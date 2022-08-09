@@ -3,9 +3,11 @@
     height: 100vh;
     position: relative;
 }
+
 .map-cnt {
     height: 100%;
 }
+
 .open-map {
     width: fit-content;
     padding: 8px 16px;
@@ -14,15 +16,18 @@
     cursor: pointer;
     flex-shrink: 0;
 }
+
 .open-map p {
     font-size: 16px;
     color: #fff;
     font-weight: bold;
 }
+
 .map .map-content {
     width: 100%;
     height: 100%;
 }
+
 .map .dialog-map__close {
     position: absolute;
     top: 14px;
@@ -34,6 +39,7 @@
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     cursor: pointer;
 }
+
 .map .dialog-map__close-img {
     width: 30px;
     height: 30px;
@@ -48,49 +54,67 @@
 .map .dialog-map__list {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 25%;
     height: 100%;
     overflow-y: scroll;
     background-color: var(--bgWhite);
     z-index: 4;
     border-right: 1px solid #ccc;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    pointer-events: fill;
 }
 
 .map .dialog-map__list::-webkit-scrollbar {
     width: 2px;
     display: block;
 }
+
 .map .dialog-map__list::-webkit-scrollbar-thumb {
     background-color: darkgrey;
 }
 
-.map .dialog-map__detail {
-    position: absolute;
-    top: 50%;
-    right: -50%;
-    transform: translate(60%, -50%);
+.map .dialog-wrap__list {
+    align-items: center;
+    display: flex;
+    height: 100%;
     width: 100%;
+    position: relative;
+    pointer-events: none;
+}
+
+.map .dialog-map__detail {
+    margin-left: 24px;
+    pointer-events: fill;
+    width: 25%;
     max-height: calc(100vh - 64px);
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border-radius: 16px;
     overflow: hidden;
     overflow-y: scroll;
+    scrollbar-width: none;
 }
+
+.dialog-map__detail::-webkit-scrollbar {
+    display: none;
+}
+
 .head-active {
     background-color: var(--bgWhite) !important;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     transition: all 0.5s;
 }
+
 .content-head.head-active span {
     opacity: 1 !important;
     visibility: visible !important;
     transition: all 0.5s;
 }
+
 .map .dialog-map__content {
     position: relative;
 }
+
 .map .content-head {
     height: 56px;
     width: 100%;
@@ -101,18 +125,23 @@
     justify-content: center;
     align-items: center;
     transition: all 0.5s;
+    z-index: 999;
 }
+
 .map .content-img {
     height: 240px;
     width: 100%;
     margin-top: -56px;
 }
+
 .map .content-img img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover !important;
 }
+
 .map .content-head span {
+    padding: 0 40px 0 24px;
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -122,10 +151,10 @@
     font-size: 18px;
     font-weight: 500;
     line-height: 24px;
-    text-align: center;
     visibility: hidden;
     opacity: 0;
 }
+
 .map .content-head img {
     margin-right: 16px;
     background-color: #fff;
@@ -142,6 +171,7 @@
     padding: 16px 24px 24px 24px;
     border-bottom: 1px solid rgba(204, 204, 204, 0.663);
 }
+
 .map .content-info .content-info__name {
     font-size: 18px;
     line-height: 28px;
@@ -149,6 +179,7 @@
     margin-bottom: 6px;
     font-weight: 600;
 }
+
 .map .content-info .content-info__wrapbtn {
     margin-top: 16px;
     display: flex;
@@ -166,18 +197,22 @@
     justify-content: center;
     cursor: pointer;
 }
+
 .map .content-info .content-info__wrapbtn .content-info__btn img {
     width: 24px;
 }
+
 .map .content-info .content-info__wrapbtn .content-info__btn span {
     font-size: 14px;
     color: var(--purple);
     font-weight: bold;
 }
+
 .list-org__active {
     margin-left: 0 !important;
-    transition: all 0.1s linear;
+    transition: all 0.1s;
 }
+
 .map .dialog-map__item {
     display: flex;
     background-color: var(--bgWhite);
@@ -190,13 +225,16 @@
     transition: all 0.1s ease-out;
     user-select: none;
 }
+
 .map .dialog-map__item:hover {
     background-color: var(--bgGray) !important;
     transition: all 0.2s ease-out;
 }
+
 .map .dialog-map__item:not(:last-child) {
     border-bottom: 1px solid rgba(204, 204, 204, 0.539);
 }
+
 .map .map-item__img {
     width: 80px;
     height: 80px;
@@ -204,14 +242,18 @@
     overflow: hidden;
     flex-shrink: 0;
 }
+
 .map .map-item__img img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
+
 /* .dialog-map__org .map-item__content {
     padding: 16px;
 } */
+
 .map .map-item__name p {
     font-size: 16px;
     font-weight: bold;
@@ -223,6 +265,7 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+
 .map .map-item__address p {
     font-size: 14px;
     font-weight: bold;
@@ -235,6 +278,7 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+
 .map .map-item__evaluate {
     display: flex;
     grid-gap: 0 16px;
@@ -245,6 +289,7 @@
     grid-gap: 0 4px;
     align-items: center;
 }
+
 .dialog-map__item .map-item__content {
     width: 100%;
     display: flex;
@@ -253,55 +298,55 @@
     flex: 1;
     height: 100%;
 }
+
 .map .evaluate-item img {
     width: 14px;
     height: 14px;
 }
+
 .map .evaluate-item p {
     font-size: 14px;
     font-weight: bold;
 }
+
 .map .map-item__distance {
     font-size: 14px;
     font-weight: bold;
     line-height: 14px;
 }
+
 .map .map-item__distance-icon {
     width: 14px;
     height: 14px;
     margin-right: 6px;
 }
+
 .dialog-map__wrapper {
     position: absolute;
     z-index: 2;
     height: 100%;
-    width: 25%;
+    width: 100%;
     top: 0;
     left: 0;
     margin-left: -25%;
-    transition: all 0.3s ease-in !important;
+    transition: all 0.2s !important;
+    pointer-events: none;
 }
+
 .map .open-list__org {
     z-index: 6;
-    position: absolute;
+    pointer-events: fill;
     padding: 16px 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: max-content;
+    height: fit-content;
     background-color: var(--purple);
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     cursor: pointer;
     border-radius: 0 8px 8px 0;
 }
-.map .open-list__org.open {
-    left: 0;
-    z-index: 6;
+
+.css-1u2w381-MuiModal-root-MuiDrawer-root.isMap {
+    z-index: 9000;
 }
-.map .open-list__org.close {
-    z-index: 6;
-    right: -23px;
-}
-/* cus google map marker */
 
 .gm-style .gm-style-iw-c {
     width: max-content;
@@ -327,19 +372,135 @@
     padding-bottom: 4px !important;
     padding-top: 4px !important;
 }
+
 .gm-style .gm-style-iw-t::after {
     background: var(--purple);
     z-index: 2;
 }
+
 .gm-ui-hover-effect {
     display: none !important;
 }
+
 .map .map-item__mobile {
     display: none;
 }
-.google-map-view{
-    width: 100vw;
-    height: 100vh;
+
+.map .content-info__list {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 16px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.map .content-info__item {
+    display: flex;
+    grid-gap: 0 8px;
+    width: 100%;
+    align-items: center;
+}
+
+.map .content-info__item .item-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.map .content-info__item .item-text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.map .content-info__item .item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.map .content-info__rating {
+    padding: 24px;
+    position: relative;
+}
+
+.map .evaluate-input__change {
+    width: 100%;
+    bottom: unset;
+    padding: 16px 24px;
+}
+
+.map .input-btn {
+    right: 20px;
+}
+
+.map .evaluate-rating__left {
+    width: 33.33%;
+    grid-gap: 4px 0;
+    border: 0;
+}
+
+.map .evaluate-rating__right {
+    width: 66.66%;
+    margin-right: 16px;
+}
+
+.map .MuiRating-root {
+    font-size: 16px;
+}
+
+.map .evaluate-rating__left,
+.map .evaluate-rating__right {
+    padding: 0px;
+}
+
+.map .evaluate-rating__quantity {
+    font-size: 14px;
+}
+
+.map .org-evaluate__cnt .evaluate-rating {
+    border: 0;
+    flex-direction: row-reverse;
+}
+
+.map .org-evaluate {
+    width: 100%;
+}
+
+.map .input-btn {
+    right: 20px;
+}
+
+.map .evaluate-rating__left {
+    width: 33.33%;
+    grid-gap: 4px 0;
+    border: 0;
+}
+
+.map .evaluate-rating__right {
+    width: 66.66%;
+    margin-right: 16px;
+}
+
+.map .MuiRating-root {
+    font-size: 16px;
+}
+
+.map .evaluate-rating__left,
+.map .evaluate-rating__right {
+    padding: 0px;
+}
+
+.map .evaluate-rating__quantity {
+    font-size: 14px;
+}
+
+.map .org-evaluate__cnt .evaluate-rating {
+    border: 0;
+    flex-direction: row-reverse;
+}
+
+.map .org-evaluate {
+    width: 100%;
 }
 
 @media only screen and (max-width: 1023px) {

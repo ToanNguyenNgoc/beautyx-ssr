@@ -34,8 +34,8 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
         dispatch(onResetFilter());
-        // dispatch(onSetOrgsEmpty());
-    }, []);
+    }, [])
+
     return (
         <div className="homepage">
             <ExtraFlatForm />
@@ -44,7 +44,7 @@ export default function HomePage() {
             <Container>
                 {
                     banner_status !== STATUS.SUCCESS ?
-                        <LoadHomeBanner/>
+                        <LoadHomeBanner />
                         :
                         <>
                             <HomeBanner />

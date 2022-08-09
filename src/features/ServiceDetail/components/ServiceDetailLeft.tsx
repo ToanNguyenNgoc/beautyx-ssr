@@ -7,7 +7,9 @@ import {
     fetchAsyncFavoriteService,
 } from "../../../redux/org_services/serviceSlice";
 import onErrorImg from "../../../utils/errorImg";
-import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
+import formatPrice, {
+    formatSalePriceService,
+} from "../../../utils/formatPrice";
 import Slider from "react-slick";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
@@ -41,7 +43,10 @@ export default function ServiceDetailLeft(props: any) {
     const history = useHistory();
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);
-    const serviceSaleSpecialPrice = formatSalePriceService(service.special_price, service.special_price_momo)
+    const serviceSaleSpecialPrice = formatSalePriceService(
+        service.special_price,
+        service.special_price_momo
+    );
 
     const percent = service
         ? Math.round(100 - (serviceSaleSpecialPrice / service?.price) * 100)
@@ -197,12 +202,10 @@ export default function ServiceDetailLeft(props: any) {
                         </div>
                     )}
                     <div className="service-detail__mobile-price">
-                        {(serviceSaleSpecialPrice > 0) ? (
+                        {serviceSaleSpecialPrice > 0 ? (
                             <>
                                 <span>
-                                    {formatPrice(
-                                        service?.special_price_momo
-                                    )}đ
+                                    {formatPrice(service?.special_price_momo)}đ
                                 </span>
                                 <span>{formatPrice(service?.price)}đ</span>
                             </>

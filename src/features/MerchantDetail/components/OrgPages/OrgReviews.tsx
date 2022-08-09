@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IOrganization } from "../../../../interface/organization";
 import {
@@ -13,10 +13,11 @@ import ReviewsContainer from "../../../ReviewsContainer";
 interface IProps {
     org: IOrganization;
     refReview?: any;
+    isMapReview?: Boolean;
 }
 
 function OrgReviews(props: IProps) {
-    const { org, refReview } = props;
+    const { org, refReview, isMapReview } = props;
     const dispatch = useDispatch();
     const [openAll, setOpenAll] = useState(false);
     const { org_id, comments, totalItem, status, page } = useSelector(
@@ -38,7 +39,7 @@ function OrgReviews(props: IProps) {
     };
     useEffect(() => {
         callOrgComments();
-    }, []);
+    }, [org]);
     return (
         <>
             <div ref={refReview} className="org-evaluate">
@@ -57,6 +58,7 @@ function OrgReviews(props: IProps) {
                         }}
                         onClick={() => {
                             setOpenAll(true);
+                            console.log("first");
                         }}
                         className="seemore-cmt"
                     >
@@ -71,6 +73,7 @@ function OrgReviews(props: IProps) {
                 org_id={org_id}
                 totalItem={totalItem}
                 page={page}
+                muiCustomClass={isMapReview?'isMap':''}
                 commentable_type="ORGANIZATION"
             />
         </>

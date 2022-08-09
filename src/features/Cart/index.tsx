@@ -13,7 +13,7 @@ import HeadTitle from '../HeadTitle';
 import './cart.css'
 import { AppContext } from '../../context/AppProvider';
 //import _ from 'lodash';
-
+import { checkPhoneValid } from "../../utils/phoneUpdate";
 interface Org {
 	id: number, name: string
 }
@@ -22,6 +22,7 @@ function Cart(props: any) {
 	const headerTitle = t('cart.cart')
 	const dispatch = useDispatch();
 	const carts = useSelector((state: any) => state.carts);
+	const { USER } = useSelector((state: any) => state.USER);
 	//const list = carts.cartList;
 
 	// const listGroup = _(list)
@@ -68,6 +69,7 @@ function Cart(props: any) {
 		return newArr
 	}
 	const orgs = unique(orgCart)
+	USER&&console.log(checkPhoneValid(USER?.telephone));
 	return (
 		<div className="cart" >
 			<HeadTitle

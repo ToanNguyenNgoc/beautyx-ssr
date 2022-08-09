@@ -54,7 +54,7 @@ export function callApiFromTiki(api,params) {
         '' +
         Math.floor(Math.random() * 1000000);
     // eslint-disable-next-line no-undef
-    my.postMessage({
+    my?.postMessage({
         requestId: requestId,
         params: {
             api: api,

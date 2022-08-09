@@ -6,10 +6,10 @@ class MobaGalleries {
         const params = {
             page: 1,
             limit: 15,
-            "include": "images"
-        }
-        return axiosClient.get(url, { params })
-    }
+            include: "images|videos",
+        };
+        return axiosClient.get(url, { params });
+    };
 }
 const galleriesApi = new MobaGalleries();
 export default galleriesApi;

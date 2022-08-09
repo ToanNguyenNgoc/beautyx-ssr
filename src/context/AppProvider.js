@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
@@ -7,7 +8,11 @@ import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
 import { fetchAsyncApps } from '../redux/appointment/appSlice';
-import { fetchAsyncOrderServices } from '../redux/order/orderSlice'
+import { fetchAsyncOrderServices } from '../redux/order/orderSlice';
+import { callApiFromTiki } from "../rootComponents/tiki/doPostMessageTiki";
+import { EXTRA_FLAT_FORM } from "../api/extraFlatForm";
+import { FLAT_FORM_TYPE } from "../rootComponents/flatForm";
+import useGetMessageTiki from "../rootComponents/useGetMessageTiki";
 
 
 export const AppContext = createContext();
@@ -61,7 +66,11 @@ export default function AppProvider({ children }) {
     dispatch(fetchAsyncVideos());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  const getUserLocation = () => {
+
+  //----------------------------------------------------------
+  //get location plat form
+  const platform = EXTRA_FLAT_FORM();
+  const getLocationPlatFormBeauty = () => {
     navigator.geolocation.getCurrentPosition(function (position) {
       const user_location = {
         lat: position.coords.latitude,
@@ -70,16 +79,36 @@ export default function AppProvider({ children }) {
       sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
     });
   }
+  const getLocationPlatFormTiki = async () => {
+    const api = "getLocation";
+    const params = {
+      api: api,
+      params: {
+        TYPE: 'CALL_API'
+      }
+    };
+    await callApiFromTiki(api, params)
+  }
+  const response = useGetMessageTiki();
   useEffect(() => {
-    getUserLocation()
-    return function cleanup() {
-      getUserLocation()
+    if (platform === FLAT_FORM_TYPE.TIKI) {
+      getLocationPlatFormTiki()
+      if (response && response.result?.res) {
+        const user_location = {
+          lat: response.result?.res.latitude,
+          long: response.result?.res.longitude
+        }
+        sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
+      }
     }
-  }, []);
+    else if (platform === FLAT_FORM_TYPE.BEAUTYX) {
+      getLocationPlatFormBeauty()
+    }
+  }, [response, getLocationPlatFormTiki]);
+
+
   const value = {
     t,
-    //tags,
-    //provinces,
     language,
     openModal,
     setOpenModal,

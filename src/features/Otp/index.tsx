@@ -1,24 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { auth, firebase } from '../../firebase';
 import authentication from '../../api/authApi';
+import { vnPhoneCheck } from '../../utils/validateForm';
 
 function Otp(props: any) {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [verificationId, setVerificationId] = useState('')
     const [values, setValues] = useState({
-        telephone: '0583580050',
-        new_password: '',
+        telephone: '',
         code: '',
         verification_id: ''
     })
     const sign = () => {
-        if (phoneNumber === "") return;
+        console.log(values.telephone);
+        if (values.telephone === "") return;
 
         let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             'size': 'invisible'
         });
 
-        auth.signInWithPhoneNumber(phoneNumber, verify).then((result) => {
+        auth.signInWithPhoneNumber(values.telephone, verify).then((result) => {
             console.log(result)
             setValues({
                 ...values,
@@ -31,7 +32,8 @@ function Otp(props: any) {
     }
     const handleForgotPass = async () => {
         try {
-            await authentication.forgotPassword(values);
+            // await authentication.forgotPassword(values);
+            console.log(values);
         } catch (error) {
             console.log(error)
         }
@@ -39,17 +41,22 @@ function Otp(props: any) {
     const onSubmit = () => {
         handleForgotPass()
     }
-
+    console.log(values.telephone);
 
     return (
         <div>
             <div id="recaptcha-container"></div>
-            <input type="text" onChange={(e) => setPhoneNumber(e.target.value)} />
+            <span>-------</span>
+            <input type="text" onChange={(e) => setValues({...values,telephone:e.target.value.replaceAll(" ",'').replace(/0/i,'+84')})} />
             <button onClick={sign} >send otp</button>
             <br />
             <span>--------------</span>
-            <input type="text" onChange={(e) => setValues({ ...values, telephone: e.target.value })} placeholder='Sdt' />
-            <input type="text" onChange={(e) => setValues({ ...values, new_password: e.target.value })} placeholder='new pass' />
+            <br/>
+            <span>-------</span>
+            <br />
+            <span>--------------</span>
+            <br/>
+            <span>-------</span>
             <input type="text" onChange={(e) => setValues({ ...values, code: e.target.value })} placeholder='Otp' />
             <button
                 onClick={onSubmit}

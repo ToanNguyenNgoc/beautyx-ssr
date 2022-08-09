@@ -34,7 +34,6 @@ function EvaluateInput(props: IProps) {
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const { image_url, status } = useSelector((state: any) => state.COMMENT);
-    console.log("image_url", image_url);
     const history = useHistory();
     //handle post media
     const onChangeMedia = (e: any) => {

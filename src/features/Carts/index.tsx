@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import icon from "../../constants/icon";
@@ -29,6 +30,7 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
 import { IDiscountPar } from "../../interface/discount";
 import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
+import { checkPhoneValid } from "../../utils/phoneUpdate";
 // end
 
 const initialMomoForBeautyx = {
@@ -48,6 +50,7 @@ function Carts() {
     // console.log(VOUCHER_APPLY)
     const { USER } = useSelector((state: any) => state.USER);
     const cartListAll = useSelector((state: any) => state.carts.cartList)
+    const history = useHistory();
     const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
 
 
@@ -81,6 +84,7 @@ function Carts() {
 
     useEffect(() => {
         dispatch(getTotal(USER?.id));
+        ((USER && FLAT_FORM === FLAT_FORM_TYPE.MB) && (!checkPhoneValid(USER.telephone) && (history.push('/otp'))));
     }, [dispatch, cartList, USER, VOUCHER_APPLY]);
 
     const [open, setOpen] = useState(false);

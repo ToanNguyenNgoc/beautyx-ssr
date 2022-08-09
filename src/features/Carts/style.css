@@ -154,7 +154,8 @@
 }
 
 .re-cart-bottom__pay {
-    align-items: flex-start;
+    align-items: center;
+    margin-top: 4px;
 }
 
 .re-cart-bottom__pay .left,
@@ -166,7 +167,7 @@
 
 .re-cart-bottom__pay .right {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .re-cart-bottom__pay .right-money {
@@ -286,12 +287,19 @@
     overflow-y: scroll;
     background-color: var(--white);
     padding: 24px;
+    max-height: calc(100vh - 64px);
 }
 .cart-vouchers-list .list .item {
     width: 100%;
     min-height: 150px;
     height: fit-content;
     margin: 12px 0px;
+    padding: 0 14px;
+}
+.cart-vouchers-list .list {
+    overflow: scroll;
+    height: 100%;
+    margin-top: 14px;
 }
 .cart-item-voucher {
     padding: 8px 4px;
@@ -440,6 +448,7 @@
         max-width: unset;
         overflow-y: unset;
         padding: 20px;
+        height: 100%;
     }
 
     .cart-vouchers-list__item-right {

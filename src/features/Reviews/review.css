@@ -276,7 +276,6 @@
     display: grid;
     grid-template-columns: repeat(3, 150px);
     grid-gap: 14px;
-    margin: 8px 0;
 }
 
 .evaluate-comment .comment-img {
@@ -357,7 +356,7 @@
 .evaluate-comment__child-item {
     background-color: var(--grey_2);
     border-radius: 12px;
-    padding: 24px;
+    padding: 12px;
     margin: 12px 0px;
 }
 
@@ -380,7 +379,7 @@
     font-weight: 600;
     line-height: 16px;
     display: block;
-    margin: 14px 0;
+    margin: 10px 0;
 }
 .evaluate-comment__child-item .time-ago {
     font-size: 10px;
