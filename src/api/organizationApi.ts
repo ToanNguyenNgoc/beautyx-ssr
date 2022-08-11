@@ -19,7 +19,7 @@ class Organization {
     const url = `/organizations`;
     const paramsOb = {
       page: values.page || 1,
-      limit: 15,
+      limit: values.limit || 15,
       "filter[keyword]": values.keyword,
       "filter[tags]": values.tags,
       "filter[min_price]": values.min_price,

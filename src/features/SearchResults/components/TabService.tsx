@@ -9,6 +9,7 @@ import { fetchServicesByFilter } from "../../../redux/search/searchResultSlice";
 import { STATUS } from "../../../redux/status";
 import { LoadingServices } from "../../../components/LoadingSketion";
 import LoadingMore from "../../../components/LoadingMore";
+import EmptyRes from "../../EmptyRes";
 
 function TabService(props: any) {
     const { keyword } = props;
@@ -31,6 +32,7 @@ function TabService(props: any) {
     return (
         <div>
             {page === 1 && status !== STATUS.SUCCESS && <LoadingServices />}
+            {(status === STATUS.SUCCESS && services.length === 0)&&<EmptyRes title={'Không tìm được kết quả phù hợp!'} />}
             <InfiniteScroll
                 dataLength={services.length}
                 hasMore={true}

@@ -184,7 +184,7 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncServiceDetail(values));
         }
     };
-
+    console.log(service?.description?.length);
     return (
         <>
             {SERVICE.status === STATUS.LOADING && <LoadDetail />}
@@ -236,30 +236,25 @@ function ServiceDetail(props: any) {
                                                 <p
                                                     ref={refLimitText}
                                                     className="service-description"
-                                                >
-                                                    {t("pr.description")}:{" "}
-                                                    {service.description
-                                                        ? service.description
-                                                        : t(
-                                                            "detail_item.updating"
-                                                        )}
-                                                </p>
+                                                    dangerouslySetInnerHTML={{ '__html': service.description || t("detail_item.updating") }}
+                                                ></p>
                                                 {service?.description &&
-                                                (is_mobile === true
-                                                    ? service?.description
-                                                          .length > 300
-                                                    : service?.description
-                                                          .length > 500) ? (
-                                                    <div
-                                                        onClick={() =>
-                                                            handleSeemoreText()
-                                                        }
-                                                        className="seemore-btn"
-                                                    >
-                                                        <p>Xem thêm &or;</p>
-                                                        <p>Thu gọn &and;</p>
-                                                    </div>
-                                                ) : null}
+                                                    (
+                                                        is_mobile === true
+                                                        ? service?.description.length > 100
+                                                        : service?.description.length > 300
+                                                    )
+                                                    ? (
+                                                        <div
+                                                            onClick={() =>
+                                                                handleSeemoreText()
+                                                            }
+                                                            className="seemore-btn"
+                                                        >
+                                                            <p>Xem thêm &or;</p>
+                                                            <p>Thu gọn &and;</p>
+                                                        </div>
+                                                    ) : null}
                                             </div>
                                         </TabPanel>
 

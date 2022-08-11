@@ -2,7 +2,7 @@
     width: 90vw;
     height: 90vh;
 }
-.map-list__mobile{
+.map-list__mobile {
     display: none;
 }
 .dialog-map__org .dialog-map__close {
@@ -133,7 +133,7 @@
     font-size: 14px;
     font-weight: bold;
 }
-.dialog-map__wrapper {
+.dialog-map__org .dialog-map__wrapper {
     position: absolute;
     z-index: 2;
     height: 100%;

@@ -19,7 +19,7 @@ export default function DiscountDetailRightReview(props: IProps) {
                     size="small"
                     readOnly
                     name="simple-controlled"
-                    value={data.rating}
+                    value={(data.rating === 5) ? 5 : 4+(data.rating/10)}
                 />
 
                 {comment.totalItem > 0 ? (

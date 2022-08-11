@@ -78,6 +78,7 @@ function LoginFlatFormRequest(props: any) {
     };
     const handleLoginMomo = async () => {
         try {
+            alert('handleLoginMomo');
             handleGetUserInfoMomo({ fetchAsyncUserAndinitApp, setLoad });
         } catch (err) {
             alert(JSON.stringify(err));
@@ -142,6 +143,16 @@ function LoginFlatFormRequest(props: any) {
                 title="Cho phép truy cập"
                 onClick={handleLogin}
                 loading={load}
+            />
+            <ButtonLoading
+                title="show Toast"
+                onClick={()=>momoApi.showToast('lolo','success')}
+                loading={false}
+            />
+            <ButtonLoading
+                title="get location"
+                onClick={()=>momoApi.getLocation()}
+                loading={false}
             />
         </div>
     );

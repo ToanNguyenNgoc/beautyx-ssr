@@ -98,7 +98,7 @@ function Booking() {
             quantity: item.quantity,
         };
     });
-    const [seatAmount, SetSeatAmount] = useState(services[0]?.quantity);
+    const [seatAmount, SetSeatAmount] = useState(services[0]?.quantity||1);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -406,9 +406,9 @@ function Booking() {
                                     Số lượng người
                                 </span>
                                 <div className="seats_amount-cnt">
-                                    {/* <button className="desc" disabled={(seatAmount === 1)?true:false} onClick={()=>handleSeatsAmount('desc')}>{'-'}</button> */}
+                                    <button className="desc" disabled={(seatAmount === 1)?true:false} onClick={()=>handleSeatsAmount('desc')}>{'-'}</button>
                                     <div className="book-section-title amount">{seatAmount}</div>
-                                    {/* <button className="asc"  disabled={(seatAmount >= 10 && seatAmount<=services[0]?.quantity)?true:false} onClick={()=>handleSeatsAmount('asc')}>{'+'}</button> */}
+                                    <button className="asc"  disabled={(seatAmount >= 10 && seatAmount<=services[0]?.quantity)?true:false} onClick={()=>handleSeatsAmount('asc')}>{'+'}</button>
                                 </div>
                             </div>
 

@@ -7,6 +7,7 @@ import { fetchAsyncOrgsByFilter } from "../../../redux/search/searchResultSlice"
 import LoadingMore from "../../../components/LoadingMore";
 import { LoadingOrgs } from "../../../components/LoadingSketion";
 import { STATUS } from "../../../redux/status";
+import EmptyRes from "../../EmptyRes";
 
 function TabOrgs(props: any) {
     const { keyword, FILTER_ORGS_VAL, changeStyle } = props;
@@ -29,6 +30,7 @@ function TabOrgs(props: any) {
     return (
         <>
             {page === 1 && status !== STATUS.SUCCESS && <LoadingOrgs />}
+            {(status === STATUS.SUCCESS && orgs.length === 0)&&<EmptyRes title={'Không tìm được kết quả phù hợp!'} />}
             <InfiniteScroll
                 dataLength={orgs.length}
                 hasMore={true}

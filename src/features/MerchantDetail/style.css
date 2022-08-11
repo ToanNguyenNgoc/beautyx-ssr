@@ -8,9 +8,11 @@
     z-index: 102;
     transition: all 0.5s;
 }
+
 .MuiTabs-indicator {
     background-color: var(--purple) !important;
 }
+
 .pointer-events-none {
     pointer-events: none;
 }
@@ -70,7 +72,9 @@
     height: 16px;
 }
 
+
 /* org search */
+
 .mb-head-org__input {
     height: 32px;
     width: 0px;
@@ -136,6 +140,7 @@
     padding: 32px 0px 24px 0;
     height: 550px;
 }
+
 .wrap-video {
     width: 100%;
     height: 100%;
@@ -342,7 +347,9 @@
     transition: all 0.3s ease-in-out;
 }
 
+
 /* org container */
+
 .org-container {
     width: 100%;
     position: sticky;
@@ -369,7 +376,9 @@
     transition: all 0.3s;
 }
 
+
 /* org discounts */
+
 .org-deal-hot__section-title {
     margin: 20px 0px 12px 0px;
     font-size: 20px;
@@ -466,7 +475,9 @@
     flex-direction: column;
 }
 
+
 /* org information cnt */
+
 .org-container .org-information-cnt {
     padding: 32px 0px 16px 0;
     grid-gap: 0 48px;
@@ -525,11 +536,17 @@
 
 .org-information__map-cnt .map-org-detail__slide {
     height: 100%;
+    width: 60%;
+    margin-left: auto;
+}
+
+.org-information__map-cnt .map-org-detail__slide .map-org-detail__item .branch-avatar {
+    width: auto;
 }
 
 .org-information__map-cnt .map-org-detail__item {
     width: 100%;
-    height: 108px;
+    height: 96px;
     background-color: var(--bgWhite);
     border-radius: 8px;
     padding: 8px 12px;
@@ -650,6 +667,7 @@
     line-height: 20px;
     font-weight: 600;
     color: var(--text-black);
+    white-space: pre-line;
 }
 
 .org-information-utils {
@@ -673,7 +691,9 @@
     color: var(--text-black);
 }
 
+
 /* org services */
+
 .org-services-cnt {
     padding: 28px 0px;
     display: flex;
@@ -735,10 +755,13 @@
     cursor: pointer;
 }
 
+
 /* org galleries */
+
 .org-galleries-cnt {
     padding: 28px 0px;
 }
+
 
 /* .org-galleries__thumb-section {
     background-color: var(--bgWhite);
@@ -815,15 +838,19 @@
 .org-image-items__box {
     cursor: pointer;
 }
+
 .MuiMasonry-root {
     margin: unset !important;
 }
+
 .galleries-masory {
     margin-top: 14px;
 }
+
 .galleries-tab {
     padding: 0 8px;
 }
+
 .org-image-items__box img {
     transition: all 0.3s ease-in-out;
     border-radius: 4px;
@@ -939,7 +966,9 @@
     text-transform: capitalize;
 }
 
+
 /* org voucher */
+
 .org-voucher__title {
     color: var(--orange);
     font-size: 14px;
@@ -1055,12 +1084,14 @@
     font-weight: 500;
     line-height: 22px;
 }
+
 .voucher-org-condition-cnt {
     position: absolute;
     z-index: 10;
     margin-top: 100px;
     width: 346px;
 }
+
 .voucher-org-condition {
     width: 100%;
     height: fit-content;
@@ -1070,11 +1101,13 @@
     box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     border-radius: 8px;
 }
+
 .voucher-org-condition .title {
     font-size: 14px;
     line-height: 16px;
     font-weight: 600;
 }
+
 .voucher-org-condition .section-item {
     /* background-color: #8c8c8c; */
     margin: 4px 0px;
@@ -1083,6 +1116,7 @@
     border: solid 1px var(--bg-color);
     border-radius: 6px;
 }
+
 .voucher-org-condition .section-item .section-item__title {
     font-size: 12px;
     line-height: 14px;
@@ -1090,6 +1124,7 @@
     color: var(--text-hover);
     width: 84px;
 }
+
 .voucher-org-condition .section-item .section-item__desc {
     width: calc(100% - 84px);
     font-size: 12px;
@@ -1103,7 +1138,6 @@
         grid-gap: 0 12px;
         align-items: center;
     }
-
     .org-mess-flo .org-mess {
         padding: 4px 8px;
         background-color: #fadfdf;
@@ -1114,7 +1148,6 @@
         justify-content: center;
         align-items: center;
     }
-
     .org-mess-flo .org-mess span,
     .org-mess-flo .org-flo span {
         font-weight: 500;
@@ -1122,7 +1155,6 @@
         line-height: 22px;
         color: #e64d4a;
     }
-
     .org-mess-flo .org-flo {
         width: 100%;
         padding: 4px 8px;
@@ -1133,60 +1165,47 @@
         justify-content: center;
         align-items: center;
     }
-
     .mb-cnt {
         z-index: 1;
     }
-
     .mb-org-search-cnt {
         z-index: 99;
     }
-
     .org-detail__cnt-bot .org-detail__info {
         grid-gap: 12px 0;
     }
-
     .org-information__map-cnt .map-org__seemore {
         top: 12px;
         right: 12px;
     }
-
     .org-container .MuiTab-root {
         font-size: 14px;
     }
-
     .org-container .org-information-cnt {
         grid-gap: 16px 0;
         padding: 16px 12px;
         display: flex;
         flex-direction: column;
     }
-
     .org-time-work__right-list {
         font-size: 12px;
     }
-
     .org-detail {
         padding: 0px;
         height: 375px;
     }
-
     .org-detail__cnt-top {
         height: 184px;
     }
-
     .org-detail__banner-de__item {
         height: 184px;
     }
-
     .org-detail__cnt-bot .left {
         width: 100%;
     }
-
     .org-detail__cnt-bot .right {
         display: none;
     }
-
     .org-detail__cnt .wrap-bot {
         padding: 12px 12px 0 12px;
         border: none;
@@ -1196,7 +1215,6 @@
         transform: translateY(75%);
         z-index: 23;
     }
-
     .org-detail__cnt-bot {
         background-color: var(--bgWhite);
         padding: 12px 12px;
@@ -1204,28 +1222,23 @@
         box-shadow: 0px 4px 6px rgb(0 0 0 / 10%);
         z-index: 10;
     }
-
     .org-detail__cnt-bot .icon {
         width: 16px;
         height: 16px;
     }
-
     .org-detail__cnt-bot .org-avatar {
         width: 60px;
         height: 60px;
         border: none;
     }
-
     .org-detail__cnt-bot .org-avatar img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-
     .org-detail__cnt-bot .org-left-detail {
         width: calc(100% - 48px);
     }
-
     .org-left-detail__name {
         font-size: 16px;
         line-height: 24px;
@@ -1235,14 +1248,12 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
     .org-left-detail__address,
     .org-left-detail__rate {
         font-size: 12px;
         line-height: 14px;
         font-weight: 500;
     }
-
     .mb-cnt .org-left-detail__address span {
         display: -webkit-box;
         -webkit-line-clamp: 1;
@@ -1251,7 +1262,6 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
-
     .org-time-work {
         width: 100%;
         margin: 0px;
@@ -1260,101 +1270,83 @@
         padding-top: 12px;
         border-top: 1px solid #ccc;
     }
-
     .org-time-work .title,
     .org-time-work .time {
         font-size: 12px;
         line-height: 16px;
         font-weight: 500;
     }
-
     /* org container */
     .org-container {
         margin-top: 0;
         padding-top: 0px;
     }
-
     .org-container__tab-cnt {
         padding: 0px;
     }
-
     .org-tab-list {
         width: max-content;
         border-bottom: solid 1px #fafafa;
     }
-
     .org-tab-list li {
         width: fit-content;
         margin-left: 12px;
     }
-
     .org-tab-list__item {
         font-size: 16px;
         line-height: 24px;
         font-weight: 700;
     }
-
     /* org discounts */
     .org-deal-hot {
         padding: 0px 12px;
         /* background-color: #ffe3d2; */
     }
-
     .org-deal-hot__discounts {
         width: 100%;
         height: 300px;
         overflow-x: scroll;
     }
-
     .org-deal-hot__discounts .list {
         flex-wrap: nowrap;
         width: max-content;
     }
-
     .org-deal-hot__discounts .list li {
         width: 172px;
         height: 278px;
     }
-
     .mb-cnt .MuiTabs-indicator {
         background-color: var(--purple);
     }
-
     .org-deal-hot__section {
         padding: 12px 0;
     }
-
     .org-special__list {
         display: flex;
         flex-direction: column;
     }
-
     .org-special__list li {
         width: 100%;
         padding: 12px 0px;
         border-bottom: solid 1px var(--bgGray);
     }
-
     .org-special-item {
         width: 100%;
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
     }
-
     .org-special-item__img {
         width: 68px;
         height: 68px;
         border-radius: 8px;
     }
-
     .org-special-item__img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         border-radius: 8px;
     }
-
     .org-special-item__detail {
         width: calc(100% - 68px);
         display: flex;
@@ -1362,85 +1354,69 @@
         background-color: var(--bgWhite);
         padding: 0px 12px 0px 0px;
     }
-
     .org-special-item__detail .item-head {
         width: 58.1%;
     }
-
     .org-special-item__detail .item-price {
         width: 41.5%;
         justify-content: flex-start;
         align-items: flex-end;
     }
-
     .org-special-item__rate {
         margin-left: -62px;
     }
-
     .org-special-item__rate .rate-item__count {
         font-size: 12px;
         line-height: 14px;
         color: var(--text-hover);
     }
-
     .org-information {
         width: 100%;
         padding: 16px 0;
     }
-
     .org-information__map-cnt {
         height: 184px;
     }
-
     .org-information__map-cnt .map-org-detail {
         height: 92px;
     }
-
     .org-information__map-cnt .map-org-detail__item {
         height: 68px;
     }
-
     .map-org-detail__item .branch-detail .name {
         font-weight: 700;
         font-size: 12px;
         line-height: 20px;
         color: var(--purple);
     }
-
     .map-org-detail__item .branch-detail .icon {
         width: 10px;
         height: 10px;
     }
-
     .map-org-detail__item .rate-item .rate-item__text {
         font-size: 10px;
         line-height: 12px;
         font-weight: 500;
     }
-
     .org-information__about {
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
     }
-
     .org-information-utils .utils-item .icon {
         width: 12px;
         height: 12px;
     }
-
     .org-information-utils .utils-item span {
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
     }
-
     .org-services-cnt {
         padding: 0px;
         flex-direction: column;
         justify-content: flex-start;
     }
-
     .org-services-cnt__left {
         padding: 8px 12px;
         width: 100%;
@@ -1452,27 +1428,22 @@
         background-color: var(--bgWhite);
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     }
-
     .org-services-cnt__left .cates-list {
         display: flex;
         width: max-content;
         margin: 0 12px;
     }
-
     .cate-list__item {
         margin-bottom: 0px !important;
         margin-right: 4px;
     }
-
     .org-services-cnt__right {
         width: 100%;
         padding: 8px 12px;
     }
-
     .org-services-cnt__right-list {
         flex-direction: column;
     }
-
     .org-services-cnt__right-list li,
     .org-combos-cnt__right li {
         width: 100%;
@@ -1480,22 +1451,20 @@
         padding: 12px 0px;
         border-bottom: solid 1px var(--bgGray);
     }
-
     .org-combos-cnt__right li {
         padding: 12px;
     }
-
     .org-galleries-cnt {
         padding: 0px;
     }
-
     .org-container .org-galleries-cnt {
         padding: 16px 12px;
     }
-    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    .org-galleries__images-section
+        .MuiButtonBase-root.MuiTab-root.Mui-selected {
         color: var(--purple) !important;
     }
-    .css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+    .org-galleries__images-section .MuiButtonBase-root.MuiTab-root {
         text-transform: capitalize !important;
         font-family: "Quicksand" !important;
         line-height: 1.5 !important;
@@ -1512,20 +1481,16 @@
     .css-13xfq8m-MuiTabPanel-root {
         padding: 0 !important;
     }
-
     .org-galleries__thumb-section .thumb-list li {
         width: 100%;
         padding: 8px 0px;
     }
-
     .thumb-img__box {
         padding-bottom: unset;
     }
-
     .thumb-list__item-cnt img {
         position: unset;
     }
-
     .org-galleries__images-section .title {
         position: fixed;
         z-index: 2;
@@ -1536,22 +1501,18 @@
         padding: 8px 12px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.05);
     }
-
     .org-image-btn {
         display: block;
     }
-
     .images-section__wrap {
         padding-top: 38px;
     }
-
     .org-galleries__images-section .org-image-btn {
         border: none;
         outline: none;
         background-color: transparent;
         margin-right: 18px;
     }
-
     .org-container .MuiTabs-root {
         min-height: 0;
         position: sticky;
@@ -1565,5 +1526,12 @@
     }
     .org-des-cnt {
         width: 80%;
+    }
+}
+
+@media only screen and (max-width: 475px) {
+    .org-information__map-cnt .map-org-detail__slide {
+        width: 65%;
+        min-width: 240px;
     }
 }

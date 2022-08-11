@@ -222,9 +222,9 @@ function ProductDetail(props: any) {
                                             {product?.description &&
                                             (is_mobile === true
                                                 ? product?.description.length >
-                                                  300
+                                                  100
                                                 : product?.description.length >
-                                                  500) ? (
+                                                  300) ? (
                                                 <div
                                                     onClick={() =>
                                                         handleSeemoreText()

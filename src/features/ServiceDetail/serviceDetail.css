@@ -1,4 +1,5 @@
 /* cus tab MUI */
+
 .service-detail .MuiTabs-root {
     min-height: 48px;
     position: sticky;
@@ -60,6 +61,7 @@
     display: none;
 }
 
+
 /* end cus tab MUI */
 
 .flexX-gap-8 {
@@ -119,11 +121,13 @@
     flex-shrink: 0;
     border-radius: 8px;
 }
+
 .detail-left__img-item {
     width: 100%;
     height: 450px;
     position: relative;
 }
+
 .detail-left__img-bg {
     position: absolute;
     width: 100%;
@@ -131,6 +135,7 @@
     object-fit: cover;
     z-index: 1;
 }
+
 .detail-left__img-item-video {
     backdrop-filter: blur(10px);
     position: absolute;
@@ -139,25 +144,33 @@
     width: 100%;
     object-fit: contain;
 }
+
 .service-detail .detail-left__slider-nav {
     margin-top: 24px;
     width: 100%;
 }
+
 .slick-current .slider-nav__video,
 .slick-current .slider-nav__img {
     border: 2px solid var(--red-cl);
 }
+
 .service-detail .slick-track {
     margin: unset;
 }
+
 .service-detail .detail-left__slider-nav .slick-slide {
     width: unset !important;
     display: flex;
 }
-.service-detail .detail-left__slider-nav .slick-slide > div {
+
+.service-detail .detail-left__slider-nav .slick-slide>div {
     margin-right: 16px;
 }
+
+
 /* cus btn arr img */
+
 .detail-btn__prev,
 .detail-btn__next {
     position: absolute;
@@ -174,25 +187,30 @@
     padding: 3px;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+
 .detail-btn__prev {
     top: 50%;
     transform: translateY(-50%) rotate(180deg);
     left: 0;
 }
+
 .detail-btn__next {
     right: 0;
 }
+
 .detail-btn__prev .detail-btn__prev-img,
 .detail-btn__next .detail-btn__next-img {
     width: 30px !important;
     height: 30px !important;
 }
+
 .detail-left__img:hover .detail-btn__prev {
     opacity: 0.7;
     visibility: visible;
     left: 14px;
     transition: all 0.3s ease-in;
 }
+
 .detail-left__img:hover .detail-btn__next {
     opacity: 0.7;
     right: 14px;
@@ -207,14 +225,17 @@
     height: 82px;
     border: 2px solid rgba(204, 204, 204, 0.419);
 }
+
 .slider-nav__img img {
     width: 100%;
     height: 100%;
 }
+
 .slider-nav__img {
     width: 82px;
     height: 82px;
 }
+
 .slider-nav__video .slider-video {
     width: 100%;
     height: 100%;
@@ -285,6 +306,7 @@
 .evaluate-item__wrap {
     display: flex;
 }
+
 .evaluate-item__wrap .evaluate-item:first-child {
     border-right: 1px solid gray;
     border-left: 1px solid gray;
@@ -356,8 +378,7 @@
     grid-gap: 8px 0;
     padding: 16px;
     border-radius: 4px;
-    box-shadow: rgb(242 242 242) 1px 1px 0px 0px inset,
-        rgb(242 242 242) -1px -1px 0px 0px inset;
+    box-shadow: rgb(242 242 242) 1px 1px 0px 0px inset, rgb(242 242 242) -1px -1px 0px 0px inset;
 }
 
 .service-detail .infoMer-top {
@@ -421,6 +442,7 @@
     grid-gap: 4px 0;
 }
 
+
 /* .service-detail .infoMer-item:not(:nth-child(3)) {
     border-right: 1px solid #ccc;
 } */
@@ -460,12 +482,14 @@
     width: 20px;
     height: 20px;
 }
+
 .service-detail .detail-right__no {
     color: var(--red-cl);
     font-size: 14px;
     line-height: 16px;
     font-weight: 700;
 }
+
 .service-detail .detail-right__bottom {
     display: flex;
     justify-content: space-between;
@@ -528,6 +552,7 @@
     grid-gap: 0 8px;
     cursor: pointer;
 }
+
 .bottom-buy__now {
     height: 40px;
     margin-right: 16px;
@@ -552,9 +577,10 @@
 .service-detail .service-detail__description {
     margin-bottom: 24px;
 }
+
 .service-detail .service-detail__description .service-description {
     margin-bottom: 14px;
-    line-height: 26px;
+    line-height: 1.5;
     font-weight: 500;
     font-size: 16px;
     display: -webkit-box;
@@ -563,6 +589,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
+    white-space: pre-line;
 }
 
 .service-detail .service-detail__comment {
@@ -654,6 +681,7 @@
     padding: 24px;
     background-color: #fff;
 }
+
 .detail-recommend__title {
     font-weight: 800;
     font-size: 16px;
@@ -666,15 +694,18 @@
     grid-gap: 16px;
     margin-top: 24px;
 }
+
 .evaluate-rating__mobile {
     display: none;
 }
+
 .total-comment__wrap {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: space-between;
 }
+
 .seemore-cmt {
     font-size: 14px;
     color: var(--purple);
@@ -683,27 +714,33 @@
     cursor: pointer;
     line-height: 34px;
 }
+
 .seemore-btn {
     font-size: 14px;
     color: var(--purple);
     margin: 0 auto;
     cursor: pointer;
 }
+
 .seemore-btn p {
     font-weight: 500;
     width: 80px;
     margin: 0 auto;
     text-align: center;
 }
+
 .seemore-btn p:nth-child(2) {
     display: none;
 }
+
 .change-text p:nth-child(1) {
     display: none;
 }
+
 .change-text p:nth-child(2) {
     display: block;
 }
+
 .unlimit-text {
     -webkit-line-clamp: unset !important;
 }
@@ -751,26 +788,21 @@
     .service-detail .detail-left__img img {
         border-radius: unset;
     }
-
     .service-detail .service-detail__description {
         font-size: 14px;
     }
-
     .service-detail .service-detail__tabitem {
         padding: 16px 0;
     }
-
     .service-detail .service-detail__tab {
         margin: 12px 0 0 0;
         padding: 0 12px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
-
     .service-detail .service-detail__left {
         width: 100%;
         padding: 0;
     }
-
     .service-detail .service-detail__mobile {
         display: block;
         width: 100%;
@@ -783,12 +815,10 @@
         gap: 8px 0;
         position: relative;
     }
-
     .service-detail .service-detail__comment {
         width: 100%;
         margin-bottom: 16px;
     }
-
     .service-detail .detail-left__img {
         width: 100%;
         height: 100%;
@@ -814,11 +844,9 @@
     .detail-left__img-item-vd {
         height: 345px;
     }
-
     .service-detail .slick-slider {
         position: unset;
     }
-
     .service-detail .service-detail__mobile-favorite {
         position: absolute;
         padding: 8px;
@@ -830,30 +858,25 @@
         border-radius: 100px;
         overflow: hidden;
     }
-
     .service-detail .service-detail__mobile-mid {
         display: flex;
         gap: 0 4px;
         align-items: center;
     }
-
     .service-detail .service-detail__mobile-mid img {
         width: 14px;
         height: 14px;
     }
-
     .service-detail .service-detail__mobile-mid p {
         font-weight: 500;
         font-size: 12px;
         color: #8c8c8c;
     }
-
     .service-detail .service-detail__mobile-bottom {
         display: flex;
         gap: 0 8px;
         align-items: center;
     }
-
     .service-detail .service-detail__mobile-percent {
         clip-path: polygon(0 0, 92% 0, 100% 50%, 92% 100%, 0 100%, 7% 50%);
         background-color: var(--red-cl);
@@ -863,24 +886,20 @@
         line-height: 16px;
         color: #fff;
     }
-
     .service-detail .MuiTab-root {
         font-size: 14px;
     }
-
     .service-detail .service-detail__mobile-price span:nth-child(1) {
         font-size: 20px;
         font-weight: bold;
         color: var(--red-cl);
     }
-
     .service-detail .service-detail__mobile-price span:nth-child(2) {
         color: rgb(128, 128, 137);
         font-size: 12px;
         text-decoration: line-through;
         margin-left: 8px;
     }
-
     .service-detail .service-detail__bottom {
         display: block;
         display: flex;
@@ -896,7 +915,6 @@
         border-radius: 16px 16px 0 0 !important;
         overflow: hidden;
     }
-
     .service-detail .service-detail__bottom button {
         width: 100%;
         padding: 8px;
@@ -905,52 +923,42 @@
         border-radius: 8px;
         background-color: var(--purple);
     }
-
     .service-detail .service-detail__bottom button p {
         color: #fff;
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
     }
-
     .service-detail .service-detail__bottom .btn-addcart {
         display: flex;
         align-items: center;
         justify-content: center;
         grid-gap: 0 8px;
     }
-
     .service-detail .service-detail__right {
         display: none;
     }
-
     .active-mb {
         border-radius: 16px;
         overflow: hidden;
     }
-
     .active-mb .service-detail__right {
         display: block;
         width: 100%;
         padding: 0;
     }
-
     .css-9emuhu-MuiPaper-root-MuiDrawer-paper {
         border-radius: 16px 16px 0 0;
     }
-
     .active-mb .detail-right__infoMer {
         display: none;
     }
-
     .active-mb .service-detail {
         padding: 12px 12px 24px 12px;
     }
-
     .active-mb .detail-right__info {
         width: 100%;
     }
-
     .active-mb .detail-right__head-img {
         display: block;
         width: 112px;
@@ -959,7 +967,6 @@
         overflow: hidden;
         flex-shrink: 0;
     }
-
     .active-mb .detail-right__head-img img {
         width: 100%;
         height: 100%;
@@ -968,21 +975,17 @@
     .active-mb .detail-right__head-info {
         width: 100%;
     }
-
     .active-mb .detail-right__head {
         display: flex;
         grid-gap: 0 8px;
         align-items: center;
     }
-
     .active-mb .favorite {
         display: none;
     }
-
     .active-mb .detail-right__org {
         display: none;
     }
-
     .active-mb .detail-right__name p {
         font-weight: 700;
         font-size: 16px;
@@ -992,13 +995,11 @@
     .active-mb .service-detail__right {
         margin-top: 12px;
     }
-
     .active-mb .service-detail__right .detail-right__price span:nth-child(1) {
         font-size: 20px;
         font-weight: bold;
         color: var(--red-cl);
     }
-
     .active-mb .service-detail__right .detail-right__price span:nth-child(2) {
         color: rgb(128, 128, 137);
         font-size: 12px;
@@ -1006,25 +1007,20 @@
         text-decoration: line-through;
         margin-left: 8px;
     }
-
     .active-mb .service-detail__right .detail-right__body {
         margin: 16px 0 0 0;
     }
-
     .active-mb .detail-right__duration-wrap p {
         font-size: 14px;
     }
-
     .active-mb .detail-right__duration {
         font-size: 14px;
         margin: 0;
     }
-
     .active-mb .detail-right__duration img {
         width: 16px;
         height: 16px;
     }
-
     .active-mb .bottom-quantity__text {
         font-size: 14px;
         margin: 0;
@@ -1038,19 +1034,16 @@
         align-items: unset;
         grid-gap: 14px 0;
     }
-
     .active-mb .bottom-quantity {
         display: flex;
         align-items: center;
         justify-content: space-between;
     }
-
     .active-mb .quantity-btn {
         width: 28px;
         height: 28px;
         font-size: 14px !important;
     }
-
     .active-mb .bottom-addCart {
         width: 100%;
         padding: 8px;
@@ -1063,11 +1056,9 @@
     .bottom-buy__now {
         margin: 0px;
     }
-
     .active-mb .detail-right__percent p {
         font-size: 14px;
     }
-
     .service-detail__org-mb {
         display: block;
     }
@@ -1084,20 +1075,16 @@
         padding: 12px;
         box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
     }
-
     .service-detail .infoMer-mid {
         padding: 0px;
         justify-content: space-around;
     }
-
     .service-detail .MuiTabs-root {
         top: 49px;
     }
-
     .detail-recommend {
         padding: 0 12px 12px 12px;
     }
-
     /* policy */
     .detail-recommend__list {
         margin-top: 12px;
@@ -1110,31 +1097,25 @@
     .detailPolicy-useGuild__bot {
         padding: 12px;
     }
-
     .detailPolicy-useguild__item {
         font-size: 12px;
     }
-
     .detailPolicy-useGuild__bot p {
         font-size: 12px;
     }
-
     .detailPolicy-rules {
         margin-top: 12px;
     }
-
     .detailPolicy-rules span:nth-child(1) {
         font-size: 16px;
         line-height: 24px;
     }
-
     .detailPolicy-rules span:nth-child(3),
     .detailPolicy-rules span:nth-child(7) {
         font-size: 12px;
         line-height: 16px;
         margin-top: 8px;
     }
-
     .detailPolicy-rules span:nth-child(5),
     .detailPolicy-rules span:nth-child(9) {
         font-size: 12px;
@@ -1173,7 +1154,6 @@
         display: flex;
         flex-direction: column;
     }
-
     .evaluate-rating__mobile .rating-left__text {
         font-weight: 500;
         font-size: 10px;

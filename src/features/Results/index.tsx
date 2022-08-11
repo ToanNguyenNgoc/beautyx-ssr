@@ -28,6 +28,7 @@ import { LoadingOrgs } from '../../components/LoadingSketion';
 import { AppContext } from '../../context/AppProvider';
 import Map from '../../components/Map';
 import { useLocation } from 'react-router-dom';
+import EmptyRes from '../EmptyRes';
 
 function Result() {
     const IS_MB = useFullScreen();
@@ -89,6 +90,7 @@ function Result() {
             }))
         }
     }
+    console.log(orgs);
     return (
         <>
             <HeadTitle title={`Kết quả tìm kiếm cho : ${titleHeader}`} />
@@ -110,6 +112,7 @@ function Result() {
                     </div>
                     <div className="result-cont__right">
                         {(status === STATUS.LOADING && page === 1) && <LoadingOrgs />}
+                        {(status === STATUS.SUCCESS && orgs.length === 0)&&<EmptyRes title={'Không tìm được kết quả phù hợp cho "' + titleHeader + '"'} />}
                         <InfiniteScroll
                             dataLength={orgs.length}
                             hasMore={true}

@@ -11,7 +11,8 @@ class Comments {
             "filter[commentable_type]": "ORGANIZATION",
             "filter[commentable_id]": values.org_id,
             append: "media_url",
-            include: "rate|children|children.media",
+            // include: "rate|children|children.media",
+            include: "rate|user|children",
             sort: "-created_at",
         };
         return axiosClient.get(url, { params });
@@ -38,7 +39,8 @@ class Comments {
             "filter[commentable_id]": values.id,
             "filter[organization_id]": values.org_id,
             append: "media_url",
-            include: "rate|children|children.media",
+            // include: "rate|children|children.media",
+            include: "rate|children|user",
             sort: "-created_at",
         };
         return axiosClient.get(url, { params });

@@ -165,7 +165,7 @@ export default function ServiceDetailRight(props: IProps) {
                                 size="small"
                                 readOnly
                                 name="simple-controlled"
-                                value={service.rating}
+                                value={(service.rating === 5) ? 5 : 4+(service.rating/10)}
                             />
 
                             {COMMENTS.totalItem > 0 ? (

@@ -16,14 +16,14 @@ export default function TotalStartEvaluate(props: IProps) {
             <div className="evaluate-rating">
                 <div className="evaluate-rating__left">
                     <div className="evaluate-rating__total">
-                        <span>{item.rating > 0 ? item.rating : 0}/</span>
+                        <span>{item.rating > 0 ? ((item.rating === 5) ? 5 : 4+(item.rating/10)) : 0}/</span>
                         <span>5</span>
                     </div>
                     <div className="evaluate-rating__start">
                         <Rating
                             readOnly
                             name="simple-controlled"
-                            value={item.rating}
+                            value={(item.rating === 5) ? 5 : 4+(item.rating/10)}
                             // onChange={(event, newValue) => {
                             //     setValue(item.rating);
                             // }}

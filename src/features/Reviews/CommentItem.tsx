@@ -184,6 +184,10 @@ export default function CommentItem(props: IProps) {
                             <img
                                 onClick={() => setOpen(true)}
                                 src={body.image_url}
+                                onError={(e)=>{
+                                    e.currentTarget.style.display = 'none';
+                                    if(e.currentTarget?.parentElement){e.currentTarget.parentElement.style.display= 'none'}
+                                }}
                                 alt=""
                             />
                         </div>

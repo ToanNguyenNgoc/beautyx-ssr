@@ -297,15 +297,15 @@ function DiscountDetail() {
                                                     {detail?.description
                                                         ? detail?.description
                                                         : t(
-                                                              "detail_item.updating"
-                                                          )}
+                                                            "detail_item.updating"
+                                                        )}
                                                 </p>
                                                 {detail?.description &&
-                                                (is_mobile === true
-                                                    ? detail?.description
-                                                          .length > 300
-                                                    : detail?.description
-                                                          .length > 500) ? (
+                                                    (is_mobile === true
+                                                        ? detail?.description
+                                                            .length > 100
+                                                        : detail?.description
+                                                            .length > 300) ? (
                                                     <div
                                                         onClick={() =>
                                                             handleSeemoreText()
@@ -337,7 +337,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -376,22 +376,22 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                {t(
+                                                                    "detail_item.merchant"
+                                                                )}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={ORG?.org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={ORG?.org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={ORG?.org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>

@@ -31,7 +31,7 @@ import imgDefault from "../assets/image/imgDefault.png";
 
 import hairSalon from "../assets/image/tags/hairSalon.svg";
 import massage from "../assets/image/tags/message.svg";
-import eyelash_extensions from "../assets/image/tags/eyelash_extensions.jpg"
+import eyelash_extensions from "../assets/image/tags/eyelash_extensions.jpg";
 import nails from "../assets/image/tags/nails.svg";
 import nhaKhoa from "../assets/image/tags/nhaKhoa.svg";
 import skinCare from "../assets/image/tags/skinCare.svg";
@@ -104,7 +104,7 @@ const img = {
     imgDefault,
     sellerCenterImg,
     beautyx,
-    bannerBlur
+    bannerBlur,
 };
 export const social = {
     facebook,
@@ -135,7 +135,7 @@ export const imgTag = {
     skinCare,
     spa,
     yoga,
-    clinic
+    clinic,
 };
 export const dealHot = {
     dealhot1,

@@ -10,6 +10,7 @@ import { fetchProductsByFilter } from "../../../redux/search/searchResultSlice";
 import { STATUS } from "../../../redux/status";
 import { LoadingServices } from "../../../components/LoadingSketion";
 import LoadingMore from "../../../components/LoadingMore";
+import EmptyRes from "../../EmptyRes";
 
 function TabProduct(props: any) {
     const { keyword } = props;
@@ -33,6 +34,7 @@ function TabProduct(props: any) {
     return (
         <div>
             {page === 1 && status !== STATUS.SUCCESS && <LoadingServices />}
+            {(status === STATUS.SUCCESS && products.length === 0)&&<EmptyRes title={'Không tìm được kết quả phù hợp!'} />}
             <InfiniteScroll
                 dataLength={products.length}
                 hasMore={true}

@@ -40,7 +40,10 @@ function OrgInformation(props: IProps) {
         <div className="org-information" ref={refMap}>
             <div className="org-information__map-cnt">
                 <div className="map-cnt">
-                    <WrapperMap />
+                    <WrapperMap
+                        lat={org.latitude}
+                        long={org.longitude}
+                    />
                 </div>
                 <div className="map-org__seemore">
                     <p
@@ -226,9 +229,12 @@ function OrgInformation(props: IProps) {
             <div className="org-information__branches">
                 <div className="title">{t("Mer_de.about")}</div>
                 <div className="org-information__about">
-                    Thành lập năm 2018, {org?.name} là thương hiệu uy tín hàng
+                    {
+                        org.description ||
+                        (`Thành lập năm 2018, ${org?.name} là thương hiệu uy tín hàng
                     đầu trong ngành công nghệ spa, với thiết bị máy móc hiện đại
-                    đội ngũ nhân sự có tay nghề được đào tạo bài bản
+                    đội ngũ nhân sự có tay nghề được đào tạo bài bản`)
+                    }
                 </div>
             </div>
             <div className="org-information__branches">
