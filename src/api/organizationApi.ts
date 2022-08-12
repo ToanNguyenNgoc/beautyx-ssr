@@ -24,7 +24,7 @@ class Organization {
       "filter[tags]": values.tags,
       "filter[min_price]": values.min_price,
       "filter[max_price]": values.max_price,
-      "filter[location]": values.sort === "distance" ? LOCATION : null,
+      "filter[location]": values.LatLng ? values.LatLng : (values.sort === "distance" ? LOCATION : null),
       "filter[province_code]": values.province_code,
       "filter[district_code]": values.district_code,
       "sort": values.sort !== "distance" ? values.sort : null,

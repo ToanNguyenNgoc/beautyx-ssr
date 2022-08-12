@@ -1,82 +1,108 @@
-import { StandaloneSearchBox } from '@react-google-maps/api';
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import icon from '../../constants/icon';
-import { fetchAsyncOrgsByFilter, onSetOrgsEmpty } from '../../redux/filter/filterSlice';
+
+import React, { useState, useCallback } from "react";
+import usePlacesAutocomplete, {
+    getGeocode,
+    getLatLng,
+} from "use-places-autocomplete";
+import orgApi from "../../api/organizationApi";
+import { IOrganization } from "../../interface/organization";
+import icon from "../../constants/icon";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
-import { IOrganization } from '../../interface/organization';
-import orgApi from '../../api/organizationApi';
+import { useDispatch } from "react-redux";
+import {
+    fetchOrgsMapFilter, onSetOrgsMapEmpty, onSetOrgCenter
+} from '../../redux/org/orgMapSlice';
+import { fetchAsyncOrg } from "../../redux/org/orgSlice";
+import { Switch } from "@mui/material";
 
-function MapOrgFilter() {
-    const [orgsFilter, setOrgsFilter] = useState<IOrganization[]>([])
-    // const dispatch = useDispatch();
-    // const location = useLocation()
-    const callOrgsByFilter = async (keyword: string) => {
+const PlaceComponent = (props: any) => {
+    const { map, setZoom, setOpenDetail, openDetail } = props;
+    const dispatch = useDispatch();
+    const [orgs, setOrgs] = useState<IOrganization[]>([]);
+
+    const callOrgsByKeyword = async (keyword: string) => {
         try {
             const res = await orgApi.getAll({
                 page: 1,
                 limit: 5,
-                distance: "distance",
-                keyword: keyword
+                keyword: keyword,
+                sort: "distance"
             })
-            setOrgsFilter(res.data.context.data);
+            setOrgs(res.data.context.data)
         } catch (error) {
 
         }
-        // dispatch(onSetOrgsEmpty())
-        // dispatch(fetchAsyncOrgsByFilter({
-        //     page: 1,
-        //     sort: "distance",
-        //     path_url: location.pathname,
-        //     keyword: keyword
-        // }))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debounceDropDown = useCallback(
         debounce((nextValue) => {
-            callOrgsByFilter(nextValue);
+            callOrgsByKeyword(nextValue);
         }, 1000),
         []
     );
-
-    const onChangeSearchBox = (e: any) => {
-        const keyword = e.target.value;
-        debounceDropDown(keyword)
+    const {
+        ready,
+        value,
+        setValue,
+        suggestions: { status, data },
+        clearSuggestions,
+    } = usePlacesAutocomplete();
+    // console.log(data)
+    const handleSelect = (description: any) => {
+        setValue(description.description, false);
+        setOpenDetail({
+            ...openDetail,
+            open: false,
+            check: false,
+        })
+        setOrgs([]);
+        setZoom(14)
+        clearSuggestions();
+        getGeocode({ address: description.description }).then((results) => {
+            const { lat, lng } = getLatLng(results[0]);
+            const geo = `${lat},${lng}`;
+            map?.panTo({ lat: lat, lng: lng })
+            dispatch(onSetOrgsMapEmpty())
+            dispatch(fetchOrgsMapFilter({
+                page: 1,
+                LatLng: geo
+            }))
+        });
     }
-    console.log()
-
+    const onInputChange = (e: any) => {
+        setValue(e.target.value)
+        debounceDropDown(e.target.value)
+    }
+    const onClickOrgItemClick = (org: IOrganization) => {
+        setZoom(16)
+        setOpenDetail({
+            open: true,
+            check: true,
+        });
+        dispatch(fetchAsyncOrg(org.subdomain));
+        setValue(org.name, false)
+        map?.panTo({ lat: org.latitude, lng: org.longitude })
+        setOrgs([])
+        dispatch(onSetOrgCenter(org))
+        clearSuggestions();
+    }
     return (
-        <StandaloneSearchBox
-        >
-            <div className="map-filter-cnt">
+        <>
+            <div className="flex-row-sp map-filter-cnt">
                 <div className="map-filter-cnt__left">
                     <div className="map-filter-cnt__input">
                         <input
                             type="text"
                             placeholder="Tìm kiếm trên bản đồ"
-                            onChange={onChangeSearchBox}
-                            style={{
-                                boxSizing: `border-box`,
-                                border: `1px solid transparent`,
-                                height: `32px`,
-                                padding: `0 12px`,
-                                paddingRight: "32px",
-                                borderRadius: `3px`,
-                                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                                fontSize: `14px`,
-                                outline: `none`,
-                                textOverflow: `ellipses`,
-                                // position: "absolute",
-                                // left: 0,
-                                // zIndex: 100
-                                // left: "50%",
-                                // marginLeft: "-120px"
-                            }}
+                            value={value}
+                            onChange={onInputChange}
+                            disabled={!ready}
                         />
                         <div className="map-filter-cnt__input-btn">
-                            <button>
+                            <button
+                                onClick={() => setValue("")}
+                            >
                                 <img src={icon.closeBlack} alt="" />
                             </button>
                         </div>
@@ -84,8 +110,30 @@ function MapOrgFilter() {
                     <div className="map-filter-cnt__drop">
                         <ul className="map-filter-list-org">
                             {
-                                orgsFilter.map((i: IOrganization, index: number) => (
-                                    <li key={index} className="map-list-org__item">
+                                status === "OK" &&
+                                data.map((suggestion) => {
+                                    const {
+                                        place_id,
+                                        structured_formatting: { main_text, secondary_text },
+                                    } = suggestion;
+                                    return (
+                                        <li
+                                            className="map-list-org__item"
+                                            key={place_id} onClick={() => handleSelect(suggestion)}
+                                        >
+                                            <strong>{main_text}</strong> <small>{secondary_text}</small>
+                                        </li>
+                                    );
+                                })
+                            }
+                            {
+                                (orgs.length > 0 && value.length > 0) &&
+                                orgs.map((i: IOrganization, index: number) => (
+                                    <li
+                                        onClick={() => onClickOrgItemClick(i)}
+                                        className="map-list-org__item"
+                                        key={index}
+                                    >
                                         {i.name}
                                     </li>
                                 ))
@@ -93,9 +141,15 @@ function MapOrgFilter() {
                         </ul>
                     </div>
                 </div>
+                <div className="map-filter-cnt__right">
+                    <div className="flex-row map-filter-cnt__right-switch">
+                    <Switch defaultChecked size="small" />
+                        Cập nhật khi di chuyển bản đồ
+                    </div>
+                </div>
             </div>
-        </StandaloneSearchBox>
+        </>
     );
-}
+};
 
-export default MapOrgFilter;
+export default PlaceComponent;

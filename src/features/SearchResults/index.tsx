@@ -81,7 +81,7 @@ function SearchResults(props: any) {
         // history.push(`/lich-hen?tab=${newValue}`);
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${searchKey}?tab=${newValue}`,
+            search: `?keyword=${encodeURIComponent(searchKey)}?tab=${newValue}`,
         });
     };
     const callOrgsByKeyword = () => {

@@ -21,7 +21,7 @@ function SectionNull(props: any) {
         dispatch(onToggleSearchCnt(false));
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${title}`,
+            search: `?keyword=${encodeURIComponent(title)}`,
         });
     };
     let showNull = false;

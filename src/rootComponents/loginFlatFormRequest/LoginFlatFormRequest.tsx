@@ -144,16 +144,6 @@ function LoginFlatFormRequest(props: any) {
                 onClick={handleLogin}
                 loading={load}
             />
-            <ButtonLoading
-                title="show Toast"
-                onClick={()=>momoApi.showToast('lolo','success')}
-                loading={false}
-            />
-            <ButtonLoading
-                title="get location"
-                onClick={()=>momoApi.getLocation()}
-                loading={false}
-            />
         </div>
     );
 }
