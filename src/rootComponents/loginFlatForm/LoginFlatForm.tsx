@@ -35,7 +35,7 @@ function LoginFlatForm(props: any) {
                     },
                 ]
             }, async ({ data, status }: any) => {
-                alert(JSON.stringify(data)+JSON.stringify(status))
+                // alert(JSON.stringify(data)+JSON.stringify(status))
                 const dataOb: IUserConsentsData = {
                     email: data?.email,
                     name: data?.name,
@@ -72,7 +72,7 @@ function LoginFlatForm(props: any) {
                 ],
             },
             async ({ data, status }: any) => {
-                alert(JSON.stringify(data)+JSON.stringify(status))
+                // alert(JSON.stringify(data)+JSON.stringify(status))
                 if (data.phone) {
                     await dispatch(loginAsyncMomo(data));
                     await dispatch(fetchAsyncUser());
