@@ -9,7 +9,7 @@ import {
 } from "../../redux/loginFlatForm/loginFlatFrom";
 import { pickBy, identity } from "lodash";
 import MOMO from '../../api/_momoImport';
-import { IUserConsentsData } from "../../api/momoApi";
+import momoApi, { IUserConsentsData } from "../../api/momoApi";
 // import momoAuthApi from '../../api/_momoAuthApi';
 // import { AnyAaaaRecord } from 'dns';
 
@@ -20,7 +20,7 @@ function LoginFlatForm(props: any) {
     const onLoginFlatFormMomo = async () => {
         try {
             alert('onLoginFlatFormMomo')
-            
+            momoApi.initApp();
             MOMO.showLoading([""]);
             MOMO.getUserConsents({
                 "permissions": [
