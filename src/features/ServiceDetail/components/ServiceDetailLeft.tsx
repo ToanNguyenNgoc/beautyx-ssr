@@ -108,8 +108,9 @@ export default function ServiceDetailLeft(props: any) {
                         {service?.video && (
                             <div className="detail-left__img-item detail-left__img-item-vd">
                                 <video
+                                    webkit-playsinline="webkit-playsinline"
                                     className="detail-left__img-bg"
-                                    autoPlay={true}
+                                    autoPlay={false}
                                     loop
                                     muted
                                 >
@@ -117,9 +118,10 @@ export default function ServiceDetailLeft(props: any) {
                                 </video>
                                 <video
                                     webkit-playsinline="webkit-playsinline"
+                                    playsInline
                                     className="detail-left__img-item-video"
                                     controls
-                                    autoPlay={true}
+                                    autoPlay={false}
                                     loop
                                     muted
                                 >
