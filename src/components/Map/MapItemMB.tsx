@@ -7,11 +7,12 @@ import onErrorImg from "../../utils/errorImg";
 import { formatDistance } from "../../utils/format";
 
 interface IProps{
-    item: IOrganization
+    item: IOrganization,
+    handleDirection?:() => void
 }
 
 export default function MapTagsItemMB(props: IProps) {
-    const { item } = props;
+    const { item, handleDirection } = props;
     const history = useHistory();
     const gotoDetail = () => {
         history.push({
@@ -20,6 +21,10 @@ export default function MapTagsItemMB(props: IProps) {
             state: item,
         });
     };
+    const onRouteDirection = (e:any) =>{
+        e.stopPropagation()
+        handleDirection&&handleDirection()
+    }
     return (
         <div onClick={gotoDetail} className="map-item__wrap">
             <div className="map-item__mobile">
@@ -69,6 +74,12 @@ export default function MapTagsItemMB(props: IProps) {
                             </div>
                         )}
                     </div>
+                    <button
+                        onClick={(e)=>onRouteDirection(e)}
+                        className="item-content__btn-direction"
+                    >
+                        Đường đi
+                    </button>
                 </div>
             </div>
         </div>

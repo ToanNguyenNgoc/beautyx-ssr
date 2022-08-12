@@ -197,6 +197,8 @@ import filterBlack from "../assets/icon/filterBlack.svg";
 import closeBlack from "../assets/icon/closeBlack.svg";
 import locationCate from "../assets/icon/locationCate.png";
 import noApply from "../assets/icon/no-apply.svg";
+import directionRed from '../assets/icon/directionRed.svg';
+import archiveRed from '../assets/icon/archiveRed.svg'
 
 const icon = {
     noApply,
@@ -393,6 +395,8 @@ const icon = {
     filterBlack,
     closeBlack,
     locationCate,
-    pinMapRed
+    pinMapRed,
+    directionRed,
+    archiveRed
 };
 export default icon;

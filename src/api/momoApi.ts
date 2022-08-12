@@ -119,16 +119,16 @@ class MOMO_API {
     }
     getLocation = () => {
         MOMO.getLocation((data:any) => {
-            // alert(JSON.stringify([data]))
+            alert(JSON.stringify([data]))
             return {data:data}
         })
     };
     showToast = (description: string, type: IToastType) => {
-        // MOMO.showToast({
-        //     description: description,
-        //     type: type,
-        //     duration: 2000
-        // });
+        MOMO.showToast({
+            description: description,
+            type: type,
+            duration: 2000
+        });
     };
 }
 export const momoApi = new MOMO_API();

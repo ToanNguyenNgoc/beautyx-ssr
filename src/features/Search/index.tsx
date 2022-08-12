@@ -29,6 +29,7 @@ import {
     onSetEmptyProducts,
     onSetEmptyServices,
 } from "../../redux/search/searchResultSlice";
+import { URL } from "url";
 // end
 
 function Search() {
@@ -75,8 +76,9 @@ function Search() {
         []
     );
     const handleOnChangeInput = (e: any) => {
-        debounceDropDown(e.target.value);
-        dispatch(onSetKeyword(e.target.value));
+        var keyword = e.target.value;
+        debounceDropDown(keyword);
+        dispatch(onSetKeyword(keyword));
     };
     const onGotoFilterResult = () => {
         dispatch(onSetEmptyOrgs());
@@ -84,7 +86,7 @@ function Search() {
         dispatch(onSetEmptyProducts());
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${keyword}?tab=1`,
+            search: `?keyword=${encodeURIComponent(keyword)}?tab=1`,
             state: {
                 orgsTotal: ORGS.totalItem,
                 servicesTotal: SERVICES.totalItem,

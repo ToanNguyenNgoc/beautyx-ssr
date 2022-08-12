@@ -1,11 +1,12 @@
 import { Dialog } from "@mui/material";
-import { useState } from "react";
+// import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import MapContent from "./MapContent";
 import "./style.css";
 export default function Map(props: any) {
     const { open, setOpenMap, data } = props;
+    // console.log(data)
     const history = useHistory();
     function handleClose() {
         setOpenMap ? setOpenMap(false) : history.goBack();

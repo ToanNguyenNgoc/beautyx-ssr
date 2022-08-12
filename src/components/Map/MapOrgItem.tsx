@@ -5,23 +5,26 @@ import { IOrganization } from "../../interface/organization";
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
-import { formatDistance } from "../../utils/format";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import _, { debounce } from "lodash";
+
 interface IProps {
     item: IOrganization;
     handleSetLocation: any;
     location: any;
     setOpenDetail: any;
     openDetail: any;
-    map:any,
-    setLocal:any,
-    setZoom:any
+    map: any,
+    setLocal: any,
+    setZoom: any,
 }
 export default function MapTagsOrgItem(props: IProps) {
-    const { item,location, setOpenDetail, openDetail, map, setZoom} =
+    const { item, location, setOpenDetail, openDetail, map, setZoom } =
         props;
     const dispatch = useDispatch();
+
     const onHoveItem = () => {
-        map?.panTo({ lat: item.latitude, lng: item.longitude })
+        // map?.panTo({ lat: item.latitude, lng: item.longitude })
         dispatch(onSetOrgCenter(item))
     };
     const gotoDetail = () => {
@@ -32,6 +35,7 @@ export default function MapTagsOrgItem(props: IProps) {
             check: true,
         });
         dispatch(fetchAsyncOrg(item.subdomain));
+        map?.panTo({ lat: item.latitude, lng: item.longitude })
     };
     return (
         <div
@@ -81,7 +85,7 @@ export default function MapTagsOrgItem(props: IProps) {
                         </p>
                     </div>
                 </div>
-                {item.distance && (
+                {/* {item.distance && (
                     <div className="flex-row map-item__distance">
                         <img
                             className="map-item__distance-icon"
@@ -90,7 +94,7 @@ export default function MapTagsOrgItem(props: IProps) {
                         />
                         {formatDistance(item.distance)}
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );

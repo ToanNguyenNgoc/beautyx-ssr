@@ -53,7 +53,7 @@ function SectionEmpty() {
         dispatch(onSetEmptyProducts())
         history.push({
             pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${keyword}`,
+            search: `?keyword=${encodeURIComponent(keyword)}`,
         });
     };
 

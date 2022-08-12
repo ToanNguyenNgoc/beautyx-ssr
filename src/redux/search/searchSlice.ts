@@ -8,6 +8,10 @@ const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
 export const fetchOrgsBySearch: any = createAsyncThunk(
     "SEARCH/fetchOrgsBySearch",
     async (values: any) => {
+        values = {
+            ...values,
+            keyword: encodeURIComponent(values.keyword)
+        }
         const res = await orgApi.getAll(values);
         return {
             orgs: res.data.context.data,
@@ -19,6 +23,10 @@ export const fetchOrgsBySearch: any = createAsyncThunk(
 export const fetchProductsBySearch: any = createAsyncThunk(
     "SEARCH/fetchProductsBySearch",
     async (values: any) => {
+        values = {
+            ...values,
+            keyword: encodeURIComponent(values.keyword)
+        }
         const res = await productsApi.getProductsAll(values);
         return {
             products: res.data.data.hits,
@@ -30,6 +38,10 @@ export const fetchProductsBySearch: any = createAsyncThunk(
 export const fetchServicesBySearch: any = createAsyncThunk(
     "SEARCH/fetchServicesBySearch",
     async (values: any) => {
+        values = {
+            ...values,
+            keyword: encodeURIComponent(values.keyword)
+        }
         const res = await servicePromoApi.getServicesPromo(values);
         return {
             services: res.data.data.hits,

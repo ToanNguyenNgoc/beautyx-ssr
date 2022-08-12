@@ -6,6 +6,7 @@
         "@emotion/react": "^11.10.0",
         "@emotion/styled": "^11.10.0",
         "@googlemaps/react-wrapper": "^1.1.35",
+        "@momo-miniapp/api": "^0.1.4-beta.14",
         "@mui/lab": "^5.0.0-alpha.94",
         "@mui/material": "^5.10.0",
         "@mui/styles": "^5.9.3",
@@ -61,6 +62,7 @@
         "slick-carousel": "^1.8.1",
         "styled-components": "^5.3.5",
         "typescript": "^4.7.4",
+        "use-places-autocomplete": "^4.0.0",
         "usehooks-ts": "^1.2.0",
         "web-vitals": "^1.1.2",
         "yup": "^0.32.11"

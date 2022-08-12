@@ -4,20 +4,23 @@ import { useLocation } from "react-router-dom";
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import MapTagsOrgItem from "./MapOrgItem";
-import { fetchAsyncOrgsByFilter } from "../../redux/filter/filterSlice";
+// import { fetchAsyncOrgsByFilter } from "../../redux/filter/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Slider from "react-slick";
 import MapTagsItemMB from "./MapItemMB";
 import { IOrganization } from "../../interface/organization";
 import MapOrgItemDetail from "./MapOrgItemDetail";
-import { GoogleMap, Marker, useLoadScript, InfoWindow } from "@react-google-maps/api";
+import {
+    GoogleMap, Marker, useLoadScript, InfoWindow, DirectionsRenderer
+} from "@react-google-maps/api";
 import MapOrgFilter from "./MapOrgFilter";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
-import {  onSetOrgCenter } from "../../redux/org/orgMapSlice";
+import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
+import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 
 
 interface IProps {
@@ -27,16 +30,17 @@ declare type Libraries = ("drawing" | "geometry" | "localContext" | "places" | "
 const lib: Libraries = ["places"]
 
 
-const  MapContent = (props: IProps) => {
+const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
+    const { orgs } = props;
+    // console.log(orgs)
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-    const {orgCenter} = useSelector((state:any) => state.ORGS_MAP)
+    const { orgCenter } = useSelector((state: any) => state.ORGS_MAP)
     const [zoom, setZoom] = useState<number>(16);
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
     const dispatch = useDispatch();
-    const { orgs } = props;
     const [map, setMap] = useState<any>()
     const slideRef = useRef<any>();
     const [openDetail, setOpenDetail] = useState({
@@ -50,7 +54,7 @@ const  MapContent = (props: IProps) => {
 
     const refListOrg: any = useRef();
     const [openListOrg, setOpenListOrg] = useState(true);
-    const { page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
+    // const { page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
     const handleToggleListOrg = () => {
         refListOrg.current.classList.toggle("list-org__active");
         setOpenListOrg(!openListOrg);
@@ -88,7 +92,7 @@ const  MapContent = (props: IProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-
+    const {totalItem, page} = useSelector((state:any) => state.ORGS_MAP.orgsMap)
     const onViewMoreOrgs = () => {
         if (
             location.pathname === "/ban-do" &&
@@ -96,7 +100,7 @@ const  MapContent = (props: IProps) => {
             orgs.length < totalItem
         ) {
             dispatch(
-                fetchAsyncOrgsByFilter({
+                fetchOrgsMapFilter({
                     page: page + 1,
                     sort: "distance",
                     path_url: location.pathname,
@@ -123,7 +127,7 @@ const  MapContent = (props: IProps) => {
         className: "center",
         centerMode: true,
         afterChange: function (index: any) {
-            onPanTo(orgs[index].latitude, orgs[index].longitude)
+            onPanTo(orgs[index]?.latitude, orgs[index]?.longitude)
             dispatch(onSetOrgCenter(orgs[index]))
         },
     };
@@ -168,11 +172,39 @@ const  MapContent = (props: IProps) => {
     const onCenterChanged = () => {
         debounceDropDown(map?.getCenter().toJSON())
     }
-    
+
+    const [directionsResponse, setDirectionsResponse] = useState<any>()
+    // const [step, setStep] = useState<any>()
+    const handleDirection = async () => {
+        if (orgCenter && LOCATION) {
+            setOpenListOrg(false)
+            const directionsService = new google.maps.DirectionsService()
+            const results = await directionsService.route({
+                // origin: originRef.current.value,
+                origin: {
+                    lat: parseFloat(LOCATION.split(",")[0]),
+                    lng: parseFloat(LOCATION.split(",")[1])
+                },
+                // destination: orgCenter.full_address,
+                destination: { lat: orgCenter.latitude, lng: orgCenter.longitude },
+                // eslint-disable-next-line no-undef
+                travelMode: google.maps.TravelMode.DRIVING,
+            })
+            setDirectionsResponse(results)
+            // setStep(results?.routes[0]?.legs[0]?.steps)
+        }
+    }
+
 
     return (
         <div className="map-content">
             {/* map */}
+            <MapOrgFilter
+                map={map}
+                setZoom={setZoom}
+                openDetail={openDetail}
+                setOpenDetail={setOpenDetail}
+            />
             {
                 isLoaded &&
                 <GoogleMap
@@ -182,15 +214,14 @@ const  MapContent = (props: IProps) => {
                     zoom={zoom}
                     onLoad={map => setMap(map)}
                     center={{
-                        lat:  local.lat,
+                        lat: local.lat,
                         lng: local.long,
                     }}
                 >
-                    <MapOrgFilter />
                     {LOCATION && (
                         <Marker
-                            position={{ 
-                                lat: parseFloat(LOCATION?.split(",")[0]), 
+                            position={{
+                                lat: parseFloat(LOCATION?.split(",")[0]),
                                 lng: parseFloat(LOCATION?.split(",")[1])
                             }}
                         >
@@ -200,27 +231,28 @@ const  MapContent = (props: IProps) => {
                         <Marker
                             onClick={() => onMarkerClick(item, index)}
                             key={index}
-                            icon={{url:icon.pinMap}}
+                            icon={{ url: icon.pinMap }}
                             position={{ lat: item?.latitude, lng: item?.longitude }}
                         >
                         </Marker>
                     ))}
-                        {
-                            orgCenter &&
-                            <InfoWindow
-                                position={{ lat: orgCenter?.latitude, lng: orgCenter?.longitude }}
-                            >
-                                <img
-                                    className="map-org-img-marker"
-                                    src={orgCenter.image_url} alt=""
-                                />
-                            </InfoWindow>
-                        }
-                    </GoogleMap>
+                    {
+                        orgCenter &&
+                        <InfoWindow
+                            position={{ lat: orgCenter?.latitude, lng: orgCenter?.longitude }}
+                        >
+                            <img
+                                className="map-org-img-marker"
+                                src={orgCenter.image_url} alt=""
+                            />
+                        </InfoWindow>
+                    }
+                    {
+                        directionsResponse &&
+                        <DirectionsRenderer directions={directionsResponse} />
+                    }
+                </GoogleMap>
             }
-            {/* close map */}
-
-            {/* list map desktop */}
             <div
                 className={
                     openListOrg === true
@@ -230,7 +262,6 @@ const  MapContent = (props: IProps) => {
                 ref={refListOrg}
             >
                 <div className="dialog-wrap__list">
-                    {/* org list  */}
                     <div id="scrollableDiv" className="dialog-map__list">
                         <InfiniteScroll
                             hasMore={true}
@@ -254,17 +285,14 @@ const  MapContent = (props: IProps) => {
                             ))}
                         </InfiniteScroll>
                     </div>
-                    {/* close org list */}
-
-                    {/* org detail */}
                     {openDetail.open === true ? (
                         <MapOrgItemDetail
                             org={org}
                             setOpenDetail={setOpenDetail}
                             openDetail={openDetail}
+                            handleDirection={handleDirection}
                         />
                     ) : null}
-                    {/* btn toggle open close list map org */}
                     <div
                         onClick={() => {
                             handleToggleListOrg();
@@ -280,21 +308,21 @@ const  MapContent = (props: IProps) => {
                             alt=""
                         />
                     </div>
-                    {/* close toggle open close list map org */}
                 </div>
-                {/* close org detail */}
             </div>
-            {/* close list map desktop */}
-
-            {/* list map mobile */}
-            <div className="map-list__mobile">
-                <Slider ref={slideRef} {...settings}>
-                    {orgs.map((item: any, index: number) => (
-                        <MapTagsItemMB key={index} item={item} />
-                    ))}
-                </Slider>
-            </div>
-            {/* close list map mobile */}
+            {
+                IS_MB &&
+                <div className="map-list__mobile">
+                    <Slider ref={slideRef} {...settings}>
+                        {orgs.length > 0 && orgs.map((item: any, index: number) => (
+                            <MapTagsItemMB 
+                            handleDirection={handleDirection} 
+                            key={index} item={item} 
+                            />
+                        ))}
+                    </Slider>
+                </div>
+            }
         </div>
     );
 }
