@@ -165,7 +165,7 @@
 }
 
 .book-time-cnt {
- width: 60vw;
+    width: 60vw;
     background-color: var(--bgWhite);
     padding: 24px;
 }
@@ -223,10 +223,15 @@
     left: 16px;
     top: unset;
     height: unset;
-    width: 33.33%;
-    margin-left: calc(-33.33% - 16px);
+    width: 30%;
+    position: absolute;
+    margin-left: calc(-30% - 16px);
+    transition: all 0.1s;
 }
-
+.booking-cnt .map-cnt {
+    position: relative;
+    overflow: hidden;
+}
 .booking-cnt .map-item__img {
     width: 80px;
     height: 80px;
@@ -337,16 +342,16 @@
     color: var(--orange);
 }
 
-.booking-cnt__right-time .book-seats-amount{
+.booking-cnt__right-time .book-seats-amount {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
-.seats_amount-cnt{
+.seats_amount-cnt {
     display: flex;
     justify-content: space-evenly;
 }
-.seats_amount-cnt .amount{
+.seats_amount-cnt .amount {
     /* font-family: 'Nunito';
     font-size: 14px; */
     padding: 3px 0;
@@ -354,7 +359,7 @@
     text-align: center;
 }
 .seats_amount-cnt .asc,
-.seats_amount-cnt .desc{
+.seats_amount-cnt .desc {
     border: none;
     line-height: 1;
     padding: 3px 10px;
@@ -363,12 +368,12 @@
     color: var(--white);
     cursor: pointer;
 }
-.seats_amount-cnt .asc{
+.seats_amount-cnt .asc {
     background-color: var(--purple);
     color: var(--white);
     /* margin-right: 10px; */
 }
-.seats_amount-cnt .desc{
+.seats_amount-cnt .desc {
     background-color: var(--bg-gray);
     color: var(--purple);
 }
