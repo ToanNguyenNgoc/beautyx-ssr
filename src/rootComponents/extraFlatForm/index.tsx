@@ -12,6 +12,7 @@ function ExtraFlatForm() {
     const params = extraParamsUrl();
 
     const flatForm = location.pathname.slice(1, params ? location.pathname.length - 1 : location.pathname.length);
+    console.log(flatForm)
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     if (!FLAT_FORM) {
         switch (flatForm) {
