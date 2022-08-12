@@ -52,6 +52,7 @@
 }
 
 .map .dialog-map__list {
+    padding-top: 48px;
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -85,8 +86,8 @@
 .map .dialog-map__detail {
     margin-left: 16px;
     pointer-events: fill;
-    width: 25%;
-    max-height: calc(100vh - 64px);
+    width: 22%;
+    max-height: 84vh;
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border-radius: 16px;
@@ -186,7 +187,7 @@
     margin-top: 16px;
     display: flex;
     grid-gap: 0 16px;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn {
@@ -199,11 +200,11 @@
     padding: 12px;
     background-color: #fadfdf;
     border-radius: 100%;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 .map .content-info .content-info__wrapbtn .content-info__btn button:hover {
-    transition: all .3s;
+    transition: all 0.3s;
     opacity: 0.7;
 }
 
@@ -259,7 +260,6 @@
     height: 100%;
     object-fit: cover;
 }
-
 
 /* .dialog-map__org .map-item__content {
     padding: 16px;
@@ -526,7 +526,6 @@
     width: 100%;
 }
 
-
 /* map filter container */
 
 .map-filter-cnt {
@@ -535,13 +534,14 @@
     top: 0;
     left: 0;
     right: 0;
-    /* height: 100px; */
-    /* background-color: burlywood; */
+    display: flex;
+    align-items: center;
+    grid-gap: 0 20px;
     padding: 8px;
 }
 
 .map-filter-cnt__left {
-    width: 25%;
+    width: 18.9%;
     position: relative;
 }
 
@@ -560,7 +560,7 @@
     border-radius: 3px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
     outline: none;
-    text-overflow: ellipsis,
+    text-overflow: ellipsis;
 }
 
 .map-filter-cnt__input-btn {
@@ -585,7 +585,6 @@
     border-radius: 3px;
 }
 
-
 /* .map-filter-list-org{
     padding: 12px;
 } */
@@ -596,14 +595,14 @@
     font-size: 14px;
     line-height: 18px;
     font-weight: 500;
-    transition: all .3s;
+    transition: all 0.3s;
     padding: 2px 4px;
     border-radius: 3px;
 }
 
 .map-list-org__item:hover {
     background-color: var(--bg-gray);
-    transition: all .3s
+    transition: all 0.3s;
 }
 
 .map-filter-cnt__right {
@@ -622,7 +621,6 @@
     border-radius: 3px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
 }
-
 
 /* end map filter */
 
@@ -737,7 +735,7 @@
     font-size: 14px;
 }
 
-.map .content-img:hover>.content-seemore__img {
+.map .content-img:hover > .content-seemore__img {
     visibility: visible;
     opacity: 1;
     transition: all 0.3s;
