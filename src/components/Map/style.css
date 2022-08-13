@@ -32,7 +32,7 @@
     position: absolute;
     top: 11px;
     right: 60px;
-    z-index: 20000;
+    z-index: 10;
     background-color: var(--purple);
     border-radius: 100px;
     padding: 2px;
@@ -852,6 +852,28 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .map-filter-cnt {
+        align-items: unset;
+        flex-direction: column;
+        grid-gap: 8px 0;
+        z-index: 9;
+    }
+    .map-filter-cnt__left {
+        width: 60%;
+    }
+    .map-filter-cnt__input input {
+        font-size: 12px;
+    }
+    .map-filter-cnt__right {
+        padding-left: 0;
+        width: 60%;
+    }
+    .map-filter-cnt__right-switch {
+        font-size: 12px;
+        grid-gap: 0 6px;
+        padding: 4px 10px 4px 6px;
+        width: 100%;
+    }
     .open-map {
         padding: 6px 14px;
     }
