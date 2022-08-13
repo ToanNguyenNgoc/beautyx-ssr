@@ -809,6 +809,23 @@
     height: 100%;
     object-fit: contain;
 }
+.map .content-info__special {
+    border-bottom: 1px solid #ccc;
+    margin: 16px 0 0;
+}
+.map .special-title {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 0 16px;
+}
+.map .special-list {
+    padding: 16px;
+}
+.map .org-special-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
 
 @media only screen and (max-width: 1023px) {
     .open-map {

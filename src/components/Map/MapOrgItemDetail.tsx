@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Slider from "react-slick";
 import icon from "../../constants/icon";
 import { ICON } from "../../constants/icon2";
 import { AppContext } from "../../context/AppProvider";
@@ -14,12 +13,13 @@ import {
 } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
 import MapGalleries from "./MapGalleries";
+import MapSpecial from "./MapSpecial";
 
 interface IProps {
     org: any;
     openDetail: any;
     setOpenDetail: any;
-    handleDirection:()=>void,
+    handleDirection: () => void;
 }
 
 export default function MapOrgItemDetail(props: IProps) {
@@ -166,10 +166,19 @@ export default function MapOrgItemDetail(props: IProps) {
                             </div>
                             <div className="flex-column content-info__btn">
                                 <button onClick={handleFolower}>
-                                    <img src={org?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                                    <img
+                                        src={
+                                            org?.is_favorite
+                                                ? icon.heart
+                                                : icon.unHeart
+                                        }
+                                        alt=""
+                                    />
                                 </button>
                                 <span>
-                                    {org?.is_favorite ? "Đã thích":"Yêu thích"}
+                                    {org?.is_favorite
+                                        ? "Đã thích"
+                                        : "Yêu thích"}
                                 </span>
                             </div>
                             <div className="flex-column content-info__btn">
@@ -291,6 +300,10 @@ export default function MapOrgItemDetail(props: IProps) {
                         setOpen={setOpen}
                     />
                     {/* close galleries */}
+
+                    {/* discount */}
+                    <MapSpecial />
+                    {/* close discount */}
 
                     {/* rating */}
                     <div className="content-info__rating">
