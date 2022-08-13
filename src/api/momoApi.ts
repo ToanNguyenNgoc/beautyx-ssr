@@ -44,6 +44,12 @@ export interface IUserConsents {
 }
 // end
 class MOMO_API {
+    initApp = () => {
+        MOMO.init({
+            appId: process.env.MOMO_APP_ID,
+            parnerCode: process.env.MOMO_PARTNER_CODE
+        })
+    }
     requestUserConsents = () => {
         MOMO.showLoading([""]);
         MOMO.requestUserConsents({

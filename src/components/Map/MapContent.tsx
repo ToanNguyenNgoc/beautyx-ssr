@@ -21,6 +21,7 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 import _, { debounce } from "lodash";
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
+import MapCurrentUser from './MapCurrentUser'
 
 
 interface IProps {
@@ -194,6 +195,14 @@ const MapContent = (props: IProps) => {
             // setStep(results?.routes[0]?.legs[0]?.steps)
         }
     }
+    const handleBackCurrentUser = () => {
+        if (LOCATION) {
+            map?.panTo({
+                lat: parseFloat(LOCATION.split(",")[0]),
+                lng: parseFloat(LOCATION.split(",")[1])
+            })
+        }
+    }
 
 
     return (
@@ -204,6 +213,9 @@ const MapContent = (props: IProps) => {
                 setZoom={setZoom}
                 openDetail={openDetail}
                 setOpenDetail={setOpenDetail}
+            />
+            <MapCurrentUser
+                handleBackCurrentUser={handleBackCurrentUser}
             />
             {
                 isLoaded &&

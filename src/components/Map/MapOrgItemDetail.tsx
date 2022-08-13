@@ -19,7 +19,7 @@ interface IProps {
     org: any;
     openDetail: any;
     setOpenDetail: any;
-    handleDirection: () => void;
+    handleDirection?: () => void;
 }
 
 export default function MapOrgItemDetail(props: IProps) {
@@ -159,7 +159,13 @@ export default function MapOrgItemDetail(props: IProps) {
                         </div>
                         <div className="content-info__wrapbtn">
                             <div className="flex-column content-info__btn">
-                                <button onClick={handleDirection}>
+                                <button
+                                    onClick={() => {
+                                        if (handleDirection) {
+                                            handleDirection();
+                                        }
+                                    }}
+                                >
                                     <img src={icon.directionRed} alt="" />
                                 </button>
                                 <span>Đường đi</span>

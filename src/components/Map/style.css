@@ -30,7 +30,7 @@
 
 .map .dialog-map__close {
     position: absolute;
-    top: 14px;
+    top: 11px;
     right: 60px;
     z-index: 20000;
     background-color: var(--purple);
@@ -825,6 +825,30 @@
 .map .org-special-item {
     border: 1px solid #ccc;
     border-radius: 8px;
+}
+/* map :current user */
+.map-current-user {
+    position: fixed;
+    bottom: 186px;
+    right: 0;
+    z-index: 10;
+    margin: 0px 9px 0px 0px;
+}
+.map-current-user__btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: var(--bgWhite);
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+}
+.map-current-user__btn img {
+    width: 30px;
+    height: 30px;
+    margin-top: 6px;
 }
 
 @media only screen and (max-width: 1023px) {

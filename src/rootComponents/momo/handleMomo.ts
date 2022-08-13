@@ -3,11 +3,11 @@ import momoAuthApi from "../../api/_momoAuthApi";
 import { MOMO } from "../../api/_momoImport";
 import momoApi from "../../api/momoApi";
 
-export const handleGetUserInfoMomo = (props: any) => {
+export const handleGetUserInfoMomo = (props?: any) => {
     const { fetchAsyncUserAndinitApp, setLoad } = props;
     getUserConsents(fetchAsyncUserAndinitApp, setLoad);
 };
-export const getUserConsents = async (callBack: any, loading: any) => {
+export const getUserConsents = async (callBack?: any, loading?: any) => {
     try {
         alert('getUserConsents')
         momoApi.getLocation();
@@ -36,7 +36,7 @@ export const getUserConsents = async (callBack: any, loading: any) => {
             if (dataOb.phone) {
                 const res = await momoAuthApi.login(dataOb)
                 window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-                callBack()
+                callBack&&callBack()
             }
             else {
                 requestUserConsents(callBack,loading);
@@ -45,10 +45,10 @@ export const getUserConsents = async (callBack: any, loading: any) => {
         })
     } catch (err) {
         alert(JSON.stringify(err));
-        loading(false);
+        loading&&loading(false);
     }
 };
-export const requestUserConsents = (callBack: any, loading: any) => {
+export const requestUserConsents = (callBack?: any, loading?: any) => {
     alert('requestUserConsents')
     MOMO.showLoading([""]);
     MOMO.requestUserConsents({
@@ -73,7 +73,7 @@ export const requestUserConsents = (callBack: any, loading: any) => {
             let context = res.data.context;
             if(status === 200 && context && context.token){
                 window.sessionStorage.setItem("_WEB_TK", context.token)
-                callBack();
+                callBack&&callBack();
             }
         }
         else {
@@ -82,7 +82,7 @@ export const requestUserConsents = (callBack: any, loading: any) => {
                 type: "failure",
                 duration: 2000
             });
-            loading(false)
+            loading&&loading(false)
             MOMO.hideLoading()
         }
         return { data: data }
