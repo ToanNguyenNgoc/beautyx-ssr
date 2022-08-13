@@ -19,7 +19,7 @@ interface IProps {
     org: any;
     openDetail: any;
     setOpenDetail: any;
-    handleDirection:()=>void,
+    handleDirection?: () => void,
 }
 
 export default function MapOrgItemDetail(props: IProps) {
@@ -159,7 +159,11 @@ export default function MapOrgItemDetail(props: IProps) {
                         </div>
                         <div className="content-info__wrapbtn">
                             <div className="flex-column content-info__btn">
-                                <button onClick={handleDirection}>
+                                <button onClick={() => {
+                                    if (handleDirection) {
+                                        handleDirection()
+                                    }
+                                }}>
                                     <img src={icon.directionRed} alt="" />
                                 </button>
                                 <span>Đường đi</span>
@@ -169,7 +173,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                     <img src={org?.is_favorite ? icon.heart : icon.unHeart} alt="" />
                                 </button>
                                 <span>
-                                    {org?.is_favorite ? "Đã thích":"Yêu thích"}
+                                    {org?.is_favorite ? "Đã thích" : "Yêu thích"}
                                 </span>
                             </div>
                             <div className="flex-column content-info__btn">
@@ -207,7 +211,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                     {time_works_today?.status && (
                                         <>
                                             {time_works_today?.status ===
-                                            "on" ? (
+                                                "on" ? (
                                                 <p
                                                     style={{
                                                         color: "var(--green)",
@@ -250,8 +254,8 @@ export default function MapOrgItemDetail(props: IProps) {
                                                     style={
                                                         index + 2 === today
                                                             ? {
-                                                                  color: "var(--purple)",
-                                                              }
+                                                                color: "var(--purple)",
+                                                            }
                                                             : {}
                                                     }
                                                     key={index}
