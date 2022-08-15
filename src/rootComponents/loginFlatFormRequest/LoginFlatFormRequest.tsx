@@ -79,7 +79,7 @@ function LoginFlatFormRequest(props: any) {
     const handleLoginMomo = async () => {
         try {
             alert('handleLoginMomo');
-            handleGetUserInfoMomo({ fetchAsyncUserAndinitApp, setLoad });
+            // handleGetUserInfoMomo({ fetchAsyncUserAndinitApp, setLoad });
         } catch (err) {
             alert(JSON.stringify(err));
             setLoad(false);
