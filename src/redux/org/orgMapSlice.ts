@@ -3,7 +3,7 @@ import orgApi from '../../api/organizationApi';
 import { IOrganization } from '../../interface/organization';
 import { STATUS } from "../status";
 
-interface IInitialState {
+export interface IORGS_MAP {
     orgCenter: any,
     orgsMap: {
         orgs: IOrganization[],
@@ -11,10 +11,11 @@ interface IInitialState {
         totalItem: number,
         status: string
     },
-    locationCenter: any
+    locationCenter: any,
+    getValueCenter: boolean,
 }
 
-const initialState: IInitialState = {
+const initialState: IORGS_MAP = {
     orgCenter: null,
     orgsMap: {
         orgs: [],
@@ -22,7 +23,8 @@ const initialState: IInitialState = {
         totalItem: 1,
         status: ""
     },
-    locationCenter: null
+    locationCenter: null,
+    getValueCenter: false
 }
 export const fetchOrgsMapFilter: any = createAsyncThunk(
     "ORGS_MAP/fetchOrgsMapFilter",
@@ -57,6 +59,9 @@ const orgMapReducer = createSlice({
         onSetLocationCenter: (state, action) => {
             console.log(action.payload)
             state.locationCenter = action.payload
+        },
+        onSwitchValueCenter: (state, action) => {
+            state.getValueCenter = action.payload
         }
     },
     extraReducers: {
@@ -81,5 +86,10 @@ const orgMapReducer = createSlice({
     }
 })
 const { actions } = orgMapReducer;
-export const { onSetOrgCenter, onSetLocationCenter, onSetOrgsMapEmpty } = actions;
+export const {
+    onSetOrgCenter,
+    onSetLocationCenter,
+    onSetOrgsMapEmpty,
+    onSwitchValueCenter
+} = actions;
 export default orgMapReducer.reducer;

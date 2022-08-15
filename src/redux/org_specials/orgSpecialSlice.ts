@@ -1,7 +1,25 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import serviceApi from '../../api/serviceApi';
 import productsApi from '../../api/productApi';
-import { STATUS } from '../status'
+import { STATUS } from '../status';
+import { Service } from '../../interface/service';
+import { Product } from '../../interface/product'
+
+export interface IORG_SPECIALS {
+    org_id: null | number,
+    SERVICES_SPECIAL: {
+        services_special: Service[],
+        page: number,
+        totalItem: number,
+        status_ser: string
+    },
+    PRODUCTS_SPECIAL: {
+        products_special: Product[],
+        page: number,
+        totalItem: number,
+        status_pr: string
+    }
+}
 
 export const fetchAsyncServicesSpecial: any = createAsyncThunk(
     "ORG_SPECIALS/fetchAsyncServicesSpecial",
@@ -28,7 +46,7 @@ export const fetchProductsSpecial: any = createAsyncThunk(
     }
 )
 
-const initialState = {
+const initialState: IORG_SPECIALS = {
     org_id: null,
     SERVICES_SPECIAL: {
         services_special: [],

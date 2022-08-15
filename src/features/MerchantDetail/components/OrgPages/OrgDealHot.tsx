@@ -9,14 +9,15 @@ import OrgServiceItem from './OrgServiceItem';
 import OrgProductItem from './OrgProductItem';
 import EmptyRes from '../../../EmptyRes';
 import OrgVoucher from './OrgVoucher';
+import IStore from '../../../../interface/IStore';
 
 function OrgDealHot() {
-    const ORG = useSelector((state: any) => state.ORG);
-    const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
+    const ORG = useSelector((state: IStore) => state.ORG);
+    const ORG_SPECIALS = useSelector((state: IStore) => state.ORG_SPECIALS);
     const { SERVICES_SPECIAL, PRODUCTS_SPECIAL } = ORG_SPECIALS;
-    const { DISCOUNTS } = useSelector((state: any) => state.ORG_DISCOUNTS);
+    const { DISCOUNTS } = useSelector((state: IStore) => state.ORG_DISCOUNTS);
     const discounts: IDiscountPar[] = DISCOUNTS.discounts;
-    console.log(ORG)
+
     return (
         <div className="org-deal-hot">
             <OrgVoucher

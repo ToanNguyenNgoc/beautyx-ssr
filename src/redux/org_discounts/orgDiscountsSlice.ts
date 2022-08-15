@@ -1,6 +1,21 @@
 import discountApi from "../../api/discountApi";
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { STATUS } from '../status'
+import { STATUS } from '../status';
+import { IDiscountPar, IITEMS_DISCOUNT } from '../../interface/discount'
+
+export interface IORG_DISCOUNTS {
+    org_id: null | number,
+    DISCOUNTS: {
+        discounts: IDiscountPar[],
+        totalItem: number,
+        status_list: string,
+    },
+    DISCOUNT: {
+        discount: IDiscountPar | null,
+        status: string
+    },
+    ITEM_DISCOUNT: IITEMS_DISCOUNT | null,
+}
 
 export const fetchAsyncDiscountDetail: any = createAsyncThunk(
     "ORG_DISCOUNTS/fetchAsyncDiscountDetail",
@@ -29,7 +44,7 @@ export const fetchAsyncOrgDiscounts: any = createAsyncThunk(
         }
     }
 )
-const initialState = {
+const initialState: IORG_DISCOUNTS = {
     org_id: null,
     DISCOUNTS: {
         discounts: [],
@@ -37,7 +52,7 @@ const initialState = {
         status_list: "",
     },
     DISCOUNT: {
-        discount: {},
+        discount: null,
         status: ""
     },
     ITEM_DISCOUNT: null,

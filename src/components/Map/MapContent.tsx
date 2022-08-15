@@ -20,8 +20,9 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
-import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
+import { fetchOrgsMapFilter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from './MapCurrentUser'
+import IStore from "../../interface/IStore";
 
 
 interface IProps {
@@ -34,9 +35,9 @@ const lib: Libraries = ["places"]
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs } = props;
-    // console.log(orgs)
+    console.log(orgs)
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-    const { orgCenter } = useSelector((state: any) => state.ORGS_MAP)
+    const { orgCenter, getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const [zoom, setZoom] = useState<number>(16);
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
@@ -93,7 +94,7 @@ const MapContent = (props: IProps) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const {totalItem, page} = useSelector((state:any) => state.ORGS_MAP.orgsMap)
+    const { totalItem, page } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
     const onViewMoreOrgs = () => {
         if (
             location.pathname === "/ban-do" &&
@@ -170,8 +171,24 @@ const MapContent = (props: IProps) => {
         }, 1000),
         []
     );
+    const debounceGetOrgsMoveCenter = useCallback(
+        debounce((LatLng) => {
+            dispatch(onSetOrgsMapEmpty())
+            dispatch(fetchOrgsMapFilter({
+                page: 1,
+                LatLng: LatLng
+            }))
+        }, 2000),
+        []
+    )
     const onCenterChanged = () => {
         debounceDropDown(map?.getCenter().toJSON())
+        const latString = JSON.stringify(`${map?.getCenter().toJSON().lat}`)
+        const lngString = JSON.stringify(`${map?.getCenter().toJSON().lng}`)
+        const LatLng = `${latString},${lngString}`
+        if (getValueCenter) {
+            // debounceGetOrgsMoveCenter(LatLng)
+        }
     }
 
     const [directionsResponse, setDirectionsResponse] = useState<any>()
@@ -327,9 +344,9 @@ const MapContent = (props: IProps) => {
                 <div className="map-list__mobile">
                     <Slider ref={slideRef} {...settings}>
                         {orgs.length > 0 && orgs.map((item: any, index: number) => (
-                            <MapTagsItemMB 
-                            handleDirection={handleDirection} 
-                            key={index} item={item} 
+                            <MapTagsItemMB
+                                handleDirection={handleDirection}
+                                key={index} item={item}
                             />
                         ))}
                     </Slider>

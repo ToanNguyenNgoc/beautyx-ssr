@@ -4,6 +4,27 @@ import commentsApi from "../../api/commentsApi";
 import { STATUS } from "../status";
 import favorites from "../../api/favorite";
 import { IComment } from "../../interface/comments";
+import { Product } from '../../interface/product';
+import { productInit } from '../initials'
+
+export interface IPRODUCT {
+    PRODUCT: {
+        product: Product,
+        status: "",
+    },
+    PRODUCT_REC: {
+        products: Product[],
+        cate_id: any,
+        status: string,
+    },
+    COMMENTS: {
+        product_id: any,
+        comments: IComment[],
+        page: number,
+        totalItem: number,
+        status_cmt: string,
+    },
+}
 
 // get product detail
 export const fetchAsyncProductDetail: any = createAsyncThunk(
@@ -106,20 +127,9 @@ export const postAsyncReplyProductComments: any = createAsyncThunk(
         }
     }
 )
-interface InitialState {
-    PRODUCT: any,
-    PRODUCT_REC: any,
-    COMMENTS: {
-        product_id: any,
-        comments: IComment[],
-        page: number,
-        totalItem: number,
-        status_cmt: string,
-    },
-}
-const initialState: InitialState = {
+const initialState: IPRODUCT = {
     PRODUCT: {
-        product: {},
+        product: productInit,
         status: "",
     },
     PRODUCT_REC: {

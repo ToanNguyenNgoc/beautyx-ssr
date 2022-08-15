@@ -3,7 +3,7 @@ import commentsApi from "../../api/commentsApi";
 import { STATUS } from "../status";
 import { IComment } from "../../interface/comments";
 
-interface IInitialState {
+export interface IORG_COMMENTS {
     org_id: any;
     comments: IComment[];
     page: number;
@@ -63,7 +63,7 @@ export const postAsyncReplyOrgComments: any = createAsyncThunk(
         };
     }
 );
-const initialState: IInitialState = {
+const initialState: IORG_COMMENTS = {
     org_id: null,
     comments: [],
     page: 1,

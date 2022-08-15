@@ -17,10 +17,11 @@ import { AppContext } from "../../../context/AppProvider";
 import { STATUS } from "../../../redux/status";
 import { onToggleOpenChat } from "../../../redux/chat/chatOrgSlice";
 import OrgMapWrapper from "./OrgMap/OrgMapWrapper";
+import {IOrgMobaGalleries} from "../../../interface/IOrgMobaGalleries"
 
 interface IProps {
     org: IOrganization;
-    galleries: [];
+    galleries: IOrgMobaGalleries[];
     status_galleries: string;
 }
 
@@ -141,7 +142,7 @@ function OrgDetail(props: IProps) {
                                         </div>
                                     </div>
                                 )}
-                            {galleries.map((item: any, index: number) => (
+                            {galleries.map((item: IOrgMobaGalleries, index: number) => (
                                 <div
                                     key={index}
                                     className="org-detail__banner-de"
