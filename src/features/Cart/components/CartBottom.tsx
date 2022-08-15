@@ -15,6 +15,8 @@ import { AppContext } from "../../../context/AppProvider";
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
+import { checkPhoneValid } from "../../../utils/phoneUpdate";
+
 function CartBottom(props: any) {
   const { orgs, chooseOrg, chooseOrgClick } = props;
   const { t } = useContext(AppContext);
@@ -39,11 +41,16 @@ function CartBottom(props: any) {
   const gotoPayment = () => {
     GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (USER) {
-      if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
-        scrollTop();
-        history.push("/payment");
-      } else {
-        setPopUp(true);
+      if(checkPhoneValid(USER?.telephone)){
+        if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
+          scrollTop();
+          history.push("/payment");
+        } else {
+          setPopUp(true);
+        }
+      }
+      else {
+        alert('cap nhap sdt nhe');
       }
     } else {
       setPopupSign(true);

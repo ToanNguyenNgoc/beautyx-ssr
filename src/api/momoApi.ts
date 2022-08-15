@@ -70,6 +70,7 @@ class MOMO_API {
             if(data.email && data.phone){
                 // alert('in')
                 const res = await momoAuthApi.login(data)
+                window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
                 // alert('res'+JSON.stringify(res))
             }
             else {
