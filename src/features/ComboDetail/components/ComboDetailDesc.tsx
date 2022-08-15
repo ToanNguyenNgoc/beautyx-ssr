@@ -15,17 +15,19 @@ export default function ComboDetailDesc(props: IProps) {
         <div className="combo-desc">
             <p className="combo-description">
                 Combo bao gồm :
-                {` ${serviceList?.length ? serviceList?.length : "0"} dịch vụ`}
+                {` ${
+                    serviceList?.length > 0 ? serviceList?.length : "0"
+                } dịch vụ`}
                 {productList?.length > 0 &&
                     ` và ${productList?.length} sản phẩm`}
-                {productList?.map((item: any, index: number) => (
-                    <li key={index}>
-                        <span>{item.product_name}</span>
-                    </li>
-                ))}
                 {serviceList?.map((item: any, index: number) => (
                     <li key={index}>
                         <span>{item.service_name}</span>
+                    </li>
+                ))}
+                {productList?.map((item: any, index: number) => (
+                    <li key={index}>
+                        <span>{item.product_name}</span>
                     </li>
                 ))}
             </p>
