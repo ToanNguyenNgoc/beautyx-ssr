@@ -45,10 +45,10 @@
     background-color: darkgrey;
 }
 
-.list-org__active {
+/* .list-org__active {
     margin-left: 0 !important;
     transition: all 0.2s ease-in !important;
-}
+} */
 .dialog-map__org .dialog-map__item {
     display: flex;
     background-color: var(--bgWhite);

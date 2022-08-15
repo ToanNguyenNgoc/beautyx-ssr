@@ -73,6 +73,7 @@ export const postAsyncProductComment: any = createAsyncThunk(
                     ...res.data.context,
                     children: [],
                     user: params.user,
+                    media_url: [params.values.image_url]
                 },
             };
             return payload;
@@ -123,7 +124,8 @@ export const postAsyncReplyProductComments: any = createAsyncThunk(
             commentable_id: res.data.context.commentable_id,
             body: res.data.context.body,
             user_id: res.data.context.user_id,
-            user: values.user
+            user: values.user,
+            media:[{original_url: values.values.original_url}]
         }
     }
 )

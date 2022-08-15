@@ -28,7 +28,6 @@ export default function MapGalleries(props: any) {
         .map((i: any) => i.image_url);
     const galleriesPar = GALLERIES.map((i: any) => i.image_url);
     const totalGalleries = galleriesPar.concat(galleriesChild);
-    console.log("totalGalleries :>> ", totalGalleries[0]);
     const [chooseImg, setChooseImg] = useState(totalGalleries[0]);
     var settings = {
         slidesToShow: GALLERIES.length < 3 ? GALLERIES.length : 3,

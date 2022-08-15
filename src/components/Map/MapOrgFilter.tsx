@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from "react";
 import usePlacesAutocomplete, {
     getGeocode,
@@ -11,8 +10,10 @@ import icon from "../../constants/icon";
 import _, { debounce } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
 import {
-    fetchOrgsMapFilter, onSetOrgsMapEmpty, onSetOrgCenter
-} from '../../redux/org/orgMapSlice';
+    fetchOrgsMapFilter,
+    onSetOrgsMapEmpty,
+    onSetOrgCenter,
+} from "../../redux/org/orgMapSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { Switch } from "@mui/material";
 import { onSwitchValueCenter } from "../../redux/org/orgMapSlice";
@@ -37,13 +38,6 @@ const PlaceComponent = (props: any) => {
 
         }
     }
-    const {
-        ready,
-        value,
-        setValue,
-        suggestions: { status, data },
-        clearSuggestions,
-    } = usePlacesAutocomplete();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debounceDropDown = useCallback(
         debounce((nextValue) => {
@@ -51,6 +45,13 @@ const PlaceComponent = (props: any) => {
         }, 1000),
         []
     );
+    const {
+        ready,
+        value,
+        setValue,
+        suggestions: { status, data },
+        clearSuggestions,
+    } = usePlacesAutocomplete();
     // console.log(data)
     const handleSelect = (description: any) => {
         setValue(description.description, false);
@@ -58,45 +59,44 @@ const PlaceComponent = (props: any) => {
             ...openDetail,
             open: false,
             check: false,
-        })
+        });
         setOrgs([]);
-        setZoom(14)
+        setZoom(14);
         clearSuggestions();
         getGeocode({ address: description.description }).then((results) => {
             const { lat, lng } = getLatLng(results[0]);
             const geo = `${lat},${lng}`;
-            map?.panTo({ lat: lat, lng: lng })
-            dispatch(onSetOrgsMapEmpty())
-            dispatch(fetchOrgsMapFilter({
-                page: 1,
-                LatLng: geo
-            }))
+            map?.panTo({ lat: lat, lng: lng });
+            dispatch(onSetOrgsMapEmpty());
+            dispatch(
+                fetchOrgsMapFilter({
+                    page: 1,
+                    LatLng: geo,
+                })
+            );
         });
-    }
+    };
     const onInputChange = (e: any) => {
         const keyword = e.target.value
         setValue(keyword)
         debounceDropDown(keyword)
     }
     const onClickOrgItemClick = (org: IOrganization) => {
-        setZoom(16)
+        setZoom(16);
         setOpenDetail({
             open: true,
             check: true,
         });
         dispatch(fetchAsyncOrg(org.subdomain));
-        setValue(org.name, false)
-        map?.panTo({ lat: org.latitude, lng: org.longitude })
-        setOrgs([])
-        dispatch(onSetOrgCenter(org))
+        setValue(org.name, false);
+        map?.panTo({ lat: org.latitude, lng: org.longitude });
+        setOrgs([]);
+        dispatch(onSetOrgCenter(org));
         clearSuggestions();
-    }
-    const onSwitchChange = (e: any) => {
-        dispatch(onSwitchValueCenter(e.target.checked))
     }
     return (
         <>
-            <div className="flex-row-sp map-filter-cnt">
+            <div className=" map-filter-cnt">
                 <div className="map-filter-cnt__left">
                     <div className="map-filter-cnt__input">
                         <input
@@ -107,34 +107,37 @@ const PlaceComponent = (props: any) => {
                             disabled={!ready}
                         />
                         <div className="map-filter-cnt__input-btn">
-                            <button
-                                onClick={() => setValue("")}
-                            >
+                            <button onClick={() => setValue("")}>
                                 <img src={icon.closeBlack} alt="" />
                             </button>
                         </div>
                     </div>
                     <div className="map-filter-cnt__drop">
                         <ul className="map-filter-list-org">
-                            {
-                                status === "OK" &&
+                            {status === "OK" &&
                                 data.map((suggestion) => {
                                     const {
                                         place_id,
-                                        structured_formatting: { main_text, secondary_text },
+                                        structured_formatting: {
+                                            main_text,
+                                            secondary_text,
+                                        },
                                     } = suggestion;
                                     return (
                                         <li
                                             className="map-list-org__item"
-                                            key={place_id} onClick={() => handleSelect(suggestion)}
+                                            key={place_id}
+                                            onClick={() =>
+                                                handleSelect(suggestion)
+                                            }
                                         >
-                                            <strong>{main_text}</strong> <small>{secondary_text}</small>
+                                            <strong>{main_text}</strong>{" "}
+                                            <small>{secondary_text}</small>
                                         </li>
                                     );
-                                })
-                            }
-                            {
-                                (orgs.length > 0 && value.length > 0) &&
+                                })}
+                            {orgs.length > 0 &&
+                                value.length > 0 &&
                                 orgs.map((i: IOrganization, index: number) => (
                                     <li
                                         onClick={() => onClickOrgItemClick(i)}
@@ -143,18 +146,13 @@ const PlaceComponent = (props: any) => {
                                     >
                                         {i.name}
                                     </li>
-                                ))
-                            }
+                                ))}
                         </ul>
                     </div>
                 </div>
                 <div className="map-filter-cnt__right">
                     <div className="flex-row map-filter-cnt__right-switch">
-                        <Switch
-                            onChange={onSwitchChange}
-                            checked={getValueCenter}
-                            size="small"
-                        />
+                    <Switch defaultChecked size="small" />
                         Cập nhật khi di chuyển bản đồ
                     </div>
                 </div>

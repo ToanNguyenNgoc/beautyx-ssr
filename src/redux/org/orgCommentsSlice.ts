@@ -15,6 +15,7 @@ export interface IORG_COMMENTS {
 export const fetchAsyncOrgComments: any = createAsyncThunk(
     "ORG_COMMENTS/fetchAsyncOrgComments",
     async (values: any) => {
+        console.log(values)
         try {
             const res = commentsApi.getCommentsOrg({
                 org_id: values.org_id,
@@ -42,6 +43,7 @@ export const postAsyncOrgComments: any = createAsyncThunk(
                     ...res.data.context,
                     children: [],
                     user: values.user,
+                    media_url: [values.values.image_url]
                 },
             };
             return payload;
@@ -53,6 +55,7 @@ export const postAsyncOrgComments: any = createAsyncThunk(
 export const postAsyncReplyOrgComments: any = createAsyncThunk(
     "ORG_COMMENTS/postAsyncReplyOrgComments",
     async (values: any) => {
+        console.log(values)
         const res = await commentsApi.postComment(values.values);
         return {
             id: res.data.context.id,
@@ -60,6 +63,7 @@ export const postAsyncReplyOrgComments: any = createAsyncThunk(
             body: res.data.context.body,
             user_id: res.data.context.user_id,
             user: values.user,
+            media:[{original_url: values.values.original_url}]
         };
     }
 );

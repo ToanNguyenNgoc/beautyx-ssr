@@ -1,5 +1,9 @@
 import { User } from './user'
 
+export interface ICommentChildMedia{
+    original_url: string
+}
+
 export interface ICommentChild {
     id?: number,
     body: number,
@@ -11,7 +15,9 @@ export interface ICommentChild {
     commentable_id: number,
     created_at?: string,
     updated_at?: string,
-    deleted_at?: null
+    deleted_at?: null,
+    media_url:string[]
+    media:ICommentChildMedia[]
 }
 
 export interface IComment {
@@ -27,5 +33,6 @@ export interface IComment {
     deleted_at: null | string,
     rate: null | number,
     user: User,
-    children: ICommentChild[]
+    children: ICommentChild[],
+    media_url: string[],
 }

@@ -8,11 +8,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { postAsyncComment } from "../../redux/org_services/serviceSlice";
 import { postAsyncProductComment } from "../../redux/org_products/productSlice";
 import { postCommentCombo } from "../../redux/org_combos/comboSlice";
-import { clearPrevState } from "../../redux/commentSlice";
+import { clearPrevState, onSetComment } from "../../redux/commentSlice";
 import { pickBy, identity } from "lodash";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../context/AppProvider";
 import { postAsyncOrgComments } from "../../redux/org/orgCommentsSlice";
+import IStore from '../../interface/IStore'
 
 interface IProps {
     comments?: any;
@@ -39,24 +40,29 @@ function Review(props: IProps) {
     } = props;
     const { t } = useContext(AppContext);
     const USER = useSelector((state: any) => state.USER);
-    const COMMENT = useSelector((state: any) => state.COMMENT);
+    const {comment} = useSelector((state: IStore) => state.COMMENT_MEDIA)
     const SERVICE = useSelector((state: any) => state.SERVICE.SERVICE.service);
     const user = USER.USER;
     const dispatch = useDispatch();
     const history = useHistory();
-    const [comment, setComment] = useState<any>({
-        text: "",
-        image_url: COMMENT.image_url,
-        used: false,
-        star: 5,
-    });
+    // const [comment, setComment] = useState<ICommentPost>({
+    //     text: "",
+    //     image_url: COMMENT_MEDIA.image_url,
+    //     media_ids: [],
+    //     used: false,
+    //     star: 5,
+    // });
+    // console.log(comment)
 
     const handleOnchange = (e: any) => {
-        setComment({
-            ...comment,
-            text: e.target.value,
-            image_url: COMMENT.image_url,
-        });
+        dispatch(onSetComment({
+            body: e.target.value
+        }))
+        // setComment({
+        //     ...comment,
+        //     text: e.target.value,
+        //     image_url: COMMENT_MEDIA.image_url,
+        // });
     };
     // const [data, setData] = useState<any>({
     //     comments: [...comments],
@@ -78,18 +84,16 @@ function Review(props: IProps) {
         page: 1,
         org_id: id,
         type: commentable_type,
-        body: JSON.stringify({ ...comment, image_url: COMMENT.image_url }),
+        body: comment.body,
+        rate:comment.rate,
+        media_ids: comment.media_ids.length > 0 && comment.media_ids,
         id: detail_id,
+        image_url: comment.image_url
     };
     const values = pickBy(valuesStr, identity);
 
     const handlePostComment = () => {
-        if (comment.text.length > 0 && user) {
-            setComment({
-                ...comment,
-                text: "",
-                image_url: null,
-            });
+        if (comment.body.length > 0 && user) {
             dispatch(clearPrevState());
             switch (commentable_type) {
                 case "ORGANIZATION":
@@ -145,11 +149,9 @@ function Review(props: IProps) {
                 />
                 <EvaluateInput
                     handleOnchange={handleOnchange}
-                    comment={comment}
                     handleKeyDown={handleKeyDown}
                     handlePostComment={handlePostComment}
                     user={user}
-                    setComment={setComment}
                     changeStyle={changeStyle}
                 />
                 {totalItem && totalItem > 0 ? (
