@@ -19,7 +19,7 @@ function LoginFlatForm(props: any) {
     const TOKEN = sessionStorage.getItem("_WEB_TK");
     const onLoginFlatFormMomo = async () => {
         try {
-            alert('onLoginFlatFormMomo')
+            // alert('onLoginFlatFormMomo')
             momoApi.initApp();
             MOMO.showLoading([""]);
             MOMO.getUserConsents({
