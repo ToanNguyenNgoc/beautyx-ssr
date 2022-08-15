@@ -51,42 +51,48 @@ function LoginFlatForm(props: any) {
                 return { data: data }
             })
         } catch (err) {
-            alert(JSON.stringify(err));
+            console.log(err)
+            // alert(JSON.stringify(err));
         }
     };
     const requestUserConsents = () => {
-        MOMO.showLoading([""]);
-        MOMO.requestUserConsents(
-            {
-                permissions: [
-                    {
-                        role: "name",
-                        require: true,
-                    },
-                    {
-                        role: "phone",
-                    },
-                    {
-                        role: "email",
-                    },
-                ],
-            },
-            async ({ data, status }: any) => {
-                // alert(JSON.stringify(data)+JSON.stringify(status))
-                if (data.phone) {
-                    await dispatch(loginAsyncMomo(data));
-                    await dispatch(fetchAsyncUser());
-                } else {
-                    MOMO.showToast({
-                        description: "có lỗi khi nhận thông tin từ momo",
-                        type: "failure",
-                        duration: 2000,
-                    });
-                    MOMO.hideLoading();
+        try{
+
+            MOMO.showLoading([""]);
+            MOMO.requestUserConsents(
+                {
+                    permissions: [
+                        {
+                            role: "name",
+                            require: true,
+                        },
+                        {
+                            role: "phone",
+                        },
+                        {
+                            role: "email",
+                        },
+                    ],
+                },
+                async ({ data, status }: any) => {
+                    // alert(JSON.stringify(data)+JSON.stringify(status))
+                    if (data.phone) {
+                        await dispatch(loginAsyncMomo(data));
+                        await dispatch(fetchAsyncUser());
+                    } else {
+                        MOMO.showToast({
+                            description: "có lỗi khi nhận thông tin từ momo",
+                            type: "failure",
+                            duration: 2000,
+                        });
+                        MOMO.hideLoading();
+                    }
+                    return { data: data };
                 }
-                return { data: data };
-            }
-        );
+            );
+        }catch(err){
+            console.log(err);
+        }
     };
     const onLoginFlatFormTiki = async () => {
         const PARAMS_OB = {
