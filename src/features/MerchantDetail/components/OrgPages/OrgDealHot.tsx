@@ -20,9 +20,9 @@ function OrgDealHot() {
 
     return (
         <div className="org-deal-hot">
-            <OrgVoucher
+            {/* <OrgVoucher
                 org_id={ORG.org?.id}
-            />
+            /> */}
             {
                 discounts?.length > 0 &&
                 <div className="org-deal-hot__discounts">
