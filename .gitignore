@@ -57,7 +57,5 @@ package-lock.json
 .firebase/hosting.YnVpbGQ.cache
 prod/
 .firebase/hosting.YnVpbGQ.cache
-=======
 *.cache
-prod/
->>>>>>> b1ada437284a4b4182fa444d41980c72238c254e
+.gitpod.yml
