@@ -184,7 +184,6 @@ function ServiceDetail(props: any) {
             dispatch(fetchAsyncServiceDetail(values));
         }
     };
-    console.log(service?.description?.length);
     return (
         <>
             {SERVICE.status === STATUS.LOADING && <LoadDetail />}
@@ -236,25 +235,30 @@ function ServiceDetail(props: any) {
                                                 <p
                                                     ref={refLimitText}
                                                     className="service-description"
-                                                    dangerouslySetInnerHTML={{ '__html': service.description || t("detail_item.updating") }}
+                                                    dangerouslySetInnerHTML={{
+                                                        __html:
+                                                            service.description ||
+                                                            t(
+                                                                "detail_item.updating"
+                                                            ),
+                                                    }}
                                                 ></p>
                                                 {service?.description &&
-                                                    (
-                                                        is_mobile === true
-                                                        ? service?.description.length > 100
-                                                        : service?.description.length > 300
-                                                    )
-                                                    ? (
-                                                        <div
-                                                            onClick={() =>
-                                                                handleSeemoreText()
-                                                            }
-                                                            className="seemore-btn"
-                                                        >
-                                                            <p>Xem thêm &or;</p>
-                                                            <p>Thu gọn &and;</p>
-                                                        </div>
-                                                    ) : null}
+                                                (is_mobile === true
+                                                    ? service?.description
+                                                          .length > 100
+                                                    : service?.description
+                                                          .length > 300) ? (
+                                                    <div
+                                                        onClick={() =>
+                                                            handleSeemoreText()
+                                                        }
+                                                        className="seemore-btn"
+                                                    >
+                                                        <p>Xem thêm &or;</p>
+                                                        <p>Thu gọn &and;</p>
+                                                    </div>
+                                                ) : null}
                                             </div>
                                         </TabPanel>
 
@@ -278,7 +282,7 @@ function ServiceDetail(props: any) {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >=
+                                                COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -319,22 +323,22 @@ function ServiceDetail(props: any) {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                {t(
-                                                                    "detail_item.merchant"
-                                                                )}
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={org}
                                                             />
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
 
@@ -352,7 +356,7 @@ function ServiceDetail(props: any) {
                         {/* service bottom buttom add cart */}
                         <div className="service-detail__bottom">
                             {service?.is_momo_ecommerce_enable &&
-                                org?.is_momo_ecommerce_enable ? (
+                            org?.is_momo_ecommerce_enable ? (
                                 <>
                                     <button
                                         onClick={() => {

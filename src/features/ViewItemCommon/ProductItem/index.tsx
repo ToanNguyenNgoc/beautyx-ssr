@@ -2,7 +2,9 @@ import React, { useContext } from "react";
 import "../ServicePromoItem/service-promo-item.css";
 import { Product } from "../../../interface/product";
 import { IOrganization } from "../../../interface/organization";
-import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
+import formatPrice, {
+    formatSalePriceService,
+} from "../../../utils/formatPrice";
 import onErrorImg from "../../../utils/errorImg";
 import { Link } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
@@ -24,7 +26,10 @@ interface IProps {
 function ProductItem(props: IProps) {
     const { product, org, changeStyle } = props;
     const { t } = useContext(AppContext);
-    const productSaleSpecial = formatSalePriceService(product?.special_price, product?.special_price_momo)
+    const productSaleSpecial = formatSalePriceService(
+        product?.special_price,
+        product?.special_price_momo
+    );
 
     const percent = Math.round(
         100 - (productSaleSpecial / product?.retail_price) * 100
@@ -62,7 +67,7 @@ function ProductItem(props: IProps) {
                 <div className="ser-promo">
                     {product?.special_price > 0 && (
                         <div className="ser-promo__percent">
-                            {`${t("detail_iten.off")}`} {percent}%
+                            {`${t("detail_item.off")}`} {percent}%
                         </div>
                     )}
                     {/* <div className="flex-row ser-promo__bot">
@@ -86,19 +91,16 @@ function ProductItem(props: IProps) {
                             : "ser-price"
                     }
                 >
-                    {productSaleSpecial > 0 ?
-                        (
-                            <>
-                                <span>{formatPrice(productSaleSpecial)}đ</span>
-                                <span>{formatPrice(product?.retail_price)}đ</span>
-                            </>
-                        )
-                        :
-                        (
-                            <span style={{ color: "var(--purple)" }}>
-                                {formatPrice(product?.retail_price)}đ
-                            </span>
-                        )}
+                    {productSaleSpecial > 0 ? (
+                        <>
+                            <span>{formatPrice(productSaleSpecial)}đ</span>
+                            <span>{formatPrice(product?.retail_price)}đ</span>
+                        </>
+                    ) : (
+                        <span style={{ color: "var(--purple)" }}>
+                            {formatPrice(product?.retail_price)}đ
+                        </span>
+                    )}
                 </div>
                 {/* {
                     service._geoDistance ?

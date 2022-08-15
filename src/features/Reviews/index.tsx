@@ -78,7 +78,7 @@ function Review(props: IProps) {
         page: 1,
         org_id: id,
         type: commentable_type,
-        body: JSON.stringify({ ...comment, image_url: COMMENT.image_url }),
+        body: { ...comment, image_url: COMMENT.image_url },
         id: detail_id,
     };
     const values = pickBy(valuesStr, identity);
