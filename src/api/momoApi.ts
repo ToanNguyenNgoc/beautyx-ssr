@@ -46,8 +46,8 @@ export interface IUserConsents {
 class MOMO_API {
     initApp = () => {
         MOMO.init({
-            appId: process.env.MOMO_APP_ID,
-            parnerCode: process.env.MOMO_PARTNER_CODE
+            appId: process.env.REACT_APP_MOMO_APP_ID,
+            parnerCode: process.env.REACT_APP_MOMO_PARTNER_CODE
         })
     }
     requestUserConsents = () => {
