@@ -119,6 +119,9 @@ const MapContent = (props: IProps) => {
             if (index === orgs.length - 3) {
                 onViewMoreOrgs()
             }
+            if (mapRef?.current.getZoom() < 15) {
+                mapRef?.current.setZoom(13)
+            }
             onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
             dispatch(onSetOrgCenter(orgs[index]))
         },

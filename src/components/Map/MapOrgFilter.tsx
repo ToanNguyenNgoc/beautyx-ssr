@@ -66,7 +66,7 @@ const PlaceComponent = (props: any) => {
         );
         setTimeout(() => {
             slideRef?.current?.slickGoTo(0);
-        }, 2000)
+        }, 500)
     }
     const onInputChange = async (e: any) => {
         const keyword = e.target.value
@@ -99,7 +99,7 @@ const PlaceComponent = (props: any) => {
         dispatch(fetchAsyncOrg(org.subdomain));
         setTimeout(() => {
             slideRef?.current?.slickGoTo(0);
-        }, 2000)
+        }, 500)
     }
     return (
         <>
