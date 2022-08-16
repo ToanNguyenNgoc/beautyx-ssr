@@ -1,29 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+/* eslint-disable react/style-prop-object */
+import React from 'react';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './style.css'
 
-// mapboxgl.accessToken = 'pk.eyJ1IjoidG9hbjA2MDExOTk4IiwiYSI6ImNsM2wzZzBpbDAxODUzcnA0cjlmb3V3OGoifQ.ndRxWrmEcI0r_E0wbJ0-6w';
 
 function MapBox() {
-    // const mapContainer = useRef<any>(null);
-    // const map = useRef<any>(null);
-    // const [lng, setLng] = useState(106.68205401591362);
-    // const [lat, setLat] = useState(10.800590217284448);
-    // const [zoom, setZoom] = useState(9);
+    const key = process.env.REACT_APP_MAPBOX_TOKEN
     const Map = ReactMapboxGl({
         accessToken:
-            'pk.eyJ1IjoidG9hbjA2MDExOTk4IiwiYSI6ImNsM2wzZzBpbDAxODUzcnA0cjlmb3V3OGoifQ.ndRxWrmEcI0r_E0wbJ0-6w'
+            `${key}`
     });
-    // useEffect(() => {
-    //     if (map.current) return; // initialize map only once
-    //     map.current = new mapboxgl.Map({
-    //         container: mapContainer.current,
-    //         style: 'mapbox://styles/mapbox/streets-v11',
-    //         center: [lng, lat],
-    //         zoom: zoom
-    //     });
-    // });
     return (
         <div>
             {/* <div ref={mapContainer} className="map-container" /> */}

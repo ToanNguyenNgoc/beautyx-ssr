@@ -35,13 +35,14 @@ import ReviewsContainer from "../ReviewsContainer";
 import PageNotFound from "../../components/PageNotFound";
 import { AppContext } from "../../context/AppProvider";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
+import IStore from "../../interface/IStore";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
     const history = useHistory();
-    const ORG = useSelector((state: any) => state.ORG);
-    const { PRODUCT, COMMENTS } = useSelector((state: any) => state.PRODUCT);
+    const ORG = useSelector((state: IStore) => state.ORG);
+    const { PRODUCT, COMMENTS } = useSelector((state: IStore) => state.PRODUCT);
     const params: any = extraParamsUrl();
     const is_mobile = useFullScreen();
     const [open, setOpen] = useState({
@@ -96,7 +97,7 @@ function ProductDetail(props: any) {
 
     const callProductDetail = () => {
         if (
-            parseInt(params.id) !== PRODUCT.product.id ||
+            parseInt(params.id) !== PRODUCT?.product?.id ||
             PRODUCT.status !== STATUS.SUCCESS
         ) {
             const values = {

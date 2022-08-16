@@ -3,6 +3,7 @@ import categoryApi from "../../api/categoryApi";
 import serviceApi from "../../api/serviceApi";
 import { STATUS } from "../status";
 import { Service } from "../../interface/service";
+import {CategoryService} from '../../interface/category'
 
 interface ISERVICES {
     services: Service[];
@@ -11,10 +12,10 @@ interface ISERVICES {
     status_ser: string;
 }
 interface ICATE {
-    categories: [];
+    categories: CategoryService[];
     status: string;
 }
-interface IINITIALSTATE {
+export interface IORG_SERVICES {
     choose_cate: null;
     org_id: any;
     CATE: ICATE;
@@ -50,7 +51,7 @@ export const fetchAsyncServices: any = createAsyncThunk(
         return payload;
     }
 );
-const initialState: IINITIALSTATE = {
+const initialState: IORG_SERVICES = {
     choose_cate: null,
     org_id: null,
     CATE: {

@@ -6,6 +6,7 @@ import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
 import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 // end
@@ -34,15 +35,16 @@ function DiscountItem(props: IProps) {
                 discountItem.organization.image_url !== null &&
                 <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
             }
-            <img
-                className="home-discount-item__img"
+            <LazyLoadImage
+                alt=""
                 src={
                     discountItem.productable.image
                         ? discountItem.productable.image_url
                         : discountItem.organization.image_url
                 }
-                alt=""
-                onError={(e) => onErrorImg(e)}
+                width="100%"
+                height="100%"
+                className="home-discount-item__img"
             />
             <div className="home-discount-item__detail">
                 <span className="name">
@@ -74,7 +76,7 @@ function DiscountItem(props: IProps) {
                                 ? { width: "100%" }
                                 : {
                                     width: `${(discountPar.used /
-                                            discountPar.total) *
+                                        discountPar.total) *
                                         100
                                         }%`,
                                 }

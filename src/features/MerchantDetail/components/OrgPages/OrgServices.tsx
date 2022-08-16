@@ -16,6 +16,8 @@ import { AppContext } from "../../../../context/AppProvider";
 import EmptyRes from '../../../EmptyRes';
 import { LoadingServices } from "../../../../components/LoadingSketion";
 import LoadingMore from "../../../../components/LoadingMore";
+import IStore from '../../../../interface/IStore';
+import { CategoryService } from '../../../../interface/category'
 
 interface IProps {
     org: IOrganization;
@@ -25,7 +27,7 @@ function OrgServices(props: IProps) {
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);
     const { CATE, SERVICES, choose_cate, org_id } = useSelector(
-        (state: any) => state.ORG_SERVICES
+        (state: IStore) => state.ORG_SERVICES
     );
     const { categories, status } = CATE;
     const { services, page, totalItem, status_ser } = SERVICES;
@@ -77,8 +79,8 @@ function OrgServices(props: IProps) {
     return (
         <div className="org-services-cnt">
             {categories &&
-                categories.filter((e: any) => e.services_count > 0).length >
-                    0 && (
+                categories.filter((e: CategoryService) => e.services_count > 0).length >
+                0 && (
                     <div className="org-services-cnt__left">
                         <ul className="cates-list">
                             <li
@@ -86,9 +88,9 @@ function OrgServices(props: IProps) {
                                 style={
                                     !choose_cate
                                         ? {
-                                              color: "var(--bgWhite)",
-                                              backgroundColor: "var(--purple)",
-                                          }
+                                            color: "var(--bgWhite)",
+                                            backgroundColor: "var(--purple)",
+                                        }
                                         : {}
                                 }
                                 className="cate-list__item"
@@ -97,8 +99,8 @@ function OrgServices(props: IProps) {
                                     style={
                                         !choose_cate
                                             ? {
-                                                  color: "var(--bgWhite)",
-                                              }
+                                                color: "var(--bgWhite)",
+                                            }
                                             : {}
                                     }
                                     className="cate-list__item-title"
@@ -107,16 +109,16 @@ function OrgServices(props: IProps) {
                                 </span>
                             </li>
                             {categories
-                                .filter((i: any) => i.services_count > 0)
-                                .map((item: any, index: number) => (
+                                .filter((i: CategoryService) => i.services_count > 0)
+                                .map((item: CategoryService, index: number) => (
                                     <li
                                         style={
                                             choose_cate === item.id
                                                 ? {
-                                                      color: "#fff",
-                                                      backgroundColor:
-                                                          "var(--purple)",
-                                                  }
+                                                    color: "#fff",
+                                                    backgroundColor:
+                                                        "var(--purple)",
+                                                }
                                                 : {}
                                         }
                                         onClick={() =>
@@ -129,8 +131,8 @@ function OrgServices(props: IProps) {
                                             style={
                                                 choose_cate === item.id
                                                     ? {
-                                                          color: "#fff",
-                                                      }
+                                                        color: "#fff",
+                                                    }
                                                     : {}
                                             }
                                             className="cate-list__item-title"

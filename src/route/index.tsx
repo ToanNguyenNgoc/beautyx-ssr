@@ -51,6 +51,7 @@ import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 import Result from "../features/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
 import ChatAll from "../features/Chat/ChatAll";
+import PageNotFound from "../components/PageNotFound";
 
 import MapBox from "../features/MapBeta";
 
@@ -199,6 +200,10 @@ function RouterConfig(props: any) {
     {
       path:"/ban-do",
       component:<HomeMap/>
+    },
+    {
+      path:"*",
+      component: <PageNotFound/>
     }
   ];
   const routesPrivate = [

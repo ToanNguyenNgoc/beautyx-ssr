@@ -1,39 +1,61 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import commentsApi from "../api/commentsApi";
 import { STATUS } from "./status";
-import { IComment } from "../interface/comments";
 import mediaApi from "../api/mediaApi";
 
-interface IInitialState {
-    image_url: string;
-    status: string;
+export interface ICOMMENT_MEDIA {
+    comment: {
+        body: string,
+        media_ids: number[],
+        image_url: string,
+        rate: number
+    },
+    status: string
 }
+
 export const postAsyncMediaComment: any = createAsyncThunk(
-    "COMMENT/postAsyncMediaComment",
+    "COMMENT_MEDIA/postAsyncMediaComment",
     async (media: any) => {
         try {
-            // const res = await commentsApi.postCommentOrg(values.values);
             let formData = new FormData();
             formData.append("file", media);
             const res = await mediaApi.postMedia(formData);
-            const payload = res.data.context.original_url;
-            return payload;
+            return {
+                model_id: res.data.context.model_id,
+                original_url: res.data.context.original_url
+            };
         } catch (error) {
             console.log(error);
         }
     }
 );
-const initialState: IInitialState = {
-    image_url: "",
-    status: "",
+const initialState: ICOMMENT_MEDIA = {
+    comment: {
+        body: "",
+        media_ids: [],
+        image_url: "",
+        rate: 4
+    },
+    status: ""
 };
 const commentSlice = createSlice({
     initialState,
-    name: "COMMENT",
+    name: "COMMENT_MEDIA",
     reducers: {
+        onSetComment: (state, action) => {
+            const newComment = {
+                ...state.comment,
+                ...action.payload
+            }
+            state.comment = newComment
+        },
         clearPrevState: (state: any) => {
-            console.log("clearPrevState");
-            state.image_url = "";
+            const initComment = {
+                body: "",
+                media_ids: [],
+                image_url: "",
+                rate: 5
+            }
+            state.comment = initComment
         },
     },
     extraReducers: {
@@ -42,12 +64,16 @@ const commentSlice = createSlice({
             return { ...state, status: STATUS.LOADING };
         },
         [postAsyncMediaComment.fulfilled]: (state, { payload }) => {
-            console.log(payload);
+            const { model_id, original_url } = payload;
             return {
                 ...state,
-                image_url: payload,
                 status: STATUS.SUCCESS,
-            };
+                comment: {
+                    ...state.comment,
+                    media_ids: [model_id],
+                    image_url: original_url
+                }
+            }
         },
         [postAsyncMediaComment.rejected]: (state) => {
             return {
@@ -58,5 +84,5 @@ const commentSlice = createSlice({
     },
 });
 const { actions } = commentSlice;
-export const { clearPrevState } = actions;
+export const { clearPrevState, onSetComment } = actions;
 export default commentSlice.reducer;

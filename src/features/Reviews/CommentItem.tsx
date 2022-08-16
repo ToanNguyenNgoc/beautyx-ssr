@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import Rating from "@mui/material/Rating";
 import icon from "../../constants/icon";
-import { IComment } from "../../interface/comments";
+import { IComment, ICommentChild } from "../../interface/comments";
 import FullImage from "../OpenFullImage";
 import { AppContext } from "../../context/AppProvider";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,7 +34,7 @@ export default function CommentItem(props: IProps) {
     const [open, setOpen] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { t } = useContext(AppContext);
-    let body;
+    let body
     try {
         const cmt = JSON.parse(`${comment.body}`);
         body = {
@@ -63,6 +63,7 @@ export default function CommentItem(props: IProps) {
                     org_id: org_id,
                     media_ids: [commentRep.media_id].filter(Boolean),
                     body: commentRep.text,
+                    original_url: commentRep.img_url
                 };
                 setCommentRep({
                     text: '',
@@ -135,8 +136,11 @@ export default function CommentItem(props: IProps) {
         })
     };
     const displayTime = moment(comment.created_at).locale("vi").fromNow();
-    // console.log(commentRep);
-    // console.log(props)
+    let images_url_parent: string[] = comment.media_url.filter(Boolean)
+    if (body.image_url) {
+        images_url_parent = [body.image_url]
+    }
+
     return (
         <>
             <div className="evaluate-comment__top">
@@ -178,21 +182,22 @@ export default function CommentItem(props: IProps) {
             <div className="evaluate-comment__body">
                 {/* <span>Phân loại: Name of Service/Product</span> */}
                 <span>{body.text}</span>
-                {body.image_url ? (
-                    <>
-                        <div className="comment-img">
+                {
+                    images_url_parent.length > 0 &&
+                    images_url_parent?.map((item: string, index: number) => (
+                        <div key={index} className="comment-img">
                             <img
                                 onClick={() => setOpen(true)}
-                                src={body.image_url}
-                                onError={(e)=>{
+                                src={item}
+                                onError={(e) => {
                                     e.currentTarget.style.display = 'none';
-                                    if(e.currentTarget?.parentElement){e.currentTarget.parentElement.style.display= 'none'}
+                                    if (e.currentTarget?.parentElement) { e.currentTarget.parentElement.style.display = 'none' }
                                 }}
                                 alt=""
                             />
                         </div>
-                    </>
-                ) : null}
+                    ))
+                }
             </div>
             <div>
                 <Accordion>
@@ -222,7 +227,7 @@ export default function CommentItem(props: IProps) {
                         <div className="evaluate-comment__child">
                             <ul className="evaluate-comment__child-list">
                                 {comment?.children && (comment.children.length > 0 && comment.children.map(
-                                    (item: any, index: number) => (
+                                    (item: ICommentChild, index: number) => (
                                         <li
                                             key={index}
                                             className="evaluate-comment__child-item"
@@ -297,15 +302,15 @@ export default function CommentItem(props: IProps) {
                                             type="text"
                                             placeholder={`Trả lời ${comment?.user?.fullname}...`}
                                         />
-                                        {/* <label
+                                        <label
                                             className="btn-media"
-                                            htmlFor="file-reply"
+                                            htmlFor={`file-reply-${comment.id}`}
                                         >
                                             <img src={icon.addImg} alt="" />
-                                        </label> */}
+                                        </label>
                                         <input
                                             hidden
-                                            id="file-reply"
+                                            id={`file-reply-${comment.id}`}
                                             type="file"
                                             name="file"
                                             accept="image/png, image/jpeg"
@@ -321,7 +326,7 @@ export default function CommentItem(props: IProps) {
                                         </button>
                                     </div>
 
-                                    {/* {commentRep.img_url.length > 0 && (
+                                    {commentRep.img_url.length > 0 && (
                                         <div
                                             style={{ marginTop: "24px" }}
                                             className="evaluate-input__upload"
@@ -341,7 +346,7 @@ export default function CommentItem(props: IProps) {
                                                 />
                                             </button>
                                         </div>
-                                    )} */}
+                                    )}
                                 </div>
                             </ul>
                         </div>
