@@ -84,10 +84,11 @@
 }
 
 .map .dialog-map__detail {
-    margin-left: 16px;
+    margin-top: 32px;
+    margin-left: 12px;
     pointer-events: fill;
-    width: 22%;
-    max-height: 84vh;
+    width: 25%;
+    max-height: 90vh;
     background-color: #fff;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     border-radius: 16px;
@@ -850,6 +851,36 @@
     height: 30px;
     margin-top: 6px;
 }
+.map-marker-org{
+    width: fit-content;
+    height: fit-content;
+    width: 30px;
+    position: relative;
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    transition: all .3s;
+}
+
+.map-marker-org__img{
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    object-fit: cover;
+    border: solid 1px var(--red-cl);
+    z-index: 2;
+    transition: all .3s;
+}
+.map-marker-org::after{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    z-index: 1;
+    background-color: var(--red-cl);
+    content: "";
+    clip-path: polygon(100% 0, 0 0, 50% 100%);
+    margin-top: 17px;
+    transition: all .3s;
+}
 
 @media only screen and (max-width: 1023px) {
     .map-filter-cnt {
@@ -859,7 +890,7 @@
         z-index: 9;
     }
     .map-filter-cnt__left {
-        width: 60%;
+        width: 86%;
     }
     .map-filter-cnt__input input {
         font-size: 12px;
@@ -867,6 +898,7 @@
     .map-filter-cnt__right {
         padding-left: 0;
         width: 60%;
+        
     }
     .map-filter-cnt__right-switch {
         font-size: 12px;
@@ -994,5 +1026,15 @@
         padding: 4px 0px;
         color: var(--bgWhite);
         border-radius: 4px;
+    }
+    .map-org-de-mb-wrap{
+        height: 86vh;
+    }
+    .map .dialog-map__detail{
+        margin: 0px;
+        width: 100%;
+    }
+    .map .content-head img{
+        display: none;
     }
 }

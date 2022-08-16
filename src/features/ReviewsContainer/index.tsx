@@ -20,7 +20,6 @@ function ReviewsContainer(props: IProps) {
     const { open, setOpen, comments, totalItem, org_id, page, muiCustomClass } = props;
     const IS_MB = useFullScreen();
     const anchor = IS_MB ? "bottom" : "right";
-    console.log('watch all cmt',open);
     return (
         <Drawer open={open} anchor={anchor} className={muiCustomClass} onClose={() => setOpen(false)}>
             <div className="all-review-cnt">

@@ -1,8 +1,6 @@
 /* eslint-disable react/style-prop-object */
-import React, { useCallback, useRef, useState } from 'react';
-// import ReactMapboxGl, { Layer, Feature, Marker } from 'react-mapbox-gl';
-import ReactMapGL, { Marker, Popup, useMap } from 'react-map-gl';
-import { AddressAutofill, AddressMinimap, useConfirmAddress, config } from '@mapbox/search-js-react';
+import React, {useRef} from 'react';
+import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import './style.css'
 import axios from 'axios';
@@ -36,7 +34,6 @@ function MapBox() {
             >
                 xxx
             </button>
-            {/* <div ref={mapContainer} className="map-container" /> */}
             <ReactMapGL
                 // zoom={10}
                 style={{
@@ -49,18 +46,23 @@ function MapBox() {
                     zoom: 15
                 }}
                 attributionControl={true}
-                // initialViewState={{ latitude: 51.5072, longitude: 0.1276 }}
                 mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
                 ref={mapRef}
             // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
             >
+                <NavigationControl
+                    position='bottom-right'
+                    showCompass={true}
+                    showZoom={true}
+                />
                 <Marker
                     latitude={10.7993308}
                     longitude={106.6853966}
                 >
                     <img src={icon.pinMapRed} alt="" />
                 </Marker>
+
             </ReactMapGL>
         </div>
     );
