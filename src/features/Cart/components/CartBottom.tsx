@@ -44,7 +44,7 @@ function CartBottom(props: any) {
     GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (USER) {
       if((FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone))){
-        alert('cap nhap sdt nhe');
+        alert('cap nhap sdt nhé!');
       }
       else {
         if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
