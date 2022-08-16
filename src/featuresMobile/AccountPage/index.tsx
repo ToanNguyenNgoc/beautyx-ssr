@@ -68,9 +68,7 @@ export default function AccountMobile() {
     };
     return (
         <div className="accountMobile">
-            {USER && (
-                <DialogChangeInfo USER={USER} open={open} setOpen={setOpen} />
-            )}
+            {USER && <DialogChangeInfo USER={USER} open={open} setOpen={setOpen} />}
             {/* top */}
             <div className="accountMobile-top">
                 <div className="accountMobile-top__img">

@@ -21,8 +21,8 @@ declare global {
 window.confirmationResult = window.confirmationResult || {};
 
 function RenderRecatpcha(props: IPropOtp) {
-    const { open, setOpen, dataOtp, setDataOtp, handleSubmit }:IPropOtp = props;
-    const [openDialog, setOpenDialog] = useState(false);
+    const { open, setOpen, dataOtp, setDataOtp, handleSubmit, setOpenDialog }:IPropOtp = props;
+    // const [openDialog, setOpenDialog] = useState(false);
     const snackStatus = {
         SUCCESS: 'SUCCESS',
         FAIL: 'FAIL',
@@ -43,12 +43,13 @@ function RenderRecatpcha(props: IPropOtp) {
                         size: "invisible",
                         callback: (values: any) => {
                             // handleSubmit(values);
-                            console.log(values)
-                            setDataOtp({
-                                ...dataOtp,
-                                verification_id:values,
-                                telephone:phoneNumberVN
-                            })
+                            // console.log(values)
+                            
+                            // setDataOtp({
+                            //     ...dataOtp,
+                            //     verification_id:values,
+                            //     telephone:props
+                            // })
                         },
                     }
                 );
@@ -67,10 +68,14 @@ function RenderRecatpcha(props: IPropOtp) {
             window.recaptchaVerifier
         )
             .then((confirmationResult: any) => {
-                // console.log(confirmationResult.verification_id)
-                // setDataOtp({
-                //     ...dataOtp,
-                //     verification_id:confirmationResult.verification_id});
+                console.log(confirmationResult)
+                setDataOtp({
+                    ...dataOtp,
+                    telephone:values,
+                    verification_id:confirmationResult.verification_id
+                });
+                setOpenDialog(true);
+                    
                 window.confirmationResult = confirmationResult;
                 // setLoading(false);
             })
@@ -108,6 +113,7 @@ function RenderRecatpcha(props: IPropOtp) {
        
         generateRecaptcha(props);
         verifyWithPhone(props)
+       
     }
     const handleClose = () => {
         return setOpen(false)
@@ -118,7 +124,8 @@ function RenderRecatpcha(props: IPropOtp) {
     useEffect(() => {
         if(dataOtp.verification_id){
             handleClose()
-            setOpenDialog(true);
+            // setOpenDialog(true);
+            
         }
     }, [dataOtp.verification_id])
     return (
@@ -136,13 +143,6 @@ function RenderRecatpcha(props: IPropOtp) {
                 />
             </div>
         </Drawer>
-        <FieldOtps
-            open={openDialog}
-            setOpen={setOpenDialog}
-            dataOtp={dataOtp}
-            setDataOtp={setDataOtp}
-            handleSubmit={handleConfirm}
-        />
         <AlertSnack
             open={notiWarning.open}
             title={notiWarning.title}
@@ -154,14 +154,18 @@ function RenderRecatpcha(props: IPropOtp) {
         </>
     );
 }
-function FieldOtps (props:any){
+export function FieldOtps (props:any){
     const {open,setOpen,dataOtp,setDataOtp,handleSubmit}:IPropOtp = props
     const handleTelephone = (props:any) => {
         setDataOtp({
             ...dataOtp,
             code: props
         })
-        handleSubmit(props);
+        handleSubmit({
+            ...dataOtp,
+            code: props
+        });
+        setOpen(false);
     }
     return(
         <Drawer
