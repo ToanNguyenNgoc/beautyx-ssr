@@ -18,13 +18,15 @@ function SendOtp(telephone:number|string){
         
     }
     return(
-        DialogOtp({
-            open:open,
-            setOpen:setOpen,
-            dataOtp:dataOtp,
-            setDataOtp:setDataOtp,
-            handleSubmit: handleSubmit
-        })
+        // DialogOtp({
+        //     open:open,
+        //     setOpen:setOpen,
+        //     dataOtp:dataOtp,
+        //     setDataOtp:setDataOtp,
+        //     handleSubmit: handleSubmit
+        // })
+        <>
+        </>
     )
 }
 interface IProps{

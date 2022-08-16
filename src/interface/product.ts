@@ -1,7 +1,8 @@
+import { Category } from './category'
 export interface Product {
       branch_id: number
       brand_id: number
-      is_product: true
+      is_product: boolean
       commission_money: number
       commission_percen: number
       commission_plan: number
@@ -35,4 +36,7 @@ export interface Product {
       is_favorite: boolean,
       favorites_count: number,
       special_price_momo: number,
+      category: Category[],
+      is_displayed_home:number,
+      tags:any
 }

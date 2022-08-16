@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import IStore from "../../../../interface/IStore";
 import { IOrganization } from "../../../../interface/organization";
 import {
     fetchAsyncOrgComments,
@@ -21,7 +22,7 @@ function OrgReviews(props: IProps) {
     const dispatch = useDispatch();
     const [openAll, setOpenAll] = useState(false);
     const { org_id, comments, totalItem, status, page } = useSelector(
-        (state: any) => state.ORG_COMMENTS
+        (state: IStore) => state.ORG_COMMENTS
     );
     const handleOpenSeemoreCmt = () => {
         setOpenAll(true);
@@ -38,7 +39,7 @@ function OrgReviews(props: IProps) {
         }
     };
     useEffect(() => {
-        // callOrgComments();
+        callOrgComments();
     }, [org]);
     return (
         <>

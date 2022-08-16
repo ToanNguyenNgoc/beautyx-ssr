@@ -51,6 +51,7 @@ import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 import Result from "../features/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
 import ChatAll from "../features/Chat/ChatAll";
+import PageNotFound from "../components/PageNotFound";
 
 import MapBox from "../features/MapBeta";
 
@@ -199,6 +200,10 @@ function RouterConfig(props: any) {
     {
       path:"/ban-do",
       component:<HomeMap/>
+    },
+    {
+      path:"*",
+      component: <PageNotFound/>
     }
   ];
   const routesPrivate = [
@@ -243,19 +248,19 @@ function RouterConfig(props: any) {
     <BrowserRouter>
       <Switch>
         <Redirect exact from="/" to="homepage" />
-        {routes.map((item, index) => (
-          <RouterPage
-            key={index}
-            path={`${item.path}`}
-            pageComponent={item.component}
-          />
-        ))}
         {routesPrivate.map((item, index) => (
           <PrivateRoute
             USER={USER}
             key={index}
             path={`${item.path}`}
             component={item.component}
+          />
+        ))}
+        {routes.map((item, index) => (
+          <RouterPage
+            key={index}
+            path={`${item.path}`}
+            pageComponent={item.component}
           />
         ))}
       </Switch>

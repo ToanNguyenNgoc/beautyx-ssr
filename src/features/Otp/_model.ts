@@ -6,6 +6,7 @@ export interface IPropOtp{
     open: boolean
     dataOtp: IDataOtp
     setDataOtp: Dispatch<SetStateAction<IDataOtp>>
+    setOpenDialog:Dispatch<SetStateAction<boolean>>
     handleSubmit: (props:any)=>any
 }
 export interface IDataOtp{

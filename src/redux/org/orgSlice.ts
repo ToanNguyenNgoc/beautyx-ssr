@@ -5,9 +5,34 @@ import serviceApi from "../../api/serviceApi";
 import favorites from "../../api/favorite";
 import productsApi from "../../api/productApi";
 import { STATUS } from "../status";
+import { orgInit } from "../initials";
+import { IOrganization } from '../../interface/organization'
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
+import { Service } from '../../interface/service';
+import { Product } from '../../interface/product';
+import {IOrgMobaGalleries} from '../../interface/IOrgMobaGalleries';
 // end
+export interface IOrgSlice {
+    org: IOrganization,
+    status: string,
+    tab: number,
+    GALLERIES: {
+        galleries: IOrgMobaGalleries[],
+        org_subdomain: string,
+        status: string,
+    },
+    SERVICES_KEYWORD: {
+        services_keyword: Service[],
+        status: string,
+        total_services: number,
+    },
+    PRODUCTS_KEYWORD: {
+        products_keyword: Product[],
+        status: string,
+        total_products: number,
+    },
+}
 
 export const fetchAsyncOrg: any = createAsyncThunk(
     "ORG/fetchAsyncOrg",
@@ -70,13 +95,13 @@ export const fetchAsyncByKeyword: any = createAsyncThunk(
         }
     }
 );
-const initialState = {
-    org: {},
+const initialState: IOrgSlice = {
+    org: orgInit,
     status: "",
     tab: 1,
     GALLERIES: {
         galleries: [],
-        org_id: null,
+        org_subdomain: "",
         status: "",
     },
     SERVICES_KEYWORD: {
@@ -130,7 +155,7 @@ const orgSlice = createSlice({
                 ...state,
                 GALLERIES: {
                     galleries: payload.galleries,
-                    org_id: payload.org_id,
+                    org_subdomain: payload.org_id,
                     status: STATUS.SUCCESS,
                 },
             };

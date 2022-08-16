@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import mediaApi from "../../api/mediaApi";
 import icon from "../../constants/icon";
 import BeautyLoading from "../../components/BeautyxLoading";
 import {
     postAsyncMediaComment,
     clearPrevState,
+    onSetComment,
 } from "../../redux/commentSlice";
 import { STATUS } from "../../redux/status";
 import { AppContext } from "../../context/AppProvider";
+import IStore from "../../interface/IStore";
+
 interface IProps {
     handleOnchange?: any;
-    comment: any;
-    setComment: (comment: any) => void;
     handleKeyDown: any;
     user: any;
     handlePostComment: any;
@@ -24,16 +24,14 @@ interface IProps {
 function EvaluateInput(props: IProps) {
     const {
         handleOnchange,
-        comment,
         handleKeyDown,
         user,
         handlePostComment,
-        setComment,
         changeStyle,
     } = props;
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
-    const { image_url, status } = useSelector((state: any) => state.COMMENT);
+    const { comment, status } = useSelector((state: IStore) => state.COMMENT_MEDIA);
     const history = useHistory();
     //handle post media
     const onChangeMedia = (e: any) => {
@@ -49,18 +47,16 @@ function EvaluateInput(props: IProps) {
         formData.append("file", media);
         try {
             await dispatch(postAsyncMediaComment(media));
-            setComment({
-                ...comment,
-                image_url: image_url,
-            });
         } catch (error) {
             console.log(error);
         }
     };
 
     const onRemoveImgTemp = () => {
-        setComment({ ...comment, image_url: null });
-        dispatch(clearPrevState());
+        dispatch(onSetComment({
+            image_url:"",
+            media_ids:[]
+        }));
     };
     return (
         <>
@@ -79,13 +75,14 @@ function EvaluateInput(props: IProps) {
                 </div>
                 <div className="evaluate-input__wrap">
                     <input
+                        // multiple
                         onChange={handleOnchange}
                         onKeyDown={handleKeyDown}
                         placeholder={`${t("detail_item.write_a_comment")} ...`}
                         type="text"
-                        name={comment.text}
+                        name={comment.body}
                         id="comment"
-                        value={comment.text}
+                        value={comment.body}
                     />
                     <div className="input-btn">
                         <div
@@ -115,10 +112,10 @@ function EvaluateInput(props: IProps) {
                     </div>
                 </div>
             </div>
-            {image_url && status === STATUS.SUCCESS && (
+            {comment.image_url?.length > 0 && status === STATUS.SUCCESS && (
                 <div className="evaluate-input__upload">
                     <img
-                        src={image_url}
+                        src={comment.image_url}
                         className="evaluate-upload__img"
                         alt=""
                     />

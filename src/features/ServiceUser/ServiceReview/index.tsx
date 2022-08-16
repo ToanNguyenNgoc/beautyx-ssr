@@ -243,7 +243,7 @@ function ServiceReview(props: any) {
                                 </div>
                             </div>
                         </div>
-                        {COMMENTS.image_url && (
+                        {COMMENTS && COMMENTS.image_url && (
                             <div
                                 style={{ marginTop: "24px" }}
                                 className="evaluate-input__upload"

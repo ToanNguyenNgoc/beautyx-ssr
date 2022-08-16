@@ -39,14 +39,15 @@ import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import { formatSalePriceService } from "../../utils/formatPrice";
 import { Service } from "../../interface/service";
+import IStore from "../../interface/IStore";
 // end
 
-function ServiceDetail(props: any) {
+function ServiceDetail() {
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
-    const ORG = useSelector((state: any) => state.ORG);
-    const { SERVICE, COMMENTS } = useSelector((state: any) => state.SERVICE);
+    const ORG = useSelector((state: IStore) => state.ORG);
+    const { SERVICE, COMMENTS } = useSelector((state: IStore) => state.SERVICE);
     const params: any = extraParamsUrl();
     const history = useHistory();
     const is_mobile = useFullScreen();

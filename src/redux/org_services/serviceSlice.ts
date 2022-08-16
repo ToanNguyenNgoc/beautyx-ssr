@@ -4,6 +4,29 @@ import commentsApi from "../../api/commentsApi";
 import { STATUS } from "../status";
 import favorites from "../../api/favorite";
 import { IComment } from "../../interface/comments";
+import { Service } from '../../interface/service';
+import { serviceInit } from '../initials';
+
+
+export interface ISERVICE {
+    SERVICE: {
+        service: Service,
+        status: string,
+        org_id: number | null,
+    },
+    SERVICES_REC: {
+        services: Service[],
+        cate_id: number | null,
+        status: string,
+    },
+    COMMENTS: {
+        service_id: any;
+        comments: IComment[];
+        page: number;
+        totalItem: number;
+        status_cmt: string;
+    };
+}
 
 // get service detail
 export const fetchAsyncServiceDetail: any = createAsyncThunk(
@@ -41,6 +64,7 @@ export const postAsyncComment: any = createAsyncThunk(
                     ...res.data.context,
                     children: [],
                     user: params.user,
+                    media_url: [params.values.image_url]
                 },
             };
             return payload;
@@ -60,6 +84,7 @@ export const postAsyncReplyServiceComments: any = createAsyncThunk(
             body: res.data.context.body,
             user_id: res.data.context.user_id,
             user: values.user,
+            media:[{original_url: values.values.original_url}]
         };
     }
 );
@@ -119,20 +144,9 @@ export const fetchAsyncServicesRec: any = createAsyncThunk(
         return payload;
     }
 );
-interface InitialState {
-    SERVICE: any;
-    SERVICES_REC: any;
-    COMMENTS: {
-        service_id: any;
-        comments: IComment[];
-        page: number;
-        totalItem: number;
-        status_cmt: string;
-    };
-}
-const initialState: InitialState = {
+const initialState: ISERVICE = {
     SERVICE: {
-        service: {},
+        service: serviceInit,
         status: "",
         org_id: null,
     },

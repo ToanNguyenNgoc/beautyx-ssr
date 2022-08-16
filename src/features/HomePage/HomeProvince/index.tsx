@@ -1,11 +1,12 @@
 import React, { useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
+import {  Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { AppContext } from "../../../context/AppProvider";
 import { IProvince } from "../../../interface/provinces";
 import scrollTop from "../../../utils/scrollTop";
 import HomeTitle from "../Components/HomeTitle";
 import { formatRoundOrgCount } from "../../../utils/format";
+import {LazyLoadImage} from 'react-lazy-load-image-component'
 
 function HomeProvince(props: any) {
     const { t } = useContext(AppContext);
@@ -40,7 +41,12 @@ function HomeProvince(props: any) {
                             key={index}
                             className="home-province_item"
                         >
-                            <img src={`${item.media[1].original_url}`} alt="" />
+                            <LazyLoadImage 
+                                width="100%"
+                                height="100%"
+                                effect="blur"
+                                src={`${item.media[1].original_url}`} alt="" 
+                            />
                             <div className="province-item-cnt">
                                 <span>{item.name}</span>
                                 <span>

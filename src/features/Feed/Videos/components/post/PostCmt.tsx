@@ -67,11 +67,9 @@ export default function PostComment(props: any) {
             }
             <EvaluateInput
                 handleOnchange={handleComment}
-                comment={comment}
                 handleKeyDown={handleKeyDown}
                 user={user}
                 handlePostComment={handlePostComment}
-                setComment={setComment}
             />
         </div>
     );

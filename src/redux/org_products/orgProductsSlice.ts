@@ -3,6 +3,7 @@ import productsApi from "../../api/productApi";
 import categoryApi from "../../api/categoryApi";
 import { STATUS } from "../status";
 import { Product } from "../../interface/product";
+import { Category } from '../../interface/category'
 
 interface IPRODUCTS {
     products: Product[];
@@ -11,10 +12,10 @@ interface IPRODUCTS {
     status_pr: string;
 }
 interface ICATE {
-    categories: [];
+    categories: Category[];
     status: string;
 }
-interface IINITIALSTATE {
+export interface IORG_PRODUCTS {
     CATE: ICATE;
     PRODUCTS: IPRODUCTS;
     org_id: any;
@@ -49,7 +50,7 @@ export const fetchAsyncProducts: any = createAsyncThunk(
         return payload;
     }
 );
-const initialState: IINITIALSTATE = {
+const initialState: IORG_PRODUCTS = {
     org_id: null,
     choose_cate: null,
     CATE: {
@@ -80,7 +81,7 @@ const orgProductsSlice = createSlice({
         onChooseCateServices: (state, { payload }) => {
             state.choose_cate = payload;
         },
-        onSetEmptyChooseCatePr:(state)=>{
+        onSetEmptyChooseCatePr: (state) => {
             state.choose_cate = null
         }
     },

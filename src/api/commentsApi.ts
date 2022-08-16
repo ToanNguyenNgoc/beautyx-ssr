@@ -26,6 +26,7 @@ class Comments {
             organization_id: values.org_id,
             body: values.body,
             media_ids: values.media_ids,
+            rate: values.rate
         };
         return axiosClient.post(url, params, AUTH_HEADER());
     };
@@ -53,6 +54,7 @@ class Comments {
             organization_id: values.org_id,
             body: values.body,
             media_ids: values.media_ids,
+            rate: values.rate
         };
         return axiosClient.post(url, params, AUTH_HEADER());
     };
