@@ -248,19 +248,19 @@ function RouterConfig(props: any) {
     <BrowserRouter>
       <Switch>
         <Redirect exact from="/" to="homepage" />
-        {routes.map((item, index) => (
-          <RouterPage
-            key={index}
-            path={`${item.path}`}
-            pageComponent={item.component}
-          />
-        ))}
         {routesPrivate.map((item, index) => (
           <PrivateRoute
             USER={USER}
             key={index}
             path={`${item.path}`}
             component={item.component}
+          />
+        ))}
+        {routes.map((item, index) => (
+          <RouterPage
+            key={index}
+            path={`${item.path}`}
+            pageComponent={item.component}
           />
         ))}
       </Switch>
