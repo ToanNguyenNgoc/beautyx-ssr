@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
@@ -16,16 +17,22 @@ export default function MapTagsOrgItem(props: IProps) {
     const { item, handleSetLocation, location, setOpenDetail, openDetail } =
         props;
     const dispatch = useDispatch();
+    const history = useHistory();
     const onHoveItem = () => {
         handleSetLocation(item);
     };
     const gotoDetail = () => {
-        setOpenDetail({
-            ...openDetail,
-            open: true,
-            check: true,
+        // setOpenDetail({
+        //     ...openDetail,
+        //     open: true,
+        //     check: true,
+        // });
+        // dispatch(fetchAsyncOrg(item.subdomain));
+        history.push({
+            pathname: `/org/${item.subdomain}`,
+            // search: `${item.id}`,
+            state: item,
         });
-        dispatch(fetchAsyncOrg(item.subdomain));
     };
     return (
         <div

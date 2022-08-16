@@ -14,6 +14,9 @@ import {
 import OrgProductItem from "./OrgProductItem";
 import { AppContext } from "../../../../context/AppProvider";
 import EmptyRes from '../../../EmptyRes';
+import IStore from '../../../../interface/IStore';
+import { Category } from '../../../../interface/category'
+
 interface IProps {
     org: IOrganization;
 }
@@ -22,7 +25,7 @@ function OrgProducts(props: IProps) {
     const { org } = props;
     const { t } = useContext(AppContext);
     const { CATE, PRODUCTS, choose_cate, org_id } = useSelector(
-        (state: any) => state.ORG_PRODUCTS
+        (state: IStore) => state.ORG_PRODUCTS
     );
     const { categories, status } = CATE;
     const { products, page, totalItem, status_pr } = PRODUCTS;
@@ -74,7 +77,7 @@ function OrgProducts(props: IProps) {
     return (
         <div className="org-services-cnt">
             {
-                (categories && categories.filter((e: any) => e.products_count > 0).length > 0)
+                (categories && categories.filter((e: Category) => e.products_count > 0).length > 0)
                 &&
                 <div className="org-services-cnt__left">
                     <ul className="cates-list">
@@ -105,8 +108,8 @@ function OrgProducts(props: IProps) {
                         </li>
                         {
                             categories
-                                .filter((i: any) => i.products_count > 0)
-                                .map((item: any, index: number) => (
+                                .filter((i: Category) => i.products_count > 0)
+                                .map((item: Category, index: number) => (
                                     <li
                                         style={
                                             choose_cate === item.id

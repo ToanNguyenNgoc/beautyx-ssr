@@ -8,7 +8,7 @@ import { IOrganization } from "../../interface/organization";
 import icon from "../../constants/icon";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     fetchOrgsMapFilter,
     onSetOrgsMapEmpty,
@@ -16,11 +16,14 @@ import {
 } from "../../redux/org/orgMapSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { Switch } from "@mui/material";
+import { onSwitchValueCenter } from "../../redux/org/orgMapSlice";
+import IStore from "../../interface/IStore";
 
 const PlaceComponent = (props: any) => {
     const { map, setZoom, setOpenDetail, openDetail } = props;
     const dispatch = useDispatch();
     const [orgs, setOrgs] = useState<IOrganization[]>([]);
+    const { getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP);
 
     const callOrgsByKeyword = async (keyword: string) => {
         try {
@@ -28,11 +31,13 @@ const PlaceComponent = (props: any) => {
                 page: 1,
                 limit: 5,
                 keyword: keyword,
-                sort: "distance",
-            });
-            setOrgs(res.data.context.data);
-        } catch (error) {}
-    };
+                sort: "distance"
+            })
+            setOrgs(res.data.context.data)
+        } catch (error) {
+
+        }
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const debounceDropDown = useCallback(
         debounce((nextValue) => {
@@ -72,9 +77,10 @@ const PlaceComponent = (props: any) => {
         });
     };
     const onInputChange = (e: any) => {
-        setValue(e.target.value);
-        debounceDropDown(e.target.value);
-    };
+        const keyword = e.target.value
+        setValue(keyword)
+        debounceDropDown(keyword)
+    }
     const onClickOrgItemClick = (org: IOrganization) => {
         setZoom(16);
         setOpenDetail({
@@ -87,7 +93,7 @@ const PlaceComponent = (props: any) => {
         setOrgs([]);
         dispatch(onSetOrgCenter(org));
         clearSuggestions();
-    };
+    }
     return (
         <>
             <div className=" map-filter-cnt">
@@ -146,7 +152,7 @@ const PlaceComponent = (props: any) => {
                 </div>
                 <div className="map-filter-cnt__right">
                     <div className="flex-row map-filter-cnt__right-switch">
-                        <Switch defaultChecked size="small" />
+                    <Switch defaultChecked size="small" />
                         Cập nhật khi di chuyển bản đồ
                     </div>
                 </div>

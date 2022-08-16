@@ -16,11 +16,13 @@ import { AppContext } from "../../../context/AppProvider";
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
 // end 
 import { checkPhoneValid } from "../../../utils/phoneUpdate";
+import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
 
 function CartBottom(props: any) {
   const { orgs, chooseOrg, chooseOrgClick } = props;
   const { t } = useContext(AppContext);
   const USER = useSelector((state: any) => state.USER.USER)
+  const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
   const dispatch = useDispatch();
   const history = useHistory();
   const [popUp, setPopUp] = useState(false);
@@ -41,16 +43,16 @@ function CartBottom(props: any) {
   const gotoPayment = () => {
     GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (USER) {
-      if(checkPhoneValid(USER?.telephone)){
+      if((FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone))){
+        alert('cap nhap sdt nhe');
+      }
+      else {
         if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
           scrollTop();
           history.push("/payment");
         } else {
           setPopUp(true);
         }
-      }
-      else {
-        alert('cap nhap sdt nhe');
       }
     } else {
       setPopupSign(true);

@@ -30,9 +30,9 @@
 
 .map .dialog-map__close {
     position: absolute;
-    top: 14px;
+    top: 11px;
     right: 60px;
-    z-index: 2;
+    z-index: 20000;
     background-color: var(--purple);
     border-radius: 100px;
     padding: 2px;
@@ -55,7 +55,7 @@
     padding-top: 48px;
     display: flex;
     flex-direction: column;
-    width: 25%;
+    width: 20%;
     height: 100%;
     overflow-y: scroll;
     background-color: var(--bgWhite);
@@ -84,7 +84,7 @@
 }
 
 .map .dialog-map__detail {
-    margin-left: 24px;
+    margin-left: 16px;
     pointer-events: fill;
     width: 22%;
     max-height: 84vh;
@@ -798,7 +798,79 @@
     object-fit: contain;
 }
 
+.map .content-info__special {
+    border-bottom: 1px solid #ccc;
+    margin: 16px 0 0;
+}
+
+.map .special-title {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+    padding: 0 16px;
+}
+
+.map .special-list {
+    padding: 16px;
+}
+
+.map .org-special-item {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+
+/* map :current user */
+
+.map-current-user {
+    position: fixed;
+    bottom: 186px;
+    right: 0;
+    z-index: 10;
+    margin: 0px 9px 0px 0px;
+}
+
+.map-current-user__btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: var(--bgWhite);
+    box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+}
+
+.map-current-user__btn img {
+    width: 30px;
+    height: 30px;
+    margin-top: 6px;
+}
+
 @media only screen and (max-width: 1023px) {
+    .map-filter-cnt {
+        align-items: unset;
+        flex-direction: column;
+        grid-gap: 8px 0;
+        z-index: 9;
+    }
+    .map-filter-cnt__left {
+        width: 60%;
+    }
+    .map-filter-cnt__input input {
+        font-size: 12px;
+    }
+    .map-filter-cnt__right {
+        padding-left: 0;
+        width: 60%;
+    }
+    .map-filter-cnt__right-switch {
+        font-size: 12px;
+        grid-gap: 0 6px;
+        padding: 4px 10px 4px 6px;
+        width: 100%;
+    }
     .open-map {
         padding: 6px 14px;
     }

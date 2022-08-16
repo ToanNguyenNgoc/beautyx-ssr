@@ -12,10 +12,12 @@ import { AppContext } from "../../../../context/AppProvider";
 import { checkPhoneValid } from "../../../../utils/phoneUpdate";
 import RenderRecatpcha,{FieldOtps} from "../../../../features/Otp/dialogOtp";
 import { IDataOtp } from "../../../../features/Otp/_model";
+import { FLAT_FORM_TYPE } from "../../../../rootComponents/flatForm";
 export default function DialogChangeInfo(props: any) {
     const { open, setOpen } = props;
     const { t } = useContext(AppContext);
     const { USER } = useSelector((state: any) => state.USER);
+    const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     const dispatch = useDispatch();
     const [otp, setOtp] = useState(false);
     const [otpCode, setOtpCode] = useState(false);
@@ -130,7 +132,7 @@ export default function DialogChangeInfo(props: any) {
                                     USER?.telephone
                                 }
                                 {" "}
-                                {!checkPhoneValid(USER?.telephone) && <div onClick={() => handleOtp()}>!__UPDATE_NOW__</div>}
+                                {FLAT_FORM===FLAT_FORM_TYPE.MB&&(!checkPhoneValid(USER?.telephone) && <div onClick={() => handleOtp()}>!__UPDATE_NOW__</div>)}
                             </span>
                         </div>
                         <div className="edit-user__email">

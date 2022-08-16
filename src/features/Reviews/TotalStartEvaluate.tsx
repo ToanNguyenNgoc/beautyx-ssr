@@ -67,7 +67,7 @@ export default function TotalStartEvaluate(props: IProps) {
             <div className="evaluate-rating__mobile">
                 <div className="rating-left">
                     <div className="evaluate-rating__total rating-left__total">
-                        <span>{item.rating > 0 ? item.rating : 0}/</span>
+                        <span>{item.rating > 0 ? ((item.rating === 5) ? 5 : 4+(item.rating/10)) : 0}/</span>
                         <span>5</span>
                     </div>
                     <div className="rating-left__infor">

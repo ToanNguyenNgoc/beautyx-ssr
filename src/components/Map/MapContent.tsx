@@ -40,11 +40,8 @@ export default function MapContent(props: IProps) {
     const handleToggleListOrg = () => {
         refListOrg.current.classList.toggle("list-org__active");
         setOpenListOrg(!openListOrg);
-        if (
-            openListOrg === false &&
-            openDetail.open === false &&
-            openDetail.check === true
-        ) {
+        if ( !openListOrg && !openDetail.open && openDetail.check) 
+        {
             setOpenDetail({
                 ...openDetail,
                 open: true,
@@ -55,11 +52,7 @@ export default function MapContent(props: IProps) {
                 open: false,
             });
         }
-        if (
-            openListOrg === false &&
-            openDetail.open === true &&
-            openDetail.check === true
-        ) {
+        if (!openListOrg && openDetail.open && openDetail.check) {
             setOpenDetail({
                 ...openDetail,
                 open: true,

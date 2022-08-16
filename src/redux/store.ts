@@ -56,7 +56,7 @@ const rootReducer = {
     VID: videosReducer,
     TRENDs: trendReducer,
     APP: appReducer,
-    COMMENT: commentReducer,
+    COMMENT_MEDIA: commentReducer,
     ORDER: orderReducer,
     SEARCH_RESULT: searchResultReducer,
     FILTER: filterReducer,

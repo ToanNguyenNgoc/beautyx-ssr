@@ -8,81 +8,82 @@ import { Product } from '../../../../interface/product'
 import OrgServiceItem from './OrgServiceItem';
 import OrgProductItem from './OrgProductItem';
 import EmptyRes from '../../../EmptyRes';
-import OrgVoucher from './OrgVoucher';
+import IStore from '../../../../interface/IStore';
 
 function OrgDealHot() {
-    const ORG = useSelector((state: any) => state.ORG);
-    const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
+    const ORG = useSelector((state: IStore) => state.ORG);
+    const ORG_SPECIALS = useSelector((state: IStore) => state.ORG_SPECIALS);
     const { SERVICES_SPECIAL, PRODUCTS_SPECIAL } = ORG_SPECIALS;
-    const { DISCOUNTS } = useSelector((state: any) => state.ORG_DISCOUNTS);
-    const discounts: IDiscountPar[] = DISCOUNTS.discounts;
-    console.log(ORG)
+    const { DISCOUNTS } = useSelector((state: IStore) => state.ORG_DISCOUNTS);
+    const discounts: IDiscountPar[] = DISCOUNTS.discounts
     return (
         <div className="org-deal-hot">
-            {/* <OrgVoucher
-                org_id={ORG.org?.id}
-            /> */}
-            {
-                discounts?.length > 0 &&
+            {discounts?.length > 0 && (
                 <div className="org-deal-hot__discounts">
                     <ul className="list">
-                        {
-                            discounts
-                                ?.filter((i: IDiscountPar) => i.discount_type === "PRODUCT")
-                                ?.map((discount: any, index: number) => (
-                                    <li key={index} className="org-discount__item">
-                                        {
-                                            discount.items.map((item: IITEMS_DISCOUNT, i: number) => (
-                                                <DiscountItem
-                                                    key={i}
-                                                    discountItem={item}
-                                                    discountPar={discount}
-                                                />
-                                            ))
-                                        }
-                                    </li>
-                                ))
-                        }
+                        {discounts
+                            ?.filter(
+                                (i: IDiscountPar) =>
+                                    i.discount_type === "PRODUCT"
+                            )
+                            ?.map((discount: any, index: number) => (
+                                <li key={index} className="org-discount__item">
+                                    {discount.items.map(
+                                        (item: IITEMS_DISCOUNT, i: number) => (
+                                            <DiscountItem
+                                                key={i}
+                                                discountItem={item}
+                                                discountPar={discount}
+                                            />
+                                        )
+                                    )}
+                                </li>
+                            ))}
                     </ul>
                 </div>
-            }
-            {
-                SERVICES_SPECIAL.services_special?.length > 0 &&
+            )}
+            {SERVICES_SPECIAL.services_special?.length > 0 && (
                 <div className="org-deal-hot__section">
                     <span className="org-deal-hot__section-title">Dịch vụ</span>
                     <ul className="org-special__list">
-                        {
-                            SERVICES_SPECIAL.services_special?.map((item: Service, index: number) => (
+                        {SERVICES_SPECIAL.services_special?.map(
+                            (item: Service, index: number) => (
                                 <li key={index}>
                                     <OrgServiceItem
                                         org={ORG.org}
                                         service={item}
                                     />
                                 </li>
-                            ))
-                        }
+                            )
+                        )}
                     </ul>
                 </div>
-            }
-            {
-                PRODUCTS_SPECIAL.products_special?.length > 0 &&
+            )}
+            {PRODUCTS_SPECIAL.products_special?.length > 0 && (
                 <div className="org-deal-hot__section">
-                    <span className="org-deal-hot__section-title">Sản phẩm</span>
+                    <span className="org-deal-hot__section-title">
+                        Sản phẩm
+                    </span>
                     <ul className="org-special__list">
-                        {
-                            PRODUCTS_SPECIAL.products_special?.map((item: Product, index: number) => (
+                        {PRODUCTS_SPECIAL.products_special?.map(
+                            (item: Product, index: number) => (
                                 <li key={index}>
                                     <OrgProductItem
                                         org={ORG.org}
                                         product={item}
                                     />
                                 </li>
-                            ))
-                        }
+                            )
+                        )}
                     </ul>
                 </div>
-            }
-            {(discounts?.length + SERVICES_SPECIAL.services_special?.length + PRODUCTS_SPECIAL.products_special?.length) == 0 && <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />}
+            )}
+            {discounts?.length +
+                SERVICES_SPECIAL.services_special?.length +
+                PRODUCTS_SPECIAL.products_special?.length ==
+                0 && (
+                <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />
+            )}
         </div>
     );
 }

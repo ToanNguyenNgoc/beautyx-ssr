@@ -8,7 +8,7 @@ import LoadOrg from "../../components/LoadingSketion/LoadOrg";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
-import { IDiscountPar } from "../../interface/discount";
+// import { IDiscountPar } from "../../interface/discount";
 import { addVoucherByOrg } from "../../redux/cartSlice";
 import {
   fetchAsyncOrg,
@@ -33,6 +33,7 @@ import HeadTitle from "../HeadTitle/index";
 import HeadOrg from "./components/HeadOrg";
 import OrgContainer from "./components/OrgContainer";
 import OrgDetail from "./components/OrgDetail";
+import IStore from "../../interface/IStore";
 import "./style.css";
 
 
@@ -43,7 +44,7 @@ function MerchantDetail() {
   const param = formatOrgParam(location.pathname);
   const { sub_domain } = param;
 
-  const ORG = useSelector((state: any) => state.ORG);
+  const ORG = useSelector((state: IStore) => state.ORG);
   const ORG_SPECIALS = useSelector((state: any) => state.ORG_SPECIALS);
   const { SERVICES_SPECIAL, PRODUCTS_SPECIAL, org_id } = ORG_SPECIALS;
   const { status_ser } = SERVICES_SPECIAL;
@@ -62,7 +63,7 @@ function MerchantDetail() {
     }
   }
   const callGalleriesOrg = () => {
-    if (GALLERIES.org_id !== sub_domain || GALLERIES.status !== STATUS.SUCCESS) {
+    if (GALLERIES.org_subdomain !== sub_domain || GALLERIES.status !== STATUS.SUCCESS) {
       dispatch(fetchOrgGalleries(sub_domain))
     }
   }
@@ -139,7 +140,7 @@ function MerchantDetail() {
   }, [ORG_DISCOUNTS.DISCOUNTS, SERVICES_SPECIAL, PRODUCTS_SPECIAL]);
 
   let loading = false;
-  if (status === STATUS.LOADING && GALLERIES.org !== sub_domain) {
+  if (status === STATUS.LOADING && GALLERIES.org_subdomain !== sub_domain) {
     loading = true
   }
 

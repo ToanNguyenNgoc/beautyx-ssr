@@ -101,7 +101,7 @@ export default function AppProvider({ children }) {
         sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
       }
     }
-    else if (platform === FLAT_FORM_TYPE.BEAUTYX) {
+    else{
       getLocationPlatFormBeauty()
     }
   }, [response, getLocationPlatFormTiki]);
