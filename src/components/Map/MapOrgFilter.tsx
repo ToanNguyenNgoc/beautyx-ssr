@@ -18,6 +18,7 @@ import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { Switch } from "@mui/material";
 import { onSwitchValueCenter } from "../../redux/org/orgMapSlice";
 import IStore from "../../interface/IStore";
+import axios from "axios";
 
 const PlaceComponent = (props: any) => {
     const { map, setZoom, setOpenDetail, openDetail } = props;
@@ -53,6 +54,9 @@ const PlaceComponent = (props: any) => {
         clearSuggestions,
     } = usePlacesAutocomplete();
     // console.log(data)
+    const [coorAddress, setCoorAddress] = useState([]);
+    const [keyword, setKeyword] = useState("");
+    const keyMapBox = process.env.REACT_APP_MAPBOX_TOKEN
     const handleSelect = (description: any) => {
         setValue(description.description, false);
         setOpenDetail({
@@ -76,9 +80,30 @@ const PlaceComponent = (props: any) => {
             );
         });
     };
-    const onInputChange = (e: any) => {
+    const handleSelectAddressItem=(a:any)=>{
+        setKeyword(a.place_name);
+        setCoorAddress([]);
+        setOrgs([]);
+        setZoom(14);
+        const geo = a.center.reverse().join(",");
+        console.log(a.center[1])
+        map?.panTo({ lat: a.center[0], lng: a.center[1] });
+        dispatch(onSetOrgsMapEmpty());
+        dispatch(
+            fetchOrgsMapFilter({
+                page: 1,
+                LatLng: geo,
+            })
+        );
+
+    }
+    const onInputChange = async (e: any) => {
         const keyword = e.target.value
-        setValue(keyword)
+        // setValue(keyword)
+        setKeyword(keyword)
+        const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?access_token=${keyMapBox}&country=vn`;
+        const res: any = await axios.get(url);
+        setCoorAddress(res.features)
         debounceDropDown(keyword)
     }
     const onClickOrgItemClick = (org: IOrganization) => {
@@ -102,7 +127,7 @@ const PlaceComponent = (props: any) => {
                         <input
                             type="text"
                             placeholder="Tìm kiếm trên bản đồ"
-                            value={value}
+                            value={keyword}
                             onChange={onInputChange}
                             disabled={!ready}
                         />
@@ -114,7 +139,7 @@ const PlaceComponent = (props: any) => {
                     </div>
                     <div className="map-filter-cnt__drop">
                         <ul className="map-filter-list-org">
-                            {status === "OK" &&
+                            {/* {status === "OK" &&
                                 data.map((suggestion) => {
                                     const {
                                         place_id,
@@ -135,7 +160,18 @@ const PlaceComponent = (props: any) => {
                                             <small>{secondary_text}</small>
                                         </li>
                                     );
-                                })}
+                                })} */}
+                            {keyword.length > 0 &&
+                                coorAddress.length > 0 &&
+                                coorAddress.map((i: any, index: number) => (
+                                    <li
+                                        onClick={() => handleSelectAddressItem(i)}
+                                        className="map-list-org__item"
+                                        key={index}
+                                    >
+                                        {i.place_name}
+                                    </li>
+                                ))}
                             {orgs.length > 0 &&
                                 value.length > 0 &&
                                 orgs.map((i: IOrganization, index: number) => (
@@ -152,7 +188,7 @@ const PlaceComponent = (props: any) => {
                 </div>
                 <div className="map-filter-cnt__right">
                     <div className="flex-row map-filter-cnt__right-switch">
-                    <Switch defaultChecked size="small" />
+                        <Switch defaultChecked size="small" />
                         Cập nhật khi di chuyển bản đồ
                     </div>
                 </div>
