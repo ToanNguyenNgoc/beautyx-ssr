@@ -9,39 +9,24 @@ import { formatDistance } from "../../utils/format";
 import MapOrgItemDetailMb from "./MapOrgItemDetailMb";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 
-interface IProps {
-    item: IOrganization,
-    handleDirection: () => void
+interface IProps{
+    item: IOrganization
 }
 
 export default function MapTagsItemMB(props: IProps) {
-    const { item, handleDirection } = props;
-    const org: IOrganization = useSelector((state: any) => state.ORG.org);
-    const dispatch = useDispatch();
-    const [open, setOpen] = useState(false);
+    const { item } = props;
     const history = useHistory();
     const gotoDetail = () => {
-        setOpen(true)
-        dispatch(fetchAsyncOrg(item.subdomain));
-        // history.push({
-        //     pathname: `/org/${item.subdomain}`,
-        //     // search: `${item.id}`,
-        //     state: item,
-        // });
-    };
-    const onRouteDirection = (e: any) => {
+        // setOpen(true)
         // dispatch(fetchAsyncOrg(item.subdomain));
-        e.stopPropagation()
-        handleDirection()
-    }
+        history.push({
+            pathname: `/org/${item.subdomain}`,
+            // search: `${item.id}`,
+            state: item,
+        });
+    };
     return (
         <>
-            <MapOrgItemDetailMb
-                open={open}
-                setOpen={setOpen}
-                org={org}
-                handleDirection={handleDirection}
-            />
             <div onClick={gotoDetail} className="map-item__wrap">
                 <div className="map-item__mobile">
                     <div className="item-img">
@@ -88,17 +73,11 @@ export default function MapTagsItemMB(props: IProps) {
                                 />
                                 {formatDistance(item.distance)}
                             </div>
-                        )} */}
-                        </div>
-                        <button
-                            onClick={(e) => onRouteDirection(e)}
-                            className="item-content__btn-direction"
-                        >
-                            Đường đi
-                        </button>
+                            )}*/}
                     </div>
                 </div>
             </div>
+        </div>
         </>
     );
 }

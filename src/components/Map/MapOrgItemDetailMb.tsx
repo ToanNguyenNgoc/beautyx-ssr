@@ -23,7 +23,7 @@ function MapOrgItemDetailMb(props: IProps) {
                     org={org}
                     openDetail={open}
                     setOpenDetail={setOpen}
-                    handleDirection={handleDirection}
+                    // handleDirection={handleDirection}
                 />
             </div>
         </Drawer>

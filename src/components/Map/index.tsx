@@ -25,9 +25,7 @@ export default function Map(props: any) {
                         <img src={icon.closeCircleWhite} alt="" />
                     </div>
                 </div>
-                <MapContent 
-                    orgs={data} 
-                />
+                <MapContent orgs={data} />
             </div>
         </Dialog>
     );

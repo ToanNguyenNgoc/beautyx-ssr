@@ -58,7 +58,7 @@ function LoginFlatFormRequest(props: any) {
                 });
                 break;
             case FLAT_FORM_TYPE.MB:
-                handleLoginMB();
+                // handleLoginMB();
                 break;
             default:
                 break;
