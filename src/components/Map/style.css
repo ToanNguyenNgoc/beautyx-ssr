@@ -32,7 +32,7 @@
     position: absolute;
     top: 11px;
     right: 60px;
-    z-index: 10;
+    z-index: 1000;
     background-color: var(--purple);
     border-radius: 100px;
     padding: 2px;
@@ -261,6 +261,7 @@
     height: 100%;
     object-fit: cover;
 }
+
 
 /* .dialog-map__org .map-item__content {
     padding: 16px;
@@ -527,6 +528,7 @@
     width: 100%;
 }
 
+
 /* map filter container */
 
 .map-filter-cnt {
@@ -586,6 +588,7 @@
     border-radius: 3px;
 }
 
+
 /* .map-filter-list-org{
     padding: 12px;
 } */
@@ -622,6 +625,7 @@
     border-radius: 3px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
 }
+
 
 /* end map filter */
 
@@ -736,7 +740,7 @@
     font-size: 14px;
 }
 
-.map .content-img:hover > .content-seemore__img {
+.map .content-img:hover>.content-seemore__img {
     visibility: visible;
     opacity: 1;
     transition: all 0.3s;
@@ -810,24 +814,31 @@
     height: 100%;
     object-fit: contain;
 }
+
 .map .content-info__special {
     border-bottom: 1px solid #ccc;
     margin: 16px 0 0;
 }
+
 .map .special-title {
     font-weight: 800;
     font-size: 16px;
     line-height: 24px;
     padding: 0 16px;
 }
+
 .map .special-list {
     padding: 16px;
 }
+
 .map .org-special-item {
     border: 1px solid #ccc;
     border-radius: 8px;
 }
+
+
 /* map :current user */
+
 .map-current-user {
     position: fixed;
     bottom: 186px;
@@ -835,6 +846,7 @@
     z-index: 10;
     margin: 0px 9px 0px 0px;
 }
+
 .map-current-user__btn {
     width: 40px;
     height: 40px;
@@ -846,12 +858,14 @@
     display: flex;
     justify-content: center;
 }
+
 .map-current-user__btn img {
     width: 30px;
     height: 30px;
     margin-top: 6px;
 }
-.map-marker-org{
+
+.map-marker-org {
     width: fit-content;
     height: fit-content;
     width: 30px;
@@ -860,7 +874,7 @@
     transition: all .3s;
 }
 
-.map-marker-org__img{
+.map-marker-org__img {
     position: absolute;
     width: 30px;
     height: 30px;
@@ -870,7 +884,8 @@
     z-index: 2;
     transition: all .3s;
 }
-.map-marker-org::after{
+
+.map-marker-org::after {
     width: 30px;
     height: 30px;
     position: absolute;
@@ -898,7 +913,6 @@
     .map-filter-cnt__right {
         padding-left: 0;
         width: 60%;
-        
     }
     .map-filter-cnt__right-switch {
         font-size: 12px;
@@ -1027,14 +1041,14 @@
         color: var(--bgWhite);
         border-radius: 4px;
     }
-    .map-org-de-mb-wrap{
+    .map-org-de-mb-wrap {
         height: 86vh;
     }
-    .map .dialog-map__detail{
+    .map .dialog-map__detail {
         margin: 0px;
         width: 100%;
     }
-    .map .content-head img{
+    .map .content-head img {
         display: none;
     }
 }
