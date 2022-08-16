@@ -8,7 +8,7 @@ import LoadOrg from "../../components/LoadingSketion/LoadOrg";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
 //import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
-import { IDiscountPar } from "../../interface/discount";
+// import { IDiscountPar } from "../../interface/discount";
 import { addVoucherByOrg } from "../../redux/cartSlice";
 import {
   fetchAsyncOrg,

@@ -64,6 +64,7 @@ export const postAsyncComment: any = createAsyncThunk(
                     ...res.data.context,
                     children: [],
                     user: params.user,
+                    media_url: [params.values.image_url]
                 },
             };
             return payload;
@@ -83,6 +84,7 @@ export const postAsyncReplyServiceComments: any = createAsyncThunk(
             body: res.data.context.body,
             user_id: res.data.context.user_id,
             user: values.user,
+            media:[{original_url: values.values.original_url}]
         };
     }
 );
