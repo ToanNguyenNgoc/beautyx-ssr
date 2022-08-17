@@ -36,10 +36,8 @@ function Calendar() {
     };
     useEffect(() => {
         dispatch(clearAllServices());
-        console.log(params.tab);
-        (params.tab)&&(params.tab !== valueTab)&&setValueTab(params.tab);
     }, []);
-    useEffect(()=>{(params.tab)&&(params.tab !== valueTab)&&setValueTab(params.tab);},[params.tab]);
+    useEffect(()=>{(params && params?.tab)&&(params.tab !== valueTab)&&setValueTab(params.tab);},[params?.tab]);
     const onGoBack = () => {
         if (location.state?.prevUrl) {
             history.goBack(`${location.state?.prevUrl}`);
