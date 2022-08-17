@@ -98,7 +98,7 @@ const PlaceComponent = (props: any) => {
                             placeholder="Tìm kiếm trên bản đồ"
                             value={value}
                             onChange={onInputChange}
-                            disabled={!ready}
+                            // disabled={!ready}
                         />
                         <div className="map-filter-cnt__input-btn">
                             <button onClick={() => setValue("")}>
