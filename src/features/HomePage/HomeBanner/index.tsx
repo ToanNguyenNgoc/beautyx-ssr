@@ -159,22 +159,12 @@ export default function HomeBanner() {
                                     key={index + item.url}
                                     className="banner-slide__img"
                                 >
-<<<<<<< HEAD
-                                    {/* <LazyLoadImage
-                                        src={item.imageURL}
-                                        alt=""
-                                        width="100%"
-                                        height="350px"
-                                    /> */}
-                                    <img src={item.imageURL} alt="" />
-=======
                                     <img
                                         src={item.imageURL}
                                         alt=""
-                                       
+
                                     />
                                     {/* <img src={item.imageURL} alt="" /> */}
->>>>>>> Dev_mapbox
                                 </div>
                             ))}
                         </Slider>

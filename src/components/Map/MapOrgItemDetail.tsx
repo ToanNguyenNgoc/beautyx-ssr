@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
+import { ICON } from "../../constants/icon2";
 import { AppContext } from "../../context/AppProvider";
 import { extraOrgTimeWork } from "../../features/MerchantDetail/components/Functions/extraOrg";
 import OrgReviews from "../../features/MerchantDetail/components/OrgPages/OrgReviews";
@@ -11,15 +12,18 @@ import {
     onFavoriteOrg,
 } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
+import MapGalleries from "./MapGalleries";
+import MapSpecial from "./MapSpecial";
 
 interface IProps {
     org: any;
     openDetail: any;
     setOpenDetail: any;
+    handleDirection?: () => void;
 }
 
 export default function MapOrgItemDetail(props: IProps) {
-    const { org, setOpenDetail, openDetail } = props;
+    const { org, setOpenDetail, openDetail, handleDirection } = props;
     const { t } = useContext(AppContext);
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
@@ -27,7 +31,11 @@ export default function MapOrgItemDetail(props: IProps) {
     const refDetail: any = useRef();
     const refHead: any = useRef();
     const refListTimeWorks = useRef<any>();
+    const [open, setOpen] = useState(false);
+    // galleries
     const galleries = useSelector((state: any) => state.ORG.GALLERIES);
+    const [totalCountGalleries, setTotalCountGalleries] = useState("");
+    // close galleries
     // time open ORG
     const now = new Date();
     const today = now.getDay() + 1;
@@ -108,7 +116,12 @@ export default function MapOrgItemDetail(props: IProps) {
                 {/* content */}
                 <div className="dialog-map__content">
                     {/* image */}
-                    <div className="content-img">
+                    <div
+                        onClick={() =>
+                            totalCountGalleries.length > 0 && setOpen(true)
+                        }
+                        className="content-img"
+                    >
                         <img
                             onError={(e) => onErrorImg(e)}
                             src={
@@ -118,6 +131,12 @@ export default function MapOrgItemDetail(props: IProps) {
                             }
                             alt=""
                         />
+                        {totalCountGalleries.length > 0 && (
+                            <div className="content-seemore__img">
+                                <img src={ICON.photoLibraryWhite} alt="" />
+                                <span>{totalCountGalleries.length} ảnh</span>
+                            </div>
+                        )}
                     </div>
                     {/* close image */}
 
@@ -139,38 +158,47 @@ export default function MapOrgItemDetail(props: IProps) {
                             </div>
                         </div>
                         <div className="content-info__wrapbtn">
-                            <div
-                                onClick={() => handleGotoOrg()}
-                                className="content-info__btn"
-                            >
-                                <img src={icon.archive} alt="" />
+                            {/* <div className="flex-column content-info__btn">
+                                <button
+                                    onClick={() => {
+                                        if (handleDirection) {
+                                            handleDirection();
+                                        }
+                                    }}
+                                >
+                                    <img src={icon.directionRed} alt="" />
+                                </button>
+                                <span>Đường đi</span>
+                            </div> */}
+                            <div className="flex-column content-info__btn">
+                                <button onClick={handleFolower}>
+                                    <img
+                                        src={
+                                            org?.is_favorite
+                                                ? icon.heart
+                                                : icon.unHeart
+                                        }
+                                        alt=""
+                                    />
+                                </button>
+                                <span>
+                                    {org?.is_favorite
+                                        ? "Đã thích"
+                                        : "Yêu thích"}
+                                </span>
+                            </div>
+                            <div className="flex-column content-info__btn">
+                                <button onClick={handleGotoOrg}>
+                                    <img src={icon.archiveRed} alt="" />
+                                </button>
                                 <span>Xem spa</span>
                             </div>
-
-                            <div
-                                style={
-                                    org?.is_favorite === true
-                                        ? {
-                                              backgroundColor: "var(--purple)",
-                                          }
-                                        : { backgroundColor: "#fff" }
-                                }
-                                onClick={handleFolower}
-                                className="content-info__btn"
-                            >
-                                {org?.is_favorite === true ? (
-                                    <>
-                                        <span style={{ color: "#fff" }}>
-                                            Đang theo dõi
-                                        </span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <img src={icon.rss} alt="" />
-                                        <span>Theo dõi</span>
-                                    </>
-                                )}
-                            </div>
+                            {/* <div className="flex-column content-info__btn">
+                                <button>
+                                    <img src={icon.directionRed} alt="" />
+                                </button>
+                                <span>Chi sẻ</span>
+                            </div> */}
                         </div>
                     </div>
                     {/* close info  */}
@@ -194,7 +222,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                     {time_works_today?.status && (
                                         <>
                                             {time_works_today?.status ===
-                                            "on" ? (
+                                                "on" ? (
                                                 <p
                                                     style={{
                                                         color: "var(--green)",
@@ -237,8 +265,8 @@ export default function MapOrgItemDetail(props: IProps) {
                                                     style={
                                                         index + 2 === today
                                                             ? {
-                                                                  color: "var(--purple)",
-                                                              }
+                                                                color: "var(--purple)",
+                                                            }
                                                             : {}
                                                     }
                                                     key={index}
@@ -269,6 +297,19 @@ export default function MapOrgItemDetail(props: IProps) {
                         </div>
                     </div>
                     {/* close info */}
+
+                    {/* galleries */}
+                    <MapGalleries
+                        GALLERIES={galleries.galleries}
+                        setTotalCountGalleries={setTotalCountGalleries}
+                        open={open}
+                        setOpen={setOpen}
+                    />
+                    {/* close galleries */}
+
+                    {/* discount */}
+                    <MapSpecial />
+                    {/* close discount */}
 
                     {/* rating */}
                     <div className="content-info__rating">

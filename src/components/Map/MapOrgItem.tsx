@@ -1,22 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
-<<<<<<< HEAD
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
-import onErrorImg from "../../utils/errorImg";
-import { formatDistance } from "../../utils/format";
-interface IProps {
-    item: IOrganization;
-    handleSetLocation: any;
-    location: any;
-    setOpenDetail: any;
-    openDetail: any;
-}
-export default function MapTagsOrgItem(props: IProps) {
-    const { item, handleSetLocation, location, setOpenDetail, openDetail } =
-=======
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
 import onErrorImg from "../../utils/errorImg";
 
@@ -26,32 +11,14 @@ interface IProps {
 }
 export default function MapTagsOrgItem(props: IProps) {
     const { item, onMarkerClick } =
->>>>>>> Dev_mapbox
         props;
     const dispatch = useDispatch();
-    const history = useHistory();
+
     const onHoveItem = () => {
-<<<<<<< HEAD
-        handleSetLocation(item);
-    };
-    const gotoDetail = () => {
-        // setOpenDetail({
-        //     ...openDetail,
-        //     open: true,
-        //     check: true,
-        // });
-        // dispatch(fetchAsyncOrg(item.subdomain));
-        history.push({
-            pathname: `/org/${item.subdomain}`,
-            // search: `${item.id}`,
-            state: item,
-        });
-=======
         dispatch(onSetOrgCenter(item))
     };
     const gotoDetail = () => {
         onMarkerClick(item)
->>>>>>> Dev_mapbox
     };
     return (
         <div
@@ -92,7 +59,7 @@ export default function MapTagsOrgItem(props: IProps) {
                         </p>
                     </div>
                 </div>
-                {item.distance && (
+                {/* {item.distance && (
                     <div className="flex-row map-item__distance">
                         <img
                             className="map-item__distance-icon"
@@ -101,7 +68,7 @@ export default function MapTagsOrgItem(props: IProps) {
                         />
                         {formatDistance(item.distance)}
                     </div>
-                )}
+                )} */}
             </div>
         </div>
     );
