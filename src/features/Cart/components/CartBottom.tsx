@@ -43,8 +43,18 @@ function CartBottom(props: any) {
   const gotoPayment = () => {
     GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
     if (USER) {
-      if((FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone))){
-        alert('cap nhap sdt nhé!');
+      if(FLAT_FORM === FLAT_FORM_TYPE.MB){
+        if(checkPhoneValid(USER?.telephone)){
+          if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {
+            scrollTop();
+            history.push("/payment");
+          } else {
+            setPopUp(true);
+          }
+        }
+        else{
+          alert('cap nhap sdt nhé!');
+        }
       }
       else {
         if (carts.cartAmount > 0 && cartFirstList.length === cartConfirm.length) {

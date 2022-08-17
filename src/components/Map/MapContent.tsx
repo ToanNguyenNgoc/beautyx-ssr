@@ -21,6 +21,7 @@ import MapCurrentUser from './MapCurrentUser'
 import IStore from "../../interface/IStore";
 import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import onErrorImg from "../../utils/errorImg";
 
 
 interface IProps {
@@ -223,7 +224,7 @@ const MapContent = (props: IProps) => {
                                     }
                                     className="map-marker-org"
                                 >
-                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
+                                    <img src={item.image_url} alt="" onError={(e)=>onErrorImg(e)} className="map-marker-org__img" />
                                 </div>
                             </Marker>
                         ))
