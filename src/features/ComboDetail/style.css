@@ -120,6 +120,31 @@
     word-break: break-word;
     text-transform: capitalize;
 }
+.combo-desc__list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 16px;
+}
+.combo-desc__title {
+    font-weight: 800;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 24px;
+}
+.combo-desc__wrap:nth-child(2) {
+    margin: 24px 0;
+}
+.combo-desc .ser-pro-item {
+    border: 1px solid #ccc;
+}
+.combo-desc .ser-pro-item:hover {
+    border: 1px solid var(--red-cl);
+}
+.combo-desc .combo-description {
+    line-height: 1.5;
+    font-weight: 500;
+    font-size: 16px;
+}
 @media only screen and (max-width: 1023px) {
     .combo-cnt {
         padding: 24px;
@@ -137,8 +162,28 @@
         grid-template-columns: repeat(2, 1fr);
         margin-top: 16px;
     }
+    .combo-desc__list {
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 16px;
+    }
 }
 @media only screen and (max-width: 767px) {
+    .combo-desc .combo-description {
+        font-size: 12px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+    .combo-desc__wrap:nth-child(2) {
+        margin: 16px 0;
+    }
+    .combo-desc__title {
+        margin-bottom: 16px;
+        font-size: 14px;
+    }
+    .combo-desc__list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 12px;
+    }
     .combo-cnt {
         padding: 0;
     }

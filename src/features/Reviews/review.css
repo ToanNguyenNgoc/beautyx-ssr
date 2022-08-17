@@ -452,6 +452,12 @@
 }
 
 @media only screen and (max-width: 768px) {
+    .evaluate-input__upload img {
+        margin-top: 0;
+    }
+    .evaluate-input__upload {
+        margin-top: 8px;
+    }
     .evaluate-comment .comment-img__list {
         display: grid;
         grid-template-columns: repeat(2, 150px);

@@ -22,9 +22,7 @@ export default function MapTagsListMB(props: any) {
         <div className="map-list__mobile">
             <Slider ref={sliderRef} {...settings}>
                 {listOrg.map((item: any, index: number) => (
-                    <MapTagsItemMB key={index} item={item} 
-                    // handleDirection={handleDirection} 
-                    />
+                    <MapTagsItemMB key={index} item={item} handleDirection={handleDirection} />
                 ))}
             </Slider>
         </div>

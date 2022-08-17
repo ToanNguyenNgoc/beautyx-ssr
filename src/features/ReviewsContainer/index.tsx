@@ -13,16 +13,21 @@ interface IProps {
     totalItem: number;
     page: number;
     org_id: number;
-    muiCustomClass?: string
+    muiCustomClass?: string;
 }
 
 function ReviewsContainer(props: IProps) {
-    const { open, setOpen, comments, totalItem, org_id, page, muiCustomClass } = props;
+    const { open, setOpen, comments, totalItem, org_id, page, muiCustomClass } =
+        props;
     const IS_MB = useFullScreen();
     const anchor = IS_MB ? "bottom" : "right";
-    console.log('watch all cmt',open);
     return (
-        <Drawer open={open} anchor={anchor} className={muiCustomClass} onClose={() => setOpen(false)}>
+        <Drawer
+            open={open}
+            anchor={anchor}
+            className={muiCustomClass}
+            onClose={() => setOpen(false)}
+        >
             <div className="all-review-cnt">
                 <Review
                     commentable_type="ORGANIZATION"

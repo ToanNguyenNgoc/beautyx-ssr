@@ -177,9 +177,7 @@ function ProductDetail(props: any) {
 
     return (
         <div className="product">
-            {PRODUCT.status === STATUS.LOADING && (
-                <LoadDetail/>
-            )}
+            {PRODUCT.status === STATUS.LOADING && <LoadDetail />}
             {PRODUCT.status === STATUS.FAIL && <PageNotFound />}
             <HeadTitle
                 title={

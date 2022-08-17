@@ -18,81 +18,75 @@ function LoginFlatForm(props: any) {
     const { flatForm, params } = props;
     const TOKEN = sessionStorage.getItem("_WEB_TK");
     const onLoginFlatFormMomo = async () => {
-        try {
-            // alert('onLoginFlatFormMomo')
-            momoApi.initApp();
-            MOMO.showLoading([""]);
-            MOMO.getUserConsents({
-                "permissions": [
-                    {
-                        "role": "name",
-                    },
-                    {
-                        "role": "phone"
-                    },
-                    {
-                        "role": "email",
-                    },
-                ]
-            }, async ({ data, status }: any) => {
-                // alert(JSON.stringify(data)+JSON.stringify(status))
-                const dataOb: IUserConsentsData = {
-                    email: data?.email,
-                    name: data?.name,
-                    phone: data?.phone
-                }
-                if (dataOb.phone) {
-                    await dispatch(loginAsyncMomo(dataOb))
-                    await dispatch(fetchAsyncUser())
-                }
-                else {
-                    requestUserConsents();
-                }
-                return { data: data }
-            })
-        } catch (err) {
-            console.log(err)
-            // alert(JSON.stringify(err));
-        }
+        // try {
+        //     alert('onLoginFlatFormMomo')
+        //     momoApi.initApp();
+        //     MOMO.showLoading([""]);
+        //     MOMO.getUserConsents({
+        //         "permissions": [
+        //             {
+        //                 "role": "name",
+        //             },
+        //             {
+        //                 "role": "phone"
+        //             },
+        //             {
+        //                 "role": "email",
+        //             },
+        //         ]
+        //     }, async ({ data, status }: any) => {
+        //         // alert(JSON.stringify(data)+JSON.stringify(status))
+        //         const dataOb: IUserConsentsData = {
+        //             email: data?.email,
+        //             name: data?.name,
+        //             phone: data?.phone
+        //         }
+        //         if (dataOb.phone) {
+        //             await dispatch(loginAsyncMomo(dataOb))
+        //             await dispatch(fetchAsyncUser())
+        //         }
+        //         else {
+        //             requestUserConsents();
+        //         }
+        //         return { data: data }
+        //     })
+        // } catch (err) {
+        //     alert(JSON.stringify(err));
+        // }
     };
     const requestUserConsents = () => {
-        try{
-
-            MOMO.showLoading([""]);
-            MOMO.requestUserConsents(
-                {
-                    permissions: [
-                        {
-                            role: "name",
-                            require: true,
-                        },
-                        {
-                            role: "phone",
-                        },
-                        {
-                            role: "email",
-                        },
-                    ],
-                },
-                async ({ data, status }: any) => {
-                    // alert(JSON.stringify(data)+JSON.stringify(status))
-                    if (data.phone) {
-                        await dispatch(loginAsyncMomo(data));
-                        await dispatch(fetchAsyncUser());
-                    } else {
-                        MOMO.showToast({
-                            description: "có lỗi khi nhận thông tin từ momo",
-                            type: "failure",
-                            duration: 2000,
-                        });
-                        MOMO.hideLoading();
-                    }
-                    return { data: data };
-                }
-            );
-        }catch(err){
-            console.log(err);
-        }
+        // MOMO.showLoading([""]);
+        // MOMO.requestUserConsents(
+        //     {
+        //         permissions: [
+        //             {
+        //                 role: "name",
+        //                 require: true,
+        //             },
+        //             {
+        //                 role: "phone",
+        //             },
+        //             {
+        //                 role: "email",
+        //             },
+        //         ],
+        //     },
+        //     async ({ data, status }: any) => {
+        //         // alert(JSON.stringify(data)+JSON.stringify(status))
+        //         if (data.phone) {
+        //             await dispatch(loginAsyncMomo(data));
+        //             await dispatch(fetchAsyncUser());
+        //         } else {
+        //             MOMO.showToast({
+        //                 description: "có lỗi khi nhận thông tin từ momo",
+        //                 type: "failure",
+        //                 duration: 2000,
+        //             });
+        //             MOMO.hideLoading();
+        //         }
+        //         return { data: data };
+        //     }
+        // );
     };
     const onLoginFlatFormTiki = async () => {
         const PARAMS_OB = {
@@ -123,7 +117,7 @@ function LoginFlatForm(props: any) {
         if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
                 case FLAT_FORM_TYPE.MOMO:
-                    onLoginFlatFormMomo();
+                    // onLoginFlatFormMomo();
                     break;
                 case FLAT_FORM_TYPE.TIKI:
                     onLoginFlatFormTiki();
