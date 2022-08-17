@@ -158,38 +158,47 @@ export default function MapOrgItemDetail(props: IProps) {
                             </div>
                         </div>
                         <div className="content-info__wrapbtn">
-                            <div
-                                onClick={() => handleGotoOrg()}
-                                className="content-info__btn"
-                            >
-                                <img src={icon.archive} alt="" />
+                            {/* <div className="flex-column content-info__btn">
+                                <button
+                                    onClick={() => {
+                                        if (handleDirection) {
+                                            handleDirection();
+                                        }
+                                    }}
+                                >
+                                    <img src={icon.directionRed} alt="" />
+                                </button>
+                                <span>Đường đi</span>
+                            </div> */}
+                            <div className="flex-column content-info__btn">
+                                <button onClick={handleFolower}>
+                                    <img
+                                        src={
+                                            org?.is_favorite
+                                                ? icon.heart
+                                                : icon.unHeart
+                                        }
+                                        alt=""
+                                    />
+                                </button>
+                                <span>
+                                    {org?.is_favorite
+                                        ? "Đã thích"
+                                        : "Yêu thích"}
+                                </span>
+                            </div>
+                            <div className="flex-column content-info__btn">
+                                <button onClick={handleGotoOrg}>
+                                    <img src={icon.archiveRed} alt="" />
+                                </button>
                                 <span>Xem spa</span>
                             </div>
-
-                            <div
-                                style={
-                                    org?.is_favorite === true
-                                        ? {
-                                              backgroundColor: "var(--purple)",
-                                          }
-                                        : { backgroundColor: "#fff" }
-                                }
-                                onClick={handleFolower}
-                                className="content-info__btn"
-                            >
-                                {org?.is_favorite === true ? (
-                                    <>
-                                        <span style={{ color: "#fff" }}>
-                                            Đang theo dõi
-                                        </span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <img src={icon.rss} alt="" />
-                                        <span>Theo dõi</span>
-                                    </>
-                                )}
-                            </div>
+                            {/* <div className="flex-column content-info__btn">
+                                <button>
+                                    <img src={icon.directionRed} alt="" />
+                                </button>
+                                <span>Chi sẻ</span>
+                            </div> */}
                         </div>
                     </div>
                     {/* close info  */}
@@ -213,7 +222,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                     {time_works_today?.status && (
                                         <>
                                             {time_works_today?.status ===
-                                                "on" ? (
+                                            "on" ? (
                                                 <p
                                                     style={{
                                                         color: "var(--green)",
@@ -256,8 +265,8 @@ export default function MapOrgItemDetail(props: IProps) {
                                                     style={
                                                         index + 2 === today
                                                             ? {
-                                                                color: "var(--purple)",
-                                                            }
+                                                                  color: "var(--purple)",
+                                                              }
                                                             : {}
                                                     }
                                                     key={index}
