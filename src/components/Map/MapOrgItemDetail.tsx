@@ -158,7 +158,7 @@ export default function MapOrgItemDetail(props: IProps) {
                             </div>
                         </div>
                         <div className="content-info__wrapbtn">
-                            <div className="flex-column content-info__btn">
+                            {/* <div className="flex-column content-info__btn">
                                 <button
                                     onClick={() => {
                                         if (handleDirection) {
@@ -169,7 +169,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                     <img src={icon.directionRed} alt="" />
                                 </button>
                                 <span>Đường đi</span>
-                            </div>
+                            </div> */}
                             <div className="flex-column content-info__btn">
                                 <button onClick={handleFolower}>
                                     <img

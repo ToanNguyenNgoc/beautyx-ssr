@@ -32,7 +32,7 @@
     position: absolute;
     top: 11px;
     right: 60px;
-    z-index: 1000;
+    z-index: 20000;
     background-color: var(--purple);
     border-radius: 100px;
     padding: 2px;
@@ -261,7 +261,6 @@
     height: 100%;
     object-fit: cover;
 }
-
 
 /* .dialog-map__org .map-item__content {
     padding: 16px;
@@ -528,7 +527,6 @@
     width: 100%;
 }
 
-
 /* map filter container */
 
 .map-filter-cnt {
@@ -588,7 +586,6 @@
     border-radius: 3px;
 }
 
-
 /* .map-filter-list-org{
     padding: 12px;
 } */
@@ -625,7 +622,6 @@
     border-radius: 3px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
 }
-
 
 /* end map filter */
 
@@ -836,9 +832,7 @@
     border-radius: 8px;
 }
 
-
 /* map :current user */
-
 .map-current-user {
     position: fixed;
     bottom: 186px;
@@ -904,44 +898,57 @@
         grid-gap: 8px 0;
         z-index: 9;
     }
+
     .map-filter-cnt__left {
         width: 86%;
     }
+
     .map-filter-cnt__input input {
         font-size: 12px;
     }
+
     .map-filter-cnt__right {
         padding-left: 0;
         width: 60%;
+
     }
+
     .map-filter-cnt__right-switch {
         font-size: 12px;
         grid-gap: 0 6px;
         padding: 4px 10px 4px 6px;
         width: 100%;
     }
+
     .open-map {
         padding: 6px 14px;
     }
+
     .open-map p {
         font-size: 14px;
     }
+
     .map .evaluate-item p {
         font-size: 12px;
     }
+
     .map {
         width: 100vw;
         height: 100vh;
     }
+
     .map .dialog-map__wrapper {
         display: none;
     }
+
     .map .open-list__org {
         display: none;
     }
+
     .map .map-cnt {
         border-radius: unset;
     }
+
     .map .map-list__mobile {
         width: 100%;
         z-index: 2;
@@ -949,6 +956,7 @@
         bottom: 0;
         left: 0;
     }
+
     .map .map-item__mobile {
         width: 100%;
         background-color: var(--bgWhite);
@@ -960,15 +968,18 @@
         border-radius: 12px;
         align-items: center;
     }
+
     .map .map-item__mobile .item-img {
         width: 136px;
         height: 136px;
         padding: 12px;
         flex-shrink: 0;
     }
+
     .map .map-list__mobile .map-item__wrap {
         padding: 16px 6px;
     }
+
     .map .map-item__mobile .item-img img {
         border-radius: 12px;
         overflow: hidden;
@@ -977,12 +988,14 @@
         object-fit: cover;
         box-shadow: 0 8px 24px rgb(149 157 165 / 20%);
     }
+
     .map .map-item__mobile .item-content {
         padding: 12px 12px 12px 0;
         display: flex;
         flex-direction: column;
         gap: 4px 0;
     }
+
     .map .map-item__mobile .item-content__name {
         display: -webkit-box;
         -webkit-line-clamp: 2;
@@ -991,10 +1004,12 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
+
     .map .map-item__mobile .item-content__name p {
         font-size: 14px;
         font-weight: bold;
     }
+
     .map .map-list__mobile .item-content__address {
         display: -webkit-box;
         -webkit-line-clamp: 3;
@@ -1003,36 +1018,45 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
+
     .map .map-list__mobile .item-content__address p {
         font-size: 12px;
         font-weight: bold;
         color: #8c8c8c;
     }
+
     .map .map-list__mobile .item-content__evaluate {
         display: flex;
         grid-gap: 0 8px;
     }
+
     .map .map-list__mobile .item-content__evaluate .evaluate-item {
         display: flex;
         grid-gap: 0 4px;
     }
+
     .map .map-list__mobile .evaluate-item__img {
         width: 16px;
         height: 16px;
     }
+
     .map .map-list__mobile .evaluate-item__img img {
         width: 100%;
         height: 100%;
     }
+
     .map .gm-fullscreen-control {
         display: none;
     }
+
     .map .gmnoprint {
         display: none;
     }
+
     .map .dialog-map__close {
         right: 16px;
     }
+
     .item-content__btn-direction {
         background-color: var(--purple);
         border: none;
@@ -1040,5 +1064,18 @@
         padding: 4px 0px;
         color: var(--bgWhite);
         border-radius: 4px;
+    }
+
+    .map-org-de-mb-wrap {
+        height: 86vh;
+    }
+
+    .map .dialog-map__detail {
+        margin: 0px;
+        width: 100%;
+    }
+
+    .map .content-head img {
+        display: none;
     }
 }
