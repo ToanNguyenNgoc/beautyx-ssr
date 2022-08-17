@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
@@ -30,9 +31,8 @@ interface IProps {
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs } = props;
-    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const mapRef = useRef<any>();
-    const { orgCenter } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { orgCenter, getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
@@ -121,22 +121,24 @@ const MapContent = (props: IProps) => {
                 onViewMoreOrgs()
             }
             if (mapRef?.current.getZoom() < 15) {
-                mapRef?.current.setZoom(13)
+                mapRef?.current.setZoom(14)
             }
             onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
-            dispatch(onSetOrgCenter(orgs[index]))
+            // dispatch(onSetOrgCenter(orgs[index]))
         },
     };
-    useEffect(() => {
-        switch (orgs.length) {
-            case 30: return mapRef?.current?.setZoom(15);
-            case 45: return mapRef?.current?.setZoom(14);
-            case 60: return mapRef?.current?.setZoom(13);
-            case 75: return mapRef?.current?.setZoom(12);
-            case 90: return mapRef?.current?.setZoom(11);
-            case 105: return mapRef?.current?.setZoom(10)
-        }
-    }, [orgs.length])
+    // useEffect(() => {
+    //     if (!getValueCenter) {
+    //         switch (orgs.length) {
+    //             case 30: return mapRef?.current?.setZoom(15);
+    //             case 45: return mapRef?.current?.setZoom(14);
+    //             case 60: return mapRef?.current?.setZoom(13);
+    //             case 75: return mapRef?.current?.setZoom(12);
+    //             case 90: return mapRef?.current?.setZoom(11);
+    //             case 105: return mapRef?.current?.setZoom(10)
+    //         }
+    //     }
+    // }, [orgs.length, getValueCenter])
     const onMarkerClick = (item: IOrganization, index?: number) => {
         if (mapRef?.current.getZoom() < 15) {
             mapRef?.current.setZoom(15)
@@ -164,6 +166,37 @@ const MapContent = (props: IProps) => {
             onFlyTo(parseFloat(LOCATION?.split(",")[0]), parseFloat(LOCATION?.split(",")[1]))
         }
     }
+    const debounceOrgsMove = useCallback(
+        debounce((latLng: string) => {
+            dispatch(
+                fetchOrgsMapFilter({
+                    page: 1,
+                    LatLng: latLng,
+                })
+            );
+        }, 1000),
+        []
+    );
+    const onCenterChange = () => {
+        const lat = mapRef?.current.getCenter()?.lat
+        const lng = mapRef?.current.getCenter()?.lng
+        if (getValueCenter) {
+            debounceOrgsMove(`${lat},${lng}`)
+        }
+    }
+    // function unique(arr: any) {
+    //     var newArr = []
+    //     for (var i = 0; i < arr.length; i++) {
+    //         if (newArr.indexOf(arr[i].id) === -1) {
+    //             newArr.push(arr[i].id)
+    //         }
+    //     }
+    //     const newOrgs = newArr.map((n: number) => {
+    //         return { id: n, org: orgs.find((o: IOrganization) => o.id === n) }
+    //     }).map((orgOb: any) => orgOb.org)
+    //     return newOrgs
+    // }
+    // const newOrgs = unique(orgs)
 
     return (
         <div className="map-content">
@@ -180,6 +213,8 @@ const MapContent = (props: IProps) => {
             />
             {
                 <ReactMapGL
+                    onZoom={onCenterChange}
+                    onTouchMove={onCenterChange}
                     style={{
                         width: "100vw",
                         height: "100vh"

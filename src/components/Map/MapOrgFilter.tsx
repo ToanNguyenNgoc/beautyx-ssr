@@ -4,22 +4,23 @@ import { IOrganization } from "../../interface/organization";
 import icon from "../../constants/icon";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     fetchOrgsMapFilter,
     onSetOrgsMapEmpty,
     onSetOrgCenter,
 } from "../../redux/org/orgMapSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
-// import { Switch } from "@mui/material";
-// import { onSwitchValueCenter } from "../../redux/org/orgMapSlice";
+import { Switch } from "@mui/material";
+import { onSwitchValueCenter } from "../../redux/org/orgMapSlice";
 import axios from "axios";
+import IStore from "../../interface/IStore";
 
 const PlaceComponent = (props: any) => {
     const { mapRef, onFlyTo, setOpenDetail, openDetail, slideRef } = props;
     const dispatch = useDispatch();
     const [orgs, setOrgs] = useState<IOrganization[]>([]);
-
+    const { getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const callOrgsByKeyword = async (keyword: string) => {
         try {
             const res = await orgApi.getAll({
@@ -101,6 +102,9 @@ const PlaceComponent = (props: any) => {
             slideRef?.current?.slickGoTo(0);
         }, 500)
     }
+    const onChangeSwitch = (e:any)=>{
+        dispatch(onSwitchValueCenter(e.target.checked))
+    }
     return (
         <>
             <div className=" map-filter-cnt">
@@ -147,7 +151,11 @@ const PlaceComponent = (props: any) => {
                 </div>
                 {/* <div className="map-filter-cnt__right">
                     <div className="flex-row map-filter-cnt__right-switch">
-                        <Switch defaultChecked size="small" />
+                        <Switch 
+                            onChange={onChangeSwitch}
+                            checked={getValueCenter} 
+                            size="small" 
+                            />
                         Cập nhật khi di chuyển bản đồ
                     </div>
                 </div> */}
