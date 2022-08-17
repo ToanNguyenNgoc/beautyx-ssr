@@ -9,8 +9,14 @@ import { formatDistance } from "../../utils/format";
 import MapOrgItemDetailMb from "./MapOrgItemDetailMb";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 
+<<<<<<< HEAD
 interface IProps{
     item: IOrganization
+=======
+interface IProps {
+    item: IOrganization,
+    handleDirection?: () => void
+>>>>>>> Dev_mapbox
 }
 
 export default function MapTagsItemMB(props: IProps) {
@@ -19,12 +25,20 @@ export default function MapTagsItemMB(props: IProps) {
     const gotoDetail = () => {
         // setOpen(true)
         // dispatch(fetchAsyncOrg(item.subdomain));
+<<<<<<< HEAD
         history.push({
             pathname: `/org/${item.subdomain}`,
             // search: `${item.id}`,
             state: item,
         });
     };
+=======
+        e.stopPropagation()
+        if(handleDirection){
+            handleDirection()
+        }
+    }
+>>>>>>> Dev_mapbox
     return (
         <>
             <div onClick={gotoDetail} className="map-item__wrap">

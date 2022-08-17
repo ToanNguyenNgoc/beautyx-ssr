@@ -42,9 +42,6 @@ function HomeProvince(props: any) {
                             className="home-province_item"
                         >
                             <LazyLoadImage 
-                                width="100%"
-                                height="100%"
-                                effect="blur"
                                 src={`${item.media[1].original_url}`} alt="" 
                             />
                             <div className="province-item-cnt">

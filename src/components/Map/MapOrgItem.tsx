@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
+<<<<<<< HEAD
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
 import { formatDistance } from "../../utils/format";
@@ -15,10 +16,22 @@ interface IProps {
 }
 export default function MapTagsOrgItem(props: IProps) {
     const { item, handleSetLocation, location, setOpenDetail, openDetail } =
+=======
+import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
+import onErrorImg from "../../utils/errorImg";
+
+interface IProps {
+    item: IOrganization;
+    onMarkerClick: (item: IOrganization) => void
+}
+export default function MapTagsOrgItem(props: IProps) {
+    const { item, onMarkerClick } =
+>>>>>>> Dev_mapbox
         props;
     const dispatch = useDispatch();
     const history = useHistory();
     const onHoveItem = () => {
+<<<<<<< HEAD
         handleSetLocation(item);
     };
     const gotoDetail = () => {
@@ -33,21 +46,18 @@ export default function MapTagsOrgItem(props: IProps) {
             // search: `${item.id}`,
             state: item,
         });
+=======
+        dispatch(onSetOrgCenter(item))
+    };
+    const gotoDetail = () => {
+        onMarkerClick(item)
+>>>>>>> Dev_mapbox
     };
     return (
         <div
             id={`${item.id}`}
             onMouseEnter={onHoveItem}
             onClick={() => gotoDetail()}
-            style={
-                item?.latitude === location.lat
-                    ? {
-                        backgroundColor: "var(--bgGray)",
-                    }
-                    : {
-                        backgroundColor: "var(--bgWhite)",
-                    }
-            }
             className="dialog-map__item"
         >
             <div className="map-item__img">
