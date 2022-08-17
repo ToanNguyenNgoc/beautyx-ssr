@@ -1,16 +1,19 @@
 .discount-head {
     display: none;
 }
+
 .dis-cnt__list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
+
 .dis-cnt__list-item {
     width: 50%;
     height: 142px;
     padding: 8px;
 }
+
 .discount-item:hover {
     box-shadow: 0 6px 15px #dcd8ee;
     border: 1px solid #ccc;
@@ -56,7 +59,7 @@
 }
 
 .discount-item__cnt {
-    width: calc(100% - 114px);
+    width: calc(100%);
     padding-left: 6px;
     display: flex;
     flex-direction: column;
@@ -98,6 +101,7 @@
     color: var(--text-hover);
     text-decoration: line-through;
 }
+
 .dis-cnt__list-btn {
     margin-top: 24px;
     color: var(--purple);
@@ -108,6 +112,7 @@
     line-height: 28px;
     font-weight: 700;
 }
+
 @media only screen and (max-width: 767px) {
     .discount-item .vail_util {
         position: unset;

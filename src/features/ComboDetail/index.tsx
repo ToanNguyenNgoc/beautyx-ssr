@@ -31,6 +31,7 @@ import {
 import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+import ComboDetailDesc from "./components/ComboDetailDesc";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
@@ -56,6 +57,7 @@ function ComboDetail() {
 
     const org = ORG.org;
     const combo = COMBO.combo;
+    console.log("combo", combo);
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();
@@ -177,9 +179,17 @@ function ComboDetail() {
                                             ref={refDesc}
                                             className="service-detail__description"
                                         >
-                                            <p>{`${t(
-                                                "detail_item.updating"
-                                            )}`}</p>
+                                            {combo?.products?.length === 0 &&
+                                            combo?.services?.length === 0 ? (
+                                                <p>{`${t(
+                                                    "detail_item.updating"
+                                                )}`}</p>
+                                            ) : (
+                                                <ComboDetailDesc
+                                                    combo={combo}
+                                                    org={ORG?.org}
+                                                />
+                                            )}
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>
@@ -229,28 +239,23 @@ function ComboDetail() {
                                     <TabPanel value={value}>
                                         <div
                                             ref={refMap}
-                                            className="org-information-cnt"
+                                            className="service-detail__org"
                                         >
-                                            <div className="service-detail__org">
-                                                {ORG.status ===
-                                                    STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
-                                                                org={org}
-                                                            />
-                                                        </div>
-                                                        <OrgInformation
+                                            {ORG.status === STATUS.SUCCESS && (
+                                                <>
+                                                    <p className="service-detail__title">
+                                                        {t(
+                                                            "detail_item.merchant"
+                                                        )}
+                                                    </p>
+                                                    <div className="service-detail__org-mb">
+                                                        <DetailOrgCard
                                                             org={org}
                                                         />
-                                                    </>
-                                                )}
-                                            </div>
+                                                    </div>
+                                                    <OrgInformation org={org} />
+                                                </>
+                                            )}
                                         </div>
                                     </TabPanel>
                                     <TabPanel value={value}>

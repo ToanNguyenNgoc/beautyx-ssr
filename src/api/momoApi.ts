@@ -46,8 +46,8 @@ export interface IUserConsents {
 class MOMO_API {
     initApp = () => {
         MOMO.init({
-            appId: process.env.REACT_APP_MOMO_APP_ID,
-            parnerCode: process.env.REACT_APP_MOMO_PARTNER_CODE
+            appId: process.env.MOMO_APP_ID,
+            parnerCode: process.env.MOMO_PARTNER_CODE
         })
     }
     requestUserConsents = () => {
@@ -70,7 +70,6 @@ class MOMO_API {
             if(data.email && data.phone){
                 // alert('in')
                 const res = await momoAuthApi.login(data)
-                window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
                 // alert('res'+JSON.stringify(res))
             }
             else {

@@ -9,7 +9,8 @@ export const handleGetUserInfoMomo = (props?: any) => {
 };
 export const getUserConsents = async (callBack?: any, loading?: any) => {
     try {
-        alert('getUserConsents')
+        // alert('getUserConsents')
+        
         momoApi.getLocation();
         momoApi.showToast('truy cập momo','success')
         MOMO.showLoading([""]);
@@ -27,7 +28,7 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
                 },
             ]
         }, async ({ data, status }: any) => {
-            alert(JSON.stringify(data)+JSON.stringify(status));
+            // alert(JSON.stringify(data)+JSON.stringify(status));
             const dataOb: IUserConsentsData = {
                 email: data?.email,
                 name: data?.name,
@@ -44,12 +45,12 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
             return { data: data }
         })
     } catch (err) {
-        alert(JSON.stringify(err));
+        // alert(JSON.stringify(err));
         loading&&loading(false);
     }
 };
 export const requestUserConsents = (callBack?: any, loading?: any) => {
-    alert('requestUserConsents')
+    // alert('requestUserConsents')
     MOMO.showLoading([""]);
     MOMO.requestUserConsents({
         "permissions": [
@@ -65,7 +66,7 @@ export const requestUserConsents = (callBack?: any, loading?: any) => {
             }
         ]
     }, async ({ data, status }: any) => {
-        alert(JSON.stringify(data)+JSON.stringify(status));
+        // alert(JSON.stringify(data)+JSON.stringify(status));
         if (data.phone) {
             const res = await momoAuthApi.login(data)
             // alert('res' + JSON.stringify(res))

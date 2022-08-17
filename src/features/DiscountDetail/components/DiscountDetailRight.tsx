@@ -234,12 +234,12 @@ function DiscountDetailRight(props: IProps) {
                             </span>
                         </div>
                     </div>
-                    {
+                    {/* {
                         discount.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key &&
                         <div className="service-detail__mobile-avi">
                             Lượt mua còn lại : {discount?.user_available_purchase_count}
                         </div>
-                    }
+                    } */}
                 </div>
                 <DetailOrgCard org={org} />
             </div>

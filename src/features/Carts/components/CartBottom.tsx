@@ -16,13 +16,15 @@ import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
 import { IDiscountPar } from "../../../interface/discount";
 // end
+import { checkPhoneValid } from "../../../utils/phoneUpdate";
+import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
     const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
     const { cartQuantityCheck } = useSelector((state: any) => state.carts);
-
+    const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     // console.log(VOUCHER_APPLY, cartQuantityCheck)
     const [openAlertSnack, setOpenAlertSnack] = useState({
         title: "",
@@ -124,7 +126,18 @@ function CartBottom(props: any) {
                     open: true,
                     title: "Chưa có địa chỉ giao hàng !",
                 });
-            } else {
+            } 
+            else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)){
+                setOpenNoti({
+                    open: true,
+                    title: ``,
+                    titleLeft: `Cập nhập`,
+                    titleRight: `Để sau`,
+                    onClickLeft: () => history.push("/tai-khoan"),
+                    onClickRight: () => history.push("/"),
+                });
+            }
+            else {
                 handlePostOrder();
             }
         } else if (!pramsOrder.payment_method_id) {

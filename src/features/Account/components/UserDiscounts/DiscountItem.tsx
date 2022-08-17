@@ -4,6 +4,7 @@ import formatDate from "../../../../utils/formatDate";
 import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkDiscount } from "../../../../utils/formatRouterLink/formatRouter";
+import { DISCOUNT_TYPE } from "../../../../utils/formatRouterLink/fileType";
 
 interface IProps {
     discountPar: IDiscountPar;
@@ -41,7 +42,13 @@ function DiscountItem(props: IProps) {
                     </span>
                 </div>
                 <div className="flex-row discount-item__cnt-price">
-                    <span>{formatPrice(discountItem.view_price)}</span>
+                    <span>{
+                        discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
+                            `${formatPrice(discountPar.discount_value)}đ`
+                            :
+                            `${formatPrice(discountItem.view_price)}đ`
+                    
+                    }</span>
                     <span>{formatPrice(discountItem.productable.price)}đ</span>
                 </div>
             </div>

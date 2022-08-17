@@ -13,7 +13,7 @@ import "./style.css";
 import tracking from "../../api/trackApi";
 // end
 import useDeviceMobile from "../../utils/useDeviceMobile";
-import useScript from "../../utils/useScript";
+// import useScript from "../../utils/useScript";
 
 export default function AssistantBtn() {
     const dispatch = useDispatch();
@@ -21,7 +21,7 @@ export default function AssistantBtn() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
 
 
-    const viewDisable = ["/trang-thai-don-hang/", "/chat"];
+    const viewDisable = ["/trang-thai-don-hang/", "/chat", "/map-box", "/ban-do"];
     let disable = false;
     if (viewDisable.includes(location.pathname)) {
         disable = true;

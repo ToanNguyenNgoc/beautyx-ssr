@@ -18,12 +18,12 @@ function MapOrgItemDetailMb(props: IProps) {
             onClose={() => setOpen(false)}
             anchor={"bottom"}
         >
-            <div className='map-org-de-mb-wrap map'>
+            <div className='map map-org-de-mb-wrap'>
                 <MapOrgItemDetail
                     org={org}
                     openDetail={open}
                     setOpenDetail={setOpen}
-                    // handleDirection={handleDirection}
+                    handleDirection={handleDirection}
                 />
             </div>
         </Drawer>
