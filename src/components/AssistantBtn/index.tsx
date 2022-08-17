@@ -21,7 +21,7 @@ export default function AssistantBtn() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
 
 
-    const viewDisable = ["/trang-thai-don-hang/", "/chat"];
+    const viewDisable = ["/trang-thai-don-hang/", "/chat", "/map-box", "/ban-do"];
     let disable = false;
     if (viewDisable.includes(location.pathname)) {
         disable = true;

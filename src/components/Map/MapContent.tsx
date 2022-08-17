@@ -1,61 +1,54 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
 import MapTagsOrgItem from "./MapOrgItem";
-// import { fetchAsyncOrgsByFilter } from "../../redux/filter/filterSlice";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Slider from "react-slick";
 import MapTagsItemMB from "./MapItemMB";
 import { IOrganization } from "../../interface/organization";
 import MapOrgItemDetail from "./MapOrgItemDetail";
-import {
-    GoogleMap, Marker, useLoadScript, InfoWindow, DirectionsRenderer
-} from "@react-google-maps/api";
 import MapOrgFilter from "./MapOrgFilter";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
-import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
+import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from './MapCurrentUser'
+import IStore from "../../interface/IStore";
+import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 
 interface IProps {
     orgs: IOrganization[];
 }
-declare type Libraries = ("drawing" | "geometry" | "localContext" | "places" | "visualization")[];
-const lib: Libraries = ["places"]
-
 
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs } = props;
-    // console.log(orgs)
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
-    const { orgCenter } = useSelector((state: any) => state.ORGS_MAP)
-    const [zoom, setZoom] = useState<number>(16);
+    const mapRef = useRef<any>();
+    const { orgCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
     const dispatch = useDispatch();
-    const [map, setMap] = useState<any>()
     const slideRef = useRef<any>();
     const [openDetail, setOpenDetail] = useState({
         open: false,
         check: false,
     });
-    const [local, setLocal] = useState({
+    const [local,] = useState({
         lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
         long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
     const [openListOrg, setOpenListOrg] = useState(true);
-    // const { page, totalItem } = useSelector((state: any) => state.FILTER.ORGS);
     const handleToggleListOrg = () => {
         refListOrg.current.classList.toggle("list-org__active");
         setOpenListOrg(!openListOrg);
@@ -85,15 +78,8 @@ const MapContent = (props: IProps) => {
             });
         }
     };
-    const handleSetLocation = useCallback((cardMapItem: any) => {
-        setLocal({
-            lat: cardMapItem?.latitude,
-            long: cardMapItem?.longitude,
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
-    const {totalItem, page} = useSelector((state:any) => state.ORGS_MAP.orgsMap)
+    const { totalItem, page } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
     const onViewMoreOrgs = () => {
         if (
             location.pathname === "/ban-do" &&
@@ -109,17 +95,20 @@ const MapContent = (props: IProps) => {
             );
         }
     };
-
+    const onPanTo = (lat: number, lng: number) => {
+        mapRef?.current?.panTo([lng, lat])
+    }
+    const onFlyTo = (lat: number, lng: number) => {
+        mapRef?.current?.flyTo({
+            center: [lng, lat]
+        })
+    }
     const onGotoSlickOrgItem = (index: number) => {
         slideRef?.current?.slickGoTo(index);
     };
-
-    const onPanTo = (lat: number, lng: number) => {
-        map?.panTo({ lat: lat, lng: lng })
-    }
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -128,33 +117,33 @@ const MapContent = (props: IProps) => {
         className: "center",
         centerMode: true,
         afterChange: function (index: any) {
-            onPanTo(orgs[index]?.latitude, orgs[index]?.longitude)
+            if (index === orgs.length - 3) {
+                onViewMoreOrgs()
+            }
+            if (mapRef?.current.getZoom() < 15) {
+                mapRef?.current.setZoom(13)
+            }
+            onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
             dispatch(onSetOrgCenter(orgs[index]))
         },
     };
     useEffect(() => {
         switch (orgs.length) {
-            case 30: return setZoom(15);
-            case 45: return setZoom(14);
-            case 60: return setZoom(13);
-            case 75: return setZoom(12);
-            case 90: return setZoom(11);
-            case 105: return setZoom(10)
+            case 30: return mapRef?.current?.setZoom(15);
+            case 45: return mapRef?.current?.setZoom(14);
+            case 60: return mapRef?.current?.setZoom(13);
+            case 75: return mapRef?.current?.setZoom(12);
+            case 90: return mapRef?.current?.setZoom(11);
+            case 105: return mapRef?.current?.setZoom(10)
         }
     }, [orgs.length])
-    const { isLoaded } = useLoadScript({
-        libraries: lib,
-        googleMapsApiKey: `${key}`
-    })
-    const onMarkerClick = (item: IOrganization, index: number) => {
+    const onMarkerClick = (item: IOrganization, index?: number) => {
+        if (mapRef?.current.getZoom() < 15) {
+            mapRef?.current.setZoom(15)
+        }
         dispatch(fetchAsyncOrg(item.subdomain));
         dispatch(onSetOrgCenter(item))
-        setZoom(16)
-        setLocal({
-            lat: item.latitude,
-            long: item.longitude,
-        });
-        if (IS_MB && onGotoSlickOrgItem) {
+        if (IS_MB && index && onGotoSlickOrgItem) {
             onGotoSlickOrgItem(index);
         }
         setOpenDetail({
@@ -164,53 +153,25 @@ const MapContent = (props: IProps) => {
         });
         onPanTo(item.latitude, item.longitude)
     };
-    const debounceDropDown = useCallback(
-        debounce((nextValue) => {
-            setLocal(nextValue);
-        }, 1000),
-        []
-    );
-    const onCenterChanged = () => {
-        debounceDropDown(map?.getCenter().toJSON())
-    }
 
-    const [directionsResponse, setDirectionsResponse] = useState<any>()
-    // const [step, setStep] = useState<any>()
-    const handleDirection = async () => {
-        if (orgCenter && LOCATION) {
-            setOpenListOrg(false)
-            const directionsService = new google.maps.DirectionsService()
-            const results = await directionsService.route({
-                // origin: originRef.current.value,
-                origin: {
-                    lat: parseFloat(LOCATION.split(",")[0]),
-                    lng: parseFloat(LOCATION.split(",")[1])
-                },
-                // destination: orgCenter.full_address,
-                destination: { lat: orgCenter.latitude, lng: orgCenter.longitude },
-                // eslint-disable-next-line no-undef
-                travelMode: google.maps.TravelMode.DRIVING,
-            })
-            setDirectionsResponse(results)
-            // setStep(results?.routes[0]?.legs[0]?.steps)
-        }
-    }
     const handleBackCurrentUser = () => {
         if (LOCATION) {
-            map?.panTo({
-                lat: parseFloat(LOCATION.split(",")[0]),
-                lng: parseFloat(LOCATION.split(",")[1])
-            })
+            dispatch(onSetOrgsMapEmpty());
+            dispatch(fetchOrgsMapFilter({
+                page: 1,
+                sort: "distance",
+            }))
+            onFlyTo(parseFloat(LOCATION?.split(",")[0]), parseFloat(LOCATION?.split(",")[1]))
         }
     }
-
 
     return (
         <div className="map-content">
             {/* map */}
             <MapOrgFilter
-                map={map}
-                setZoom={setZoom}
+                slideRef={slideRef}
+                mapRef={mapRef}
+                onFlyTo={onFlyTo}
                 openDetail={openDetail}
                 setOpenDetail={setOpenDetail}
             />
@@ -218,52 +179,56 @@ const MapContent = (props: IProps) => {
                 handleBackCurrentUser={handleBackCurrentUser}
             />
             {
-                isLoaded &&
-                <GoogleMap
-                    id="searchbox-example"
-                    onCenterChanged={onCenterChanged}
-                    mapContainerClassName="google-map-view"
-                    zoom={zoom}
-                    onLoad={map => setMap(map)}
-                    center={{
-                        lat: local.lat,
-                        lng: local.long,
+                <ReactMapGL
+                    style={{
+                        width: "100vw",
+                        height: "100vh"
                     }}
+                    initialViewState={{
+                        latitude: local.lat,
+                        longitude: local.long,
+                        zoom: 16
+                    }}
+                    attributionControl={true}
+                    mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    ref={mapRef}
+                // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
-                    {LOCATION && (
-                        <Marker
-                            position={{
-                                lat: parseFloat(LOCATION?.split(",")[0]),
-                                lng: parseFloat(LOCATION?.split(",")[1])
-                            }}
-                        >
-                        </Marker>
-                    )}
-                    {orgs?.map((item: IOrganization, index: number) => (
-                        <Marker
-                            onClick={() => onMarkerClick(item, index)}
-                            key={index}
-                            icon={{ url: icon.pinMap }}
-                            position={{ lat: item?.latitude, lng: item?.longitude }}
-                        >
-                        </Marker>
-                    ))}
+                    <NavigationControl
+                        position="bottom-right"
+                        showZoom={true}
+                        showCompass={true}
+                    />
                     {
-                        orgCenter &&
-                        <InfoWindow
-                            position={{ lat: orgCenter?.latitude, lng: orgCenter?.longitude }}
+                        LOCATION &&
+                        <Marker
+                            latitude={parseFloat(LOCATION?.split(",")[0])}
+                            longitude={parseFloat(LOCATION?.split(",")[1])}
                         >
-                            <img
-                                className="map-org-img-marker"
-                                src={orgCenter.image_url} alt=""
-                            />
-                        </InfoWindow>
+                            <img style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt="" />
+                        </Marker>
                     }
                     {
-                        directionsResponse &&
-                        <DirectionsRenderer directions={directionsResponse} />
+                        orgs.map((item: IOrganization, index: number) => (
+                            <Marker
+                                onClick={() => onMarkerClick(item, index)}
+                                key={index}
+                                latitude={item.latitude}
+                                longitude={item.longitude}
+                            >
+                                <div
+                                    style={
+                                        item.id === orgCenter?.id ? { transform: "scale(1.2)" } : {}
+                                    }
+                                    className="map-marker-org"
+                                >
+                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
+                                </div>
+                            </Marker>
+                        ))
                     }
-                </GoogleMap>
+                </ReactMapGL>
             }
             <div
                 className={
@@ -284,15 +249,9 @@ const MapContent = (props: IProps) => {
                         >
                             {orgs?.map((item: any, index: number) => (
                                 <MapTagsOrgItem
-                                    location={local}
-                                    handleSetLocation={handleSetLocation}
+                                    onMarkerClick={onMarkerClick}
                                     key={index}
                                     item={item}
-                                    setZoom={setZoom}
-                                    setOpenDetail={setOpenDetail}
-                                    openDetail={setOpenDetail}
-                                    map={map}
-                                    setLocal={setLocal}
                                 />
                             ))}
                         </InfiniteScroll>
@@ -302,7 +261,7 @@ const MapContent = (props: IProps) => {
                             org={org}
                             setOpenDetail={setOpenDetail}
                             openDetail={openDetail}
-                            handleDirection={handleDirection}
+                        // handleDirection={handleDirection}
                         />
                     ) : null}
                     <div
@@ -327,9 +286,9 @@ const MapContent = (props: IProps) => {
                 <div className="map-list__mobile">
                     <Slider ref={slideRef} {...settings}>
                         {orgs.length > 0 && orgs.map((item: any, index: number) => (
-                            <MapTagsItemMB 
-                            handleDirection={handleDirection} 
-                            key={index} item={item} 
+                            <MapTagsItemMB
+                                // handleDirection={handleDirection}
+                                key={index} item={item}
                             />
                         ))}
                     </Slider>

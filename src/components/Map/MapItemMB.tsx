@@ -11,7 +11,7 @@ import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 
 interface IProps {
     item: IOrganization,
-    handleDirection: () => void
+    handleDirection?: () => void
 }
 
 export default function MapTagsItemMB(props: IProps) {
@@ -32,7 +32,9 @@ export default function MapTagsItemMB(props: IProps) {
     const onRouteDirection = (e: any) => {
         // dispatch(fetchAsyncOrg(item.subdomain));
         e.stopPropagation()
-        handleDirection()
+        if(handleDirection){
+            handleDirection()
+        }
     }
     return (
         <>

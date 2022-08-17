@@ -10,7 +10,7 @@ import { IBanner } from "../../../interface/banner";
 import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
 import HomeBannerPopup from "./HomeBannerPopup";
-// import {LazyLoadImage} from 'react-lazy-load-image-component'
+import {LazyLoadImage} from 'react-lazy-load-image-component'
 
 import "../../../assets/styles/main.css";
 import "./homeBanner.css";
@@ -159,13 +159,13 @@ export default function HomeBanner() {
                                     key={index + item.url}
                                     className="banner-slide__img"
                                 >
-                                    {/* <LazyLoadImage
+                                    <LazyLoadImage
                                         src={item.imageURL}
                                         alt=""
                                         width="100%"
                                         height="350px"
-                                    /> */}
-                                    <img src={item.imageURL} alt="" />
+                                    />
+                                    {/* <img src={item.imageURL} alt="" /> */}
                                 </div>
                             ))}
                         </Slider>

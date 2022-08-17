@@ -3,54 +3,28 @@ import { useDispatch } from "react-redux";
 import icon from "../../constants/icon";
 import { IOrganization } from "../../interface/organization";
 import { onSetOrgCenter } from "../../redux/org/orgMapSlice";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import onErrorImg from "../../utils/errorImg";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import _, { debounce } from "lodash";
 
 interface IProps {
     item: IOrganization;
-    handleSetLocation: any;
-    location: any;
-    setOpenDetail: any;
-    openDetail: any;
-    map: any,
-    setLocal: any,
-    setZoom: any,
+    onMarkerClick: (item: IOrganization) => void
 }
 export default function MapTagsOrgItem(props: IProps) {
-    const { item, location, setOpenDetail, openDetail, map, setZoom } =
+    const { item, onMarkerClick } =
         props;
     const dispatch = useDispatch();
 
     const onHoveItem = () => {
-        // map?.panTo({ lat: item.latitude, lng: item.longitude })
         dispatch(onSetOrgCenter(item))
     };
     const gotoDetail = () => {
-        setZoom(16)
-        setOpenDetail({
-            ...openDetail,
-            open: true,
-            check: true,
-        });
-        dispatch(fetchAsyncOrg(item.subdomain));
-        map?.panTo({ lat: item.latitude, lng: item.longitude })
+        onMarkerClick(item)
     };
     return (
         <div
             id={`${item.id}`}
             onMouseEnter={onHoveItem}
             onClick={() => gotoDetail()}
-            style={
-                item?.latitude === location.lat
-                    ? {
-                        backgroundColor: "var(--bgGray)",
-                    }
-                    : {
-                        backgroundColor: "var(--bgWhite)",
-                    }
-            }
             className="dialog-map__item"
         >
             <div className="map-item__img">
