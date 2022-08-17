@@ -30,6 +30,7 @@ interface IProps {
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs } = props;
+    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const mapRef = useRef<any>();
     const { orgCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();

@@ -90,17 +90,11 @@ export default function MapTagsItemMB(props: IProps) {
                                 />
                                 {formatDistance(item.distance)}
                             </div>
-                        )} */}
-                        </div>
-                        {/* <button
-                            onClick={(e) => onRouteDirection(e)}
-                            className="item-content__btn-direction"
-                        >
-                            Đường đi
-                        </button> */}
+                            )}*/}
                     </div>
                 </div>
             </div>
+        </div>
         </>
     );
 }
