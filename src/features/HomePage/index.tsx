@@ -52,7 +52,7 @@ export default function HomePage() {
                         </>
                 }
             </Container>
-            <HomeDiscount />
+            {/* <HomeDiscount /> */}
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />

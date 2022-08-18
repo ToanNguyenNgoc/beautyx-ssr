@@ -26,6 +26,7 @@ function Bottom(props: any) {
             icon: ICON.home,
             iconAct: ICON.homeAct,
             path: "/homepage",
+            params:"",
             badge: 0
         },
         // {
@@ -41,6 +42,7 @@ function Bottom(props: any) {
             icon: ICON.cate,
             iconAct: ICON.cateAct,
             path: "/-danh-muc",
+            params:"",
             badge: 0
         },
         {
@@ -49,6 +51,7 @@ function Bottom(props: any) {
             icon: ICON.calendar,
             iconAct: ICON.calendarAct,
             path: "/lich-hen",
+            params:"tab=2",
             badge: 0
         },
         // {
@@ -65,13 +68,17 @@ function Bottom(props: any) {
             icon: ICON.user,
             iconAct: ICON.userAct,
             path: "/tai-khoan/thong-tin-ca-nhan",
+            params:"",
             badge: ORDER_SERVICES_NOT_BOOK_COUNT
         },
     ];
     const history = useHistory();
     const chooseBtn = (item: any) => {
         scrollTop();
-        history.push(`${item.path}`);
+        history.push({
+            pathname:item.path,
+            search:`${item.params}`
+        });
     };
     return (
         <div className="bt">

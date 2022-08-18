@@ -1,16 +1,17 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import formatPrice from "../../../utils/formatPrice";
 import icon from "../../../constants/icon";
 import OrderDetail from "../../OrderDetail";
 import { IOrderV2 } from "../../../interface/orderv2";
 import { formatDate } from "../../../utils/format";
-import { AppContext } from "../../../context/AppProvider";
+import PopupQr from "../../AppointmentDetail/PopupQr";
 
 interface IProp {
     order: IOrderV2;
 }
 
 function OrderItem(props: IProp) {
+    const [openQr, setOpenQr] = useState(false)
     const { order } = props;
     const countItem = order.items_count;
     const [open, setOpen] = useState(false);
@@ -54,12 +55,20 @@ function OrderItem(props: IProp) {
                 );
             case "PAID":
                 return (
-                    <div
-                        style={{ backgroundColor: "var(--green)" }}
-                        className="status"
-                    >
-                        Đã thanh toán
-                    </div>
+                    <>
+                        <div
+                            style={{ backgroundColor: "var(--green)" }}
+                            className="status"
+                        >
+                            Đã thanh toán
+                        </div>
+                        <div
+                            onClick={()=>setOpenQr(true)}
+                            className="status status-qr"
+                        >
+                            Mã QR
+                        </div>
+                    </>
                 );
             default:
                 break;
@@ -68,8 +77,14 @@ function OrderItem(props: IProp) {
     const handleOpenDetail = () => {
         setOpen(true);
     };
+    console.log(order)
     return (
         <>
+            <PopupQr
+                open={openQr}
+                setOpen={setOpenQr}
+                qr={order.qr_link}
+            />
             <li>
                 <div className="order-item">
                     <div className="flex-row-sp order-item__head">

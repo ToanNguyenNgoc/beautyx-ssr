@@ -18,30 +18,33 @@ function OrgDealHot() {
     const discounts: IDiscountPar[] = DISCOUNTS.discounts
     return (
         <div className="org-deal-hot">
-            {discounts?.length > 0 && (
-                <div className="org-deal-hot__discounts">
-                    <ul className="list">
-                        {discounts
-                            ?.filter(
-                                (i: IDiscountPar) =>
-                                    i.discount_type === "PRODUCT"
-                            )
-                            ?.map((discount: any, index: number) => (
-                                <li key={index} className="org-discount__item">
-                                    {discount.items.map(
-                                        (item: IITEMS_DISCOUNT, i: number) => (
-                                            <DiscountItem
-                                                key={i}
-                                                discountItem={item}
-                                                discountPar={discount}
-                                            />
-                                        )
-                                    )}
-                                </li>
-                            ))}
-                    </ul>
-                </div>
-            )}
+            {discounts?.filter(
+                (i: IDiscountPar) =>
+                    i.discount_type === "PRODUCT"
+            ).length > 0 && (
+                    <div className="org-deal-hot__discounts">
+                        <ul className="list">
+                            {discounts
+                                ?.filter(
+                                    (i: IDiscountPar) =>
+                                        i.discount_type === "PRODUCT"
+                                )
+                                ?.map((discount: any, index: number) => (
+                                    <li key={index} className="org-discount__item">
+                                        {discount.items.map(
+                                            (item: IITEMS_DISCOUNT, i: number) => (
+                                                <DiscountItem
+                                                    key={i}
+                                                    discountItem={item}
+                                                    discountPar={discount}
+                                                />
+                                            )
+                                        )}
+                                    </li>
+                                ))}
+                        </ul>
+                    </div>
+                )}
             {SERVICES_SPECIAL.services_special?.length > 0 && (
                 <div className="org-deal-hot__section">
                     <span className="org-deal-hot__section-title">Dịch vụ</span>
@@ -82,8 +85,8 @@ function OrgDealHot() {
                 SERVICES_SPECIAL.services_special?.length +
                 PRODUCTS_SPECIAL.products_special?.length ==
                 0 && (
-                <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />
-            )}
+                    <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />
+                )}
         </div>
     );
 }

@@ -6,7 +6,7 @@ import "../ResetPassword/style.css";
 import "./style.css";
 // end 
 // interface
-import {IDataOtp,IPropOtp} from './_model'
+import { IDataOtp, IPropOtp } from './_model'
 // end
 import { auth, firebase } from "../../firebase";
 import FormTelephone from "../ResetPassword/components/FormTelephone";
@@ -21,35 +21,36 @@ declare global {
 window.confirmationResult = window.confirmationResult || {};
 
 function RenderRecatpcha(props: IPropOtp) {
-    const { open, setOpen, dataOtp, setDataOtp, handleSubmit, setOpenDialog }:IPropOtp = props;
+    const { open, setOpen, dataOtp, setDataOtp, handleSubmit }: IPropOtp = props;
     // const [openDialog, setOpenDialog] = useState(false);
     const snackStatus = {
         SUCCESS: 'SUCCESS',
         FAIL: 'FAIL',
         WARNING: 'WARNING'
     }
-    const [notiWarning,setNotiWarning] = useState({
+    const [notiWarning, setNotiWarning] = useState({
         title: "",
         open: false,
         status: ""
     });
-    const generateRecaptcha = (props:string|number) => {
+    const generateRecaptcha = (props: string | number) => {
         try {
-            // console.log(window.recaptchaVerifier);
+            console.log(window.recaptchaVerifier);
             let phoneNumberVN = "+84" + props.toString().slice(1);
             if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier( "recaptcha-container",
+                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container",
                     {
                         size: "invisible",
                         callback: (values: any) => {
                             // handleSubmit(values);
-                            // console.log(values)
-                            
+                            console.log(values)
+
                             // setDataOtp({
                             //     ...dataOtp,
                             //     verification_id:values,
                             //     telephone:props
                             // })
+                            // verifyWithPhone(props);
                         },
                     }
                 );
@@ -57,10 +58,27 @@ function RenderRecatpcha(props: IPropOtp) {
                 window.recaptchaVerifier.render();
             }
         } catch (err: any) {
-            console.log(err);
+            console.log(err.message);
+
+            if (err.message.includes('RecaptchaVerifier instance has been destroyed')) {
+                try {
+                    console.log('in');
+                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container",
+                        {
+                            size: "invisible",
+                            callback: (values: any) => {
+                                console.log(values)
+                            },
+                        }
+                    );
+                }
+                catch (err) {
+                    console.log(err);
+                }
+            }
         }
     };
-    const verifyWithPhone = (values:string|number) => {
+    const verifyWithPhone = (values: string | number) => {
         // console.log(window.recaptchaVerifier)
         let phoneNumberVN = "+84" + values.toString().slice(1);
         auth.signInWithPhoneNumber(
@@ -71,11 +89,12 @@ function RenderRecatpcha(props: IPropOtp) {
                 console.log(confirmationResult)
                 setDataOtp({
                     ...dataOtp,
-                    telephone:values,
-                    verification_id:confirmationResult.verification_id
+                    open: true,
+                    telephone: values,
+                    verification_id: confirmationResult.verificationId
                 });
-                setOpenDialog(true);
-                    
+                setOpen(false);
+
                 window.confirmationResult = confirmationResult;
                 // setLoading(false);
             })
@@ -88,48 +107,104 @@ function RenderRecatpcha(props: IPropOtp) {
                     errorCode === "auth/quota-exceeded" ||
                     errorCode === "auth/too-many-requests"
                 ) {
-                   setNotiWarning({
-                       ...notiWarning,
-                       open: true,
-                       title: "Số điện thoại đã đạt giới hạn cho phép gửi mã xác thực (OTP) trong ngày",
-                       status: snackStatus.WARNING
-                   })
+                    setNotiWarning({
+                        ...notiWarning,
+                        open: true,
+                        title: "Số điện thoại đã đạt giới hạn cho phép gửi mã xác thực (OTP) trong ngày",
+                        status: snackStatus.WARNING
+                    })
                 } else if (
                     messCode ===
                     "reCAPTCHA has already been rendered in this element"
                 ) {
                     // setOpenDialogReloadPage(true);
+                    window.location.reload();
                     setNotiWarning({
                         ...notiWarning,
                         open: true,
-                        title: "Vui lòng bấm nút tải lại trang để tiếp tục ...",
+                        title: "Quá số lần nhận Otp tải lại trang để tiếp tục ...",
+                        status: snackStatus.FAIL
+                    })
+                }
+                else {
+                    // window.location.reload();
+                    setNotiWarning({
+                        ...notiWarning,
+                        open: true,
+                        title: "Quá số lần nhận Otp tải lại trang để tiếp tục ..",
                         status: snackStatus.FAIL
                     })
                 }
             });
     }
-    const handleTelephone = (props:number) => {
+    const handleTelephone = (props: number) => {
         console.log(props)
-       
+
         generateRecaptcha(props);
         verifyWithPhone(props)
-       
+
     }
     const handleClose = () => {
+        if (window.recaptchaVerifier) {try {
+            window.recaptchaVerifier.clear();
+        }
+            catch (err) {
+                console.log(err);
+            }
+        }
         return setOpen(false)
     }
-    const handleConfirm = (code:string) => {
+    const handleConfirm = (code: string) => {
         handleSubmit(code)
     }
-    useEffect(() => {
-        if(dataOtp.verification_id){
-            handleClose()
-            // setOpenDialog(true);
-            
-        }
-    }, [dataOtp.verification_id])
+    console.log(open);
     return (
         <>
+            <Drawer
+                open={open}
+                onClose={handleClose}
+                anchor="bottom"
+            >
+                <div className="form-otp__cnt">
+                    <FormTelephone
+                        title="Nhập số điện thoại để nhận mã OTP"
+                        handlePostTelephone={handleTelephone}
+                        isDialog={true}
+                    />
+                </div>
+            </Drawer>
+            <AlertSnack
+                open={notiWarning.open}
+                title={notiWarning.title}
+                status={notiWarning.status}
+                onClose={() => setNotiWarning({
+                    ...notiWarning, open: false
+                })}
+            />
+        </>
+    );
+}
+export function FieldOtps(props: any) {
+    const { open, dataOtp, setDataOtp, handleSubmit }: IPropOtp = props
+    const handleTelephone = (props: any) => {
+        handleSubmit({
+            ...dataOtp,
+            code: props
+        });
+        setDataOtp({
+            ...dataOtp,
+            code: props
+            // open: false
+        })
+    }
+    const handleClose = () => {
+        setDataOtp({
+            ...dataOtp,
+            open: false
+        })
+        window.recaptchaVerifier.clear();
+    }
+    return (
         <Drawer
             open={open}
             onClose={handleClose}
@@ -137,50 +212,12 @@ function RenderRecatpcha(props: IPropOtp) {
         >
             <div className="form-otp__cnt">
                 <FormTelephone
-                    title="Nhập số điện thoại để nhận mã OTP"
-                    handlePostTelephone={handleTelephone}
-                    isDialog={true}
-                />
-            </div>
-        </Drawer>
-        <AlertSnack
-            open={notiWarning.open}
-            title={notiWarning.title}
-            status={notiWarning.status}
-            onClose={() => setNotiWarning({
-                ...notiWarning, open: false
-            })}
-        />
-        </>
-    );
-}
-export function FieldOtps (props:any){
-    const {open,setOpen,dataOtp,setDataOtp,handleSubmit}:IPropOtp = props
-    const handleTelephone = (props:any) => {
-        setDataOtp({
-            ...dataOtp,
-            code: props
-        })
-        handleSubmit({
-            ...dataOtp,
-            code: props
-        });
-        setOpen(false);
-    }
-    return(
-        <Drawer
-            open={open}
-            onClose={()=>setOpen(false)}
-            anchor="bottom"
-        >
-            <div className="form-otp__cnt">
-                <FormTelephone
                     title="Nhập mã OTP"
                     handlePostTelephone={handleTelephone}
                     isDialog={true}
+                    load={false}
                 />
             </div>
-
         </Drawer>
     )
 }

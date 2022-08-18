@@ -83,7 +83,7 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
-    console.log(servicesBook);
+    // console.log(servicesBook);
     const branches = org?.branches?.concat(org);
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
@@ -278,6 +278,7 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
+    console.log(services)
     return (
         <>
             <Container>
@@ -438,9 +439,10 @@ function Booking() {
                                         <button
                                             className="asc"
                                             disabled={
-                                                seatAmount >= 10 &&
-                                                seatAmount <=
-                                                    services[0]?.quantity
+                                                (seatAmount >= 10 ||
+                                                seatAmount >
+                                                services[0]?.quantity ||
+                                                services[0]?.quantity === 1)
                                                     ? true
                                                     : false
                                             }

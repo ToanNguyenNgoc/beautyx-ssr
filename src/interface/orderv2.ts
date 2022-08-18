@@ -34,6 +34,7 @@ export interface IOrderV2 {
     platform: string,
     discount_value: number,
     items_count: number,
+    qr_link:string,
     payment_gateway: {
         id: number,
         status: string,

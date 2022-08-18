@@ -157,7 +157,7 @@ function MenuSideBar(props: info) {
           </div>
           <span className="quicksand-md text-bold">{t("Header.my_order")}</span>
         </div>
-        <div className="tab" onClick={() => history.push("/goi-dich-vu")}>
+        <div className="tab" onClick={() => history.push("/lich-hen?tab=2")}>
           <div className="icon">
             <img src={icon.bag} alt="" />
           </div>

@@ -4,9 +4,9 @@ import { Dispatch, SetStateAction } from "react";
 export interface IPropOtp{
     setOpen: Dispatch<SetStateAction<boolean>>
     open: boolean
-    dataOtp: IDataOtp
-    setDataOtp: Dispatch<SetStateAction<IDataOtp>>
-    setOpenDialog:Dispatch<SetStateAction<boolean>>
+    dataOtp: any
+    setDataOtp: Dispatch<SetStateAction<any>>
+    setOpenDialog?:Dispatch<SetStateAction<boolean>>
     handleSubmit: (props:any)=>any
 }
 export interface IDataOtp{
