@@ -44,6 +44,7 @@ export default function AccountMobile() {
         const prevUrl = "/tai-khoan/thong-tin-ca-nhan";
         history.push({
             pathname: "/lich-hen",
+            search:`tab=1`,
             state: { prevUrl },
         });
     };
