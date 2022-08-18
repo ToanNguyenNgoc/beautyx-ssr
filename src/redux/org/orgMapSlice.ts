@@ -9,7 +9,8 @@ export interface IORGS_MAP {
         orgs: IOrganization[],
         page: number,
         totalItem: number,
-        status: string
+        status: string,
+        mountNth:number
     },
     locationCenter: any,
     getValueCenter: boolean,
@@ -21,6 +22,7 @@ const initialState: IORGS_MAP = {
         orgs: [],
         page: 1,
         totalItem: 1,
+        mountNth:1,
         status: ""
     },
     locationCenter: null,
@@ -34,7 +36,8 @@ export const fetchOrgsMapFilter: any = createAsyncThunk(
             return {
                 orgs: res.data.context.data,
                 totalItem: res.data.context.total,
-                page: values.page
+                page: values.page,
+                mountNth: values.mountNth
             }
         } catch (error) {
             console.log(error)
@@ -50,6 +53,7 @@ const orgMapReducer = createSlice({
                 orgs: [],
                 page: 1,
                 totalItem: 1,
+                mountNth:2,
                 status: ""
             }
         },
@@ -69,12 +73,13 @@ const orgMapReducer = createSlice({
             return { ...state, status: STATUS.LOADING };
         },
         [fetchOrgsMapFilter.fulfilled]: (state, { payload }) => {
-            const { orgs, page, totalItem } = payload;
+            const { orgs, page, totalItem, mountNth } = payload;
             return {
                 ...state,
                 orgsMap: {
                     orgs: [...state.orgsMap.orgs, ...orgs],
                     page: page,
+                    mountNth: mountNth,
                     totalItem: totalItem,
                     status: STATUS.SUCCESS
                 }

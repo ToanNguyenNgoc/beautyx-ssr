@@ -23,12 +23,14 @@ import {
     EX_CHECK_INCLUDE_ITEMS,
     EX_CHECK_SUB_TOTAL,
     IS_VOUCHER,
+    EX_CHECK_VALID_TIME
 } from "../../../utils/cart/checkConditionVoucher";
 import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import onErrorImg from "../../../utils/errorImg";
 import img from "../../../constants/img";
 import formatPrice from "../../../utils/formatPrice";
 import moment from "moment";
+import { discountReducerItem } from "../../../utils/cart/cartReducer";
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
@@ -189,14 +191,19 @@ const VoucherOrgItem = (props: any) => {
         // items:[],
         // items_count:0,
         // minimum_order_value: null,
+        // valid_time: "10:00:00 - 20:00:00",
         // valid_from: "2022-01-01 10:00:00",
         // valid_util: "2022-10-01 10:00:00"
     };
-    const listItemName = voucher.items
-        .filter((i: IITEMS_DISCOUNT) => i.organization?.id === org?.id)
-        .map((i: IITEMS_DISCOUNT) =>
-            i.productable?.service_name || i?.productable.product_name
-        )
+    console.log(voucher)
+    const { timeCondition, displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
+
+    const { productsInDis, servicesInDis } = discountReducerItem(
+        voucher.items.filter((i: IITEMS_DISCOUNT) => i.organization_id === org?.id)
+    )
+    const productName = productsInDis.map((i: IITEMS_DISCOUNT) => i.productable?.product_name);
+    const serviceName = servicesInDis.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
+    const displayName = serviceName.concat(productName).filter(Boolean)
     const dispatch = useDispatch();
     const { cartAmount, cartList, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
@@ -212,7 +219,8 @@ const VoucherOrgItem = (props: any) => {
         voucher.discount_type === DISCOUNT_TYPE.SUB_TOTAL.key &&
         subTotalCondition &&
         dateCondition &&
-        itemsCondition
+        itemsCondition &&
+        timeCondition
     ) {
         applyCondition = true;
     }
@@ -279,18 +287,24 @@ const VoucherOrgItem = (props: any) => {
                         </span>
                     }
                     {
-                        listItemName.length > 0 ?
+                        (productsInDis.length === 0 && servicesInDis.length === 0) ?
+                            <span className="item-right__desc">
+                                Áp dụng tất cả sản phẩm, dịch vụ
+                            </span>
+                            :
                             <span className="item-right__desc">
                                 Áp dụng cho các dịch vụ, sản phẩm : <span
                                     style={{ fontWeight: "bold" }}
                                 >
-                                    {listItemName.join(",")}
+                                    {displayName.join(", ")}
                                 </span>
                             </span>
-                            :
-                            <span className="item-right__desc">
-                                Áp dụng tất cả sản phẩm, dịch vụ
-                            </span>
+                    }
+                    {
+                        voucher.valid_time &&
+                        <span className="item-right__desc">
+                            Khoảng thời gian : {displayFrom}-{displayTo}
+                        </span>
                     }
                 </div>
                 <div className="item-right__bottom">

@@ -19,6 +19,7 @@ class Order {
                   'filter[platform]': FLAT_FORM,
                   'filter[productable]': true,
                   "filter[status]": values.status,
+                  "append":"qr_link"
             }
             return axiosClient.get(url, AUTH_HEADER_PARAM_GET(pickBy(paramsOb, identity)))
       }

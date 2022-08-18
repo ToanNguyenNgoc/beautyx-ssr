@@ -1,8 +1,13 @@
 import React from 'react';
 import { Dialog } from '@mui/material'
 
+interface IProps {
+    open: boolean,
+    setOpen: (open: boolean) => void,
+    qr: string
+}
 
-function PopupQr(props: any) {
+function PopupQr(props: IProps) {
     const { open, setOpen, qr } = props;
     return (
         <Dialog
@@ -10,9 +15,9 @@ function PopupQr(props: any) {
             onClose={() => setOpen(false)}
         >
             <div
-                style={{width:"86vw", borderRadius:"8px"}}
+                style={{ width: "86vw", borderRadius: "8px" }}
             >
-                <img style={{borderRadius:"8px"}} src={qr} alt="" />
+                <img style={{ borderRadius: "8px" }} src={qr} alt="" />
             </div>
         </Dialog>
     );

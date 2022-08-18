@@ -198,6 +198,74 @@
   margin-left: 8px;
   background-color: var(--orange);
 }
+/* order ship status */
+.order-de-ship-status .title{
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 500;
+  color: var(--black);
+}
+.order-de-ship-status__time-line{
+  margin-top: 12px;
+  position: relative;
+  height: 38px;
+}
+.order-de-ship-status__time-line .line{
+  position: absolute;
+  width: 75%;
+  height: 2px;
+  margin-top: 10px;
+  left:12.5%;
+  background-color: var(--grey);
+}
+.order-de-ship-status__time-line .line .child{
+  width: 0%;
+  height: 100%;
+  background-color: var(--orange);
+}
+.order-de-ship-status__time-line ul{
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+.order-de-ship-status__time-line li{
+  width: 25%;
+}
+.order-de-ship-status__time-line .status-item{
+  color: var(--text-hover);
+}
+.ship-status-item__step{
+  background-color: var(--text-hover);
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 700;
+  color: var(--bgWhite);
+  text-align: center;
+}
+.ship-status-item__title{
+  margin: 8px 0px 4px 0px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 500;
+}
+.ship-status-item__time{
+  font-size: 12px;
+  line-height: 14px;
+  font-weight: 500;
+}
+.ship-cancel-status{
+  background-color: var(--red_2);
+  padding: 2px 8px;
+  width: fit-content;
+  color: var(--white);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 700;
+}
 
 /* res-mobile */
 /* Mobile */
@@ -312,5 +380,11 @@
     line-height: 12px;
     border-radius: 4px;
     margin: -15px 0px 0px -8px;
+  }
+  .order-de-ship-status__time-line{
+    height: 60px;
+  }
+  .ship-status-item__title{
+    font-size: 9px;
   }
 }

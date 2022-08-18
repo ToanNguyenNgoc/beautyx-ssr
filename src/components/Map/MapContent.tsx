@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
@@ -19,9 +20,10 @@ import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from './MapCurrentUser'
 import IStore from "../../interface/IStore";
-import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import onErrorImg from "../../utils/errorImg";
+
 
 
 interface IProps {
@@ -31,9 +33,8 @@ interface IProps {
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs } = props;
-    const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const mapRef = useRef<any>();
-    const { orgCenter } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { orgCenter, getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
@@ -44,8 +45,8 @@ const MapContent = (props: IProps) => {
         check: false,
     });
     const [local,] = useState({
-        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
-        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
+        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0].latitude,
+        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0].longitude,
     });
 
     const refListOrg: any = useRef();
@@ -92,6 +93,7 @@ const MapContent = (props: IProps) => {
                     page: page + 1,
                     sort: "distance",
                     path_url: location.pathname,
+                    mountNth: 2
                 })
             );
         }
@@ -122,22 +124,24 @@ const MapContent = (props: IProps) => {
                 onViewMoreOrgs()
             }
             if (mapRef?.current.getZoom() < 15) {
-                mapRef?.current.setZoom(13)
+                mapRef?.current.setZoom(14)
             }
             onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
-            dispatch(onSetOrgCenter(orgs[index]))
+            // dispatch(onSetOrgCenter(orgs[index]))
         },
     };
-    useEffect(() => {
-        switch (orgs.length) {
-            case 30: return mapRef?.current?.setZoom(15);
-            case 45: return mapRef?.current?.setZoom(14);
-            case 60: return mapRef?.current?.setZoom(13);
-            case 75: return mapRef?.current?.setZoom(12);
-            case 90: return mapRef?.current?.setZoom(11);
-            case 105: return mapRef?.current?.setZoom(10)
-        }
-    }, [orgs.length])
+    // useEffect(() => {
+    //     if (!getValueCenter) {
+    //         switch (orgs.length) {
+    //             case 30: return mapRef?.current?.setZoom(15);
+    //             case 45: return mapRef?.current?.setZoom(14);
+    //             case 60: return mapRef?.current?.setZoom(13);
+    //             case 75: return mapRef?.current?.setZoom(12);
+    //             case 90: return mapRef?.current?.setZoom(11);
+    //             case 105: return mapRef?.current?.setZoom(10)
+    //         }
+    //     }
+    // }, [orgs.length, getValueCenter])
     const onMarkerClick = (item: IOrganization, index?: number) => {
         if (mapRef?.current.getZoom() < 15) {
             mapRef?.current.setZoom(15)
@@ -161,10 +165,52 @@ const MapContent = (props: IProps) => {
             dispatch(fetchOrgsMapFilter({
                 page: 1,
                 sort: "distance",
+                mountNth: 2
             }))
             onFlyTo(parseFloat(LOCATION?.split(",")[0]), parseFloat(LOCATION?.split(",")[1]))
         }
     }
+
+    const debounceOrgsMove = useCallback(
+        debounce((latLng: string, orgsLength:number) => {
+            if(orgsLength === 75){
+                dispatch(onSetOrgsMapEmpty())
+            }
+            // dispatch(onSetOrgsMapEmpty())
+            dispatch(
+                fetchOrgsMapFilter({
+                    page: 1,
+                    LatLng: latLng,
+                    mountNth:2
+                })
+            );
+        }, 1200),
+        []
+    );
+    const onCenterChange = () => {
+        const lat = mapRef?.current?.getCenter()?.lat
+        const lng = mapRef?.current?.getCenter()?.lng
+        if (getValueCenter) {
+            debounceOrgsMove(`${lat},${lng}`, orgs.length)
+        }
+    }
+    // function unique(arr: any) {
+    //     var newArr = []
+    //     for (var i = 0; i < arr.length; i++) {
+    //         if (newArr.indexOf(arr[i].id) === -1) {
+    //             newArr.push(arr[i].id)
+    //         }
+    //     }
+    //     const newOrgs = newArr.map((n: number) => {
+    //         return { id: n, org: orgs.find((o: IOrganization) => o.id === n) }
+    //     }).map((orgOb: any) => orgOb.org)
+    //     return newOrgs
+    // }
+    // const newOrgs = unique(orgs)
+    const currentUser = (e: GeolocateResultEvent) => {
+        handleBackCurrentUser()
+    }
+
 
     return (
         <div className="map-content">
@@ -181,6 +227,8 @@ const MapContent = (props: IProps) => {
             />
             {
                 <ReactMapGL
+                    onZoom={onCenterChange}
+                    onTouchMove={onCenterChange}
                     style={{
                         width: "100vw",
                         height: "100vh"
@@ -200,6 +248,10 @@ const MapContent = (props: IProps) => {
                         position="bottom-right"
                         showZoom={true}
                         showCompass={true}
+                    />
+                    <GeolocateControl
+                        position="bottom-right"
+                        onGeolocate={currentUser}
                     />
                     {
                         LOCATION &&
@@ -288,7 +340,6 @@ const MapContent = (props: IProps) => {
                     <Slider ref={slideRef} {...settings}>
                         {orgs.length > 0 && orgs.map((item: any, index: number) => (
                             <MapTagsItemMB
-                                // handleDirection={handleDirection}
                                 key={index} item={item}
                             />
                         ))}

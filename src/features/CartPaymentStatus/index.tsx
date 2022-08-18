@@ -114,6 +114,7 @@ function CartPaymentStatus() {
             }
         } catch (error) {
             console.log(error);
+            handleCancelPayment()
         }
     };
     const setInter = () => {

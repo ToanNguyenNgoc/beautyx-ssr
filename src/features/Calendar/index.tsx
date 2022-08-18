@@ -37,7 +37,6 @@ function Calendar() {
     useEffect(() => {
         dispatch(clearAllServices());
     }, []);
-    useEffect(()=>{(params && params?.tab)&&(params.tab !== valueTab)&&setValueTab(params.tab);},[params?.tab]);
     const onGoBack = () => {
         if (location.state?.prevUrl) {
             history.goBack(`${location.state?.prevUrl}`);
@@ -45,7 +44,7 @@ function Calendar() {
             history.push("/");
         }
     };
-    console.log('render');
+    // console.log('render');
     return (
         <>
             <HeadTitle title="Lịch hẹn" />

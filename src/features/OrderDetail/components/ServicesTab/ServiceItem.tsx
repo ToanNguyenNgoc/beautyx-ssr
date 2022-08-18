@@ -12,7 +12,7 @@ import { formatAddCart } from "../../../../utils/cart/formatAddCart";
 import AlertSnack from "../../../../components/AlertSnack";
 
 // ==== api tracking ====
- import tracking from "../../../../api/trackApi";
+import tracking from "../../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
@@ -20,7 +20,7 @@ import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
 function ServiceItem(props: any) {
     const { t } = useContext(AppContext);
     const { serviceItem, org, itemsDiscountOrg } = props;
-const {USER} = useSelector((state:any) => state.USER);
+    const { USER } = useSelector((state: any) => state.USER);
     const service = serviceItem.productable;
     const IS_DISCOUNT = itemsDiscountOrg.find(
         (i: any) => i.productable_id === service?.id
@@ -96,7 +96,7 @@ const {USER} = useSelector((state:any) => state.USER);
             history.push({
                 pathname: `/chi-tiet-giam-gia/${slugify(
                     IS_DISCOUNT.productable.service_name ||
-                        IS_DISCOUNT.productable.product_name
+                    IS_DISCOUNT.productable.product_name
                 )}`,
                 search: `type=${type}&org_id=${org?.id}&dis_id=${IS_DISCOUNT?.discount_id}&item_id=${IS_DISCOUNT.productable_id}`,
             });
@@ -150,7 +150,7 @@ const {USER} = useSelector((state:any) => state.USER);
                                 >
                                     {formatPrice(
                                         service?.price -
-                                            serviceItem?.discount_value
+                                        serviceItem?.discount_value
                                     )}
                                     đ
                                 </span>

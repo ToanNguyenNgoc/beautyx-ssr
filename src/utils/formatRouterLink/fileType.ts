@@ -2,6 +2,11 @@ import { IDiscountPar } from "../../interface/discount";
 import formatPrice from "../formatPrice";
 import moment from "moment";
 
+export interface IORDER_SHIP_STATUS {
+    id: number,
+    title: string,
+    process: number,
+}
 const date = new Date();
 const dayNow = moment(date).format("YYYY-MM-YY HH:MM:SS");
 export const DISCOUNT_TYPE = {
@@ -42,7 +47,7 @@ export const EX_DISCOUNT_UNIT = (discount: IDiscountPar) => {
 export const EX_DISCOUNT_TYPE = (discount: IDiscountPar) => {
     const { discount_type } = discount
     let text = "";
-    let TYPE = ""
+    // let TYPE = ""
     const value = EX_DISCOUNT_UNIT(discount)
     switch (discount_type) {
         case DISCOUNT_TYPE.FINAL_PRICE.key:
@@ -58,7 +63,10 @@ export const EX_DISCOUNT_TYPE = (discount: IDiscountPar) => {
     }
     return text
 }
-export const EX_ORDER_VALUE = (discount: IDiscountPar) => {
-    let title = "";
-
-}
+export const ORDER_SHIP_STATUS: IORDER_SHIP_STATUS[] = [
+    { id: 0, title: "Chưa xác nhận", process: 0 },
+    { id: 1, title: "Đang xử lý", process: 33.33 },
+    { id: 2, title: "Đang giao hàng", process: 66.66 },
+    { id: 3, title: "Đã giao", process: 100 },
+    { id: 4, title: "Đã hủy", process: 100 }
+]
