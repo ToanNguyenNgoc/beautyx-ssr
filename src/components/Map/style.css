@@ -577,6 +577,7 @@
 }
 
 .map-filter-cnt__drop {
+    z-index: 2;
     position: absolute;
     width: calc(100%);
     height: fit-content;

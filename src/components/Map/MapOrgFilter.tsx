@@ -63,6 +63,7 @@ const PlaceComponent = (props: any) => {
             fetchOrgsMapFilter({
                 page: 1,
                 LatLng: geo,
+                mountNth:2
             })
         );
         setTimeout(() => {
@@ -87,6 +88,7 @@ const PlaceComponent = (props: any) => {
             fetchOrgsMapFilter({
                 page: 1,
                 LatLng: `${org.latitude},${org.longitude}`,
+                mountNth:2
             })
         );
         setOpenDetail({
@@ -149,7 +151,7 @@ const PlaceComponent = (props: any) => {
                         </ul>
                     </div>
                 </div>
-                {/* <div className="map-filter-cnt__right">
+                <div className="map-filter-cnt__right">
                     <div className="flex-row map-filter-cnt__right-switch">
                         <Switch 
                             onChange={onChangeSwitch}
@@ -158,7 +160,7 @@ const PlaceComponent = (props: any) => {
                             />
                         Cập nhật khi di chuyển bản đồ
                     </div>
-                </div> */}
+                </div>
             </div>
         </>
     );

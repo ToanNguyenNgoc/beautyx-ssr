@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AUTH_LOCATION } from "../../api/authLocation";
 import icon from "../../constants/icon";
@@ -20,8 +20,9 @@ import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from './MapCurrentUser'
 import IStore from "../../interface/IStore";
-import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
+import ReactMapGL, { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
 
 
 interface IProps {
@@ -43,8 +44,8 @@ const MapContent = (props: IProps) => {
         check: false,
     });
     const [local,] = useState({
-        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
-        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
+        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0].latitude,
+        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0].longitude,
     });
 
     const refListOrg: any = useRef();
@@ -91,6 +92,7 @@ const MapContent = (props: IProps) => {
                     page: page + 1,
                     sort: "distance",
                     path_url: location.pathname,
+                    mountNth: 2
                 })
             );
         }
@@ -162,26 +164,33 @@ const MapContent = (props: IProps) => {
             dispatch(fetchOrgsMapFilter({
                 page: 1,
                 sort: "distance",
+                mountNth: 2
             }))
             onFlyTo(parseFloat(LOCATION?.split(",")[0]), parseFloat(LOCATION?.split(",")[1]))
         }
     }
+
     const debounceOrgsMove = useCallback(
-        debounce((latLng: string) => {
+        debounce((latLng: string, orgsLength:number) => {
+            if(orgsLength === 75){
+                dispatch(onSetOrgsMapEmpty())
+            }
+            // dispatch(onSetOrgsMapEmpty())
             dispatch(
                 fetchOrgsMapFilter({
                     page: 1,
                     LatLng: latLng,
+                    mountNth:2
                 })
             );
-        }, 1000),
+        }, 1200),
         []
     );
     const onCenterChange = () => {
-        const lat = mapRef?.current.getCenter()?.lat
-        const lng = mapRef?.current.getCenter()?.lng
+        const lat = mapRef?.current?.getCenter()?.lat
+        const lng = mapRef?.current?.getCenter()?.lng
         if (getValueCenter) {
-            debounceOrgsMove(`${lat},${lng}`)
+            debounceOrgsMove(`${lat},${lng}`, orgs.length)
         }
     }
     // function unique(arr: any) {
@@ -197,6 +206,10 @@ const MapContent = (props: IProps) => {
     //     return newOrgs
     // }
     // const newOrgs = unique(orgs)
+    const currentUser = (e: GeolocateResultEvent) => {
+        handleBackCurrentUser()
+    }
+
 
     return (
         <div className="map-content">
@@ -234,6 +247,10 @@ const MapContent = (props: IProps) => {
                         position="bottom-right"
                         showZoom={true}
                         showCompass={true}
+                    />
+                    <GeolocateControl
+                        position="bottom-right"
+                        onGeolocate={currentUser}
                     />
                     {
                         LOCATION &&
@@ -322,7 +339,6 @@ const MapContent = (props: IProps) => {
                     <Slider ref={slideRef} {...settings}>
                         {orgs.length > 0 && orgs.map((item: any, index: number) => (
                             <MapTagsItemMB
-                                // handleDirection={handleDirection}
                                 key={index} item={item}
                             />
                         ))}

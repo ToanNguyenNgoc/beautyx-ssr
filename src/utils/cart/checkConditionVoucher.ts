@@ -27,8 +27,8 @@ const IsEqualArr = (arr1: any[], arr2: any[]) => {
     });
     return is_Equal
 }
-export const IS_VOUCHER = (discounts:IDiscountPar[])=>{
-    const vouchers:IDiscountPar[] = discounts.filter((i: IDiscountPar) => (
+export const IS_VOUCHER = (discounts: IDiscountPar[]) => {
+    const vouchers: IDiscountPar[] = discounts.filter((i: IDiscountPar) => (
         i.discount_type === "SUB_TOTAL" ||
         ((i.discount_type === "PRODUCT" || i.discount_type === "FINAL_PRICE") && i.items_count === 0)
     ));
@@ -45,6 +45,32 @@ export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
         dateCondition = true
     }
     return dateCondition
+}
+export const EX_CHECK_VALID_TIME = (voucher: IDiscountPar) => {
+    let timeCondition = false;
+    const hourNow = `0${date.getHours()}`.slice(-2);
+    const minuteNow = `00${date.getMinutes() + 1}`.slice(-2)
+    const timeNowNum = parseInt(`${hourNow}${minuteNow}`);
+
+    const timeFrom = voucher.valid_time?.split("-")[0];
+    const timeHourFrom = `0${timeFrom?.split(":")[0]}`.slice(-2)
+    const timeMinuteFrom = `0${timeFrom?.split(":")[1]}`.slice(-2)
+    const timeFromNum = parseInt(`${timeHourFrom}${timeMinuteFrom}`);
+
+    const timeTo = voucher.valid_time?.split("-")[1];
+    const timeHourTo = `0${timeTo?.split(":")[0]}`.slice(-2)
+    const timeMinuteTo = `0${timeTo?.split(":")[1]}`.slice(-2)
+    const timeToNum = parseInt(`${timeHourTo}${timeMinuteTo}`);
+
+    if (!voucher.valid_time) {
+        timeCondition = true
+    } else if (voucher.valid_from && timeFromNum < timeNowNum && timeNowNum < timeToNum) {
+        timeCondition = true
+    }
+
+    const displayFrom = voucher.valid_time ? `${timeHourFrom}h${timeMinuteFrom}` : null
+    const displayTo = voucher.valid_time ? `${timeHourTo}h${timeMinuteTo}` : null
+    return { timeCondition, displayFrom, displayTo }
 }
 export const EX_CHECK_SUB_TOTAL = (
     totalAmount: number, voucher: IDiscountPar
