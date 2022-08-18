@@ -10,7 +10,7 @@ import { STATUS } from '../../redux/status';
 
 function HomeMap() {
     const dispatch = useDispatch();
-    const { orgs, status } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
+    const { orgs, status, mountNth } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
     const location = useLocation()
     const history = useHistory();
     const callOrgsByDistance = () => {
@@ -18,7 +18,8 @@ function HomeMap() {
             dispatch(fetchOrgsMapFilter({
                 page: 1,
                 sort: "distance",
-                path_url: location.pathname
+                path_url: location.pathname,
+                mountNth: 2
             }))
         }
     }
@@ -35,9 +36,12 @@ function HomeMap() {
                     <img src={icon.closeCircleWhite} alt="" />
                 </div>
             </div>
-            <MapContent
-                orgs={orgs}
-            />
+            {
+                (mountNth === 2) &&
+                <MapContent
+                    orgs={orgs}
+                />
+            }
         </div>
     );
 }

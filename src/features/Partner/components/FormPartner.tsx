@@ -12,6 +12,9 @@ import {
     GoogleReCaptchaProvider,
     GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
+import registerSeller from "../../../api/registerSeller";
+
+
 export default function FormPartner() {
     const { t } = useContext(AppContext);
     const parner = partnerStyle();
@@ -20,34 +23,47 @@ export default function FormPartner() {
     const [captcha, setCaptcha] = useState("");
     const verifyRecaptchaCallback = React.useCallback((token) => {
         setCaptcha(token);
+        console.log(token)
     }, []);
-    const handleContact = (values: any) => {
+    const handleContact = async (values: any) => {
         setPopup(true);
-        params.append("reg_phone", `${values.Phone}`);
-        params.append("reg_email", `${values.Email}`);
-        params.append("reg_name", `${values.Name}`);
-        params.append("reg_business_name", `${values.Enterprise}`);
-        params.append("reg_business_add", `${values.Address}`);
-        params.append("reg_captcha", `${captcha}`);
-        params.append("reg_action", "submit");
-        const config = {
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
-        };
-        axios
-            .post(
-                `https://15c0-42-115-180-214.ap.ngrok.io/myspa_website/Frontend/register_momo `,
-                params,
-                config
-            )
-            .then(function (response: any) {
-                console.log("response :>> ", JSON.stringify(response));
-            })
-            .catch(function (err: any) {
-                console.log(`err`, err);
-                throw new Error("Token error");
-            });
+        const params = {
+            "reg_phone": values.Phone,
+            "reg_email": values.Email,
+            "reg_name": values.Name,
+            "reg_business_name": values.Enterprise,
+            "reg_business_add": values.Address,
+            "reg_captcha": captcha,
+            "reg_action": "submit",
+            "reg_type": "ĐĂNG+KÝ+LIÊN+KẾT+VÍ+MOMO"
+        }
+        await registerSeller.post(params)
+        // params.append("reg_phone", `${values.Phone}`);
+        // params.append("reg_email", `${values.Email}`);
+        // params.append("reg_name", `${values.Name}`);
+        // params.append("reg_business_name", `${values.Enterprise}`);
+        // params.append("reg_business_add", `${values.Address}`);
+        // params.append("reg_captcha", `${captcha}`);
+        // params.append("reg_action", "submit");
+        // params.append("reg_type","ĐĂNG+KÝ+LIÊN+KẾT+VÍ+MOMO")
+        // const config = {
+        //     headers: {
+        //         "Content-Type": "multipart/form-data",
+        //     },
+        // };
+        // axios
+        //     .post(
+        //         `https://4659-42-117-36-77.ap.ngrok.io/myspa_website/Frontend/register_momo `,
+        //         params,
+        //         config
+        //     )
+        //     .then(function (response: any) {
+        //         console.log("response :>> ", JSON.stringify(response));
+        //     })
+        //     .catch(function (err: any) {
+        //         console.log(`err`, err);
+        //         throw new Error("Token error");
+        //     });
     };
     const formikPartner = useFormik({
         initialValues: {
