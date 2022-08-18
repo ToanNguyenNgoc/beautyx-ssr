@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AUTH_LOCATION } from "../../api/authLocation";
@@ -17,11 +16,10 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 import _, { debounce } from "lodash";
 import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
-import MapCurrentUser from './MapCurrentUser'
+import MapCurrentUser from "./MapCurrentUser";
 import IStore from "../../interface/IStore";
-import ReactMapGL, { Marker, NavigationControl } from 'react-map-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
-
+import ReactMapGL, { Marker, NavigationControl } from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 interface IProps {
     orgs: IOrganization[];
@@ -32,7 +30,7 @@ const MapContent = (props: IProps) => {
     const { orgs } = props;
     const key = process.env.REACT_APP_GOOGLE_MAP_API_KEY;
     const mapRef = useRef<any>();
-    const { orgCenter } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { orgCenter } = useSelector((state: IStore) => state.ORGS_MAP);
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
@@ -42,9 +40,11 @@ const MapContent = (props: IProps) => {
         open: false,
         check: false,
     });
-    const [local,] = useState({
+    const [local] = useState({
         lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
-        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
+        long: LOCATION
+            ? parseFloat(LOCATION?.split(",")[1])
+            : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -79,7 +79,9 @@ const MapContent = (props: IProps) => {
         }
     };
 
-    const { totalItem, page } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
+    const { totalItem, page } = useSelector(
+        (state: any) => state.ORGS_MAP.orgsMap
+    );
     const onViewMoreOrgs = () => {
         if (
             location.pathname === "/ban-do" &&
@@ -96,13 +98,13 @@ const MapContent = (props: IProps) => {
         }
     };
     const onPanTo = (lat: number, lng: number) => {
-        mapRef?.current?.panTo([lng, lat])
-    }
+        mapRef?.current?.panTo([lng, lat]);
+    };
     const onFlyTo = (lat: number, lng: number) => {
         mapRef?.current?.flyTo({
-            center: [lng, lat]
-        })
-    }
+            center: [lng, lat],
+        });
+    };
     const onGotoSlickOrgItem = (index: number) => {
         slideRef?.current?.slickGoTo(index);
     };
@@ -118,31 +120,37 @@ const MapContent = (props: IProps) => {
         centerMode: true,
         afterChange: function (index: any) {
             if (index === orgs.length - 3) {
-                onViewMoreOrgs()
+                onViewMoreOrgs();
             }
             if (mapRef?.current.getZoom() < 15) {
-                mapRef?.current.setZoom(13)
+                mapRef?.current.setZoom(13);
             }
-            onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
-            dispatch(onSetOrgCenter(orgs[index]))
+            onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude);
+            dispatch(onSetOrgCenter(orgs[index]));
         },
     };
     useEffect(() => {
         switch (orgs.length) {
-            case 30: return mapRef?.current?.setZoom(15);
-            case 45: return mapRef?.current?.setZoom(14);
-            case 60: return mapRef?.current?.setZoom(13);
-            case 75: return mapRef?.current?.setZoom(12);
-            case 90: return mapRef?.current?.setZoom(11);
-            case 105: return mapRef?.current?.setZoom(10)
+            case 30:
+                return mapRef?.current?.setZoom(15);
+            case 45:
+                return mapRef?.current?.setZoom(14);
+            case 60:
+                return mapRef?.current?.setZoom(13);
+            case 75:
+                return mapRef?.current?.setZoom(12);
+            case 90:
+                return mapRef?.current?.setZoom(11);
+            case 105:
+                return mapRef?.current?.setZoom(10);
         }
-    }, [orgs.length])
+    }, [orgs.length]);
     const onMarkerClick = (item: IOrganization, index?: number) => {
         if (mapRef?.current.getZoom() < 15) {
-            mapRef?.current.setZoom(15)
+            mapRef?.current.setZoom(15);
         }
         dispatch(fetchAsyncOrg(item.subdomain));
-        dispatch(onSetOrgCenter(item))
+        dispatch(onSetOrgCenter(item));
         if (IS_MB && index && onGotoSlickOrgItem) {
             onGotoSlickOrgItem(index);
         }
@@ -151,19 +159,24 @@ const MapContent = (props: IProps) => {
             open: true,
             check: true,
         });
-        onPanTo(item.latitude, item.longitude)
+        onPanTo(item.latitude, item.longitude);
     };
 
     const handleBackCurrentUser = () => {
         if (LOCATION) {
             dispatch(onSetOrgsMapEmpty());
-            dispatch(fetchOrgsMapFilter({
-                page: 1,
-                sort: "distance",
-            }))
-            onFlyTo(parseFloat(LOCATION?.split(",")[0]), parseFloat(LOCATION?.split(",")[1]))
+            dispatch(
+                fetchOrgsMapFilter({
+                    page: 1,
+                    sort: "distance",
+                })
+            );
+            onFlyTo(
+                parseFloat(LOCATION?.split(",")[0]),
+                parseFloat(LOCATION?.split(",")[1])
+            );
         }
-    }
+    };
 
     return (
         <div className="map-content">
@@ -175,59 +188,64 @@ const MapContent = (props: IProps) => {
                 openDetail={openDetail}
                 setOpenDetail={setOpenDetail}
             />
-            <MapCurrentUser
-                handleBackCurrentUser={handleBackCurrentUser}
-            />
+            <MapCurrentUser handleBackCurrentUser={handleBackCurrentUser} />
             {
                 <ReactMapGL
                     style={{
                         width: "100vw",
-                        height: "100vh"
+                        height: "100vh",
                     }}
                     initialViewState={{
                         latitude: local.lat,
                         longitude: local.long,
-                        zoom: 16
+                        zoom: 16,
                     }}
                     attributionControl={true}
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                     mapStyle="mapbox://styles/mapbox/streets-v11"
                     ref={mapRef}
-                // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
+                    // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
                     <NavigationControl
                         position="bottom-right"
                         showZoom={true}
                         showCompass={true}
                     />
-                    {
-                        LOCATION &&
+                    {LOCATION && (
                         <Marker
                             latitude={parseFloat(LOCATION?.split(",")[0])}
                             longitude={parseFloat(LOCATION?.split(",")[1])}
                         >
-                            <img style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt="" />
+                            <img
+                                style={{ width: "42px" }}
+                                src={icon.pinMapRedGoogle}
+                                alt=""
+                            />
                         </Marker>
-                    }
-                    {
-                        orgs.map((item: IOrganization, index: number) => (
-                            <Marker
-                                onClick={() => onMarkerClick(item, index)}
-                                key={index}
-                                latitude={item.latitude}
-                                longitude={item.longitude}
+                    )}
+                    {orgs.map((item: IOrganization, index: number) => (
+                        <Marker
+                            onClick={() => onMarkerClick(item, index)}
+                            key={index}
+                            latitude={item.latitude}
+                            longitude={item.longitude}
+                        >
+                            <div
+                                style={
+                                    item.id === orgCenter?.id
+                                        ? { transform: "scale(1.2)" }
+                                        : {}
+                                }
+                                className="map-marker-org"
                             >
-                                <div
-                                    style={
-                                        item.id === orgCenter?.id ? { transform: "scale(1.2)" } : {}
-                                    }
-                                    className="map-marker-org"
-                                >
-                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
-                                </div>
-                            </Marker>
-                        ))
-                    }
+                                <img
+                                    src={item.image_url}
+                                    alt=""
+                                    className="map-marker-org__img"
+                                />
+                            </div>
+                        </Marker>
+                    ))}
                 </ReactMapGL>
             }
             <div
@@ -261,7 +279,7 @@ const MapContent = (props: IProps) => {
                             org={org}
                             setOpenDetail={setOpenDetail}
                             openDetail={openDetail}
-                        // handleDirection={handleDirection}
+                            // handleDirection={handleDirection}
                         />
                     ) : null}
                     <div
@@ -281,20 +299,21 @@ const MapContent = (props: IProps) => {
                     </div>
                 </div>
             </div>
-            {
-                IS_MB &&
+            {IS_MB && (
                 <div className="map-list__mobile">
                     <Slider ref={slideRef} {...settings}>
-                        {orgs.length > 0 && orgs.map((item: any, index: number) => (
-                            <MapTagsItemMB
-                                // handleDirection={handleDirection}
-                                key={index} item={item}
-                            />
-                        ))}
+                        {orgs.length > 0 &&
+                            orgs.map((item: any, index: number) => (
+                                <MapTagsItemMB
+                                    // handleDirection={handleDirection}
+                                    key={index}
+                                    item={item}
+                                />
+                            ))}
                     </Slider>
                 </div>
-            }
+            )}
         </div>
     );
-}
-export default MapContent
+};
+export default MapContent;
