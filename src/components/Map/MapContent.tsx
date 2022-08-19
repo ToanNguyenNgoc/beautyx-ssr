@@ -22,6 +22,7 @@ import MapCurrentUser from './MapCurrentUser'
 import IStore from "../../interface/IStore";
 import ReactMapGL, { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import onErrorImg from "../../utils/errorImg";
 
 
 
@@ -171,8 +172,8 @@ const MapContent = (props: IProps) => {
     }
 
     const debounceOrgsMove = useCallback(
-        debounce((latLng: string, orgsLength:number) => {
-            if(orgsLength === 75){
+        debounce((latLng: string, orgsLength: number) => {
+            if (orgsLength === 75) {
                 dispatch(onSetOrgsMapEmpty())
             }
             // dispatch(onSetOrgsMapEmpty())
@@ -180,7 +181,7 @@ const MapContent = (props: IProps) => {
                 fetchOrgsMapFilter({
                     page: 1,
                     LatLng: latLng,
-                    mountNth:2
+                    mountNth: 2
                 })
             );
         }, 1200),
@@ -275,7 +276,7 @@ const MapContent = (props: IProps) => {
                                     }
                                     className="map-marker-org"
                                 >
-                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
+                                    <img src={item.image_url} alt="" onError={(e) => onErrorImg(e)} className="map-marker-org__img" />
                                 </div>
                             </Marker>
                         ))
