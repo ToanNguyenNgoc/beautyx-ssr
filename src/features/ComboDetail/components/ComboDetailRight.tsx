@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 import icon from "../../../constants/icon";
 import { AppContext } from "../../../context/AppProvider";
 import { Combo } from "../../../interface/combo";
@@ -99,6 +100,9 @@ function ComboDetailRight(props: IProps) {
                     <ComboDetailRightReview data={combo} comment={COMMENTS} />
                 </div>
             </div>
+            <DetailOrgVoucher
+                org={org}
+            />
 
             <div className="detail-right__body">
                 <div className="detail-right__info">

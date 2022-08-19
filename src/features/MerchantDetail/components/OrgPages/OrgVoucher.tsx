@@ -51,7 +51,7 @@ export const VoucherItem = (props: IVoucherItemProps) => {
         // valid_from: "2022-05-10 10:10:10"
     }
     const orgVoucher = voucher.organizations.find((o: IOrganization) => o.id === org_id);
-    const validDate = EX_APPLY_DATE(voucher)
+    // const validDate = EX_APPLY_DATE(voucher)
 
     return (
         <div className="voucher-org-item">

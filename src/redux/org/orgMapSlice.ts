@@ -14,6 +14,7 @@ export interface IORGS_MAP {
     },
     locationCenter: any,
     getValueCenter: boolean,
+    tags:string[]
 }
 
 const initialState: IORGS_MAP = {
@@ -23,10 +24,11 @@ const initialState: IORGS_MAP = {
         page: 1,
         totalItem: 1,
         mountNth:1,
-        status: ""
+        status: "",
     },
     locationCenter: null,
-    getValueCenter: false
+    getValueCenter: false,
+    tags:[]
 }
 export const fetchOrgsMapFilter: any = createAsyncThunk(
     "ORGS_MAP/fetchOrgsMapFilter",
@@ -67,6 +69,14 @@ const orgMapReducer = createSlice({
         onSwitchValueCenter: (state, action) => {
             state.getValueCenter = action.payload;
         },
+        onSetTagsFilter:(state, action)=>{
+            if(state.tags.includes(action.payload)){
+                const newTags = state.tags.filter(i => i !== action.payload)
+                state.tags = newTags
+            }else{
+                state.tags.push(action.payload)
+            }
+        }
     },
     extraReducers: {
         [fetchOrgsMapFilter.pending]: (state) => {
@@ -96,5 +106,6 @@ export const {
     onSetLocationCenter,
     onSetOrgsMapEmpty,
     onSwitchValueCenter,
+    onSetTagsFilter
 } = actions;
 export default orgMapReducer.reducer;

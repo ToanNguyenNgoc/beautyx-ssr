@@ -447,15 +447,18 @@
         width: 100%;
         max-width: unset;
         overflow-y: unset;
-        padding: 20px;
+        padding: 12px;
         height: 100%;
     }
 
     .cart-vouchers-list__item-right {
         grid-gap: 8px 0;
+        padding: 8px;
     }
     .cart-vouchers-list .list .item {
-        height: 130px;
+        min-height: 130px;
+        height: fit-content;
+        padding: 0px;
     }
     .cart-vouchers-list__item-right .item-right__top .item-right__name {
         font-size: 14px;

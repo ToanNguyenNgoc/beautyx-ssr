@@ -31,8 +31,8 @@
 .map .dialog-map__close {
     position: absolute;
     top: 11px;
-    right: 60px;
-    z-index: 20000;
+    right: 11px;
+    z-index: 10;
     background-color: var(--purple);
     border-radius: 100px;
     padding: 2px;
@@ -539,6 +539,7 @@
     align-items: center;
     grid-gap: 0 20px;
     padding: 8px;
+    width: calc(100% - 56px);
 }
 
 .map-filter-cnt__left {
@@ -609,7 +610,7 @@
 
 .map-filter-cnt__right {
     padding-left: 8px;
-    width: 75%;
+    width: 80%;
 }
 
 .map-filter-cnt__right-switch {
@@ -622,6 +623,30 @@
     border: 1px solid transparent;
     border-radius: 3px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
+}
+.map-filter-cnt__right-tag{
+    width: calc(100% - 268px);
+    overflow-x: scroll;
+}
+.map-filter-tags{
+    width: max-content;
+}
+.map-filter-tags__item{
+    margin: 0px 8px 0px 0px;
+    padding: 4px;
+    width: fit-content;
+}
+.map-filter-tags__item-cnt{
+    cursor: pointer;
+    background-color: var(--bgWhite);
+    height: 30px;
+    padding: 0px 12px;
+    font-size: 14px;
+    line-height: 30px;
+    border-radius: 15px;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);;
+    transition: all .3s;
 }
 
 /* end map filter */
@@ -853,6 +878,9 @@
     display: flex;
     justify-content: center;
 }
+.map-current-user__btn:nth-child(1){
+    display: none;
+}
 
 .map-current-user__btn img {
     width: 30px;
@@ -893,6 +921,12 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .map .dialog-map__close{
+        top:8px
+    }
+    .map-filter-cnt__input-btn{
+        margin-top: 9px;
+    }
     .map-filter-cnt {
         align-items: unset;
         flex-direction: column;
@@ -901,7 +935,7 @@
     }
 
     .map-filter-cnt__left {
-        width: 86%;
+        width: 100%;
     }
 
     .map-filter-cnt__input input {
@@ -910,15 +944,15 @@
 
     .map-filter-cnt__right {
         padding-left: 0;
-        width: 60%;
-
+        width: calc(100% + 56px);
+    }
+    .map-filter-cnt__right-tag{
+        width: 100%;
+        overflow-x: scroll;
     }
 
     .map-filter-cnt__right-switch {
-        font-size: 12px;
-        grid-gap: 0 6px;
-        padding: 4px 10px 4px 6px;
-        width: 100%;
+       display: none;
     }
 
     .open-map {
@@ -1053,11 +1087,6 @@
     .map .gmnoprint {
         display: none;
     }
-
-    .map .dialog-map__close {
-        right: 16px;
-    }
-
     .item-content__btn-direction {
         background-color: var(--purple);
         border: none;
@@ -1078,5 +1107,12 @@
 
     .map .content-head img {
         display: none;
+    }
+    .map-current-user__btn{
+        border-radius: 100%;
+    }
+    .map-current-user__btn:nth-child(1){
+        display: block;
+        margin-bottom: 8px;
     }
 }
