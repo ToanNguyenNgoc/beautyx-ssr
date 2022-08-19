@@ -23,13 +23,13 @@ function PageNotFound() {
                 <div className="error-img">
                     <img src={img.resultNull} alt="" />
                 </div>
-                <span className="error-alert">Oops... Page not found</span>
+                <span className="error-alert">Oops...!</span>
                 <span className="error-desc">
                     Xin lỗi, trang bạn đang tìm kiếm không tồn tại!
                 </span>
                 <div className="error-btn">
                     <ButtonLoading
-                        title="Trở lại"
+                        title="Tiếp tục mua sắm"
                         onClick={goBack}
                         loading={false}
                     />

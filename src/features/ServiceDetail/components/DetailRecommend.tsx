@@ -14,6 +14,8 @@ function DetailRecommend(props: any) {
     const { SERVICE, SERVICES_REC } = useSelector(
         (state: any) => state.SERVICE
     );
+    const curService = SERVICE.service
+
     const { t } = useContext(AppContext);
 
     const callServicesRecommend = () => {
@@ -38,16 +40,20 @@ function DetailRecommend(props: any) {
     }, [SERVICE.status]);
     return (
         <div className="detail-recommend">
+            {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).length>0&&
+            <>
             <div className="detail-recommend__title">{`${t(
                 "detail_item.similar_service"
             )}`}</div>
             <ul className="detail-recommend__list">
-                {SERVICES_REC.services.map((item: Service, index: number) => (
+                {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).map((item: Service, index: number) => (
                     <li key={index}>
                         <ServiceItem service={item} org={org} />
                     </li>
                 ))}
             </ul>
+            </>
+            }
         </div>
     );
 }
