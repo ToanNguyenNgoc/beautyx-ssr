@@ -33,7 +33,7 @@ function DiscountItem(props: IProps) {
             {
                 discountItem.organization.image_url !== '' &&
                 discountItem.organization.image_url !== null &&
-                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
+                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e,true)} className="home-discount-item__org-logo" alt="" />
             }
             <LazyLoadImage
                 alt=""
@@ -45,6 +45,7 @@ function DiscountItem(props: IProps) {
                 width="100%"
                 height="100%"
                 className="home-discount-item__img"
+                onError={(e)=>onErrorImg(e)}
             />
             <div className="home-discount-item__detail">
                 <span className="name">

@@ -58,7 +58,7 @@ function LoginFlatFormRequest(props: any) {
                 });
                 break;
             case FLAT_FORM_TYPE.MB:
-                // handleLoginMB();
+                handleLoginMB();
                 break;
             default:
                 break;
@@ -78,8 +78,8 @@ function LoginFlatFormRequest(props: any) {
     };
     const handleLoginMomo = async () => {
         try {
-            alert('handleLoginMomo');
-            // handleGetUserInfoMomo({ fetchAsyncUserAndinitApp, setLoad });
+            // alert('handleLoginMomo');
+            handleGetUserInfoMomo({ fetchAsyncUserAndinitApp, setLoad });
         } catch (err) {
             alert(JSON.stringify(err));
             setLoad(false);

@@ -13,7 +13,7 @@ import "./style.css";
 import tracking from "../../api/trackApi";
 // end
 import useDeviceMobile from "../../utils/useDeviceMobile";
-import useScript from "../../utils/useScript";
+// import useScript from "../../utils/useScript";
 
 export default function AssistantBtn() {
     const dispatch = useDispatch();

@@ -276,7 +276,7 @@ const MapContent = (props: IProps) => {
                                     }
                                     className="map-marker-org"
                                 >
-                                    <img src={item.image_url} alt="" onError={(e) => onErrorImg(e)} className="map-marker-org__img" />
+                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
                                 </div>
                             </Marker>
                         ))

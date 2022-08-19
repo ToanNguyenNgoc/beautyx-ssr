@@ -2,7 +2,7 @@ import { FLAT_FORM_TYPE } from "../rootComponents/flatForm";
 import { callApiFromTiki } from "../rootComponents/tiki/doPostMessageTiki";
 import { openUrlIn_Mb } from "../rootComponents/mb/doPostMessageMBbank";
 import openUrlIn_Tiki from "../rootComponents/tiki/test";
-// import { MOMO } from "../api/_momoImport";
+import { MOMO } from "../api/_momoImport";
 export const handleSubiz = () => {
     let $: any = window;
     let su_widget = document.querySelector(
@@ -34,7 +34,7 @@ export const handleChat = () => {
             // window.open(deepLinkMessenger, "_blank");
             break;
         case FLAT_FORM_TYPE.MOMO:
-            // MOMO.openURL(deepLinkMessenger);
+            MOMO.openURL(deepLinkMessenger);
             // alert(deepLinkMessenger)
             break;
         case FLAT_FORM_TYPE.MB:

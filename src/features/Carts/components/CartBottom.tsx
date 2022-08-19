@@ -4,39 +4,58 @@ import { Container } from "@mui/material";
 import ButtonLoading from "../../../components/ButtonLoading";
 import formatPrice from "../../../utils/formatPrice";
 import { cartReducer } from "../../../utils/cart/cartReducer";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import order from "../../../api/orderApi";
 import { useHistory } from "react-router-dom";
 import { identity, pickBy } from "lodash";
 import Notification from "../../../components/Notification";
 import AlertSnack from "../../../components/AlertSnack";
+import authentication from "../../../api/authApi";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
 import { AppContext } from "../../../context/AppProvider";
 import { IDiscountPar } from "../../../interface/discount";
 // end
+import { checkPhoneValid } from "../../../utils/phoneUpdate";
+import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
+// OTP [ update telephone number ]
+    import { IDataOtp } from "../../Otp/_model";
+    import RenderRecatpcha,{FieldOtps} from "../../Otp/dialogOtp";
+// END [ update telephone number ]
+import { putUser, updateAsyncUser } from "../../../redux/USER/userSlice";
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
     const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
+    const dispatch = useDispatch();
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
     const { cartQuantityCheck } = useSelector((state: any) => state.carts);
-
-    // console.log(VOUCHER_APPLY, cartQuantityCheck)
-    const [openAlertSnack, setOpenAlertSnack] = useState({
-        title: "",
-        open: false,
-    });
-    const [openNoti, setOpenNoti] = useState({
-        title: "",
-        open: false,
-        titleLeft: "",
-        titleRight: "",
-        onClickLeft: () => { },
-        onClickRight: () => { },
-    });
-
+    const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
+    //* [ OTP  update telephone number ]
+        const [otp, setOtp] = useState(false);
+        // const [otpCode, setOtpCode] = useState(false);
+        const [dataOtp, setDataOtp] = useState({
+            open: false,
+            telephone: '',
+            code: '',
+            verification_id: ''
+        });
+    //* [END]  OTP  update telephone number
+    //* [ Throw exception noti ]
+        const [openAlertSnack, setOpenAlertSnack] = useState({
+            title: "",
+            open: false,
+        });
+        const [openNoti, setOpenNoti] = useState({
+            title: "",
+            open: false,
+            titleLeft: "",
+            titleRight: "",
+            onClickLeft: () => { },
+            onClickRight: () => { },
+        });
+    //* [END] Throw exception noti
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
     const listDiscount = DATA_CART.cartList
@@ -124,7 +143,18 @@ function CartBottom(props: any) {
                     open: true,
                     title: "Chưa có địa chỉ giao hàng !",
                 });
-            } else {
+            } 
+            else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)){
+                setOpenNoti({
+                    open: true,
+                    title: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
+                    titleLeft: `Cập nhập`,
+                    titleRight: `Để sau`,
+                    onClickLeft: () => handleOtp(),
+                    onClickRight: () => setOpenNoti({...openNoti,open:false}),
+                });
+            }
+            else {
                 handlePostOrder();
             }
         } else if (!pramsOrder.payment_method_id) {
@@ -163,9 +193,44 @@ function CartBottom(props: any) {
             .reduce((pre: number, cur: number) => pre + cur)
     }
     // console.log(discountVoucherTotal, vouchersCal)
+    const handleOtp = () => {
+        setOtp(true);
+        setOpenNoti({...openNoti,open:false})
+    }
+    const handleUpdatePhone = async (props: IDataOtp) => {
+        console.log(props);
+        try{
 
-
+            const paramsOb = {
+                "telephone": props.telephone,
+                "code": props.code,
+                "verification_id": props.verification_id
+            }
+            const res = await authentication.putUserProfile(paramsOb);
+            // const res = await updateAsyncUser(paramsOb);
+            console.log(res);
+            dispatch(putUser({ ...USER,  }));
+            if(res){
+                setDataOtp({
+                    ...dataOtp,
+                    open:false
+                })
+                alert('cập nhập thành công');
+                window.location.reload();
+            }
+        }catch(err){
+            console.log(err);
+            setOpenAlertSnack({
+                ...openAlertSnack,
+                open: true,
+                // title: JSON.stringify(err),
+                title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
+            });
+        }
+    }
+    // console.log(dataOtp);
     return (
+        <>
         <div className="re-cart-bottom">
             <AlertSnack
                 title={openAlertSnack.title}
@@ -255,6 +320,25 @@ function CartBottom(props: any) {
                 onClickRight={openNoti.onClickRight}
             />
         </div>
+        {
+            otp && <RenderRecatpcha
+                setOpen={setOtp}
+                open={otp}
+                dataOtp={dataOtp}
+                setDataOtp={setDataOtp}
+                handleSubmit={handleUpdatePhone}
+            />
+        }
+        {
+            dataOtp.verification_id && <FieldOtps
+                open={dataOtp.open}
+                setOpen={setDataOtp}
+                dataOtp={dataOtp}
+                setDataOtp={setDataOtp}
+                handleSubmit={handleUpdatePhone}
+            />
+        }
+        </>
     );
 }
 
