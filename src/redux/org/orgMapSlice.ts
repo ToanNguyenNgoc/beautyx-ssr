@@ -53,7 +53,8 @@ const orgMapReducer = createSlice({
                 orgs: [],
                 page: 1,
                 totalItem: 1,
-                status: ""
+                status: "",
+                mountNth:2
             }
         },
         onSetOrgCenter: (state, action) => {

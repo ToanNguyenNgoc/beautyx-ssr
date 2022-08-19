@@ -95,5 +95,6 @@ export interface IOrderV2 {
         deleted_at: null,
         items: ITems[],
     },
-    origin?: IOrderOrigin
+    origin?: IOrderOrigin,
+    qr_link:string
 }

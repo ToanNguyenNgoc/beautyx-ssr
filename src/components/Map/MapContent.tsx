@@ -259,7 +259,10 @@ const MapContent = (props: IProps) => {
                             latitude={parseFloat(LOCATION?.split(",")[0])}
                             longitude={parseFloat(LOCATION?.split(",")[1])}
                         >
-                            <img style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt="" />
+                            <img 
+                                onError={(e)=>onErrorImg(e)}
+                                style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt="" 
+                            />
                         </Marker>
                     }
                     {

@@ -29,6 +29,7 @@ function HomeMap() {
     const handleClose = () => {
         history.push("/");
     }
+    console.log(mountNth)
     return (
         <div className="map">
             <div onClick={handleClose} className="dialog-map__close">
