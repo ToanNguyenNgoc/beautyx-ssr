@@ -186,8 +186,9 @@ const VoucherOrgItem = (props: any) => {
     const { org } = props;
     const voucher: IDiscountPar = {
         ...props.voucher,
+        //discount_unit:"PERCENT"
         // discount_type:"PRODUCT",
-        // discount_value:500,
+        // discount_value:50,
         // items:[],
         // items_count:0,
         // minimum_order_value: null,
