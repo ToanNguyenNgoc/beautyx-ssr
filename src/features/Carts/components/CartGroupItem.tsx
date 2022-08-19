@@ -173,7 +173,7 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                     <ul className="list">
                         {vouchers.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
-                                <VoucherOrgItem org={org} voucher={item} />
+                                <VoucherOrgItem org={org} voucher={item} setOpen={setOpen} />
                             </li>
                         ))}
                     </ul>
@@ -183,7 +183,7 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     );
 };
 const VoucherOrgItem = (props: any) => {
-    const { org } = props;
+    const { org, setOpen } = props;
     const voucher: IDiscountPar = {
         ...props.voucher,
         //discount_unit:"PERCENT"
@@ -237,6 +237,7 @@ const VoucherOrgItem = (props: any) => {
             dispatch(onCancelApplyVoucher(voucher.id))
         } else {
             if (applyCondition && cartAmount > 0) {
+                setOpen(false);
                 dispatch(onApplyVoucherSubTotal(voucher));
             }
         }
