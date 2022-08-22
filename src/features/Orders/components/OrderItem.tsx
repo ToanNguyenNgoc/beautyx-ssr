@@ -11,7 +11,7 @@ interface IProp {
 }
 
 function OrderItem(props: IProp) {
-    const [openQr, setOpenQr] = useState(false)
+    const [openQr, setOpenQr] = useState(false);
     const { order } = props;
     const countItem = order.items_count;
     const [open, setOpen] = useState(false);
@@ -63,7 +63,7 @@ function OrderItem(props: IProp) {
                             Đã thanh toán
                         </div>
                         <div
-                            onClick={()=>setOpenQr(true)}
+                            onClick={() => setOpenQr(true)}
                             className="status status-qr"
                         >
                             Mã QR
@@ -77,14 +77,10 @@ function OrderItem(props: IProp) {
     const handleOpenDetail = () => {
         setOpen(true);
     };
-    console.log(order)
+    console.log(order);
     return (
         <>
-            <PopupQr
-                open={openQr}
-                setOpen={setOpenQr}
-                qr={order.qr_link}
-            />
+            <PopupQr open={openQr} setOpen={setOpenQr} qr={order.qr_link} />
             <li>
                 <div className="order-item">
                     <div className="flex-row-sp order-item__head">

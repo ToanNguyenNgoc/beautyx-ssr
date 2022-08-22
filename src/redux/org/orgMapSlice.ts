@@ -4,16 +4,16 @@ import { IOrganization } from "../../interface/organization";
 import { STATUS } from "../status";
 
 export interface IORGS_MAP {
-    orgCenter: any,
+    orgCenter: any;
     orgsMap: {
-        orgs: IOrganization[],
-        page: number,
-        totalItem: number,
-        status: string,
-        mountNth:number
-    },
-    locationCenter: any,
-    getValueCenter: boolean,
+        orgs: IOrganization[];
+        page: number;
+        totalItem: number;
+        status: string;
+        mountNth: number;
+    };
+    locationCenter: any;
+    getValueCenter: boolean;
 }
 
 const initialState: IORGS_MAP = {
@@ -22,12 +22,12 @@ const initialState: IORGS_MAP = {
         orgs: [],
         page: 1,
         totalItem: 1,
-        mountNth:1,
-        status: ""
+        mountNth: 1,
+        status: "",
     },
     locationCenter: null,
-    getValueCenter: false
-}
+    getValueCenter: false,
+};
 export const fetchOrgsMapFilter: any = createAsyncThunk(
     "ORGS_MAP/fetchOrgsMapFilter",
     async (values: any) => {
@@ -37,13 +37,13 @@ export const fetchOrgsMapFilter: any = createAsyncThunk(
                 orgs: res.data.context.data,
                 totalItem: res.data.context.total,
                 page: values.page,
-                mountNth: values.mountNth
-            }
+                mountNth: values.mountNth,
+            };
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
-)
+);
 const orgMapReducer = createSlice({
     name: "ORGS_MAP",
     initialState,
@@ -53,8 +53,9 @@ const orgMapReducer = createSlice({
                 orgs: [],
                 page: 1,
                 totalItem: 1,
-                status: ""
-            }
+                status: "",
+                mountNth: 2,
+            };
         },
         onSetOrgCenter: (state, action) => {
             state.orgCenter = action.payload;
