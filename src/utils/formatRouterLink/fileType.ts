@@ -23,6 +23,19 @@ export const DISCOUNT_TYPE = {
         text: "Giá thanh toán"
     }
 }
+export const EX_VOUCHER_TITLE_DISCOUNT = (discount:IDiscountPar)=>{
+    let displayTitle="";
+    if(discount.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key){
+        displayTitle = `Giảm còn ${formatPrice(discount.discount_value)}đ`
+    }
+    if(discount.discount_unit === "PERCENT"){
+        displayTitle = `Giảm ${discount.discount_value}%`
+    }
+    if(discount.discount_unit === "PRICE"){
+        displayTitle = `Giảm ${formatPrice(discount.discount_value)}đ`
+    }
+    return displayTitle
+}
 export const EX_APPLY_DATE = (discount: IDiscountPar) => {
     console.log(discount)
     let validDate = false;

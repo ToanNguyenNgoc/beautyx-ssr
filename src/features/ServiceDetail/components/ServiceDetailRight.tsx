@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../../constants/icon";
 import onErrorImg from "../../../utils/errorImg";
@@ -18,8 +18,8 @@ import { Service } from "../../../interface/service";
 import useFullScreen from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
-import { handleScroll } from "../onScrollChange";
 import { Rating } from "@mui/material";
+import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 // import { formatSalePriceService } from "../../../utils/formatPrice";
 
 interface IProps {
@@ -31,7 +31,7 @@ interface IProps {
 }
 
 export default function ServiceDetailRight(props: IProps) {
-    const { org, service, setOpenDrawer, NOW, setValue } = props;
+    const { org, service, setOpenDrawer, NOW } = props;
     const { t } = useContext(AppContext);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
@@ -194,6 +194,12 @@ export default function ServiceDetailRight(props: IProps) {
                     </div>
                 </div>
             </div>
+            {
+                !IS_MB &&
+                <DetailOrgVoucher
+                    org={org}
+                />
+            }
 
             <div className="detail-right__body">
                 <div className="detail-right__info">

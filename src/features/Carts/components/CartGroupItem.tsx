@@ -1,9 +1,8 @@
 /* eslint-disable no-useless-concat */
 import { Checkbox, Dialog } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import icon from "../../../constants/icon";
 import {
-    addVoucherByOrg,
     checkConfirm,
     onApplyVoucherSubTotal,
     onCancelApplyVoucher,
@@ -14,7 +13,6 @@ import CartItem from "./CartItem";
 //import { checkConfirm, onChooseCartItemByOrg } from '../../../redux/cartSlice'
 import { useDispatch, useSelector } from "react-redux";
 import ButtonLoading from "../../../components/ButtonLoading";
-import { fetchAsyncOrgDiscounts } from "../../../redux/org_discounts/orgDiscountsSlice";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
 import { IOrganization } from "../../../interface/organization";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
@@ -31,6 +29,7 @@ import img from "../../../constants/img";
 import formatPrice from "../../../utils/formatPrice";
 import moment from "moment";
 import { discountReducerItem } from "../../../utils/cart/cartReducer";
+import { Transition, TransitionUp } from "../../../utils/transition";
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
@@ -151,6 +150,7 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     const { open, setOpen, org, vouchers } = props;
     return (
         <Dialog
+            TransitionComponent={IS_MB ? Transition : TransitionUp}
             fullScreen={IS_MB ? true : false}
             open={open}
             onClose={() => setOpen(false)}
@@ -173,7 +173,7 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                     <ul className="list">
                         {vouchers.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
-                                <VoucherOrgItem org={org} voucher={item} setOpen={setOpen} />
+                                <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
                             </li>
                         ))}
                     </ul>
@@ -182,8 +182,13 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
         </Dialog>
     );
 };
-const VoucherOrgItem = (props: any) => {
-    const { org, setOpen } = props;
+interface IVoucherOrgItem{
+    org: IOrganization,
+    voucher:IDiscountPar,
+    showApplyBtn:boolean
+}
+export const VoucherOrgItem = (props: IVoucherOrgItem) => {
+    const { org, showApplyBtn } = props;
     const voucher: IDiscountPar = {
         ...props.voucher,
         //discount_unit:"PERCENT"
@@ -196,7 +201,6 @@ const VoucherOrgItem = (props: any) => {
         // valid_from: "2022-01-01 10:00:00",
         // valid_util: "2022-10-01 10:00:00"
     };
-    console.log(voucher)
     const { timeCondition, displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
 
     const { productsInDis, servicesInDis } = discountReducerItem(
@@ -237,7 +241,6 @@ const VoucherOrgItem = (props: any) => {
             dispatch(onCancelApplyVoucher(voucher.id))
         } else {
             if (applyCondition && cartAmount > 0) {
-                setOpen(false);
                 dispatch(onApplyVoucherSubTotal(voucher));
             }
         }
@@ -320,35 +323,27 @@ const VoucherOrgItem = (props: any) => {
                             <span className="item-right__expired"></span>
                     }
                     {
-                        applyCondition === true ?
-                            <div
-                                onClick={() => handleApplyVoucher()}
-                                className="item-right__btn"
-                            >
-                                <span>{
-                                    active
-                                        ?
-                                        "Bỏ chọn" : "Áp dụng"
-                                }</span>
-                            </div>
-                            :
-                            <img src={icon.noApply} alt="" />
+                        showApplyBtn &&
+                        <>
+                            {
+                                applyCondition === true ?
+                                    <div
+                                        onClick={() => handleApplyVoucher()}
+                                        className="item-right__btn"
+                                    >
+                                        <span>{
+                                            active
+                                                ?
+                                                "Bỏ chọn" : "Áp dụng"
+                                        }</span>
+                                    </div>
+                                    :
+                                    <img src={icon.noApply} alt="" />
+                            }
+                        </>
                     }
                 </div>
             </div>
-            {/* {voucher.title}<br />
-            <span>
-                {voucher.discount_type}<br />
-                {voucher.discount_unit}<br />
-                {voucher.discount_value}<br />
-                max_dis:{voucher.maximum_discount_value}<br />
-                min-order:{voucher.minimum_order_value}<br />
-            </span>
-            <button
-                onClick={handleApplyVoucher}
-            >
-                Áp dụng mã
-            </button> */}
         </div>
     );
 };
