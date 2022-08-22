@@ -89,6 +89,15 @@ function LoginFlatForm(props: any) {
             }
         );
     };
+    const onLoginFlatFormMomowithParams = async () => {
+        const PARAMS = {
+            "fullname": params?.fullname,
+            "email": params?.email,
+            "phone": params?.telephone
+        }
+        await dispatch(loginAsyncMomo(PARAMS))
+        await dispatch(fetchAsyncUser())
+    }
     const onLoginFlatFormTiki = async () => {
         const PARAMS_OB = {
             customerId: params?.customerId,
@@ -118,7 +127,12 @@ function LoginFlatForm(props: any) {
         if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
                 case FLAT_FORM_TYPE.MOMO:
-                    onLoginFlatFormMomo();
+                    if(params){
+                        onLoginFlatFormMomowithParams();
+                    }
+                    else{
+                        onLoginFlatFormMomo();
+                    }
                     break;
                 case FLAT_FORM_TYPE.TIKI:
                     onLoginFlatFormTiki();
