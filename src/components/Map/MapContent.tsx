@@ -34,7 +34,7 @@ const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs } = props;
     const mapRef = useRef<any>();
-    const { orgCenter, getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { orgCenter, getValueCenter, tags } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
@@ -93,7 +93,8 @@ const MapContent = (props: IProps) => {
                     page: page + 1,
                     sort: "distance",
                     path_url: location.pathname,
-                    mountNth: 2
+                    mountNth: 2,
+                    tags: tags.join("|")
                 })
             );
         }
@@ -111,7 +112,7 @@ const MapContent = (props: IProps) => {
     };
     const settings = {
         dots: false,
-        infinite: false,
+        // infinite: false,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -124,10 +125,9 @@ const MapContent = (props: IProps) => {
                 onViewMoreOrgs()
             }
             if (mapRef?.current.getZoom() < 15) {
-                mapRef?.current.setZoom(14)
+                mapRef?.current.setZoom(15)
             }
             onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
-            // dispatch(onSetOrgCenter(orgs[index]))
         },
     };
     // useEffect(() => {
@@ -172,8 +172,8 @@ const MapContent = (props: IProps) => {
     }
 
     const debounceOrgsMove = useCallback(
-        debounce((latLng: string, orgsLength: number) => {
-            if (orgsLength === 75) {
+        debounce((latLng: string, orgsLength: number, tags: string[]) => {
+            if (orgsLength === 90) {
                 dispatch(onSetOrgsMapEmpty())
             }
             // dispatch(onSetOrgsMapEmpty())
@@ -181,7 +181,8 @@ const MapContent = (props: IProps) => {
                 fetchOrgsMapFilter({
                     page: 1,
                     LatLng: latLng,
-                    mountNth: 2
+                    mountNth: 2,
+                    tags: tags.join("|")
                 })
             );
         }, 1200),
@@ -191,22 +192,9 @@ const MapContent = (props: IProps) => {
         const lat = mapRef?.current?.getCenter()?.lat
         const lng = mapRef?.current?.getCenter()?.lng
         if (getValueCenter) {
-            debounceOrgsMove(`${lat},${lng}`, orgs.length)
+            debounceOrgsMove(`${lat},${lng}`, orgs.length, tags)
         }
     }
-    // function unique(arr: any) {
-    //     var newArr = []
-    //     for (var i = 0; i < arr.length; i++) {
-    //         if (newArr.indexOf(arr[i].id) === -1) {
-    //             newArr.push(arr[i].id)
-    //         }
-    //     }
-    //     const newOrgs = newArr.map((n: number) => {
-    //         return { id: n, org: orgs.find((o: IOrganization) => o.id === n) }
-    //     }).map((orgOb: any) => orgOb.org)
-    //     return newOrgs
-    // }
-    // const newOrgs = unique(orgs)
     const currentUser = (e: GeolocateResultEvent) => {
         handleBackCurrentUser()
     }
@@ -227,7 +215,6 @@ const MapContent = (props: IProps) => {
             />
             {
                 <ReactMapGL
-                    onZoom={onCenterChange}
                     onTouchMove={onCenterChange}
                     style={{
                         width: "100vw",
@@ -259,7 +246,10 @@ const MapContent = (props: IProps) => {
                             latitude={parseFloat(LOCATION?.split(",")[0])}
                             longitude={parseFloat(LOCATION?.split(",")[1])}
                         >
-                            <img style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt="" />
+                            <img
+                                onError={(e) => onErrorImg(e)}
+                                style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt=""
+                            />
                         </Marker>
                     }
                     {

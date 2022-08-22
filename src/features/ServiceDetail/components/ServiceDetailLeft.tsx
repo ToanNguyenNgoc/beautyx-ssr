@@ -13,6 +13,7 @@ import formatPrice, {
 import Slider from "react-slick";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
+import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 const PrevButton = (props: any) => {
     const { onClick } = props;
 
@@ -217,6 +218,12 @@ export default function ServiceDetailLeft(props: any) {
                     </div>
                 </div>
             </div>
+            {
+                is_mb &&
+                <DetailOrgVoucher
+                    org={org}
+                />
+            }
         </div>
     );
 }

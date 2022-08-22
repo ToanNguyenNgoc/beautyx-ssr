@@ -97,4 +97,5 @@ export interface IOrderV2 {
         items: ITems[];
     };
     origin?: IOrderOrigin;
+    qr_link: string;
 }

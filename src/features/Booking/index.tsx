@@ -440,7 +440,7 @@ function Booking() {
                                             className="asc"
                                             disabled={
                                                 (seatAmount >= 10 ||
-                                                seatAmount >
+                                                seatAmount >=
                                                 services[0]?.quantity ||
                                                 services[0]?.quantity === 1)
                                                     ? true

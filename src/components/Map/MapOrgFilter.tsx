@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import orgApi from "../../api/organizationApi";
 import { IOrganization } from "../../interface/organization";
 import icon from "../../constants/icon";
@@ -9,18 +9,53 @@ import {
     fetchOrgsMapFilter,
     onSetOrgsMapEmpty,
     onSetOrgCenter,
+    onSetTagsFilter
 } from "../../redux/org/orgMapSlice";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { Switch } from "@mui/material";
 import { onSwitchValueCenter } from "../../redux/org/orgMapSlice";
 import axios from "axios";
 import IStore from "../../interface/IStore";
+import { imgTag } from "../../constants/img";
+import { AppContext } from "../../context/AppProvider";
 
 const PlaceComponent = (props: any) => {
     const { mapRef, onFlyTo, setOpenDetail, openDetail, slideRef } = props;
+    const { t } = useContext(AppContext);
+    const tags_data = [
+        // { id: 9, title: t("home_2.places_near_you"), text: t("home_2.places_near_you"), img: icon.distance },
+        { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
+        { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
+        { id: 1, title: "Nail", text: "Nail", img: imgTag.nails },
+        {
+            id: 6,
+            title: "clinic",
+            text: "clinic",
+            img: imgTag.clinic,
+        },
+        {
+            id: 8,
+            title: "Massage",
+            text: "Massage",
+            img: imgTag.massage,
+        },
+        {
+            id: 5,
+            title: "Thẩm mỹ viện",
+            text: t("home_2.beauty_salon"),
+            img: imgTag.skinCare,
+        },
+        {
+            id: 2,
+            title: "nha khoa",
+            text: t("home_2.dentistry"),
+            img: imgTag.nhaKhoa,
+        },
+        // { id: 7, title: 'Yoga', text: "Yoga", img: imgTag.yoga },
+    ];
     const dispatch = useDispatch();
     const [orgs, setOrgs] = useState<IOrganization[]>([]);
-    const { getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { getValueCenter, tags } = useSelector((state: IStore) => state.ORGS_MAP)
     const callOrgsByKeyword = async (keyword: string) => {
         try {
             const res = await orgApi.getAll({
@@ -63,7 +98,8 @@ const PlaceComponent = (props: any) => {
             fetchOrgsMapFilter({
                 page: 1,
                 LatLng: geo,
-                mountNth:2
+                mountNth: 2,
+                tags: tags.join("|")
             })
         );
         setTimeout(() => {
@@ -88,7 +124,8 @@ const PlaceComponent = (props: any) => {
             fetchOrgsMapFilter({
                 page: 1,
                 LatLng: `${org.latitude},${org.longitude}`,
-                mountNth:2
+                mountNth: 2,
+                tags: tags.join("|")
             })
         );
         setOpenDetail({
@@ -104,8 +141,23 @@ const PlaceComponent = (props: any) => {
             slideRef?.current?.slickGoTo(0);
         }, 500)
     }
-    const onChangeSwitch = (e:any)=>{
+    const onChangeSwitch = (e: any) => {
         dispatch(onSwitchValueCenter(e.target.checked))
+    }
+    const handleTagClick = async (tag: string) => {
+        const lat = mapRef?.current?.getCenter()?.lat
+        const lng = mapRef?.current?.getCenter()?.lng
+        dispatch(onSetTagsFilter(tag))
+        dispatch(onSetOrgsMapEmpty());
+        const res = await dispatch(fetchOrgsMapFilter({
+            page: 1,
+            mountNth: 2,
+            tags: tags.includes(tag) ? tags.filter(i => i !== tag).join("|") : [...tags, tag].join("|"),
+            LatLng:`${lat},${lng}`
+        }))
+        if((res.meta.requestStatus === "fulfilled")){
+            slideRef?.current?.slickGoTo(0);
+        }
     }
     return (
         <>
@@ -151,14 +203,37 @@ const PlaceComponent = (props: any) => {
                         </ul>
                     </div>
                 </div>
-                <div className="map-filter-cnt__right">
+                <div className="flex-row-sp map-filter-cnt__right">
                     <div className="flex-row map-filter-cnt__right-switch">
-                        <Switch 
+                        <Switch
                             onChange={onChangeSwitch}
-                            checked={getValueCenter} 
-                            size="small" 
-                            />
+                            checked={getValueCenter}
+                            size="small"
+                        />
                         Cập nhật khi di chuyển bản đồ
+                    </div>
+                    <div className="map-filter-cnt__right-tag">
+                        <ul className="flex-row map-filter-tags">
+                            {
+                                tags_data.map(tag => (
+                                    <li
+                                        onClick={() => handleTagClick(tag.title)}
+                                        key={tag.id}
+                                        className="map-filter-tags__item"
+                                    >
+                                        <div
+                                            style={tags.includes(tag.title) ? {
+                                                backgroundColor: "var(--purple)",
+                                                color: "var(--bgWhite)"
+                                            } : {}}
+                                            className="map-filter-tags__item-cnt"
+                                        >
+                                            {tag.title}
+                                        </div>
+                                    </li>
+                                ))
+                            }
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import { IOrganization } from "../../../interface/organization";
 import icon from "../../../constants/icon";
 import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
     onFavoriteProduct,
     onDeleteFavorite,
@@ -12,16 +12,13 @@ import {
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
 import onErrorImg from "../../../utils/errorImg";
-import {
-    onDeleteFavoriteOrg,
-    onFavoriteOrg,
-} from "../../../redux/org/orgSlice";
 import PopupSuccess from "../../PopupSuccess";
 import useFullScreen from "../../../utils/useDeviceMobile";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
 import ProductDetailRightReview from "./ProductDetailRightReview";
+import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 
 interface IProps {
     product: Product;
@@ -84,7 +81,7 @@ function ProductDetailRight(props: IProps) {
                     ? productSaleSpecial
                     : product.retail_price;
             const is_type = 1;
-            if(USER){
+            if (USER) {
                 const values = formatAddCart(
                     product,
                     org,
@@ -98,7 +95,7 @@ function ProductDetailRight(props: IProps) {
                     user_id: USER.id
                 }));
                 setPopupSuccess(true);
-            }else{
+            } else {
                 history.push("/sign-in?1")
             }
         }
@@ -171,6 +168,10 @@ function ProductDetailRight(props: IProps) {
                     />
                 </div>
             </div>
+            {
+                !IS_MB &&
+                <DetailOrgVoucher org={org} />
+            }
             {/* service detail right body */}
             <div className="detail-right__body">
                 <div className="detail-right__info">
@@ -216,10 +217,10 @@ function ProductDetailRight(props: IProps) {
             {/* button add cart */}
             {(product?.is_momo_ecommerce_enable === false ||
                 org?.is_momo_ecommerce_enable === false) && (
-                <span className="detail-right__no">
-                    {t("detail_item.not_sale")}
-                </span>
-            )}
+                    <span className="detail-right__no">
+                        {t("detail_item.not_sale")}
+                    </span>
+                )}
             <div className="detail-right__bottom">
                 <div className="bottom-quantity">
                     <p className="bottom-quantity__text">
@@ -276,7 +277,7 @@ function ProductDetailRight(props: IProps) {
                             className="bottom-addCart bottom-buy__now"
                             style={
                                 product.is_momo_ecommerce_enable &&
-                                org?.is_momo_ecommerce_enable
+                                    org?.is_momo_ecommerce_enable
                                     ? {}
                                     : { opacity: "0.4", cursor: "not-allowed" }
                             }
@@ -286,7 +287,7 @@ function ProductDetailRight(props: IProps) {
                         <div
                             style={
                                 product.is_momo_ecommerce_enable &&
-                                org?.is_momo_ecommerce_enable
+                                    org?.is_momo_ecommerce_enable
                                     ? {}
                                     : { opacity: "0.4", cursor: "not-allowed" }
                             }
