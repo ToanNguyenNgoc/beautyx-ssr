@@ -13,6 +13,8 @@ import { callApiFromTiki } from "../rootComponents/tiki/doPostMessageTiki";
 import { EXTRA_FLAT_FORM } from "../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../rootComponents/flatForm";
 import useGetMessageTiki from "../rootComponents/useGetMessageTiki";
+import { getPosition } from "../api/authLocation";
+import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
 
 
 export const AppContext = createContext();
@@ -20,7 +22,9 @@ export default function AppProvider({ children }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const lg = localStorage.getItem("i18nextLng");
-  const [language, setLanguage] = useState();
+  const [language, setLanguage] = useState(
+    (lg === "en-US" || lg === "en") ? "en" : "vn"
+  );
   const [openModal, setOpenModal] = useState(false);
   const [userInfo, setUserInfo] = useState();
   const [sign, setSign] = useState();
@@ -38,14 +42,6 @@ export default function AppProvider({ children }) {
       localStorage.removeItem("_WEB_TK");
     }
   }
-
-  useEffect(() => {
-    if (lg === "en-US" || lg === "en") {
-      setLanguage("en");
-    } else if (lg === "vi-VN" || lg === "vi") {
-      setLanguage("vn");
-    }
-  }, [lg]);
   useEffect(() => {
     const callUserProfile = async () => {
       const res = await dispatch(fetchAsyncUser());
@@ -69,15 +65,26 @@ export default function AppProvider({ children }) {
 
   //----------------------------------------------------------
   //get location plat form
-  const platform = EXTRA_FLAT_FORM();
-  const getLocationPlatFormBeauty = () => {
-    navigator.geolocation.getCurrentPosition(function (position) {
+  const callOrgsByLocation = () => {
+    dispatch(fetchOrgsMapFilter({
+      page: 1,
+      sort: "distance",
+      path_url: "/ban-do",
+      mountNth: 2
+    }))
+  }
+  const getLocationPlatFormBeauty = async () => {
+    try {
+      const res = await getPosition();
       const user_location = {
-        lat: position.coords.latitude,
-        long: position.coords.longitude
+        lat: res.coords.latitude,
+        long: res.coords.longitude
       }
       sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
-    });
+      callOrgsByLocation()
+    } catch (error) {
+      callOrgsByLocation()
+    }
   }
   const getLocationPlatFormTiki = async () => {
     const api = "getLocation";
@@ -91,19 +98,25 @@ export default function AppProvider({ children }) {
   }
   const response = useGetMessageTiki();
   useEffect(() => {
-    if (platform === FLAT_FORM_TYPE.TIKI) {
-      getLocationPlatFormTiki()
-      if (response && response.result?.res) {
-        const user_location = {
-          lat: response.result?.res.latitude,
-          long: response.result?.res.longitude
+    setTimeout(() => {
+      const platform = EXTRA_FLAT_FORM();
+      if (platform === FLAT_FORM_TYPE.TIKI) {
+        getLocationPlatFormTiki()
+        if (response && response.result?.res) {
+          const user_location = {
+            lat: response.result?.res.latitude,
+            long: response.result?.res.longitude
+          }
+          sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
+          callOrgsByLocation()
+        } else {
+          getLocationPlatFormBeauty()
         }
-        sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
       }
-    }
-    else{
-      getLocationPlatFormBeauty()
-    }
+      if (platform === FLAT_FORM_TYPE.BEAUTYX) {
+        getLocationPlatFormBeauty()
+      }
+    }, 1000)
   }, [response, getLocationPlatFormTiki]);
 
 

@@ -20,6 +20,7 @@ import HomeProvince from "./HomeProvince";
 import { useDispatch, useSelector } from "react-redux";
 import { onResetFilter } from "../../redux/filter/filterSlice";
 import { LoadHomeBanner } from "../../components/LoadingSketion/LoadHome";
+// import Header from "../../components/Header";
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
@@ -52,7 +53,7 @@ export default function HomePage() {
                         </>
                 }
             </Container>
-            {/* <HomeDiscount /> */}
+            <HomeDiscount />
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />

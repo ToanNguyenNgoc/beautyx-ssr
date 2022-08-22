@@ -15,7 +15,7 @@ import tracking from "../../../api/trackApi";
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { AppContext } from "../../../context/AppProvider";
 import { formatDistance } from "../../../utils/format";
-import {LazyLoadImage} from 'react-lazy-load-image-component'
+// import {LazyLoadImage} from 'react-lazy-load-image-component'
 // end
 
 interface IProps {
@@ -39,9 +39,7 @@ function ServicePromoItem(props: IProps) {
         >
             <div className="ser-img-cnt">
                 {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" onError={(e)=>onErrorImg(e,true)} alt=""/> }
-                <LazyLoadImage
-                    width="183px"
-                    height="183px"
+                <img
                     className="ser-img"
                     src={
                         service?.image_url

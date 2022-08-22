@@ -194,11 +194,11 @@ function Head(props: IProps) {
             >
               <img src={icon.playCirclePurple} alt="" />
               Video
-            </button>
-            <button onClick={() => history.push('/tin-tuc')} className="flex-row hd-cnt__left-btn">
-              <img src={icon.newsPurple} alt="" />
-              Tin tức
             </button> */}
+                        <button onClick={() => history.push('/blog')} className="flex-row hd-cnt__left-btn">
+                            <img src={icon.newsPurple} alt="" />
+                            Tin tức
+                        </button>
                     </div>
                     <img
                         onClick={handleBack}

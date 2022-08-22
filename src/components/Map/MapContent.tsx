@@ -20,9 +20,11 @@ import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from './MapCurrentUser'
 import IStore from "../../interface/IStore";
-import ReactMapGL, { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
+import { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
+import MapGL from "react-map-gl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import onErrorImg from "../../utils/errorImg";
+// import MapDirection from './MapDirection';
 
 
 
@@ -45,8 +47,8 @@ const MapContent = (props: IProps) => {
         check: false,
     });
     const [local,] = useState({
-        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0].latitude,
-        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0].longitude,
+        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
+        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -199,7 +201,6 @@ const MapContent = (props: IProps) => {
         handleBackCurrentUser()
     }
 
-
     return (
         <div className="map-content">
             {/* map */}
@@ -214,7 +215,8 @@ const MapContent = (props: IProps) => {
                 handleBackCurrentUser={handleBackCurrentUser}
             />
             {
-                <ReactMapGL
+                <MapGL
+                    // onViewportChange={onCenterChange}
                     onTouchMove={onCenterChange}
                     style={{
                         width: "100vw",
@@ -227,10 +229,11 @@ const MapContent = (props: IProps) => {
                     }}
                     attributionControl={true}
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    mapStyle="mapbox://styles/mapbox/streets-v10"
                     ref={mapRef}
                 // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
+
                     <NavigationControl
                         position="bottom-right"
                         showZoom={true}
@@ -266,12 +269,17 @@ const MapContent = (props: IProps) => {
                                     }
                                     className="map-marker-org"
                                 >
-                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
+                                    <img
+                                        src={item.image_url}
+                                        alt=""
+                                        className="map-marker-org__img"
+                                        onError={(e) => onErrorImg(e)}
+                                    />
                                 </div>
                             </Marker>
                         ))
                     }
-                </ReactMapGL>
+                </MapGL>
             }
             <div
                 className={

@@ -33,10 +33,12 @@ import AlertSnack from "../../components/AlertSnack";
 
 // ==== api tracking ====
 //import tracking from "../../api/trackApi";
-import { formatProductList } from "../../utils/tracking";
+// import { formatProductList } from "../../utils/tracking";
 import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
+import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
+
 // end
 const date = dayjs();
 function Booking() {
@@ -54,9 +56,10 @@ function Booking() {
         open: false,
         titleLeft: "",
         titleRight: "",
-        onClickLeft: () => {},
-        onClickRight: () => {},
+        onClickLeft: () => { },
+        onClickRight: () => { },
     });
+    const [openVouchers, setOpenVouchers] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
         (state: any) => state.PAYMENT.PAYMENT
@@ -64,6 +67,8 @@ function Booking() {
     const branchRef = useRef<any>();
     const history = useHistory();
     const location: any = useLocation();
+    //api discount apply for book now
+    //-------------------------------
 
     const callOrgDetail = () => {
         if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
@@ -278,7 +283,7 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
-    console.log(services)
+    console.log(location)
     return (
         <>
             <Container>
@@ -320,6 +325,24 @@ function Booking() {
                                     </p>
                                 </div>
                             </div>
+                            {
+                                location.state?.vouchers?.length > 0 &&
+                                <>
+                                    <button
+                                        onClick={() => setOpenVouchers(true)}
+                                        className="flex-row booking-cnt__right-voucher"
+                                    >
+                                        Mã khuyếm mãi
+                                        <img src={icon.cardDiscountOrange} alt="" />
+                                    </button>
+                                    <PopUpVoucherOrg
+                                        org={org}
+                                        open={openVouchers}
+                                        setOpen={setOpenVouchers}
+                                        vouchers={location.state.vouchers}
+                                    />
+                                </>
+                            }
                             <div className="booking-cnt__right-services">
                                 <ul className="booking-service-list">
                                     {servicesBook.map(
@@ -351,10 +374,10 @@ function Booking() {
                                             />
                                             {bookTime.branch_id
                                                 ? org?.branches?.find(
-                                                      (i: any) =>
-                                                          i.id ===
-                                                          bookTime.branch_id
-                                                  )?.full_address
+                                                    (i: any) =>
+                                                        i.id ===
+                                                        bookTime.branch_id
+                                                )?.full_address
                                                 : org?.full_address}
                                         </span>
                                         {org?.branches?.length > 0 && (
@@ -377,10 +400,10 @@ function Booking() {
                                                         }
                                                         style={
                                                             bookTime.branch_id ===
-                                                            item.id
+                                                                item.id
                                                                 ? {
-                                                                      color: "var(--text-black)",
-                                                                  }
+                                                                    color: "var(--text-black)",
+                                                                }
                                                                 : {}
                                                         }
                                                         key={index}
@@ -440,9 +463,9 @@ function Booking() {
                                             className="asc"
                                             disabled={
                                                 (seatAmount >= 10 ||
-                                                seatAmount >=
-                                                services[0]?.quantity ||
-                                                services[0]?.quantity === 1)
+                                                    seatAmount >=
+                                                    services[0]?.quantity ||
+                                                    services[0]?.quantity === 1)
                                                     ? true
                                                     : false
                                             }
@@ -476,7 +499,7 @@ function Booking() {
                             <div
                                 style={
                                     FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                                    location.state.TYPE === "BOOK_NOW"
+                                        location.state.TYPE === "BOOK_NOW"
                                         ? { display: "block" }
                                         : { display: "none" }
                                 }

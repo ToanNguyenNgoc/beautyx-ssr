@@ -18,6 +18,8 @@ import axios from "axios";
 import IStore from "../../interface/IStore";
 import { imgTag } from "../../constants/img";
 import { AppContext } from "../../context/AppProvider";
+import BeautyLoading from "../BeautyxLoading";
+import { STATUS } from "../../redux/status";
 
 const PlaceComponent = (props: any) => {
     const { mapRef, onFlyTo, setOpenDetail, openDetail, slideRef } = props;
@@ -55,7 +57,7 @@ const PlaceComponent = (props: any) => {
     ];
     const dispatch = useDispatch();
     const [orgs, setOrgs] = useState<IOrganization[]>([]);
-    const { getValueCenter, tags } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { getValueCenter, tags, orgsMap } = useSelector((state: IStore) => state.ORGS_MAP)
     const callOrgsByKeyword = async (keyword: string) => {
         try {
             const res = await orgApi.getAll({
@@ -153,9 +155,9 @@ const PlaceComponent = (props: any) => {
             page: 1,
             mountNth: 2,
             tags: tags.includes(tag) ? tags.filter(i => i !== tag).join("|") : [...tags, tag].join("|"),
-            LatLng:`${lat},${lng}`
+            LatLng: `${lat},${lng}`
         }))
-        if((res.meta.requestStatus === "fulfilled")){
+        if ((res.meta.requestStatus === "fulfilled")) {
             slideRef?.current?.slickGoTo(0);
         }
     }
@@ -171,9 +173,14 @@ const PlaceComponent = (props: any) => {
                             onChange={onInputChange}
                         />
                         <div className="map-filter-cnt__input-btn">
-                            <button onClick={() => setKeyword("")}>
-                                <img src={icon.closeBlack} alt="" />
-                            </button>
+                            {
+                                orgsMap.status === STATUS.LOADING ?
+                                    <BeautyLoading />
+                                    :
+                                    <button onClick={() => setKeyword("")}>
+                                        <img src={icon.closeBlack} alt="" />
+                                    </button>
+                            }
                         </div>
                     </div>
                     <div className="map-filter-cnt__drop">
