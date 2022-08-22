@@ -13,6 +13,7 @@ import {doPostMakePaymentMessageMB} from '../../../rootComponents/mb/doPostMessa
 import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
+import onErrorImg from '../../../utils/errorImg';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
@@ -159,7 +160,7 @@ function PaymentInfo(props: any) {
                 <UserPaymentInfo disableEdit={true} />
                 <div className="pm-status-user__detail">
                     <div className="flex-row org">
-                        <img src={organization?.image_url} alt="" />
+                        <img src={organization?.image_url} onError={(e)=>onErrorImg(e)} alt="" />
                         <span>{organization?.name}</span>
                     </div>
                     <div className="pm-status-user__list">
@@ -170,7 +171,7 @@ function PaymentInfo(props: any) {
                                         className='pm-order-item'
                                         key={index}
                                     >
-                                        <img className='pm-order-item__img' src={item.cart_item.image_url} alt="" />
+                                        <img className='pm-order-item__img' src={item.cart_item.image_url??""} onError={(e)=>onErrorImg(e)} alt="" />
                                         <div className="pm-order-item__de">
                                             <span className="pm-order-item__name">
                                                 {item.name}
@@ -184,7 +185,7 @@ function PaymentInfo(props: any) {
                                                                 <span>{formatPrice(item.price)}đ</span>
                                                             </>
                                                             :
-                                                            <span>{formatPrice(item.price)}</span>
+                                                            <span>{" "}{formatPrice(item.price)}</span>
                                                     }
                                                 </div>
                                                 <span className="quantity">x{item.quantity}</span>

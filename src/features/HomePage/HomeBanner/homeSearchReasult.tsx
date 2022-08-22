@@ -58,7 +58,7 @@ export default function HomeBannerResult() {
       })
     }
   }
-  console.log(data, apiBanner);
+  // console.log(data, apiBanner);
 
   return (
     <>

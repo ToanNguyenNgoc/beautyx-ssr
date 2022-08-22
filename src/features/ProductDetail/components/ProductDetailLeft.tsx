@@ -11,6 +11,8 @@ import {
     onDeleteFavorite,
 } from "../../../redux/org_products/productSlice";
 import { AppContext } from "../../../context/AppProvider";
+import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
+import useDeviceMobile from "../../../utils/useDeviceMobile";
 
 interface IProps {
     product: Product;
@@ -18,6 +20,7 @@ interface IProps {
 }
 
 function ProductDetailLeft(props: IProps) {
+    const IS_MB = useDeviceMobile();
     const { product, org } = props;
     const dispatch = useDispatch();
     const history = useHistory();
@@ -109,6 +112,12 @@ function ProductDetailLeft(props: IProps) {
                         </div>
                     </div>
                 </div>
+                {
+                    IS_MB &&
+                    <DetailOrgVoucher
+                        org={org}
+                    />
+                }
             </div>
         </>
     );

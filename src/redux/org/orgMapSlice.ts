@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import orgApi from '../../api/organizationApi';
-import { IOrganization } from '../../interface/organization';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import orgApi from "../../api/organizationApi";
+import { IOrganization } from "../../interface/organization";
 import { STATUS } from "../status";
 
 export interface IORGS_MAP {
@@ -14,6 +14,7 @@ export interface IORGS_MAP {
     },
     locationCenter: any,
     getValueCenter: boolean,
+    tags:string[]
 }
 
 const initialState: IORGS_MAP = {
@@ -23,10 +24,11 @@ const initialState: IORGS_MAP = {
         page: 1,
         totalItem: 1,
         mountNth:1,
-        status: ""
+        status: "",
     },
     locationCenter: null,
-    getValueCenter: false
+    getValueCenter: false,
+    tags:[]
 }
 export const fetchOrgsMapFilter: any = createAsyncThunk(
     "ORGS_MAP/fetchOrgsMapFilter",
@@ -53,19 +55,27 @@ const orgMapReducer = createSlice({
                 orgs: [],
                 page: 1,
                 totalItem: 1,
-                mountNth:2,
-                status: ""
+                status: "",
+                mountNth:2
             }
         },
         onSetOrgCenter: (state, action) => {
-            state.orgCenter = action.payload
+            state.orgCenter = action.payload;
         },
         onSetLocationCenter: (state, action) => {
-            console.log(action.payload)
-            state.locationCenter = action.payload
+            console.log(action.payload);
+            state.locationCenter = action.payload;
         },
         onSwitchValueCenter: (state, action) => {
-            state.getValueCenter = action.payload
+            state.getValueCenter = action.payload;
+        },
+        onSetTagsFilter:(state, action)=>{
+            if(state.tags.includes(action.payload)){
+                const newTags = state.tags.filter(i => i !== action.payload)
+                state.tags = newTags
+            }else{
+                state.tags.push(action.payload)
+            }
         }
     },
     extraReducers: {
@@ -81,20 +91,21 @@ const orgMapReducer = createSlice({
                     page: page,
                     mountNth: mountNth,
                     totalItem: totalItem,
-                    status: STATUS.SUCCESS
-                }
-            }
+                    status: STATUS.SUCCESS,
+                },
+            };
         },
         [fetchOrgsMapFilter.rejected]: (state) => {
             return { ...state, status: STATUS.FAIL };
         },
-    }
-})
+    },
+});
 const { actions } = orgMapReducer;
 export const {
     onSetOrgCenter,
     onSetLocationCenter,
     onSetOrgsMapEmpty,
-    onSwitchValueCenter
+    onSwitchValueCenter,
+    onSetTagsFilter
 } = actions;
 export default orgMapReducer.reducer;

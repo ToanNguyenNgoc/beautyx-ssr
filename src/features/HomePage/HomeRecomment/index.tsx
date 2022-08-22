@@ -27,7 +27,7 @@ export default function HomeRecomment() {
             dispatch(fetchAsyncServicesRandom({
                 keyword: service_recent_order,
                 page: 1,
-                sort:"distance"
+                sort: "distance"
             }))
         }
     }
@@ -36,7 +36,7 @@ export default function HomeRecomment() {
             const res = await servicePromoApi.getServicesPromo({
                 page: 1,
                 keyword: filterKeyWord[0],
-                sort:"distance"
+                sort: "distance"
             })
             setServicesByRecentSearch(res.data.data.hits)
         } catch (error) {
@@ -50,24 +50,29 @@ export default function HomeRecomment() {
             callServicesRecentSearch()
         }
     }, [ORDER_SERVICES.status]);
-   
+
     return (
         <div className="home-recomment">
-            <HomeTitle title={t("home_2.suggestions_for_you")} />
-            <ul className="home-recomment__list">
-                {servicesByRecentSearch.slice(0, 12).map((item: IServicePromo, index: number) => (
-                    <li className="home-recomment__item" key={index}>
-                        <ServicePromoItem service={item} />
-                    </li>
-                ))}
-            </ul>
-            <ul className="home-recomment__list">
-                {services.slice(0, 12).map((item: IServicePromo, index: number) => (
-                    <li className="home-recomment__item" key={index}>
-                        <ServicePromoItem service={item} />
-                    </li>
-                ))}
-            </ul>
+            {
+                (servicesByRecentSearch.length > 0 || services.length > 0) &&
+                <>
+                    <HomeTitle title={t("home_2.suggestions_for_you")} />
+                    <ul className="home-recomment__list">
+                        {servicesByRecentSearch.slice(0, 12).map((item: IServicePromo, index: number) => (
+                            <li className="home-recomment__item" key={index}>
+                                <ServicePromoItem service={item} />
+                            </li>
+                        ))}
+                    </ul>
+                    <ul className="home-recomment__list">
+                        {services.slice(0, 12).map((item: IServicePromo, index: number) => (
+                            <li className="home-recomment__item" key={index}>
+                                <ServicePromoItem service={item} />
+                            </li>
+                        ))}
+                    </ul>
+                </>
+            }
         </div>
     );
 }
