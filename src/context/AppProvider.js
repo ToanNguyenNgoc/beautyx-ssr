@@ -2,7 +2,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import dayjs from "dayjs";
 import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
@@ -65,13 +65,16 @@ export default function AppProvider({ children }) {
 
   //----------------------------------------------------------
   //get location plat form
+  const {mountNth} = useSelector((state) => state.ORGS_MAP.orgsMap)
   const callOrgsByLocation = () => {
-    dispatch(fetchOrgsMapFilter({
-      page: 1,
-      sort: "distance",
-      path_url: "/ban-do",
-      mountNth: 2
-    }))
+    if(mountNth !== 2){
+      dispatch(fetchOrgsMapFilter({
+        page: 1,
+        sort: "distance",
+        path_url: "/ban-do",
+        mountNth: 2
+      }))
+    }
   }
   const getLocationPlatFormBeauty = async () => {
     try {

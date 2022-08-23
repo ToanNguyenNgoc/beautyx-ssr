@@ -175,7 +175,7 @@ const MapContent = (props: IProps) => {
 
     const debounceOrgsMove = useCallback(
         debounce((latLng: string, orgsLength: number, tags: string[]) => {
-            if (orgsLength === 90) {
+            if (orgsLength === 105) {
                 dispatch(onSetOrgsMapEmpty())
             }
             // dispatch(onSetOrgsMapEmpty())
@@ -187,7 +187,7 @@ const MapContent = (props: IProps) => {
                     tags: tags.join("|")
                 })
             );
-        }, 1200),
+        }, 500),
         []
     );
     const onCenterChange = () => {
@@ -217,6 +217,7 @@ const MapContent = (props: IProps) => {
             {
                 <MapGL
                     // onViewportChange={onCenterChange}
+                    onMouseMove={onCenterChange}
                     onTouchMove={onCenterChange}
                     style={{
                         width: "100vw",
