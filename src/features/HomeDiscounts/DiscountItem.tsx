@@ -9,6 +9,7 @@ import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
+import { analytics } from "../../firebase";
 // end
 interface IProps {
     discountPar: IDiscountPar;
@@ -25,6 +26,10 @@ function DiscountItem(props: IProps) {
             'khuyến mãi hot',
             discountItem.discount_id
         );
+        analytics.logEvent('detail_discount', {
+            service: discountItem.productable.product_name,
+            merchant: discountItem.organization.name
+        })
         history.push(pathDiscountOb);
     };
     // console.log(discountItem);

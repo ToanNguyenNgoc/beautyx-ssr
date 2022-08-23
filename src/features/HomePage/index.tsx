@@ -25,6 +25,7 @@ import { LoadHomeBanner } from "../../components/LoadingSketion/LoadHome";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 // end
+import {analytics} from "../../firebase";
 // import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 export default function HomePage() {
     const IS_MB = useFullScreen();
@@ -33,6 +34,8 @@ export default function HomePage() {
 
     useEffect(() => {
         tracking.HOME_LOAD();
+        console.log('home');
+        
         dispatch(onResetFilter());
     }, [])
 

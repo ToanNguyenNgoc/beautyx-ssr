@@ -10,10 +10,11 @@ import { useEffect } from "react";
 import scrollTop from "../../../utils/scrollTop";
 import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
 // ==== api tracking ====
- import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { analytics } from "../../../firebase";
 // end
 function TabService(props: any) {
     const { catesChild, CATE } = props;
@@ -45,8 +46,12 @@ function TabService(props: any) {
     const history = useHistory();
     const onServiceDetail = (service: any) => {
         scrollTop();
-        tracking.CATEGORY_TREE_ITEM_CLICK(CATE.cate_id,service.org_id,service.id)
+        tracking.CATEGORY_TREE_ITEM_CLICK(CATE.cate_id, service.org_id, service.id)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+        analytics.logEvent('detail_service', {
+            service: service.service_name,
+            merchant: service.org_name
+        })
         const pathServiceOb = formatRouterLinkServicePromo(service);
         history.push(pathServiceOb);
     };

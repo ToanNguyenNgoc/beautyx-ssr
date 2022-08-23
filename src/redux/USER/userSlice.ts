@@ -4,16 +4,20 @@ import discountApi from '../../api/discountApi';
 import { STATUS } from '../status';
 import { IDiscountPar } from '../../interface/discount'
 import { checkPhoneValid } from '../../utils/phoneUpdate';
+import { analytics } from '../../firebase';
 
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
     async () => {
         try {
             const res = await authentication.getUserProfile();
-            let context = res?.data.context
-            if(context.telephone && !checkPhoneValid(context.telephone)){
+            let context = res?.data.context;
+            if (context.telephone && !checkPhoneValid(context.telephone)) {
                 context = { ...context, telephone: 'số điện thoại' }
             }
+            analytics.logEvent('login', {
+                'User login': context.fullname
+            })
             return context
         } catch (error) {
             localStorage.removeItem('_WEB_TK')

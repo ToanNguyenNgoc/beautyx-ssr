@@ -12,6 +12,7 @@ import { formatRouterLinkService } from "../../../../utils/formatRouterLink/form
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
+import { analytics } from "../../../../firebase";
 // end
 interface IProps {
     service: Service;
@@ -29,6 +30,10 @@ function OrgServiceItem(props: IProps) {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
                 tracking.USER_ITEM_CLICK(org.id, service.id);
+                analytics.logEvent('detail_service', {
+                    service: service.service_name,
+                    merchant: org.name
+                })
             }}
         >
             <div className="org-special-item">
