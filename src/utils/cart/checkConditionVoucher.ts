@@ -1,6 +1,8 @@
 import moment from "moment";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
-import { cartReducer, discountReducerItem } from "./cartReducer";
+import {  discountReducerItem } from "./cartReducer";
+import {Product} from '../../interface/product';
+import {Service} from '../../interface/service'
 // import { isEqual } from 'lodash'
 
 const date = new Date();
@@ -64,7 +66,7 @@ export const EX_CHECK_VALID_TIME = (voucher: IDiscountPar) => {
 
     if (!voucher.valid_time) {
         timeCondition = true
-    } else if (voucher.valid_from && timeFromNum < timeNowNum && timeNowNum < timeToNum) {
+    } else if (voucher.valid_time && timeFromNum < timeNowNum && timeNowNum < timeToNum) {
         timeCondition = true
     }
 
@@ -81,9 +83,10 @@ export const EX_CHECK_SUB_TOTAL = (
     }
     return subTotalCondition
 }
-export const EX_CHECK_INCLUDE_ITEMS = (voucher: IDiscountPar, cartList: any[]) => {
+export const EX_CHECK_INCLUDE_ITEMS = (
+    voucher: IDiscountPar, products: Product[], services: Service[]
+) => {
     let itemCondition = false;
-    const { products, services } = cartReducer(cartList)
     const { productsInDis, servicesInDis } = discountReducerItem(voucher.items);
     // console.log(productsInDis)
     const products_id = products.map((i: any) => i.id);

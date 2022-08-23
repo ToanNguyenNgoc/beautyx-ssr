@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import { LoadingMapOrg } from '../../components/LoadingSketion/LoadOrg';
 // import Map from '../../components/Map';
 import MapContent from '../../components/Map/MapContent';
 import icon from '../../constants/icon';
@@ -29,7 +30,6 @@ function HomeMap() {
     const handleClose = () => {
         history.push("/");
     }
-    // console.log(mountNth)
     return (
         <div className="map">
             <div onClick={handleClose} className="dialog-map__close">
@@ -38,10 +38,12 @@ function HomeMap() {
                 </div>
             </div>
             {
-                (mountNth === 2) &&
-                <MapContent
-                    orgs={orgs}
-                />
+                (mountNth === 2) ?
+                    <MapContent
+                        orgs={orgs}
+                    />
+                    :
+                    <LoadingMapOrg />
             }
         </div>
     );
