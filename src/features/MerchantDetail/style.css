@@ -531,7 +531,7 @@
     right: 0;
     z-index: 2;
     height: 132px;
-    padding: 12px;
+    padding: 20px;
 }
 
 .org-information__map-cnt .map-org-detail__slide {
@@ -1375,7 +1375,7 @@
         padding: 16px 0;
     }
     .org-information__map-cnt {
-        height: 184px;
+        height: 260px;
     }
     .org-information__map-cnt .map-org-detail {
         height: 92px;
@@ -1531,7 +1531,7 @@
 
 @media only screen and (max-width: 475px) {
     .org-information__map-cnt .map-org-detail__slide {
-        width: 65%;
+        width: 100%;
         min-width: 240px;
     }
 }

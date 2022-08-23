@@ -20,7 +20,7 @@ class Organization {
     const paramsOb = {
       page: values.page || 1,
       limit: values.limit || 15,
-      "filter[keyword]": values.keyword,
+      "filter[keyword]": values.keyword ? decodeURI(values.keyword):"" ,
       "filter[tags]": values.tags,
       "filter[is_momo_ecommerce_enable]":values.isEcommerce,
       "filter[min_price]": values.min_price,

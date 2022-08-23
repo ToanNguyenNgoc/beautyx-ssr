@@ -200,7 +200,6 @@ const MapContent = (props: IProps) => {
     const currentUser = (e: GeolocateResultEvent) => {
         handleBackCurrentUser()
     }
-
     return (
         <div className="map-content">
             {/* map */}

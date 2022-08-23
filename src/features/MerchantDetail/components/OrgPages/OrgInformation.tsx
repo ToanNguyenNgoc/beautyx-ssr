@@ -41,8 +41,7 @@ function OrgInformation(props: IProps) {
             <div className="org-information__map-cnt">
                 <div className="map-cnt">
                     <WrapperMap
-                        lat={org.latitude}
-                        long={org.longitude}
+                        org={org}
                     />
                 </div>
                 <div className="map-org__seemore">

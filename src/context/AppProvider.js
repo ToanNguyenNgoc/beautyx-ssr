@@ -65,9 +65,9 @@ export default function AppProvider({ children }) {
 
   //----------------------------------------------------------
   //get location plat form
-  const {mountNth} = useSelector((state) => state.ORGS_MAP.orgsMap)
+  const { mountNth } = useSelector((state) => state.ORGS_MAP.orgsMap)
   const callOrgsByLocation = () => {
-    if(mountNth !== 2){
+    if (mountNth !== 2) {
       dispatch(fetchOrgsMapFilter({
         page: 1,
         sort: "distance",
@@ -113,14 +113,14 @@ export default function AppProvider({ children }) {
           sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
           callOrgsByLocation()
         } else {
-          getLocationPlatFormBeauty()
+          callOrgsByLocation()
         }
       }
       if (platform === FLAT_FORM_TYPE.BEAUTYX) {
         getLocationPlatFormBeauty()
       }
     }, 1000)
-  }, [response, getLocationPlatFormTiki]);
+  }, [response]);
 
 
   const value = {
