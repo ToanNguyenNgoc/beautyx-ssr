@@ -23,7 +23,7 @@ export default function AppProvider({ children }) {
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const [language, setLanguage] = useState(
-        (lg === "en-US" || lg === "en") ? "en" : "vn"
+        (lg === "en-US" || lg === "en")? "en" : "vn"
     );
     const [openModal, setOpenModal] = useState(false);
     const [userInfo, setUserInfo] = useState();
@@ -32,7 +32,7 @@ export default function AppProvider({ children }) {
     const [dayObj, setDayObj] = useState(dayjs())
     if (localStorage.getItem("_WEB_US")) {
         const tokenDecoded = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
-        let exp = tokenDecoded ? .token_expired_at;
+        let exp = tokenDecoded?.token_expired_at;
         let expDate = exp.slice(0, 10).split("-").join("");
         let expTime = exp.slice(11, 19).split(":").join("");
         let dateExp = parseInt(`${expDate}${expTime}`);
@@ -45,7 +45,7 @@ export default function AppProvider({ children }) {
     useEffect(() => {
         const callUserProfile = async() => {
             const res = await dispatch(fetchAsyncUser());
-            if (res ? .payload) {
+            if (res?.payload) {
                 const time = dayjs().format("YYYY-MM");
                 dispatch(fetchAsyncApps(time))
                 dispatch(fetchAsyncOrderServices({ page: 1 }))
@@ -105,10 +105,10 @@ export default function AppProvider({ children }) {
             const platform = EXTRA_FLAT_FORM();
             if (platform === FLAT_FORM_TYPE.TIKI) {
                 getLocationPlatFormTiki()
-                if (response && response.result ? .res) {
+                if (response && response.result?.res) {
                     const user_location = {
-                        lat: response.result ? .res.latitude,
-                        long: response.result ? .res.longitude
+                        lat: response.result?.res.latitude,
+                        long: response.result?.res.longitude
                     }
                     sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
                     callOrgsByLocation()
@@ -137,5 +137,5 @@ export default function AppProvider({ children }) {
         dayObj,
         setDayObj
     };
-    return <AppContext.Provider value = { value } > { children } < /AppContext.Provider>;
+    return <AppContext.Provider value = { value } > { children } </AppContext.Provider>;
 }
