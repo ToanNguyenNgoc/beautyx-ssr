@@ -37,7 +37,7 @@ class ProductApi {
         const paramsOb = {
             page: values.page || 1,
             limit: 15,
-            "filter[keyword]": values.keyword,
+            "filter[keyword]":  values.keyword ? decodeURI(values.keyword):"",
             "filter[min_price]": values.min_price || 1000,
             "filter[max_price]": values.max_price,
             "filter[special_min_price]": values.special_min_price || 1000,

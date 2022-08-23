@@ -201,6 +201,7 @@ const MapContent = (props: IProps) => {
         handleBackCurrentUser()
     }
 
+
     return (
         <div className="map-content">
             {/* map */}

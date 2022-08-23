@@ -139,32 +139,23 @@ function ServiceDetail() {
         }
     };
     useEffect(() => {
-        window.addEventListener("scroll", () =>
-            handleScroll(
-                is_mobile,
-                setValue,
-                scrollReview,
-                scrollDesc,
-                scrollMap,
-                scrollPolicy
-            )
+        let scroll = true
+        window.addEventListener("scroll", () => {
+            if (scroll) {
+                handleScroll(
+                    is_mobile,
+                    setValue,
+                    scrollReview,
+                    scrollDesc,
+                    scrollMap,
+                    scrollPolicy
+                )
+            }
+        }
         );
         return () => {
-            window.removeEventListener(
-                "scroll",
-                () =>
-                    handleScroll(
-                        is_mobile,
-                        setValue,
-                        scrollReview,
-                        scrollDesc,
-                        scrollMap,
-                        scrollPolicy
-                    ),
-                false
-            );
+            scroll = false
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     });
 
     useEffect(() => {

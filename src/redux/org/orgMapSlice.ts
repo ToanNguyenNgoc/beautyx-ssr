@@ -93,7 +93,7 @@ const orgMapReducer = createSlice({
             return {
                 ...state,
                 orgsMap: {
-                    orgs: [...state.orgsMap.orgs, ...orgs],
+                    orgs: page === 1 ? orgs : [...state.orgsMap.orgs, ...orgs],
                     page: page,
                     mountNth: mountNth,
                     totalItem: totalItem,
