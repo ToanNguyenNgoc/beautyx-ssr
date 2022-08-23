@@ -10,11 +10,11 @@ export interface IORGS_MAP {
         page: number,
         totalItem: number,
         status: string,
-        mountNth:number
+        mountNth: number
     },
     locationCenter: any,
     getValueCenter: boolean,
-    tags:string[]
+    tags: string[]
 }
 
 const initialState: IORGS_MAP = {
@@ -23,12 +23,12 @@ const initialState: IORGS_MAP = {
         orgs: [],
         page: 1,
         totalItem: 1,
-        mountNth:1,
+        mountNth: 1,
         status: "",
     },
     locationCenter: null,
-    getValueCenter: false,
-    tags:[]
+    getValueCenter: true,
+    tags: []
 }
 export const fetchOrgsMapFilter: any = createAsyncThunk(
     "ORGS_MAP/fetchOrgsMapFilter",
@@ -56,7 +56,7 @@ const orgMapReducer = createSlice({
                 page: 1,
                 totalItem: 1,
                 status: "",
-                mountNth:2
+                mountNth: 2
             }
         },
         onSetOrgCenter: (state, action) => {
@@ -69,25 +69,31 @@ const orgMapReducer = createSlice({
         onSwitchValueCenter: (state, action) => {
             state.getValueCenter = action.payload;
         },
-        onSetTagsFilter:(state, action)=>{
-            if(state.tags.includes(action.payload)){
+        onSetTagsFilter: (state, action) => {
+            if (state.tags.includes(action.payload)) {
                 const newTags = state.tags.filter(i => i !== action.payload)
                 state.tags = newTags
-            }else{
+            } else {
                 state.tags.push(action.payload)
             }
         }
     },
     extraReducers: {
         [fetchOrgsMapFilter.pending]: (state) => {
-            return { ...state, status: STATUS.LOADING };
+            return {
+                ...state,
+                orgsMap: {
+                    ...state.orgsMap,
+                    status: STATUS.LOADING
+                }
+            };
         },
         [fetchOrgsMapFilter.fulfilled]: (state, { payload }) => {
             const { orgs, page, totalItem, mountNth } = payload;
             return {
                 ...state,
                 orgsMap: {
-                    orgs: [...state.orgsMap.orgs, ...orgs],
+                    orgs: page === 1 ? orgs : [...state.orgsMap.orgs, ...orgs],
                     page: page,
                     mountNth: mountNth,
                     totalItem: totalItem,
@@ -96,7 +102,13 @@ const orgMapReducer = createSlice({
             };
         },
         [fetchOrgsMapFilter.rejected]: (state) => {
-            return { ...state, status: STATUS.FAIL };
+            return {
+                ...state,
+                orgsMap: {
+                    ...state.orgsMap,
+                    status: STATUS.FAIL
+                }
+            };
         },
     },
 });

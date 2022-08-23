@@ -5,6 +5,7 @@ import { IDiscountPar } from "../interface/discount";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../utils/dataLayer";
+import { analytics } from "../firebase";
 // end
 
 interface IInitialState {
@@ -48,6 +49,7 @@ const cart = createSlice({
             const iIndex = state.cartList.findIndex(
                 (item: any) => item.cart_id === action.payload.cart_id
             );
+           
             if (iIndex >= 0) {
                 state.cartList[iIndex].quantity += action.payload.quantity;
                 tracking.ADD_CART_CLICK(
@@ -56,6 +58,11 @@ const cart = createSlice({
                     state.cartList[iIndex].price,
                     state.cartList[iIndex].quantity
                 );
+                analytics.logEvent('add_to_cart',{
+                    items: state.cartList[iIndex],
+                    value: state.cartList[iIndex].price,
+                    currency: 'VND'
+                });
             } else {
                 const templeCart = {
                     ...action.payload,
@@ -67,6 +74,11 @@ const cart = createSlice({
                     templeCart.price,
                     templeCart.quantity
                 );
+                analytics.logEvent('add_to_cart',{
+                    items: templeCart,
+                    value: templeCart.price,
+                    currency: 'VND'
+                });
                 state.cartList.push(templeCart);
             }
             localStorage.setItem(storageName, JSON.stringify(state.cartList));

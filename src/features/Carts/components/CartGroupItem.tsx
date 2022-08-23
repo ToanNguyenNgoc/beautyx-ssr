@@ -28,7 +28,7 @@ import onErrorImg from "../../../utils/errorImg";
 import img from "../../../constants/img";
 import formatPrice from "../../../utils/formatPrice";
 import moment from "moment";
-import { discountReducerItem } from "../../../utils/cart/cartReducer";
+import { cartReducer, discountReducerItem } from "../../../utils/cart/cartReducer";
 import { Transition, TransitionUp } from "../../../utils/transition";
 
 function CartGroupItem(props: any) {
@@ -148,6 +148,31 @@ interface IPopUpVoucherOrg {
 export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     const IS_MB = useDeviceMobile();
     const { open, setOpen, org, vouchers } = props;
+    const testVoucher:IDiscountPar[] = [
+        {
+            ...props.vouchers[0],
+            id:101010,
+            discount_unit:"PRICE",
+            discount_type:"PRODUCT",
+            discount_value:50000,
+            items:[],
+            items_count:0,
+            valid_time: "10:00:00 - 20:00:00",
+        },
+        {
+            ...props.vouchers[0],
+            id:101011,
+            discount_unit:"PERCENT",
+            discount_type:"PRODUCT",
+            discount_value:50,
+            maximum_discount_value:null,
+            items: [],
+            items_count: 0,
+            valid_from: "2022-01-01 10:00:00",
+            valid_util: "2022-06-01 10:00:00",
+            valid_time: "10:00:00 - 12:00:00",
+        }
+    ]
     return (
         <Dialog
             TransitionComponent={IS_MB ? Transition : TransitionUp}
@@ -172,6 +197,11 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                     </span>
                     <ul className="list">
                         {vouchers.map((item: IDiscountPar, index: number) => (
+                            <li key={index} className="item">
+                                <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
+                            </li>
+                        ))}
+                        {testVoucher.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
                                 <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
                             </li>
@@ -213,11 +243,12 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const { cartAmount, cartList, VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
-    const active = VOUCHER_APPLY.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const cartCheck = cartList.filter((item: any) => item.isConfirm === true);
+    const { products, services } = cartReducer(cartCheck)
+    const active = VOUCHER_APPLY.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
-    const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, cartCheck);
+    const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products, services);
 
     let applyCondition = false;
     if (
@@ -230,11 +261,15 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
         applyCondition = true;
     }
     if (
-        voucher.discount_type === DISCOUNT_TYPE.PRODUCT.key
+        voucher.discount_type === DISCOUNT_TYPE.PRODUCT.key &&
+        subTotalCondition &&
+        dateCondition &&
+        itemsCondition &&
+        timeCondition
     ) {
         applyCondition = true
     }
-    // console.log(applyCondition)
+    // console.log(voucher.id, subTotalCondition, dateCondition, itemsCondition, timeCondition)
 
     const handleApplyVoucher = () => {
         if (active) {

@@ -39,6 +39,7 @@ import tracking from "../../../api/trackApi";
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
+import { analytics } from "../../../firebase";
 // end
 interface IProps {
     inPayment?: boolean;
@@ -127,8 +128,17 @@ function CartItem(props: IProps) {
                     discount,
                     discountItem
                 );
+                
+                analytics.logEvent('detail_discount', {
+                    service: cartItem.cart_item.service_name,
+                    merchant: org.name
+                })
                 history.push(pathDiscountOb);
             } else {
+                analytics.logEvent('detail_service', {
+                    service: cartItem.cart_item.service_name,
+                    merchant: org.name
+                })
                 const pathServiceOb = formatRouterLinkService(
                     cartItem.cart_item,
                     cartItem.org

@@ -67,3 +67,35 @@ function LoadOrg() {
 }
 
 export default LoadOrg;
+export const LoadingMapOrg = () => {
+    return (
+        <div className="load-org-cnt">
+            <div className="load-org-cnt__left">
+                <ul className="list">
+                    {
+                        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,].map(i => (
+                            <li key={i} className="list-item">
+                                <div className="flex-row-sp list-item__cnt">
+                                    <div className="list-item__cnt-img">
+                                        <Skeleton width="100%" height="100%" />
+                                    </div>
+                                    <div className="list-item__cnt-de">
+                                        <span>
+                                            <Skeleton width="100%" height="100%" />
+                                        </span>
+                                        <span>
+                                            <Skeleton width="100%" height="100%" />
+                                        </span>
+                                        <span>
+                                            <Skeleton width="100%" height="100%" />
+                                        </span>
+                                    </div>
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </div>
+    )
+}

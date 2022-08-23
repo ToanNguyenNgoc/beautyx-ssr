@@ -20,6 +20,8 @@ import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
 import { Rating } from "@mui/material";
 import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
+import IStore from "../../../interface/IStore";
+import { IS_VOUCHER } from "../../../utils/cart/checkConditionVoucher";
 // import { formatSalePriceService } from "../../../utils/formatPrice";
 
 interface IProps {
@@ -33,6 +35,8 @@ interface IProps {
 export default function ServiceDetailRight(props: IProps) {
     const { org, service, setOpenDrawer, NOW } = props;
     const { t } = useContext(AppContext);
+    const {discounts} = useSelector((state:IStore) => state.ORG_DISCOUNTS.DISCOUNTS);
+    const vouchers = IS_VOUCHER(discounts);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
     const { COMMENTS } = useSelector((state: any) => state.SERVICE);
@@ -109,7 +113,7 @@ export default function ServiceDetailRight(props: IProps) {
             const TYPE = "BOOK_NOW";
             history.push({
                 pathname: "/dat-hen",
-                state: { org, services, TYPE },
+                state: { org, services, TYPE, vouchers },
             });
             dispatch(clearAllServices());
         }

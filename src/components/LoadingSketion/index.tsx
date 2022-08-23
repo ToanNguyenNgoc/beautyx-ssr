@@ -54,10 +54,3 @@ export const LoadingServicesRow = () => {
         </ul>
     );
 }
-export const LoadingOrg = () => {
-    return (
-        <div className="load-org-cnt">
-            load-org-cnt
-        </div>
-    )
-}

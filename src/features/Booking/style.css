@@ -17,6 +17,18 @@
 .booking-cnt__right-org {
     display: flex;
 }
+.booking-cnt__right-voucher{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--orange);
+}
+.booking-cnt__right-voucher img{
+    margin-left: 4px;
+}
 
 .book-org-detail {
     padding-left: 6px;

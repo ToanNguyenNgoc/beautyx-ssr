@@ -20,11 +20,13 @@ import HomeProvince from "./HomeProvince";
 import { useDispatch, useSelector } from "react-redux";
 import { onResetFilter } from "../../redux/filter/filterSlice";
 import { LoadHomeBanner } from "../../components/LoadingSketion/LoadHome";
+// import Header from "../../components/Header";
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 // end
+import {analytics} from "../../firebase";
 // import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 export default function HomePage() {
     const IS_MB = useFullScreen();

@@ -24,5 +24,7 @@ const firebaseConfig = {
     // measurementId: "G-5K4B1FFSVQ",
 };
 firebase.initializeApp(firebaseConfig);
+// firebase.setAnalyticsCollectionEnabled
 const auth = firebase.auth();
+export const analytics = firebase.analytics();
 export { auth, firebase }

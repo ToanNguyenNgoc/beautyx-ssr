@@ -7,6 +7,7 @@ import { IOrganization } from '../../../../interface/organization';
 import { Link } from 'react-router-dom'
 import slugify from '../../../../utils/formatUrlString';
 import scrollTop from '../../../../utils/scrollTop';
+import { analytics } from '../../../../firebase';
 
 interface IProps {
     org: IOrganization,
@@ -22,7 +23,13 @@ function OrgComboItem(props: IProps) {
                 search: `org_id=${org?.id}&id=${combo?.id}`,
                 state: { org_state: org, combo_state: combo }
             }}
-            onClick={() => scrollTop()}
+            onClick={() => {
+                scrollTop();
+                analytics.logEvent('detail_combo', {
+                    service: combo.name,
+                    merchant: org.name
+                })
+            }}
         >
             <div
                 className="org-special-item"
