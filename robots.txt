@@ -1,0 +1,8 @@
+User-agent: Googlebot
+Disallow: /nogooglebot/
+Disallow: /MOMO
+Disallow: /TIKI
+Disallow: /MBBANK
+
+Sitemap: https://www.beautyx.vn/sitemap.xml
+Sitemap: https://beautyx.vn/sitemap.xml
