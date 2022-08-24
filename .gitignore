@@ -56,3 +56,4 @@ prod/
 .firebase/hosting.YnVpbGQ.cache
 *.cache
 .gitpod.yml
+.next/
