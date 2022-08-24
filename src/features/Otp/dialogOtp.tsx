@@ -154,9 +154,6 @@ function RenderRecatpcha(props: IPropOtp) {
         }
         return setOpen(false)
     }
-    const handleConfirm = (code: string) => {
-        handleSubmit(code)
-    }
     console.log(open);
     return (
         <>
