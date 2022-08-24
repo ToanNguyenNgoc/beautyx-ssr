@@ -2,7 +2,7 @@ yarn.lock
 package-lock.json
 node_modules/
 *.cache
-build/
+
 dist/
 .history
 # Compiled Java class files
