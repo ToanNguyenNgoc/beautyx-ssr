@@ -35,15 +35,14 @@ export default function HomeBannerResult() {
   useEffect(() => {
     axios
       .get(apiBanner)
-      .then((response) => {
+      .then((response:any) => {
         const res = response;
         setData({
           ...data,
-          services: [...data.services, ...res.data.hits],
+          services: [...data.services, ...res.hits],
           loading: false,
           totalItem: data.total
         })
-
       })
       .catch((error) => {
         console.log("error :>> ", error);
@@ -58,7 +57,7 @@ export default function HomeBannerResult() {
       })
     }
   }
-  // console.log(data, apiBanner);
+  console.log(data, apiBanner);
 
   return (
     <>
