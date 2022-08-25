@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
@@ -38,6 +38,7 @@ import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
+import SectionTitle from "../SectionTitle";
 
 // end
 const date = dayjs();
@@ -130,7 +131,7 @@ function Booking() {
         products: [],
         services: services,
         treatment_combo: [],
-        payment_method_id: payment_method_id,
+        payment_method_id:  FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
         coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
         description: "",
         branch_id: bookTime.branch_id,
@@ -257,14 +258,15 @@ function Booking() {
             if (bookTime.time) {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
-                        if (chooseE_wall) return handlePostOrder();
-                        else {
-                            setOpenAlertSnack({
-                                ...openAlertSnack,
-                                open: true,
-                                title: "Bạn Chưa chọn phương thức thanh toán!",
-                            });
-                        }
+                        handlePostOrder();
+                        // if (chooseE_wall) return 
+                        // else {
+                        //     setOpenAlertSnack({
+                        //         ...openAlertSnack,
+                        //         open: true,
+                        //         title: "Bạn Chưa chọn phương thức thanh toán!",
+                        //     });
+                        // }
                     } else {
                         return handlePostOrder();
                     }
@@ -283,7 +285,6 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
-    console.log(location)
     return (
         <>
             <Container>
@@ -504,10 +505,28 @@ function Booking() {
                                         : { display: "none" }
                                 }
                             >
-                                <PaymentMethodCpn
-                                    e={chooseE_wall}
-                                    onPaymentMethodChange={setChooseE_wall}
-                                />
+                                {
+                                    FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX 
+                                    ?
+                                    <>
+                                    <SectionTitle title={'Phương thức thanh toán'} />
+                                    <span style={{
+                                        backgroundColor: "var(--pink-momo)",
+                                        marginLeft: "12px",
+                                        marginBottom: "12px", 
+                                        padding: "0px 8px", 
+                                        borderRadius: "6px", 
+                                        color: "var(--white)"}}>
+                                            MOMO
+                                    </span>
+                                    <br/>
+                                    </>
+                                    :
+                                    <PaymentMethodCpn
+                                        e={chooseE_wall}
+                                        onPaymentMethodChange={setChooseE_wall}
+                                    />
+                                }
                             </div>
                             <div className="booking-cnt__bot">
                                 {location.state.TYPE === "BOOK_NOW" && (

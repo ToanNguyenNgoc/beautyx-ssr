@@ -1,15 +1,18 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
+import { AUTH_LOCATION } from "./authLocation";
 
 
 class Discounts {
     getAll = (values: any) => {
         const url = `/discounts`;
+        const LOCATION = AUTH_LOCATION();
         const params = {
             "page": values.page,
             "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
+            "filter[location]": LOCATION,
             "sort": "-created_at"
         }
         return axiosClient.get(url, { params })

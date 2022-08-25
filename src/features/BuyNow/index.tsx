@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Head from '../Head';
 import HeadMobile from '../HeadMobile';
@@ -24,15 +24,15 @@ import Footer from '../Footer';
 import { formatAddCart } from '../../utils/cart/formatAddCart';
 import useDeviceMobile from '../../utils/useDeviceMobile';
 import { DISCOUNT_TYPE } from '../../utils/formatRouterLink/fileType';
+import SectionTitle from '../SectionTitle';
 
 // ==== api tracking ====
-// import tracking from "../../api/trackApi";
-// import { formatProductList } from "../../utils/tracking";
+import tracking from "../../api/trackApi";
+import { formatProductList } from "../../utils/tracking";
 // end
 function BuyNow() {
     const IS_MB = useDeviceMobile();
     const location: any = useLocation();
-    console.log(location)
     const history = useHistory();
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const { payments_method } = useSelector(
@@ -86,7 +86,7 @@ function BuyNow() {
         products: productsPost,
         services: [],
         treatment_combo: [],
-        payment_method_id: payment_method_id,
+        payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
         coupon_code: [],
         description: "",
         user_address_id: address?.id
@@ -95,13 +95,13 @@ function BuyNow() {
         //setLoading(true)
         const params = pickBy(params_string, identity);
         try {
-            // const productsForTracking = products.map((i: any) => {
-            //     return {
-            //         ...i.product,
-            //         quantity: i.quantity
-            //     }
-            // })
-            // tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(productsForTracking))
+            const productsForTracking = products.map((i: any) => {
+                return {
+                    ...i.product,
+                    quantity: i.quantity
+                }
+            })
+            tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(productsForTracking))
             const response = await order.postOrder(org?.id, params);
             const state_payment = await response.data.context;
             const desc = await state_payment.payment_gateway.description;
@@ -125,9 +125,9 @@ function BuyNow() {
     const onClickPayment = () => {
         if (address) {
             if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
-                if (chooseE_wall) {
+                // if (chooseE_wall) {
                     handlePostOrder()
-                }
+                // }
             } else {
                 handlePostOrder()
             }
@@ -173,10 +173,29 @@ function BuyNow() {
                                 : { display: "none" }
                         }
                     >
-                        <PaymentMethodCpn
-                            e={chooseE_wall}
-                            onPaymentMethodChange={setChooseE_wall}
-                        />
+                        {
+                            FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX
+                                ?
+                                <>
+                                    <SectionTitle title={'Phương thức thanh toán'} />
+                                    <span style={{
+                                        backgroundColor: "var(--pink-momo)",
+                                        marginLeft: "12px",
+                                        marginBottom: "12px",
+                                        padding: "0px 8px",
+                                        borderRadius: "6px",
+                                        color: "var(--white)"
+                                    }}>
+                                        MOMO
+                                    </span>
+                                    <br/>
+                                </>
+                                :
+                                <PaymentMethodCpn
+                                    e={chooseE_wall}
+                                    onPaymentMethodChange={setChooseE_wall}
+                                />
+                        }
                     </div>
                     <div className="buy-now__total-cnt">
                         <div className="buy-now__total">

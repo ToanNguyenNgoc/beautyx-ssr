@@ -79,7 +79,6 @@ export default function DialogChangeInfo(props: any) {
         console.log(props);
     }
     
-    console.log(dataOtp)
     return (
         <>
             <Dialog open={open} onClose={() => setOpen(false)}>

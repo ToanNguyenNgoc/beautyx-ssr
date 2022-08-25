@@ -35,7 +35,7 @@ class ApointmentApi {
       page: 1,
       limit: 300,
       "filter[time_start]": time,
-      "filter[platform]": FLAT_FORM,
+      // "filter[platform]": FLAT_FORM,
       "append": "services",
       "include": "organization|order|branch",
       "sort": "-id"
