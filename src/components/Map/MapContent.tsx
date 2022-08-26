@@ -202,40 +202,42 @@ const MapContent = (props: IProps) => {
 			/>
 			<>
 				{isLoaded && (
-					<GoogleMap
-						id="searchbox-example"
-						onCenterChanged={onCenterChanged}
-						mapContainerClassName="google-map-view"
-						zoom={zoom}
-						onLoad={(map) => setMap(map)}
-						center={{
-							lat: local.lat,
-							lng: local.long,
-						}}
-					>
-						{LOCATION && (
-							<Marker
-								position={{
-									lat: parseFloat(LOCATION?.split(',')[0]),
-									lng: parseFloat(LOCATION?.split(',')[1]),
-								}}
-							></Marker>
-						)}
-						{orgs?.map((item: IOrganization, index: number) => (
-							<Marker
-								onClick={() => onMarkerClick(item, index)}
-								key={index}
-								icon={{ url: icon.pinMap }}
-								position={{ lat: item?.latitude, lng: item?.longitude }}
-							></Marker>
-						))}
-						{orgCenter && (
-							<InfoWindow position={{ lat: orgCenter?.latitude, lng: orgCenter?.longitude }}>
-								<img className="map-org-img-marker" src={orgCenter.image_url} alt="" />
-							</InfoWindow>
-						)}
-						{directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
-					</GoogleMap>
+					<>
+						<GoogleMap
+							id="searchbox-example"
+							onCenterChanged={onCenterChanged}
+							mapContainerClassName="google-map-view"
+							zoom={zoom}
+							onLoad={(map) => setMap(map)}
+							center={{
+								lat: local.lat,
+								lng: local.long,
+							}}
+						>
+							{LOCATION && (
+								<Marker
+									position={{
+										lat: parseFloat(LOCATION?.split(',')[0]),
+										lng: parseFloat(LOCATION?.split(',')[1]),
+									}}
+								></Marker>
+							)}
+							{orgs?.map((item: IOrganization, index: number) => (
+								<Marker
+									onClick={() => onMarkerClick(item, index)}
+									key={index}
+									icon={{ url: icon.pinMap }}
+									position={{ lat: item?.latitude, lng: item?.longitude }}
+								></Marker>
+							))}
+							{orgCenter && (
+								<InfoWindow position={{ lat: orgCenter?.latitude, lng: orgCenter?.longitude }}>
+									<img className="map-org-img-marker" src={orgCenter.image_url} alt="" />
+								</InfoWindow>
+							)}
+							{directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+						</GoogleMap>
+					</>
 				)}
 			</>
 			<div
