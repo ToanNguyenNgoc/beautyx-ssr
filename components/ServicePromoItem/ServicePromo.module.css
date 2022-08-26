@@ -170,4 +170,7 @@
 		height: 100%;
 		object-fit: cover;
 	}
+	.ser_name {
+		font-size: 13px;
+	}
 }
