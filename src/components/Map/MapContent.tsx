@@ -203,7 +203,7 @@ const MapContent = (props: IProps) => {
 			<>
 				{isLoaded && (
 					<>
-						<GoogleMap
+						{/* <GoogleMap
 							id="searchbox-example"
 							onCenterChanged={onCenterChanged}
 							mapContainerClassName="google-map-view"
@@ -236,7 +236,7 @@ const MapContent = (props: IProps) => {
 								</InfoWindow>
 							)}
 							{directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
-						</GoogleMap>
+						</GoogleMap> */}
 					</>
 				)}
 			</>
