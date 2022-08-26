@@ -30,11 +30,12 @@ import onErrorImg from "../../utils/errorImg";
 
 interface IProps {
     orgs: IOrganization[];
+    isDetail?: Boolean
 }
 
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
-    const { orgs } = props;
+    const { orgs, isDetail } = props;
     const mapRef = useRef<any>();
     const { orgCenter, getValueCenter, tags } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();
@@ -47,8 +48,8 @@ const MapContent = (props: IProps) => {
         check: false,
     });
     const [local,] = useState({
-        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
-        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
+        lat: isDetail ? orgs[0]?.latitude : LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
+        long: isDetail ? orgs[0]?.longitude : LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -336,7 +337,18 @@ const MapContent = (props: IProps) => {
             </div>
             {
                 IS_MB &&
-                <div className="map-list__mobile">
+                <div
+                    className={isDetail ? "map-list__mobile map" : "map-list__mobile"}
+                    style={
+                        isDetail ? {
+                            position: "fixed",
+                            width: "auto",
+                            height: "auto",
+                            left: 0,
+                            right: 0
+                        } : {}
+                    }
+                >
                     <Slider ref={slideRef} {...settings}>
                         {orgs.length > 0 && orgs.map((item: any, index: number) => (
                             <MapTagsItemMB

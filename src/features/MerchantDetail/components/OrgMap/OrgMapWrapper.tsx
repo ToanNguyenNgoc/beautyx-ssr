@@ -1,4 +1,5 @@
 import { Dialog } from "@mui/material";
+import MapContent from "../../../../components/Map/MapContent";
 import icon from "../../../../constants/icon";
 import useFullScreen from "../../../../utils/useDeviceMobile";
 import MapOrg from "./MapOrg";
@@ -26,7 +27,8 @@ export default function OrgMapWrapper(props: any) {
                         <img src={icon.closeCircleWhite} alt="" />
                     </div>
                 </div>
-                <MapOrg org={org} />
+                <MapContent orgs={[org]} isDetail={true} />
+                {/* <MapOrg org={org} /> */}
             </div>
         </Dialog>
     );
