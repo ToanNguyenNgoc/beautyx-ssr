@@ -66,75 +66,76 @@ const MapTagsGoogle = (props: any) => {
 		})
 	}
 	return (
-		<LoadScript googleMapsApiKey={`${key}`} libraries={['places', 'drawing']}>
-			<>
-				<GoogleMap
-					id="searchbox-example"
-					mapContainerClassName="google-map-view"
-					// mapContainerStyle={containerStyle}
-					// defaultOptions={defaultMapOptions}
-					zoom={zoom}
-					center={{
-						lat: location.lat,
-						lng: location.long,
-					}}
-				>
-					{/* <StandaloneSearchBox>
-                    <input
-                        type="text"
-                        placeholder="Customized your placeholder"
-                        style={{
-                            boxSizing: `border-box`,
-                            border: `1px solid transparent`,
-                            width: `240px`,
-                            height: `32px`,
-                            padding: `0 12px`,
-                            borderRadius: `3px`,
-                            boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                            fontSize: `14px`,
-                            outline: `none`,
-                            textOverflow: `ellipses`,
-                            position: "absolute",
-                            left: "50%",
-                            marginLeft: "-120px",
-                        }}
-                    />
-                </StandaloneSearchBox> */}
-					{LOCATION && (
-						<Marker
-							icon={{
-								url: icon.pinMapRed,
-							}}
-							position={{ lat: USER_LAT, lng: USER_LNG }}
-						>
-							{/* {
-                            <InfoWindow>
-                                <div className="tooltip tooltip-current">
-                                    Vị trí của bạn
-                                </div>
-                            </InfoWindow>
-                        } */}
-						</Marker>
-					)}
-					{org?.map((item: IOrganization, index: number) => (
-						<Marker
-							onClick={() => onMarkerClick(item, index)}
-							key={index}
-							icon={{
-								url: item?.latitude === location.lat ? icon.pinMapGreen : icon.pinMap,
-							}}
-							position={{ lat: item?.latitude, lng: item?.longitude }}
-						>
-							{/* {
-                            <InfoWindow>
-                                <div className="tooltip">{item?.name}</div>
-                            </InfoWindow>
-                        } */}
-						</Marker>
-					))}
-				</GoogleMap>
-			</>
-		</LoadScript>
+		<></>
+		// <LoadScript googleMapsApiKey={`${key}`} libraries={['places', 'drawing']}>
+		// 	<>
+		// 		<GoogleMap
+		// 			id="searchbox-example"
+		// 			mapContainerClassName="google-map-view"
+		// 			// mapContainerStyle={containerStyle}
+		// 			// defaultOptions={defaultMapOptions}
+		// 			zoom={zoom}
+		// 			center={{
+		// 				lat: location.lat,
+		// 				lng: location.long,
+		// 			}}
+		// 		>
+		// 			{/* <StandaloneSearchBox>
+		//             <input
+		//                 type="text"
+		//                 placeholder="Customized your placeholder"
+		//                 style={{
+		//                     boxSizing: `border-box`,
+		//                     border: `1px solid transparent`,
+		//                     width: `240px`,
+		//                     height: `32px`,
+		//                     padding: `0 12px`,
+		//                     borderRadius: `3px`,
+		//                     boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
+		//                     fontSize: `14px`,
+		//                     outline: `none`,
+		//                     textOverflow: `ellipses`,
+		//                     position: "absolute",
+		//                     left: "50%",
+		//                     marginLeft: "-120px",
+		//                 }}
+		//             />
+		//         </StandaloneSearchBox> */}
+		// 			{LOCATION && (
+		// 				<Marker
+		// 					icon={{
+		// 						url: icon.pinMapRed,
+		// 					}}
+		// 					position={{ lat: USER_LAT, lng: USER_LNG }}
+		// 				>
+		// 					{/* {
+		//                     <InfoWindow>
+		//                         <div className="tooltip tooltip-current">
+		//                             Vị trí của bạn
+		//                         </div>
+		//                     </InfoWindow>
+		//                 } */}
+		// 				</Marker>
+		// 			)}
+		// 			{org?.map((item: IOrganization, index: number) => (
+		// 				<Marker
+		// 					onClick={() => onMarkerClick(item, index)}
+		// 					key={index}
+		// 					icon={{
+		// 						url: item?.latitude === location.lat ? icon.pinMapGreen : icon.pinMap,
+		// 					}}
+		// 					position={{ lat: item?.latitude, lng: item?.longitude }}
+		// 				>
+		// 					{/* {
+		//                     <InfoWindow>
+		//                         <div className="tooltip">{item?.name}</div>
+		//                     </InfoWindow>
+		//                 } */}
+		// 				</Marker>
+		// 			))}
+		// 		</GoogleMap>
+		// 	</>
+		// </LoadScript>
 	)
 }
 // export default withScriptjs(withGoogleMap(MapTagsGoogle));
