@@ -83,14 +83,15 @@ const MapContent = (props: IProps) => {
             });
         }
     };
-
     const { totalItem, page } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
+    // console.log(totalItem, orgs.length)
     const onViewMoreOrgs = () => {
         if (
             location.pathname === "/ban-do" &&
             totalItem >= 15 &&
             orgs.length < totalItem
         ) {
+            console.log("call")
             dispatch(
                 fetchOrgsMapFilter({
                     page: page + 1,
