@@ -17,6 +17,7 @@ import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import OrgMapWrapper from "../../MerchantDetail/components/OrgMap/OrgMapWrapper";
 import { fakeOrgStar } from "../../../utils/format";
+import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     org: IOrganization;
@@ -33,7 +34,7 @@ function OrgItem(props: IProps) {
     const gotoDetail = () => {
         scrollTop();
         history.push({
-            pathname: `/org/${org.subdomain}`,
+            pathname: formatRouterLinkOrg(org.subdomain),
             state: org,
         });
     };

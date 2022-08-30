@@ -127,7 +127,7 @@ function RouterConfig(props: any) {
       component: <SignPageRequest />,
     },
     {
-      path: "/org/:subdomain",
+      path: "/cua-hang/:subdomain",
       component: <MerchantDetail />,
     },
     {

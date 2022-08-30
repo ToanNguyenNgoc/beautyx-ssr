@@ -16,6 +16,7 @@ import "../../../assets/styles/main.css";
 import "./homeBanner.css";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
+import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
 // end
 const PrevButton = (props: any) => {
     const { onClick } = props;
@@ -130,7 +131,7 @@ export default function HomeBanner() {
                     return console.log("PROMOTION");
                 case "ORGANIZATION":
                     return history.push({
-                        pathname: `/org/${chooseBanner.origin_id}`,
+                        pathname: formatRouterLinkOrg(chooseBanner.origin_id),
                     });
                 default:
                     break;
