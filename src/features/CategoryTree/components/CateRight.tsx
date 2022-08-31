@@ -15,6 +15,7 @@ import TabProduct2 from "./TabProduct2";
 import { Link } from "react-router-dom";
 // ==== api tracking ====
  import tracking from "../../../api/trackApi";
+import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
 // end
 function CateRight(props: any) {
     const { CATE, ORGS, catesChild, SERVICES, VALUE, PRODUCTS } = props;
@@ -92,7 +93,7 @@ function CateRight(props: any) {
                         <li key={index} className="cate-org__item">
                             <Link
                                 to={{
-                                    pathname: `/org/${item.subdomain}`,
+                                    pathname: formatRouterLinkOrg(item.subdomain),
                                     state: item,
                                 }}
                             >

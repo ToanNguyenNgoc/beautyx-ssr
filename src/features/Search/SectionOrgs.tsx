@@ -7,6 +7,7 @@ import { onSetTabResult } from "../../redux/search/searchResultSlice";
 import { AppContext } from "../../context/AppProvider";
 // ==== api tracking ====
  import tracking from "../../api/trackApi";
+import { formatRouterLinkOrg } from "../../utils/formatRouterLink/formatRouter";
 // end
 function SectionOrgs(props: any) {
     const { t } = useContext(AppContext);
@@ -59,7 +60,7 @@ function SectionOrgs(props: any) {
                             >
                                 <Link
                                     to={{
-                                        pathname: `/org/${item.subdomain}`,
+                                        pathname: formatRouterLinkOrg(item.subdomain),
                                     }}
                                     className="flex-column search-empty-item__list-item"
                                 >
