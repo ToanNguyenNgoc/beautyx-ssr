@@ -131,6 +131,10 @@ function RouterConfig(props: any) {
       component: <MerchantDetail />,
     },
     {
+      path: "/org/:subdomain",
+      component: <MerchantDetail />,
+    },
+    {
       path: '/deal-lam-dep-cuc-HOT',
       component: <HomePromo />
     },
