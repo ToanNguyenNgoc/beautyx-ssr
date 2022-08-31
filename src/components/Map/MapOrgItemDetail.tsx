@@ -51,7 +51,7 @@ export default function MapOrgItemDetail(props: IProps) {
 
     const handleGotoOrg = () => {
         history.push({
-            pathname: `/org/${org.subdomain}`,
+            pathname: `/cua-hang/${org.subdomain}`,
             state: org,
         });
     };

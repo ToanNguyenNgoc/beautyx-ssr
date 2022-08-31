@@ -22,7 +22,7 @@ function OrgItemMap(props: IProps) {
     }
     const gotoDetail = () => {
         history.push({
-            pathname: `/org/${org.subdomain}`,
+            pathname: `/cua-hang/${org.subdomain}`,
             search: `${org.id}`,
             state: org,
         })

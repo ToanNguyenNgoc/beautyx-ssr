@@ -84,7 +84,7 @@ function HomeBanner(props: any) {
                     });
                 case "ORGANIZATION":
                     return history.push({
-                        pathname: `/org/${chooseBanner.origin_id}`,
+                        pathname: `/cua-hang/${chooseBanner.origin_id}`,
                     });
                 default:
                     break;

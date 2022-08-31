@@ -70,7 +70,7 @@ function SectionEmpty() {
                             <li key={index}>
                                 <Link
                                     to={{
-                                        pathname: `/org/${item.subdomain}`,
+                                        pathname: `/cua-hang/${item.subdomain}`,
                                     }}
                                     onClick={() =>
                                         dispatch(onToggleSearchCnt(false))
