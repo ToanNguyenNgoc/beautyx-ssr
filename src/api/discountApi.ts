@@ -13,7 +13,7 @@ class Discounts {
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
             "filter[location]": LOCATION,
-            "sort": "-created_at"
+            "sort": "-priority|-created_at|discount_value"
         }
         return axiosClient.get(url, { params })
     }
@@ -24,7 +24,7 @@ class Discounts {
             "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
-            "sort": "discount_value|created_at",
+            "sort": "discount_value|-priority|-created_at",
             "filter[organization_id]": values.org_id
         }
         return axiosClient.get(url, { params })
