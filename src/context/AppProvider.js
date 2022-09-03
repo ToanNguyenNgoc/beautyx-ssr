@@ -16,7 +16,6 @@ import useGetMessageTiki from "../rootComponents/useGetMessageTiki";
 import { getPosition } from "../api/authLocation";
 import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
 
-
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
@@ -55,9 +54,9 @@ export default function AppProvider({ children }) {
     }, [sign, dispatch]);
     useEffect(() => {
         dispatch(fetchAsyncHome())
-        dispatch(fetchAsyncDiscounts({
-            page: 1
-        }))
+        // dispatch(fetchAsyncDiscounts({
+        //     page: 1
+        // }))
         dispatch(fetchAsyncNews());
         dispatch(fetchAsyncVideos());
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,8 +64,8 @@ export default function AppProvider({ children }) {
 
     //----------------------------------------------------------
     //get location plat form
-    const { mountNth } = useSelector((state) => state.ORGS_MAP.orgsMap)
-    const callOrgsByLocation = () => {
+    const { mountNth } = useSelector((state) => state.ORGS_MAP.orgsMap);
+    const callDisAndOrgsByLocation = () => {
         if (mountNth !== 2) {
             dispatch(fetchOrgsMapFilter({
                 page: 1,
@@ -75,6 +74,9 @@ export default function AppProvider({ children }) {
                 mountNth: 2
             }))
         }
+        dispatch(fetchAsyncDiscounts({
+            page: 1
+        }))
     }
     const getLocationPlatFormBeauty = async() => {
         try {
@@ -83,10 +85,10 @@ export default function AppProvider({ children }) {
                 lat: res.coords.latitude,
                 long: res.coords.longitude
             }
-            sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
-            callOrgsByLocation()
+            sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location));
+            callDisAndOrgsByLocation();
         } catch (error) {
-            callOrgsByLocation()
+            callDisAndOrgsByLocation();
         }
     }
     const getLocationPlatFormTiki = async() => {
@@ -111,9 +113,9 @@ export default function AppProvider({ children }) {
                         long: response.result?.res.longitude
                     }
                     sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location))
-                    callOrgsByLocation()
+                    callDisAndOrgsByLocation()
                 } else {
-                    callOrgsByLocation()
+                    callDisAndOrgsByLocation()
                 }
             }
             if (platform === FLAT_FORM_TYPE.BEAUTYX) {
