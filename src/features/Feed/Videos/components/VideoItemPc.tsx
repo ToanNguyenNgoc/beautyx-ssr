@@ -96,7 +96,7 @@ function VideoItemPc(props: any) {
         },[])
     // handle func
         const handleGoOrgDetail = () => {
-           alert('detail');
+        //    alert('detail');
         }
         const handleComment = (e: any) => {
             if (!user) {

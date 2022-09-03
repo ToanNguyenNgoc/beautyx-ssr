@@ -15,11 +15,13 @@ import { FLAT_FORM_TYPE } from "../rootComponents/flatForm";
 import useGetMessageTiki from "../rootComponents/useGetMessageTiki";
 import { getPosition } from "../api/authLocation";
 import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
+import { STATUS } from "../redux/status";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
     const dispatch = useDispatch();
+    const {DISCOUNTS} = useSelector((state) => state.HOME);
     const lg = localStorage.getItem("i18nextLng");
     const [language, setLanguage] = useState(
         (lg === "en-US" || lg === "en")? "en" : "vn"
@@ -74,7 +76,7 @@ export default function AppProvider({ children }) {
                 mountNth: 2
             }))
         }
-        dispatch(fetchAsyncDiscounts({
+        (DISCOUNTS.status_discount !== STATUS.SUCCESS)&&dispatch(fetchAsyncDiscounts({
             page: 1
         }))
     }

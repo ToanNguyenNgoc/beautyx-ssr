@@ -87,7 +87,7 @@ export function doPostMakePaymentMessageMB(res:IPaymentProps) {
             },
         }))
     } catch (e) {
-        alert(e);
+        // alert(e);
     }
 }
 /**
@@ -102,7 +102,7 @@ export function exitMbMiniApp (){
         }));
     }
     catch(e){
-        alert(e)
+        // alert(e)
     }
 }
 /**
@@ -121,7 +121,7 @@ export function exitMbMiniApp (){
         }));
     }
     catch(e){
-        alert(e)
+        // alert(e)
     }
 }
 export default doPostMakePaymentMessageMB;
