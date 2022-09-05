@@ -226,7 +226,17 @@ const MapContent = (props: IProps) => {
     };
 
     return (
-        <div className="map-content">
+        <div
+            style={
+                platform === "BEAUTYX" && IS_MB === true
+                    ? {
+                          width: "100vw",
+                          height: "90vh",
+                      }
+                    : { width: "100vw", height: "100vh" }
+            }
+            className="map-content"
+        >
             {/* map */}
             <MapOrgFilter
                 slideRef={slideRef}
@@ -245,7 +255,7 @@ const MapContent = (props: IProps) => {
                         platform === "BEAUTYX" && IS_MB === true
                             ? {
                                   width: "100vw",
-                                  height: "80vh",
+                                  height: "90vh",
                               }
                             : { width: "100vw", height: "100vh" }
                     }
