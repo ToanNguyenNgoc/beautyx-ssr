@@ -18,26 +18,32 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 import _, { debounce } from "lodash";
 import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
-import MapCurrentUser from './MapCurrentUser'
+import MapCurrentUser from "./MapCurrentUser";
 import IStore from "../../interface/IStore";
-import { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
+import {
+    Marker,
+    NavigationControl,
+    GeolocateControl,
+    GeolocateResultEvent,
+} from "react-map-gl";
 import MapGL from "react-map-gl";
-import 'mapbox-gl/dist/mapbox-gl.css';
+import "mapbox-gl/dist/mapbox-gl.css";
 import onErrorImg from "../../utils/errorImg";
+import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
+
 // import MapDirection from './MapDirection';
-
-
-
 interface IProps {
     orgs: IOrganization[];
-    isDetail?: Boolean
+    isDetail?: Boolean;
 }
 
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
     const { orgs, isDetail } = props;
     const mapRef = useRef<any>();
-    const { orgCenter, getValueCenter, tags } = useSelector((state: IStore) => state.ORGS_MAP)
+    const { orgCenter, getValueCenter, tags } = useSelector(
+        (state: IStore) => state.ORGS_MAP
+    );
     const location = useLocation();
     const LOCATION = AUTH_LOCATION();
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
@@ -47,9 +53,18 @@ const MapContent = (props: IProps) => {
         open: false,
         check: false,
     });
-    const [local,] = useState({
-        lat: isDetail ? orgs[0]?.latitude : LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
-        long: isDetail ? orgs[0]?.longitude : LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
+    const platform = EXTRA_FLAT_FORM();
+    const [local] = useState({
+        lat: isDetail
+            ? orgs[0]?.latitude
+            : LOCATION
+            ? parseFloat(LOCATION?.split(",")[0])
+            : orgs[0]?.latitude,
+        long: isDetail
+            ? orgs[0]?.longitude
+            : LOCATION
+            ? parseFloat(LOCATION?.split(",")[1])
+            : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -83,7 +98,9 @@ const MapContent = (props: IProps) => {
             });
         }
     };
-    const { totalItem, page } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
+    const { totalItem, page } = useSelector(
+        (state: any) => state.ORGS_MAP.orgsMap
+    );
     // console.log(totalItem, orgs.length)
     const onViewMoreOrgs = () => {
         if (
@@ -91,26 +108,26 @@ const MapContent = (props: IProps) => {
             totalItem >= 15 &&
             orgs.length < totalItem
         ) {
-            console.log("call")
+            console.log("call");
             dispatch(
                 fetchOrgsMapFilter({
                     page: page + 1,
                     sort: "distance",
                     path_url: location.pathname,
                     mountNth: 2,
-                    tags: tags.join("|")
+                    tags: tags.join("|"),
                 })
             );
         }
     };
     const onPanTo = (lat: number, lng: number) => {
-        mapRef?.current?.panTo([lng, lat])
-    }
+        mapRef?.current?.panTo([lng, lat]);
+    };
     const onFlyTo = (lat: number, lng: number) => {
         mapRef?.current?.flyTo({
-            center: [lng, lat]
-        })
-    }
+            center: [lng, lat],
+        });
+    };
     const onGotoSlickOrgItem = (index: number) => {
         slideRef?.current?.slickGoTo(index);
     };
@@ -126,12 +143,12 @@ const MapContent = (props: IProps) => {
         centerMode: true,
         afterChange: function (index: any) {
             if (index === orgs.length - 3) {
-                onViewMoreOrgs()
+                onViewMoreOrgs();
             }
             if (mapRef?.current.getZoom() < 15) {
-                mapRef?.current.setZoom(15)
+                mapRef?.current.setZoom(15);
             }
-            onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude)
+            onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude);
         },
     };
     // useEffect(() => {
@@ -148,10 +165,10 @@ const MapContent = (props: IProps) => {
     // }, [orgs.length, getValueCenter])
     const onMarkerClick = (item: IOrganization, index?: number) => {
         if (mapRef?.current.getZoom() < 15) {
-            mapRef?.current.setZoom(15)
+            mapRef?.current.setZoom(15);
         }
         dispatch(fetchAsyncOrg(item.subdomain));
-        dispatch(onSetOrgCenter(item))
+        dispatch(onSetOrgCenter(item));
         if (IS_MB && index && onGotoSlickOrgItem) {
             onGotoSlickOrgItem(index);
         }
@@ -160,25 +177,30 @@ const MapContent = (props: IProps) => {
             open: true,
             check: true,
         });
-        onPanTo(item.latitude, item.longitude)
+        onPanTo(item.latitude, item.longitude);
     };
 
     const handleBackCurrentUser = () => {
         if (LOCATION) {
             dispatch(onSetOrgsMapEmpty());
-            dispatch(fetchOrgsMapFilter({
-                page: 1,
-                sort: "distance",
-                mountNth: 2
-            }))
-            onFlyTo(parseFloat(LOCATION?.split(",")[0]), parseFloat(LOCATION?.split(",")[1]))
+            dispatch(
+                fetchOrgsMapFilter({
+                    page: 1,
+                    sort: "distance",
+                    mountNth: 2,
+                })
+            );
+            onFlyTo(
+                parseFloat(LOCATION?.split(",")[0]),
+                parseFloat(LOCATION?.split(",")[1])
+            );
         }
-    }
+    };
 
     const debounceOrgsMove = useCallback(
         debounce((latLng: string, orgsLength: number, tags: string[]) => {
             if (orgsLength === 105) {
-                dispatch(onSetOrgsMapEmpty())
+                dispatch(onSetOrgsMapEmpty());
             }
             // dispatch(onSetOrgsMapEmpty())
             dispatch(
@@ -186,23 +208,22 @@ const MapContent = (props: IProps) => {
                     page: 1,
                     LatLng: latLng,
                     mountNth: 2,
-                    tags: tags.join("|")
+                    tags: tags.join("|"),
                 })
             );
         }, 500),
         []
     );
     const onCenterChange = () => {
-        const lat = mapRef?.current?.getCenter()?.lat
-        const lng = mapRef?.current?.getCenter()?.lng
+        const lat = mapRef?.current?.getCenter()?.lat;
+        const lng = mapRef?.current?.getCenter()?.lng;
         if (getValueCenter) {
-            debounceOrgsMove(`${lat},${lng}`, orgs.length, tags)
+            debounceOrgsMove(`${lat},${lng}`, orgs.length, tags);
         }
-    }
+    };
     const currentUser = (e: GeolocateResultEvent) => {
-        handleBackCurrentUser()
-    }
-
+        handleBackCurrentUser();
+    };
 
     return (
         <div className="map-content">
@@ -214,30 +235,31 @@ const MapContent = (props: IProps) => {
                 openDetail={openDetail}
                 setOpenDetail={setOpenDetail}
             />
-            <MapCurrentUser
-                handleBackCurrentUser={handleBackCurrentUser}
-            />
+            <MapCurrentUser handleBackCurrentUser={handleBackCurrentUser} />
             {
                 <MapGL
                     // onViewportChange={onCenterChange}
                     onMouseMove={onCenterChange}
                     onTouchMove={onCenterChange}
-                    style={{
-                        width: "100vw",
-                        height: "100vh"
-                    }}
+                    style={
+                        platform === "BEAUTYX" && IS_MB === true
+                            ? {
+                                  width: "100vw",
+                                  height: "80vh",
+                              }
+                            : { width: "100vw", height: "100vh" }
+                    }
                     initialViewState={{
                         latitude: local.lat,
                         longitude: local.long,
-                        zoom: 16
+                        zoom: 16,
                     }}
                     attributionControl={true}
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                     mapStyle="mapbox://styles/mapbox/streets-v10"
                     ref={mapRef}
-                // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
+                    // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
-
                     <NavigationControl
                         position="bottom-right"
                         showZoom={true}
@@ -247,42 +269,43 @@ const MapContent = (props: IProps) => {
                         position="bottom-right"
                         onGeolocate={currentUser}
                     />
-                    {
-                        LOCATION &&
+                    {LOCATION && (
                         <Marker
                             latitude={parseFloat(LOCATION?.split(",")[0])}
                             longitude={parseFloat(LOCATION?.split(",")[1])}
                         >
                             <img
                                 onError={(e) => onErrorImg(e)}
-                                style={{ width: "42px" }} src={icon.pinMapRedGoogle} alt=""
+                                style={{ width: "42px" }}
+                                src={icon.pinMapRedGoogle}
+                                alt=""
                             />
                         </Marker>
-                    }
-                    {
-                        orgs.map((item: IOrganization, index: number) => (
-                            <Marker
-                                onClick={() => onMarkerClick(item, index)}
-                                key={index}
-                                latitude={item.latitude}
-                                longitude={item.longitude}
+                    )}
+                    {orgs.map((item: IOrganization, index: number) => (
+                        <Marker
+                            onClick={() => onMarkerClick(item, index)}
+                            key={index}
+                            latitude={item.latitude}
+                            longitude={item.longitude}
+                        >
+                            <div
+                                style={
+                                    item.id === orgCenter?.id
+                                        ? { transform: "scale(1.2)" }
+                                        : {}
+                                }
+                                className="map-marker-org"
                             >
-                                <div
-                                    style={
-                                        item.id === orgCenter?.id ? { transform: "scale(1.2)" } : {}
-                                    }
-                                    className="map-marker-org"
-                                >
-                                    <img
-                                        src={item.image_url}
-                                        alt=""
-                                        className="map-marker-org__img"
-                                        onError={(e) => onErrorImg(e)}
-                                    />
-                                </div>
-                            </Marker>
-                        ))
-                    }
+                                <img
+                                    src={item.image_url}
+                                    alt=""
+                                    className="map-marker-org__img"
+                                    onError={(e) => onErrorImg(e)}
+                                />
+                            </div>
+                        </Marker>
+                    ))}
                 </MapGL>
             }
             <div
@@ -316,7 +339,7 @@ const MapContent = (props: IProps) => {
                             org={org}
                             setOpenDetail={setOpenDetail}
                             openDetail={openDetail}
-                        // handleDirection={handleDirection}
+                            // handleDirection={handleDirection}
                         />
                     ) : null}
                     <div
@@ -336,30 +359,32 @@ const MapContent = (props: IProps) => {
                     </div>
                 </div>
             </div>
-            {
-                IS_MB &&
+            {IS_MB && (
                 <div
-                    className={isDetail ? "map-list__mobile map" : "map-list__mobile"}
+                    className={
+                        isDetail ? "map-list__mobile map" : "map-list__mobile"
+                    }
                     style={
-                        isDetail ? {
-                            position: "fixed",
-                            width: "auto",
-                            height: "auto",
-                            left: 0,
-                            right: 0
-                        } : {}
+                        isDetail
+                            ? {
+                                  position: "fixed",
+                                  width: "auto",
+                                  height: "auto",
+                                  left: 0,
+                                  right: 0,
+                              }
+                            : {}
                     }
                 >
                     <Slider ref={slideRef} {...settings}>
-                        {orgs.length > 0 && orgs.map((item: any, index: number) => (
-                            <MapTagsItemMB
-                                key={index} item={item}
-                            />
-                        ))}
+                        {orgs.length > 0 &&
+                            orgs.map((item: any, index: number) => (
+                                <MapTagsItemMB key={index} item={item} />
+                            ))}
                     </Slider>
                 </div>
-            }
+            )}
         </div>
     );
-}
-export default MapContent
+};
+export default MapContent;
