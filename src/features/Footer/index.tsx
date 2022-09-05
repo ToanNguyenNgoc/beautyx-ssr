@@ -388,10 +388,10 @@ function Footer() {
                     {t("footer.address_company")}
                 </div>
                 <div className="footer-copy-right">
-                   {t("footer.policy")}
+                    {t("footer.policy")}
                 </div>
                 <div className="footer-copy-right">
-                    © Copyright Myspa | ProductX teams.
+                    © 2018 Copyright Myspa | ProductX teams.
                 </div>
             </Container>
         </div>

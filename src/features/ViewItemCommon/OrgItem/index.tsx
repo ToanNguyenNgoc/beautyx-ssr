@@ -15,7 +15,6 @@ import {
 import { onToggleFavoriteOrg } from "../../../redux/search/searchResultSlice";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
-import OrgMapWrapper from "../../MerchantDetail/components/OrgMap/OrgMapWrapper";
 import { fakeOrgStar } from "../../../utils/format";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
 
@@ -283,11 +282,6 @@ function OrgItem(props: IProps) {
                     </div>
                 </div>
             </Drawer>
-            <OrgMapWrapper
-                open={openPopupMap}
-                setOpen={setOpenPopupMap}
-                org={org}
-            />
         </>
     );
 }

@@ -120,7 +120,7 @@ export default function DialogChangeInfo(props: any) {
                                     style={{ fontSize: "10px" }}
                                     className="err-text"
                                 >
-                                    {formik.errors.fullname}
+                                    Vui lòng nhập Họ và tên
                                 </p>
                             )}
                         </div>

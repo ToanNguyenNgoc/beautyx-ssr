@@ -96,7 +96,7 @@ function MenuSideBar(props: info) {
             <b>{USER?.fullname}</b>
           </p>
           <div className="other_stuff text-bold quicksand-md">
-            <div className="point">
+            {/* <div className="point">
               <img src={icon.Ticket} alt="" />
               <div className="content">
                 <span className="quicksand-sm text-color-grey">
@@ -104,7 +104,7 @@ function MenuSideBar(props: info) {
                 </span>
                 <span>{data.point}</span>
               </div>
-            </div>
+            </div> */}
             <div className="amount">
               <img src={icon.Wallet} alt="" />
               <div className="content">

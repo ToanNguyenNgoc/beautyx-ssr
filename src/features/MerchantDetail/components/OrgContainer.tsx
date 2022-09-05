@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef } from "react";
 import { IOrganization } from "../../../interface/organization";
 import { onActiveTab } from "../../../redux/org/orgSlice";
@@ -51,6 +52,16 @@ function OrgContainer(props: IProps) {
             { id: 6, title: t("Mer_de.galleries") },
         ]
     }
+    if (org.is_momo_ecommerce_enable === false) {
+        tabs = [
+            { id: 5, title: is_mb ? t("app.details") : t("pr.merchant_detail") },
+            { id: 6, title: `${t("Mer_de.feedback")} (${totalItem > 30 ? "30+" : totalItem})` },
+            { id: 7, title: t("Mer_de.galleries") },
+        ]
+    }
+    useEffect(() => {
+        if (org.is_momo_ecommerce_enable === false) dispatch(onActiveTab(5))
+    }, [org.is_momo_ecommerce_enable])
     // end 
     if (is_mb === false) {
         tabs = tabs.filter((item: any) => item.id !== 6);
