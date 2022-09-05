@@ -5,6 +5,7 @@ node_modules/
 
 dist/
 .history
+.prettierrc
 # Compiled Java class files
 *.class
 

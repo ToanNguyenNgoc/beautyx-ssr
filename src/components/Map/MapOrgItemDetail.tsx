@@ -100,12 +100,16 @@ export default function MapOrgItemDetail(props: IProps) {
                     <span className="content-head__name">{org?.name}</span>
                     <img
                         className="cursor-pointer"
-                        onClick={() =>
+                        onClick={() => {
+                            openDetail.open ? 
                             setOpenDetail({
                                 ...openDetail,
                                 open: false,
                                 check: false,
                             })
+                            :
+                            setOpenDetail(false)
+                        }
                         }
                         src={icon.x}
                         alt=""
@@ -222,7 +226,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                     {time_works_today?.status && (
                                         <>
                                             {time_works_today?.status ===
-                                            "on" ? (
+                                                "on" ? (
                                                 <p
                                                     style={{
                                                         color: "var(--green)",
@@ -265,8 +269,8 @@ export default function MapOrgItemDetail(props: IProps) {
                                                     style={
                                                         index + 2 === today
                                                             ? {
-                                                                  color: "var(--purple)",
-                                                              }
+                                                                color: "var(--purple)",
+                                                            }
                                                             : {}
                                                     }
                                                     key={index}

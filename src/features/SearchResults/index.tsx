@@ -122,9 +122,6 @@ function SearchResults(props: any) {
         callProductsByKeyword();
     }, [searchKey]);
     const [openFilter, setOpenFilter] = useState(false);
-    const onActiveTab = useCallback((tab) => {
-        dispatch(onSetTabResult(tab.id));
-    }, []);
 
     const handleApplyFilterOrgs = () => {
         setOpenFilter(false);

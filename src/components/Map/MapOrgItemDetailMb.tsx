@@ -4,16 +4,22 @@ import MapOrgItemDetail from './MapOrgItemDetail';
 import { IOrganization } from '../../interface/organization';
 
 interface IProps {
-    open: boolean
-    setOpen: (open: boolean) => void,
+    // open: IOpenState,
+    open: boolean,
+    setOpen: any,
     org: IOrganization,
     handleDirection?:() => void
 }
-
+interface IOpenState {
+    open: boolean,
+    check: boolean
+}
 function MapOrgItemDetailMb(props: IProps) {
     const { open, setOpen, org, handleDirection } = props
     return (
         <Drawer
+            // open={open.open}
+            // onClose={() => setOpen({...open,open:false})}
             open={open}
             onClose={() => setOpen(false)}
             anchor={"bottom"}

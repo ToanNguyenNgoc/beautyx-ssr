@@ -5,7 +5,6 @@ import onErrorImg from "../../../../utils/errorImg";
 import icon from "../../../../constants/icon";
 import WrapperMap from "../../../Map/MapWarraper/WrapperMap";
 import { extraOrgTimeWork } from "../Functions/extraOrg";
-import OrgMapWrapper from "../OrgMap/OrgMapWrapper";
 import { AppContext } from "../../../../context/AppProvider";
 
 interface IProps {
@@ -257,11 +256,6 @@ function OrgInformation(props: IProps) {
                     </li>
                 </ul>
             </div>
-            <OrgMapWrapper
-                open={openPopupSeemoreMap}
-                setOpen={setOpenPopupSeemoreMap}
-                org={org}
-            />
         </div>
     );
 }

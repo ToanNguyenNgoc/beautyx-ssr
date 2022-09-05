@@ -21,6 +21,7 @@ export default function MapTagsItemMB(props: IProps) {
     const [open, setOpen] = useState(false);
     const history = useHistory();
     const gotoDetail = () => {
+        // setOpen({...open,open:true})
         setOpen(true)
         dispatch(fetchAsyncOrg(item.subdomain));
         // history.push({
@@ -91,10 +92,10 @@ export default function MapTagsItemMB(props: IProps) {
                                 {formatDistance(item.distance)}
                             </div>
                             )}*/}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </>
     );
 }
