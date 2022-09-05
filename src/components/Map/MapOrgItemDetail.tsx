@@ -101,11 +101,14 @@ export default function MapOrgItemDetail(props: IProps) {
                     <img
                         className="cursor-pointer"
                         onClick={() => {
+                            openDetail.open ? 
                             setOpenDetail({
                                 ...openDetail,
                                 open: false,
                                 check: false,
                             })
+                            :
+                            setOpenDetail(false)
                         }
                         }
                         src={icon.x}

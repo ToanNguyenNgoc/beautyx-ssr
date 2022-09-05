@@ -18,13 +18,11 @@ export default function MapTagsItemMB(props: IProps) {
     const { item, handleDirection } = props;
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
     const dispatch = useDispatch();
-    const [open, setOpen] = useState({
-        open: false,
-        check: false
-    });
+    const [open, setOpen] = useState(false);
     const history = useHistory();
     const gotoDetail = () => {
-        setOpen({...open,open:true})
+        // setOpen({...open,open:true})
+        setOpen(true)
         dispatch(fetchAsyncOrg(item.subdomain));
         // history.push({
         //     pathname: `/org/${item.subdomain}`,
