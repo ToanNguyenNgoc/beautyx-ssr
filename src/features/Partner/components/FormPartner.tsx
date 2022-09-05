@@ -21,7 +21,7 @@ export default function FormPartner() {
     const [popup, setPopup] = useState(false);
     const params = new URLSearchParams();
     const [captcha, setCaptcha] = useState("");
-    const verifyRecaptchaCallback = React.useCallback((token) => {
+    const verifyRecaptchaCallback = React.useCallback((token:any) => {
         setCaptcha(token);
         console.log(token)
     }, []);

@@ -16,8 +16,7 @@ import { extraOrgTimeWork } from "./Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
 import { STATUS } from "../../../redux/status";
 import { onToggleOpenChat } from "../../../redux/chat/chatOrgSlice";
-import OrgMapWrapper from "./OrgMap/OrgMapWrapper";
-import {IOrgMobaGalleries} from "../../../interface/IOrgMobaGalleries"
+import { IOrgMobaGalleries } from "../../../interface/IOrgMobaGalleries"
 
 interface IProps {
     org: IOrganization;
@@ -248,8 +247,8 @@ function OrgDetail(props: IProps) {
                                                         <>
                                                             <span className="re-change-map-total">
                                                                 {org?.branches.length}{" "}
-                                                        CN
-                                                    </span>
+                                                                CN
+                                                            </span>
                                                         </>
                                                     ) : null}
                                                 </div>
@@ -446,11 +445,6 @@ function OrgDetail(props: IProps) {
                     </div>
                 </div>
             </Drawer>
-            <OrgMapWrapper
-                open={openPopupMap}
-                setOpen={setOpenPopupMap}
-                org={org}
-            />
         </div>
     );
 }

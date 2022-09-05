@@ -21,7 +21,6 @@ import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import PaymentMethodCpn from "../PaymentMethod/index";
 import { formatDatePost } from "../../utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
-import MapOrg from "../MerchantDetail/components/OrgMap/MapOrg";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "../../utils/cart/formatAddCart";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
@@ -305,10 +304,7 @@ function Booking() {
                     <div className="booking-cnt">
                         <div className="booking-cnt__left">
                             {IS_MB === false && org && (
-                                <MapOrg
-                                    onChangeCardMap={onChangeCardMap}
-                                    org={org}
-                                />
+                                <></>
                             )}
                         </div>
                         <div className="booking-cnt__right">
