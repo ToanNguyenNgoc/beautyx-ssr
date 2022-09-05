@@ -18,10 +18,13 @@ export default function MapTagsItemMB(props: IProps) {
     const { item, handleDirection } = props;
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({
+        open: false,
+        check: false
+    });
     const history = useHistory();
     const gotoDetail = () => {
-        setOpen(true)
+        setOpen({...open,open:true})
         dispatch(fetchAsyncOrg(item.subdomain));
         // history.push({
         //     pathname: `/org/${item.subdomain}`,
@@ -91,10 +94,10 @@ export default function MapTagsItemMB(props: IProps) {
                                 {formatDistance(item.distance)}
                             </div>
                             )}*/}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </>
     );
 }
