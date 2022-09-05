@@ -4,6 +4,7 @@ export const getPosition = (options?: PositionOptions) => {
     );
 }
 
+
 // export const GET_LOCATION_BEAUTY = () => {
 //     let load;
 //     navigator.geolocation.getCurrentPosition(function (position) {

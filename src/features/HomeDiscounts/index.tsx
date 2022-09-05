@@ -26,7 +26,7 @@ function HomeDiscount() {
         <div className="home-discounts">
             <Container>
                 <div className="flex-row-sp home-discounts__title">
-                    <span>{t("home_2.hot_promotion")}</span>
+                    <h2>{t("home_2.hot_promotion")}</h2>
                     <span onClick={onViewMore}>
                         {t("trending.watch_all")} {">"}
                     </span>
