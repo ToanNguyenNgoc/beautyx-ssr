@@ -120,7 +120,7 @@ export default function AppProvider({ children }) {
                     callDisAndOrgsByLocation()
                 }
             }
-            if (platform === FLAT_FORM_TYPE.BEAUTYX) {
+            if (platform === FLAT_FORM_TYPE.BEAUTYX || platform === FLAT_FORM_TYPE.MOMO) {
                 getLocationPlatFormBeauty()
             }
         }, 1000)
