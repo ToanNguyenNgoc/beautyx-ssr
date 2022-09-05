@@ -76,12 +76,16 @@
 }
 
 .home-tags .tag-item-cnt>.tag-item-title {
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 700;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
     color: var(--text-black);
-    text-align: center;
-    text-transform: capitalize;
+    font-weight: 700;
+    display: -webkit-box;
+    font-size: 12px;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 .home-tags .tag-item-cnt:hover>.tag-item-title {
