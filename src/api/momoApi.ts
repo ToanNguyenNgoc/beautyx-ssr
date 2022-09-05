@@ -125,7 +125,7 @@ class MOMO_API {
     }
     getLocation = () => {
         MOMO.getLocation((data:any) => {
-            alert(JSON.stringify([data]))
+            // alert(JSON.stringify([data]))
             return {data:data}
         })
     };

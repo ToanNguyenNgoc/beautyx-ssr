@@ -33,11 +33,12 @@ export function doPostMakePaymentMessageTiki(params) {
                 }
             },
             success: function () {
-                alert('alo');
+                // alert('alo');
             }
         });
     } catch (e) {
-        alert(e);
+        // alert(e);
+        console.log(e)
     }
 }
 /**
@@ -60,8 +61,9 @@ export async function callApiFromTiki(api, params) {
                 response: params
             }
         },
-        success: function () {
-            alert('alo');
+        success: function (e) {
+            // alert('alo');
+            console.log(e)
         }
     });
 }

@@ -3,16 +3,17 @@ import { Link } from "react-router-dom";
 import { AppContext } from "../../../context/AppProvider";
 import { imgTag } from "../../../constants/img";
 import icon from "../../../constants/icon";
-import { useSelector } from "react-redux";
-import { ITag } from "../../../interface/tags";
+// import { useSelector } from "react-redux";
+// import { ITag } from "../../../interface/tags";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
 
 function HomeTags(props: any) {
     //const history = useHistory();
-    const { t } = useContext(AppContext);
-    const tagsList: ITag[] = useSelector((state: any) => state.HOME.tags);
-    const tags = tagsList.filter(e => e.children && e.children?.length > 0 && e.organizations_count > 0);
+    const { t, geo } = useContext(AppContext);
+    // console.log(geo)
+    // const tagsList: ITag[] = useSelector((state: any) => state.HOME.tags);
+    // const tags = tagsList.filter(e => e.children && e.children?.length > 0 && e.organizations_count > 0);
     // console.log(t)
     const tags_data = [
         // { id: 9, title: t("home_2.places_near_you"), text: t("home_2.places_near_you"), img: icon.distance },
@@ -51,6 +52,7 @@ function HomeTags(props: any) {
     //         search: `${tag}`,
     //     });
     // };
+    const currentAddress = geo?.properties?.address ?? `${geo?.context[0]?.text_vi},${geo?.context[1]?.text_vi}`
     return (
         <>
             {/* <div className="home-title__tag">
@@ -67,11 +69,46 @@ function HomeTags(props: any) {
                             }}
                             onClick={() => scrollTop()}
                             className="flex-column tag-item-cnt">
+                            {/* {
+                                geo
+                                    ?
+                                    <div className="tag-item-title"
+                                        style={{
+                                            padding: "20px 4px"
+                                        }}
+                                    >
+                                        <img
+                                            // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                            src={icon.locationCate}
+                                            style={{
+                                                width: "15px",
+                                                height: "15px",
+                                                margin: 0,
+                                                marginRight: '4px',
+                                                display: "inline-block"
+                                            }}
+                                            onError={(e) => onErrorImg(e)} alt="" />
+                                        {geo ? currentAddress : "Gần bạn"}
+                                    </div>
+                                    :
+                                    <>
+                                        <img
+                                            // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                            src={icon.locationCate}
+                                            onError={(e) => onErrorImg(e)} alt="" />
+                                        <div className="tag-item-title">
+                                        {geo ? currentAddress : "Gần bạn"}
+                                        </div>
+                                    </>
+
+                            } */}
                             <img
                                 // src={item.img.length > 0 ? item.img[0].original_url : ""} 
                                 src={icon.locationCate}
                                 onError={(e) => onErrorImg(e)} alt="" />
-                            <div className="tag-item-title">Gần bạn</div>
+                            <div className="tag-item-title">
+                                {geo ? currentAddress : "Gần bạn"}
+                            </div>
                         </Link>
                     </li>
                     {tags_data.map((item) => (

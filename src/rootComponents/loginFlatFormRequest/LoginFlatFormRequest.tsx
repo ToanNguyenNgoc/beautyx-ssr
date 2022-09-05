@@ -81,7 +81,7 @@ function LoginFlatFormRequest(props: any) {
             // alert('handleLoginMomo');
             handleGetUserInfoMomo({ fetchAsyncUserAndinitApp, setLoad });
         } catch (err) {
-            alert(JSON.stringify(err));
+            // alert(JSON.stringify(err));
             setLoad(false);
         }
     };
@@ -92,7 +92,7 @@ function LoginFlatFormRequest(props: any) {
                 token: session,
             })
         );
-        alert("handleLoginMB!");
+        // alert("handleLoginMB!");
         if (res.meta.requestStatus === EXTRA_REDUCER_STATUS.FULFILLED) {
             fetchAsyncUserAndinitApp();
         } else if (res.meta.requestStatu === EXTRA_REDUCER_STATUS.REJECTED) {
