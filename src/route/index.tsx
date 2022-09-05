@@ -54,6 +54,7 @@ import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
 
 import MapBox from "../features/MapBeta";
+import { analytics } from "../firebase";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -62,8 +63,8 @@ function RouterConfig(props: any) {
   const USER = useSelector((state: any) => state.USER);
   const routes = [
     {
-      path:'/map-box',
-      component: <MapBox/>
+      path: '/map-box',
+      component: <MapBox />
     },
     {
       path: `/home`,
@@ -124,6 +125,10 @@ function RouterConfig(props: any) {
     {
       path: "/sign-request",
       component: <SignPageRequest />,
+    },
+    {
+      path: "/cua-hang/:subdomain",
+      component: <MerchantDetail />,
     },
     {
       path: "/org/:subdomain",
@@ -198,12 +203,12 @@ function RouterConfig(props: any) {
       component: <Result />
     },
     {
-      path:"/ban-do",
-      component:<HomeMap/>
+      path: "/ban-do",
+      component: <HomeMap />
     },
     {
-      path:"*",
-      component: <PageNotFound/>
+      path: "*",
+      component: <PageNotFound />
     }
   ];
   const routesPrivate = [
@@ -240,10 +245,15 @@ function RouterConfig(props: any) {
       component: Carts
     },
     {
-      path:"/chat",
+      path: "/chat",
       component: ChatAll
     }
   ];
+  analytics.logEvent('page_view', {
+    page_title: document.title,
+    page_path: window.location.pathname,
+    page_location: window.location.href
+  });
   return (
     <BrowserRouter>
       <Switch>

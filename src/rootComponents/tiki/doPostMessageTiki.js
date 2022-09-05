@@ -9,7 +9,6 @@
 //       }
 //     }
 //   }
-const callbacks = {};
 /**
  * @name makePayment
  * @description Post order id to tini app for makePayment().
@@ -48,11 +47,9 @@ export function doPostMakePaymentMessageTiki(params) {
  * 
  * @returns {string} response
  */
-export function callApiFromTiki(api,params) {
+export async function callApiFromTiki(api, params) {
     const requestId =
-        new Date().getTime() +
-        '' +
-        Math.floor(Math.random() * 1000000);
+        new Date().getTime() + '' + Math.floor(Math.random() * 1000000);
     // eslint-disable-next-line no-undef
     my?.postMessage({
         requestId: requestId,
@@ -67,6 +64,5 @@ export function callApiFromTiki(api,params) {
             alert('alo');
         }
     });
-
 }
 export default doPostMakePaymentMessageTiki;

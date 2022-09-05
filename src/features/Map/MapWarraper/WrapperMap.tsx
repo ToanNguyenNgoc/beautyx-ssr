@@ -1,27 +1,44 @@
 import React, { useState } from 'react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import MyMapComponent from './MyMapComponent';
+import MapGL from 'react-map-gl';
+import { IOrganization } from '../../../interface/organization';
 
+interface IWrapperMapProps {
+    org: IOrganization
+}
 
-function WrapperMap(props:any) {
-    const key = `${process.env.REACT_APP_GOOGLE_MAP_API_KEY}`
-    const [map, setMap] = useState<any>();
-    const center = {
-        lat: props.lat||10.800590217284448,
-        lng: props.long||106.68205401591362
-    }
-    const zoom = 20;
+function WrapperMap(props: IWrapperMapProps) {
+    const {org} = props;
+    console.log(org)
     return (
-        <Wrapper
-            apiKey={key}
+        <MapGL
+            style={{
+                width: "100%",
+                height: "100%"
+            }}
+            initialViewState={{
+                latitude: org.latitude,
+                longitude: org.longitude,
+                zoom: 8
+            }}
+            attributionControl={true}
+            mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+            mapStyle="mapbox://styles/mapbox/streets-v10"
         >
-            <MyMapComponent
-                map={map}
-                setMap={setMap}
-                center={center}
-                zoom={zoom}
-            />
-        </Wrapper>
+
+        </MapGL>
+        // <Wrapper
+        //     apiKey={key}
+        // >
+        //     <MyMapComponent
+        //         map={map}
+        //         setMap={setMap}
+        //         center={center}
+        //         zoom={zoom}
+        //     />
+        // </Wrapper>
+        // <></>
     );
 }
 

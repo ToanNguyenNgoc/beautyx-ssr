@@ -42,14 +42,7 @@ function DiscountItem(props: IProps) {
                     </span>
                 </div>
                 <div className="flex-row discount-item__cnt-price">
-                    <span>
-                        {
-                            discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
-                                `${formatPrice(discountPar.discount_value)}đ`
-                                :
-                                `${formatPrice(discountItem.view_price)}đ`
-                        }
-                    </span>
+                    <span>{formatPrice(discountItem.view_price)}</span>
                     <span>{formatPrice(discountItem.productable.price)}đ</span>
                 </div>
             </div>

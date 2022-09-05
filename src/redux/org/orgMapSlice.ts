@@ -27,7 +27,7 @@ const initialState: IORGS_MAP = {
         status: "",
     },
     locationCenter: null,
-    getValueCenter: false,
+    getValueCenter: true,
     tags: [],
 };
 export const fetchOrgsMapFilter: any = createAsyncThunk(
@@ -80,7 +80,13 @@ const orgMapReducer = createSlice({
     },
     extraReducers: {
         [fetchOrgsMapFilter.pending]: (state) => {
-            return { ...state, status: STATUS.LOADING };
+            return {
+                ...state,
+                orgsMap: {
+                    ...state.orgsMap,
+                    status: STATUS.LOADING,
+                },
+            };
         },
         [fetchOrgsMapFilter.fulfilled]: (state, { payload }) => {
             const { orgs, page, totalItem, mountNth } = payload;
@@ -96,7 +102,13 @@ const orgMapReducer = createSlice({
             };
         },
         [fetchOrgsMapFilter.rejected]: (state) => {
-            return { ...state, status: STATUS.FAIL };
+            return {
+                ...state,
+                orgsMap: {
+                    ...state.orgsMap,
+                    status: STATUS.FAIL,
+                },
+            };
         },
     },
 });

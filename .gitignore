@@ -2,7 +2,7 @@ yarn.lock
 package-lock.json
 node_modules/
 *.cache
-build/
+
 dist/
 .history
 .prettierrc
@@ -48,15 +48,13 @@ Thumbs.db
 *.wmv
 
 .env
-build/
 .firebase/
-.firebaserc
+*.firebaserc
 .vscode/
 firebase.json
 package-lock.json
-<<<<<<< HEAD
-.firebase/hosting.YnVpbGQ.cache
 prod/
 .firebase/hosting.YnVpbGQ.cache
 *.cache
 .gitpod.yml
+.next/

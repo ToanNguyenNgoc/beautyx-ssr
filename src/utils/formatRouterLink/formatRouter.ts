@@ -70,3 +70,7 @@ export const formatRouterLinkDiscount = (
     }
     return patchDiscountOb
 }
+export const formatRouterLinkOrg = (subdomain: any) => {
+    const pathOrg = `/cua-hang/${subdomain}`
+    return pathOrg
+}

@@ -576,6 +576,13 @@
     background-color: transparent;
     border: none;
 }
+.map-filter-cnt__input-btn .loading-cnt{
+    margin: -4px 0px 0px -18px;
+}
+.map-filter-cnt__input-btn .MuiCircularProgress-root{
+    width: 16px !important;
+    height: 16px !important;
+}
 
 .map-filter-cnt__drop {
     z-index: 2;

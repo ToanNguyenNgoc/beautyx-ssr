@@ -20,19 +20,22 @@ import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from './MapCurrentUser'
 import IStore from "../../interface/IStore";
-import ReactMapGL, { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
+import { Marker, NavigationControl, GeolocateControl, GeolocateResultEvent } from 'react-map-gl';
+import MapGL from "react-map-gl";
 import 'mapbox-gl/dist/mapbox-gl.css';
 import onErrorImg from "../../utils/errorImg";
+// import MapDirection from './MapDirection';
 
 
 
 interface IProps {
     orgs: IOrganization[];
+    isDetail?: Boolean
 }
 
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
-    const { orgs } = props;
+    const { orgs, isDetail } = props;
     const mapRef = useRef<any>();
     const { orgCenter, getValueCenter, tags } = useSelector((state: IStore) => state.ORGS_MAP)
     const location = useLocation();
@@ -45,8 +48,8 @@ const MapContent = (props: IProps) => {
         check: false,
     });
     const [local,] = useState({
-        lat: LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0].latitude,
-        long: LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0].longitude,
+        lat: isDetail ? orgs[0]?.latitude : LOCATION ? parseFloat(LOCATION?.split(",")[0]) : orgs[0]?.latitude,
+        long: isDetail ? orgs[0]?.longitude : LOCATION ? parseFloat(LOCATION?.split(",")[1]) : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -80,14 +83,15 @@ const MapContent = (props: IProps) => {
             });
         }
     };
-
     const { totalItem, page } = useSelector((state: any) => state.ORGS_MAP.orgsMap)
+    // console.log(totalItem, orgs.length)
     const onViewMoreOrgs = () => {
         if (
             location.pathname === "/ban-do" &&
             totalItem >= 15 &&
             orgs.length < totalItem
         ) {
+            console.log("call")
             dispatch(
                 fetchOrgsMapFilter({
                     page: page + 1,
@@ -173,7 +177,7 @@ const MapContent = (props: IProps) => {
 
     const debounceOrgsMove = useCallback(
         debounce((latLng: string, orgsLength: number, tags: string[]) => {
-            if (orgsLength === 90) {
+            if (orgsLength === 105) {
                 dispatch(onSetOrgsMapEmpty())
             }
             // dispatch(onSetOrgsMapEmpty())
@@ -185,7 +189,7 @@ const MapContent = (props: IProps) => {
                     tags: tags.join("|")
                 })
             );
-        }, 1200),
+        }, 500),
         []
     );
     const onCenterChange = () => {
@@ -214,7 +218,9 @@ const MapContent = (props: IProps) => {
                 handleBackCurrentUser={handleBackCurrentUser}
             />
             {
-                <ReactMapGL
+                <MapGL
+                    // onViewportChange={onCenterChange}
+                    onMouseMove={onCenterChange}
                     onTouchMove={onCenterChange}
                     style={{
                         width: "100vw",
@@ -227,10 +233,11 @@ const MapContent = (props: IProps) => {
                     }}
                     attributionControl={true}
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                    mapStyle="mapbox://styles/mapbox/streets-v11"
+                    mapStyle="mapbox://styles/mapbox/streets-v10"
                     ref={mapRef}
                 // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
+
                     <NavigationControl
                         position="bottom-right"
                         showZoom={true}
@@ -266,12 +273,17 @@ const MapContent = (props: IProps) => {
                                     }
                                     className="map-marker-org"
                                 >
-                                    <img src={item.image_url} alt="" className="map-marker-org__img" />
+                                    <img
+                                        src={item.image_url}
+                                        alt=""
+                                        className="map-marker-org__img"
+                                        onError={(e) => onErrorImg(e)}
+                                    />
                                 </div>
                             </Marker>
                         ))
                     }
-                </ReactMapGL>
+                </MapGL>
             }
             <div
                 className={
@@ -326,7 +338,18 @@ const MapContent = (props: IProps) => {
             </div>
             {
                 IS_MB &&
-                <div className="map-list__mobile">
+                <div
+                    className={isDetail ? "map-list__mobile map" : "map-list__mobile"}
+                    style={
+                        isDetail ? {
+                            position: "fixed",
+                            width: "auto",
+                            height: "auto",
+                            left: 0,
+                            right: 0
+                        } : {}
+                    }
+                >
                     <Slider ref={slideRef} {...settings}>
                         {orgs.length > 0 && orgs.map((item: any, index: number) => (
                             <MapTagsItemMB

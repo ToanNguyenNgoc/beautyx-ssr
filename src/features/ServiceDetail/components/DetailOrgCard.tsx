@@ -9,6 +9,7 @@ import {
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
 import onErrorImg from "../../../utils/errorImg";
+import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
 
 interface IProps {
     org: IOrganization;
@@ -85,7 +86,7 @@ function DetailOrgCard(props: IProps) {
                     <button className="infoMer-bottom__left">
                         <Link
                             className="flex-row flexX-gap-4"
-                            to={{ pathname: `/org/${org.subdomain}` }}
+                            to={{ pathname: formatRouterLinkOrg(org.subdomain)}}
                         >
                             <img
                                 style={{ width: "20px", height: "20px" }}

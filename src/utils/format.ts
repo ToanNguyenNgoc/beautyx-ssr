@@ -66,7 +66,7 @@ export const formatRoundOrgCount = (count: number) => {
 }
 export const fakeOrgStar = (count: number) => {
     let star;
-    if (count >= 0 || count < 10) {
+    if (count >= 0 && count <10) {
         star = `4.${count}`
     } else if (count >= 10) {
         star = '5'

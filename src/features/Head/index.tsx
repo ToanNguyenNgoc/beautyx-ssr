@@ -194,11 +194,11 @@ function Head(props: IProps) {
             >
               <img src={icon.playCirclePurple} alt="" />
               Video
-            </button>
-            <button onClick={() => history.push('/tin-tuc')} className="flex-row hd-cnt__left-btn">
-              <img src={icon.newsPurple} alt="" />
-              Tin tức
             </button> */}
+                        <button onClick={() => window.open('https://beautyx.vn/blog','_blank')} className="flex-row hd-cnt__left-btn">
+                            <img src={icon.newsPurple} alt="" />
+                            Tin tức
+                        </button>
                     </div>
                     <img
                         onClick={handleBack}

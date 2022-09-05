@@ -19,8 +19,10 @@ export default function HomeFavorite() {
             dispatch(
                 fetchAsyncOrgsFavorite({
                     page: 1,
-                    // include:"favorites_count",
-                    // sort:"-favorites_count"
+                    isEcommerce: true,
+                    // sort:"priority"
+                    // include: "favorites_count",
+                    sort:"-favorites_count"
                 })
             );
         }
@@ -33,11 +35,13 @@ export default function HomeFavorite() {
         <div className="home-favorite">
             <HomeTitle title={t("home_2.favorite_places")} />
             <ul className="home-favorite__list">
-                {orgs?.map((item: IOrganization, index: number) => (
-                    <li key={index} className="home-favorite__item">
-                        <OrgItem org={item} />
-                    </li>
-                ))}
+                {
+                    orgs
+                        .map((item: IOrganization, index: number) => (
+                            <li key={index} className="home-favorite__item">
+                                <OrgItem org={item} />
+                            </li>
+                        ))}
             </ul>
         </div>
     );

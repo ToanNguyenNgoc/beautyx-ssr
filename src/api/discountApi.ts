@@ -1,16 +1,19 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
+import { AUTH_LOCATION } from "./authLocation";
 
 
 class Discounts {
     getAll = (values: any) => {
         const url = `/discounts`;
+        const LOCATION = AUTH_LOCATION();
         const params = {
             "page": values.page,
             "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
-            "sort": "-created_at"
+            "filter[location]": LOCATION,
+            "sort": "-priority|-created_at|discount_value"
         }
         return axiosClient.get(url, { params })
     }
@@ -21,7 +24,7 @@ class Discounts {
             "limit": 30,
             "filter[platform]": "MOMO", // update change platform "BEAUTYX"
             "append": "user_available_purchase_count",
-            "sort": "discount_value|created_at",
+            "sort": "discount_value|-priority|-created_at",
             "filter[organization_id]": values.org_id
         }
         return axiosClient.get(url, { params })

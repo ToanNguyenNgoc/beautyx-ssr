@@ -40,6 +40,7 @@ import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import { formatSalePriceService } from "../../utils/formatPrice";
 import { Service } from "../../interface/service";
 import IStore from "../../interface/IStore";
+import { analytics } from "../../firebase";
 // end
 
 function ServiceDetail() {
@@ -137,38 +138,32 @@ function ServiceDetail() {
             dispatch(fetchAsyncServiceCmt(values));
         }
     };
-
     useEffect(() => {
-        window.addEventListener("scroll", () =>
-            handleScroll(
-                is_mobile,
-                setValue,
-                scrollReview,
-                scrollDesc,
-                scrollMap,
-                scrollPolicy
-            )
+        let scroll = true
+        window.addEventListener("scroll", () => {
+            if (scroll) {
+                handleScroll(
+                    is_mobile,
+                    setValue,
+                    scrollReview,
+                    scrollDesc,
+                    scrollMap,
+                    scrollPolicy
+                )
+            }
+        }
         );
         return () => {
-            window.removeEventListener(
-                "scroll",
-                () =>
-                    handleScroll(
-                        is_mobile,
-                        setValue,
-                        scrollReview,
-                        scrollDesc,
-                        scrollMap,
-                        scrollPolicy
-                    ),
-                false
-            );
+            scroll = false
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     });
 
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
+        analytics.logEvent('detail_service', {
+            service: service.service_name,
+            merchant: org.name
+        })
         callServiceDetail();
         callOrgDetail();
         callServiceComments();
@@ -245,11 +240,11 @@ function ServiceDetail() {
                                                     }}
                                                 ></p>
                                                 {service?.description &&
-                                                (is_mobile === true
-                                                    ? service?.description
-                                                          .length > 100
-                                                    : service?.description
-                                                          .length > 300) ? (
+                                                    (is_mobile === true
+                                                        ? service?.description
+                                                            .length > 100
+                                                        : service?.description
+                                                            .length > 300) ? (
                                                     <div
                                                         onClick={() =>
                                                             handleSeemoreText()
@@ -283,7 +278,7 @@ function ServiceDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -324,22 +319,22 @@ function ServiceDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                {t(
+                                                                    "detail_item.merchant"
+                                                                )}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
 
@@ -357,7 +352,7 @@ function ServiceDetail() {
                         {/* service bottom buttom add cart */}
                         <div className="service-detail__bottom">
                             {service?.is_momo_ecommerce_enable &&
-                            org?.is_momo_ecommerce_enable ? (
+                                org?.is_momo_ecommerce_enable ? (
                                 <>
                                     <button
                                         onClick={() => {

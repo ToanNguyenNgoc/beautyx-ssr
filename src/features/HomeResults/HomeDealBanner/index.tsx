@@ -8,6 +8,7 @@ import { IServicePromo } from '../../../interface/servicePromo'
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import ButtonLoading from '../../../components/ButtonLoading';
 import { dealHot } from '../../../constants/img';
+import { blockService } from '../../../utils/blockCardItem';
 
 interface IBanner {
     id: number,
@@ -25,9 +26,9 @@ interface IData {
 }
 
 export const deals = [
-    { id: 1, title: 'Deal hot từ 50-100k', min_price: 50000, max_price: 100000, img: dealHot.dealhot },
-    { id: 2, title: 'Deal chăm sóc da làm đẹp Giảm 50%', min_price: null, img: dealHot.dealhot1, percent: 50 },
-    { id: 3, title: 'Dịch vụ xâm lấn Giảm 30%', min_price: null, img: dealHot.dealhot2, percent: 30 }
+    { id: 1, title: 'Deal hot từ 50-100k', min_price: 50000, max_price: 100000, img: dealHot.dealhot, backgroundColor: "rgb(176, 219, 253)", bannerWidth: "calc(16.66% * 4 - 10px)"},
+    { id: 2, title: 'Deal chăm sóc da làm đẹp Giảm 50%', min_price: null, img: dealHot.dealhot1, percent: 50, backgroundColor: "#fff4e1", bannerWidth: "calc(16.66% * 2 - 10px)" },
+    { id: 3, title: 'Dịch vụ xâm lấn Giảm 30%', min_price: null, img: dealHot.dealhot2, percent: 30, backgroundColor: "rgb(209, 202, 240)", bannerWidth: "calc(16.66% * 2 - 10px)" }
 ]
 
 function HomeDealBanner() {
@@ -81,13 +82,23 @@ function HomeDealBanner() {
             <Head />
             <div
                 className='deal-banner'
+                style={{
+                    backgroundColor: bannerDeals?.backgroundColor
+                }}
             >
-                <Container>
-                    <div className="deal-banner__wr">
-                        <img src={bannerDeals?.img} alt="" className="deal-banner__img" />
+                <Container
+                    sx={{
+                        maxWidth: '1200px',
+                        zIndex: 1,
+                        position: 'relative'
+                    }}
+                >
+                    <div className="deal-banner__wr"
+                    >
                         <ul className="deal-banner__list">
+                            <img src={bannerDeals?.img} style={{width: bannerDeals?.bannerWidth}} alt="" className="deal-banner__img" />
                             {
-                                data.services.map((item: IServicePromo, index: number) => (
+                                data.services.filter(e=>!blockService(e.price,e.special_price)).map((item: IServicePromo, index: number) => (
                                     <li
                                         key={index}
                                     >

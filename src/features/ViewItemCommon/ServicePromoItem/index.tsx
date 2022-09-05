@@ -15,7 +15,7 @@ import tracking from "../../../api/trackApi";
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { AppContext } from "../../../context/AppProvider";
 import { formatDistance } from "../../../utils/format";
-import {LazyLoadImage} from 'react-lazy-load-image-component'
+import { analytics } from "../../../firebase";
 // end
 
 interface IProps {
@@ -34,14 +34,16 @@ function ServicePromoItem(props: IProps) {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
                 tracking.USER_ITEM_CLICK(service.org_id, service.id);
+                analytics.logEvent('detail_service', {
+                    service: service.service_name,
+                    merchant: service.org_name
+                })
             }}
             className="ser-pro-item"
         >
             <div className="ser-img-cnt">
                 {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" onError={(e)=>onErrorImg(e,true)} alt=""/> }
-                <LazyLoadImage
-                    width="183px"
-                    height="183px"
+                <img
                     className="ser-img"
                     src={
                         service?.image_url
