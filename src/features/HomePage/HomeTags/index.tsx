@@ -69,13 +69,40 @@ function HomeTags(props: any) {
                             }}
                             onClick={() => scrollTop()}
                             className="flex-column tag-item-cnt">
-                            <img
-                                // src={item.img.length > 0 ? item.img[0].original_url : ""} 
-                                src={icon.locationCate}
-                                onError={(e) => onErrorImg(e)} alt="" />
-                            <div className="tag-item-title">
-                                {geo ? currentAddress : "Gần bạn"}
-                            </div>
+                            {
+                                geo
+                                    ?
+                                    <div className="tag-item-title"
+                                        style={{
+                                            padding: "20px 4px"
+                                        }}
+                                    >
+                                        <img
+                                            // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                            src={icon.locationCate}
+                                            style={{
+                                                width: "15px",
+                                                height: "15px",
+                                                margin: 0,
+                                                marginRight: '4px',
+                                                display: "inline-block"
+                                            }}
+                                            onError={(e) => onErrorImg(e)} alt="" />
+                                        {geo ? currentAddress : "Gần bạn"}
+                                    </div>
+                                    :
+                                    <>
+                                        <img
+                                            // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                            src={icon.locationCate}
+                                            onError={(e) => onErrorImg(e)} alt="" />
+                                        <div className="tag-item-title">
+                                           Gần bạn
+                                        </div>
+                                    </>
+
+                            }
+
                         </Link>
                     </li>
                     {tags_data.map((item) => (
