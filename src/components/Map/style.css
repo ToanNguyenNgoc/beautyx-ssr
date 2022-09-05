@@ -576,10 +576,10 @@
     background-color: transparent;
     border: none;
 }
-.map-filter-cnt__input-btn .loading-cnt{
+.map-filter-cnt__input-btn .loading-cnt {
     margin: -4px 0px 0px -18px;
 }
-.map-filter-cnt__input-btn .MuiCircularProgress-root{
+.map-filter-cnt__input-btn .MuiCircularProgress-root {
     width: 16px !important;
     height: 16px !important;
 }
@@ -631,19 +631,19 @@
     border-radius: 3px;
     box-shadow: 0 2px 6px rgb(0 0 0 / 30%);
 }
-.map-filter-cnt__right-tag{
+.map-filter-cnt__right-tag {
     width: calc(100% - 268px);
     overflow-x: scroll;
 }
-.map-filter-tags{
+.map-filter-tags {
     width: max-content;
 }
-.map-filter-tags__item{
+.map-filter-tags__item {
     margin: 0px 8px 0px 0px;
     padding: 4px;
     width: fit-content;
 }
-.map-filter-tags__item-cnt{
+.map-filter-tags__item-cnt {
     cursor: pointer;
     background-color: var(--bgWhite);
     height: 30px;
@@ -652,8 +652,8 @@
     line-height: 30px;
     border-radius: 15px;
     font-weight: 600;
-    box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);;
-    transition: all .3s;
+    box-shadow: 0 1px 2px rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+    transition: all 0.3s;
 }
 
 /* end map filter */
@@ -769,7 +769,7 @@
     font-size: 14px;
 }
 
-.map .content-img:hover>.content-seemore__img {
+.map .content-img:hover > .content-seemore__img {
     visibility: visible;
     opacity: 1;
     transition: all 0.3s;
@@ -868,7 +868,8 @@
 /* map :current user */
 .map-current-user {
     position: fixed;
-    bottom: 186px;
+    bottom: 50%;
+    transform: translateY(-50%);
     right: 0;
     z-index: 10;
     margin: 0px 9px 0px 0px;
@@ -885,7 +886,7 @@
     display: flex;
     justify-content: center;
 }
-.map-current-user__btn:nth-child(1){
+.map-current-user__btn:nth-child(1) {
     display: none;
 }
 
@@ -901,7 +902,7 @@
     width: 30px;
     position: relative;
     box-shadow: rgb(0 0 0 / 30%) 0px 1px 4px -1px;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 .map-marker-org__img {
@@ -912,7 +913,7 @@
     object-fit: cover;
     border: solid 1px var(--red-cl);
     z-index: 2;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 .map-marker-org::after {
@@ -924,14 +925,14 @@
     content: "";
     clip-path: polygon(100% 0, 0 0, 50% 100%);
     margin-top: 17px;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 @media only screen and (max-width: 1023px) {
-    .map .dialog-map__close{
-        top:8px
+    .map .dialog-map__close {
+        top: 8px;
     }
-    .map-filter-cnt__input-btn{
+    .map-filter-cnt__input-btn {
         margin-top: 9px;
     }
     .map-filter-cnt {
@@ -953,13 +954,13 @@
         padding-left: 0;
         width: calc(100% + 56px);
     }
-    .map-filter-cnt__right-tag{
+    .map-filter-cnt__right-tag {
         width: 100%;
         overflow-x: scroll;
     }
 
     .map-filter-cnt__right-switch {
-       display: none;
+        display: none;
     }
 
     .open-map {
@@ -1104,7 +1105,7 @@
     }
 
     .map-org-de-mb-wrap {
-        height: 86vh;
+        height: unset;
     }
 
     .map .dialog-map__detail {
@@ -1112,14 +1113,37 @@
         width: 100%;
     }
 
-    .map .content-head img {
-        display: none;
-    }
-    .map-current-user__btn{
+    .map-current-user__btn {
         border-radius: 100%;
     }
-    .map-current-user__btn:nth-child(1){
+    .map-current-user__btn:nth-child(1) {
         display: block;
         margin-bottom: 8px;
+    }
+    .map .org-special-item {
+        display: flex;
+        flex-direction: column;
+    }
+    .org-special-item__rate {
+        margin-left: unset;
+    }
+    .org-special-item__img {
+        width: unset;
+        height: unset;
+    }
+    .org-special-item__detail {
+        padding: 8px;
+        flex-direction: column;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 0px 0px 8px 8px;
+    }
+    .org-special-item__detail .item-head {
+        width: 100%;
+        padding: 4px 0;
+    }
+    .org-special-item__detail .item-price {
+        width: 100%;
+        align-items: flex-start;
     }
 }
