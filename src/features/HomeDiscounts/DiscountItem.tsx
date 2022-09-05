@@ -53,9 +53,9 @@ function DiscountItem(props: IProps) {
                 onError={(e)=>onErrorImg(e)}
             />
             <div className="home-discount-item__detail">
-                <span className="name">
+                <h2 className="name">
                     {discountItem.productable.service_name || discountItem.productable.product_name}
-                </span>
+                </h2>
                 <div className="flex-row price">
                     <span className="sale-price">
                         {

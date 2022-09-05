@@ -187,7 +187,7 @@ function RouterConfig(props: any) {
       component: <Booking />
     },
     {
-      path: "/home-banner-result",
+      path: "/campaign/:name",
       component: <HomeBannerSearchResult />,
     },
     // {

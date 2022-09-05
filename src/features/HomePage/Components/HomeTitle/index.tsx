@@ -13,7 +13,7 @@ function HomeTitle(props: IProps) {
     const history = useHistory();
     return (
         <div className="home-title">
-            <p className="home-title__text">{title}</p>
+            <h2 className="home-title__text">{title}</h2>
             <div
                 onClick={() => history.push(`${url}`)}
                 className="home-title__seemore"
