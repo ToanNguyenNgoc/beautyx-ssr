@@ -69,7 +69,7 @@ function HomeTags(props: any) {
                             }}
                             onClick={() => scrollTop()}
                             className="flex-column tag-item-cnt">
-                            {
+                            {/* {
                                 geo
                                     ?
                                     <div className="tag-item-title"
@@ -97,12 +97,18 @@ function HomeTags(props: any) {
                                             src={icon.locationCate}
                                             onError={(e) => onErrorImg(e)} alt="" />
                                         <div className="tag-item-title">
-                                           Gần bạn
+                                        {geo ? currentAddress : "Gần bạn"}
                                         </div>
                                     </>
 
-                            }
-
+                            } */}
+                            <img
+                                // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                src={icon.locationCate}
+                                onError={(e) => onErrorImg(e)} alt="" />
+                            <div className="tag-item-title">
+                                {geo ? currentAddress : "Gần bạn"}
+                            </div>
                         </Link>
                     </li>
                     {tags_data.map((item) => (
