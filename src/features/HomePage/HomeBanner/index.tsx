@@ -124,7 +124,7 @@ export default function HomeBanner() {
                 case "SEARCH_RESULT":
                     console.log(chooseBanner);
                     return history.push({
-                        pathname: `/home-banner-result`,
+                        pathname: `/campaign/${encodeURIComponent(chooseBanner.name+'')}`,
                         state: chooseBanner,
                     });
                 case "PROMOTION":
