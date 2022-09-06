@@ -54,7 +54,13 @@ const initialState = {
 const homeSlice = createSlice({
     name: "HOME",
     initialState,
-    reducers: {},
+    reducers: {
+        clearHomeDiscount: (state) => {
+            state.DISCOUNTS.discounts = [];
+            state.DISCOUNTS.page = 1;
+            state.DISCOUNTS.status_discount= ""
+        }
+    },
     extraReducers: {
         [fetchAsyncHome.pending]: (state) => {
             return state;
@@ -102,4 +108,6 @@ const homeSlice = createSlice({
         },
     },
 });
+const { actions } = homeSlice;
+export const { clearHomeDiscount } = actions
 export default homeSlice.reducer;

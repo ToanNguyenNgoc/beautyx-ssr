@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect,useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from "dayjs";
 import { fetchAsyncUser } from '../redux/USER/userSlice';
-import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
+import { clearHomeDiscount, fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
 import { fetchAsyncApps } from '../redux/appointment/appSlice';
 import { fetchAsyncOrderServices } from '../redux/order/orderSlice';
@@ -79,10 +79,13 @@ export default function AppProvider({ children }) {
                 mountNth: 2
             }))
         }
-        (DISCOUNTS.status_discount !== STATUS.SUCCESS) && dispatch(fetchAsyncDiscounts({
+    }
+    useEffect(() => {
+        dispatch(clearHomeDiscount())
+        dispatch(fetchAsyncDiscounts({
             page: 1
         }))
-    }
+    }, [geo]);
     const getLocationPlatFormBeauty = async () => {
         try {
             const res = await getPosition();
