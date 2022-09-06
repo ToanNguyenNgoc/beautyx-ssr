@@ -235,7 +235,7 @@ function OrgInformation(props: IProps) {
                     }
                 </div>
             </div>
-            <div className="org-information__branches">
+            {/* <div className="org-information__branches">
                 <div className="title">{t("Mer_de.utilities")}</div>
                 <ul className="org-information-utils">
                     <li className="flex-row utils-item">
@@ -255,7 +255,7 @@ function OrgInformation(props: IProps) {
                         <span>{t("detail_item.accept_card_payment")}</span>
                     </li>
                 </ul>
-            </div>
+            </div> */}
         </div>
     );
 }
