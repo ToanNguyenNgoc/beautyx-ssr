@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext, useState, useEffect,useMemo } from "react";
+import React, { createContext, useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
 import { useDispatch, useSelector } from 'react-redux';
@@ -79,13 +79,8 @@ export default function AppProvider({ children }) {
                 mountNth: 2
             }))
         }
+
     }
-    useEffect(() => {
-        dispatch(clearHomeDiscount())
-        dispatch(fetchAsyncDiscounts({
-            page: 1
-        }))
-    }, [geo]);
     const getLocationPlatFormBeauty = async () => {
         try {
             const res = await getPosition();
@@ -100,9 +95,14 @@ export default function AppProvider({ children }) {
             const resAddress = await axios.get(api_url);
             setGeo(resAddress?.features[0]);
             callDisAndOrgsByLocation();
-
+            dispatch(fetchAsyncDiscounts({
+                page: 1
+            }))
         } catch (error) {
             callDisAndOrgsByLocation();
+            dispatch(fetchAsyncDiscounts({
+                page: 1
+            }))
         }
     }
     // const getLocationPlatFormTiki = async() => {
