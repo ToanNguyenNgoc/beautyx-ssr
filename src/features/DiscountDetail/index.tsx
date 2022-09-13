@@ -175,14 +175,14 @@ function DiscountDetail() {
     let refReview = useRef<any>();
     let refMap = useRef<any>();
     let refPolicy = useRef<any>();
-    let refLimitText = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
     const scrollPolicy = refPolicy?.current?.offsetTop;
+    const [readMore, setReadMore] = useState(false);
+
     const handleSeemoreText = () => {
-        refLimitText?.current.classList.toggle("unlimit-text");
-        refLimitText?.current.nextSibling?.classList.toggle("change-text");
+        setReadMore(!readMore);
     };
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
@@ -289,33 +289,65 @@ function DiscountDetail() {
                                                 ref={refDesc}
                                                 className="service-detail__description"
                                             >
-                                                <p
-                                                    ref={refLimitText}
-                                                    className="service-description"
-                                                >
-                                                    {t("pr.description")}:{" "}
-                                                    {detail?.description
-                                                        ? detail?.description
-                                                        : t(
-                                                            "detail_item.updating"
-                                                        )}
-                                                </p>
-                                                {detail?.description &&
-                                                    (is_mobile === true
-                                                        ? detail?.description
-                                                            .length > 100
-                                                        : detail?.description
-                                                            .length > 300) ? (
-                                                    <div
-                                                        onClick={() =>
-                                                            handleSeemoreText()
-                                                        }
-                                                        className="seemore-btn"
-                                                    >
-                                                        <p>Xem thêm &or;</p>
-                                                        <p>Thu gọn &and;</p>
+                                                {detail?.description.length ===
+                                                0 ? (
+                                                    <div className="service-description-updating">
+                                                        <span className="service-description">
+                                                            {t(
+                                                                "pr.description"
+                                                            )}
+                                                            {": "}
+                                                            {t(
+                                                                "detail_item.updating"
+                                                            )}
+                                                        </span>
                                                     </div>
-                                                ) : null}
+                                                ) : (
+                                                    <>
+                                                        <span className="service-description">
+                                                            {t(
+                                                                "pr.description"
+                                                            )}
+                                                            :{" "}
+                                                            {detail?.description
+                                                                .length > 150 &&
+                                                            readMore !== true
+                                                                ? detail?.description.slice(
+                                                                      0,
+                                                                      150
+                                                                  )
+                                                                : detail?.description}
+                                                            {/* dots */}
+                                                            {detail?.description
+                                                                .length > 150 &&
+                                                            readMore === false
+                                                                ? "..."
+                                                                : " "}
+                                                            {/* close dot  */}
+                                                        </span>{" "}
+                                                        {/* button readmore */}
+                                                        <span>
+                                                            {detail?.description &&
+                                                                detail
+                                                                    ?.description
+                                                                    .length >
+                                                                    150 && (
+                                                                    <span
+                                                                        onClick={() =>
+                                                                            handleSeemoreText()
+                                                                        }
+                                                                        className="seemore-btn"
+                                                                    >
+                                                                        {readMore ===
+                                                                        false
+                                                                            ? "Xem thêm >>"
+                                                                            : "Thu gọn <<"}
+                                                                    </span>
+                                                                )}
+                                                        </span>
+                                                        {/* close read more */}
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>
@@ -337,7 +369,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >=
+                                                COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -376,22 +408,22 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                {t(
-                                                                    "detail_item.merchant"
-                                                                )}
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={ORG?.org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <>
+                                                        <p className="service-detail__title">
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={ORG?.org}
                                                             />
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={ORG?.org}
+                                                        />
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>

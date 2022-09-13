@@ -75,14 +75,13 @@ function ServiceDetail() {
     let refReview = useRef<any>();
     let refMap = useRef<any>();
     let refPolicy = useRef<any>();
-    let refLimitText = useRef<any>();
     const scrollMap = refMap?.current?.offsetTop;
     const scrollDesc = refDesc?.current?.offsetTop;
     const scrollReview = refReview?.current?.offsetTop;
     const scrollPolicy = refPolicy?.current?.offsetTop;
+    const [readMore, setReadMore] = useState(false);
     const handleSeemoreText = () => {
-        refLimitText?.current.classList.toggle("unlimit-text");
-        refLimitText?.current.nextSibling?.classList.toggle("change-text");
+        setReadMore(!readMore);
     };
     // handle onclick active menu
     const handleChange = (event: React.SyntheticEvent, value: any) => {
@@ -139,7 +138,7 @@ function ServiceDetail() {
         }
     };
     useEffect(() => {
-        let scroll = true
+        let scroll = true;
         window.addEventListener("scroll", () => {
             if (scroll) {
                 handleScroll(
@@ -149,21 +148,20 @@ function ServiceDetail() {
                     scrollDesc,
                     scrollMap,
                     scrollPolicy
-                )
+                );
             }
-        }
-        );
+        });
         return () => {
-            scroll = false
+            scroll = false;
         };
     });
 
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
-        analytics.logEvent('detail_service', {
+        analytics.logEvent("detail_service", {
             service: service.service_name,
-            merchant: org.name
-        })
+            merchant: org.name,
+        });
         callServiceDetail();
         callOrgDetail();
         callServiceComments();
@@ -228,33 +226,69 @@ function ServiceDetail() {
                                                 ref={refDesc}
                                                 className="service-detail__description"
                                             >
-                                                <p
-                                                    ref={refLimitText}
-                                                    className="service-description"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html:
-                                                            service.description ||
-                                                            t(
+                                                {service?.description.length ===
+                                                0 ? (
+                                                    <div className="service-description-updating">
+                                                        <span className="service-description">
+                                                            {t(
+                                                                "pr.description"
+                                                            )}
+                                                            {": "}
+                                                            {t(
                                                                 "detail_item.updating"
-                                                            ),
-                                                    }}
-                                                ></p>
-                                                {service?.description &&
-                                                    (is_mobile === true
-                                                        ? service?.description
-                                                            .length > 100
-                                                        : service?.description
-                                                            .length > 300) ? (
-                                                    <div
-                                                        onClick={() =>
-                                                            handleSeemoreText()
-                                                        }
-                                                        className="seemore-btn"
-                                                    >
-                                                        <p>Xem thêm &or;</p>
-                                                        <p>Thu gọn &and;</p>
+                                                            )}
+                                                        </span>
                                                     </div>
-                                                ) : null}
+                                                ) : (
+                                                    <>
+                                                        {/* open description */}
+                                                        <span className="service-description">
+                                                            {t(
+                                                                "pr.description"
+                                                            )}
+                                                            :{" "}
+                                                            {service
+                                                                ?.description
+                                                                .length > 150 &&
+                                                            readMore !== true
+                                                                ? service?.description.slice(
+                                                                      0,
+                                                                      150
+                                                                  )
+                                                                : service?.description}
+                                                            {/* dots */}
+                                                            {service
+                                                                ?.description
+                                                                .length > 150 &&
+                                                            readMore === false
+                                                                ? "..."
+                                                                : " "}
+                                                            {/* close dot  */}
+                                                        </span>{" "}
+                                                        {/* end description */}
+                                                        {/* button read more */}
+                                                        <span>
+                                                            {service?.description &&
+                                                                service
+                                                                    ?.description
+                                                                    .length >
+                                                                    150 && (
+                                                                    <span
+                                                                        onClick={() =>
+                                                                            handleSeemoreText()
+                                                                        }
+                                                                        className="seemore-btn"
+                                                                    >
+                                                                        {readMore ===
+                                                                        false
+                                                                            ? "Xem thêm >> "
+                                                                            : "Thu gọn <<"}
+                                                                    </span>
+                                                                )}
+                                                        </span>
+                                                        {/* end  button read more */}
+                                                    </>
+                                                )}
                                             </div>
                                         </TabPanel>
 
@@ -278,7 +312,7 @@ function ServiceDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                    COMMENTS.comments.length >=
+                                                COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -319,22 +353,22 @@ function ServiceDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                        <>
-                                                            <p className="service-detail__title">
-                                                                {t(
-                                                                    "detail_item.merchant"
-                                                                )}
-                                                            </p>
-                                                            <div className="service-detail__org-mb">
-                                                                <DetailOrgCard
-                                                                    org={org}
-                                                                />
-                                                            </div>
-                                                            <OrgInformation
+                                                    <div>
+                                                        <p className="service-detail__title">
+                                                            {t(
+                                                                "detail_item.merchant"
+                                                            )}
+                                                        </p>
+                                                        <div className="service-detail__org-mb">
+                                                            <DetailOrgCard
                                                                 org={org}
                                                             />
-                                                        </>
-                                                    )}
+                                                        </div>
+                                                        <OrgInformation
+                                                            org={org}
+                                                        />
+                                                    </div>
+                                                )}
                                             </div>
                                         </TabPanel>
 
@@ -352,7 +386,7 @@ function ServiceDetail() {
                         {/* service bottom buttom add cart */}
                         <div className="service-detail__bottom">
                             {service?.is_momo_ecommerce_enable &&
-                                org?.is_momo_ecommerce_enable ? (
+                            org?.is_momo_ecommerce_enable ? (
                                 <>
                                     <button
                                         onClick={() => {
