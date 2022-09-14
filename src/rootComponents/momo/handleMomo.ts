@@ -18,13 +18,13 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
         MOMO.getUserConsents({
             "permissions": [
                 {
-                    "role": "name",
+                    "role": "name"
                 },
                 {
                     "role": "phone"
                 },
                 {
-                    "role": "email",
+                    "role": "email"
                 },
             ]
         }, async ({ data, status }: any) => {
@@ -55,11 +55,11 @@ export const requestUserConsents = (callBack?: any, loading?: any) => {
     MOMO.requestUserConsents({
         "permissions": [
             {
-                "role": "name",
-                "require": true
+                "role": "name"
             },
             {
-                "role": "phone"
+                "role": "phone",
+                "require": true
             },
             {
                 "role": "email",

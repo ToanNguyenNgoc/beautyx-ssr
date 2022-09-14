@@ -101,14 +101,14 @@ export default function MapOrgItemDetail(props: IProps) {
                     <img
                         className="cursor-pointer"
                         onClick={() => {
-                            openDetail.open ? 
-                            setOpenDetail({
-                                ...openDetail,
-                                open: false,
-                                check: false,
-                            })
-                            :
-                            setOpenDetail(false)
+                            openDetail.open ?
+                                setOpenDetail({
+                                    ...openDetail,
+                                    open: false,
+                                    check: false,
+                                })
+                                :
+                                setOpenDetail(false)
                         }
                         }
                         src={icon.x}
@@ -201,7 +201,7 @@ export default function MapOrgItemDetail(props: IProps) {
                                 <button>
                                     <img src={icon.directionRed} alt="" />
                                 </button>
-                                <span>Chi sẻ</span>
+                                <span>Chia sẻ</span>
                             </div> */}
                         </div>
                     </div>
@@ -312,7 +312,9 @@ export default function MapOrgItemDetail(props: IProps) {
                     {/* close galleries */}
 
                     {/* discount */}
-                    <MapSpecial />
+                    {
+                        org?.is_momo_ecommerce_enable && <MapSpecial />
+                    }
                     {/* close discount */}
 
                     {/* rating */}
