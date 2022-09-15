@@ -3,7 +3,7 @@ import { IOrganization } from "../../../../interface/organization";
 import Slider from "react-slick";
 import onErrorImg from "../../../../utils/errorImg";
 import icon from "../../../../constants/icon";
-import WrapperMap from "../../../Map/MapWarraper/WrapperMap";
+import { WrapperMap, OrgMapFull } from "../../../Map/MapWarraper/WrapperMap";
 import { extraOrgTimeWork } from "../Functions/extraOrg";
 import { AppContext } from "../../../../context/AppProvider";
 
@@ -24,7 +24,7 @@ function OrgInformation(props: IProps) {
         className: "map-org-detail__slide",
         arrows: false,
     };
-    const [openPopupSeemoreMap, setOpenPopupSeemoreMap] = useState(false);
+    const [openOrgMap, setOpenOrgMap] = useState(false);
     const onDropBranches: any = () => {
         branchesCntRef.current.classList.toggle("branches-list-cnt__drop");
     };
@@ -46,7 +46,7 @@ function OrgInformation(props: IProps) {
                 <div className="map-org__seemore">
                     <p
                         onClick={() => {
-                            setOpenPopupSeemoreMap(true);
+                            setOpenOrgMap(true);
                         }}
                     >
                         {t("trending.watch_all")}
@@ -256,7 +256,11 @@ function OrgInformation(props: IProps) {
                     </li>
                 </ul>
             </div> */}
-
+            <OrgMapFull
+                open={openOrgMap}
+                setOpen={setOpenOrgMap}
+                org={org}
+            />
         </div>
     );
 }

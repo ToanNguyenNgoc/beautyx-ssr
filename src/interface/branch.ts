@@ -7,8 +7,8 @@ export interface IBranch {
   id: number;
   image: string | null;
   image_url: string;
-  latitude: number | string | null;
-  longitude: number | string | null;
+  latitude: number;
+  longitude: number;
   name: string;
   organization_id: number;
   origin_id: number;

@@ -60,22 +60,6 @@ function HomeDiscount() {
                                             )}
                                         </div>
                                     ))}
-                                {/* {
-                                    exDiscountFinal.map((discount: any, index: number) => (
-                                        <div key={index}>
-                                            {discount.items.map(
-                                                (item: IITEMS_DISCOUNT, i: number) => (
-                                                    <li key={i}>
-                                                        <DiscountItem
-                                                            discountItem={item}
-                                                            discountPar={discount}
-                                                        />
-                                                    </li>
-                                                )
-                                            )}
-                                        </div>
-                                    ))
-                                } */}
                                 <div className="watch-more-card" onClick={onViewMore}>
                                     <li>
                                         <div>{'>'}</div>

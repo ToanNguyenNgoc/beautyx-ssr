@@ -6,7 +6,7 @@ class ServicePromo {
     //services promo
     getServicesPromo = async (values: any) => {
         const url = `/services`;
-        const LOCATION = AUTH_LOCATION();
+        // const LOCATION = AUTH_LOCATION();
         const paramsOb = {
             page: values.page || 1,
             limit: 30,
@@ -18,7 +18,7 @@ class ServicePromo {
             "filter[discount_percent]": values.discount_percent,
             "filter[special_price]": values.special_price,
             "filter[is_momo_ecommerce_enable]": true,
-            "filter[location]": values.sort === "distance" ? LOCATION : null,
+            // "filter[location]": values.sort === "distance" ? LOCATION : null,
             "sort": values.sort === "distance" ? null : values.sort,
         };
         const params = pickBy(paramsOb, identity);

@@ -8,7 +8,13 @@ dist/
 .prettierrc
 # Compiled Java class files
 *.class
-
+next
+next/
+next/*
+.next
+.next/
+.next/*
+declaration.a.ts
 # Compiled Python bytecode
 *.py[cod]
 
@@ -51,10 +57,14 @@ Thumbs.db
 .firebase/
 *.firebaserc
 .vscode/
+.next/
 firebase.json
 package-lock.json
+ 
+.firebase/hosting.YnVpbGQ.cache
 prod/
 .firebase/hosting.YnVpbGQ.cache
+
 *.cache
-.gitpod.yml
-.next/
+ 
+ 

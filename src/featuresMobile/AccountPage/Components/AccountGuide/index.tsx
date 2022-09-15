@@ -2,10 +2,10 @@ import React, { useContext, useRef, useState } from "react";
 import { Dialog } from "@mui/material";
 import HeadMobile from "../../../../features/HeadMobile";
 import { Transition } from "../../../../utils/transition";
-import step1 from "../../../../assets/image/user_guide/step_1.png";
-import step2 from "../../../../assets/image/user_guide/step_2.png";
-import step3 from "../../../../assets/image/user_guide/step_3.png";
-import step4 from "../../../../assets/image/user_guide/step_4.png";
+// import step1 from "../../../../assets/image/user_guide/step_1.png";
+// import step2 from "../../../../assets/image/user_guide/step_2.png";
+// import step3 from "../../../../assets/image/user_guide/step_3.png";
+// import step4 from "../../../../assets/image/user_guide/step_4.png";
 import GuideItem from "./Components/GuideItem";
 import icon from "../../../../constants/icon";
 import Slider from "react-slick";
@@ -21,7 +21,7 @@ function AccountGuide(props: any) {
             img: [
                 {
                     desc: `${t("account_guide.ac_gui_desc1")}`,
-                    url: step1,
+                    // url: step1,
                 },
             ],
         },
@@ -30,7 +30,7 @@ function AccountGuide(props: any) {
             img: [
                 {
                     desc: `${t("account_guide.ac_gui_desc2")}`,
-                    url: step2,
+                    // url: step2,
                 },
             ],
         },
@@ -39,7 +39,7 @@ function AccountGuide(props: any) {
             img: [
                 {
                     desc: `${t("account_guide.ac_gui_desc3")}`,
-                    url: step3,
+                    // url: step3,
                 },
             ],
         },
@@ -48,7 +48,7 @@ function AccountGuide(props: any) {
             img: [
                 {
                     desc: `${t("account_guide.ac_gui_desc4")}`,
-                    url: step4,
+                    // url: step4,
                 },
             ],
         },
@@ -97,7 +97,7 @@ function AccountGuide(props: any) {
                                 <div key={index}>
                                     <div className="step-img__model">
                                         <img
-                                            src={value.url}
+                                            // src={value.url}
                                             alt={"step" + index + index}
                                         />
                                     </div>

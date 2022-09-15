@@ -11,7 +11,7 @@ export const GoogleTagEvents = {
 const $:any = window;
 export function GoogleTagPush(event_name:String){
     try{
-        $.dataLayer.push({'event': {event_name}});
+        $?.dataLayer?.push({'event': {event_name}});
     }catch(err){
         console.log(err);
     }

@@ -16,7 +16,8 @@ import { extraOrgTimeWork } from "./Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
 import { STATUS } from "../../../redux/status";
 import { onToggleOpenChat } from "../../../redux/chat/chatOrgSlice";
-import { IOrgMobaGalleries } from "../../../interface/IOrgMobaGalleries"
+import { IOrgMobaGalleries } from "../../../interface/IOrgMobaGalleries";
+import { OrgMapFull } from "../../Map/MapWarraper/WrapperMap"
 
 interface IProps {
     org: IOrganization;
@@ -93,12 +94,7 @@ function OrgDetail(props: IProps) {
         dispatch(onActiveTab(7));
     };
     const handleOpenMap = () => {
-        if (org?.branches.length > 0) {
-            // open lit branch
-            setOpen(true);
-        } else {
-            setOpenPopupMap(true);
-        }
+        setOpenPopupMap(true);
     };
     const onOpenChatOrg = () => {
         if (USER) {
@@ -109,6 +105,14 @@ function OrgDetail(props: IProps) {
     };
     return (
         <div className="org-detail">
+            {
+                org &&
+                <OrgMapFull
+                    open={openPopupMap}
+                    setOpen={setOpenPopupMap}
+                    org={org}
+                />
+            }
             <Container>
                 <div className="org-detail__cnt">
                     <div

@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import imgNull from "../../assets/image/user_guide/searchNull.png";
+// import imgNull from "../../assets/image/user_guide/searchNull.png";
 import icon from "../../constants/icon";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { listRecomment } from "./SectionEmpty";
@@ -44,7 +44,7 @@ function SectionNull(props: any) {
     return showNull ? (
         <>
             <div className="search-null">
-                <img src={imgNull} alt="" />
+                {/* <img src={imgNull} alt="" /> */}
                 <div className="title">
                     {t("se.no_results_found_for")} <span>{keyword}</span>
                 </div>
