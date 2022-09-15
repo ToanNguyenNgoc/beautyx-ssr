@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.4e09fd02.css",
-    "main.js": "/static/js/main.44fdd4cb.js",
+    "main.css": "/static/css/main.b7d22b0c.css",
+    "main.js": "/static/js/main.2ba39f07.js",
     "static/js/483.63d94053.chunk.js": "/static/js/483.63d94053.chunk.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.a5fc7079.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.62ebd8c8.chunk.js",
@@ -32,8 +32,6 @@
     "static/media/flatform3.png": "/static/media/flatform3.30fbde6b88d0a1300967.png",
     "static/media/flatform1.png": "/static/media/flatform1.7f82c0a9b3a54f4aa530.png",
     "static/media/slider1.png": "/static/media/slider1.4d09efb6be12534b673f.png",
-    "static/media/step_1.png": "/static/media/step_1.110ef50b04d5f4d17922.png",
-    "static/media/searchNull.png": "/static/media/searchNull.f5a0f17c544a729858c3.png",
     "static/media/homeSt4.png": "/static/media/homeSt4.e8100729a41eace6cdff.png",
     "static/media/rectangle_148.png": "/static/media/rectangle_148.419de759557a976c90ea.png",
     "static/media/Nunito-BlackItalic.woff": "/static/media/Nunito-BlackItalic.90e0fb662710770a8b9c.woff",
@@ -52,8 +50,6 @@
     "static/media/Nunito-Bold.woff": "/static/media/Nunito-Bold.99eccd9b275c50e648b5.woff",
     "static/media/Nunito-Light.woff": "/static/media/Nunito-Light.768d10645f5a17c35ecf.woff",
     "static/media/Nunito-ExtraLight.woff": "/static/media/Nunito-ExtraLight.8135a3b916a00374b606.woff",
-    "static/media/step_2.png": "/static/media/step_2.33dc5b57f14e00dd4a18.png",
-    "static/media/step_3.png": "/static/media/step_3.e342c472ea88660d7c5d.png",
     "static/media/Nunito-BlackItalic.woff2": "/static/media/Nunito-BlackItalic.d1ee9574a5b494dd3f5e.woff2",
     "static/media/Nunito-ExtraBoldItalic.woff2": "/static/media/Nunito-ExtraBoldItalic.646d903714d5b28f297b.woff2",
     "static/media/Nunito-SemiBoldItalic.woff2": "/static/media/Nunito-SemiBoldItalic.1f3686818312abb9df63.woff2",
@@ -72,7 +68,6 @@
     "static/media/dealhot2.png": "/static/media/dealhot2.511d00b4f29291d8e9b5.png",
     "static/media/Nunito-ExtraLight.woff2": "/static/media/Nunito-ExtraLight.1a0cd706bffc1122b20f.woff2",
     "static/media/logo.svg": "/static/media/logo.b32860d766a4cdffbc6b34be944ffa76.svg",
-    "static/media/step_4.png": "/static/media/step_4.62871a4cd3baa6e3dadb.png",
     "static/media/dealhot.png": "/static/media/dealhot.58012a1984a1a9077ed7.png",
     "static/media/Quicksand-SemiBold.woff": "/static/media/Quicksand-SemiBold.66199d9b3d31279c0f57.woff",
     "static/media/Quicksand-Medium.woff": "/static/media/Quicksand-Medium.1e506261bf8e27690a27.woff",
@@ -312,8 +307,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-    "main.4e09fd02.css.map": "/static/css/main.4e09fd02.css.map",
-    "main.44fdd4cb.js.map": "/static/js/main.44fdd4cb.js.map",
+    "main.b7d22b0c.css.map": "/static/css/main.b7d22b0c.css.map",
+    "main.2ba39f07.js.map": "/static/js/main.2ba39f07.js.map",
     "483.63d94053.chunk.js.map": "/static/js/483.63d94053.chunk.js.map",
     "reactPlayerYouTube.a5fc7079.chunk.js.map": "/static/js/reactPlayerYouTube.a5fc7079.chunk.js.map",
     "reactPlayerSoundCloud.62ebd8c8.chunk.js.map": "/static/js/reactPlayerSoundCloud.62ebd8c8.chunk.js.map",
@@ -331,7 +326,7 @@
     "787.476e4605.chunk.js.map": "/static/js/787.476e4605.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4e09fd02.css",
-    "static/js/main.44fdd4cb.js"
+    "static/css/main.b7d22b0c.css",
+    "static/js/main.2ba39f07.js"
   ]
 }
