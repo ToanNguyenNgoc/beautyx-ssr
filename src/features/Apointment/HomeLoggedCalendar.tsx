@@ -188,16 +188,17 @@ export default function HomeLoggedCalendar() {
 
   // lấy ngày đầu tiên trong tuần
   const getFirstDayOfW = (selectedDay: any) => {
+    console.log(selectedDay)
     // T2 -> [0] , CN -> [6]
     // console.log(`(T2 -> 0, CN -> 6) `, selectedDay);
     if (selectedDay.startOf("week").month() !== selectedDay.month()) {
-      // console.log(
-      //   "đầu tuần của tuần đầu trong tháng",
-      //   selectedDay.startOf("month").startOf("week").date()
-      // );
+      console.log(
+        "đầu tuần của tuần đầu trong tháng",
+        selectedDay.startOf("month").startOf("week").date()
+      );
       return selectedDay.startOf("month");
     }
-    // console.log(`đầu tuần`, selectedDay.startOf("week").date());
+    console.log(`đầu tuần`, selectedDay.startOf("week").date());
     return selectedDay.startOf("week");
   };
 
