@@ -2,7 +2,7 @@
 import { Container } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import "../../assets/styles/main.css";
 import LoadOrg from "../../components/LoadingSketion/LoadOrg";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
@@ -37,12 +37,16 @@ import IStore from "../../interface/IStore";
 import "./style.css";
 import { analytics } from "../../firebase";
 
-
+type IUseParams = {
+  subdomain: string|undefined
+}
 function MerchantDetail() {
   const IS_MB = useFullScreen();
   const location: any = useLocation();
   const dispatch = useDispatch();
   const param = formatOrgParam(location.pathname);
+  const sth = useParams<IUseParams>();
+  console.log(sth);
   const { sub_domain } = param;
 
   const ORG = useSelector((state: IStore) => state.ORG);

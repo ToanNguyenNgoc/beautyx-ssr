@@ -59,7 +59,8 @@ class MOMO_API {
                     "require": true
                 },
                 {
-                    "role": "phone"
+                    "role": "phone",
+                    "require": true
                 },
                 {
                     "role": "email",

@@ -55,7 +55,8 @@ export const requestUserConsents = (callBack?: any, loading?: any) => {
     MOMO.requestUserConsents({
         "permissions": [
             {
-                "role": "name"
+                "role": "name",
+                "require": true
             },
             {
                 "role": "phone",

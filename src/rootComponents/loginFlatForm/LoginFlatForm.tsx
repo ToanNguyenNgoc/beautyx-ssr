@@ -61,11 +61,12 @@ function LoginFlatForm(props: any) {
             {
                 permissions: [
                     {
-                        role: "name",
-                        require: true,
+                        "role": "name",
+                        "require": true
                     },
                     {
-                        role: "phone",
+                        "role": "phone",
+                        "require": true
                     },
                     {
                         role: "email",
