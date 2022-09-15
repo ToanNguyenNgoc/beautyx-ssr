@@ -113,6 +113,8 @@ export default function HomeLoggedCalendar() {
     handleAppoint(date, thisMonth, thisYear, false);
   }
 
+  console.log(datepick)
+
   // hander Appoint
   function handleAppoint(
     date: any,
@@ -185,10 +187,11 @@ export default function HomeLoggedCalendar() {
   const selectedDay = dayjs(
     `${datepick.year}-${datepick.month + 1}-${datepick.date}`
   );
+  console.log(selectedDay, datepick)
 
   // lấy ngày đầu tiên trong tuần
   const getFirstDayOfW = (selectedDay: any) => {
-    console.log(selectedDay)
+    // console.log(selectedDay)
     // T2 -> [0] , CN -> [6]
     // console.log(`(T2 -> 0, CN -> 6) `, selectedDay);
     if (selectedDay.startOf("week").month() !== selectedDay.month()) {
