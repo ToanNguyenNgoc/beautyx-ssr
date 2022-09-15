@@ -6,7 +6,7 @@ import icon from "../../../../constants/icon";
 import WrapperMap from "../../../Map/MapWarraper/WrapperMap";
 import { extraOrgTimeWork } from "../Functions/extraOrg";
 import { AppContext } from "../../../../context/AppProvider";
-// import OrgMapWrapper from "../OrgMap/OrgMapWrapper";
+
 interface IProps {
     org: IOrganization;
     refMap?: any;
@@ -256,11 +256,7 @@ function OrgInformation(props: IProps) {
                     </li>
                 </ul>
             </div> */}
-            {/* <OrgMapWrapper
-                open={openPopupSeemoreMap}
-                setOpen={setOpenPopupSeemoreMap}
-                org={org}
-            /> */}
+
         </div>
     );
 }

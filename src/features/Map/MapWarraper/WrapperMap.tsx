@@ -9,8 +9,7 @@ interface IWrapperMapProps {
 }
 
 function WrapperMap(props: IWrapperMapProps) {
-    const {org} = props;
-    console.log(org)
+    const { org } = props;
     return (
         <MapGL
             style={{
