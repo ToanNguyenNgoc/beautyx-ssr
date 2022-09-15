@@ -17,6 +17,7 @@ import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import { fakeOrgStar } from "../../../utils/format";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
+import { OrgMapFull } from "../../Map/MapWarraper/WrapperMap";
 
 interface IProps {
     org: IOrganization;
@@ -62,6 +63,13 @@ function OrgItem(props: IProps) {
     };
     return (
         <>
+            {org &&
+                <OrgMapFull
+                    open={openPopupMap}
+                    setOpen={setOpenPopupMap}
+                    org={org}
+                />
+            }
             <div onClick={gotoDetail} className="re-org-item">
                 {org?.is_momo_ecommerce_enable && (
                     <div className="re-org-item__enable">
@@ -141,11 +149,11 @@ function OrgItem(props: IProps) {
                                             <span>
                                                 {org?.distance < 1000
                                                     ? `${Math.round(
-                                                          org?.distance
-                                                      )}(m)`
+                                                        org?.distance
+                                                    )}(m)`
                                                     : `${Math.round(
-                                                          org?.distance / 1000
-                                                      )}(km)`}
+                                                        org?.distance / 1000
+                                                    )}(km)`}
                                             </span>
                                         </div>
                                     ) : (
@@ -223,8 +231,8 @@ function OrgItem(props: IProps) {
                                     {org?.distance < 1000
                                         ? `${Math.round(org?.distance)}(m)`
                                         : `${Math.round(
-                                              org?.distance / 1000
-                                          )}(km)`}
+                                            org?.distance / 1000
+                                        )}(km)`}
                                 </div>
                             ) : (
                                 <></>
