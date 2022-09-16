@@ -3,23 +3,31 @@ import Head from '../../Head';
 import HeadTitle from '../../HeadTitle';
 import { Container } from '@mui/material';
 import '../../HomeDiscounts/style.css'
-import { useSelector, useDispatch } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
 import DiscountItem from '../../HomeDiscounts/DiscountItem';
-import { fetchAsyncDiscounts } from '../../../redux/home/homeSlice'
 import ButtonLoading from '../../../components/ButtonLoading';
 import './style.css';
 import Footer from '../../Footer';
 import HeadMobile from '../../HeadMobile';
 import useFullScreen from '../../../utils/useDeviceMobile';
+import useSwrInfinite from '../../../utils/useSwrInfinite';
+import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
+import {AUTH_LOCATION} from "../../../api/authLocation"
 
 function HomeDiscountList() {
-    const dispatch = useDispatch();
+    const location = AUTH_LOCATION()
+    const paramsDiscounts = {
+        "append": "user_available_purchase_count",
+        "filter[platform]": "MOMO",
+        "filter[location]": location,
+        "limit": "30",
+        "sort": "-priority|-created_at|discount_value"
+    }
     const IS_MB = useFullScreen();
-    const { DISCOUNTS } = useSelector((state: any) => state.HOME);
-    const { discounts, totalItem, page } = DISCOUNTS;
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite("/discounts", paramsDiscounts)
+    const discounts: IDiscountPar[] = resData
     const onViewMore = () => {
-        dispatch(fetchAsyncDiscounts({ page: page + 1 }))
+        onLoadMore()
     }
     return (
         <>
@@ -49,6 +57,7 @@ function HomeDiscountList() {
                             ))
                         }
                     </ul>
+                    {isValidating && <LoadGrid />}
                     <div className="discount-list-cnt__bot">
                         {
                             discounts.length < totalItem &&
