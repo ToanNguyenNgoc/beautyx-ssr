@@ -56,9 +56,7 @@ const homeSlice = createSlice({
     initialState,
     reducers: {
         clearHomeDiscount: (state) => {
-            state.DISCOUNTS.discounts = [];
-            state.DISCOUNTS.page = 1;
-            state.DISCOUNTS.status_discount= ""
+            state.DISCOUNTS = initialState.DISCOUNTS
         }
     },
     extraReducers: {
