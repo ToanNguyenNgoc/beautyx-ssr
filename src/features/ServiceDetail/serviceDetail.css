@@ -61,7 +61,6 @@
     display: none;
 }
 
-
 /* end cus tab MUI */
 
 .flexX-gap-8 {
@@ -164,10 +163,9 @@
     display: flex;
 }
 
-.service-detail .detail-left__slider-nav .slick-slide>div {
+.service-detail .detail-left__slider-nav .slick-slide > div {
     margin-right: 16px;
 }
-
 
 /* cus btn arr img */
 
@@ -378,7 +376,8 @@
     grid-gap: 8px 0;
     padding: 16px;
     border-radius: 4px;
-    box-shadow: rgb(242 242 242) 1px 1px 0px 0px inset, rgb(242 242 242) -1px -1px 0px 0px inset;
+    box-shadow: rgb(242 242 242) 1px 1px 0px 0px inset,
+        rgb(242 242 242) -1px -1px 0px 0px inset;
 }
 
 .service-detail .infoMer-top {
@@ -441,7 +440,6 @@
     justify-content: center;
     grid-gap: 4px 0;
 }
-
 
 /* .service-detail .infoMer-item:not(:nth-child(3)) {
     border-right: 1px solid #ccc;
@@ -581,10 +579,10 @@
 .service-detail .service-detail__description .service-description {
     margin-bottom: 14px;
     line-height: 1.5;
-    font-weight: 500;
+    font-weight: 700;
     font-size: 16px;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
+    /* display: -webkit-box; */
+
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -714,12 +712,20 @@
     cursor: pointer;
     line-height: 34px;
 }
-
+.service-description-updating {
+    margin-bottom: 24px;
+}
+.service-description-updating span {
+    font-weight: bold;
+}
 .seemore-btn {
     font-size: 14px;
     color: var(--purple);
     margin: 0 auto;
+    font-weight: bold;
+    margin-left: 8px;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .seemore-btn p {
