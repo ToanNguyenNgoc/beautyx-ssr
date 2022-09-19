@@ -12,14 +12,14 @@ import HeadMobile from '../../HeadMobile';
 import useFullScreen from '../../../utils/useDeviceMobile';
 import useSwrInfinite from '../../../utils/useSwrInfinite';
 import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
-import {AUTH_LOCATION} from "../../../api/authLocation"
+import { AUTH_LOCATION } from "../../../api/authLocation"
 
 function HomeDiscountList() {
-    const location = AUTH_LOCATION()
+    const LOCATION = AUTH_LOCATION()
     const paramsDiscounts = {
         "append": "user_available_purchase_count",
         "filter[platform]": "MOMO",
-        "filter[location]": location,
+        "filter[location]": LOCATION,
         "limit": "30",
         "sort": "-priority|-created_at|discount_value"
     }

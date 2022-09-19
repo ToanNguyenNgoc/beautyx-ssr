@@ -1,27 +1,37 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { Container } from "@mui/material";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
+import useSwrInfinite from "../../utils/useSwrInfinite";
 import DiscountItem from "./DiscountItem";
-import "./style.css";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
-import { STATUS } from "../../redux/status";
-
-import { LoadingServicesRow } from '../../components/LoadingSketion';
+import { LoadGrid } from "../../components/LoadingSketion"
 import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
+import { AUTH_LOCATION } from "../../api/authLocation";
+import { paramsDiscounts } from "../../params-query"
+import "./style.css";
 
 function HomeDiscount() {
-    const { t } = useContext(AppContext);
-    const { DISCOUNTS } = useSelector((state: any) => state.HOME);
-    const { discounts } = DISCOUNTS;
+    const { t, geo } = useContext(AppContext);
+    const LOCATION = AUTH_LOCATION();
+    const newParams = {
+        ...paramsDiscounts,
+        page: 1,
+        "filter[location]": LOCATION
+    }
+    const { resData, isValidating } = useSwrInfinite("/discounts", newParams)
+    const discounts = resData
     const history = useHistory();
     const onViewMore = () => {
         history.push("/giam-gia");
         scrollTop();
     };
+    let currentLocation
+    if (geo) {
+        currentLocation = `${geo.context[1]?.text_vi},${geo.context[2]?.text_vi},${geo.context[3]?.text_vi}`
+    }
     return (
         <div className="home-discounts">
             <Container>
@@ -31,43 +41,50 @@ function HomeDiscount() {
                         {t("trending.watch_all")} {">"}
                     </span>
                 </div>
+                {
+                    geo &&
+                    <div className="home-discounts__location">
+                        <div className="ring-container">
+                            <div className="ringring"></div>
+                            <div className="circle"></div>
+                        </div>
+                        <span className="text">
+                            {currentLocation}
+                        </span>
+                    </div>
+                }
                 <div className="home-discounts__list-wrap">
-                    {
-                        DISCOUNTS.status_discount === STATUS.LOADING
-                            ?
-                            <LoadingServicesRow />
-                            :
-                            <ul className="home-discounts__list">
-                                {discounts
-                                    .filter((i: IDiscountPar) =>
-                                    (i.items.length > 0 && (
-                                        i.discount_type === DISCOUNT_TYPE.PRODUCT.key ||
-                                        i.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key
-                                    ))
-                                    )
-                                    .slice(0, 12)
-                                    .map((discount: IDiscountPar, index: number) => (
-                                        <div key={index}>
-                                            {discount.items.map(
-                                                (item: IITEMS_DISCOUNT, i: number) => (
-                                                    <li key={i}>
-                                                        <DiscountItem
-                                                            discountItem={item}
-                                                            discountPar={discount}
-                                                        />
-                                                    </li>
-                                                )
-                                            )}
-                                        </div>
-                                    ))}
-                                <div className="watch-more-card" onClick={onViewMore}>
-                                    <li>
-                                        <div>{'>'}</div>
-                                        <span>Xem thêm</span>
-                                    </li>
+                    {(isValidating && resData.length === 0) && <LoadGrid />}
+                    <ul className="home-discounts__list">
+                        {discounts
+                            .filter((i: IDiscountPar) =>
+                            (i.items.length > 0 && (
+                                i.discount_type === DISCOUNT_TYPE.PRODUCT.key ||
+                                i.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key
+                            ))
+                            )
+                            .slice(0, 12)
+                            .map((discount: IDiscountPar, index: number) => (
+                                <div key={index}>
+                                    {discount.items.map(
+                                        (item: IITEMS_DISCOUNT, i: number) => (
+                                            <li key={i}>
+                                                <DiscountItem
+                                                    discountItem={item}
+                                                    discountPar={discount}
+                                                />
+                                            </li>
+                                        )
+                                    )}
                                 </div>
-                            </ul>
-                    }
+                            ))}
+                        {/* <div className="watch-more-card" onClick={onViewMore}>
+                            <li>
+                                <div>{'>'}</div>
+                                <span>Xem thêm</span>
+                            </li>
+                        </div> */}
+                    </ul>
                 </div>
             </Container>
         </div>

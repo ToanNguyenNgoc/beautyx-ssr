@@ -52,7 +52,10 @@ function HomeTags(props: any) {
     //         search: `${tag}`,
     //     });
     // };
-    const currentAddress = geo?.properties?.address ?? `${geo?.context[0]?.text_vi},${geo?.context[1]?.text_vi}`
+    let currentLocation
+    if(geo){
+        currentLocation = `${geo.context[1]?.text_vi},${geo.context[2]?.text_vi},${geo.context[3]?.text_vi}`
+    }
     return (
         <>
             {/* <div className="home-title__tag">
@@ -107,7 +110,7 @@ function HomeTags(props: any) {
                                 src={icon.locationCate}
                                 onError={(e) => onErrorImg(e)} alt="" />
                             <div className="tag-item-title">
-                                {geo ? currentAddress : "Gần bạn"}
+                                {geo ? currentLocation : "Gần bạn"}
                             </div>
                         </Link>
                     </li>

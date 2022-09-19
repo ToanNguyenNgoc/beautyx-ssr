@@ -1,6 +1,7 @@
 import React from "react";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
 import onErrorImg from "../../utils/errorImg";
+import {formatDistance} from "../../utils/format"
 import formatPrice from "../../utils/formatPrice";
 import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
@@ -38,7 +39,7 @@ function DiscountItem(props: IProps) {
             {
                 discountItem.organization.image_url !== '' &&
                 discountItem.organization.image_url !== null &&
-                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e,true)} className="home-discount-item__org-logo" alt="" />
+                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
             }
             <img
                 alt=""
@@ -70,6 +71,13 @@ function DiscountItem(props: IProps) {
                         {formatPrice(discountItem.productable.price || discountItem.productable.retail_price)}đ
                     </span>
                 </div>
+                {
+                    discountPar.distance_organization &&
+                    <div className="distance">
+                        <span className="dot"></span>
+                        Cách bạn: {formatDistance(discountPar.distance_organization)}
+                    </div>
+                }
                 <div className="address">
                     <img src={icon.mapPinRed} alt="" />
                     <span>{discountItem.organization.full_address}</span>
