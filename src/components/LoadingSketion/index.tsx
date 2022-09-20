@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react'
 import './style.css'
 import { Skeleton } from '@mui/material'
-import useDeviceMobile from '../../utils/useDeviceMobile';
+import useDeviceMobile from '../../utils/useDeviceMobile'
+export * from "./LoadGrid"
 
 
 const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];

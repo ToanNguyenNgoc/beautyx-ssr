@@ -5,7 +5,7 @@ import dateNow from "../utils/dateExp";
 import { useDispatch, useSelector } from 'react-redux';
 import dayjs from "dayjs";
 import { fetchAsyncUser } from '../redux/USER/userSlice';
-import { fetchAsyncHome, fetchAsyncDiscounts } from '../redux/home/homeSlice';
+import { fetchAsyncHome } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
 import { fetchAsyncApps } from '../redux/appointment/appSlice';
 import { fetchAsyncOrderServices } from '../redux/order/orderSlice';
@@ -53,9 +53,6 @@ export default function AppProvider({ children }) {
     }, [sign, dispatch]);
     useEffect(() => {
         dispatch(fetchAsyncHome())
-        dispatch(fetchAsyncDiscounts({
-            page: 1
-        }))
         dispatch(fetchAsyncNews());
         dispatch(fetchAsyncVideos());
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,19 +79,17 @@ export default function AppProvider({ children }) {
                 lat: res.coords.latitude,
                 long: res.coords.longitude
             }
+            // const user_location = {
+            //     lat: 10.8783504,
+            //     long: 106.7669344
+            // }
             sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location));
             const api_url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${user_location.long},${user_location.lat}.json?access_token=${keyMapBox}&language=vi&country=vn`
             const resAddress = await axios.get(api_url);
             setGeo(resAddress?.features[0]);
             callDisAndOrgsByLocation();
-            dispatch(fetchAsyncDiscounts({
-                page: 1
-            }))
         } catch (error) {
             callDisAndOrgsByLocation();
-            dispatch(fetchAsyncDiscounts({
-                page: 1
-            }))
         }
     }
     useEffect(() => {

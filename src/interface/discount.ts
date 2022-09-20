@@ -84,6 +84,7 @@ export interface IDiscountPar {
     coupon_code: string,
     discount_value: number,
     discount_unit: string,
+    distance_organization?:number,
     discount_type: string,
     valid_from: string,
     valid_util: string,
