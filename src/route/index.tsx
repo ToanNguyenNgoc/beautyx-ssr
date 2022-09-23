@@ -31,6 +31,7 @@ import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 import HomeMap from "../features/HomeMap";
+import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -205,6 +206,10 @@ function RouterConfig(props: any) {
     {
       path: "/ban-do",
       component: <HomeMap />
+    },
+    {
+      path: "/top-san-pham-giam-gia",
+      component: <HomePromoProduct />
     },
     {
       path: "*",

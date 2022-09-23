@@ -27,11 +27,14 @@ export const fetchAsyncOrgsByFilter: any = createAsyncThunk(
     }
 )
 
-interface IInitialState {
+export interface IFILTER {
     FILTER_PROMO: {
         id: number,
         query: string
     },
+    FILTER_PRODUCT_PROMO: {
+        query: string
+    }
     FILTER_ORG: {
         tags: any[],
         province: any,
@@ -56,12 +59,14 @@ interface IInitialState {
     }
 }
 
-const initialState: IInitialState = {
+const initialState: IFILTER = {
     FILTER_PROMO: {
         id: 2,
         query: "-discount_percent"
     },
-
+    FILTER_PRODUCT_PROMO: {
+        query: "-discount_percent"
+    },
     FILTER_ORG: {
         tags: [],
         province: null,
@@ -93,6 +98,9 @@ const filterSlice = createSlice({
         onSetFilterPromo: (state, action) => {
             state.FILTER_PROMO.id = action.payload.id;
             state.FILTER_PROMO.query = action.payload.query
+        },
+        onSetFilterProductPromo: (state, action) => {
+            state.FILTER_PRODUCT_PROMO.query = action.payload
         },
         onSetTagsOrg: (state, action) => {
             const iIndex = state.FILTER_ORG.tags.findIndex((item: any) =>
@@ -183,6 +191,7 @@ const filterSlice = createSlice({
 const { actions } = filterSlice;
 export const {
     onSetFilterPromo,
+    onSetFilterProductPromo,
     onSetTagsOrg,
     onSetSortOrg,
     onSetOrgsProvince,

@@ -22,8 +22,8 @@ function HomeTags(props: any) {
         { id: 1, title: "Nail", text: "Nail", img: imgTag.nails },
         {
             id: 6,
-            title: "clinic",
-            text: "clinic",
+            title: "Clinic",
+            text: "Clinic",
             img: imgTag.clinic,
         },
         {
@@ -53,7 +53,7 @@ function HomeTags(props: any) {
     //     });
     // };
     let currentLocation
-    if(geo){
+    if (geo) {
         currentLocation = `${geo.context[1]?.text_vi},${geo.context[2]?.text_vi},${geo.context[3]?.text_vi}`
     }
     return (

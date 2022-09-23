@@ -2,6 +2,7 @@ import { useSWRInfinite } from "swr";
 import { pickBy, identity } from "lodash"
 
 export function useSwrInfinite(
+    condition: any,
     API_URL: string,
     params?: any,
 ) {
@@ -10,7 +11,7 @@ export function useSwrInfinite(
         paramsURL = `&${new URLSearchParams(pickBy(params, identity)).toString()}`
     }
     const { data, isValidating, size, setSize, mutate } = useSWRInfinite(
-        (index) => `${API_URL}?page=${index + 1}${paramsURL}`,
+        (index) => condition && `${API_URL}?page=${index + 1}${paramsURL}`,
         {
             revalidateOnFocus: false,
             initialSize: 1

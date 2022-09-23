@@ -1,45 +1,49 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
-import { IServicePromo } from "../../../interface/servicePromo";
-import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
+import React from "react";
+import { IProductPromo } from "../../../interface/productPromo"
+import ProductPromoItem from "../../ViewItemCommon/ProductPromoItem";
 import HomeTitle from "../Components/HomeTitle";
+import useSwrInfinite from "../../../utils/useSwrInfinite";
+import { paramsProducts } from "../../../params-query"
+// import { AppContext } from "../../../context/AppProvider";
+import FilterProduct from "../../Filter/FilterProduct";
+import { LoadGrid } from "../../../components/LoadingSketion";
+import { useSelector } from "react-redux";
+import IStore from "../../../interface/IStore";
 import "./homeTopService.css";
-import { fetchAsyncServicesBought } from '../../../redux/home/homePageSlice'
-import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from '../../../redux/status'
-import { AppContext } from "../../../context/AppProvider";
 
 
 export default function HomeTopService() {
-    const {t} = useContext(AppContext);
-    const dispatch = useDispatch();
-    const { SERVICES_BOUGHT } = useSelector((state: any) => state.HOME_PAGE);
-    const { services, status } = SERVICES_BOUGHT;
-
-    const callServicesTopBought = () => {
-        if (status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncServicesBought({
-                page: 1,
-                sort: "-bought_count"
-            }))
-        }
+    // const { t } = useContext(AppContext);
+    const { query } = useSelector((state: IStore) => state.FILTER.FILTER_PRODUCT_PROMO)
+    const params = {
+        ...paramsProducts,
+        limit: 30,
+        "sort": query,
+        "filter[special_price]": true
     }
-
-    useEffect(() => {
-        callServicesTopBought()
-    }, []);
+    const { resData, isValidating } = useSwrInfinite(true, "/products", params)
 
     return (
         <div className="home-top__service">
             <HomeTitle
-                title={t("home_2.top_selling_services")}
-                // url={"/"}
-                // seemore={"Xem chi tiết >"}
+                title={"Top sản phẩm đang giảm giá"}
+                url={"/top-san-pham-giam-gia"}
+                seemore={"Xem chi tiết >"}
             />
+            <FilterProduct />
+            {(resData.length === 0 && isValidating) && <LoadGrid />}
             <div className="top-service__list">
-                {services?.map((item: IServicePromo, index: number) => (
-                    <ServicePromoItem key={index} service={item} />
-                ))}
+                {
+                    resData
+                        .slice(0, 24)
+                        .map((item: IProductPromo, index: number) => (
+                            <ProductPromoItem
+                                key={index}
+                                product={item}
+                            />
+                        ))
+                }
             </div>
         </div>
     );

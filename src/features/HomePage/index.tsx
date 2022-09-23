@@ -58,10 +58,10 @@ export default function HomePage() {
             <Container>
                 <HomeHotDeal />
                 <HomeTopService />
+                <HomeRecomment />
                 {/* {IS_MB && <HomeHotTrend />} */}
                 <HomeFavorite />
                 <HomeProvince />
-                <HomeRecomment />
             </Container>
             {/* <FooterCate/> */}
             <Footer />

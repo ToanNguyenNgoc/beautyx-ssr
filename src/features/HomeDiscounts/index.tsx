@@ -21,7 +21,7 @@ function HomeDiscount() {
         page: 1,
         "filter[location]": LOCATION
     }
-    const { resData, isValidating } = useSwrInfinite("/discounts", newParams)
+    const { resData, isValidating } = useSwrInfinite(true, "/discounts", newParams)
     const discounts = resData
     const history = useHistory();
     const onViewMore = () => {
