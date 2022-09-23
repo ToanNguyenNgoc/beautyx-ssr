@@ -489,7 +489,7 @@
 }
 
 .org-information {
-    width: 50%;
+    /* width: 50%; */
 }
 
 .org-information__map-cnt {
@@ -1460,8 +1460,7 @@
     .org-container .org-galleries-cnt {
         padding: 16px 12px;
     }
-    .org-galleries__images-section
-        .MuiButtonBase-root.MuiTab-root.Mui-selected {
+    .org-galleries__images-section .MuiButtonBase-root.MuiTab-root.Mui-selected {
         color: var(--purple) !important;
     }
     .org-galleries__images-section .MuiButtonBase-root.MuiTab-root {

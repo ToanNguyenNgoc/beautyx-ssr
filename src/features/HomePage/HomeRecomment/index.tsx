@@ -25,7 +25,7 @@ export default function HomeRecomment() {
         <div className="home-recomment">
             <HomeTitle title={t("home_2.suggestions_for_you")} />
             <ul className="home-recomment__list">
-                {resData.map((item: IServicePromo, index: number) => (
+                {resData.filter(e=>e.org_id !== 164).map((item: IServicePromo, index: number) => (
                     <li className="home-recomment__item" key={index}>
                         <ServicePromoItem service={item} />
                     </li>

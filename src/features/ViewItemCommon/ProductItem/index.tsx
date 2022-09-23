@@ -64,6 +64,10 @@ function ProductItem(props: IProps) {
                     alt=""
                     onError={(e) => onErrorImg(e)}
                 />
+                <img 
+                    src={org?.image_url} alt="org logo" className="ser-img__org-logo"
+                    onError={(e) => onErrorImg(e,true)}
+                />
                 <div className="ser-promo">
                     {product?.special_price > 0 && (
                         <div className="ser-promo__percent">
