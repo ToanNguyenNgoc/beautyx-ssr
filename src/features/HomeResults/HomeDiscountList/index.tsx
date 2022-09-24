@@ -19,7 +19,7 @@ function HomeDiscountList() {
     const paramsDiscounts = {
         "append": "user_available_purchase_count",
         "filter[platform]": "MOMO",
-        "filter[location]": LOCATION ?? "",
+        // "filter[location]": LOCATION ?? "",
         "limit": "30",
         "sort": "-priority|-created_at|discount_value"
     }
