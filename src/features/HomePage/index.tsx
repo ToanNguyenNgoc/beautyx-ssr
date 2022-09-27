@@ -11,6 +11,7 @@ import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
 import HomeHotDeal from "./HomeHotDeal";
+import HomeCate from "./HomeCate";
 // import HomeHotTrend from "./HomeHotTrend";
 import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
@@ -44,6 +45,7 @@ export default function HomePage() {
             {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
             {/* <HomeTagsProducts /> */}
             <Container>
+                <HomeCate/>
                 {
                     banner_status !== STATUS.SUCCESS ?
                         <LoadHomeBanner />

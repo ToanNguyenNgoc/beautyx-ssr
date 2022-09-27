@@ -1,5 +1,6 @@
 @import "~slick-carousel/slick/slick.css";
 @import "~slick-carousel/slick/slick-theme.css";
+
 :root {
     --bg-white: rgb(255, 255, 255);
     --bg-gray-dark: #e5e5e5;
@@ -16,6 +17,7 @@
     --pink-momo: #d82d8b;
     --purple-text: #3a2c93;
     --bg-purple: #7266ba;
+    --box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, .1);
 }
 
 a {
@@ -42,16 +44,19 @@ body>iframe {
 /* scroll bar */
 
 @media only screen and (max-width: 820px) {
-     ::-webkit-scrollbar {
+    ::-webkit-scrollbar {
         display: none;
     }
-     ::-webkit-scrollbar-track {
+
+    ::-webkit-scrollbar-track {
         border-radius: 3px;
     }
-     ::-webkit-scrollbar-thumb {
+
+    ::-webkit-scrollbar-thumb {
         border-radius: 3px;
         background-color: var(--purple);
     }
+
     html {
         scrollbar-width: none;
     }

@@ -24,7 +24,7 @@ function HomeDiscountList() {
         "sort": "-priority|-created_at|discount_value"
     }
     const IS_MB = useFullScreen();
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite("/discounts", paramsDiscounts)
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(true,"/discounts", paramsDiscounts)
     const discounts: IDiscountPar[] = resData
     const onViewMore = () => {
         onLoadMore()

@@ -11,6 +11,8 @@ import { fetchAsyncApps } from '../redux/appointment/appSlice';
 import { fetchAsyncOrderServices } from '../redux/order/orderSlice';
 import { getPosition } from "../api/authLocation";
 import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
+import { useSwr } from "../utils/useSwr";
+import { paramsProductsCate } from "../params-query";
 import axios from "axios";
 
 export const AppContext = createContext();
@@ -95,6 +97,11 @@ export default function AppProvider({ children }) {
     useEffect(() => {
         getLocationPlatFormBeauty()
     }, [])
+    //handle product cate, service cate
+    const productCatePage1 = useSwr("/tags", true, { page: 1, ...paramsProductsCate }).responseArray;
+    const productCatePage2 = useSwr("/tags", true, { page: 2, ...paramsProductsCate }).responseArray;
+    const productCatePage3 = useSwr("/tags", true, { page: 3, ...paramsProductsCate }).responseArray;
+    const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
 
 
     const value = {
@@ -110,7 +117,8 @@ export default function AppProvider({ children }) {
         setTempleCount,
         dayObj,
         setDayObj,
-        geo
+        geo,
+        productCate
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }

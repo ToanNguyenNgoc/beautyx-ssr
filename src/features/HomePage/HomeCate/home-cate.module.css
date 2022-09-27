@@ -1,0 +1,145 @@
+.container {
+    margin: 10px 0px;
+    width: 212px;
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    text-align: start;
+}
+
+.cate_header {
+    display: flex;
+    align-items: center;
+    background-color: #fff0e8;
+    width: fit-content;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+.cate_header img {
+    width: 18px;
+    height: 18px;
+}
+
+.cate_header span {
+    color: var(--text-orange);
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+.cate_par_cnt {
+    width: max-content;
+    background-color: var(--bgWhite);
+    padding: 8px;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000;
+    box-shadow: var(--box-shadow);
+    top: 46px;
+    transition: all .3s;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.cate_par_cnt_show {
+    transition: all .3;
+    opacity: 1;
+    visibility: visible;
+    top: 36px;
+}
+
+.cate_par_list {
+    position: relative;
+}
+
+.cate_par_list::before {
+    content: "";
+    top: -8px;
+    right: -16px;
+    width: 20px;
+    height: calc(100% + 16px);
+    position: absolute;
+    background-color: transparent;
+}
+
+
+.cate_par_list_item {
+    cursor: pointer;
+    padding: 8px;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 700;
+    transition: all .3s;
+    border-radius: 4px;
+}
+
+.item_child_cnt {
+    position: absolute;
+    width: 58vw;
+    height: max-content;
+    background-color: var(--bg-white);
+    border-radius: 4px;
+    box-shadow: var(--box-shadow);
+    z-index: 1000;
+    left: calc(100% + 12px);
+    top: 2px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all .3s;
+}
+
+.cate_par_list_item:hover {
+    background-color: var(--bg-color);
+    transition: all .3s;
+}
+
+.cate_par_list:hover .item_child_cnt {
+    top: -8px;
+    visibility: visible;
+    transition: all .3s;
+    opacity: 1;
+}
+
+.child_list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 12px;
+    padding: 12px;
+}
+
+.child_list_name {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.child_list_name img {
+    width: 34px;
+    height: 34px;
+    border-radius: 100%;
+    margin-right: 6px;
+}
+
+.child_child_list {
+    padding: 12px;
+}
+
+.child_child_item {
+    margin-bottom: 2px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all .3s;
+}
+
+.child_child_item:hover {
+    background-color: var(--bg-color);
+    transition: all .3s;
+}

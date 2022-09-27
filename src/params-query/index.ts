@@ -32,3 +32,8 @@ export const paramsProducts = {
     "filter[location]": "",
     "sort": ""
 }
+export const paramsProductsCate = {
+    "filter[group]": "PRODUCT",
+    "include": "parent.media|children.media|children.children.media|media",
+    "sort": "-organizations_count"
+}

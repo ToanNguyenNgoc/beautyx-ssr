@@ -2,11 +2,19 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import "./style.css"
 
-export function LoadGrid() {
+interface LoadGridProp {
+    grid?: number
+}
+
+export function LoadGrid(props: LoadGridProp) {
+    const { grid } = props;
     const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     return (
         <div>
-            <ul className="load_grid_list">
+            <ul
+                style={grid ? { gridTemplateColumns: `repeat(${grid}, 1fr)` } : {}}
+                className="load_grid_list"
+            >
                 {
                     arr.map(i => (
                         <li key={i} className="load_grid_list_item">

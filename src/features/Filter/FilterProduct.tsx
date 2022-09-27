@@ -5,10 +5,17 @@ import IStore from '../../interface/IStore';
 import { ISortList } from './FilterService';
 import { onSetFilterProductPromo } from '../../redux/filter/filterSlice';
 
-function FilterProduct() {
+interface FilterProductProps {
+    onChangeFilter?: (query: string) => void,
+    value?: string
+}
+
+function FilterProduct(props: FilterProductProps) {
+    const { onChangeFilter, value } = props;
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const { query } = useSelector((state: IStore) => state.FILTER.FILTER_PRODUCT_PROMO)
+    const query_value = value ?? query
     const sortList: ISortList[] = [
         { id: 2, title: t("home_2.hot_promotion"), query: '-discount_percent' },
         //{ id: 8, title: 'Dịch vụ HOT', query: '-modified_date' },
@@ -18,7 +25,11 @@ function FilterProduct() {
         // { id: 7, title: t("home_2.name") + 'Z-A', query: '-service_name' },
     ]
     const onFilter = (query: string) => {
-        dispatch(onSetFilterProductPromo(query))
+        if (onChangeFilter) {
+            onChangeFilter(query)
+        } else {
+            dispatch(onSetFilterProductPromo(query))
+        }
     }
     return (
         <div className='filter-ser-cnt'>
@@ -26,7 +37,8 @@ function FilterProduct() {
                 {
                     sortList.map(item => (
                         <li
-                            style={query === item.query ?
+                            key={item.id}
+                            style={query_value === item.query ?
                                 {
                                     backgroundColor: 'var(--pink)',
                                     color: 'var(--red-cl)',
