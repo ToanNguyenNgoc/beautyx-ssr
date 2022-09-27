@@ -2,7 +2,6 @@ import React from "react";
 //import Home from "../features/Home/index";
 import { BrowserRouter, Switch, Redirect } from "react-router-dom";
 import { RouteComponentProps } from "@reach/router";
-import { FLAT_FORM_TYPE } from '../rootComponents/flatForm';
 import MerchantDetail from "../features/MerchantDetail/index";
 import Partner from "../features/Partner";
 import Cart from "../features/Cart/index";
@@ -32,6 +31,7 @@ import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 import HomeMap from "../features/HomeMap";
 import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
+import HomeCateResult from "../features/HomeResults/HomeCateResult"
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -210,6 +210,10 @@ function RouterConfig(props: any) {
     {
       path: "/top-san-pham-giam-gia",
       component: <HomePromoProduct />
+    },
+    {
+      path:"/danh-sach-san-pham/:tag_name",
+      component:<HomeCateResult/>
     },
     {
       path: "*",

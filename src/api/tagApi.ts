@@ -5,7 +5,7 @@ class Tag {
         const url = `/tags`;
         const params = {
             filter: "ORGANIZATION",
-            include: "children|media",
+            include: "children.media|media",
             sort: "-organizations_count",
         };
         return axiosClient.get(url, { params });

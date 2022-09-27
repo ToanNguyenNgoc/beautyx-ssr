@@ -200,6 +200,7 @@ import noApply from "../assets/icon/no-apply.svg";
 import directionRed from '../assets/icon/directionRed.svg';
 import archiveRed from '../assets/icon/archiveRed.svg';
 import pinMapRedGoogle from '../assets/icon/pinMapRedGoogle.png';
+import listOrange from "../assets/icon/listOrange.svg"
 
 const icon = {
     noApply,
@@ -399,6 +400,7 @@ const icon = {
     pinMapRed,
     directionRed,
     archiveRed,
-    pinMapRedGoogle
+    pinMapRedGoogle,
+    listOrange
 };
 export default icon;

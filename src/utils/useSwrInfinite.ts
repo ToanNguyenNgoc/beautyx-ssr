@@ -20,9 +20,8 @@ export function useSwrInfinite(
     let resData: any[] = [];
     let totalItem = 1;
     if (data) {
-        // console.log(data[0].data.data.hits)
-        totalItem = data[0]?.data.context?.total ?? data[0].data.total;
-        resData = data.map((i: any) => (i.data.context?.data ?? i.data.data?.hits)).flat()
+        totalItem = data[0]?.data?.context?.total ?? data[0]?.data?.total;
+        resData = Array.isArray(data) ? data?.map((i: any) => (i?.data?.context?.data ?? i?.data?.data?.hits)).flat() : []
     }
     const onLoadMore = () => {
         setSize(size + 1)

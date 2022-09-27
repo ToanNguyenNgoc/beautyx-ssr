@@ -20,8 +20,8 @@ import { IDiscountPar } from "../../../interface/discount";
 import { checkPhoneValid } from "../../../utils/phoneUpdate";
 import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
 // OTP [ update telephone number ]
-    import { IDataOtp } from "../../Otp/_model";
-    import RenderRecatpcha,{FieldOtps} from "../../Otp/dialogOtp";
+import { IDataOtp } from "../../Otp/_model";
+import RenderRecatpcha, { FieldOtps } from "../../Otp/dialogOtp";
 // END [ update telephone number ]
 import { putUser, updateAsyncUser } from "../../../redux/USER/userSlice";
 function CartBottom(props: any) {
@@ -31,30 +31,31 @@ function CartBottom(props: any) {
     const dispatch = useDispatch();
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
     const { cartQuantityCheck } = useSelector((state: any) => state.carts);
+    const [load, setLoad] = useState(false);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     //* [ OTP  update telephone number ]
-        const [otp, setOtp] = useState(false);
-        // const [otpCode, setOtpCode] = useState(false);
-        const [dataOtp, setDataOtp] = useState({
-            open: false,
-            telephone: '',
-            code: '',
-            verification_id: ''
-        });
+    const [otp, setOtp] = useState(false);
+    // const [otpCode, setOtpCode] = useState(false);
+    const [dataOtp, setDataOtp] = useState({
+        open: false,
+        telephone: '',
+        code: '',
+        verification_id: ''
+    });
     //* [END]  OTP  update telephone number
     //* [ Throw exception noti ]
-        const [openAlertSnack, setOpenAlertSnack] = useState({
-            title: "",
-            open: false,
-        });
-        const [openNoti, setOpenNoti] = useState({
-            title: "",
-            open: false,
-            titleLeft: "",
-            titleRight: "",
-            onClickLeft: () => { },
-            onClickRight: () => { },
-        });
+    const [openAlertSnack, setOpenAlertSnack] = useState({
+        title: "",
+        open: false,
+    });
+    const [openNoti, setOpenNoti] = useState({
+        title: "",
+        open: false,
+        titleLeft: "",
+        titleRight: "",
+        onClickLeft: () => { },
+        onClickRight: () => { },
+    });
     //* [END] Throw exception noti
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
@@ -91,7 +92,7 @@ function CartBottom(props: any) {
     };
 
     async function handlePostOrder() {
-        //setLoading(true)
+        setLoad(true)
         try {
             tracking.PAY_CONFIRM_CLICK(
                 DATA_PMT.org.id,
@@ -121,9 +122,10 @@ function CartBottom(props: any) {
                     onClickRight: () => history.push("/home"),
                 });
             }
-            //setLoading(false);
+            setLoad(false);
         } catch (err) {
             console.log(err);
+            setLoad(false);
             setOpenNoti({
                 open: true,
                 title: `${t("pm.order_fail")}`,
@@ -143,15 +145,15 @@ function CartBottom(props: any) {
                     open: true,
                     title: "Chưa có địa chỉ giao hàng !",
                 });
-            } 
-            else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)){
+            }
+            else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
                 setOpenNoti({
                     open: true,
                     title: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
                     titleLeft: `Cập nhập`,
                     titleRight: `Để sau`,
                     onClickLeft: () => handleOtp(),
-                    onClickRight: () => setOpenNoti({...openNoti,open:false}),
+                    onClickRight: () => setOpenNoti({ ...openNoti, open: false }),
                 });
             }
             else {
@@ -195,11 +197,11 @@ function CartBottom(props: any) {
     // console.log(discountVoucherTotal, vouchersCal)
     const handleOtp = () => {
         setOtp(true);
-        setOpenNoti({...openNoti,open:false})
+        setOpenNoti({ ...openNoti, open: false })
     }
     const handleUpdatePhone = async (props: IDataOtp) => {
         console.log(props);
-        try{
+        try {
 
             const paramsOb = {
                 "telephone": props.telephone,
@@ -209,16 +211,16 @@ function CartBottom(props: any) {
             const res = await authentication.putUserProfile(paramsOb);
             // const res = await updateAsyncUser(paramsOb);
             console.log(res);
-            dispatch(putUser({ ...USER,  }));
-            if(res){
+            dispatch(putUser({ ...USER, }));
+            if (res) {
                 setDataOtp({
                     ...dataOtp,
-                    open:false
+                    open: false
                 })
                 alert('cập nhập thành công');
                 window.location.reload();
             }
-        }catch(err){
+        } catch (err) {
             console.log(err);
             setOpenAlertSnack({
                 ...openAlertSnack,
@@ -231,113 +233,113 @@ function CartBottom(props: any) {
     // console.log(dataOtp);
     return (
         <>
-        <div className="re-cart-bottom">
-            <AlertSnack
-                title={openAlertSnack.title}
-                open={openAlertSnack.open}
-                status="FAIL"
-                onClose={() =>
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: false,
-                    })
-                }
-            />
-            <Container>
-                <div className="re-cart-bottom__cnt">
-                    <div className="re-cart-bottom__total">
-                        {/* <div className="flex-row re-cart-bottom__total-discount">
+            <div className="re-cart-bottom">
+                <AlertSnack
+                    title={openAlertSnack.title}
+                    open={openAlertSnack.open}
+                    status="FAIL"
+                    onClose={() =>
+                        setOpenAlertSnack({
+                            ...openAlertSnack,
+                            open: false,
+                        })
+                    }
+                />
+                <Container>
+                    <div className="re-cart-bottom__cnt">
+                        <div className="re-cart-bottom__total">
+                            {/* <div className="flex-row re-cart-bottom__total-discount">
                             <span>Mã khuyến mãi</span>
                             <img src={icon.cardDiscountOrange} alt="" className="icon" />
                         </div> */}
-                        <div className="re-cart-bottom__cal">
-                            <div className="flex-row-sp re-cart-bottom__cal-item">
-                                <span>{`${t("pm.total_money")}`}</span>
-                                <span>
-                                    {formatPrice(DATA_CART.cartAmount)}đ
-                                </span>
-                            </div>
-                            {listDiscount.filter(Boolean).length > 0 && (
+                            <div className="re-cart-bottom__cal">
                                 <div className="flex-row-sp re-cart-bottom__cal-item">
-                                    <span>{`${t("pm.sale")}`}</span>
+                                    <span>{`${t("pm.total_money")}`}</span>
                                     <span>
-                                        -
+                                        {formatPrice(DATA_CART.cartAmount)}đ
+                                    </span>
+                                </div>
+                                {listDiscount.filter(Boolean).length > 0 && (
+                                    <div className="flex-row-sp re-cart-bottom__cal-item">
+                                        <span>{`${t("pm.sale")}`}</span>
+                                        <span>
+                                            -
+                                            {formatPrice(
+                                                DATA_CART.cartAmountDiscount
+                                            )}
+                                            đ
+                                        </span>
+                                    </div>
+                                )}
+                                {
+                                    VOUCHER_APPLY.length > 0 &&
+                                    vouchersCal
+                                        // .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
+                                        .map((item: IDiscountPar) => (
+                                            <div key={item.id} className="flex-row-sp re-cart-bottom__cal-item">
+                                                <span>{item.title}</span>
+                                                <span>
+                                                    -
+                                                    {formatPrice(
+                                                        item.discount_value
+                                                    )}đ
+                                                    {/* {item.discount_unit === "PERCENT" && "%"} */}
+                                                    {/* {item.discount_unit === "PRICE" && "đ"} */}
+                                                </span>
+                                            </div>
+                                        ))
+                                }
+                            </div>
+                            <div className="flex-row-sp re-cart-bottom__pay">
+                                <span className="left">{`${t(
+                                    "pm.total_payment"
+                                )}`}</span>
+                                <div className="right">
+                                    <span className="right-money">
                                         {formatPrice(
-                                            DATA_CART.cartAmountDiscount
+                                            DATA_CART.cartAmount -
+                                            DATA_CART.cartAmountDiscount -
+                                            discountVoucherTotal
                                         )}
                                         đ
                                     </span>
+                                    <ButtonLoading
+                                        title={`${t("pm.total_payment")}`}
+                                        loading={load}
+                                        onClick={handleSubmitOrder}
+                                    />
                                 </div>
-                            )}
-                            {
-                                VOUCHER_APPLY.length > 0 &&
-                                vouchersCal
-                                    // .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
-                                    .map((item: IDiscountPar) => (
-                                        <div key={item.id} className="flex-row-sp re-cart-bottom__cal-item">
-                                            <span>{item.title}</span>
-                                            <span>
-                                                -
-                                                {formatPrice(
-                                                    item.discount_value
-                                                )}đ
-                                                {/* {item.discount_unit === "PERCENT" && "%"} */}
-                                                {/* {item.discount_unit === "PRICE" && "đ"} */}
-                                            </span>
-                                        </div>
-                                    ))
-                            }
-                        </div>
-                        <div className="flex-row-sp re-cart-bottom__pay">
-                            <span className="left">{`${t(
-                                "pm.total_payment"
-                            )}`}</span>
-                            <div className="right">
-                                <span className="right-money">
-                                    {formatPrice(
-                                        DATA_CART.cartAmount -
-                                        DATA_CART.cartAmountDiscount -
-                                        discountVoucherTotal
-                                    )}
-                                    đ
-                                </span>
-                                <ButtonLoading
-                                    title={`${t("pm.total_payment")}`}
-                                    loading={false}
-                                    onClick={handleSubmitOrder}
-                                />
                             </div>
                         </div>
                     </div>
-                </div>
-            </Container>
-            <Notification
-                content={openNoti.title}
-                open={openNoti.open}
-                titleBtnLeft={openNoti.titleLeft}
-                titleBtnRight={openNoti.titleRight}
-                onClickLeft={openNoti.onClickLeft}
-                onClickRight={openNoti.onClickRight}
-            />
-        </div>
-        {
-            otp && <RenderRecatpcha
-                setOpen={setOtp}
-                open={otp}
-                dataOtp={dataOtp}
-                setDataOtp={setDataOtp}
-                handleSubmit={handleUpdatePhone}
-            />
-        }
-        {
-            dataOtp.verification_id && <FieldOtps
-                open={dataOtp.open}
-                setOpen={setDataOtp}
-                dataOtp={dataOtp}
-                setDataOtp={setDataOtp}
-                handleSubmit={handleUpdatePhone}
-            />
-        }
+                </Container>
+                <Notification
+                    content={openNoti.title}
+                    open={openNoti.open}
+                    titleBtnLeft={openNoti.titleLeft}
+                    titleBtnRight={openNoti.titleRight}
+                    onClickLeft={openNoti.onClickLeft}
+                    onClickRight={openNoti.onClickRight}
+                />
+            </div>
+            {
+                otp && <RenderRecatpcha
+                    setOpen={setOtp}
+                    open={otp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                    handleSubmit={handleUpdatePhone}
+                />
+            }
+            {
+                dataOtp.verification_id && <FieldOtps
+                    open={dataOtp.open}
+                    setOpen={setDataOtp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                    handleSubmit={handleUpdatePhone}
+                />
+            }
         </>
     );
 }
