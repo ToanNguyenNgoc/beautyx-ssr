@@ -143,3 +143,9 @@
     background-color: var(--bg-color);
     transition: all .3s;
 }
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        display: none;
+    }
+}

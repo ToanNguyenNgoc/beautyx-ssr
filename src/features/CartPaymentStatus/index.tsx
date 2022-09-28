@@ -28,6 +28,7 @@ import {
     onSetStatusServicesUser,
 } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+import ModalLoad from "../../components/ModalLoad";
 // end
 const timerRender = [0];
 const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];
@@ -38,6 +39,7 @@ function CartPaymentStatus() {
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0]);
     const [openConf, setOpenConf] = useState(false);
+    const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     const [open, setOpen] = useState({
@@ -98,16 +100,19 @@ function CartPaymentStatus() {
                     break;
                 case "PENDING":
                     setOrderStatus(status);
+                    setLoading(false)
                     break;
                 case "CANCELED_BY_USER":
                     setOrderStatus(status);
                     timerRender[0] = -1;
                     dispatch(onClearOrder());
+                    setLoading(false)
                     break;
                 case "CANCELED":
                     setOrderStatus(status);
                     timerRender[0] = -1;
                     dispatch(onClearOrder());
+                    setLoading(false)
                     break;
                 default:
                     break;
@@ -159,6 +164,7 @@ function CartPaymentStatus() {
     const response = useGetMessageTiki();
     useMemo(() => {
         if (response?.requestId && response?.result.status === "fail") {
+            setLoading(false)
             handleCancelPayment();
             let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`;
             if (action) {
@@ -178,6 +184,7 @@ function CartPaymentStatus() {
     const dataCartInfo = { res, orderStatus, sec, services };
     return (
         <>
+            {loading && <ModalLoad/>}
             <HeadTitle
                 title={
                     orderStatus === "PAID"
@@ -207,6 +214,7 @@ function CartPaymentStatus() {
                             listPayment={listPayment}
                             data={dataCartInfo}
                             handleCancelOrder={handleCancelOrder}
+                            setLoading={setLoading}
                         />
                     </div>
                 </div>
