@@ -177,6 +177,7 @@
     position: absolute;
     z-index: 1;
     filter: blur(12px);
+    width: 100%;
 }
 
 .org-detail__banner-de__item .banner-item__cnt {
