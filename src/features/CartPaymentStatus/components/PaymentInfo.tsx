@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 import { CircularProgress } from '@mui/material';
 import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
@@ -12,12 +12,12 @@ import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMes
 import {doPostMakePaymentMessageMB} from '../../../rootComponents/mb/doPostMessageMBbank';
 import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
-import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
+// import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
 import onErrorImg from '../../../utils/errorImg';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
-    const { data, handleCancelOrder, action, listPayment } = props;
+    const { data, handleCancelOrder, action, listPayment, setLoading } = props;
     const dispatch = useDispatch();
     const { organization } = data.res;
     const { cartList } = useSelector((state: any) => state.carts);
@@ -29,16 +29,20 @@ function PaymentInfo(props: any) {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const deepLink = EX_PAYMENT?.deepLink;
     const EXTRA_PAYMENT_ID = EX_PAYMENT?.EXTRA_PAYMENT_ID;
+    const openPaymentPlatformTiki = () =>{
+        doPostMakePaymentMessageTiki({
+            TYPE: "ORDER",
+            params: EXTRA_PAYMENT_ID
+        })
+        setLoading(true)
+    }
     const openDeepLinkPayment = () => {
         if (FLAT_FORM) {
             switch (FLAT_FORM) {
                 case FLAT_FORM_TYPE.MOMO:
                     return window.location.assign(EX_PAYMENT?.deepLink);
                 case FLAT_FORM_TYPE.TIKI:
-                    return doPostMakePaymentMessageTiki({
-                        TYPE: "ORDER",
-                        params: EXTRA_PAYMENT_ID
-                    })
+                    return openPaymentPlatformTiki()
                 case FLAT_FORM_TYPE.MB:
                     // return
                     return  doPostMakePaymentMessageMB(EX_PAYMENT?.EXTRA_PAYMENT_DATA)
