@@ -201,6 +201,9 @@ import directionRed from '../assets/icon/directionRed.svg';
 import archiveRed from '../assets/icon/archiveRed.svg';
 import pinMapRedGoogle from '../assets/icon/pinMapRedGoogle.png';
 import listOrange from "../assets/icon/listOrange.svg"
+import barberOrange from "../assets/icon/barberOrange.svg";
+import lipstickOrange from "../assets/icon/lipstickOrange.svg";
+import boxOrange from "../assets/icon/boxOrange.svg"
 
 const icon = {
     noApply,
@@ -401,6 +404,7 @@ const icon = {
     directionRed,
     archiveRed,
     pinMapRedGoogle,
-    listOrange
+    listOrange,
+    barberOrange, lipstickOrange, boxOrange
 };
 export default icon;

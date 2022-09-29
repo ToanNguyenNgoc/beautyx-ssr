@@ -74,7 +74,7 @@ export const formatRouterLinkOrg = (subdomain: any) => {
     const pathOrg = `/cua-hang/${subdomain}`
     return pathOrg
 }
-export const formatRouterCateResult = (id: number, name: string) => {
-    const pathCateResult = `/danh-sach-san-pham/${slugify(name)}?id=${id}`
+export const formatRouterCateResult = (id: number, name: string, type: "SERVICE" | "PRODUCT") => {
+    const pathCateResult = `/danh-sach/${slugify(name)}?id=${id}&type=${type}`
     return pathCateResult
 }
