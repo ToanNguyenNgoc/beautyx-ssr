@@ -7,7 +7,7 @@ import { paramsProductsCate, paramsProducts } from "../../../params-query"
 import { ITag } from '../../../interface/tags';
 import { formatRouterCateResult } from "../../../utils/formatRouterLink/formatRouter"
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { IProductPromo } from '../../../interface/productPromo';
+import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import ProductPromoItem from '../../ViewItemCommon/ProductPromoItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
@@ -23,6 +23,7 @@ function HomeCateResult() {
     const location = useLocation();
     const history = useHistory();
     const id = params?.id
+    const type = params?.type === "SERVICE" ? "SERVICE" : "PRODUCT"
     const query = params?.sort ?? ""
 
     const tag: ITag = useSwr(`/tags/${id}`, id, paramsProductsCate).response
@@ -37,9 +38,14 @@ function HomeCateResult() {
         "filter[special_price]": query === "-discount_percent" ? true : "",
         "sort": query
     }
+    let condition = false
+    if (tag?.name && (type === "PRODUCT" || type === "SERVICE")) condition = true
+    let APL_URL = ""
+    if (type === "SERVICE") APL_URL = "/services"
+    if (type === "PRODUCT") APL_URL = "products"
     const { resData, totalItem, onLoadMore } = useSwrInfinite(
-        tag?.name,
-        "/products",
+        condition,
+        APL_URL,
         newParams
     )
 
@@ -50,7 +56,6 @@ function HomeCateResult() {
     }
     //handle sort & filter
     const onChangeFilter = (q: string) => {
-        console.log(location)
         const pathname = location.pathname
         history.push(`${pathname}?id=${id}&sort=${q}`)
     }
@@ -68,7 +73,7 @@ function HomeCateResult() {
                             tagParParent?.name &&
                             <span className={style.head_item}>
                                 <Link
-                                    to={{ pathname: formatRouterCateResult(tagParParent.id, tagParParent.name) }}
+                                    to={{ pathname: formatRouterCateResult(tagParParent.id, tagParParent.name, type) }}
                                 >
                                     <img src={icon.chevronRightBlack} alt="" />
                                     {tagParParent.name}
@@ -79,7 +84,7 @@ function HomeCateResult() {
                             tagParent?.name &&
                             <span className={style.head_item}>
                                 <Link
-                                    to={{ pathname: formatRouterCateResult(tagParent.id, tagParent.name) }}
+                                    to={{ pathname: formatRouterCateResult(tagParent.id, tagParent.name, type) }}
                                 >
                                     <img src={icon.chevronRightBlack} alt="" />
                                     {tagParent.name}
@@ -90,7 +95,7 @@ function HomeCateResult() {
                             tag?.name &&
                             <span className={style.head_item}>
                                 <Link
-                                    to={{ pathname: formatRouterCateResult(tag.id, tag.name) }}
+                                    to={{ pathname: formatRouterCateResult(tag.id, tag.name, type) }}
                                 >
                                     <img src={icon.chevronRightBlack} alt="" />
                                     {tag.name}
@@ -105,7 +110,7 @@ function HomeCateResult() {
                                     tag?.children?.map((tag_child: ITag, index: number) => (
                                         <li className={style.body_left_cate_name} key={index}>
                                             <Link
-                                                to={{ pathname: formatRouterCateResult(tag_child.id, tag_child.name) }}
+                                                to={{ pathname: formatRouterCateResult(tag_child.id, tag_child.name, type) }}
                                             >
                                                 {tag_child.name}
                                             </Link>
@@ -119,6 +124,7 @@ function HomeCateResult() {
                                 <FilterProduct
                                     onChangeFilter={onChangeFilter}
                                     value={query}
+                                    type_price={type === "SERVICE" ? "price" : "retail_price"}
                                 />
                             </div>
                             <InfiniteScroll
@@ -129,11 +135,10 @@ function HomeCateResult() {
                             >
                                 <ul className={style.body_right_list}>
                                     {
-                                        resData.map((item: IProductPromo, index: number) => (
+                                        resData.map((item: any, index: number) => (
                                             <li key={index} className={style.body_list_item}>
-                                                <ProductPromoItem
-                                                    product={item}
-                                                />
+                                                {type === "PRODUCT" && <ProductPromoItem product={item} />}
+                                                {type === "SERVICE" && <ServicePromoItem service={item} />}
                                             </li>
                                         ))
                                     }
