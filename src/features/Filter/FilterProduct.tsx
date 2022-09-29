@@ -7,11 +7,13 @@ import { onSetFilterProductPromo } from '../../redux/filter/filterSlice';
 
 interface FilterProductProps {
     onChangeFilter?: (query: string) => void,
-    value?: string
+    value?: string,
+    type_price?: "price" | "retail_price"
 }
 
 function FilterProduct(props: FilterProductProps) {
-    const { onChangeFilter, value } = props;
+    const { onChangeFilter, value, type_price } = props;
+    const price_query = type_price ?? "retail_price"
     const { t } = useContext(AppContext);
     const dispatch = useDispatch();
     const { query } = useSelector((state: IStore) => state.FILTER.FILTER_PRODUCT_PROMO)
@@ -19,8 +21,8 @@ function FilterProduct(props: FilterProductProps) {
     const sortList: ISortList[] = [
         { id: 2, title: t("home_2.hot_promotion"), query: '-discount_percent' },
         //{ id: 8, title: 'Dịch vụ HOT', query: '-modified_date' },
-        { id: 3, title: t("Mer_de.ascending_price"), query: 'retail_price' },
-        { id: 4, title: t("Mer_de.decrease_price"), query: '-retail_price' },
+        { id: 3, title: t("Mer_de.ascending_price"), query: `${price_query}` },
+        { id: 4, title: t("Mer_de.decrease_price"), query: `-${price_query}` },
         // { id: 6, title: t("home_2.name") + 'A-Z', query: 'service_name' },
         // { id: 7, title: t("home_2.name") + 'Z-A', query: '-service_name' },
     ]

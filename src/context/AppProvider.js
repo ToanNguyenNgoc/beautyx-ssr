@@ -30,6 +30,8 @@ export default function AppProvider({ children }) {
     const [sign, setSign] = useState();
     const [tempCount, setTempleCount] = useState(0);
     const [dayObj, setDayObj] = useState(dayjs())
+    const [serviceCate, setServiceCate] = useState([])
+
     if (localStorage.getItem("_WEB_US")) {
         const tokenDecoded = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
         let exp = tokenDecoded?.token_expired_at;
@@ -96,12 +98,18 @@ export default function AppProvider({ children }) {
     }
     useEffect(() => {
         getLocationPlatFormBeauty()
+        getAllServiceCate()
     }, [])
     //handle product cate, service cate
     const productCatePage1 = useSwr("/tags", true, { page: 1, ...paramsProductsCate }).responseArray;
     const productCatePage2 = useSwr("/tags", true, { page: 2, ...paramsProductsCate }).responseArray;
     const productCatePage3 = useSwr("/tags", true, { page: 3, ...paramsProductsCate }).responseArray;
     const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
+
+    const getAllServiceCate = async () =>{
+        const res = await axios.get("https://beautyx.vercel.app/v1/api/tags-all")
+        setServiceCate(res)
+    }
 
 
     const value = {
@@ -118,7 +126,8 @@ export default function AppProvider({ children }) {
         dayObj,
         setDayObj,
         geo,
-        productCate
+        productCate,
+        serviceCate
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }

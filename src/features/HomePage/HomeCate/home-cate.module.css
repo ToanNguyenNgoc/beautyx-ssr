@@ -1,11 +1,5 @@
 .container {
-    margin: 10px 0px;
-    width: 212px;
-    position: relative;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    text-align: start;
+    padding: 12px 0px;
 }
 
 .cate_header {
@@ -13,7 +7,7 @@
     align-items: center;
     background-color: #fff0e8;
     width: fit-content;
-    padding: 4px 10px;
+    padding: 2px 6px;
     border-radius: 4px;
 }
 
@@ -24,14 +18,22 @@
 
 .cate_header span {
     color: var(--text-orange);
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 15px;
+    line-height: 18px;
     font-weight: 700;
     cursor: pointer;
-    margin-left: 8px;
+    margin-left: 6px;
 }
-
+.btn_cnt{
+    position: relative;
+    border: none;
+    outline: none;
+    text-align: start;
+    margin-right: 12px;
+    border-radius: 4px;
+}
 .cate_par_cnt {
+    min-width: 100%;
     width: max-content;
     background-color: var(--bgWhite);
     padding: 8px;
@@ -51,7 +53,6 @@
     visibility: visible;
     top: 36px;
 }
-
 .cate_par_list {
     position: relative;
 }
@@ -59,8 +60,8 @@
 .cate_par_list::before {
     content: "";
     top: -8px;
-    right: -16px;
-    width: 20px;
+    right: -200px;
+    width: 200px;
     height: calc(100% + 16px);
     position: absolute;
     background-color: transparent;
@@ -70,16 +71,17 @@
 .cate_par_list_item {
     cursor: pointer;
     padding: 8px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 18px;
     font-weight: 700;
     transition: all .3s;
     border-radius: 4px;
+    text-transform:capitalize
 }
 
 .item_child_cnt {
     position: absolute;
-    width: 58vw;
+    width: 60vw;
     height: max-content;
     background-color: var(--bg-white);
     border-radius: 4px;
@@ -114,9 +116,10 @@
 .child_list_name {
     display: flex;
     align-items: center;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 18px;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: capitalize;
 }
 
 .child_list_name img {
@@ -127,16 +130,17 @@
 }
 
 .child_child_list {
-    padding: 12px;
+    padding:4px 12px;
 }
 
 .child_child_item {
     margin-bottom: 2px;
-    padding: 4px 8px;
+    padding: 2.5px 8px;
     border-radius: 4px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     transition: all .3s;
+    text-transform: capitalize;
 }
 
 .child_child_item:hover {
