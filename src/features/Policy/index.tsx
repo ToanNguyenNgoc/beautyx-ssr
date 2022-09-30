@@ -1,26 +1,28 @@
 import React from 'react';
 import { policies } from '../../data/policies';
-import { useLocation } from 'react-router-dom';
+import { extraParamsUrl } from '../../utils/extraParamsUrl';
 // import parser from 'html-react-parser';
 import './policy.css';
 import Head from '../Head';
 import { Container } from '@mui/material'
 
 function Policy() {
-    const location: any = useLocation();
-    const state = location.state;
-    const id = state?.id
-    const dataRender = policies.find((item: any) => item.id === id)
+    const params = extraParamsUrl();
+    const id = params?.id
+    // eslint-disable-next-line eqeqeq
+    const dataRender = policies.find((item: any) => item.id == id)
     return (
-        state && dataRender &&
         <>
             <Head />
-            <Container>
-                <div className="po-container">
-                    <div dangerouslySetInnerHTML={{__html: dataRender.templateHtml}}>
+            {
+                id && dataRender &&
+                <Container>
+                    <div className="po-container">
+                        <div dangerouslySetInnerHTML={{ __html: dataRender.templateHtml }}>
+                        </div>
                     </div>
-                </div>
-            </Container>
+                </Container>
+            }
         </>
     );
 }

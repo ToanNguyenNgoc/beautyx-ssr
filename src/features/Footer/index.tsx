@@ -227,7 +227,7 @@ function Footer() {
                 return window.open(`mailto:${item.url}`);
             case "URL":
                 return history.push({
-                    pathname: `/chinh-sach/${slugify(item.title)}`,
+                    pathname: `/chinh-sach/${slugify(item.title)}?id=${item.id}`,
                     state: item,
                 });
             case "SOCIAL":
