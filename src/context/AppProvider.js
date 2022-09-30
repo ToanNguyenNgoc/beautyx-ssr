@@ -14,6 +14,7 @@ import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
 import { useSwr } from "../utils/useSwr";
 import { paramsProductsCate } from "../params-query";
 import axios from "axios";
+import useFetch from "../utils/useFetch";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -30,7 +31,6 @@ export default function AppProvider({ children }) {
     const [sign, setSign] = useState();
     const [tempCount, setTempleCount] = useState(0);
     const [dayObj, setDayObj] = useState(dayjs())
-    const [serviceCate, setServiceCate] = useState([])
 
     if (localStorage.getItem("_WEB_US")) {
         const tokenDecoded = JSON.parse(`${localStorage.getItem("_WEB_US")}`);
@@ -98,7 +98,6 @@ export default function AppProvider({ children }) {
     }
     useEffect(() => {
         getLocationPlatFormBeauty()
-        getAllServiceCate()
     }, [])
     //handle product cate, service cate
     const productCatePage1 = useSwr("/tags", true, { page: 1, ...paramsProductsCate }).responseArray;
@@ -106,10 +105,9 @@ export default function AppProvider({ children }) {
     const productCatePage3 = useSwr("/tags", true, { page: 3, ...paramsProductsCate }).responseArray;
     const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
 
-    const getAllServiceCate = async () =>{
-        const res = await axios.get("https://beautyx.vercel.app/v1/api/tags-all")
-        setServiceCate(res)
-    }
+    const serviceCate = useFetch("https://beautyx.vercel.app/v1/api/tags-all").response
+    const specialItems = useFetch("https://beautyx.vercel.app/v1/special-items").response
+
 
 
     const value = {
@@ -127,7 +125,8 @@ export default function AppProvider({ children }) {
         setDayObj,
         geo,
         productCate,
-        serviceCate
+        serviceCate,
+        specialItems
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }
