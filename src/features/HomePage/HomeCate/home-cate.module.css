@@ -24,7 +24,8 @@
     cursor: pointer;
     margin-left: 6px;
 }
-.btn_cnt{
+
+.btn_cnt {
     position: relative;
     border: none;
     outline: none;
@@ -32,6 +33,7 @@
     margin-right: 12px;
     border-radius: 4px;
 }
+
 .cate_par_cnt {
     min-width: 100%;
     width: max-content;
@@ -53,6 +55,7 @@
     visibility: visible;
     top: 36px;
 }
+
 .cate_par_list {
     position: relative;
 }
@@ -76,7 +79,7 @@
     font-weight: 700;
     transition: all .3s;
     border-radius: 4px;
-    text-transform:capitalize
+    text-transform: capitalize
 }
 
 .item_child_cnt {
@@ -92,6 +95,87 @@
     opacity: 0;
     visibility: hidden;
     transition: all .3s;
+}
+
+.item_child_cnt_ser {
+    width: 72vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item_child_cnt_left {
+    width: 25%;
+    padding: 16px 12px 0px 6px;
+}
+
+.item_child_cnt_title {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+}
+
+.special_list {
+    margin-top: 8px;
+}
+
+.special_list_item {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+.special_list_item:hover {
+    background-color: var(--bg-color);
+}
+
+.special_list_item img {
+    width: 68px;
+    height: 68px;
+    border-radius: 4px;
+}
+
+.special_item_de {
+    width: calc(100% - 68px);
+    padding-left: 4px;
+    height: 68px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item_name {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.item_price {
+    display: flex;
+    align-items: center;
+}
+
+.item_price span:first-child {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 700;
+    color: var(--text-orange);
+}
+
+.item_price span:nth-child(2) {
+    margin-left: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: line-through;
+    color: var(--text-hover);
+}
+
+
+.item_child_cnt_right {
+    width: 75%;
 }
 
 .cate_par_list_item:hover {
@@ -130,7 +214,7 @@
 }
 
 .child_child_list {
-    padding:4px 12px;
+    padding: 4px 12px;
 }
 
 .child_child_item {

@@ -27,7 +27,7 @@ import { LoadHomeBanner } from "../../components/LoadingSketion/LoadHome";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 // end
-import {analytics} from "../../firebase";
+// import { analytics } from "../../firebase";
 // import HomeTagsProducts from "./Components/HomeTagsList/HomeTagsProducts";
 export default function HomePage() {
     const IS_MB = useFullScreen();
@@ -39,13 +39,14 @@ export default function HomePage() {
         dispatch(onResetFilter());
     }, [])
 
+
     return (
         <div className="homepage">
             <ExtraFlatForm />
             {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
             {/* <HomeTagsProducts /> */}
             <Container>
-                <HomeCate/>
+                <HomeCate />
                 {
                     banner_status !== STATUS.SUCCESS ?
                         <LoadHomeBanner />
