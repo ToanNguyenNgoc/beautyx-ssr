@@ -66,6 +66,7 @@ export default function HomeBanner() {
     const [chooseBanner, setChooseBanner] = useState<IBanner>();
     const [open, setOpen] = useState(false);
     const [openVideo, setOpenVideo] = useState(false);
+
     const settings = {
         dots: true,
         infinite: true,
