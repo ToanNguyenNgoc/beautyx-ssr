@@ -3,12 +3,16 @@ import React, { useContext, useRef, useState } from 'react';
 import { AppContext } from '../../../context/AppProvider';
 import { ITag, ITagParent } from "../../../interface/tags";
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { formatRouterCateResult } from '../../../utils/formatRouterLink/formatRouter';
+import { Link, useHistory } from 'react-router-dom';
+import {
+    formatRouterCateResult,
+} from '../../../utils/formatRouterLink/formatRouter';
 
 import { Masonry } from "@mui/lab"
 import icon from '../../../constants/icon';
 import style from "./home-cate.module.css"
+import formatPrice from '../../../utils/formatPrice';
+import slugify from '../../../utils/formatUrlString';
 
 function HomeCate() {
     const { tags } = useSelector((state: any) => state.HOME)
@@ -118,44 +122,81 @@ interface TagsChildGroup {
 }
 
 const CateSerChildHover = ({ parent }: { parent: ITag[] }) => {
-    const { serviceCate } = useContext(AppContext);
+    const { serviceCate, specialItems } = useContext(AppContext);
+    const history = useHistory();
     const tagsChildGroup: TagsChildGroup[] = parent.map((par: ITag) => {
         return {
             parent: par,
             children: serviceCate.filter((child: ITag) => child.parent_id === par.id)
         }
     })
+    const onItemSpecial = (item: any) => {
+        if (item.type === "DISCOUNT") {
+            return history.push(`/chi-tiet-giam-gia/${slugify(item.name)}?type=service&org_id=${item.organization_id}&dis_id=${item.id}&item_id=${item.item_id}`)
+        }
+        if (item.type === "SERVICE") {
+            return history.push(`/dich-vu/${slugify(item.name)}?id=${item.id}&org=${item.organization_id}`)
+        }
+    }
     return (
-        <div className={style.item_child_cnt}>
-            <Masonry columns={3} spacing={3} >
-                {
-                    tagsChildGroup.map((i: TagsChildGroup, index: number) => (
-                        <div key={index} className={style.child_list_cnt}>
-                            <Link
-                                to={{ pathname: formatRouterCateResult(i.parent.id, i.parent.name, "SERVICE") }}
+        <div className={`${style.item_child_cnt} ${style.item_child_cnt_ser}`}>
+            <div className={style.item_child_cnt_right}>
+                <Masonry columns={3} spacing={3} >
+                    {
+                        tagsChildGroup.map((i: TagsChildGroup, index: number) => (
+                            <div key={index} className={style.child_list_cnt}>
+                                <Link
+                                    to={{ pathname: formatRouterCateResult(i.parent.id, i.parent.name, "SERVICE") }}
+                                >
+                                    <span className={style.child_list_name}>
+                                        <img src={i.parent?.media[0]?.original_url} alt="" />
+                                        {i.parent?.name}
+                                    </span>
+                                </Link>
+                                <ul className={style.child_child_list}>
+                                    {
+                                        i.children?.map((child: ITag, i_child: number) => (
+                                            <li key={i_child} className={style.child_child_item}>
+                                                <Link
+                                                    to={{ pathname: formatRouterCateResult(child.id, child.name, "SERVICE") }}
+                                                >
+                                                    {child.name}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        ))
+                    }
+                </Masonry>
+            </div>
+            <div className={style.item_child_cnt_left}>
+                <span className={style.item_child_cnt_title}>
+                    Top dịch vụ bán chạy
+                </span>
+                <ul className={style.special_list}>
+                    {
+                        specialItems.map((item: any, index: number) => (
+                            <li
+                                onClick={() => onItemSpecial(item)}
+                                key={index} className={style.special_list_item}
                             >
-                                <span className={style.child_list_name}>
-                                    <img src={i.parent?.media[0]?.original_url} alt="" />
-                                    {i.parent?.name}
-                                </span>
-                            </Link>
-                            <ul className={style.child_child_list}>
-                                {
-                                    i.children?.map((child: ITag, i_child: number) => (
-                                        <li key={i_child} className={style.child_child_item}>
-                                            <Link
-                                                to={{ pathname: formatRouterCateResult(child.id, child.name, "SERVICE") }}
-                                            >
-                                                {child.name}
-                                            </Link>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                    ))
-                }
-            </Masonry>
+                                <img src={item.image_url} alt="" />
+                                <div className={style.special_item_de}>
+                                    <span className={style.item_name}>{item.name}</span>
+                                    <div className={style.item_price}>
+                                        {item.special_price > 0 &&
+                                            <span>{formatPrice(item.special_price)}đ</span>
+                                        }
+                                        <span>{formatPrice(item.price)}đ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
         </div>
     )
 }
