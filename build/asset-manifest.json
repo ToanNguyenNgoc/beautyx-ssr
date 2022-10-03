@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.bee7cdf3.css",
-    "main.js": "/static/js/main.e773c6b0.js",
+    "main.css": "/static/css/main.f7a6eefb.css",
+    "main.js": "/static/js/main.c23bffa5.js",
     "static/js/483.7ef722c7.chunk.js": "/static/js/483.7ef722c7.chunk.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.a5fc7079.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.62ebd8c8.chunk.js",
@@ -110,6 +110,7 @@
     "static/media/no-apply.svg": "/static/media/no-apply.ca8b8015da300a3099c766eef690dd68.svg",
     "static/media/star.svg": "/static/media/star.ccc60dcee7a95ad5ff091609da004a9a.svg",
     "index.html": "/index.html",
+    "static/media/barberOrange.svg": "/static/media/barberOrange.06eb2386342b333dd81e47ab07ca0684.svg",
     "static/media/settingsSliders.svg": "/static/media/settingsSliders.8aa6119068e372cf5e3e69d4a8a11243.svg",
     "static/media/settingsSlidersPurple.svg": "/static/media/settingsSlidersPurple.c7c70003dee87a605c4b810f09e16929.svg",
     "static/media/jcb.svg": "/static/media/jcb.736ae8b7c8ceeda69333c96acc81ebc1.svg",
@@ -153,6 +154,7 @@
     "static/media/listOrange.svg": "/static/media/listOrange.5baaa1495190dc1cc202a783ec410b19.svg",
     "static/media/phonePay.svg": "/static/media/phonePay.abb95c5c9c4269351586323e6200b1f1.svg",
     "static/media/calendar.svg": "/static/media/calendar.5bc32900b76b537b77cfe1ee05c89c15.svg",
+    "static/media/lipstickOrange.svg": "/static/media/lipstickOrange.f2c630b431336e07e440fbbc2567e4c5.svg",
     "static/media/user.svg": "/static/media/user.e1a353c89743d56e5e5f89e2c8b8b4f7.svg",
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/calendarWhite.svg": "/static/media/calendarWhite.ff590ad58e5e9c25bb0d4535f8e9888c.svg",
@@ -160,6 +162,7 @@
     "static/media/edit.svg": "/static/media/edit.b72127ab86d50bf4fb8d418bd6942db3.svg",
     "static/media/Camera-acc.svg": "/static/media/Camera-acc.0f892cd1bcac348637adf7fe6fcfe631.svg",
     "static/media/home.svg": "/static/media/home.75f1430d7d0416b4a7838a1162e78750.svg",
+    "static/media/boxOrange.svg": "/static/media/boxOrange.807fde15e5108438e39a182b1c0e1c31.svg",
     "static/media/shareReels.svg": "/static/media/shareReels.6f4814b7f7de31ba2db7e5fa834e83d3.svg",
     "static/media/vi.svg": "/static/media/vi.a8abdb94185c21a3f6ad2a45bc18f6be.svg",
     "static/media/trendAct.svg": "/static/media/trendAct.b57814d2422aa19eec6bea01f540f496.svg",
@@ -312,8 +315,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-    "main.bee7cdf3.css.map": "/static/css/main.bee7cdf3.css.map",
-    "main.e773c6b0.js.map": "/static/js/main.e773c6b0.js.map",
+    "main.f7a6eefb.css.map": "/static/css/main.f7a6eefb.css.map",
+    "main.c23bffa5.js.map": "/static/js/main.c23bffa5.js.map",
     "483.7ef722c7.chunk.js.map": "/static/js/483.7ef722c7.chunk.js.map",
     "reactPlayerYouTube.a5fc7079.chunk.js.map": "/static/js/reactPlayerYouTube.a5fc7079.chunk.js.map",
     "reactPlayerSoundCloud.62ebd8c8.chunk.js.map": "/static/js/reactPlayerSoundCloud.62ebd8c8.chunk.js.map",
@@ -331,7 +334,7 @@
     "787.476e4605.chunk.js.map": "/static/js/787.476e4605.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bee7cdf3.css",
-    "static/js/main.e773c6b0.js"
+    "static/css/main.f7a6eefb.css",
+    "static/js/main.c23bffa5.js"
   ]
 }
