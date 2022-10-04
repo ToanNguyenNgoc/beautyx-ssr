@@ -78,7 +78,10 @@ function CartBottom(props: any) {
         .filter(Boolean)
         .concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code))
         ;
-    const { products, services, combos, cart_confirm } = cartReducer(
+    const {
+        products,cart_confirm,
+        combos_id, services_id, products_id
+    } = cartReducer(
         DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
     );
 
@@ -91,15 +94,9 @@ function CartBottom(props: any) {
             ? DATA_PMT.payment_method_id
             : DATA_PMT.pmtMethod?.id,
         // payment_method_id: 5,
-        products: products.map((item: any) => {
-            return { id: item.id, quantity: item.quantity };
-        }),
-        services: services.map((item: any) => {
-            return { id: item.id, quantity: item.quantity };
-        }),
-        treatment_combo: combos.map((item: any) => {
-            return { id: item.id, quantity: item.quantity };
-        }),
+        products: products_id,
+        services: services_id,
+        treatment_combo: combos_id,
         coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
     };
 
