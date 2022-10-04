@@ -6,16 +6,19 @@ interface IProps {
     loading: boolean,
     title?: string,
     onClick?: () => void,
-    type?: any
+    type?: any,
+    className?: string,
+    style?: any
 }
 
 function ButtonLoading(props: IProps) {
-    const { loading, title, onClick, type } = props;
+    const { loading, title, onClick, type, className, style } = props;
     //const loading = true
     return (
         <button
+            style={style ? style : {}}
             disabled={loading === true}
-            className='btn-loading'
+            className={`btn-loading ${className ? className : ""}`}
             onClick={onClick}
             type={type}
         >

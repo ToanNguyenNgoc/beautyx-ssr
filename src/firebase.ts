@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics, logEvent } from "firebase/analytics"
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
     // apiKey: "AIzaSyAoVGO0p-bNNXGQ4CKKeB5Bgi1YFWErAhs",
@@ -40,11 +40,11 @@ const authentication = getAuth(app)
 // firebase.setAnalyticsCollectionEnabled
 
 
-const KEY = process.env.REACT_APP_NOTI_KEY
+const KEY = `${process.env.REACT_APP_NOTI_KEY}`
 
 const messaging = getMessaging()
 
-const requestForToken = () => {
+export const requestForToken = () => {
     return getToken(messaging, { vapidKey: KEY })
         .then((currentToken) => {
             if (currentToken) {
@@ -57,6 +57,13 @@ const requestForToken = () => {
             console.log('An error occurred while retrieving token. ', err);
         });
 };
+export const onMessageListener = () => {
+    return new Promise((resolve) => {
+        onMessage(messaging, (payload) => {
+            resolve(payload);
+        });
+    });
+}
 
 
-export { analytics, authentication, logEvent, RecaptchaVerifier, signInWithPhoneNumber, requestForToken }
+export { analytics, authentication, logEvent, RecaptchaVerifier, signInWithPhoneNumber }

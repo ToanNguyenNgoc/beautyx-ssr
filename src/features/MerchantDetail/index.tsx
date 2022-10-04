@@ -123,7 +123,6 @@ function MerchantDetail() {
   }, [status])
   useEffect(() => {
     callOrgDetail()
-    callOrgSpecial()
     callGalleriesOrg()
     logEvent(analytics,'detail_merchant', {
       merchant: org.name

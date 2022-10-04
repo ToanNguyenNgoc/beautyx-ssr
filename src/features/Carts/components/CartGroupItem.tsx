@@ -148,31 +148,31 @@ interface IPopUpVoucherOrg {
 export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     const IS_MB = useDeviceMobile();
     const { open, setOpen, org, vouchers } = props;
-    const testVoucher:IDiscountPar[] = [
-        {
-            ...props.vouchers[0],
-            id:101010,
-            discount_unit:"PRICE",
-            discount_type:"PRODUCT",
-            discount_value:50000,
-            items:[],
-            items_count:0,
-            valid_time: "10:00:00 - 20:00:00",
-        },
-        {
-            ...props.vouchers[0],
-            id:101011,
-            discount_unit:"PERCENT",
-            discount_type:"PRODUCT",
-            discount_value:50,
-            maximum_discount_value:null,
-            items: [],
-            items_count: 0,
-            valid_from: "2022-01-01 10:00:00",
-            valid_util: "2022-06-01 10:00:00",
-            valid_time: "10:00:00 - 12:00:00",
-        }
-    ]
+    // const testVoucher:IDiscountPar[] = [
+    //     {
+    //         ...props.vouchers[0],
+    //         id:101010,
+    //         discount_unit:"PRICE",
+    //         discount_type:"PRODUCT",
+    //         discount_value:50000,
+    //         items:[],
+    //         items_count:0,
+    //         valid_time: "10:00:00 - 20:00:00",
+    //     },
+    //     {
+    //         ...props.vouchers[0],
+    //         id:101011,
+    //         discount_unit:"PERCENT",
+    //         discount_type:"PRODUCT",
+    //         discount_value:50,
+    //         maximum_discount_value:null,
+    //         items: [],
+    //         items_count: 0,
+    //         valid_from: "2022-01-01 10:00:00",
+    //         valid_util: "2022-06-01 10:00:00",
+    //         valid_time: "10:00:00 - 12:00:00",
+    //     }
+    // ]
     return (
         <Dialog
             TransitionComponent={IS_MB ? Transition : TransitionUp}
@@ -201,11 +201,11 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                                 <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
                             </li>
                         ))}
-                        {testVoucher.map((item: IDiscountPar, index: number) => (
+                        {/* {testVoucher.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
                                 <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
                             </li>
-                        ))}
+                        ))} */}
                     </ul>
                 </div>
             </div>
