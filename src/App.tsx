@@ -4,8 +4,10 @@ import RouterConfig from "./route/index";
 import AppProvider from "./context/AppProvider";
 //import BlurModal from './components/BlurModal/index'
 import "react-loading-skeleton/dist/skeleton.css";
+import {requestForToken} from "./firebase"
 
 function App() {
+    requestForToken()
     return (
         <div>
             <AppProvider>

@@ -14,7 +14,7 @@ import tracking from "../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
-import { analytics } from "../../../firebase";
+import { analytics, logEvent } from "../../../firebase";
 // end
 function TabService(props: any) {
     const { catesChild, CATE } = props;
@@ -48,7 +48,7 @@ function TabService(props: any) {
         scrollTop();
         tracking.CATEGORY_TREE_ITEM_CLICK(CATE.cate_id, service.org_id, service.id)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-        analytics.logEvent('detail_service', {
+        logEvent(analytics,'detail_service', {
             service: service.service_name,
             merchant: service.org_name
         })

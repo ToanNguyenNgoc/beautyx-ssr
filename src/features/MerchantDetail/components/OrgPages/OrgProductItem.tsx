@@ -13,7 +13,7 @@ import { formatRouterLinkProduct } from "../../../../utils/formatRouterLink/form
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
-import { analytics } from "../../../../firebase";
+import { analytics, logEvent } from "../../../../firebase";
 // end
 interface IProps {
     product: Product;
@@ -31,7 +31,7 @@ function OrgProductItem(props: IProps) {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
                 tracking.USER_ITEM_CLICK(org.id, product.id);
-                analytics.logEvent('detail_product', {
+                logEvent(analytics,'detail_product', {
                     service: product.product_name,
                     merchant: org.name
                 })

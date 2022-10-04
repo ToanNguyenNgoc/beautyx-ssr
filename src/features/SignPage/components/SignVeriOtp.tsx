@@ -2,21 +2,40 @@ import React from "react";
 import { Dialog } from "@mui/material";
 import "../../ResetPassword/style.css";
 import { formatTelephone } from "../../ResetPassword";
-import { auth, firebase } from "../../../firebase";
+import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from "../../../firebase";
 import FormTelephone from "../../ResetPassword/components/FormTelephone";
 
 function SignVeriOtp(props: any) {
     const { open, setOpen, setDataOtp } = props;
+    const generateRecaptcha = () => {
+        try {
+            if (!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(
+                    'recaptcha-container',
+                    {
+                        size: 'invisible',
+                        callback: (value: any) => {
+                            // handleSubmit(value, true)
+                        },
+                        'expired-callback': () => {
+                            // Response expired. Ask user to solve reCAPTCHA again.
+                            // ...
+                        },
+                    },
+                    authentication
+                )
+            } else {
+                window.recaptchaVerifier.render()
+            }
+        } catch (err: any) {
+            console.log(err)
+        }
+    }
     const handlePostTelephone = (telephone: string) => {
         const phoneNumber: any = formatTelephone(telephone);
         if (phoneNumber === "") return;
-        let verify = new firebase.auth.RecaptchaVerifier(
-            "recaptcha-container",
-            {
-                size: "invisible",
-            }
-        );
-        auth.signInWithPhoneNumber(phoneNumber, verify)
+        generateRecaptcha()
+        signInWithPhoneNumber(authentication, phoneNumber, window.recaptchaVerifier)
             .then((result) => {
                 console.log(result);
                 setDataOtp({

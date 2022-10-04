@@ -206,12 +206,12 @@ function OrgItem(props: IProps) {
                                 >
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.heart} alt="" />
-                                        <span>{org?.favorites.length}</span>
+                                        <span>{org?.favorites?.length}</span>
                                     </div>
                                     <div className="flexX-gap-4 org-img-cnt__rate-item">
                                         <img src={icon.star} alt="" />
                                         <span>
-                                            {fakeOrgStar(org.favorites.length)}
+                                            {fakeOrgStar(org?.favorites?.length)}
                                         </span>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@ function OrgItem(props: IProps) {
                         {t("Mer_de.list_branch")}
                     </p>
                     <div className="se-branch__list">
-                        {org?.branches.map((item: any, index: number) => (
+                        {org?.branches?.map((item: any, index: number) => (
                             <div key={index} className="se-branch__item">
                                 <div>
                                     <div className="branch-item__top">

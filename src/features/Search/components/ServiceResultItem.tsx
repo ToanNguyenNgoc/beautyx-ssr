@@ -16,7 +16,7 @@ import { AUTH_LOCATION } from "../../../api/authLocation";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
-import { analytics } from "../../../firebase";
+import { analytics, logEvent } from "../../../firebase";
 // end
 interface IProps {
     service: IServicePromo;
@@ -41,7 +41,7 @@ function ServiceResultItem(props: IProps) {
             (AUTH_LOCATION+'')
         );
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-        analytics.logEvent('detail_service', {
+        logEvent(analytics,'detail_service', {
             service: service.service_name,
             merchant: service.org_name
         })

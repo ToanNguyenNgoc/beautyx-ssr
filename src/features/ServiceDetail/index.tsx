@@ -40,7 +40,7 @@ import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import { formatSalePriceService } from "../../utils/formatPrice";
 import { Service } from "../../interface/service";
 import IStore from "../../interface/IStore";
-import { analytics } from "../../firebase";
+import { analytics, logEvent } from "../../firebase";
 // end
 
 function ServiceDetail() {
@@ -158,7 +158,7 @@ function ServiceDetail() {
 
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
-        analytics.logEvent("detail_service", {
+        logEvent(analytics, "detail_service", {
             service: service.service_name,
             merchant: org.name,
         });
@@ -227,7 +227,7 @@ function ServiceDetail() {
                                                 className="service-detail__description"
                                             >
                                                 {service?.description.length ===
-                                                0 ? (
+                                                    0 ? (
                                                     <div className="service-description-updating">
                                                         <span className="service-description">
                                                             {t(
@@ -250,17 +250,17 @@ function ServiceDetail() {
                                                             {service
                                                                 ?.description
                                                                 .length > 150 &&
-                                                            readMore !== true
+                                                                readMore !== true
                                                                 ? service?.description.slice(
-                                                                      0,
-                                                                      150
-                                                                  )
+                                                                    0,
+                                                                    150
+                                                                )
                                                                 : service?.description}
                                                             {/* dots */}
                                                             {service
                                                                 ?.description
                                                                 .length > 150 &&
-                                                            readMore === false
+                                                                readMore === false
                                                                 ? "..."
                                                                 : " "}
                                                             {/* close dot  */}
@@ -272,7 +272,7 @@ function ServiceDetail() {
                                                                 service
                                                                     ?.description
                                                                     .length >
-                                                                    150 && (
+                                                                150 && (
                                                                     <span
                                                                         onClick={() =>
                                                                             handleSeemoreText()
@@ -280,7 +280,7 @@ function ServiceDetail() {
                                                                         className="seemore-btn"
                                                                     >
                                                                         {readMore ===
-                                                                        false
+                                                                            false
                                                                             ? "Xem thêm >> "
                                                                             : "Thu gọn <<"}
                                                                     </span>
@@ -312,7 +312,7 @@ function ServiceDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -353,22 +353,22 @@ function ServiceDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <div>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <div>
+                                                            <p className="service-detail__title">
+                                                                {t(
+                                                                    "detail_item.merchant"
+                                                                )}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={org}
                                                             />
                                                         </div>
-                                                        <OrgInformation
-                                                            org={org}
-                                                        />
-                                                    </div>
-                                                )}
+                                                    )}
                                             </div>
                                         </TabPanel>
 
@@ -386,7 +386,7 @@ function ServiceDetail() {
                         {/* service bottom buttom add cart */}
                         <div className="service-detail__bottom">
                             {service?.is_momo_ecommerce_enable &&
-                            org?.is_momo_ecommerce_enable ? (
+                                org?.is_momo_ecommerce_enable ? (
                                 <>
                                     <button
                                         onClick={() => {

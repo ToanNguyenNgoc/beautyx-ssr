@@ -95,7 +95,7 @@ function FormOtp(props: any) {
         },
     });
     const onReSendOtp = () => {
-        handlePostTelephone(data.telephone);
+        handlePostTelephone(data.telephone, true);
         setSec(90)
     }
 

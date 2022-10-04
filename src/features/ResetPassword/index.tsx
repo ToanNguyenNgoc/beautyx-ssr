@@ -3,10 +3,17 @@ import { Container } from '@mui/material';
 import './style.css';
 import FormTelephone from './components/FormTelephone';
 import FormOtp from './components/FormOtp';
-import { auth, firebase } from '../../firebase';
+import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from '../../firebase';
 import FormHead from './components/FormHead';
 import Footer from '../Footer';
 
+declare global {
+    interface Window {
+        recaptchaVerifier: any
+        confirmationResult: any
+        recaptchaWidgetId: any
+    }
+}
 
 export const formatTelephone = (telephone: string) => {
     const phone = `${telephone}`.slice(-9)
@@ -22,15 +29,33 @@ function ResetPassword() {
     const [step, setStep] = useState(1)
     const [load, setLoad] = useState(false);
     //send otp
-    const handleRecapcha = () => {
-        let verify = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-            'size': 'invisible'
-        });
-        return verify
-    }
-    const handleSignWithPhone = async (phoneNumber: any, verify: any, telephone: string) => {
+    const generateRecaptcha = () => {
         try {
-            const result = await auth.signInWithPhoneNumber(phoneNumber, verify);
+            if (!window.recaptchaVerifier) {
+                window.recaptchaVerifier = new RecaptchaVerifier(
+                    'recaptcha-container',
+                    {
+                        size: 'invisible',
+                        callback: (value: any) => {
+                            // handleSubmit(value, true)
+                        },
+                        'expired-callback': () => {
+                            // Response expired. Ask user to solve reCAPTCHA again.
+                            // ...
+                        },
+                    },
+                    authentication
+                )
+            } else {
+                window.recaptchaVerifier.render()
+            }
+        } catch (err: any) {
+            console.log(err)
+        }
+    }
+    const handleSignWithPhone = async (phoneNumber: any, isRecaptcha: any, telephone: string) => {
+        try {
+            const result = await signInWithPhoneNumber(authentication, phoneNumber, window.recaptchaVerifier);
             setValues({
                 ...values,
                 telephone: telephone,
@@ -43,12 +68,12 @@ function ResetPassword() {
             setLoad(false)
         }
     }
-    const handlePostTelephone = (telephone: string) => {
+    const handlePostTelephone = (telephone: string, isRecaptcha: boolean) => {
         setLoad(true)
         const phoneNumber = formatTelephone(telephone)
         if (phoneNumber === "") return;
-        const verify = handleRecapcha();
-        handleSignWithPhone(phoneNumber, verify, telephone);
+        isRecaptcha === true && generateRecaptcha()
+        handleSignWithPhone(phoneNumber, isRecaptcha, telephone);
     }
     const onSwitchStep = () => {
         switch (step) {
@@ -73,6 +98,7 @@ function ResetPassword() {
 
     return (
         <>
+            <div id="recaptcha-container"></div>
             <FormHead />
             <Container>
                 <div

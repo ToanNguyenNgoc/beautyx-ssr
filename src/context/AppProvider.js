@@ -105,7 +105,7 @@ export default function AppProvider({ children }) {
     const productCatePage3 = useSwr("/tags", true, { page: 3, ...paramsProductsCate }).responseArray;
     const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
 
-    const serviceCate = useFetch("https://beautyx.vercel.app/v1/api/tags-all").response
+    const serviceCate = useFetch("https://beautyx.vercel.app/v1/tags-all").response
     const specialItems = useFetch("https://beautyx.vercel.app/v1/special-items").response
 
 

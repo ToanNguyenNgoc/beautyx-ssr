@@ -15,7 +15,7 @@ import tracking from "../../../api/trackApi";
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { AppContext } from "../../../context/AppProvider";
 import { formatDistance } from "../../../utils/format";
-import { analytics } from "../../../firebase";
+import { analytics, logEvent } from "../../../firebase";
 // end
 
 interface IProps {
@@ -34,7 +34,7 @@ function ServicePromoItem(props: IProps) {
                 scrollTop();
                 GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
                 tracking.USER_ITEM_CLICK(service.org_id, service.id);
-                analytics.logEvent('detail_service', {
+                logEvent(analytics,'detail_service', {
                     service: service.service_name,
                     merchant: service.org_name
                 })
