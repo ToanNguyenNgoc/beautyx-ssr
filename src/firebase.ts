@@ -40,30 +40,30 @@ const authentication = getAuth(app)
 // firebase.setAnalyticsCollectionEnabled
 
 
-const KEY = `${process.env.REACT_APP_NOTI_KEY}`
+// const KEY = `${process.env.REACT_APP_NOTI_KEY}`
 
-const messaging = getMessaging()
+// const messaging = getMessaging()
 
-export const requestForToken = () => {
-    return getToken(messaging, { vapidKey: KEY })
-        .then((currentToken) => {
-            if (currentToken) {
-                console.log('current token for client: ', currentToken);
-            } else {
-                console.log('No registration token available. Request permission to generate one.');
-            }
-        })
-        .catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
-        });
-};
-export const onMessageListener = () => {
-    return new Promise((resolve) => {
-        onMessage(messaging, (payload) => {
-            resolve(payload);
-        });
-    });
-}
+// export const requestForToken = () => {
+//     return getToken(messaging, { vapidKey: KEY })
+//         .then((currentToken) => {
+//             if (currentToken) {
+//                 console.log('current token for client: ', currentToken);
+//             } else {
+//                 console.log('No registration token available. Request permission to generate one.');
+//             }
+//         })
+//         .catch((err) => {
+//             console.log('An error occurred while retrieving token. ', err);
+//         });
+// };
+// export const onMessageListener = () => {
+//     return new Promise((resolve) => {
+//         onMessage(messaging, (payload) => {
+//             resolve(payload);
+//         });
+//     });
+// }
 
 
 export { analytics, authentication, logEvent, RecaptchaVerifier, signInWithPhoneNumber }
