@@ -136,7 +136,7 @@ function Booking() {
         services: services,
         treatment_combo: [],
         payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
-        coupon_code: openVc.voucher === "" ? listCouponCode.length > 0 ? listCouponCode : [] : openVc.voucher,
+        coupon_code: openVc.voucher === "" ? listCouponCode.length > 0 ? listCouponCode : [] : [openVc.voucher],
         description: "",
         branch_id: bookTime.branch_id,
     };
