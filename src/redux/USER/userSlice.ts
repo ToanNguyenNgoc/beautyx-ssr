@@ -4,7 +4,7 @@ import discountApi from '../../api/discountApi';
 import { STATUS } from '../status';
 import { IDiscountPar } from '../../interface/discount'
 import { checkPhoneValid } from '../../utils/phoneUpdate';
-import { analytics } from '../../firebase';
+import { analytics, logEvent } from '../../firebase';
 
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
@@ -15,7 +15,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
             if (context.telephone && !checkPhoneValid(context.telephone)) {
                 context = { ...context, telephone: 'số điện thoại' }
             }
-            analytics.logEvent('login', {
+            logEvent(analytics,'login', {
                 'User login': context.fullname
             })
             return context

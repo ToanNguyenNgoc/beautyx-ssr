@@ -35,7 +35,7 @@ import OrgContainer from "./components/OrgContainer";
 import OrgDetail from "./components/OrgDetail";
 import IStore from "../../interface/IStore";
 import "./style.css";
-import { analytics } from "../../firebase";
+import { analytics, logEvent } from "../../firebase";
 
 type IUseParams = {
   subdomain: string|undefined
@@ -123,9 +123,8 @@ function MerchantDetail() {
   }, [status])
   useEffect(() => {
     callOrgDetail()
-    callOrgSpecial()
     callGalleriesOrg()
-    analytics.logEvent('detail_merchant', {
+    logEvent(analytics,'detail_merchant', {
       merchant: org.name
     })
   }, [sub_domain])

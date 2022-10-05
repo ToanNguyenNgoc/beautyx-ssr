@@ -1,4 +1,8 @@
-import firebase from "firebase";
+import { initializeApp } from 'firebase/app'
+import { getAnalytics, logEvent } from "firebase/analytics"
+import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
+import { getMessaging, getToken, onMessage } from 'firebase/messaging';
+
 const firebaseConfig = {
     // apiKey: "AIzaSyAoVGO0p-bNNXGQ4CKKeB5Bgi1YFWErAhs",
     // authDomain: "x-otp-5668b.firebaseapp.com",
@@ -22,9 +26,44 @@ const firebaseConfig = {
     // messagingSenderId: "395382988799",
     // appId: "1:395382988799:web:dbdf5c7de7957e5c0a91ca",
     // measurementId: "G-5K4B1FFSVQ",
+
+    // apiKey: "AIzaSyC0lNEJAh95Dp4JpYDv7L8kXUZ8502dmSk",
+    // authDomain: "beautyx-spa.firebaseapp.com",
+    // projectId: "beautyx-spa",
+    // storageBucket: "beautyx-spa.appspot.com",
+    // messagingSenderId: "1018381055842",
+    // appId: "1:1018381055842:web:bad18434f365fb4afe9e3b"
 };
-firebase.initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
+const analytics = getAnalytics(app);
+const authentication = getAuth(app)
 // firebase.setAnalyticsCollectionEnabled
-const auth = firebase.auth();
-export const analytics = firebase.analytics();
-export { auth, firebase }
+
+
+const KEY = `${process.env.REACT_APP_NOTI_KEY}`
+
+const messaging = getMessaging()
+
+export const requestForToken = () => {
+    return getToken(messaging, { vapidKey: KEY })
+        .then((currentToken) => {
+            if (currentToken) {
+                console.log('current token for client: ', currentToken);
+            } else {
+                console.log('No registration token available. Request permission to generate one.');
+            }
+        })
+        .catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+        });
+};
+export const onMessageListener = () => {
+    return new Promise((resolve) => {
+        onMessage(messaging, (payload) => {
+            resolve(payload);
+        });
+    });
+}
+
+
+export { analytics, authentication, logEvent, RecaptchaVerifier, signInWithPhoneNumber }

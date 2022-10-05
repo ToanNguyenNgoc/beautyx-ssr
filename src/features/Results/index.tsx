@@ -30,6 +30,8 @@ import Map from '../../components/Map';
 import { useLocation } from 'react-router-dom';
 import EmptyRes from '../EmptyRes';
 
+
+
 function Result() {
     const IS_MB = useFullScreen();
     const params: any = extraParamsUrl();
@@ -67,6 +69,7 @@ function Result() {
         sort: sort,
         path_url: location.pathname
     }
+    // console.log(paramsFilter)
     const callOrgsByFilterTag = async () => {
         if (path_url !== location.pathname || type !== TYPE_FILTER) {
             dispatch(onResetFilter());
@@ -90,7 +93,6 @@ function Result() {
             }))
         }
     }
-    console.log(orgs);
     return (
         <>
             <HeadTitle title={`Kết quả tìm kiếm cho : ${titleHeader}`} />
@@ -98,7 +100,10 @@ function Result() {
                 IS_MB ?
                     <HeadMobile
                         title={titleHeader}
-                        element={<HeaderFilterMobile handleApplyByFilter={handleApplyByFilter} />}
+                        element={
+                            <HeaderFilterMobile
+                                handleApplyByFilter={handleApplyByFilter}
+                            />}
                     />
                     :
                     <Head />
@@ -112,7 +117,7 @@ function Result() {
                     </div>
                     <div className="result-cont__right">
                         {(status === STATUS.LOADING && page === 1) && <LoadingOrgs />}
-                        {(status === STATUS.SUCCESS && orgs.length === 0)&&<EmptyRes title={'Không tìm được kết quả phù hợp cho "' + titleHeader + '"'} />}
+                        {(status === STATUS.SUCCESS && orgs.length === 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + titleHeader + '"'} />}
                         <InfiniteScroll
                             dataLength={orgs.length}
                             hasMore={true}

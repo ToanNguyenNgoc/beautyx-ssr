@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Container } from "@mui/material";
+import { Container, Dialog } from "@mui/material";
 //import icon from '../../../constants/icon';
 import ButtonLoading from "../../../components/ButtonLoading";
 import formatPrice from "../../../utils/formatPrice";
@@ -24,6 +24,13 @@ import { IDataOtp } from "../../Otp/_model";
 import RenderRecatpcha, { FieldOtps } from "../../Otp/dialogOtp";
 // END [ update telephone number ]
 import { putUser, updateAsyncUser } from "../../../redux/USER/userSlice";
+import icon from "../../../constants/icon";
+
+export interface OpenVcProp {
+    open: boolean,
+    voucher: string
+}
+
 function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
     const cartAmount = DATA_CART.cartAmount;
@@ -42,6 +49,10 @@ function CartBottom(props: any) {
         code: '',
         verification_id: ''
     });
+    const [openVc, setOpenVc] = useState<OpenVcProp>({
+        open: false,
+        voucher: ""
+    })
     //* [END]  OTP  update telephone number
     //* [ Throw exception noti ]
     const [openAlertSnack, setOpenAlertSnack] = useState({
@@ -67,9 +78,11 @@ function CartBottom(props: any) {
         .filter(Boolean)
         .concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code))
         ;
-    const { products, services, combos } = cartReducer(
+    const { products, services, combos, cart_confirm } = cartReducer(
         DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
     );
+
+    const coupon_code_arr = listCouponCode.length > 0 ? listCouponCode : []
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
@@ -87,8 +100,7 @@ function CartBottom(props: any) {
         treatment_combo: combos.map((item: any) => {
             return { id: item.id, quantity: item.quantity };
         }),
-        coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
-        // coupon_code: ["d"]
+        coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
     };
 
     async function handlePostOrder() {
@@ -230,9 +242,14 @@ function CartBottom(props: any) {
             });
         }
     }
-    // console.log(dataOtp);
+    console.log(cart_confirm);
     return (
         <>
+            <InputVoucher
+                open={openVc}
+                setOpen={setOpenVc}
+                cart_confirm={cart_confirm}
+            />
             <div className="re-cart-bottom">
                 <AlertSnack
                     title={openAlertSnack.title}
@@ -248,11 +265,25 @@ function CartBottom(props: any) {
                 <Container>
                     <div className="re-cart-bottom__cnt">
                         <div className="re-cart-bottom__total">
-                            {/* <div className="flex-row re-cart-bottom__total-discount">
-                            <span>Mã khuyến mãi</span>
-                            <img src={icon.cardDiscountOrange} alt="" className="icon" />
-                        </div> */}
+                            <div className="flex-row re-cart-bottom__total-discount">
+                                <button
+                                    onClick={() => setOpenVc({ ...openVc, open: true })}
+                                    className="open_voucher_btn"
+                                >
+                                    Nhập mã khuyến mại
+                                    <img src={icon.cardDiscountOrange} alt="" />
+                                </button>
+                            </div>
                             <div className="re-cart-bottom__cal">
+                                {
+                                    openVc.voucher !== "" &&
+                                    <div className="flex-row-sp re-cart-bottom__cal-item">
+                                        <span>Mã khuyến mại</span>
+                                        <span>
+                                            {openVc.voucher}
+                                        </span>
+                                    </div>
+                                }
                                 <div className="flex-row-sp re-cart-bottom__cal-item">
                                     <span>{`${t("pm.total_money")}`}</span>
                                     <span>
@@ -345,3 +376,72 @@ function CartBottom(props: any) {
 }
 
 export default CartBottom;
+
+interface InputVoucherProps {
+    open: OpenVcProp,
+    setOpen: (open: OpenVcProp) => void,
+    cart_confirm: any
+}
+
+export const InputVoucher = (props: InputVoucherProps) => {
+    const { open, setOpen, cart_confirm } = props;
+    const [text, setText] = useState("");
+    const onInputChange = (e: any) => text.length <= 25 && setText(e.target.value)
+    const onApply = () => text.length <= 25 && setOpen({ open: false, voucher: text })
+    return (
+        <Dialog
+            open={open.open}
+            onClose={() => setOpen({ ...open, open: false })}
+        >
+            <div className="vc_container">
+                <div className="vc_header">
+                    <span className="vc_header_title">
+                        Beautyx - Shopee khuyến mại
+                    </span>
+                    <button
+                        onClick={() => setOpen({ ...open, open: false })}
+                        className="vc_header_btn"
+                    >
+                        <img src={icon.closeBlack} alt="" />
+                    </button>
+                </div>
+                <div className="vc_body">
+                    <div className="vc_body_input">
+                        <input
+                            disabled={cart_confirm.length > 0 && false}
+                            value={text} onChange={onInputChange} type="text"
+                        />
+                        <ButtonLoading
+                            style={text === "" ? {
+                                backgroundColor: "var(--bg-color)",
+                                cursor: "no-drop"
+                            } : {}}
+                            className="vc_body_input_btn"
+                            title="Áp dụng"
+                            loading={false}
+                            onClick={onApply}
+                        />
+                        {
+                            text !== "" &&
+                            <button
+                                onClick={() => {
+                                    setText("")
+                                    setOpen({ ...open, voucher: "" })
+                                }}
+                                className="vc_body_input_del"
+                            >
+                                <img src={icon.closeBlack} alt="" />
+                            </button>
+                        }
+                    </div>
+                    {
+                        cart_confirm.length === 0 &&
+                        <div className="vc_cart_none">
+                            Chọn Dịch vụ / sản phẩm trong giỏ hàng để áp dụng Voucher
+                        </div>
+                    }
+                </div>
+            </div>
+        </Dialog>
+    )
+}

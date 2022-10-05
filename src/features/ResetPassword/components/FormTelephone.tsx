@@ -22,7 +22,7 @@ function FormTelephone(props: any) {
                 ),
         }),
         onSubmit: (values) => {
-            handlePostTelephone(values.telephone)
+            handlePostTelephone(values.telephone, true)
         },
     });
     return (

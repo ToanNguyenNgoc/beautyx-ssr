@@ -7,6 +7,7 @@ import OrgGalleriesDialog from "./OrgGalleriesDialog";
 import { Tab } from "@mui/material";
 import OrgGalleriesVideo from "./OrgGalleriesVideo";
 
+
 function OrgGalleries() {
     const ORG = useSelector((state: any) => state.ORG);
     const IS_MOBILE = useFullScreen();

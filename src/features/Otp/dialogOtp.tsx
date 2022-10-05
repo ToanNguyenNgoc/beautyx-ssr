@@ -8,7 +8,7 @@ import "./style.css";
 // interface
 import { IDataOtp, IPropOtp } from './_model'
 // end
-import { auth, firebase } from "../../firebase";
+import { authentication, signInWithPhoneNumber, RecaptchaVerifier } from "../../firebase";
 import FormTelephone from "../ResetPassword/components/FormTelephone";
 
 declare global {
@@ -33,55 +33,35 @@ function RenderRecatpcha(props: IPropOtp) {
         open: false,
         status: ""
     });
-    const generateRecaptcha = (props: string | number) => {
+    const generateRecaptcha = () => {
         try {
-            console.log(window.recaptchaVerifier);
-            let phoneNumberVN = "+84" + props.toString().slice(1);
             if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container",
+                window.recaptchaVerifier = new RecaptchaVerifier(
+                    'recaptcha-container',
                     {
-                        size: "invisible",
-                        callback: (values: any) => {
-                            // handleSubmit(values);
-                            console.log(values)
-
-                            // setDataOtp({
-                            //     ...dataOtp,
-                            //     verification_id:values,
-                            //     telephone:props
-                            // })
-                            // verifyWithPhone(props);
+                        size: 'invisible',
+                        callback: (value: any) => {
+                            // handleSubmit(value, true)
                         },
-                    }
-                );
+                        'expired-callback': () => {
+                            // Response expired. Ask user to solve reCAPTCHA again.
+                            // ...
+                        },
+                    },
+                    authentication
+                )
             } else {
-                window.recaptchaVerifier.render();
+                window.recaptchaVerifier.render()
             }
         } catch (err: any) {
-            console.log(err.message);
-
-            if (err.message.includes('RecaptchaVerifier instance has been destroyed')) {
-                try {
-                    console.log('in');
-                    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("recaptcha-container",
-                        {
-                            size: "invisible",
-                            callback: (values: any) => {
-                                console.log(values)
-                            },
-                        }
-                    );
-                }
-                catch (err) {
-                    console.log(err);
-                }
-            }
+            console.log(err)
         }
-    };
+    }
     const verifyWithPhone = (values: string | number) => {
         // console.log(window.recaptchaVerifier)
         let phoneNumberVN = "+84" + values.toString().slice(1);
-        auth.signInWithPhoneNumber(
+        signInWithPhoneNumber(
+            authentication,
             phoneNumberVN,
             window.recaptchaVerifier
         )
@@ -138,16 +118,16 @@ function RenderRecatpcha(props: IPropOtp) {
             });
     }
     const handleTelephone = (props: number) => {
-        console.log(props)
 
-        generateRecaptcha(props);
+        generateRecaptcha();
         verifyWithPhone(props)
 
     }
     const handleClose = () => {
-        if (window.recaptchaVerifier) {try {
-            window.recaptchaVerifier.clear();
-        }
+        if (window.recaptchaVerifier) {
+            try {
+                window.recaptchaVerifier.clear();
+            }
             catch (err) {
                 console.log(err);
             }

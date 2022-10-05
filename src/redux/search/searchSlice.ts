@@ -3,13 +3,13 @@ import orgApi from "../../api/organizationApi";
 import { STATUS } from "../status";
 import productsApi from "../../api/productApi";
 import servicePromoApi from "../../api/servicePromoApi";
-import { analytics } from "../../firebase";
+import { analytics, logEvent } from "../../firebase";
 const storageName = "SEARCH_HISTORY";
 const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
 export const fetchOrgsBySearch: any = createAsyncThunk(
     "SEARCH/fetchOrgsBySearch",
     async (values: any) => {
-        analytics.logEvent('search', {
+        logEvent(analytics,'search', {
             search: values.keyword
         })
         values = {
@@ -27,7 +27,7 @@ export const fetchOrgsBySearch: any = createAsyncThunk(
 export const fetchProductsBySearch: any = createAsyncThunk(
     "SEARCH/fetchProductsBySearch",
     async (values: any) => {
-        analytics.logEvent('search', {
+        logEvent(analytics,'search', {
             search: values.keyword
         })
         values = {
@@ -45,7 +45,7 @@ export const fetchProductsBySearch: any = createAsyncThunk(
 export const fetchServicesBySearch: any = createAsyncThunk(
     "SEARCH/fetchServicesBySearch",
     async (values: any) => {
-        analytics.logEvent('search', {
+        logEvent(analytics,'search', {
             search: values.keyword
         })
         values = {

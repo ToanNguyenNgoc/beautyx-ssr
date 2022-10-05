@@ -126,6 +126,7 @@ function HomeCateResult() {
                                     value={query}
                                     type_price={type === "SERVICE" ? "price" : "retail_price"}
                                 />
+                                
                             </div>
                             <InfiniteScroll
                                 dataLength={resData.length}

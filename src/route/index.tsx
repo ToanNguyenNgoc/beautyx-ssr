@@ -55,7 +55,7 @@ import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
 
 import MapBox from "../features/MapBeta";
-import { analytics } from "../firebase";
+import { analytics, logEvent } from "../firebase";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -212,8 +212,8 @@ function RouterConfig(props: any) {
       component: <HomePromoProduct />
     },
     {
-      path:"/danh-sach/:tag_name",
-      component:<HomeCateResult/>
+      path: "/danh-sach/:tag_name",
+      component: <HomeCateResult />
     },
     {
       path: "*",
@@ -258,7 +258,7 @@ function RouterConfig(props: any) {
       component: ChatAll
     }
   ];
-  analytics.logEvent('page_view', {
+  logEvent(analytics, 'page_view', {
     page_title: document.title,
     page_path: window.location.pathname,
     page_location: window.location.href
