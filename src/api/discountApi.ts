@@ -10,7 +10,7 @@ class Discounts {
         const params = {
             "page": values.page,
             "limit": 30,
-            "filter[platform]": "MOMO", // update change platform "BEAUTYX"
+            "filter[platform]": "MOMO",
             "append": "user_available_purchase_count",
             "filter[location]": LOCATION,
             "sort": "-priority|-created_at|discount_value"
@@ -22,7 +22,7 @@ class Discounts {
         const params = {
             "page": 1,
             "limit": 30,
-            "filter[platform]": "MOMO", // update change platform "BEAUTYX"
+            "filter[platform]": "MOMO",
             "append": "user_available_purchase_count",
             "sort": "discount_value|-priority|-created_at",
             "filter[organization_id]": values.org_id
