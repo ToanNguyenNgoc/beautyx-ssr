@@ -38,6 +38,7 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
+import { InputVoucher, OpenVcProp } from "../Carts/components/CartBottom";
 
 // end
 const date = dayjs();
@@ -59,6 +60,10 @@ function Booking() {
         onClickLeft: () => { },
         onClickRight: () => { },
     });
+    const [openVc, setOpenVc] = useState<OpenVcProp>({
+        open: false,
+        voucher: ""
+    })
     const [openVouchers, setOpenVouchers] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
@@ -130,8 +135,8 @@ function Booking() {
         products: [],
         services: services,
         treatment_combo: [],
-        payment_method_id:  FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
-        coupon_code: listCouponCode.length > 0 ? listCouponCode : [],
+        payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
+        coupon_code: openVc.voucher === "" ? listCouponCode.length > 0 ? listCouponCode : [] : openVc.voucher,
         description: "",
         branch_id: bookTime.branch_id,
     };
@@ -493,6 +498,26 @@ function Booking() {
                                     rows={5}
                                 ></textarea>
                             </div>
+                            <div>
+                                <div className="flex-row re-cart-bottom__total-discount">
+                                    <button
+                                        onClick={() => setOpenVc({ ...openVc, open: true })}
+                                        className="open_voucher_btn"
+                                    >
+                                        Nhập mã khuyến mại
+                                        <img src={icon.cardDiscountOrange} alt="" />
+                                    </button>
+                                </div>
+                            </div>
+                            {
+                                openVc.voucher !== "" &&
+                                <div className="flex-row-sp re-cart-bottom__cal-item">
+                                    <span>Mã khuyến mại</span>
+                                    <span>
+                                        {openVc.voucher}
+                                    </span>
+                                </div>
+                            }
                             <div
                                 style={
                                     FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
@@ -502,26 +527,27 @@ function Booking() {
                                 }
                             >
                                 {
-                                    FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX 
-                                    ?
-                                    <>
-                                    <SectionTitle title={'Phương thức thanh toán'} />
-                                    <span style={{
-                                        backgroundColor: "var(--pink-momo)",
-                                        marginLeft: "12px",
-                                        marginBottom: "12px", 
-                                        padding: "0px 8px", 
-                                        borderRadius: "6px", 
-                                        color: "var(--white)"}}>
-                                            MOMO
-                                    </span>
-                                    <br/>
-                                    </>
-                                    :
-                                    <PaymentMethodCpn
-                                        e={chooseE_wall}
-                                        onPaymentMethodChange={setChooseE_wall}
-                                    />
+                                    FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX
+                                        ?
+                                        <>
+                                            <SectionTitle title={'Phương thức thanh toán'} />
+                                            <span style={{
+                                                backgroundColor: "var(--pink-momo)",
+                                                marginLeft: "12px",
+                                                marginBottom: "12px",
+                                                padding: "0px 8px",
+                                                borderRadius: "6px",
+                                                color: "var(--white)"
+                                            }}>
+                                                MOMO
+                                            </span>
+                                            <br />
+                                        </>
+                                        :
+                                        <PaymentMethodCpn
+                                            e={chooseE_wall}
+                                            onPaymentMethodChange={setChooseE_wall}
+                                        />
                                 }
                             </div>
                             <div className="booking-cnt__bot">
@@ -555,6 +581,11 @@ function Booking() {
                     titleBtnRight={openNoti.titleRight}
                     onClickLeft={openNoti.onClickLeft}
                     onClickRight={openNoti.onClickRight}
+                />
+                <InputVoucher
+                    open={openVc}
+                    setOpen={setOpenVc}
+                    cart_confirm={servicesBook}
                 />
             </Container>
             <Footer />

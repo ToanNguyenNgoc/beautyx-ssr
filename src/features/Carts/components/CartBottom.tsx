@@ -26,7 +26,7 @@ import RenderRecatpcha, { FieldOtps } from "../../Otp/dialogOtp";
 import { putUser, updateAsyncUser } from "../../../redux/USER/userSlice";
 import icon from "../../../constants/icon";
 
-interface OpenVcProp {
+export interface OpenVcProp {
     open: boolean,
     voucher: string
 }
@@ -239,7 +239,7 @@ function CartBottom(props: any) {
             });
         }
     }
-    // console.log(dataOtp);
+    console.log(cart_confirm);
     return (
         <>
             <InputVoucher
@@ -380,7 +380,7 @@ interface InputVoucherProps {
     cart_confirm: any
 }
 
-const InputVoucher = (props: InputVoucherProps) => {
+export const InputVoucher = (props: InputVoucherProps) => {
     const { open, setOpen, cart_confirm } = props;
     const [text, setText] = useState("");
     const onInputChange = (e: any) => text.length <= 25 && setText(e.target.value)
