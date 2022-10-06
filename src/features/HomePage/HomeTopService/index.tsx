@@ -36,7 +36,7 @@ export default function HomeTopService() {
             <div className="top-service__list">
                 {
                     resData
-                        .slice(0, 18)
+                        .slice(0, 12)
                         .map((item: IProductPromo, index: number) => (
                             <ProductPromoItem
                                 key={index}

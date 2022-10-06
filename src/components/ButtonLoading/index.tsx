@@ -3,7 +3,7 @@ import { CircularProgress } from '@mui/material';
 import './style.css';
 
 interface IProps {
-    loading: boolean,
+    loading?: boolean,
     title?: string,
     onClick?: () => void,
     type?: any,

@@ -51,7 +51,6 @@
         "react-i18next": "^11.18.4",
         "react-infinite-scroll-component": "^6.1.0",
         "react-lazy-load-image-component": "^1.5.5",
-        "react-lightgallery": "^0.9.0",
         "react-loading-skeleton": "^3.1.0",
         "react-map-gl": "^7.0.19",
         "react-mapbox-autocomplete": "^0.2.3",
@@ -78,7 +77,8 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "deploy":"react-scripts build & firebase deploy"
     },
     "eslintConfig": {
         "extends": [

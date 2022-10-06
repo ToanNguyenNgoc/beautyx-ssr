@@ -47,7 +47,7 @@ function SignIn(props: any) {
                 dispatch(fetchAsyncOrderServices({ page: 1 }))
             }
             setLoading(false);
-            history.push("/homepage");
+            history.goBack()
         } catch (error) {
             setLoading(false);
             const err = error as AxiosError;
@@ -169,7 +169,7 @@ function SignIn(props: any) {
                         />
                         <span>{t("Home.Sign_remember")}</span>
                     </div>
-                    <span onClick={() => history.push("/doi-mat-khau")}>
+                    <span onClick={() => history.replace("/doi-mat-khau")}>
                         {t("Home.Sign_forgot")} ?
                     </span>
                 </div>

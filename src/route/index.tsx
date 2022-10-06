@@ -212,7 +212,11 @@ function RouterConfig(props: any) {
       component: <HomePromoProduct />
     },
     {
-      path: "/danh-sach/:tag_name",
+      path: "/danh-sach-san-pham/:tag_name",
+      component: <HomeCateResult />
+    },
+    {
+      path: "/danh-sach-dich-vu/:tag_name",
       component: <HomeCateResult />
     },
     {

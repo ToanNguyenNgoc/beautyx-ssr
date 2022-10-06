@@ -19,6 +19,7 @@ function FilterProduct(props: FilterProductProps) {
     const { query } = useSelector((state: IStore) => state.FILTER.FILTER_PRODUCT_PROMO)
     const query_value = value ?? query
     const sortList: ISortList[] = [
+        { id: 1, title: "Gần bạn", query: "location" },
         { id: 2, title: t("home_2.hot_promotion"), query: '-discount_percent' },
         //{ id: 8, title: 'Dịch vụ HOT', query: '-modified_date' },
         { id: 3, title: t("Mer_de.ascending_price"), query: `${price_query}` },

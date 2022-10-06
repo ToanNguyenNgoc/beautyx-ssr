@@ -15,7 +15,7 @@ export default function HomeRecomment() {
 
     const params = {
         ...paramsServices,
-        "limit": 24,
+        "limit": 12,
         "filter[location]": LOCATION,
     }
     const { resData } = useSwrInfinite(true, "/services", params)
