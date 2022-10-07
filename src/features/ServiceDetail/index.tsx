@@ -26,7 +26,6 @@ import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";
 import { handleScroll, handleChangeScroll } from "./onScrollChange";
 import ReviewsContainer from "../ReviewsContainer";
-import ModalLoad from "../../components/ModalLoad";
 import PageNotFound from "../../components/PageNotFound";
 import { useHistory } from "react-router-dom";
 import { useContext } from "react";
@@ -37,10 +36,10 @@ import { EXTRA_DETAIL_SERVICE } from "../../utils/extraDetail";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
-import { formatSalePriceService } from "../../utils/formatPrice";
 import { Service } from "../../interface/service";
 import IStore from "../../interface/IStore";
 import { analytics, logEvent } from "../../firebase";
+import { postHistoryView } from "../../user-behavior";
 // end
 
 function ServiceDetail() {
@@ -155,8 +154,11 @@ function ServiceDetail() {
             scroll = false;
         };
     });
-
+    const postAsyncWatched = async () =>{
+        await postHistoryView({id: params.id, organization_id: params.org, type:"SERVICE"})
+    }
     useEffect(() => {
+        postAsyncWatched()
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
         logEvent(analytics, "detail_service", {
             service: service.service_name,

@@ -23,7 +23,7 @@ export interface IServicePromo {
     org_full_address: string,
     branch_id: null | number,
     branch_is_active: boolean,
-    special_price_momo:number,
+    special_price_momo: number,
     _geo: {
         lat: null | number,
         lng: null | number
@@ -34,4 +34,25 @@ export interface IServicePromo {
     bought_count: number,
     rating: number,
     org_telephone: []
+}
+export interface SerProCommonWatched {
+    user_id: number,
+    id: number,
+    productable_id:number,
+    name: string,
+    category_name: string,
+    price: number,
+    special_price: number,
+    image_url: string,
+    bought_count: number,
+    rating: number,
+    org_id: number,
+    org_name: string,
+    org_image: string,
+    org_full_address: string,
+    special_price_momo: number,
+    type: "SERVICE" | "PRODUCT"|"DISCOUNT",
+    createdAt: string,
+    updatedAt: string,
+    _id: string
 }

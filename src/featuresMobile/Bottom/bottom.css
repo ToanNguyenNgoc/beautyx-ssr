@@ -6,7 +6,7 @@
 @media only screen and (max-width: 767px) {
   .bt {
     display: block;
-    padding: 13px 8px 28px 8px;
+    padding: 13px 8px 24px 8px;
     background-color: hsla(0,0%,100%,.75);
     backdrop-filter: blur(9px);
     position: fixed;
@@ -37,6 +37,11 @@
   .bt-cnt__item img {
     width: 20px;
     height: 20px;
+  }
+  .bt-cnt__item:last-child img{
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
   }
   .bt-cnt__item-title {
     margin-top: 4px;

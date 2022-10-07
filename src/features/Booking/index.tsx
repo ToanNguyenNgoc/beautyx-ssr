@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
@@ -498,17 +498,20 @@ function Booking() {
                                     rows={5}
                                 ></textarea>
                             </div>
-                            <div>
-                                <div className="flex-row re-cart-bottom__total-discount">
-                                    <button
-                                        onClick={() => setOpenVc({ ...openVc, open: true })}
-                                        className="open_voucher_btn"
-                                    >
-                                        Nhập mã khuyến mại
-                                        <img src={icon.cardDiscountOrange} alt="" />
-                                    </button>
+                            {
+                                location.state?.TYPE === "BOOK_NOW" &&
+                                <div>
+                                    <div className="flex-row re-cart-bottom__total-discount">
+                                        <button
+                                            onClick={() => setOpenVc({ ...openVc, open: true })}
+                                            className="open_voucher_btn"
+                                        >
+                                            Nhập mã khuyến mại
+                                            <img src={icon.cardDiscountOrange} alt="" />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             {
                                 openVc.voucher !== "" &&
                                 <div className="flex-row-sp re-cart-bottom__cal-item">

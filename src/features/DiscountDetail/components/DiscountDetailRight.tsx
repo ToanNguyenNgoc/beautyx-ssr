@@ -55,7 +55,7 @@ function DiscountDetailRight(props: IProps) {
         100 -
         (finalDisplayPrice / (ITEM_DISCOUNT?.productable.price || ITEM_DISCOUNT?.productable?.retail_price)) * 100
     );
-    console.log(ITEM_DISCOUNT)
+   
 
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();

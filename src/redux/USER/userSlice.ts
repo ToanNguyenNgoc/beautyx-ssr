@@ -15,7 +15,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
             if (context.telephone && !checkPhoneValid(context.telephone)) {
                 context = { ...context, telephone: 'số điện thoại' }
             }
-            logEvent(analytics,'login', {
+            logEvent(analytics, 'login', {
                 'User login': context.fullname
             })
             return context
@@ -49,7 +49,7 @@ export const fetchAsyncDiscountsUser: any = createAsyncThunk(
     }
 )
 
-interface IState {
+export interface IUSER {
     USER: any,
     DISCOUNTS_USER: {
         discounts: IDiscountPar[],
@@ -60,7 +60,7 @@ interface IState {
     loading: boolean
 }
 
-const initialState: IState = {
+const initialState: IUSER = {
     USER: null,
     DISCOUNTS_USER: {
         discounts: [],

@@ -1,17 +1,9 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import Head from "../Head";
-import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    fetchAsyncDiscountDetail,
-    onSetItemDiscount,
-} from "../../redux/org_discounts/orgDiscountsSlice";
 import HeadTitle from "../HeadTitle";
-import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
 import { Container, Drawer, Tab } from "@mui/material";
-import { STATUS } from "../../redux/status";
 import "../ServiceDetail/serviceDetail.css";
 import "../ProductDetail/product.css";
 import "./style.css";
@@ -40,11 +32,17 @@ import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import Footer from "../Footer";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
+import useDeviceMobile from "../../utils/useDeviceMobile";
+import { AppContext } from "../../context/AppProvider";
+import Head from "features/Head";
+import { extraParamsUrl } from "utils/extraParamsUrl";
+import { fetchAsyncDiscountDetail, onSetItemDiscount } from "redux/org_discounts/orgDiscountsSlice";
+import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
+import { STATUS } from "redux/status";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
-import useDeviceMobile from "../../utils/useDeviceMobile";
-import { AppContext } from "../../context/AppProvider";
+import { postHistoryView } from "user-behavior";
 // end
 function DiscountDetail() {
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
@@ -229,9 +227,9 @@ function DiscountDetail() {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
-
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
+        postHistoryView({id: params.dis_id, organization_id: params.org_id, type:"DISCOUNT"})
         callDiscountDetail();
         if (TYPE === "service") {
             callServiceDetail();
@@ -290,7 +288,7 @@ function DiscountDetail() {
                                                 className="service-detail__description"
                                             >
                                                 {detail?.description.length ===
-                                                0 ? (
+                                                    0 ? (
                                                     <div className="service-description-updating">
                                                         <span className="service-description">
                                                             {t(
@@ -311,16 +309,16 @@ function DiscountDetail() {
                                                             :{" "}
                                                             {detail?.description
                                                                 .length > 150 &&
-                                                            readMore !== true
+                                                                readMore !== true
                                                                 ? detail?.description.slice(
-                                                                      0,
-                                                                      150
-                                                                  )
+                                                                    0,
+                                                                    150
+                                                                )
                                                                 : detail?.description}
                                                             {/* dots */}
                                                             {detail?.description
                                                                 .length > 150 &&
-                                                            readMore === false
+                                                                readMore === false
                                                                 ? "..."
                                                                 : " "}
                                                             {/* close dot  */}
@@ -331,7 +329,7 @@ function DiscountDetail() {
                                                                 detail
                                                                     ?.description
                                                                     .length >
-                                                                    150 && (
+                                                                150 && (
                                                                     <span
                                                                         onClick={() =>
                                                                             handleSeemoreText()
@@ -339,7 +337,7 @@ function DiscountDetail() {
                                                                         className="seemore-btn"
                                                                     >
                                                                         {readMore ===
-                                                                        false
+                                                                            false
                                                                             ? "Xem thêm >>"
                                                                             : "Thu gọn <<"}
                                                                     </span>
@@ -369,7 +367,7 @@ function DiscountDetail() {
                                                     }
                                                 />
                                                 {COMMENTS.comments &&
-                                                COMMENTS.comments.length >=
+                                                    COMMENTS.comments.length >=
                                                     8 ? (
                                                     <div
                                                         style={{
@@ -408,22 +406,22 @@ function DiscountDetail() {
                                             >
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {t(
-                                                                "detail_item.merchant"
-                                                            )}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                {t(
+                                                                    "detail_item.merchant"
+                                                                )}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={ORG?.org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={ORG?.org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={ORG?.org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </TabPanel>
                                         <TabPanel value={value}>

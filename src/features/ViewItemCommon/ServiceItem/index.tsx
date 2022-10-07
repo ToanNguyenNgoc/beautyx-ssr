@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice, { formatSalePriceService } from "../../../utils/formatPrice";
 import "../ServicePromoItem/service-promo-item.css";
@@ -30,15 +30,15 @@ function ServiceItem(props: IProps) {
     );
 
     const pathServiceOb = formatRouterLinkService(service, org);
-    const onDetail = () => {
+    const onDetail = async () => {
         scrollTop();
         tracking.USER_ITEM_CLICK(org.id, service.id);
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-        logEvent(analytics,'detail_service', {
+        logEvent(analytics, 'detail_service', {
             service: service.service_name,
             merchant: org.name
         })
-        history.push(pathServiceOb);
+        history.push(pathServiceOb)
     };
     return (
         <div

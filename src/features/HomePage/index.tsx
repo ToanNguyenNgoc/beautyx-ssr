@@ -23,6 +23,7 @@ import { LoadHomeBanner } from "../../components/LoadingSketion/LoadHome";
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
+import HomeWatched from "./HomeWatched";
 export default function HomePage() {
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
@@ -57,11 +58,10 @@ export default function HomePage() {
                 <HomeHotDeal />
                 <HomeTopService />
                 <HomeRecomment />
-                {/* {IS_MB && <HomeHotTrend />} */}
                 <HomeFavorite />
+                <HomeWatched />
                 <HomeProvince />
             </Container>
-            {/* <FooterCate/> */}
             <Footer />
             <Bottom />
         </div>
