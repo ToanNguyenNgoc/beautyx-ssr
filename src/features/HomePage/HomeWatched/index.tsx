@@ -1,21 +1,29 @@
 import React, { useContext } from 'react';
-import API_3RD from '../../../api/3rd-api';
-import useFetch from '../../../utils/useFetch';
-import { SerProCommonWatched } from '../../../interface/servicePromo';
-import style from "./home-watched.module.css"
-import { AppContext } from '../../../context/AppProvider';
-import onErrorImg from '../../../utils/errorImg';
-import formatPrice from '../../../utils/formatPrice';
-import { formatSalePriceService } from '../../../utils/formatPrice';
-import slugify from '../../../utils/formatUrlString';
-import icon from '../../../constants/icon';
+import { onErrorImg, useFetch } from 'utils';
+import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { Link } from 'react-router-dom';
+import { SerProCommonWatched } from 'interface/servicePromo';
+import slugify from 'utils/formatUrlString';
+import API_3RD from 'api/3rd-api';
+import { AppContext } from 'context/AppProvider';
 
-function HomeWatched() {
+import style from "./home-watched.module.css";
+import icon from 'constants/icon';
+
+interface HomeWatchedProps {
+    styleProp?: any
+}
+
+
+function HomeWatched(props: HomeWatchedProps) {
+    const { styleProp } = props
     const { response } = useFetch(`${API_3RD.API_NODE}/history`)
     return (
         response?.length > 0 ?
-            <div className={style.container}>
+            <div
+                style={styleProp ? styleProp : {}}
+                className={style.container}
+            >
                 <span className={style.title}>
                     Dịch vụ / Sản phẩm đã xem
                 </span>
@@ -23,7 +31,7 @@ function HomeWatched() {
                     <ul className={style.list_item}>
                         {
                             response.map((item: SerProCommonWatched, index: number) => (
-                                <li className={style.item_cnt}>
+                                <li key={index} className={style.item_cnt}>
                                     <CardItemCommon detail={item} />
                                 </li>
                             ))
@@ -44,6 +52,9 @@ const CardItemCommon = ({ detail }: { detail: SerProCommonWatched }) => {
     const discount_percent = 100 - Math.round(special_price / detail.price * 100)
     let LINK = `/dich-vu/${slugify(detail.name)}?id=${detail.id}&org=${detail.org_id}`
     if (detail.type === "PRODUCT") LINK = `/san-pham/${slugify(detail.name)}?id=${detail.id}&org=${detail.org_id}`
+    if (detail.type === "DISCOUNT") {
+        LINK = `/chi-tiet-giam-gia/${slugify(detail.name)}?type=service&org_id=${detail.org_id}&dis_id=${detail.id}&item_id=${detail.productable_id}`
+    }
     return (
         <Link
             to={{ pathname: LINK }}

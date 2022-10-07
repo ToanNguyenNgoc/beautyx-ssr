@@ -98,6 +98,14 @@
     color: var(--red-cl);
 }
 
+.ser_price span:nth-child(2) {
+    font-size: 12px;
+    line-height: 14px;
+    color: var(--text-hover);
+    font-weight: 700;
+    text-decoration: line-through;
+}
+
 .ser_org_address {
     display: flex;
     flex-direction: row;
@@ -154,4 +162,23 @@
     height: 20px;
     background-color: #ff9e90;
     margin: 12px 0 0 4px;
+}
+
+@media screen and (max-width: 1023px) {
+    .container{
+        padding: 0px 12px;
+    }
+    .title {
+        font-weight: 800;
+        font-size: 18px;
+        line-height: 24px;
+    }
+    .body{
+        padding: 12px 0px;
+    }
+
+    .item_cnt {
+        width: 164px;
+        margin-right: 12px;
+    }
 }

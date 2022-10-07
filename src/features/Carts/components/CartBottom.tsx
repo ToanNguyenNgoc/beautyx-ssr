@@ -79,7 +79,7 @@ function CartBottom(props: any) {
         .concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code))
         ;
     const {
-        products,cart_confirm,
+        products, cart_confirm,
         combos_id, services_id, products_id
     } = cartReducer(
         DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
@@ -393,7 +393,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
             <div className="vc_container">
                 <div className="vc_header">
                     <span className="vc_header_title">
-                        Beautyx - Shopee khuyến mại
+                        Beautyx khuyến mại
                     </span>
                     <button
                         onClick={() => setOpen({ ...open, open: false })}

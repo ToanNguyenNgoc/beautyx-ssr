@@ -31,7 +31,7 @@ export default function HomeTopService() {
                 url={"/top-san-pham-giam-gia"}
                 seemore={"Xem chi tiết >"}
             />
-            <FilterProduct />
+            <FilterProduct disable="location" />
             {(resData.length === 0 && isValidating) && <LoadGrid />}
             <div className="top-service__list">
                 {

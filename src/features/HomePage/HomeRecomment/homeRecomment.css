@@ -20,13 +20,21 @@
     }
 }
 @media screen and (max-width: 767px) {
-    .home-recomment {
-        margin: 12px 0;
-        padding: 0 0 100px 0;
+    .home-recomment{
+        margin: 12px 0px;
     }
-    .home-recomment__list {
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 12px;
-        margin: 24px 12px;
+    .home-recomment_cnt{
+        width: 100%;
+        overflow-x: scroll;
+    }
+    .home-recomment__list{
+        display: flex;
+        width: max-content;
+        flex-wrap: nowrap;
+        margin: 12px 0px;
+    }
+    .home-recomment__item{
+        width: 164px;
+        margin-right: 12px;
     }
 }

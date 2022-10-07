@@ -40,7 +40,7 @@ export const fetchAsyncOrderCancel: any = createAsyncThunk(
     }
 )
 
-interface InitialState {
+export interface IORDER {
     tab: string,
     openDetail: {
         open: boolean,
@@ -67,7 +67,7 @@ interface InitialState {
     }
 }
 
-const initialState: InitialState = {
+const initialState: IORDER = {
     tab: "PAID",
     openDetail: {
         open: false,

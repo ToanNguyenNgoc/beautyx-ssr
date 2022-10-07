@@ -1,15 +1,16 @@
 import axios from "axios"
-import { AUTH_HEADER } from "../api/authHeader"
+import API_3RD from "api/3rd-api"
+import { AUTH_HEADER } from "utils/authHeader"
 
 interface PostHistoryViewProps {
     id: string | number,
     organization_id: number,
-    type: "SERVICE" | "PRODUCT" | "ORGANIZATION"
+    type: "SERVICE" | "PRODUCT" | "DISCOUNT"
 }
 export async function postHistoryView(params: PostHistoryViewProps) {
     let response
     try {
-        const res = await axios.post("https://api-node-myspa.vercel.app/v1/history", params, AUTH_HEADER())
+        const res = await axios.post(`${API_3RD.API_NODE}/history`, params, AUTH_HEADER())
         response = res
     } catch (error) {
         response = error
