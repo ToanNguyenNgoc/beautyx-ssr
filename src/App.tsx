@@ -12,7 +12,7 @@ function App() {
     //     .then((payload) => {
     //         console.log(payload)
     //     })
-    //     .catch((err) => console.log('failed: ', err));
+    // .catch((err) => console.log('failed: ', err));
     return (
         <div>
             <AppProvider>
