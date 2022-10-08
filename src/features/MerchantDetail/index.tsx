@@ -35,7 +35,7 @@ import OrgContainer from "./components/OrgContainer";
 import OrgDetail from "./components/OrgDetail";
 import IStore from "../../interface/IStore";
 import "./style.css";
-import { analytics, logEvent } from "../../firebase";
+import { analytics, logEvent } from "../../firebase"
 
 
 function MerchantDetail() {
@@ -59,8 +59,6 @@ function MerchantDetail() {
       dispatch(onActiveTab(1))
       dispatch(onSetEmptyChooseCatePr())
       dispatch(onSetEmptyChooseCate())
-      //dispatch(clearServices())
-      //dispatch(clearProducts())
     }
   }
   const callGalleriesOrg = () => {
@@ -106,7 +104,7 @@ function MerchantDetail() {
     callOrgSpecial()
     callOrgDetail()
     callGalleriesOrg()
-    logEvent(analytics,'detail_merchant', {
+    logEvent(analytics, 'detail_merchant', {
       merchant: org.name
     })
   }, [sub_domain])

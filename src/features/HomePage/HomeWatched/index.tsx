@@ -19,7 +19,7 @@ function HomeWatched(props: HomeWatchedProps) {
     const { styleProp } = props
     const { response } = useFetch(`${API_3RD.API_NODE}/history`)
     return (
-        response?.length > 0 ?
+        response?.context?.data?.length > 0 ?
             <div
                 style={styleProp ? styleProp : {}}
                 className={style.container}
@@ -30,7 +30,7 @@ function HomeWatched(props: HomeWatchedProps) {
                 <div className={style.body}>
                     <ul className={style.list_item}>
                         {
-                            response.map((item: SerProCommonWatched, index: number) => (
+                            response?.context?.data?.map((item: SerProCommonWatched, index: number) => (
                                 <li key={index} className={style.item_cnt}>
                                     <CardItemCommon detail={item} />
                                 </li>
