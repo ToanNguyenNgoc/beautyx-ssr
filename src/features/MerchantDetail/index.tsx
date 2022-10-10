@@ -2,7 +2,7 @@
 import { Container } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../../assets/styles/main.css";
 import LoadOrg from "../../components/LoadingSketion/LoadOrg";
 //import { clearServices } from '../../redux/org_services/orgServivesSlice';
@@ -35,18 +35,14 @@ import OrgContainer from "./components/OrgContainer";
 import OrgDetail from "./components/OrgDetail";
 import IStore from "../../interface/IStore";
 import "./style.css";
-import { analytics, logEvent } from "../../firebase";
+import { analytics, logEvent } from "../../firebase"
 
-type IUseParams = {
-  subdomain: string|undefined
-}
+
 function MerchantDetail() {
   const IS_MB = useFullScreen();
   const location: any = useLocation();
   const dispatch = useDispatch();
   const param = formatOrgParam(location.pathname);
-  const sth = useParams<IUseParams>();
-  console.log(sth);
   const { sub_domain } = param;
 
   const ORG = useSelector((state: IStore) => state.ORG);
@@ -63,8 +59,6 @@ function MerchantDetail() {
       dispatch(onActiveTab(1))
       dispatch(onSetEmptyChooseCatePr())
       dispatch(onSetEmptyChooseCate())
-      //dispatch(clearServices())
-      //dispatch(clearProducts())
     }
   }
   const callGalleriesOrg = () => {
@@ -88,21 +82,6 @@ function MerchantDetail() {
     }
   }
   const callOrgSpecial = () => {
-    // if (status === STATUS.SUCCESS) {
-    //   const values = {
-    //     org_id: sub_domain,
-    //     page: 1,
-    //     special: true,
-    //     isEnable: org?.is_momo_ecommerce_enable && true
-    //   }
-    //   dispatch(onSaveOrgId(sub_domain))
-    //   if (sub_domain !== org_id || status_ser !== STATUS.SUCCESS) {
-    //     dispatch(fetchAsyncServicesSpecial(values));
-    //   }
-    //   if (sub_domain !== org_id || status_pr !== STATUS.SUCCESS) {
-    //     dispatch(fetchProductsSpecial(values))
-    //   }
-    // }
     const values = {
       org_id: sub_domain,
       page: 1,
@@ -122,9 +101,10 @@ function MerchantDetail() {
     callOrgDiscountsOrg()
   }, [status])
   useEffect(() => {
+    callOrgSpecial()
     callOrgDetail()
     callGalleriesOrg()
-    logEvent(analytics,'detail_merchant', {
+    logEvent(analytics, 'detail_merchant', {
       merchant: org.name
     })
   }, [sub_domain])

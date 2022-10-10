@@ -12,14 +12,17 @@ import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
 import { AUTH_LOCATION } from "../../api/authLocation";
 import { paramsDiscounts } from "../../params-query"
 import "./style.css";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 function HomeDiscount() {
     const { t, geo } = useContext(AppContext);
+    const PLAT_FORM = EXTRA_FLAT_FORM();
     const LOCATION = AUTH_LOCATION();
     const newParams = {
         ...paramsDiscounts,
         page: 1,
-        "filter[location]": LOCATION
+        "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
+        "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
     const { resData, isValidating } = useSwrInfinite(true, "/discounts", newParams)
     const discounts = resData

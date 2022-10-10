@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useScript = (script_content:any) => {
+export const useScript = (script_content:any) => {
   useEffect(() => {
     const script = document.createElement('script');
 

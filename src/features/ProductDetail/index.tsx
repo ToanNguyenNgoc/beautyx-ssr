@@ -36,6 +36,7 @@ import PageNotFound from "../../components/PageNotFound";
 import { AppContext } from "../../context/AppProvider";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import IStore from "../../interface/IStore";
+import { postHistoryView } from "../../user-behavior";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -157,8 +158,11 @@ function ProductDetail(props: any) {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
-
+    const postAsyncHistory = async () => {
+        await postHistoryView({ id: params.id, organization_id: params.org, type: "PRODUCT" })
+    }
     useEffect(() => {
+        postAsyncHistory()
         callProductDetail();
         callOrgDetail();
         callProductComments();
@@ -219,16 +223,16 @@ function ProductDetail(props: any) {
                                                     {t("pr.description")}:{" "}
                                                     {product?.description
                                                         .length > 150 &&
-                                                    readMore !== true
+                                                        readMore !== true
                                                         ? product?.description.slice(
-                                                              0,
-                                                              150
-                                                          )
+                                                            0,
+                                                            150
+                                                        )
                                                         : product?.description}
                                                     {/* dots */}
                                                     {product?.description
                                                         .length > 150 &&
-                                                    readMore === false
+                                                        readMore === false
                                                         ? "..."
                                                         : " "}
                                                     {/* close dot  */}
@@ -244,7 +248,7 @@ function ProductDetail(props: any) {
                                                                 className="seemore-btn"
                                                             >
                                                                 {readMore ===
-                                                                false
+                                                                    false
                                                                     ? "Xem thêm >> "
                                                                     : "Thu gọn <<"}
                                                             </span>
@@ -270,7 +274,7 @@ function ProductDetail(props: any) {
                                                 }
                                             />
                                             {COMMENTS.comments &&
-                                            COMMENTS.comments.length >= 8 ? (
+                                                COMMENTS.comments.length >= 8 ? (
                                                 <div
                                                     style={{
                                                         justifyContent:
@@ -305,22 +309,22 @@ function ProductDetail(props: any) {
                                             <div className="service-detail__org">
                                                 {ORG.status ===
                                                     STATUS.SUCCESS && (
-                                                    <>
-                                                        <p className="service-detail__title">
-                                                            {`${t(
-                                                                "detail_item.merchant"
-                                                            )}`}
-                                                        </p>
-                                                        <div className="service-detail__org-mb">
-                                                            <DetailOrgCard
+                                                        <>
+                                                            <p className="service-detail__title">
+                                                                {`${t(
+                                                                    "detail_item.merchant"
+                                                                )}`}
+                                                            </p>
+                                                            <div className="service-detail__org-mb">
+                                                                <DetailOrgCard
+                                                                    org={org}
+                                                                />
+                                                            </div>
+                                                            <OrgInformation
                                                                 org={org}
                                                             />
-                                                        </div>
-                                                        <OrgInformation
-                                                            org={org}
-                                                        />
-                                                    </>
-                                                )}
+                                                        </>
+                                                    )}
                                             </div>
                                         </div>
                                     </TabPanel>
@@ -337,7 +341,7 @@ function ProductDetail(props: any) {
                     {/* service bottom buttom add cart*/}
                     <div className="service-detail__bottom">
                         {product?.is_momo_ecommerce_enable === false ||
-                        org?.is_momo_ecommerce_enable === false ? (
+                            org?.is_momo_ecommerce_enable === false ? (
                             <span className="detail-right__no">
                                 {`${t("detail_item.not_sale")}`}
                             </span>

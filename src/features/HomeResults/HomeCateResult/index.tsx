@@ -5,7 +5,10 @@ import { useSwr } from '../../../utils/useSwr';
 import useSwrInfinite from '../../../utils/useSwrInfinite';
 import { paramsProductsCate, paramsProducts } from "../../../params-query"
 import { ITag } from '../../../interface/tags';
-import { formatRouterCateResult } from "../../../utils/formatRouterLink/formatRouter"
+import {
+    formatRouterCateResult,
+    formatParamsString
+} from "../../../utils/formatRouterLink/formatRouter"
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import ProductPromoItem from '../../ViewItemCommon/ProductPromoItem';
@@ -16,14 +19,18 @@ import FilterProduct from '../../Filter/FilterProduct';
 import style from "./home-cate.module.css"
 import icon from '../../../constants/icon';
 import { Container } from '@mui/system';
+import { AUTH_LOCATION } from '../../../api/authLocation';
+import { FilterPrice } from "../../../components/FilterCate"
+// import useGetLocation from '../../../utils/useGetLocation';
 
 function HomeCateResult() {
-    const params = extraParamsUrl();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const params: any = extraParamsUrl();
     const location = useLocation();
+    const LOCATION = AUTH_LOCATION();
+    const page_url = location.pathname.split("/")[1];
     const history = useHistory();
     const id = params?.id
-    const type = params?.type === "SERVICE" ? "SERVICE" : "PRODUCT"
+    const type = page_url === "danh-sach-dich-vu" ? "SERVICE" : "PRODUCT"
     const query = params?.sort ?? ""
 
     const tag: ITag = useSwr(`/tags/${id}`, id, paramsProductsCate).response
@@ -32,17 +39,22 @@ function HomeCateResult() {
         `/tags/${tagParent?.parent_id}`,
         tagParent?.parent_id,
         paramsProductsCate).response
+    // const { q_location } = useGetLocation(params.province)
+
     const newParams = {
         ...paramsProducts,
+        "filter[location]": query === "location" && LOCATION,
         "filter[keyword]": tag?.name,
+        "filter[min_price]": parseInt(params.min_price) ?? "",
+        "filter[max_price]": parseInt(params.max_price) ?? "",
         "filter[special_price]": query === "-discount_percent" ? true : "",
-        "sort": query
+        "sort": query !== "location" && query
     }
     let condition = false
     if (tag?.name && (type === "PRODUCT" || type === "SERVICE")) condition = true
     let APL_URL = ""
     if (type === "SERVICE") APL_URL = "/services"
-    if (type === "PRODUCT") APL_URL = "products"
+    if (type === "PRODUCT") APL_URL = "/products"
     const { resData, totalItem, onLoadMore } = useSwrInfinite(
         condition,
         APL_URL,
@@ -55,9 +67,16 @@ function HomeCateResult() {
         }
     }
     //handle sort & filter
-    const onChangeFilter = (q: string) => {
+    const onChangeFilter = (values: any) => {
+        const sortArr = ["location", "-discount_percent", "price", "-price", "retail_price", "-retail_price"]
+        const paramsChange = {
+            ...params,
+            sort: sortArr.includes(values) ? values : params?.sort,
+            min_price: values.min_price ?? params?.min_price,
+            max_price: values.max_price ?? params?.max_price
+        }
         const pathname = location.pathname
-        history.push(`${pathname}?id=${id}&sort=${q}`)
+        history.push(`${pathname}?${formatParamsString(paramsChange)}`)
     }
 
     return (
@@ -118,6 +137,12 @@ function HomeCateResult() {
                                     ))
                                 }
                             </ul>
+                            {/* <FilterProvince/> */}
+                            <FilterPrice
+                                onChangePrice={onChangeFilter}
+                                min_price={params?.min_price ?? ""}
+                                max_price={params?.max_price ?? ""}
+                            />
                         </div>
                         <div className={style.body_right}>
                             <div className={style.body_right_sort}>
@@ -126,7 +151,7 @@ function HomeCateResult() {
                                     value={query}
                                     type_price={type === "SERVICE" ? "price" : "retail_price"}
                                 />
-                                
+
                             </div>
                             <InfiniteScroll
                                 dataLength={resData.length}

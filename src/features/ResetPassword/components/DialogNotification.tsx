@@ -7,7 +7,7 @@ function DialogNotification(props: any) {
     const { errorCode, setErrorCode } = props;
     const history = useHistory();
     const onBackSignIn = () => {
-        history.push({
+        history.replace({
             pathname: "/sign-in",
             search: "1",
         });

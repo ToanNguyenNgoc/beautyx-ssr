@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
@@ -29,16 +29,13 @@ import apointmentApi from "../../api/apointmentApi";
 import Notification from "../../components/Notification";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
 import AlertSnack from "../../components/AlertSnack";
-
-// ==== api tracking ====
-//import tracking from "../../api/trackApi";
-// import { formatProductList } from "../../utils/tracking";
 import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
-import { InputVoucher, OpenVcProp } from "../Carts/components/CartBottom";
+import { onClearApplyVoucher } from "redux/cartSlice";
+import { IDiscountPar } from "interface/discount";
 
 // end
 const date = dayjs();
@@ -60,10 +57,6 @@ function Booking() {
         onClickLeft: () => { },
         onClickRight: () => { },
     });
-    const [openVc, setOpenVc] = useState<OpenVcProp>({
-        open: false,
-        voucher: ""
-    })
     const [openVouchers, setOpenVouchers] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
@@ -81,6 +74,7 @@ function Booking() {
         }
     };
     useEffect(() => {
+        dispatch(onClearApplyVoucher())
         if (location.state) {
             callOrgDetail();
             const action = {
@@ -131,12 +125,15 @@ function Booking() {
         payments_method,
         chooseE_wall
     );
+    const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
+    const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i:IDiscountPar) => i.coupon_code)).filter(Boolean)
+    console.log(coupon_codes)
     const params_string = {
         products: [],
         services: services,
         treatment_combo: [],
         payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
-        coupon_code: openVc.voucher === "" ? listCouponCode.length > 0 ? listCouponCode : [] : [openVc.voucher],
+        coupon_code: coupon_codes.length > 0 ? coupon_codes : [],
         description: "",
         branch_id: bookTime.branch_id,
     };
@@ -498,17 +495,20 @@ function Booking() {
                                     rows={5}
                                 ></textarea>
                             </div>
-                            <div>
-                                <div className="flex-row re-cart-bottom__total-discount">
-                                    <button
-                                        onClick={() => setOpenVc({ ...openVc, open: true })}
-                                        className="open_voucher_btn"
-                                    >
-                                        Nhập mã khuyến mại
-                                        <img src={icon.cardDiscountOrange} alt="" />
-                                    </button>
+                            {/* {
+                                location.state?.TYPE === "BOOK_NOW" &&
+                                <div>
+                                    <div className="flex-row re-cart-bottom__total-discount">
+                                        <button
+                                            onClick={() => setOpenVc({ ...openVc, open: true })}
+                                            className="open_voucher_btn"
+                                        >
+                                            Nhập mã khuyến mại
+                                            <img src={icon.cardDiscountOrange} alt="" />
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            }
                             {
                                 openVc.voucher !== "" &&
                                 <div className="flex-row-sp re-cart-bottom__cal-item">
@@ -517,7 +517,7 @@ function Booking() {
                                         {openVc.voucher}
                                     </span>
                                 </div>
-                            }
+                            } */}
                             <div
                                 style={
                                     FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
@@ -552,7 +552,7 @@ function Booking() {
                             </div>
                             <div className="booking-cnt__bot">
                                 {location.state.TYPE === "BOOK_NOW" && (
-                                    <BookingNowBill />
+                                    <BookingNowBill org={org} />
                                 )}
                                 <ButtonLoading
                                     title={
@@ -581,11 +581,6 @@ function Booking() {
                     titleBtnRight={openNoti.titleRight}
                     onClickLeft={openNoti.onClickLeft}
                     onClickRight={openNoti.onClickRight}
-                />
-                <InputVoucher
-                    open={openVc}
-                    setOpen={setOpenVc}
-                    cart_confirm={servicesBook}
                 />
             </Container>
             <Footer />

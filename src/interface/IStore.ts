@@ -8,7 +8,9 @@ import { IORG_DISCOUNTS } from '../redux/org_discounts/orgDiscountsSlice';
 import { IPRODUCT } from '../redux/org_products/productSlice';
 import { ISERVICE } from '../redux/org_services/serviceSlice';
 import { ICOMMENT_MEDIA } from '../redux/commentSlice';
-import {IFILTER} from "../redux/filter/filterSlice"
+import { IFILTER } from "../redux/filter/filterSlice"
+import { IORDER } from "../redux/order/orderSlice"
+import {IUSER} from "redux/USER/userSlice"
 
 
 export default interface IStore {
@@ -22,5 +24,7 @@ export default interface IStore {
     PRODUCT: IPRODUCT,
     SERVICE: ISERVICE,
     COMMENT_MEDIA: ICOMMENT_MEDIA,
-    FILTER: IFILTER
+    FILTER: IFILTER,
+    ORDER: IORDER,
+    USER: IUSER
 }

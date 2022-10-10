@@ -27,22 +27,23 @@ function ServicePromoItem(props: IProps) {
     const { t } = useContext(AppContext);
     const patchServiceOb = formatRouterLinkServicePromo(service);
     const serviceSaleSpecial = formatSalePriceService(service.special_price, service?.special_price_momo)
+    const onItemClick = async () => {
+        scrollTop();
+        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+        tracking.USER_ITEM_CLICK(service.org_id, service.id);
+        logEvent(analytics, 'detail_service', {
+            service: service.service_name,
+            merchant: service.org_name
+        })
+    }
     return (
         <Link
             to={patchServiceOb}
-            onClick={() => {
-                scrollTop();
-                GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-                tracking.USER_ITEM_CLICK(service.org_id, service.id);
-                logEvent(analytics,'detail_service', {
-                    service: service.service_name,
-                    merchant: service.org_name
-                })
-            }}
+            onClick={onItemClick}
             className="ser-pro-item"
         >
             <div className="ser-img-cnt">
-                {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" onError={(e)=>onErrorImg(e,true)} alt=""/> }
+                {service.org_image !== '' && service.org_image !== null && <img src={service.org_image} className="ser-img__org-logo" onError={(e) => onErrorImg(e, true)} alt="" />}
                 <img
                     className="ser-img"
                     src={
@@ -87,7 +88,7 @@ function ServicePromoItem(props: IProps) {
             <div className="ser-pro-item__cnt">
                 <span className="ser-name">{service?.service_name}</span>
                 <div className="ser-price">
-                    {serviceSaleSpecial  > 0 ?
+                    {serviceSaleSpecial > 0 ?
                         (
                             <>
                                 <span>{formatPrice(serviceSaleSpecial)}đ</span>

@@ -1,23 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from "react";
 import "./bottom.css";
-import { ICON } from "../../constants/icon2";
 import { useHistory } from "react-router-dom";
-import { AppContext } from "../../context/AppProvider";
-import scrollTop from "../../utils/scrollTop";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-//import { IServiceUser } from '../../interface/servicesUser'
+import scrollTop from "utils/scrollTop";
+import { AppContext } from "context/AppProvider";
+import { ICON } from "constants/icon2";
+import IStore from "interface/IStore";
 
-
-function Bottom(props: any) {
+function Bottom() {
     const { t } = useContext(AppContext);
     const location = useLocation();
     const pathname = location.pathname;
-    //const { services } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
-    //console.log(services);
-    //const services_not_book = services.filter((i: IServiceUser) => i?.appointments?.length === 0);
-    //console.log(services_not_book);
+    const { USER } = useSelector((state: IStore) => state.USER)
     const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const Btns = [
         {
@@ -26,7 +22,7 @@ function Bottom(props: any) {
             icon: ICON.home,
             iconAct: ICON.homeAct,
             path: "/homepage",
-            params:"",
+            params: "",
             badge: 0
         },
         // {
@@ -42,7 +38,7 @@ function Bottom(props: any) {
             icon: ICON.cate,
             iconAct: ICON.cateAct,
             path: "/-danh-muc",
-            params:"",
+            params: "",
             badge: 0
         },
         {
@@ -51,7 +47,7 @@ function Bottom(props: any) {
             icon: ICON.calendar,
             iconAct: ICON.calendarAct,
             path: "/lich-hen",
-            params:"tab=2",
+            params: "tab=2",
             badge: 0
         },
         // {
@@ -65,10 +61,10 @@ function Bottom(props: any) {
         {
             id: 5,
             title: t("Bottom.account"),
-            icon: ICON.user,
-            iconAct: ICON.userAct,
+            icon: USER?.avatar ?? ICON.user,
+            iconAct: USER?.avatar ?? ICON.userAct,
             path: "/tai-khoan/thong-tin-ca-nhan",
-            params:"",
+            params: "",
             badge: ORDER_SERVICES_NOT_BOOK_COUNT
         },
     ];
@@ -76,8 +72,8 @@ function Bottom(props: any) {
     const chooseBtn = (item: any) => {
         scrollTop();
         history.push({
-            pathname:item.path,
-            search:`${item.params}`
+            pathname: item.path,
+            search: `${item.params}`
         });
     };
     return (

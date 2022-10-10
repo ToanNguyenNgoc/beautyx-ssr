@@ -121,6 +121,7 @@
 
 .re-cart-bottom__total-discount {
     justify-content: flex-end;
+    width: 100%;
 }
 
 .re-cart-bottom__total-discount span {
@@ -478,43 +479,50 @@
 }
 
 /* popup input voucher container */
-.vc_container{
+.vc_container {
     width: 40vw;
     height: fit-content;
     max-height: 89vh;
     background-color: var(--bgWhite);
     padding: 24px 12px;
 }
-.vc_header{
+
+.vc_header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.vc_header_title{
+
+.vc_header_title {
     font-size: 18px;
     line-height: 20px;
     font-weight: 500;
     color: #ee4d2d;
 }
-.vc_header_btn{
+
+.vc_header_btn {
     padding: 4px;
     border: none;
     outline: none;
     background-color: transparent;
 }
-.vc_header_btn img{
+
+.vc_header_btn img {
     width: 22px;
     height: 22px;
 }
-.vc_body{
+
+.vc_body {
     margin-top: 12px;
 }
-.vc_body_input{
+
+.vc_body_input {
     display: flex;
     justify-content: space-between;
     position: relative;
 }
-.vc_body_input input{
+
+.vc_body_input input {
     width: calc(100% - 106px);
     font-size: 16px;
     line-height: 20px;
@@ -523,10 +531,12 @@
     border: solid 1px var(--bg-color);
     border-radius: 4px;
 }
-.vc_body_input_btn{
+
+.vc_body_input_btn {
     border-radius: 4px;
 }
-.vc_body_input_del{
+
+.vc_body_input_del {
     position: absolute;
     z-index: 2;
     background-color: var(--bg-color);
@@ -537,7 +547,8 @@
     top: 5px;
     right: 112px;
 }
-.vc_cart_none{
+
+.vc_cart_none {
     background-color: #ffe3d2;
     margin-top: 12px;
     padding: 12px;
@@ -547,6 +558,33 @@
     border-radius: 4px;
     color: var(--red-cl);
 }
+
+.vc_cart_voucher_org {
+    padding: 8px 0px;
+    display: flex;
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.vc_cart_voucher_org h3 {
+    margin-left: 4px;
+}
+
+.vc_cart_voucher_list {
+    margin: 12px 0px;
+}
+
+.vc_bot {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.vc_bot button {
+    width: 25%;
+    border-radius: 4px;
+}
+
 /* end popup input voucher container */
 
 @media only screen and (max-width: 1023px) {
@@ -591,12 +629,13 @@
 
     .cart-vouchers-list__item-right .item-right__bottom .item-right__btn span {
         font-size: 12px;
-        line-height: unset;
+        line-height: 20px;
         font-weight: 500;
     }
 
     .cart-vouchers-list__item-right .item-right__bottom .item-right__expired {
         font-size: 12px;
+        width: calc(100% - 76px);
     }
 
     .re-cart-cnt__head {
@@ -795,21 +834,44 @@
     }
 
     /* popup input voucher container */
-    .vc_container{
-        width: 94vw;
-        border-radius: 6px;
-    }
-    .vc_body_input{
-        flex-direction: column;
-    }
-    .vc_body_input input{
+    .vc_container {
         width: 100%;
+        border-radius: 6px;
+        padding: 12px 10px 72px 10px;
+    }
+
+    .vc_body_input {
+        height: 36px;
+    }
+
+    .vc_body_input input {
+        width: calc(100% - 92px);
         margin-bottom: 20px;
         height: 36px;
     }
-    .vc_body_input_del{
-        right: 6px;
-        top: 6.5px;
+
+    .vc_body_input_del {
+        right: 98px;
+        top: 8.5px;
+        padding: 2px !important;
     }
+
+    .vc_body_input button {
+        padding: 8px;
+    }
+    .vc_bot{
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        background-color: var(--bgWhite);
+        width: 100%;
+        z-index: 2;
+        padding: 12px;
+        box-shadow: var(--box-shadow);
+    }
+    .vc_bot button {
+        width: 100%;
+    }
+
     /* end popup input voucher container */
 }

@@ -331,28 +331,31 @@
 }
 
 /* bottom bill */
+.open_voucher_btn{
+    background-color: burlywood;
+}
 .booking-cnt__bot-bill {
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+}
+.booking_calc_item{
     width: 100%;
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 700;
-    margin-bottom: 12px;
-}
-
-.booking-cnt__bot-bill .left,
-.booking-cnt__bot-bill .right {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+.booking_calc_item_left{
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 400;
+}
+.booking_calc_item_right{
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
 }
 
-.booking-cnt__bot-bill .right {
-    align-items: flex-end;
-}
-
-.booking-cnt__bot-bill .left span:nth-child(2),
-.booking-cnt__bot-bill .right span:nth-child(2) {
-    color: var(--orange);
-}
 
 .booking-cnt__right-time .book-seats-amount {
     width: 100%;

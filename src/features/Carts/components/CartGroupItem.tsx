@@ -10,7 +10,6 @@ import {
     onClearPrevCartItem,
 } from "../../../redux/cartSlice";
 import CartItem from "./CartItem";
-//import { checkConfirm, onChooseCartItemByOrg } from '../../../redux/cartSlice'
 import { useDispatch, useSelector } from "react-redux";
 import ButtonLoading from "../../../components/ButtonLoading";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
@@ -21,7 +20,8 @@ import {
     EX_CHECK_INCLUDE_ITEMS,
     EX_CHECK_SUB_TOTAL,
     IS_VOUCHER,
-    EX_CHECK_VALID_TIME
+    EX_CHECK_VALID_TIME,
+    EX_CHECK_INCLUDE_ORG
 } from "../../../utils/cart/checkConditionVoucher";
 import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import onErrorImg from "../../../utils/errorImg";
@@ -148,31 +148,8 @@ interface IPopUpVoucherOrg {
 export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     const IS_MB = useDeviceMobile();
     const { open, setOpen, org, vouchers } = props;
-    // const testVoucher:IDiscountPar[] = [
-    //     {
-    //         ...props.vouchers[0],
-    //         id:101010,
-    //         discount_unit:"PRICE",
-    //         discount_type:"PRODUCT",
-    //         discount_value:50000,
-    //         items:[],
-    //         items_count:0,
-    //         valid_time: "10:00:00 - 20:00:00",
-    //     },
-    //     {
-    //         ...props.vouchers[0],
-    //         id:101011,
-    //         discount_unit:"PERCENT",
-    //         discount_type:"PRODUCT",
-    //         discount_value:50,
-    //         maximum_discount_value:null,
-    //         items: [],
-    //         items_count: 0,
-    //         valid_from: "2022-01-01 10:00:00",
-    //         valid_util: "2022-06-01 10:00:00",
-    //         valid_time: "10:00:00 - 12:00:00",
-    //     }
-    // ]
+    const { cartAmount, cartList } = useSelector((state: any) => state.carts)
+    const { services_id, products_id } = cartReducer(cartList)
     return (
         <Dialog
             TransitionComponent={IS_MB ? Transition : TransitionUp}
@@ -198,38 +175,33 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                     <ul className="list">
                         {vouchers.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
-                                <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
+                                <VoucherOrgItem
+                                    services_id={services_id.map(i => i.id)}
+                                    products_id={products_id.map(i => i.id)}
+                                    cartAmount={cartAmount}
+                                    showApplyBtn={true} org={org}
+                                    voucher={item}
+                                />
                             </li>
                         ))}
-                        {/* {testVoucher.map((item: IDiscountPar, index: number) => (
-                            <li key={index} className="item">
-                                <VoucherOrgItem showApplyBtn={true} org={org} voucher={item} />
-                            </li>
-                        ))} */}
                     </ul>
                 </div>
             </div>
         </Dialog>
     );
 };
-interface IVoucherOrgItem{
+interface IVoucherOrgItem {
     org: IOrganization,
-    voucher:IDiscountPar,
-    showApplyBtn:boolean
+    voucher: IDiscountPar,
+    showApplyBtn: boolean,
+    services_id: number[],
+    products_id: number[],
+    cartAmount: number
 }
 export const VoucherOrgItem = (props: IVoucherOrgItem) => {
-    const { org, showApplyBtn } = props;
+    const { org, showApplyBtn, services_id, products_id, cartAmount } = props;
     const voucher: IDiscountPar = {
         ...props.voucher,
-        //discount_unit:"PERCENT"
-        // discount_type:"PRODUCT",
-        // discount_value:50,
-        // items:[],
-        // items_count:0,
-        // minimum_order_value: null,
-        // valid_time: "10:00:00 - 20:00:00",
-        // valid_from: "2022-01-01 10:00:00",
-        // valid_util: "2022-10-01 10:00:00"
     };
     const { timeCondition, displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
 
@@ -240,15 +212,14 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const serviceName = servicesInDis.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
     const displayName = serviceName.concat(productName).filter(Boolean)
     const dispatch = useDispatch();
-    const { cartAmount, cartList, VOUCHER_APPLY } = useSelector(
+    const { VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
-    const cartCheck = cartList.filter((item: any) => item.isConfirm === true);
-    const { products, services } = cartReducer(cartCheck)
     const active = VOUCHER_APPLY.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
-    const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products, services);
+    const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products_id, services_id);
+    const orgCondition = EX_CHECK_INCLUDE_ORG(voucher, org.id)
 
     let applyCondition = false;
     if (
@@ -256,7 +227,8 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
         subTotalCondition &&
         dateCondition &&
         itemsCondition &&
-        timeCondition
+        timeCondition &&
+        orgCondition
     ) {
         applyCondition = true;
     }
@@ -265,11 +237,21 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
         subTotalCondition &&
         dateCondition &&
         itemsCondition &&
-        timeCondition
+        timeCondition &&
+        orgCondition
     ) {
         applyCondition = true
     }
-    // console.log(voucher.id, subTotalCondition, dateCondition, itemsCondition, timeCondition)
+    if (
+        voucher.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key &&
+        subTotalCondition &&
+        dateCondition &&
+        itemsCondition &&
+        timeCondition &&
+        orgCondition
+    ) {
+        applyCondition = true;
+    }
 
     const handleApplyVoucher = () => {
         if (active) {
@@ -280,10 +262,6 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
             }
         }
     };
-
-    // console.log("date", dateCondition)
-    // console.log("total", subTotalCondition)
-    // console.log("itemsCondition", itemsCondition)
     return (
         <div
             style={
@@ -369,7 +347,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
                                         <span>{
                                             active
                                                 ?
-                                                "Bỏ chọn" : "Áp dụng"
+                                                "Bỏ lưu" : "Lưu"
                                         }</span>
                                     </div>
                                     :

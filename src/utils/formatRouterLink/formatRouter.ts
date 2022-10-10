@@ -4,7 +4,8 @@ import { Product } from '../../interface/product';
 import { IProductPromo } from '../../interface/productPromo';
 import { Service } from '../../interface/service';
 import { IServicePromo } from '../../interface/servicePromo';
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../interface/discount'
+import { IDiscountPar, IITEMS_DISCOUNT } from '../../interface/discount';
+import { pickBy, identity } from "lodash"
 
 
 export const formatRouterLinkProduct = (
@@ -75,6 +76,11 @@ export const formatRouterLinkOrg = (subdomain: any) => {
     return pathOrg
 }
 export const formatRouterCateResult = (id: number, name: string, type: "SERVICE" | "PRODUCT") => {
-    const pathCateResult = `/danh-sach/${slugify(name)}?id=${id}&type=${type}`
+    let pathCateResult = `/danh-sach-dich-vu/${slugify(name)}?id=${id}`
+    if (type === "PRODUCT") pathCateResult = `/danh-sach-san-pham/${slugify(name)}?id=${id}`
     return pathCateResult
+}
+export const formatParamsString = (params: any) => {
+    const paramsURL = `${new URLSearchParams(pickBy(params, identity)).toString()}`
+    return paramsURL
 }

@@ -2,7 +2,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles'
 
 
-function useDeviceMobile() {
+export function useDeviceMobile() {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down(1023));
     return fullScreen

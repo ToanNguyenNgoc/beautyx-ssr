@@ -57,7 +57,7 @@ function HomePromo(props: any) {
                             <ul className="ser-list">
                                 {servicesList
                                     .filter((i: any) => i.is_block === false)
-                                    .slice(0, 18)
+                                    .slice(0, 12)
                                     .map((item: IServicePromo, index: number) => (
                                         <li key={index}>
                                             <ServicePromoItem service={item} />
