@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import icon from "../../constants/icon";
@@ -12,7 +11,7 @@ import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
 import Footer from "../Footer";
-import { addVoucherByOrg, clearByCheck, getTotal } from "../../redux/cartSlice";
+import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "../../redux/cartSlice";
 import CartPaymentMethod from "./components/CartPaymentMethod";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
@@ -22,15 +21,12 @@ import CartNull from "../Cart/components/CartNull";
 import { Transition } from "../../utils/transition";
 
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
 import { IOrganization } from "../../interface/organization";
 import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
-import { IDiscountPar } from "../../interface/discount";
 import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
-import { checkPhoneValid } from "../../utils/phoneUpdate";
 // end
 
 const initialMomoForBeautyx = {
@@ -50,7 +46,6 @@ function Carts() {
     // console.log(VOUCHER_APPLY)
     const { USER } = useSelector((state: any) => state.USER);
     const cartListAll = useSelector((state: any) => state.carts.cartList)
-    const history = useHistory();
     const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
 
 
@@ -68,6 +63,7 @@ function Carts() {
         }
     }
     useEffect(() => {
+        dispatch(onClearApplyVoucher())
         if (org) {
             callDiscountByOrg()
         }

@@ -21,7 +21,7 @@ export const DISCOUNT_TYPE = {
     FINAL_PRICE: {
         key: "FINAL_PRICE",
         text: "Giá thanh toán"
-    }
+    },
 }
 export const EX_VOUCHER_TITLE_DISCOUNT = (discount:IDiscountPar)=>{
     let displayTitle="";

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { VoucherOrgItem } from '../../features/Carts/components/CartGroupItem';
+// import { VoucherOrgItem } from '../../features/Carts/components/CartGroupItem';
 import { IDiscountPar } from '../../interface/discount';
 import IStore from '../../interface/IStore';
 import { IOrganization } from '../../interface/organization';
@@ -55,11 +55,11 @@ function DetailOrgVoucher({ org }: { org: IOrganization }) {
                             {
                                 vouchers.map((voucher: IDiscountPar, index: number) => (
                                     <li key={index} className="voucher-show-item">
-                                        <VoucherOrgItem
+                                        {/* <VoucherOrgItem
                                             voucher={voucher}
                                             org={org}
                                             showApplyBtn={false}
-                                        />
+                                        /> */}
                                     </li>
                                 ))
                             }

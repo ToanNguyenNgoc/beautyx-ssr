@@ -1,30 +1,30 @@
 import React, { useContext, useState } from "react";
 import { Container, Dialog } from "@mui/material";
-//import icon from '../../../constants/icon';
-import ButtonLoading from "../../../components/ButtonLoading";
-import formatPrice from "../../../utils/formatPrice";
-import { cartReducer } from "../../../utils/cart/cartReducer";
 import { useDispatch, useSelector } from "react-redux";
-import order from "../../../api/orderApi";
 import { useHistory } from "react-router-dom";
 import { identity, pickBy } from "lodash";
-import Notification from "../../../components/Notification";
-import AlertSnack from "../../../components/AlertSnack";
-import authentication from "../../../api/authApi";
+import Notification from "components/Notification";
 // ==== api tracking ====
-import tracking from "../../../api/trackApi";
-import { formatProductList } from "../../../utils/tracking";
-import { AppContext } from "../../../context/AppProvider";
-import { IDiscountPar } from "../../../interface/discount";
-// end
-import { checkPhoneValid } from "../../../utils/phoneUpdate";
-import { FLAT_FORM_TYPE } from "../../../rootComponents/flatForm";
-// OTP [ update telephone number ]
+import tracking from "api/trackApi";
 import { IDataOtp } from "../../Otp/_model";
-import RenderRecatpcha, { FieldOtps } from "../../Otp/dialogOtp";
-// END [ update telephone number ]
-import { putUser, updateAsyncUser } from "../../../redux/USER/userSlice";
-import icon from "../../../constants/icon";
+import { IDiscountPar } from "interface/discount";
+import { cartReducer } from "utils/cart/cartReducer";
+import formatProductList from "utils/tracking";
+import order from "api/orderApi";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
+import authentication from "api/authApi";
+import { putUser } from "redux/USER/userSlice";
+import AlertSnack from "components/AlertSnack";
+import formatPrice from "utils/formatPrice";
+import ButtonLoading from "components/ButtonLoading";
+import { AppContext } from "context/AppProvider";
+import { checkPhoneValid } from "utils/phoneUpdate";
+import icon from "constants/icon";
+import RenderRecatpcha, { FieldOtps } from "features/Otp/dialogOtp";
+import { useDeviceMobile, useSwr } from "utils/index"
+import { VoucherOrgItem } from "./CartGroupItem";
+import { IOrganization } from "interface/organization";
+import { onClearApplyVoucher } from "redux/cartSlice";
 
 export interface OpenVcProp {
     open: boolean,
@@ -218,8 +218,6 @@ function CartBottom(props: any) {
                 "verification_id": props.verification_id
             }
             const res = await authentication.putUserProfile(paramsOb);
-            // const res = await updateAsyncUser(paramsOb);
-            console.log(res);
             dispatch(putUser({ ...USER, }));
             if (res) {
                 setDataOtp({
@@ -239,13 +237,16 @@ function CartBottom(props: any) {
             });
         }
     }
-    console.log(cart_confirm);
     return (
         <>
             <InputVoucher
                 open={openVc}
                 setOpen={setOpenVc}
                 cart_confirm={cart_confirm}
+                organization={DATA_PMT.org}
+                cartAmount={cartAmount}
+                services_id={services_id.map(i => i.id)}
+                products_id={products_id.map(i => i.id)}
             />
             <div className="re-cart-bottom">
                 <AlertSnack
@@ -377,16 +378,34 @@ export default CartBottom;
 interface InputVoucherProps {
     open: OpenVcProp,
     setOpen: (open: OpenVcProp) => void,
-    cart_confirm: any
+    cart_confirm: any,
+    organization?: IOrganization,
+    services_id: number[],
+    products_id: number[],
+    cartAmount: number
 }
 
 export const InputVoucher = (props: InputVoucherProps) => {
-    const { open, setOpen, cart_confirm } = props;
+    const dispatch = useDispatch();
+    const IS_MB = useDeviceMobile();
+    const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id } = props;
+    const [shouldFetch, setShouldFetch] = useState(false);
     const [text, setText] = useState("");
-    const onInputChange = (e: any) => text.length <= 25 && setText(e.target.value)
-    const onApply = () => text.length <= 25 && setOpen({ open: false, voucher: text })
+    const onInputChange = (e: any) => {
+        if (text.length <= 25) {
+            setText(e.target.value)
+            setShouldFetch(false)
+        }
+    }
+    const { response, error } = useSwr(`/discounts/${text}`, (shouldFetch && text !== ""))
+    const voucher: IDiscountPar = { ...response, coupon_code: text }
+
+    let voucher_org: any
+    if (text !== "" && response) voucher_org = response?.organizations[0]
+
     return (
         <Dialog
+            fullScreen={IS_MB}
             open={open.open}
             onClose={() => setOpen({ ...open, open: false })}
         >
@@ -416,7 +435,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             className="vc_body_input_btn"
                             title="Áp dụng"
                             loading={false}
-                            onClick={onApply}
+                            onClick={() => setShouldFetch(true)}
                         />
                         {
                             text !== "" &&
@@ -424,6 +443,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                                 onClick={() => {
                                     setText("")
                                     setOpen({ ...open, voucher: "" })
+                                    dispatch(onClearApplyVoucher())
                                 }}
                                 className="vc_body_input_del"
                             >
@@ -432,11 +452,44 @@ export const InputVoucher = (props: InputVoucherProps) => {
                         }
                     </div>
                     {
+                        error &&
+                        <div className="vc_cart_none">
+                            Mã giảm giá {text} không hợp lệ ! Bạn vui lòng kiểm tra lại mã nhé
+                        </div>
+                    }
+                    {
                         cart_confirm.length === 0 &&
                         <div className="vc_cart_none">
                             Chọn Dịch vụ / sản phẩm trong giỏ hàng để áp dụng Voucher
                         </div>
                     }
+                    {
+                        voucher_org && cart_confirm.length > 0 &&
+                        <div className="vc_cart_voucher_org">
+                            Áp dụng khi thanh toán cho cửa hàng <h3>{voucher_org.name}</h3>
+                        </div>
+                    }
+                    <ul className="vc_cart_voucher_list">
+                        {
+                            organization && response && text !== "" &&
+                            <li >
+                                <VoucherOrgItem
+                                    voucher={voucher}
+                                    org={voucher_org ?? organization}
+                                    showApplyBtn={true}
+                                    cartAmount={cartAmount}
+                                    services_id={services_id}
+                                    products_id={products_id}
+                                />
+                            </li>
+                        }
+                    </ul>
+                    <div className="vc_bot">
+                        <ButtonLoading
+                            onClick={() => setOpen({ ...open, open: false })}
+                            title="Đồng ý"
+                        />
+                    </div>
                 </div>
             </div>
         </Dialog>

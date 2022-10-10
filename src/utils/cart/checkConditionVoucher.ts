@@ -1,9 +1,7 @@
+import { IOrganization } from "interface/organization";
 import moment from "moment";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
-import {  discountReducerItem } from "./cartReducer";
-import {Product} from '../../interface/product';
-import {Service} from '../../interface/service'
-// import { isEqual } from 'lodash'
+import { discountReducerItem } from "./cartReducer";
 
 const date = new Date();
 
@@ -84,26 +82,16 @@ export const EX_CHECK_SUB_TOTAL = (
     return subTotalCondition
 }
 export const EX_CHECK_INCLUDE_ITEMS = (
-    voucher: IDiscountPar, products: Product[], services: Service[]
+    voucher: IDiscountPar, products_id: number[], services_id: number[]
 ) => {
     let itemCondition = false;
     const { productsInDis, servicesInDis } = discountReducerItem(voucher.items);
-    // console.log(productsInDis)
-    const products_id = products.map((i: any) => i.id);
-    const services_id = services.map((i: any) => i.id);
     const productsInDis_id = productsInDis.map((i: IITEMS_DISCOUNT) => i.productable_id);
     const servicesInDis_id = servicesInDis.map((i: IITEMS_DISCOUNT) => i.productable_id);
-
-    // console.log("chil", products_id, services_id)
-    // console.log("par", productsInDis_id, servicesInDis_id)
-
     const newProductArr = productsInDis_id.concat(products_id);
     const uniProductArr = unique(newProductArr)
     const newServiceArr = servicesInDis_id.concat(services_id);
     const uniServiceArr = unique(newServiceArr);
-    // console.log(uniServiceArr, services_id)
-    // console.log(isEqual(uniServiceArr, services_id))
-
     const checkProductCartInDiscount = () => {
 
 
@@ -130,9 +118,6 @@ export const EX_CHECK_INCLUDE_ITEMS = (
     }
     const productCartInDis = checkProductCartInDiscount()
     const serviceCartInDis = checkServiceCartInDiscount()
-    // console.log("productCartInDis", productCartInDis)
-    // console.log("serviceCartInDis", serviceCartInDis)
-
     if (voucher.items.length === 0) {
         return itemCondition = true
     }
@@ -140,4 +125,11 @@ export const EX_CHECK_INCLUDE_ITEMS = (
         return itemCondition = true
     }
     return itemCondition
+}
+export const EX_CHECK_INCLUDE_ORG = (discount: IDiscountPar, org_id: number) => {
+    let orgCondition = false;
+    const orgs_id_discount = discount.organizations.map((org: IOrganization) => org.id)
+    if (discount.organizations.length === 0) orgCondition = true
+    if (orgs_id_discount.includes(org_id)) orgCondition = true
+    return orgCondition
 }
