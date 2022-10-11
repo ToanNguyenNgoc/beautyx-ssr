@@ -7,7 +7,7 @@ import Notification from "components/Notification";
 // ==== api tracking ====
 import tracking from "api/trackApi";
 import { IDataOtp } from "../../Otp/_model";
-import { IDiscountPar } from "interface/discount";
+import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 import { cartReducer } from "utils/cart/cartReducer";
 import formatProductList from "utils/tracking";
 import order from "api/orderApi";
@@ -25,6 +25,7 @@ import { useDeviceMobile, useSwr } from "utils/index"
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cartSlice";
+import { DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
 
 export interface OpenVcProp {
     open: boolean,
@@ -190,20 +191,22 @@ function CartBottom(props: any) {
             // console.log(cartQuantityCheck, i.discount_value)
             discountValue = cartQuantityCheck * i.discount_value
         }
-        // console.log(discountValue)
+        if (i.discount_type === "FINAL_PRICE" && i.items_count > 0) {
+            discountValue = i.items[0].productable.price - i.discount_value
+        }
         return {
             ...i,
-            discount_value: (i.discount_unit === "PERCENT" || i.discount_type === "PRODUCT") ?
+            discount_value: (i.discount_unit === "PERCENT" || i.discount_type === "PRODUCT" || i.discount_type === "FINAL_PRICE") ?
                 discountValue : i.discount_value
         }
     })
+
     let discountVoucherTotal = 0
     if (VOUCHER_APPLY.length > 0) {
         discountVoucherTotal = vouchersCal
-            .map((i: IDiscountPar) => i.discount_value)
+            .map((i: IDiscountPar) => i.discount_value) 
             .reduce((pre: number, cur: number) => pre + cur)
     }
-    // console.log(discountVoucherTotal, vouchersCal)
     const handleOtp = () => {
         setOtp(true);
         setOpenNoti({ ...openNoti, open: false })
