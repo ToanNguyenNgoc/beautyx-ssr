@@ -18,6 +18,7 @@
     --purple-text: #3a2c93;
     --bg-purple: #7266ba;
     --box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, .1);
+    --trans: all .3s;
 }
 
 a {
