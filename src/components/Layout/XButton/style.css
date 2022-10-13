@@ -1,7 +1,7 @@
-.btn-loading{
+.btn-loading {
     padding: 7px 18px;
     background-color: var(--purple);
-    border:none;
+    border: none;
     outline: none;
     cursor: pointer;
     background-color: var(--purple);
@@ -14,11 +14,14 @@
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
-.btn-loading:hover{
+
+.btn-loading:hover {
     opacity: .8;
 }
-.loading-cnt{
+
+.loading-cnt {
     position: absolute;
     z-index: 2;
     background-color: rgba(255, 255, 255, 0.509);
@@ -28,11 +31,13 @@
     left: 0;
     padding-top: 4px;
 }
-.btn-loading img{
+
+.btn-loading img {
     margin-right: 4px;
 }
-@media only screen and (max-width: 1023px){
-    .btn-loading{
+
+@media only screen and (max-width: 1023px) {
+    .btn-loading {
         /* width: 100%; */
         padding: 8px 38px;
         border-radius: 6px;
