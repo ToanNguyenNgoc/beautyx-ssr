@@ -18,6 +18,10 @@
 .head_top {
     margin-bottom: 8px;
 }
+.head_top_right_auth{
+    display: flex;
+    align-items: center;
+}
 
 .head_top_left {
     width: calc(54% - 12px);
