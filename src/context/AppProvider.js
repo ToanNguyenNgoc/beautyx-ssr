@@ -7,20 +7,18 @@ import dayjs from "dayjs";
 import { fetchAsyncUser } from '../redux/USER/userSlice';
 import { fetchAsyncHome } from '../redux/home/homeSlice';
 import { fetchAsyncNews, fetchAsyncVideos } from '../redux/blog/blogSlice';
-import { fetchAsyncApps } from '../redux/appointment/appSlice';
-import { fetchAsyncOrderServices } from '../redux/order/orderSlice';
 import { getPosition } from "../api/authLocation";
 import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
-import { useSwr } from "../utils/useSwr";
 import { paramsProductsCate } from "../params-query";
 import axios from "axios";
-import useFetch from "../utils/useFetch";
+import API_3RD from "api/3rd-api";
+import { paramAppointment, paramOrderService } from "../params-query";
+import { useSwr, useFetch } from "utils/index"
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
     const [geo, setGeo] = useState();
-    const keyMapBox = process.env.REACT_APP_MAPBOX_TOKEN
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const [language, setLanguage] = useState(
@@ -29,7 +27,6 @@ export default function AppProvider({ children }) {
     const [openModal, setOpenModal] = useState(false);
     const [userInfo, setUserInfo] = useState();
     const [sign, setSign] = useState();
-    const [tempCount, setTempleCount] = useState(0);
     const [dayObj, setDayObj] = useState(dayjs())
 
     if (localStorage.getItem("_WEB_US")) {
@@ -46,12 +43,7 @@ export default function AppProvider({ children }) {
     }
     useEffect(() => {
         const callUserProfile = async () => {
-            const res = await dispatch(fetchAsyncUser());
-            if (res?.payload) {
-                const time = dayjs().format("YYYY-MM");
-                dispatch(fetchAsyncApps(time))
-                dispatch(fetchAsyncOrderServices({ page: 1 }))
-            }
+            await dispatch(fetchAsyncUser());
         }
         callUserProfile()
     }, [sign, dispatch]);
@@ -83,12 +75,8 @@ export default function AppProvider({ children }) {
                 lat: res.coords.latitude,
                 long: res.coords.longitude
             }
-            // const user_location = {
-            //     lat: 10.8783504,
-            //     long: 106.7669344
-            // }
             sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location));
-            const api_url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${user_location.long},${user_location.lat}.json?access_token=${keyMapBox}&language=vi&country=vn`
+            const api_url = API_3RD.API_MAP_BOX(user_location.lat, user_location.long)
             const resAddress = await axios.get(api_url);
             setGeo(resAddress?.features[0]);
             callDisAndOrgsByLocation();
@@ -107,6 +95,10 @@ export default function AppProvider({ children }) {
 
     const serviceCate = useFetch("https://beautyx.vercel.app/v1/tags-all").response
     const specialItems = useFetch("https://beautyx.vercel.app/v1/special-items").response
+    //get services, appointment user
+    const { USER } = useSelector(state => state.USER)
+    const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
+    const orderService = useSwr("/orders", USER, paramOrderService).responseArray
 
 
 
@@ -119,14 +111,14 @@ export default function AppProvider({ children }) {
         userInfo,
         setUserInfo,
         setSign,
-        tempCount,
-        setTempleCount,
         dayObj,
         setDayObj,
         geo,
         productCate,
         serviceCate,
-        specialItems
+        specialItems,
+        appointment,
+        orderService
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }

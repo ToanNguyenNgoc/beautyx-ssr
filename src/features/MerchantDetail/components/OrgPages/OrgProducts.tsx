@@ -11,17 +11,19 @@ import {
     clearProducts,
     onChooseCateServices,
 } from "../../../../redux/org_products/orgProductsSlice";
-import OrgProductItem from "./OrgProductItem";
 import { AppContext } from "../../../../context/AppProvider";
 import EmptyRes from '../../../EmptyRes';
 import IStore from '../../../../interface/IStore';
 import { Category } from '../../../../interface/category'
+import { SerProItem } from "components/Layout";
+import { useDeviceMobile } from "utils";
 
 interface IProps {
     org: IOrganization;
 }
 
 function OrgProducts(props: IProps) {
+    const IS_MB = useDeviceMobile()
     const { org } = props;
     const { t } = useContext(AppContext);
     const { CATE, PRODUCTS, choose_cate, org_id } = useSelector(
@@ -151,7 +153,7 @@ function OrgProducts(props: IProps) {
                     <ul className="org-services-cnt__right-list">
                         {products.map((item: Product, index: number) => (
                             <li key={index}>
-                                <OrgProductItem org={org} product={item} />
+                                <SerProItem changeStyle={IS_MB} type="PRODUCT" org={org} item={item} />
                             </li>
                         ))}
                     </ul>

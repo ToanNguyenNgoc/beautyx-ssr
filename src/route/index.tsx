@@ -11,12 +11,11 @@ import ProductDetail from "../features/ProductDetail";
 import ServiceDetail from "../features/ServiceDetail";
 import SignPage from "../features/SignPage/index";
 import SignPageRequest from "../features/SignPageRequest/index";
-import Notification from "../features/Notification/index";
 import PrivateRoute from "./PrivateRoute";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 //import DatePicker from "../components/DatePicker"
-import SearchResults from "../features/SearchResults/index";
+import SearchResults from "../pages/SearchResults/index";
 import HomePromo from "../features/HomeResults/HomePromo";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
 import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
@@ -37,7 +36,7 @@ import HomeCateResult from "../features/HomeResults/HomeCateResult"
 //import Calendar from "../featuresMobile/Calendar";
 //import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
-import HomePage from "../features/HomePage";
+// import HomePage from "../features/HomePage";
 import Videos from "../features/Feed/Videos";
 import Blog from "../features/Blog";
 import CategoryTree from "../features/CategoryTree";
@@ -56,6 +55,7 @@ import PageNotFound from "../components/PageNotFound";
 
 import MapBox from "../features/MapBeta";
 import { analytics, logEvent } from "../firebase";
+import HomePage from "pages/HomePage";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -240,10 +240,6 @@ function RouterConfig(props: any) {
     {
       path: "/lich-hen",
       component: Calendar,
-    },
-    {
-      path: "/notifications",
-      component: Notification,
     },
     {
       path: '/trang-thai-don-hang/',

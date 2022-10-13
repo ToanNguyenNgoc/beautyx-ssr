@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "./product.css";
 import Head from "../Head";
 import Footer from "../Footer";
@@ -40,6 +40,8 @@ import { postHistoryView } from "../../user-behavior";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const location = useLocation();
     const IS_MB = useFullScreen();
     const history = useHistory();
     const ORG = useSelector((state: IStore) => state.ORG);

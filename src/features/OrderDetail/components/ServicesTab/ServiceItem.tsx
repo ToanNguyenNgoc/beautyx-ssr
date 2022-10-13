@@ -9,13 +9,13 @@ import slugify from "../../../../utils/formatUrlString";
 import { AppContext } from "../../../../context/AppProvider";
 import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
-import AlertSnack from "../../../../components/AlertSnack";
 
 // ==== api tracking ====
 import tracking from "../../../../api/trackApi";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
+import { AlertSnack } from "components/Layout";
 // end
 function ServiceItem(props: any) {
     const { t } = useContext(AppContext);

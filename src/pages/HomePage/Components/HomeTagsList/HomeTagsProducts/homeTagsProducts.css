@@ -1,0 +1,80 @@
+.homeTagsPr {
+    padding: 16px 0;
+}
+
+.homeTagsPr .homeTagsPr-list {
+    cursor: pointer;
+    transition: all 0.2s linear;
+    display: flex;
+}
+.homeTagsPr .homeTagsPr-item {
+    cursor: pointer;
+    transition: all 0.2s linear;
+    position: relative;
+    padding: 8px;
+    margin: 0 8px;
+}
+
+.homeTagsPr .homeTagsPr-item:hover > .item-title {
+    color: var(--purple);
+    transition: all 0.2s linear;
+}
+.homeTagsPr .homeTagsPr-item .item-title {
+    font-size: 14px;
+    font-weight: 600;
+    width: max-content;
+    text-transform: capitalize;
+    transition: all 0.2s linear;
+}
+
+.homeTagsPr .item-list {
+    z-index: 999;
+    position: absolute;
+    top: 50px;
+    width: max-content;
+    left: 8px;
+    background-color: #fff;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    display: flex;
+    flex-direction: column;
+    grid-gap: 12px 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s linear;
+}
+.homeTagsPr .item-list::after {
+    position: absolute;
+    content: "";
+    height: 30px;
+    width: 100%;
+    top: -15px;
+    left: 0;
+}
+.homeTagsPr .homeTagsPr-item:hover > .item-list {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: all 0.2s linear;
+    top: 40px;
+    z-index: 999;
+}
+.homeTagsPr .item-list li {
+    font-size: 14px;
+    text-transform: capitalize;
+    font-weight: bold;
+    transition: all 0.3s linear;
+}
+.homeTagsPr .item-list li:hover {
+    color: var(--purple);
+    transition: all 0.2s linear;
+    font-weight: bold;
+}
+.homeTagsPr .slick-list {
+    overflow: unset;
+}
+@media only screen and (max-width: 767px) {
+    .homeTagsPr {
+        display: none;
+    }
+}

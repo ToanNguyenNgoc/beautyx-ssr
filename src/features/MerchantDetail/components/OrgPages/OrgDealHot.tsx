@@ -1,16 +1,17 @@
 /* eslint-disable eqeqeq */
+import { SerProItem } from 'components/Layout';
+import EmptyRes from 'features/EmptyRes';
+import DiscountItem from 'features/HomeDiscounts/DiscountItem';
+import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
+import IStore from 'interface/IStore';
+import { Product } from 'interface/product';
+import { Service } from 'interface/service';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../../../interface/discount'
-import DiscountItem from '../../../HomeDiscounts/DiscountItem';
-import { Service } from '../../../../interface/service';
-import { Product } from '../../../../interface/product'
-import OrgServiceItem from './OrgServiceItem';
-import OrgProductItem from './OrgProductItem';
-import EmptyRes from '../../../EmptyRes';
-import IStore from '../../../../interface/IStore';
+import { useDeviceMobile } from 'utils';
 
 function OrgDealHot() {
+    const IS_MB = useDeviceMobile();
     const ORG = useSelector((state: IStore) => state.ORG);
     const ORG_SPECIALS = useSelector((state: IStore) => state.ORG_SPECIALS);
     const { SERVICES_SPECIAL, PRODUCTS_SPECIAL } = ORG_SPECIALS;
@@ -49,9 +50,11 @@ function OrgDealHot() {
                         {SERVICES_SPECIAL.services_special?.map(
                             (item: Service, index: number) => (
                                 <li key={index}>
-                                    <OrgServiceItem
+                                    <SerProItem
                                         org={ORG.org}
-                                        service={item}
+                                        item={item}
+                                        type="SERVICE"
+                                        changeStyle={IS_MB}
                                     />
                                 </li>
                             )
@@ -68,9 +71,11 @@ function OrgDealHot() {
                         {PRODUCTS_SPECIAL.products_special?.map(
                             (item: Product, index: number) => (
                                 <li key={index}>
-                                    <OrgProductItem
+                                    <SerProItem
                                         org={ORG.org}
-                                        product={item}
+                                        item={item}
+                                        type="PRODUCT"
+                                        changeStyle={IS_MB}
                                     />
                                 </li>
                             )

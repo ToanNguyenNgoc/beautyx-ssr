@@ -1,45 +1,23 @@
 import slugify from "../formatUrlString";
-import { IOrganization } from '../../interface/organization';
-import { Product } from '../../interface/product';
-import { IProductPromo } from '../../interface/productPromo';
-import { Service } from '../../interface/service';
-import { IServicePromo } from '../../interface/servicePromo';
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../interface/discount';
 import { pickBy, identity } from "lodash"
+import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 
 
 export const formatRouterLinkProduct = (
-    product: Product,
-    org: IOrganization
+    id: number | string,
+    org_id: number | string,
+    name: string
 ) => {
-    const pathProductOb = {
-        pathname: `/san-pham/${slugify(product?.product_name)}`,
-        search: `id=${product.id}&org=${org.id}`,
-    }
-    return pathProductOb
+    const pathname = `/san-pham/${slugify(name)}?id=${id}&org=${org_id}`
+    return pathname
 }
-export const formatRouterLinkProductPromo = (
-    productPromo: IProductPromo
+export const formatRouterLinkService = (
+    id: number | string,
+    org_id: number | string,
+    name: string
 ) => {
-    const pathProductOb = {
-        pathname: `/san-pham/${slugify(productPromo?.product_name)}`,
-        search: `id=${productPromo.product_id}&org=${productPromo.org_id}`,
-    }
-    return pathProductOb
-}
-export const formatRouterLinkService = (service: Service, org: IOrganization) => {
-    const pathServiceOb = {
-        pathname: `/dich-vu/${slugify(service?.service_name)}`,
-        search: `id=${service.id}&org=${org?.id}`,
-    }
-    return pathServiceOb
-}
-export const formatRouterLinkServicePromo = (service: IServicePromo) => {
-    const pathServiceOb = {
-        pathname: `/dich-vu/${slugify(service?.service_name)}`,
-        search: `id=${service.service_id}&org=${service.org_id}`,
-    }
-    return pathServiceOb
+    const pathname = `/dich-vu/${slugify(name)}?id=${id}&org=${org_id}`
+    return pathname
 }
 export const formatRouterLinkDiscount = (
     discountPar: IDiscountPar,

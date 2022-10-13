@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import ServiceItem from '../../ViewItemCommon/ServiceItem';
 import { Service } from '../../../interface/service';
 import serviceApi from '../../../api/serviceApi';
 import { Pagination } from '@mui/material';
 import scrollTop_2 from '../../../utils/scrollTop_2';
 // google tag event
 import {GoogleTagPush,GoogleTagEvents} from '../../../utils/dataLayer';
+import { SerProItem } from 'components/Layout';
 // end 
 
 function Services(props: any) {
@@ -56,9 +56,10 @@ function Services(props: any) {
                             className='sale-list__item'
                             key={index}
                         >
-                            <ServiceItem
-                                service={item}
+                            <SerProItem
+                                item={item}
                                 org={org}
+                                type="SERVICE"
                             />
                         </li>
                     ))

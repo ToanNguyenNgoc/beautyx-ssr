@@ -26,9 +26,7 @@ import { formatAddCart } from "../../utils/cart/formatAddCart";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
-import Notification from "../../components/Notification";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
-import AlertSnack from "../../components/AlertSnack";
 import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
@@ -36,6 +34,8 @@ import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
 import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
+import { AlertSnack } from "components/Layout";
+import { PopupNotification } from "components/Notification";
 
 // end
 const date = dayjs();
@@ -50,12 +50,9 @@ function Booking() {
         open: false,
     });
     const [openNoti, setOpenNoti] = useState({
-        title: "",
+        content: "",
         open: false,
-        titleLeft: "",
-        titleRight: "",
-        onClickLeft: () => { },
-        onClickRight: () => { },
+        children: <></>
     });
     const [openVouchers, setOpenVouchers] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
@@ -126,7 +123,7 @@ function Booking() {
         chooseE_wall
     );
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
-    const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i:IDiscountPar) => i.coupon_code)).filter(Boolean)
+    const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code)).filter(Boolean)
     console.log(coupon_codes)
     const params_string = {
         products: [],
@@ -185,12 +182,17 @@ function Booking() {
             } else {
                 setOpenNoti({
                     open: true,
-                    title: "Tạo đơn hàng thất bại",
-                    titleLeft: "Đã hiểu",
-                    titleRight: "Về trang chủ",
-                    onClickLeft: () =>
-                        setOpenNoti({ ...openNoti, open: false }),
-                    onClickRight: () => history.push("/home"),
+                    content: "Tạo đơn hàng thất bại",
+                    children: <>
+                        <ButtonLoading
+                            title="Đã hiểu"
+                            onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                        />
+                        <ButtonLoading
+                            title="Về trang chủ"
+                            onClick={() => history.push("/home")}
+                        />
+                    </>
                 });
             }
             //setLoading(false);
@@ -198,11 +200,17 @@ function Booking() {
             console.log(err);
             setOpenNoti({
                 open: true,
-                title: "Tạo đơn hàng thất bại",
-                titleLeft: "Đã hiểu",
-                titleRight: "Về trang chủ",
-                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
-                onClickRight: () => history.push("/home"),
+                content: "Tạo đơn hàng thất bại",
+                children: <>
+                    <ButtonLoading
+                        title="Đã hiểu"
+                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                    />
+                    <ButtonLoading
+                        title="Về trang chủ"
+                        onClick={() => history.push("/home")}
+                    />
+                </>
             });
         }
     }
@@ -217,21 +225,29 @@ function Booking() {
             dispatch(onRefreshServicesNoBookCount());
             setOpenNoti({
                 open: true,
-                title: "Đặt hẹn thành công",
-                titleLeft: "Xem lịch hẹn",
-                titleRight: "Về trang chủ",
-                onClickLeft: () => gotoAppointment(),
-                onClickRight: () => history.push("/home"),
+                content: "Đặt hẹn thành công",
+                children: <>
+                    <ButtonLoading
+                        title="Xem lịch hẹn"
+                        onClick={gotoAppointment}
+                    />
+                </>
             });
         } catch (error) {
             console.log(error);
             setOpenNoti({
                 open: true,
-                title: "Có lỗi xảy ra trong quá trình đặt hẹn",
-                titleLeft: "Đã hiểu",
-                titleRight: "Về trang chủ",
-                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
-                onClickRight: () => history.push("/home"),
+                content: "Có lỗi xảy ra trong quá trình đặt hẹn",
+                children: <>
+                    <ButtonLoading
+                        title="Đã hiểu"
+                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                    />
+                    <ButtonLoading
+                        title="Về trang chủ"
+                        onClick={() => history.push("/home")}
+                    />
+                </>
             });
         }
     };
@@ -495,29 +511,6 @@ function Booking() {
                                     rows={5}
                                 ></textarea>
                             </div>
-                            {/* {
-                                location.state?.TYPE === "BOOK_NOW" &&
-                                <div>
-                                    <div className="flex-row re-cart-bottom__total-discount">
-                                        <button
-                                            onClick={() => setOpenVc({ ...openVc, open: true })}
-                                            className="open_voucher_btn"
-                                        >
-                                            Nhập mã khuyến mại
-                                            <img src={icon.cardDiscountOrange} alt="" />
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                            {
-                                openVc.voucher !== "" &&
-                                <div className="flex-row-sp re-cart-bottom__cal-item">
-                                    <span>Mã khuyến mại</span>
-                                    <span>
-                                        {openVc.voucher}
-                                    </span>
-                                </div>
-                            } */}
                             <div
                                 style={
                                     FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
@@ -574,13 +567,12 @@ function Booking() {
                     setOpen={setOpen}
                     org={org}
                 />
-                <Notification
-                    content={openNoti.title}
+                <PopupNotification
+                    title="Thông báo"
+                    content={openNoti.content}
                     open={openNoti.open}
-                    titleBtnLeft={openNoti.titleLeft}
-                    titleBtnRight={openNoti.titleRight}
-                    onClickLeft={openNoti.onClickLeft}
-                    onClickRight={openNoti.onClickRight}
+                    children={openNoti.children}
+                    setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                 />
             </Container>
             <Footer />

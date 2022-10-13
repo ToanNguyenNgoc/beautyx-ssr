@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { extraParamsUrl } from "../../../utils/extraParamsUrl";
 import { STATUS } from "../../../redux/status";
 import { Service } from "../../../interface/service";
-import ServiceItem from "../../ViewItemCommon/ServiceItem";
 import { fetchAsyncServicesRec } from "../../../redux/org_services/serviceSlice";
 import { AppContext } from "../../../context/AppProvider";
+import { SerProItem } from "components/Layout";
 
 function DetailRecommend(props: any) {
     const params: any = extraParamsUrl();
@@ -48,7 +48,10 @@ function DetailRecommend(props: any) {
             <ul className="detail-recommend__list">
                 {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).map((item: Service, index: number) => (
                     <li key={index}>
-                        <ServiceItem service={item} org={org} />
+                        <SerProItem 
+                            item={item} org={org} 
+                            type="SERVICE"
+                        />
                     </li>
                 ))}
             </ul>

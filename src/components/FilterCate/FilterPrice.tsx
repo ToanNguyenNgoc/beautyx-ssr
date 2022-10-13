@@ -1,5 +1,5 @@
+import { Input } from 'components/Layout';
 import React, { useState } from 'react';
-import Input from '../Input';
 import ButtonLoading from '../ButtonLoading';
 import style from "./filter-cate.module.css"
 

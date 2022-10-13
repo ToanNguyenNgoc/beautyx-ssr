@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import HomeTitle from "../Components/HomeTitle";
 import "./homeRecomment.css";
 import { useSelector } from "react-redux";
@@ -9,6 +8,7 @@ import { paramsServices } from "params-query";
 import { AppContext } from "context/AppProvider";
 import { IServicePromo } from "interface/servicePromo";
 import { AUTH_LOCATION } from "api/authLocation";
+import { SerProItem } from "components/Layout";
 
 export default function HomeRecomment() {
     const { t } = useContext(AppContext);
@@ -41,7 +41,7 @@ export default function HomeRecomment() {
                 <ul className="home-recomment__list">
                     {services_recommend.filter((e: any) => e.org_id !== 164).map((item: IServicePromo, index: number) => (
                         <li className="home-recomment__item" key={index}>
-                            <ServicePromoItem service={item} />
+                            <SerProItem item={item} type="SERVICE" />
                         </li>
                     ))}
                 </ul>

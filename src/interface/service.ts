@@ -38,3 +38,13 @@ export interface Service {
       is_displayed_home: number,
       tags?: any
 }
+export interface ISpecialItem {
+      id: number | string,
+      image_url: string,
+      item_id: number | string,
+      name: number,
+      organization_id: number | string,
+      price: number,
+      special_price: number,
+      type: "SERVICE" | "DISCOUNT"
+}

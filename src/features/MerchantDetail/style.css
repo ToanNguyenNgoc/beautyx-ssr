@@ -1328,8 +1328,8 @@
     }
     .org-special__list li {
         width: 100%;
-        padding: 12px 0px;
-        border-bottom: solid 1px var(--bgGray);
+        padding: 8px 0px;
+        height: 116px;
     }
     .org-special-item {
         width: 100%;
@@ -1448,9 +1448,8 @@
     .org-services-cnt__right-list li,
     .org-combos-cnt__right li {
         width: 100%;
-        width: 100%;
-        padding: 12px 0px;
-        border-bottom: solid 1px var(--bgGray);
+        height: 116px;
+        padding: 8px 0px;
     }
     .org-combos-cnt__right li {
         padding: 12px;

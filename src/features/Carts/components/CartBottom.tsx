@@ -3,18 +3,17 @@ import { Container, Dialog } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { identity, pickBy } from "lodash";
-import Notification from "components/Notification";
+import { PopupNotification } from "components/Notification";
 // ==== api tracking ====
 import tracking from "api/trackApi";
 import { IDataOtp } from "../../Otp/_model";
-import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
+import { IDiscountPar } from "interface/discount";
 import { cartReducer } from "utils/cart/cartReducer";
 import formatProductList from "utils/tracking";
 import order from "api/orderApi";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import authentication from "api/authApi";
 import { putUser } from "redux/USER/userSlice";
-import AlertSnack from "components/AlertSnack";
 import formatPrice from "utils/formatPrice";
 import ButtonLoading from "components/ButtonLoading";
 import { AppContext } from "context/AppProvider";
@@ -25,7 +24,7 @@ import { useDeviceMobile, useSwr } from "utils/index"
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cartSlice";
-import { DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
+import { AlertSnack } from "components/Layout";
 
 export interface OpenVcProp {
     open: boolean,
@@ -61,12 +60,9 @@ function CartBottom(props: any) {
         open: false,
     });
     const [openNoti, setOpenNoti] = useState({
-        title: "",
+        content: "",
         open: false,
-        titleLeft: "",
-        titleRight: "",
-        onClickLeft: () => { },
-        onClickRight: () => { },
+        children: <></>
     });
     //* [END] Throw exception noti
     const history = useHistory();
@@ -124,12 +120,17 @@ function CartBottom(props: any) {
             } else {
                 setOpenNoti({
                     open: true,
-                    title: `${t("pm.order_fail")}`,
-                    titleLeft: `${t("pm.agree")}`,
-                    titleRight: `${t("pm.goto_home")}`,
-                    onClickLeft: () =>
-                        setOpenNoti({ ...openNoti, open: false }),
-                    onClickRight: () => history.push("/home"),
+                    content: t("pm.order_fail"),
+                    children: <>
+                        <ButtonLoading
+                            title={t("pm.agree")}
+                            onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                        />
+                        <ButtonLoading
+                            title={t("pm.goto_home")}
+                            onClick={() => history.push("/home")}
+                        />
+                    </>
                 });
             }
             setLoad(false);
@@ -138,11 +139,17 @@ function CartBottom(props: any) {
             setLoad(false);
             setOpenNoti({
                 open: true,
-                title: `${t("pm.order_fail")}`,
-                titleLeft: `${t("pm.agree")}`,
-                titleRight: `${t("pm.goto_home")}`,
-                onClickLeft: () => setOpenNoti({ ...openNoti, open: false }),
-                onClickRight: () => history.push("/home"),
+                content: t("pm.order_fail"),
+                children: <>
+                    <ButtonLoading
+                        title={t("pm.agree")}
+                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                    />
+                    <ButtonLoading
+                        title={t("pm.goto_home")}
+                        onClick={() => history.push("/home")}
+                    />
+                </>
             });
         }
     }
@@ -159,11 +166,17 @@ function CartBottom(props: any) {
             else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
                 setOpenNoti({
                     open: true,
-                    title: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
-                    titleLeft: `Cập nhập`,
-                    titleRight: `Để sau`,
-                    onClickLeft: () => handleOtp(),
-                    onClickRight: () => setOpenNoti({ ...openNoti, open: false }),
+                    content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
+                    children: <>
+                        <ButtonLoading
+                            title="Cập nhập"
+                            onClick={handleOtp}
+                        />
+                        <ButtonLoading
+                            title="Để sau"
+                            onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                        />
+                    </>
                 });
             }
             else {
@@ -345,13 +358,10 @@ function CartBottom(props: any) {
                         </div>
                     </div>
                 </Container>
-                <Notification
-                    content={openNoti.title}
+                <PopupNotification
                     open={openNoti.open}
-                    titleBtnLeft={openNoti.titleLeft}
-                    titleBtnRight={openNoti.titleRight}
-                    onClickLeft={openNoti.onClickLeft}
-                    onClickRight={openNoti.onClickRight}
+                    children={openNoti.children}
+                    content={openNoti.content}
                 />
             </div>
             {

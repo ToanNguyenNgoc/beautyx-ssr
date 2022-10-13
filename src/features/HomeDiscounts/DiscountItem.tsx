@@ -1,15 +1,14 @@
+import icon from "constants/icon";
+import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 import React from "react";
-import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
-import onErrorImg from "../../utils/errorImg";
-import {formatDistance} from "../../utils/format"
-import formatPrice from "../../utils/formatPrice";
-import icon from "../../constants/icon";
 import { useHistory } from "react-router-dom";
-import { formatRouterLinkDiscount } from "../../utils/formatRouterLink/formatRouter";
-import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
-// import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { onErrorImg } from "utils";
+import { formatDistance } from "utils/format";
+import formatPrice from "utils/formatPrice";
+import { DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
+import { formatRouterLinkDiscount } from "utils/formatRouterLink/formatRouter";
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
+import tracking from "api/trackApi";
 import { analytics, logEvent } from "../../firebase";
 // end
 interface IProps {
@@ -27,7 +26,7 @@ function DiscountItem(props: IProps) {
             'khuyến mãi hot',
             discountItem.discount_id
         );
-        logEvent(analytics,'detail_discount', {
+        logEvent(analytics, 'detail_discount', {
             service: discountItem.productable.product_name,
             merchant: discountItem.organization.name
         })
@@ -36,23 +35,25 @@ function DiscountItem(props: IProps) {
     // console.log(discountItem);
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
-            {
-                discountItem.organization.image_url !== '' &&
-                discountItem.organization.image_url !== null &&
-                <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
-            }
-            <img
-                alt=""
-                src={
-                    discountItem.productable.image
-                        ? discountItem.productable.image_url
-                        : discountItem.organization.image_url
+            <div className="discount_item_img_cnt">
+                {
+                    discountItem.organization.image_url !== '' &&
+                    discountItem.organization.image_url !== null &&
+                    <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
                 }
-                width="100%"
-                height="100%"
-                className="home-discount-item__img"
-                onError={(e)=>onErrorImg(e)}
-            />
+                <img
+                    alt=""
+                    src={
+                        discountItem.productable.image
+                            ? discountItem.productable.image_url
+                            : discountItem.organization.image_url
+                    }
+                    width="100%"
+                    height="100%"
+                    className="home-discount-item__img"
+                    onError={(e) => onErrorImg(e)}
+                />
+            </div>
             <div className="home-discount-item__detail">
                 <h2 className="name">
                     {discountItem.productable.service_name || discountItem.productable.product_name}

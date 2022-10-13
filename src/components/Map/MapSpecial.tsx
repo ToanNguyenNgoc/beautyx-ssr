@@ -2,14 +2,13 @@ import Slider from "react-slick";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import icon from "../../constants/icon";
-import OrgServiceItem from "../../features/MerchantDetail/components/OrgPages/OrgServiceItem";
 import {
     fetchAsyncServicesSpecial,
     fetchProductsSpecial,
 } from "../../redux/org_specials/orgSpecialSlice";
-import OrgProductItem from "../../features/MerchantDetail/components/OrgPages/OrgProductItem";
 import { Product } from "../../interface/product";
 import { Service } from "../../interface/service";
+import { SerProItem } from "components/Layout";
 const PrevButton = (props: any) => {
     const { onClick } = props;
     return (
@@ -78,9 +77,10 @@ export default function MapSpecial() {
                                     {serviceSpecial.map(
                                         (item: Service, index: number) => (
                                             <li key={index}>
-                                                <OrgServiceItem
-                                                    org={ORG.org}
-                                                    service={item}
+                                                <SerProItem
+                                                    org={ORG}
+                                                    item={item}
+                                                    type="SERVICE"
                                                 />
                                             </li>
                                         )
@@ -99,9 +99,10 @@ export default function MapSpecial() {
                                     {productSpecial.map(
                                         (item: Product, index: number) => (
                                             <li key={index}>
-                                                <OrgProductItem
+                                                <SerProItem
                                                     org={ORG.org}
-                                                    product={item}
+                                                    item={item}
+                                                    type="PRODUCT"
                                                 />
                                             </li>
                                         )
