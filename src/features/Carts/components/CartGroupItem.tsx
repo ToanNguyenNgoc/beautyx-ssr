@@ -11,7 +11,6 @@ import {
 } from "../../../redux/cartSlice";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import ButtonLoading from "../../../components/ButtonLoading";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
 import { IOrganization } from "../../../interface/organization";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
@@ -30,6 +29,7 @@ import formatPrice from "../../../utils/formatPrice";
 import moment from "moment";
 import { cartReducer, discountReducerItem } from "../../../utils/cart/cartReducer";
 import { Transition, TransitionUp } from "../../../utils/transition";
+import { XButton } from "components/Layout";
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
@@ -84,7 +84,7 @@ function CartGroupItem(props: any) {
                 {org?.id === item.org_id &&
                     org?.branches?.length > 0 &&
                     servicesCartListCheckByOrg.length > 0 && (
-                        <ButtonLoading
+                        <XButton
                             title="Chọn chi nhánh"
                             onClick={() =>
                                 setOpenBranch({ ...openBranch, open: true })

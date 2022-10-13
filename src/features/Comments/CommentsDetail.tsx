@@ -7,8 +7,8 @@ import icon from "../../constants/icon";
 import { Container } from "@mui/material";
 import SignInUp from "../poupSignInUp";
 import mediaApi from "../../api/mediaApi";
-import ButtonLoading from "../../components/ButtonLoading";
 import { useSelector } from "react-redux";
+import { XButton } from "components/Layout";
 
 interface IData {
     comments: IComment[];
@@ -216,7 +216,7 @@ function CommentsDetail() {
                         )}
                         {data.comments.length < data.totalItem && (
                             <div className="comment-bot">
-                                <ButtonLoading
+                                <XButton
                                     title="Xem thêm đánh giá"
                                     onClick={onPage}
                                     loading={data.loadPage}

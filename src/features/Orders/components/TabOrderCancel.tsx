@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import { XButton } from 'components/Layout';
+import { IOrderV2 } from 'interface/orderv2';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ButtonLoading from '../../../components/ButtonLoading';
-import { IOrderV2 } from '../../../interface/orderv2';
-import { fetchAsyncOrderCancel } from '../../../redux/order/orderSlice';
+import { fetchAsyncOrderCancel } from 'redux/order/orderSlice';
 import OrderItem from './OrderItem';
 
 
@@ -32,7 +32,7 @@ function TabOrderCancel() {
             <div className="order-list__bottom">
                 {
                     orders.length < totalItem &&
-                    <ButtonLoading
+                    <XButton
                         title='Xem thêm'
                         loading={false}
                         onClick={onMoreOrder}

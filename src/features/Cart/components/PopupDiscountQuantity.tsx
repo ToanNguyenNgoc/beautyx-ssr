@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog } from '@mui/material';
-import ButtonLoading from '../../../components/ButtonLoading';
-import formatPrice from '../../../utils/formatPrice';
+import { XButton } from 'components/Layout';
+import formatPrice from 'utils/formatPrice';
 
 function PopupDiscountQuantity(props: any) {
     const { open, setOpen, price_display } = props;
@@ -15,7 +15,7 @@ function PopupDiscountQuantity(props: any) {
                     Giá bán này giới hạn mua tối đa chỉ 1 dịch vụ,<br />
                     từ dịch vụ thứ 2 giá bán sẽ thay đổi thành {formatPrice(price_display)}đ.
                 </span>
-                <ButtonLoading
+                <XButton
                     title='Đã hiểu'
                     onClick={() => setOpen(false)}
                     loading={false}

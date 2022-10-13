@@ -15,8 +15,8 @@ import {
 import icon from '../../constants/icon';
 import { IProvince, IDistrict } from '../../interface/provinces';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
-import ButtonLoading from '../../components/ButtonLoading';
 import { TransitionUp } from '../../utils/transition';
+import { XButton } from 'components/Layout';
 
 interface IProps {
     disableTags?: boolean,
@@ -267,12 +267,12 @@ function FilterOrgs(props: IProps) {
                 </div>
             </div>
             <div className="filter-orgs-btn">
-                <ButtonLoading
+                <XButton
                     title='Áp dụng '
                     onClick={handleApplyByFilter}
                     loading={false}
                 />
-                <ButtonLoading
+                <XButton
                     title='Thiết lập lại'
                     onClick={() => dispatch(onResetFilter())}
                     loading={false}

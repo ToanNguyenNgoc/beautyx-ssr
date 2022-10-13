@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import { Alert, Dialog, Snackbar } from "@mui/material";
-import onErrorImg from "../../../utils/errorImg";
-import HeadMobile from "../../HeadMobile";
-import icon from "../../../constants/icon";
-import ButtonLoading from "../../../components/ButtonLoading";
-import { postAsyncComment } from "../../../redux/org_services/serviceSlice";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from "../../../redux/status";
-import useFullScreen from "../../../utils/useDeviceMobile";
-import { useHistory } from "react-router-dom";
-import {
-    clearPrevState,
-    postAsyncMediaComment,
-} from "../../../redux/commentSlice";
 import { identity, pickBy } from "lodash";
+import { onErrorImg, useDeviceMobile } from "utils";
+import { useHistory } from "react-router-dom";
+import icon from "constants/icon";
+import { clearPrevState, postAsyncMediaComment } from "redux/commentSlice";
+import { postAsyncComment } from "redux/org_services/serviceSlice";
+import { STATUS } from "redux/status";
+import HeadMobile from "features/HeadMobile";
+import { XButton } from "components/Layout";
 
 function ServiceReview(props: any) {
     const { open, setOpen, service, org } = props;
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
@@ -263,7 +259,7 @@ function ServiceReview(props: any) {
                         )}
                     </div>
                     <div className="review-service__btn">
-                        <ButtonLoading
+                        <XButton
                             title="Gửi đánh giá"
                             loading={loading}
                             onClick={onSubmitComment}

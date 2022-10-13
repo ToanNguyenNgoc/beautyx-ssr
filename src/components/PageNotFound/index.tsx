@@ -1,8 +1,8 @@
 import React from "react";
 import "./style.css";
-import img from "../../constants/img";
-import ButtonLoading from "../ButtonLoading";
 import { useHistory } from "react-router-dom";
+import img from "constants/img";
+import { XButton } from "components/Layout";
 
 function PageNotFound() {
     const history = useHistory();
@@ -28,12 +28,12 @@ function PageNotFound() {
                     Xin lỗi, trang bạn đang tìm kiếm không tồn tại!
                 </span>
                 <div className="error-btn">
-                    <ButtonLoading
+                    <XButton
                         title="Tiếp tục mua sắm"
                         onClick={goBack}
                         loading={false}
                     />
-                    <ButtonLoading
+                    <XButton
                         title="Trang chủ"
                         onClick={goHome}
                         loading={false}

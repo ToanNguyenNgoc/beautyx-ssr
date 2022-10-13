@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import HeadTitle from "../HeadTitle";
-import Head from "../Head";
 import "./cart-status.css";
 import { Container } from "@mui/material";
 import useCountDown from "../../utils/useCountDown";
@@ -27,16 +26,14 @@ import {
     onAddServicesNoBookCount,
     onSetStatusServicesUser,
 } from "../../redux/order/orderSlice";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 import ModalLoad from "../../components/ModalLoad";
-import ButtonLoading from "components/ButtonLoading";
+import { XButton } from "components/Layout";
 // end
 const timerRender = [0];
 const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];
 
 function CartPaymentStatus() {
     const sec = useCountDown(600);
-    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0]);
     const [openConf, setOpenConf] = useState(false);
@@ -172,11 +169,11 @@ function CartPaymentStatus() {
                 content: title,
                 open: true,
                 children: <>
-                    <ButtonLoading
+                    <XButton
                         title="Về trang chủ"
                         onClick={() => history.push("")}
                     />
-                    <ButtonLoading
+                    <XButton
                         title="Tiếp tục"
                         onClick={() => onGoBackCart()}
                     />
@@ -195,14 +192,10 @@ function CartPaymentStatus() {
                         : "Thanh toán đơn hàng"
                 }
             />
-            {IS_MB ? (
-                <HeadMobile
-                    handleCancelPayment={handleCancelPayment}
-                    title="Thanh toán"
-                />
-            ) : (
-                <Head handleCancelPayment={handleCancelPayment} />
-            )}
+            <HeadMobile
+                handleCancelPayment={handleCancelPayment}
+                title="Thanh toán"
+            />
             <Container>
                 <div className="pm-st-cnt">
                     <PaymentQr

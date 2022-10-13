@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { XButton } from "components/Layout";
+import { AppContext } from "context/AppProvider";
+import { IOrderV2 } from "interface/orderv2";
 import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { IOrderV2 } from "../../../interface/orderv2";
-import { fetchAsyncOrderPaid } from "../../../redux/order/orderSlice";
+import { fetchAsyncOrderPaid } from "redux/order/orderSlice";
 import OrderItem from "./OrderItem";
-import ButtonLoading from "../../../components/ButtonLoading";
-import { AppContext } from "../../../context/AppProvider";
-
 
 function TabOrderPaid() {
     const ORDER = useSelector((state: any) => state.ORDER.ORDER);
@@ -30,7 +29,7 @@ function TabOrderPaid() {
             </ul>
             <div className="order-list__bottom">
                 {orders.length < totalItem && (
-                    <ButtonLoading
+                    <XButton
                         title={t("trending.watch_all")}
                         loading={false}
                         onClick={onMoreOrder}

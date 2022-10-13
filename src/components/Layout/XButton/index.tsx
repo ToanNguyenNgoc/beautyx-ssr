@@ -9,11 +9,21 @@ interface IProps {
     type?: any,
     className?: string,
     style?: any
+    icon?: string,
+    iconSize?: number
 }
 
-function ButtonLoading(props: IProps) {
-    const { loading, title, onClick, type, className, style } = props;
-    //const loading = true
+export function XButton(props: IProps) {
+    const {
+        loading,
+        title,
+        onClick,
+        type,
+        className,
+        style,
+        icon,
+        iconSize
+    } = props;
     return (
         <button
             style={style ? style : {}}
@@ -22,6 +32,10 @@ function ButtonLoading(props: IProps) {
             onClick={onClick}
             type={type}
         >
+            {
+                icon &&
+                <img src={icon} alt="" height={iconSize ?? 18} width={iconSize ?? 18} />
+            }
             {
                 loading === true &&
                 <div className="loading-cnt">
@@ -32,5 +46,3 @@ function ButtonLoading(props: IProps) {
         </button>
     );
 }
-
-export default ButtonLoading;

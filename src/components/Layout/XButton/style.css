@@ -12,6 +12,9 @@
     border-radius: 18px;
     transition: all .3s;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .btn-loading:hover{
     opacity: .8;
@@ -25,6 +28,9 @@
     top: 0;
     left: 0;
     padding-top: 4px;
+}
+.btn-loading img{
+    margin-right: 4px;
 }
 @media only screen and (max-width: 1023px){
     .btn-loading{

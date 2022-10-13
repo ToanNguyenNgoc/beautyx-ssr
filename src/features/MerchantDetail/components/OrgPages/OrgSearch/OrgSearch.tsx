@@ -93,7 +93,7 @@ const TabProducts = (props: any) => {
         <ul className="list">
             {products?.map((item: Product, index: number) => (
                 <li key={index}>
-                   <SerProItem org={org} item={item} type="PRODUCT" />
+                   <SerProItem changeStyle={true} org={org} item={item} type="PRODUCT" />
                 </li>
             ))}
         </ul>
@@ -105,7 +105,7 @@ const TabServices = (props: any) => {
         <ul className="list">
             {services?.map((item: Service, index: number) => (
                 <li key={index}>
-                    <SerProItem org={org} item={item} type="SERVICE" />
+                    <SerProItem changeStyle={true} org={org} item={item} type="SERVICE" />
                 </li>
             ))}
         </ul>
