@@ -1,26 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
 import { Container, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import "./style.css";
-import HomeLoggedCalendar from "../Apointment/HomeLoggedCalendar";
 import ServicesUser from "../ServiceUser";
 import icon from "../../constants/icon";
-import { clearAllServices } from "../../redux/servicesBookSlice";
-import { useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import Bottom from "../../featuresMobile/Bottom";
 import { AppContext } from "../../context/AppProvider";
 import Footer from "../Footer";
 import useDeviceMobile from "../../utils/useDeviceMobile";
+import { ApointmentTab } from "pages/Apointment";
 
 function Calendar() {
     const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile();
-    const dispatch = useDispatch();
     const history = useHistory();
     const location: any = useLocation();
     const params: any = extraParamsUrl();
@@ -34,9 +31,6 @@ function Calendar() {
         setValueTab(newValue);
         history.push(`/lich-hen?tab=${newValue}`);
     };
-    useEffect(() => {
-        dispatch(clearAllServices());
-    }, []);
     const onGoBack = () => {
         if (location.state?.prevUrl) {
             history.goBack(`${location.state?.prevUrl}`);
@@ -44,7 +38,6 @@ function Calendar() {
             history.push("/");
         }
     };
-    // console.log('render');
     return (
         <>
             <HeadTitle title="Lịch hẹn" />
@@ -73,13 +66,13 @@ function Calendar() {
                                     style={{ width: "24px", height: "24px" }}
                                 ></div>
                             </div>
+                            <TabPanel value="1">
+                                <ApointmentTab />
+                            </TabPanel>
+                            <TabPanel value="2">
+                                <ServicesUser />
+                            </TabPanel>
                         </Container>
-                        <TabPanel value="1">
-                            <HomeLoggedCalendar />
-                        </TabPanel>
-                        <TabPanel value="2">
-                            <ServicesUser />
-                        </TabPanel>
                     </TabContext>
                 </div>
             </div>

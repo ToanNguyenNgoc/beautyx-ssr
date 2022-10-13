@@ -5,12 +5,13 @@ import icon from "../../constants/icon";
 import { Dialog } from "@mui/material";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
-import { AppContext } from "../../context/AppProvider";
-import useFullScreen from "../../utils/useDeviceMobile";
-import BackButton from "../../components/BackButton";
-import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-import LoginFlatFormRequest from "../../rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
+import { useDeviceMobile } from "utils";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import { AppContext } from "context/AppProvider";
+import LoginFlatFormRequest from "rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
+import { BackButton } from "components/Layout";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
+
 
 
 function SignInUp(props: any) {
@@ -21,7 +22,7 @@ function SignInUp(props: any) {
     setActiveTabSign,
     useForSignRes,
   } = props;
-  const fullScreen = useFullScreen();
+  const fullScreen = useDeviceMobile();
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const { t } = useContext(AppContext);
   const buttons = [

@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocation, useHistory } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { CircularProgress, Container } from '@mui/material';
 import ExtraFlatForm from "../../../rootComponents/extraFlatForm";
 import { EXTRA_FLAT_FORM } from "../../../api/extraFlatForm";
 import onErrorImg from "../../../utils/errorImg";
 import { IServicePromo } from "../../../interface/servicePromo";
-import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
-import icon from "../../../constants/icon";
 import './homeBannerSearchResult.css'
 import Footer from "../../Footer";
 import Bottom from "../../../featuresMobile/Bottom";
 import Head from "../../Head";
 import useFullScreen from "../../../utils/useDeviceMobile";
 import HeadMobile from '../../HeadMobile/index';
+import { Container } from "@mui/material";
+import {SerProItem} from "components/Layout"
 
 
 export default function HomeBannerResult() {
@@ -57,7 +55,6 @@ export default function HomeBannerResult() {
       })
     }
   }
-  console.log(data, apiBanner);
 
   return (
     <>
@@ -88,7 +85,7 @@ export default function HomeBannerResult() {
                 <ul className="landing-page__body__list-items">
                   {data.services.map((item: IServicePromo, index: number) => (
                     <li className="home-recomment__item" key={index}>
-                      <ServicePromoItem service={item} />
+                      <SerProItem item={item} type="SERVICE" />
                     </li>
                   ))}
                 </ul>

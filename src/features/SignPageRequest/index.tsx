@@ -1,5 +1,5 @@
+import { BackButton } from "components/Layout";
 import React from "react";
-import BackButton from "../../components/BackButton";
 import img from "../../constants/img";
 import HomeSignIn from "./HomeSignIn";
 import "./signPageRequest.css";

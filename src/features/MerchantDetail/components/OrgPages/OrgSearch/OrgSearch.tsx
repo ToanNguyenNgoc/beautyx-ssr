@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
 import OrgDealHot from "../OrgDealHot";
-import ServiceItem from "../../../../ViewItemCommon/ServiceItem";
-import ProductItem from "../../../../ViewItemCommon/ProductItem";
-import { IOrganization } from "../../../../../interface/organization";
-import { Product } from "../../../../../interface/product";
-import { Service } from "../../../../../interface/service";
+import { SerProItem } from "components/Layout";
+import { Product } from "interface/product";
+import { Service } from "interface/service";
 
 function OrgSearch(props: any) {
     const { orgSearchCnt, keyword, org } = props;
@@ -95,7 +93,7 @@ const TabProducts = (props: any) => {
         <ul className="list">
             {products?.map((item: Product, index: number) => (
                 <li key={index}>
-                    <ProductItem org={org} product={item} changeStyle={true} />
+                   <SerProItem org={org} item={item} type="PRODUCT" />
                 </li>
             ))}
         </ul>
@@ -107,7 +105,7 @@ const TabServices = (props: any) => {
         <ul className="list">
             {services?.map((item: Service, index: number) => (
                 <li key={index}>
-                    <ServiceItem org={org} service={item} changeStyle={true} />
+                    <SerProItem org={org} item={item} type="SERVICE" />
                 </li>
             ))}
         </ul>

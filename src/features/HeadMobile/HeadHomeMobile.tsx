@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect } from "react";
 import Search from "../Search";
 import icon from "../../constants/icon";
 import "./style.css";
@@ -19,7 +19,7 @@ function HeadHomeMobile() {
     const history = useHistory();
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
     const { USER } = useSelector((state: any) => state.USER);
-    useMemo(() => {
+    useEffect(() => {
         dispatch(getTotal(USER?.id));
     }, [dispatch, cartList]);
     const onGotoCart = () => {

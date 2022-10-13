@@ -1,23 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { SerProItem } from "components/Layout";
+import LoadingMore from "components/LoadingMore";
+import { LoadingServices } from "components/LoadingSketion";
+import { AppContext } from "context/AppProvider";
+import EmptyRes from "features/EmptyRes";
+import { CategoryService } from "interface/category";
+import IStore from "interface/IStore";
+import { IOrganization } from "interface/organization";
+import { Service } from "interface/service";
 import React, { useContext, useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
-import { IOrganization } from "../../../../interface/organization";
 import {
+    clearServices,
     fetchAsyncCateServices,
     fetchAsyncServices,
-    onChooseCateServices,
-    clearServices,
-} from "../../../../redux/org_services/orgServivesSlice";
-import { Service } from "../../../../interface/service";
-import OrgServiceItem from "./OrgServiceItem";
-import { STATUS } from "../../../../redux/status";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { AppContext } from "../../../../context/AppProvider";
-import EmptyRes from '../../../EmptyRes';
-import { LoadingServices } from "../../../../components/LoadingSketion";
-import LoadingMore from "../../../../components/LoadingMore";
-import IStore from '../../../../interface/IStore';
-import { CategoryService } from '../../../../interface/category'
+    onChooseCateServices
+} from "redux/org_services/orgServivesSlice";
+import { STATUS } from "redux/status";
+import { useDeviceMobile } from "utils";
 
 interface IProps {
     org: IOrganization;
@@ -25,6 +26,7 @@ interface IProps {
 
 function OrgServices(props: IProps) {
     const dispatch = useDispatch();
+    const IS_MB = useDeviceMobile();
     const { t } = useContext(AppContext);
     const { CATE, SERVICES, choose_cate, org_id } = useSelector(
         (state: IStore) => state.ORG_SERVICES
@@ -157,7 +159,7 @@ function OrgServices(props: IProps) {
                     <ul className="org-services-cnt__right-list">
                         {services.map((item: Service, index: number) => (
                             <li key={index}>
-                                <OrgServiceItem org={org} service={item} />
+                                <SerProItem changeStyle={IS_MB} org={org} item={item} type="SERVICE" />
                             </li>
                         ))}
                     </ul>

@@ -14,7 +14,7 @@ import PaymentConfirm from "./components/PaymentConfirm";
 import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
 import apointmentApi from "../../api/apointmentApi";
 import HeadMobile from "../HeadMobile";
-import Notification from "../../components/Notification/index";
+import { PopupNotification } from "components/Notification";
 import { useHistory } from "react-router-dom";
 import { clearByCheck } from "../../redux/cartSlice";
 import { onClearOrder } from "../../redux/order/orderSlice";
@@ -29,6 +29,7 @@ import {
 } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import ModalLoad from "../../components/ModalLoad";
+import ButtonLoading from "components/ButtonLoading";
 // end
 const timerRender = [0];
 const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];
@@ -43,12 +44,9 @@ function CartPaymentStatus() {
     const history = useHistory();
 
     const [open, setOpen] = useState({
-        title: "",
+        content: "",
         open: false,
-        titleLeft: "",
-        titleRight: "",
-        onClickLeft: () => {},
-        onClickRight: () => {},
+        children: <></>
     });
 
     const carts = useSelector((state: any) => state.carts);
@@ -171,20 +169,25 @@ function CartPaymentStatus() {
                 title = `Thanh toán và đặt hẹn thất bại`;
             }
             setOpen({
-                ...open,
-                title: title,
+                content: title,
                 open: true,
-                titleLeft: "Về trang chủ",
-                titleRight: "Tiếp tục",
-                onClickLeft: () => history.push("/Home"),
-                onClickRight: () => onGoBackCart(),
+                children: <>
+                    <ButtonLoading
+                        title="Về trang chủ"
+                        onClick={() => history.push("")}
+                    />
+                    <ButtonLoading
+                        title="Tiếp tục"
+                        onClick={() => onGoBackCart()}
+                    />
+                </>
             });
         }
     }, [response]);
     const dataCartInfo = { res, orderStatus, sec, services };
     return (
         <>
-            {loading && <ModalLoad/>}
+            {loading && <ModalLoad />}
             <HeadTitle
                 title={
                     orderStatus === "PAID"
@@ -206,7 +209,7 @@ function CartPaymentStatus() {
                         res={res}
                         sec={sec}
                         orderStatus={orderStatus}
-                        //pay_url={pay_url}
+                    //pay_url={pay_url}
                     />
                     <div className="pm-st-cnt__body">
                         <PaymentInfo
@@ -224,14 +227,11 @@ function CartPaymentStatus() {
                 setOpen={setOpenConf}
                 handleCancelPayment={handleCancelPayment}
             />
-            <Notification
+            <PopupNotification
+                title="Thông báo"
+                content={open.content}
                 open={open.open}
-                content={open.title}
-                titleBtnLeft={open.titleLeft}
-                titleBtnRight={open.titleRight}
-                onClickLeft={open.onClickLeft}
-                onClickRight={open.onClickRight}
-                disableRight={action && true}
+                children={open.children}
             />
         </>
     );

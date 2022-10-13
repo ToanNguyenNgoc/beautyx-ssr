@@ -10,8 +10,6 @@ import {
     formatParamsString
 } from "../../../utils/formatRouterLink/formatRouter"
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
-import ProductPromoItem from '../../ViewItemCommon/ProductPromoItem';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
 import FilterProduct from '../../Filter/FilterProduct';
@@ -21,6 +19,7 @@ import icon from '../../../constants/icon';
 import { Container } from '@mui/system';
 import { AUTH_LOCATION } from '../../../api/authLocation';
 import { FilterPrice } from "../../../components/FilterCate"
+import { SerProItem } from 'components/Layout';
 // import useGetLocation from '../../../utils/useGetLocation';
 
 function HomeCateResult() {
@@ -163,8 +162,8 @@ function HomeCateResult() {
                                     {
                                         resData.map((item: any, index: number) => (
                                             <li key={index} className={style.body_list_item}>
-                                                {type === "PRODUCT" && <ProductPromoItem product={item} />}
-                                                {type === "SERVICE" && <ServicePromoItem service={item} />}
+                                                {type === "PRODUCT" && <SerProItem item={item} type="PRODUCT" />}
+                                                {type === "SERVICE" && <SerProItem item={item} type="SERVICE" />}
                                             </li>
                                         ))
                                     }

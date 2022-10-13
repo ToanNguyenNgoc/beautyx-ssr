@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import img from "../../constants/img";
 import SignIn from "./components/SignIn";
-import { AppContext } from "../../context/AppProvider";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import BackButton from "../../components/BackButton";
 import SignUps from "./components/SignUps";
-import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
-import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm';
-import LoginFlatFormRequest from "../../rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
+import { AppContext } from "context/AppProvider";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import { BackButton } from "components/Layout";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
+import img from "constants/img";
+import LoginFlatFormRequest from "rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
 
 function SignPage(props: any) {
   const { t } = useContext(AppContext);
@@ -59,7 +59,7 @@ function SignPage(props: any) {
                   className="flex-column sign-content__left"
                   style={{ justifyContent: "center" }}
                 >
-                  <img style={{width:"120px"}} className="sign-content__left-logo" src={img.beautyX} alt="" />
+                  <img style={{ width: "120px" }} className="sign-content__left-logo" src={img.beautyX} alt="" />
                   <img
                     className="sign-content__left-partner"
                     src={img.Partner}
