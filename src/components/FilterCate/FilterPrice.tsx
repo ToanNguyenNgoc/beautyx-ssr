@@ -1,6 +1,6 @@
 import { Input } from 'components/Layout';
 import React, { useState } from 'react';
-import ButtonLoading from '../ButtonLoading';
+import {XButton} from 'components/Layout'
 import style from "./filter-cate.module.css"
 
 interface FilterPriceProps {
@@ -47,7 +47,7 @@ export function FilterPrice(props: FilterPriceProps) {
                         Vui lòng điền khoảng giá phù hợp
                     </div>
                 }
-                <ButtonLoading
+                <XButton
                     className={style.price_btn}
                     title='Áp dụng'
                     onClick={onApplyPrice}

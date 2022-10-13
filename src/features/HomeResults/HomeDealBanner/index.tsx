@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import Head from '../../Head';
-import HeadTitle from '../../HeadTitle';
+import { SerProItem, XButton } from 'components/Layout';
+import { IServicePromo } from 'interface/servicePromo';
+import { dealHot } from 'constants/img';
 import { useLocation } from 'react-router-dom';
+import servicePromoApi from 'api/servicePromoApi';
+import HeadTitle from 'features/HeadTitle';
+import Head from 'features/Head';
 import { Container } from '@mui/material';
-import servicePromoApi from '../../../api/servicePromoApi';
-import { IServicePromo } from '../../../interface/servicePromo'
-import ButtonLoading from '../../../components/ButtonLoading';
-import { dealHot } from '../../../constants/img';
-import { blockService } from '../../../utils/blockCardItem';
-import { SerProItem } from 'components/Layout';
+import { blockService } from 'utils/blockCardItem';
 
 interface IBanner {
     id: number,
@@ -112,7 +111,7 @@ function HomeDealBanner() {
                         <div className="deal-banner__bot">
                             {
                                 data.services.length < data.totalItem &&
-                                <ButtonLoading
+                                <XButton
                                     title='Xem thêm'
                                     onClick={onViewMore}
                                     loading={data.loadPage}

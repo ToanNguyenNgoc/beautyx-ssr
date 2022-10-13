@@ -6,7 +6,6 @@ import ExtraFlatForm from "../../rootComponents/extraFlatForm";
 import useFullScreen from "../../utils/useDeviceMobile";
 import Footer from "../Footer";
 import Head from "../Head";
-import HeadHomeMobile from "../HeadMobile/HeadHomeMobile";
 import HomeDiscount from "../HomeDiscounts";
 import HomeBanner from "./HomeBanner";
 import HomeFavorite from "./HomeFavorite";
@@ -39,8 +38,7 @@ export default function HomePage() {
     return (
         <div className="homepage">
             <ExtraFlatForm />
-            {IS_MB ? <HeadHomeMobile /> : <Head IN_HOME={true} />}
-            {/* <HomeTagsProducts /> */}
+            <Head IN_HOME={true} />
             <Container>
                 <HomeCate />
                 {

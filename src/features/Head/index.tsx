@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
-import ButtonLoading from "components/ButtonLoading";
 import img from "constants/img";
 import icon from "constants/icon";
 import { ICON } from "constants/icon2"
@@ -22,6 +21,7 @@ import Search from "features/Search";
 import { debounce } from "lodash";
 import { useDeviceMobile } from "utils";
 import { IServiceUser } from "interface/servicesUser";
+import { XButton } from "components/Layout";
 
 interface IProps {
     IN_HOME?: boolean,
@@ -45,7 +45,7 @@ function Head(props: IProps) {
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
     useEffect(() => {
         dispatch(getTotal(USER?.id));
-    }, [dispatch, cartList]);
+    }, [dispatch, cartList, USER]);
 
     const onToggleMenu = (dis: "show" | "hide") => {
         if (dis === "show") return refMenu?.current?.classList.add(style.head_menu_show)
@@ -159,12 +159,12 @@ function Head(props: IProps) {
                                     </>
                                     :
                                     <div className={style.head_top_right_auth}>
-                                        <ButtonLoading
+                                        <XButton
                                             className={style.head_sign_btn}
                                             title={t("Home.Sign_up")}
                                             onClick={() => history.push("/sign-up?2")}
                                         />
-                                        <ButtonLoading
+                                        <XButton
                                             onClick={() => history.push("/sign-in?1")}
                                             className={style.head_sign_btn} title={t("Home.Sign_in")}
                                         />
@@ -193,7 +193,7 @@ function Head(props: IProps) {
                         </div>
                     </div>
                     <div className={style.head_bot}>
-                        <ButtonLoading
+                        <XButton
                             onClick={() => history.push("/kenh-nguoi-ban")}
                             className={style.head_bot_btn}
                             title={t("Header.seller_center")}

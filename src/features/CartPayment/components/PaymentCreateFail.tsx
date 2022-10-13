@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dialog } from '@mui/material';
-import ButtonLoading from '../../../components/ButtonLoading';
+import { XButton } from 'components/Layout';
 
 function PaymentCreateFail(props: any) {
     const {popupFail, setPopUpFail} = props;
@@ -14,7 +14,7 @@ function PaymentCreateFail(props: any) {
                 <div className="content">
                     Tạo đơn hàng thất bại
                 </div>
-                <ButtonLoading
+                <XButton
                     title='Đóng'
                     loading={false}
                     onClick={() => setPopUpFail(false)}

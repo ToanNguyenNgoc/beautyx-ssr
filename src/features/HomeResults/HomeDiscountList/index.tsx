@@ -1,29 +1,28 @@
 import React from 'react';
-import Head from '../../Head';
-import HeadTitle from '../../HeadTitle';
 import { Container } from '@mui/material';
 import '../../HomeDiscounts/style.css'
-import { IDiscountPar, IITEMS_DISCOUNT } from '../../../interface/discount';
-import DiscountItem from '../../HomeDiscounts/DiscountItem';
-import ButtonLoading from '../../../components/ButtonLoading';
 import './style.css';
-import Footer from '../../Footer';
-import HeadMobile from '../../HeadMobile';
-import useFullScreen from '../../../utils/useDeviceMobile';
-import useSwrInfinite from '../../../utils/useSwrInfinite';
-import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
-import { AUTH_LOCATION } from "../../../api/authLocation"
+import { AUTH_LOCATION } from 'api/authLocation';
+import { useDeviceMobile, useSwrInfinite } from 'utils';
+import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
+import HeadTitle from 'features/HeadTitle';
+import HeadMobile from 'features/HeadMobile';
+import Head from 'features/Head';
+import DiscountItem from 'features/HomeDiscounts/DiscountItem';
+import { LoadGrid } from 'components/LoadingSketion';
+import { XButton } from 'components/Layout';
+import Footer from 'features/Footer';
 
 function HomeDiscountList() {
     const LOCATION = AUTH_LOCATION()
     const paramsDiscounts = {
         "append": "user_available_purchase_count",
         "filter[platform]": "MOMO",
-        // "filter[location]": LOCATION ?? "",
+        "filter[location]": LOCATION ?? "",
         "limit": "30",
         "sort": "-priority|-created_at|discount_value"
     }
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(true,"/discounts", paramsDiscounts)
     const discounts: IDiscountPar[] = resData
     const onViewMore = () => {
@@ -61,7 +60,7 @@ function HomeDiscountList() {
                     <div className="discount-list-cnt__bot">
                         {
                             discounts.length < totalItem &&
-                            <ButtonLoading
+                            <XButton
                                 title='Xem thêm ưu đãi'
                                 loading={false}
                                 onClick={onViewMore}

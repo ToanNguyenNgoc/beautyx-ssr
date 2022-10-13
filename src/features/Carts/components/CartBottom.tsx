@@ -15,7 +15,6 @@ import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import authentication from "api/authApi";
 import { putUser } from "redux/USER/userSlice";
 import formatPrice from "utils/formatPrice";
-import ButtonLoading from "components/ButtonLoading";
 import { AppContext } from "context/AppProvider";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
@@ -24,7 +23,7 @@ import { useDeviceMobile, useSwr } from "utils/index"
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cartSlice";
-import { AlertSnack } from "components/Layout";
+import { AlertSnack, XButton } from "components/Layout";
 
 export interface OpenVcProp {
     open: boolean,
@@ -122,11 +121,11 @@ function CartBottom(props: any) {
                     open: true,
                     content: t("pm.order_fail"),
                     children: <>
-                        <ButtonLoading
+                        <XButton
                             title={t("pm.agree")}
                             onClick={() => setOpenNoti({ ...openNoti, open: false })}
                         />
-                        <ButtonLoading
+                        <XButton
                             title={t("pm.goto_home")}
                             onClick={() => history.push("/home")}
                         />
@@ -141,11 +140,11 @@ function CartBottom(props: any) {
                 open: true,
                 content: t("pm.order_fail"),
                 children: <>
-                    <ButtonLoading
+                    <XButton
                         title={t("pm.agree")}
                         onClick={() => setOpenNoti({ ...openNoti, open: false })}
                     />
-                    <ButtonLoading
+                    <XButton
                         title={t("pm.goto_home")}
                         onClick={() => history.push("/home")}
                     />
@@ -168,11 +167,11 @@ function CartBottom(props: any) {
                     open: true,
                     content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
                     children: <>
-                        <ButtonLoading
+                        <XButton
                             title="Cập nhập"
                             onClick={handleOtp}
                         />
-                        <ButtonLoading
+                        <XButton
                             title="Để sau"
                             onClick={() => setOpenNoti({ ...openNoti, open: false })}
                         />
@@ -346,7 +345,7 @@ function CartBottom(props: any) {
                                         )}
                                         đ
                                     </span>
-                                    <ButtonLoading
+                                    <XButton
                                         title={`${t("pm.total_payment")}`}
                                         loading={load}
                                         onClick={handleSubmitOrder}
@@ -438,7 +437,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             disabled={cart_confirm.length > 0 && false}
                             value={text} onChange={onInputChange} type="text"
                         />
-                        <ButtonLoading
+                        <XButton
                             style={text === "" ? {
                                 backgroundColor: "var(--bg-color)",
                                 cursor: "no-drop"
@@ -496,7 +495,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                         }
                     </ul>
                     <div className="vc_bot">
-                        <ButtonLoading
+                        <XButton
                             onClick={() => setOpen({ ...open, open: false })}
                             title="Đồng ý"
                         />

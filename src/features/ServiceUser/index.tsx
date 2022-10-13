@@ -5,13 +5,13 @@ import "./mySer.css";
 import { useDispatch, useSelector } from "react-redux";
 import useFullScreen from "../../utils/useDeviceMobile";
 import { Masonry } from "@mui/lab";
-import { IServiceUser } from "../../interface/servicesUser";
+import { AppContext } from "context/AppProvider";
+import { STATUS } from "redux/status";
+import { fetchAsyncOrderServices } from "redux/order/orderSlice";
+import ModalLoad from "components/ModalLoad";
+import { IServiceUser } from "interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
-import { STATUS } from "../../redux/status";
-import { fetchAsyncOrderServices } from "../../redux/order/orderSlice";
-import ModalLoad from "../../components/ModalLoad";
-import ButtonLoading from "../../components/ButtonLoading";
-import { AppContext } from "../../context/AppProvider";
+import { XButton } from "components/Layout";
 
 function ServicesUser(props: any) {
     const dispatch = useDispatch();
@@ -64,7 +64,7 @@ function ServicesUser(props: any) {
                                 {services.length >= 15 &&
                                     services.length < totalItem && (
                                         <div className="my-ser-bot">
-                                            <ButtonLoading
+                                            <XButton
                                                 title={`${t(
                                                     "trending.watch_all"
                                                 )}`}

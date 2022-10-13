@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import "./style.css";
 import icon from "../../constants/icon";
-import ButtonLoading from "../../components/ButtonLoading";
+import {XButton} from 'components/Layout'
 import { FLAT_FORM_TYPE } from "../flatForm";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 // SLICE
@@ -139,7 +139,7 @@ function LoginFlatFormRequest(props: any) {
                 Cho phép sử dụng thông tin{" "}
                 <span>Họ tên, Số điện thoại, Email</span> của bạn.
             </div>
-            <ButtonLoading
+            <XButton
                 title="Cho phép truy cập"
                 onClick={handleLogin}
                 loading={load}

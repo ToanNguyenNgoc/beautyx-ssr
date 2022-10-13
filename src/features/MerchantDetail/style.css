@@ -891,8 +891,8 @@
 }
 
 .mb-org-search-result__cnt li {
-    padding: 16px 12px;
-    border-bottom: solid 1px var(--grey_2);
+    padding: 8px 12px;
+    height: 116px;
 }
 
 .org-image-btn {

@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import UserPaymentInfo from '../Account/components/UserPaymentInfo';
 import DetailOrgCard from '../ServiceDetail/components/DetailOrgCard';
 import ProductItem from './ProductItem';
-import ButtonLoading from '../../components/ButtonLoading';
 import formatPrice from '../../utils/formatPrice';
 import PaymentMethodCpn from '../PaymentMethod';
 import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm';
@@ -29,6 +28,7 @@ import SectionTitle from '../SectionTitle';
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
+import { XButton } from 'components/Layout';
 // end
 function BuyNow() {
     const IS_MB = useDeviceMobile();
@@ -209,7 +209,7 @@ function BuyNow() {
                                     <span>{formatPrice(total)}đ</span>
                                 </div>
                                 <div className="amount-btn">
-                                    <ButtonLoading
+                                    <XButton
                                         onClick={onClickPayment}
                                         title='Thanh toán'
                                         loading={false}

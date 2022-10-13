@@ -5,7 +5,6 @@ import PopupSuccess from "../../PopupSuccess/index";
 import { AppContext } from "../../../context/AppProvider";
 import order from "../../../api/orderApi";
 import { useHistory } from "react-router-dom";
-import ButtonLoading from "../../../components/ButtonLoading";
 import { pickBy, identity } from "lodash";
 import { useSelector } from "react-redux";
 import REDUCER_CART from "../../../utils/reducerCart";
@@ -17,6 +16,7 @@ import { extraPaymentMethodId } from "../../PaymentMethod/extraPaymentMethodId";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
 import { formatProductList } from "../../../utils/tracking";
+import { XButton } from "components/Layout";
 // end
 const useInPayment: boolean = true;
 function PaymentTotal(props: any) {
@@ -130,7 +130,7 @@ function PaymentTotal(props: any) {
                 </div>
                 <div className="flex-row-sp payment-total__body-submit">
                     <span>{t("pm.enter_to_payment")}</span>
-                    <ButtonLoading
+                    <XButton
                         title={t("pm.payment_2")}
                         loading={loading}
                         onClick={handleSubmitPayment}

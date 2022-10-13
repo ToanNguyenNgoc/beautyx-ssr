@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import { useFormik } from "formik";
-import { AppContext } from "../../../../../context/AppProvider";
-import { useSelector, useDispatch } from "react-redux";
-import { updateAsyncUser } from "../../../../../redux/USER/userSlice";
-import ButtonLoading from "../../../../../components/ButtonLoading";
+import { AppContext } from "context/AppProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { updateAsyncUser } from "redux/USER/userSlice";
+import { XButton } from "components/Layout";
 
 function FormInfo() {
     const { t } = useContext(AppContext);
@@ -103,7 +103,7 @@ function FormInfo() {
                     </div>
                 </div>
             </div>
-            <ButtonLoading
+            <XButton
                 loading={loading}
                 title={t("acc.save")}
                 type="submit"

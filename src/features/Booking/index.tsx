@@ -9,7 +9,6 @@ import ServiceBookItem from "./components/ServiceItem";
 import { useHistory, useLocation } from "react-router-dom";
 import { addServiceBookNow } from "../../redux/servicesBookSlice";
 import icon from "../../constants/icon";
-import ButtonLoading from "../../components/ButtonLoading";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
 import Footer from "../Footer";
@@ -34,7 +33,7 @@ import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
 import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
-import { AlertSnack } from "components/Layout";
+import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 
 // end
@@ -184,11 +183,11 @@ function Booking() {
                     open: true,
                     content: "Tạo đơn hàng thất bại",
                     children: <>
-                        <ButtonLoading
+                        <XButton
                             title="Đã hiểu"
                             onClick={() => setOpenNoti({ ...openNoti, open: false })}
                         />
-                        <ButtonLoading
+                        <XButton
                             title="Về trang chủ"
                             onClick={() => history.push("/home")}
                         />
@@ -202,11 +201,11 @@ function Booking() {
                 open: true,
                 content: "Tạo đơn hàng thất bại",
                 children: <>
-                    <ButtonLoading
+                    <XButton
                         title="Đã hiểu"
                         onClick={() => setOpenNoti({ ...openNoti, open: false })}
                     />
-                    <ButtonLoading
+                    <XButton
                         title="Về trang chủ"
                         onClick={() => history.push("/home")}
                     />
@@ -227,7 +226,7 @@ function Booking() {
                 open: true,
                 content: "Đặt hẹn thành công",
                 children: <>
-                    <ButtonLoading
+                    <XButton
                         title="Xem lịch hẹn"
                         onClick={gotoAppointment}
                     />
@@ -239,11 +238,11 @@ function Booking() {
                 open: true,
                 content: "Có lỗi xảy ra trong quá trình đặt hẹn",
                 children: <>
-                    <ButtonLoading
+                    <XButton
                         title="Đã hiểu"
                         onClick={() => setOpenNoti({ ...openNoti, open: false })}
                     />
-                    <ButtonLoading
+                    <XButton
                         title="Về trang chủ"
                         onClick={() => history.push("/home")}
                     />
@@ -448,7 +447,7 @@ function Booking() {
                                         </span>
                                     )}
                                 </div>
-                                <ButtonLoading
+                                <XButton
                                     title="Chọn"
                                     onClick={() => setOpen(true)}
                                     loading={false}
@@ -547,7 +546,7 @@ function Booking() {
                                 {location.state.TYPE === "BOOK_NOW" && (
                                     <BookingNowBill org={org} />
                                 )}
-                                <ButtonLoading
+                                <XButton
                                     title={
                                         location.state?.TYPE === "BOOK_NOW"
                                             ? "Thanh toán và đặt hẹn ngay"

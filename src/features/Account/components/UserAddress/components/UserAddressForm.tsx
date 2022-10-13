@@ -1,14 +1,14 @@
+import provincesApi from 'api/provinceApi';
+import { XButton } from 'components/Layout';
+import { AppContext } from 'context/AppProvider';
+import { IDistrict, IWard } from 'interface/district';
+import { IProvince } from 'interface/provinces';
 import React, { useContext, useEffect, useState } from 'react';
-import { IProvince } from '../../../../../interface/provinces';
-import { IDistrict, IWard } from '../../../../../interface/district';
-import provincesApi from '../../../../../api/provinceApi';
-import ButtonLoading from '../../../../../components/ButtonLoading';
 import { useDispatch, useSelector } from 'react-redux';
-import { postAsyncAddress } from '../../../../../redux/USER/userAddressSlice';
-import { STATUS } from '../../../../../redux/status';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from '../../../../../context/AppProvider';
-import useDeviceMobile from '../../../../../utils/useDeviceMobile';
+import { STATUS } from 'redux/status';
+import { postAsyncAddress } from 'redux/USER/userAddressSlice';
+import { useDeviceMobile } from 'utils';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -297,7 +297,7 @@ function UserAddressForm(props: any) {
                     </div>
                 </div>
                 <div className="form-btn">
-                    <ButtonLoading
+                    <XButton
                         loading={status_up === STATUS.LOADING ? true : false}
                         onClick={handleSubmitForm}
                         title="Thêm mới địa chỉ"
