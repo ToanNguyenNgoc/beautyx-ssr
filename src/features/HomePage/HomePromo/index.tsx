@@ -2,11 +2,11 @@
 import React, { useEffect } from "react";
 import { IServicePromo } from "../../../interface/servicePromo";
 import FilterService from "../../Filter/FilterService";
-import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsyncServicesPromo } from '../../../redux/home/homePageSlice';
 import { STATUS } from '../../../redux/status'
 import { blockService } from "../../../utils/blockCardItem";
+import { SerProItem } from "components/Layout";
 
 
 function HomePromo(props: any) {
@@ -60,7 +60,7 @@ function HomePromo(props: any) {
                                     .slice(0, 12)
                                     .map((item: IServicePromo, index: number) => (
                                         <li key={index}>
-                                            <ServicePromoItem service={item} />
+                                            <SerProItem item={item} type="SERVICE" />
                                         </li>
                                     ))}
                             </ul>

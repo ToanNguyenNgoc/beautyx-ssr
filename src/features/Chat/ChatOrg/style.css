@@ -111,7 +111,7 @@
 .chat-org__body-wrap-item {
     display: flex;
     height: fit-content;
-    justify-content: start;
+    justify-content: flex-start;
     padding: 12px 0px;
 }
 

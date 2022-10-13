@@ -1,33 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect } from "react";
-import Head from "../../Head";
-import HeadTitle from "../../HeadTitle";
 import { Container } from "@mui/material";
 import "../home-result.css";
-import HomeTitleSection from "../../HomePage/HomeTitleSection/index/index";
-import ServicePromoItem from "../../ViewItemCommon/ServicePromoItem";
-import { IServicePromo } from "../../../interface/servicePromo";
-import { AppContext } from "../../../context/AppProvider";
-import { extraParamsUrl } from "../../../utils/extraParamsUrl";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAsyncServicesPromo } from "../../../redux/home/homePageSlice";
-import FilterService from "../../Filter/FilterService";
-import { STATUS } from "../../../redux/status";
-import { onSetFilterPromo } from '../../../redux/filter/filterSlice';
 import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
-import useFullScreen from "../../../utils/useDeviceMobile";
-import HeadMobile from "../../HeadMobile";
-import ServiceResultItem from "../../Search/components/ServiceResultItem";
-import BackTopButton from "../../../components/BackTopButton";
-import Footer from "../../Footer";
-import LoadingMore from "../../../components/LoadingMore";
-import { LoadingServices } from "../../../components/LoadingSketion";
-import { blockService } from "../../../utils/blockCardItem";
+import { SerProItem, BackTopButton } from "components/Layout";
+import { AppContext } from "context/AppProvider";
+import { useDeviceMobile } from "utils";
+import { extraParamsUrl } from "utils/extraParamsUrl";
+import { STATUS } from "redux/status";
+import { fetchAsyncServicesPromo } from "redux/home/homePageSlice";
+import { onSetFilterPromo } from "redux/filter/filterSlice";
+import { IServicePromo } from "interface/servicePromo";
+import { blockService } from "utils/blockCardItem";
+import HeadMobile from "features/HeadMobile";
+import Head from "features/Head";
+import HeadTitle from "features/HeadTitle";
+import HomeTitleSection from "pages/HomePage/HomeTitleSection/index";
+import FilterService from "features/Filter/FilterService";
+import { LoadingServices } from "components/LoadingSketion";
+import LoadingMore from "components/LoadingMore";
+import Footer from "features/Footer";
 
 function HomePromo(props: any) {
     const { t } = useContext(AppContext);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const history = useHistory();
     const { SERVICES_PROMO } = useSelector((state: any) => state.HOME_PAGE);
     const dispatch = useDispatch();
@@ -117,12 +115,7 @@ function HomePromo(props: any) {
                                             key={index}
                                             className="ser-list-item__mb ser-item__cus"
                                         >
-                                            {
-                                                IS_MB ?
-                                                    <ServiceResultItem service={item} />
-                                                    :
-                                                    <ServicePromoItem service={item} />
-                                            }
+                                            <SerProItem changeStyle={IS_MB} item={item} type="SERVICE" />
                                         </li>
                                     )
                                 )}
@@ -140,3 +133,4 @@ function HomePromo(props: any) {
 }
 
 export default HomePromo;
+

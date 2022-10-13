@@ -1,10 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
-import Search from "../../features/Search";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
@@ -18,7 +15,7 @@ import useDeviceMobile from "../../utils/useDeviceMobile";
 export default function AssistantBtn() {
     const dispatch = useDispatch();
     const location: any = useLocation();
-    const FLAT_FORM = EXTRA_FLAT_FORM();
+    // const FLAT_FORM = EXTRA_FLAT_FORM();
 
 
     const viewDisable = ["/trang-thai-don-hang/", "/chat", "/map-box", "/ban-do"];
@@ -182,7 +179,7 @@ export default function AssistantBtn() {
                     </div>
                 </div>
             </div>
-            <Search />
+            {/* <Search /> */}
         </>
     );
 }

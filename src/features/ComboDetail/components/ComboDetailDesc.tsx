@@ -1,7 +1,6 @@
+import { SerProItem } from "components/Layout";
+import { IOrganization } from "interface/organization";
 import React from "react";
-import { IOrganization } from "../../../interface/organization";
-import ProductItem from "../../ViewItemCommon/ProductItem";
-import ServiceItem from "../../ViewItemCommon/ServiceItem";
 
 interface IProps {
     combo: any;
@@ -40,7 +39,9 @@ export default function ComboDetailDesc(props: IProps) {
                     <ul className="combo-desc__list">
                         {serviceList?.map((item: any, index: number) => (
                             <li key={index}>
-                                <ServiceItem service={item} org={org} />
+                                <SerProItem 
+                                    item={item} org={org} type="SERVICE"
+                                />
                             </li>
                         ))}
                     </ul>
@@ -55,7 +56,7 @@ export default function ComboDetailDesc(props: IProps) {
                     <ul className="combo-desc__list">
                         {productList?.map((item: any, index: number) => (
                             <li key={index}>
-                                <ProductItem product={item} org={org} />
+                                <SerProItem type="PRODUCT" item={item} org={org} />
                             </li>
                         ))}
                     </ul>

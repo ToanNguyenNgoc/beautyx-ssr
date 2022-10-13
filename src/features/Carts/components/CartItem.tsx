@@ -114,8 +114,9 @@ function CartItem(props: IProps) {
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (cartItem.is_type === 1) {
             const pathProductOb = formatRouterLinkProduct(
-                cartItem.cart_item,
-                cartItem.org
+                cartItem.cart_item.id,
+                cartItem.org.id,
+                cartItem.name
             );
             history.push(pathProductOb);
         } else if (cartItem.is_type === 2) {
@@ -140,8 +141,9 @@ function CartItem(props: IProps) {
                     merchant: org.name
                 })
                 const pathServiceOb = formatRouterLinkService(
-                    cartItem.cart_item,
-                    cartItem.org
+                    cartItem.cart_item.id,
+                    cartItem.org.id,
+                    cartItem.name
                 );
                 history.push(pathServiceOb);
             }

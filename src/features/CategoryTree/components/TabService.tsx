@@ -5,10 +5,10 @@ import { useHistory } from "react-router-dom";
 import onErrorImg from "../../../utils/errorImg";
 import formatNumber from "../../../utils/formatPrice";
 import { fetchServiceByCateChild } from "../../../redux/CateTree/cateTreeSlice";
+import { formatRouterLinkService } from "utils/formatRouterLink/formatRouter"
 import { STATUS } from "../../../redux/status";
 import { useEffect } from "react";
 import scrollTop from "../../../utils/scrollTop";
-import { formatRouterLinkServicePromo } from "../../../utils/formatRouterLink/formatRouter";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
 // end
@@ -48,11 +48,13 @@ function TabService(props: any) {
         scrollTop();
         tracking.CATEGORY_TREE_ITEM_CLICK(CATE.cate_id, service.org_id, service.id)
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
-        logEvent(analytics,'detail_service', {
+        logEvent(analytics, 'detail_service', {
             service: service.service_name,
             merchant: service.org_name
         })
-        const pathServiceOb = formatRouterLinkServicePromo(service);
+        const pathServiceOb = formatRouterLinkService(
+            service.service_id, service.org_id, service.name
+        );
         history.push(pathServiceOb);
     };
     return (

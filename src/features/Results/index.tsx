@@ -12,7 +12,7 @@ import { IOrganization } from '../../interface/organization';
 import OrgItem from '../ViewItemCommon/OrgItem';
 import { STATUS } from '../../redux/status';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import BackTopButton from '../../components/BackTopButton';
+import { BackTopButton } from 'components/Layout';
 import Footer from '../Footer';
 import {
     fetchAsyncOrgsByFilter,

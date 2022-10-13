@@ -1,9 +1,8 @@
 import React from "react";
 import Bottom from "../Bottom/index";
-import HomeLoggedCalendar from "../../features/Apointment/HomeLoggedCalendar";
-// import BackButton from '../../components/BackButton';
 import Head from "../../features/Head";
 import Footer from "../../features/Footer";
+import { ApointmentTab } from "../../pages/Apointment";
 
 function Calendar(props: any) {
   return (
@@ -12,7 +11,7 @@ function Calendar(props: any) {
         <Head />
       </div>
       <div>
-        <HomeLoggedCalendar />
+        <ApointmentTab />
       </div>
       <Bottom />
       <div className="calender-wrap">

@@ -27,7 +27,7 @@ import DetailRecommend from "./components/DetailRecommend";
 import { handleScroll, handleChangeScroll } from "./onScrollChange";
 import ReviewsContainer from "../ReviewsContainer";
 import PageNotFound from "../../components/PageNotFound";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppProvider";
 import { EXTRA_DETAIL_SERVICE } from "../../utils/extraDetail";
@@ -44,6 +44,8 @@ import { postHistoryView } from "../../user-behavior";
 
 function ServiceDetail() {
     const { t } = useContext(AppContext);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const location = useLocation();
     const dispatch = useDispatch();
     const IS_MB = useFullScreen();
     const ORG = useSelector((state: IStore) => state.ORG);
@@ -154,8 +156,8 @@ function ServiceDetail() {
             scroll = false;
         };
     });
-    const postAsyncWatched = async () =>{
-        await postHistoryView({id: params.id, organization_id: params.org, type:"SERVICE"})
+    const postAsyncWatched = async () => {
+        await postHistoryView({ id: params.id, organization_id: params.org, type: "SERVICE" })
     }
     useEffect(() => {
         postAsyncWatched()

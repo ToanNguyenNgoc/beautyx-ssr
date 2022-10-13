@@ -1,0 +1,123 @@
+.date_cnt {
+    min-width: 250px;
+    width: 100%;
+    background-color: var(--bg-white);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px -1px rgba(0, 0, 0, 0.1);
+}
+
+.date_month_cnt {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+
+.date_btn_month {
+    border: none;
+    outline: none;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+.date_btn_month:first-child {
+    margin-right: 8px;
+}
+
+.date_month_text {
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 600;
+    width: fit-content;
+    left: 0;
+    position: absolute;
+}
+
+.date_day_cnt {
+    margin-top: 6px;
+    padding-top: 4px;
+    border-top: solid 1px var(--bg-color);
+}
+
+.week_container {
+    display: flex;
+}
+
+.week_cell {
+    width: calc(100% / 7);
+    padding: 4px 0px 14px 0px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--text-hover);
+    text-align: center;
+}
+
+.day_container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.day_cell_item {
+    width: calc(100% / 7);
+    text-align: center;
+    margin: 4px 0px;
+    padding: 6px 0px;
+    cursor: pointer;
+    height: 32px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all .3s;
+    border: solid 1px var(--bg-white);
+    position: relative;
+}
+.day_cell_item_dis{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: var(--bg-white);
+    opacity: 0.7;
+    top: 0;
+    cursor: no-drop;
+}
+
+.list_dots {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    bottom: 0;
+    height: 10px;
+}
+
+.list_dots_item {
+    width: 4px;
+    height: 4px;
+    margin: 0px 1.5px;
+    background-color: var(--text-orange);
+    border-radius: 100%;
+}
+
+.day_fade {
+    color: var(--text-hover);
+    font-weight: 500;
+}
+
+.day_current {
+    background-color: var(--purple);
+    color: var(--bg-white);
+}
+
+.day_cell_item:hover {
+    transition: all .3s;
+    background-color: var(--bg-color);
+}

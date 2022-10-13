@@ -5,10 +5,10 @@ import { useLocation } from 'react-router-dom';
 import { Container } from '@mui/material';
 import servicePromoApi from '../../../api/servicePromoApi';
 import { IServicePromo } from '../../../interface/servicePromo'
-import ServicePromoItem from '../../ViewItemCommon/ServicePromoItem';
 import ButtonLoading from '../../../components/ButtonLoading';
 import { dealHot } from '../../../constants/img';
 import { blockService } from '../../../utils/blockCardItem';
+import { SerProItem } from 'components/Layout';
 
 interface IBanner {
     id: number,
@@ -102,8 +102,8 @@ function HomeDealBanner() {
                                     <li
                                         key={index}
                                     >
-                                        <ServicePromoItem
-                                            service={item}
+                                        <SerProItem
+                                            item={item} type="SERVICE"
                                         />
                                     </li>
                                 ))

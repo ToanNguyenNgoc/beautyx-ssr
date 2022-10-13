@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 // css && library 
 import { Drawer } from "@mui/material";
-import AlertSnack from "../../components/AlertSnack";
 import "../ResetPassword/style.css";
 import "./style.css";
 // end 
@@ -10,6 +9,7 @@ import { IDataOtp, IPropOtp } from './_model'
 // end
 import { authentication, signInWithPhoneNumber, RecaptchaVerifier } from "../../firebase";
 import FormTelephone from "../ResetPassword/components/FormTelephone";
+import { AlertSnack } from "components/Layout";
 
 declare global {
     interface Window {
@@ -134,7 +134,6 @@ function RenderRecatpcha(props: IPropOtp) {
         }
         return setOpen(false)
     }
-    console.log(open);
     return (
         <>
             <Drawer

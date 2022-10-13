@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import { IProductPromo } from "../../../interface/productPromo"
-import ProductPromoItem from "../../ViewItemCommon/ProductPromoItem";
 import HomeTitle from "../Components/HomeTitle";
 import useSwrInfinite from "../../../utils/useSwrInfinite";
 import { paramsProducts } from "../../../params-query"
@@ -11,6 +10,7 @@ import { LoadGrid } from "../../../components/LoadingSketion";
 import { useSelector } from "react-redux";
 import IStore from "../../../interface/IStore";
 import "./homeTopService.css";
+import { SerProItem } from "components/Layout";
 
 
 export default function HomeTopService() {
@@ -38,9 +38,10 @@ export default function HomeTopService() {
                     resData
                         .slice(0, 12)
                         .map((item: IProductPromo, index: number) => (
-                            <ProductPromoItem
+                            <SerProItem
                                 key={index}
-                                product={item}
+                                item={item}
+                                type="PRODUCT"
                             />
                         ))
                 }

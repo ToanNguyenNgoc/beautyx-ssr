@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ProductItem from '../../ViewItemCommon/ProductItem';
-import { Product } from '../../../interface/product';
-import productsApi from '../../../api/productApi';
-import scrollTop_2 from '../../../utils/scrollTop_2';
 import { Pagination } from '@mui/material'
+import productsApi from 'api/productApi';
+import scrollTop_2 from 'utils/scrollTop_2';
+import { Product } from 'interface/product';
+import { SerProItem } from 'components/Layout';
 
 function Products(props: any) {
     const { org, act } = props;
@@ -52,9 +52,10 @@ function Products(props: any) {
                             className='sale-list__item'
                             key={index}
                         >
-                            <ProductItem
-                                product={item}
+                            <SerProItem
+                                item={item}
                                 org={org}
+                                type="PRODUCT"
                             />
                         </li>
                     ))

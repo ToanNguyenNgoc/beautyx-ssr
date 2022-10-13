@@ -2,26 +2,21 @@ import { Container } from '@mui/material';
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useSelector } from 'react-redux';
-import BackTopButton from '../../../components/BackTopButton';
-// import { AppContext } from '../../../context/AppProvider';
-import IStore from '../../../interface/IStore';
-import useDeviceMobile from '../../../utils/useDeviceMobile';
-import Footer from '../../Footer';
-import Head from '../../Head';
-import HeadMobile from '../../HeadMobile';
-import HeadTitle from '../../HeadTitle';
-import HomeTitleSection from '../../HomePage/HomeTitleSection/index';
-import { paramsProducts } from '../../../params-query';
-import useSwrInfinite from '../../../utils/useSwrInfinite';
-import ProductPromoItem from '../../ViewItemCommon/ProductPromoItem';
-import ProductResultItem from '../../Search/components/ProductResultItem';
-import { IProductPromo } from '../../../interface/productPromo';
-import { LoadGrid } from '../../../components/LoadingSketion';
-import FilterProduct from '../../Filter/FilterProduct';
+import { BackTopButton, SerProItem } from 'components/Layout';
+import { useDeviceMobile, useSwrInfinite } from 'utils';
+import IStore from 'interface/IStore';
+import { paramsProducts } from 'params-query';
+import HeadMobile from 'features/HeadMobile';
+import Head from 'features/Head';
+import HeadTitle from 'features/HeadTitle';
+import HomeTitleSection from 'pages/HomePage/HomeTitleSection/index';
+import FilterProduct from 'features/Filter/FilterProduct';
+import { IProductPromo } from 'interface/productPromo';
+import { LoadGrid } from "components/LoadingSketion"
+import Footer from 'features/Footer';
 
 function HomePromoProduct() {
     const IS_MB = useDeviceMobile();
-    // const { t } = useContext(AppContext);
     const { query } = useSelector((state: IStore) => state.FILTER.FILTER_PRODUCT_PROMO)
     const params = {
         ...paramsProducts,
@@ -76,11 +71,7 @@ function HomePromoProduct() {
                                             key={index}
                                             className="ser-list-item__mb ser-item__cus"
                                         >
-                                            {
-                                                IS_MB ? <ProductResultItem keyword={""} product={item} />
-                                                    :
-                                                    <ProductPromoItem product={item} />
-                                            }
+                                            <SerProItem changeStyle={IS_MB} item={item} type="PRODUCT" />
                                         </li>
                                     )
                                 )}

@@ -1,12 +1,19 @@
+import { SerProItem } from "components/Layout";
+import { AppContext } from "context/AppProvider";
+import { IOrganization } from "interface/organization";
+import { Product } from "interface/product";
 import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppContext } from "../../../context/AppProvider";
-import { IOrganization } from "../../../interface/organization";
-import { Product } from "../../../interface/product";
-import { fetchAsynProductRecomment } from "../../../redux/org_products/productSlice";
-import { STATUS } from "../../../redux/status";
-import { extraParamsUrl } from "../../../utils/extraParamsUrl";
-import ProductItem from "../../ViewItemCommon/ProductItem";
+import { fetchAsynProductRecomment } from "redux/org_products/productSlice";
+import { STATUS } from "redux/status";
+import { extraParamsUrl } from "utils/extraParamsUrl";
+// import { AppContext } from "../../../context/AppProvider";
+// import { IOrganization } from "../../../interface/organization";
+// import { Product } from "../../../interface/product";
+// import { fetchAsynProductRecomment } from "../../../redux/org_products/productSlice";
+// import { STATUS } from "../../../redux/status";
+// import { extraParamsUrl } from "../../../utils/extraParamsUrl";
+// import ProductItem from "../../ViewItemCommon/ProductItem";
 
 interface IProps {
     org: IOrganization;
@@ -46,7 +53,7 @@ export default function ProductDetailRecomment(props: IProps) {
             <ul className="detail-recommend__list">
                 {PRODUCT_REC?.products?.map((item: Product, index: number) => (
                     <li key={index}>
-                        <ProductItem product={item} org={org} />
+                        <SerProItem item={item} org={org} type="PRODUCT" />
                     </li>
                 ))}
             </ul>
