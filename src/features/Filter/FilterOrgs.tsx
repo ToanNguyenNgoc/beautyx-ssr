@@ -237,7 +237,7 @@ function FilterOrgs(props: IProps) {
                             />
                         </div>
                         {
-                            (min_price >= max_price) &&
+                            (min_price >= max_price || min_price !=="" || max_price !=="") &&
                             <span className="filter-orgs-ip__error">
                                 Vui lòng chọn khoảng giá phù hợp
                             </span>

@@ -99,6 +99,7 @@ function Search(props: SearchProps) {
                         <img src={icon.chevronLeft} alt="" />
                     </div>
                     <input
+                        autoFocus={true}
                         onChange={onChange}
                         type="text" className={style.search_input_mb}
                         placeholder="Bạn muốn tìm gì..."
