@@ -62,7 +62,7 @@ function FormTelephone(props: any) {
                     </span>
                 }
                 <button
-                    disabled={load ? true : false}
+                    // disabled={load ? true : false}
                     className='for-pass-cnt__btn'
                     type='submit'
                 >
