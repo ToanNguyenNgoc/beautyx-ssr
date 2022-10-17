@@ -17,8 +17,9 @@ function FormTelephone(props: any) {
         validationSchema: Yup.object({
             telephone: Yup.string()
                 .required(t("form.please_enter_your_phone"))
-                .matches(validateForm.phone,
-                    t("pm.phone_number")
+                .matches(validateForm.phone_new_rule,
+                    //t("pm.phone_number")
+                    'Số điện thoại không hợp lệ'
                 ),
         }),
         onSubmit: (values) => {
