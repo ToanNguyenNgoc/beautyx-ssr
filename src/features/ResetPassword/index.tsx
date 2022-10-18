@@ -16,8 +16,10 @@ declare global {
 }
 
 export const formatTelephone = (telephone: string) => {
-    const phone = `${telephone}`.slice(-9)
-    return `+84${phone}`
+    // const phone = `${telephone}`.slice(-9);
+    console.log('phone',"+84" + telephone.toString().slice(1));
+    return "+84" + telephone.toString().slice(1);
+    // return `+84${phone}`
 }
 function ResetPassword() {
     const [values, setValues] = useState({

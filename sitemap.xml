@@ -11,6 +11,26 @@
     <lastmod>2022-08-23</lastmod>
   </url>
   <url>
+    <loc>https://beautyx.vn/blog</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.80</priority>
+  </url>
+    <url>
+    <loc>https://beautyx.vn/cua-hang</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://beautyx.vn/san-pham</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://beautyx.vn/dich-vu</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
     <loc>https://beautyx.vn/giam-gia</loc>
     <changefreq>weekly</changefreq>
     <priority>1.00</priority>
