@@ -16,6 +16,8 @@ import { AppContext } from "context/AppProvider"
 import { addHistory } from "redux/search/searchSlice"
 import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
+import slugify from "utils/formatUrlString"
+import { useLocation } from "react-router-dom";
 
 interface SearchProps {
     key_work?: string,
@@ -25,6 +27,8 @@ interface SearchProps {
 
 
 function Search(props: SearchProps) {
+    const location = useLocation();
+
     const { specialItems } = useContext(AppContext)
     const dispatch = useDispatch()
     const keysRecommend = useFetch(`${API_3RD.API_NODE}/history/view`).response
@@ -87,6 +91,10 @@ function Search(props: SearchProps) {
         dispatch(addHistory({
             TYPE: "ORG", id: item.id, item: item
         }))
+    }
+    const onItemSpecial = (item: any) => {
+        if (item.type === "DISCOUNT") return history.push(`/chi-tiet-giam-gia/${slugify(item.name)}?type=service&org_id=${item.organization_id}&dis_id=${item.id}&item_id=${item.item_id}`);
+        if (item.type === "SERVICE") return history.push(`/dich-vu/${slugify(item.name)}?id=${item.id}&org=${item.organization_id}`);
     }
     return (
         <div className={style.container}>
@@ -235,7 +243,7 @@ function Search(props: SearchProps) {
                             <ul className={style.list_special}>
                                 {specialItems.map((item: any, index: number) => (
                                     <li
-                                        onClick={onCloseSearch}
+                                        onClick={()=>onItemSpecial(item)}
                                         key={index} className={style.list_special_item}
                                     >
                                         <SpecialItem item={item} />
