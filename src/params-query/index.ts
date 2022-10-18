@@ -15,6 +15,7 @@ export const paramOrgs: ParamOrg = {
 export const paramsDiscounts = {
     "append": "user_available_purchase_count",
     "filter[platform]": "MOMO",
+    "limit": 12,
     "sort": "-priority|-created_at|discount_value",
 }
 export const paramsServices: ParamService = {

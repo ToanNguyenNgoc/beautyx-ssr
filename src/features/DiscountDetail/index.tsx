@@ -43,8 +43,11 @@ import { STATUS } from "redux/status";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import { postHistoryView } from "user-behavior";
+import { useLocation } from "react-router-dom";
+
 // end
 function DiscountDetail() {
+    const location = useLocation()
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useDeviceMobile();
     const discount: IDiscountPar = DISCOUNT.discount;
@@ -227,9 +230,10 @@ function DiscountDetail() {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
+    console.log(params.dis_id)
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
-        postHistoryView({id: params.dis_id, organization_id: params.org_id, type:"DISCOUNT"})
+        postHistoryView({ id: params.dis_id, organization_id: params.org_id, type: "DISCOUNT" })
         callDiscountDetail();
         if (TYPE === "service") {
             callServiceDetail();
@@ -237,7 +241,7 @@ function DiscountDetail() {
             callProductDetail();
         }
         callOrgDetail();
-    }, []);
+    }, [params.dis_id]);
 
     useEffect(() => {
         handleOnSetItemDiscount();
