@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog } from "@mui/material";
 import "../../ResetPassword/style.css";
 import { formatTelephone } from "../../ResetPassword";
@@ -7,6 +7,7 @@ import FormTelephone from "../../ResetPassword/components/FormTelephone";
 
 function SignVeriOtp(props: any) {
     const { open, setOpen, setDataOtp } = props;
+    const [load, setLoad] = useState(false);
     const generateRecaptcha = () => {
         try {
             if (!window.recaptchaVerifier) {
@@ -35,17 +36,19 @@ function SignVeriOtp(props: any) {
         const phoneNumber: any = formatTelephone(telephone);
         if (phoneNumber === "") return;
         generateRecaptcha()
+        setLoad(true)
         signInWithPhoneNumber(authentication, phoneNumber, window.recaptchaVerifier)
             .then((result) => {
-                console.log(result);
                 setDataOtp({
                     telephone: telephone,
                     verification_id: result?.verificationId,
                 });
                 setOpen(false);
+                setLoad(false)
             })
             .catch((err) => {
                 console.log(err);
+                setLoad(false)
             });
     };
     return (
@@ -55,6 +58,7 @@ function SignVeriOtp(props: any) {
                     <div id="recaptcha-container"></div>
                     <FormTelephone
                         title="Đăng ký"
+                        load={load}
                         handlePostTelephone={handlePostTelephone}
                     />
                 </div>
