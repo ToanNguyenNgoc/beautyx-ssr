@@ -44,9 +44,9 @@ import { STATUS } from "redux/status";
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import { postHistoryView } from "user-behavior";
 import { useLocation } from "react-router-dom";
+
 // end
 function DiscountDetail() {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const location = useLocation()
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useDeviceMobile();
