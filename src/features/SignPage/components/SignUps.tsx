@@ -1,31 +1,36 @@
 import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import icon from '../../../constants/icon';
 import { FormControl, RadioGroup, FormControlLabel, Radio, Checkbox, CircularProgress } from '@mui/material'
-import { AppContext } from '../../../context/AppProvider';
 import { AxiosError } from "axios";
-import authentication from '../../../api/authApi';
-import PopupNoti from './PopupNoti';
-import validateForm from '../../../utils/validateForm';
 import SignVeriOtp from './SignVeriOtp';
-//import useCountDown from '../../../utils/useCountDown';
+import { AppContext } from 'context/AppProvider';
+import authentication from 'api/authApi';
+import validateForm from 'utils/validateForm';
+import icon from 'constants/icon';
+import { XButton } from 'components/Layout'
+import { PopupNotification } from 'components/Notification'
+import { useHistory } from 'react-router-dom';
 
 function SignUps(props: any) {
-    //const sec = useCountDown(90)
     const { t } = useContext(AppContext)
     const { setActiveTabSign } = props;
-    // const [errAlready, setErrAlready] = useState({
-    //     errMail: '',
-    //     errPhone: ''
-    // })
+    const history = useHistory()
     const [loading, setLoading] = useState(false);
-    const [popup, setPopup] = useState(false);
+    const [noti, setNoti] = useState({
+        content: "",
+        open: false,
+        children: <></>
+    })
     const [openOtp, setOpenOtp] = useState(true);
     const [dataOtp, setDataOtp] = useState({
         telephone: '',
         verification_id: ''
     })
+    const onBackSignIn = () => {
+        setActiveTabSign(1)
+        history.replace({ pathname: '/sign-in', search: '1' })
+    }
     const handleAsyncForgotPass = async (val: any) => {
         const params = {
             telephone: val.telephone,
@@ -36,9 +41,24 @@ function SignUps(props: any) {
         try {
             await authentication.forgotPassword(params);
             setLoading(false);
-            setPopup(true)
+            setNoti({
+                content: "Đăng ký thành công",
+                open: true,
+                children: <XButton
+                    title='Quay vè trang đăng nhập'
+                    onClick={onBackSignIn}
+                />
+            })
         } catch (error) {
             console.log(error)
+            setNoti({
+                content: "Có lỗi xảy ra. Vui lòng thử lại!",
+                open: true,
+                children: <XButton
+                    title='Quay vè trang đăng nhập'
+                    onClick={onBackSignIn}
+                />
+            })
         }
     }
     async function handleSubmitForm(values: any) {
@@ -54,7 +74,14 @@ function SignUps(props: any) {
         try {
             await authentication.register(params);
             setLoading(false);
-            setPopup(true)
+            setNoti({
+                content: "Đăng ký thành công",
+                open: true,
+                children: <XButton
+                    title='Quay vè trang đăng nhập'
+                    onClick={onBackSignIn}
+                />
+            })
         } catch (error) {
             setLoading(false);
             const err = error as AxiosError;
@@ -349,11 +376,12 @@ function SignUps(props: any) {
                     <img src={icon.facebook} alt="" />
                 </div> */}
             </form>
-            <PopupNoti
-                popup={popup}
-                setPopup={setPopup}
-                isSignIn={false}
-                setActiveTabSign={setActiveTabSign}
+            <PopupNotification
+                title='Thông báo'
+                open={noti.open}
+                content={noti.content}
+                children={noti.children}
+                setOpen={() => setNoti({ ...noti, open: false })}
             />
         </div>
     );

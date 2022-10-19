@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup';
-import validateForm from '../../../utils/validateForm';
-import icon from '../../../constants/icon';
 import { useHistory } from 'react-router-dom'
-import { AppContext } from '../../../context/AppProvider';
+import validateForm from 'utils/validateForm';
+import { AppContext } from 'context/AppProvider';
+import icon from 'constants/icon';
+
 
 function FormTelephone(props: any) {
     const { t } = useContext(AppContext);
@@ -63,7 +64,6 @@ function FormTelephone(props: any) {
                     </span>
                 }
                 <button
-                    // disabled={load ? true : false}
                     className='for-pass-cnt__btn'
                     type='submit'
                 >
