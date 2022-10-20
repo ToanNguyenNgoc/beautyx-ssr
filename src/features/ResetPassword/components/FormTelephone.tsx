@@ -19,11 +19,15 @@ function FormTelephone(props: any) {
             telephone: Yup.string()
                 .required(t("form.please_enter_your_phone"))
                 .matches(validateForm.phone_new_rule,
-                    //t("pm.phone_number")
+                    
                     'Số điện thoại không hợp lệ'
                 ),
         }),
         onSubmit: (values) => {
+            values = {
+                ...values,
+                telephone: values.telephone.cleanString()
+             };
             handlePostTelephone(values.telephone, true)
         },
     });
