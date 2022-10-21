@@ -6,7 +6,7 @@ class BannerApi {
       page: 1,
       limit: 15,
       platform: "MOMO",
-      sort: "-created_at",
+      sort: "-priority|-created_at",
     };
     const url = `/banners`;
     return axiosClient.get(url, { params });
