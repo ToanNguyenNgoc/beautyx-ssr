@@ -40,6 +40,7 @@ import { Service } from "../../interface/service";
 import IStore from "../../interface/IStore";
 import { analytics, logEvent } from "../../firebase";
 import { postHistoryView } from "../../user-behavior";
+import { OpenApp } from 'components/Layout'
 // end
 
 function ServiceDetail() {
@@ -448,6 +449,10 @@ function ServiceDetail() {
             )}
             {/* footer */}
             <Footer />
+            <OpenApp
+                type="service"
+                item_id={params.id} org_id={params.org} id={params.id}
+            />
         </>
     );
 }

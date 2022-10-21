@@ -19,7 +19,8 @@ export const formatAddCart = (
     const calDiscount = {
         ...discount,
         discount_value: discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
-            sale_price * quantity - discount?.discount_value * quantity : discount?.discount_value
+            // sale_price * quantity - discount?.discount_value * quantity : discount?.discount_value
+            sale_price - discount?.discount_value : discount?.discount_value
     }
 
     const cartValues = {

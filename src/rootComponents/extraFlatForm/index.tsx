@@ -29,6 +29,9 @@ function ExtraFlatForm() {
                 sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.MB);
                 // sessionStorage.setItem('_loginToken', params?.loginToken+'');
                 break
+            case FLAT_FORM_TYPE.ZALO:
+                sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.ZALO);
+                break
             default:
                 sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');
         }

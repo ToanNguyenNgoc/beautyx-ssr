@@ -11,15 +11,17 @@
 }
 .homepage-banner .banner-slide__img {
     width: 100%;
-    height: 100%;
+    height: 350px;
+    background-color: var(--bg-color);
     cursor: pointer;
-    /* border-radius: 8px; */
+    position: relative;
 }
 .homepage-banner .banner-slide__img img {
     width: 100%;
     height: 100%;
+    position: absolute;
+    z-index: 2;
     object-fit: cover;
-    /* border-radius: 8px; */
 }
 .homepage-banner .banner-right {
     width: 30%;
@@ -162,6 +164,9 @@
         grid-gap: 12px;
         padding: 0 12px; */
         display: none;
+    }
+    .homepage-banner .banner-slide__img{
+        height: 170px;
     }
     .homepage-banner .banner-right__bottom {
         grid-gap: 0 12px;

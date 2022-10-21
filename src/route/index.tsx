@@ -88,6 +88,10 @@ function RouterConfig(props: any) {
       component: <HomePage />
     },
     {
+      path: '/ZALO',
+      component: <HomePage />
+    },
+    {
       path: `/otp`,
       component: <Otp />,
     },

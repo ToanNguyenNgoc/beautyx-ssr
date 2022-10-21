@@ -24,9 +24,16 @@
     display: flex;
     justify-content: center;
 }
+.pop_noti_bot button{
+    margin: 0px 8px;
+}
 
 @media screen and (max-width: 1023.98px) {
     .container {
         padding: 24px 8px;
+        border-radius: 6px;
+    }
+    .pop_noti_bot button{
+        margin: 0px 4px;
     }
 }

@@ -164,9 +164,7 @@ export default function HomeBanner() {
                                     <img
                                         src={item.imageURL}
                                         alt=""
-
                                     />
-                                    {/* <img src={item.imageURL} alt="" /> */}
                                 </div>
                             ))}
                         </Slider>

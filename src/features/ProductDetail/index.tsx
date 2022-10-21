@@ -37,6 +37,7 @@ import { AppContext } from "../../context/AppProvider";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import IStore from "../../interface/IStore";
 import { postHistoryView } from "../../user-behavior";
+import { OpenApp } from 'components/Layout'
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -393,6 +394,10 @@ function ProductDetail(props: any) {
                 </div>
             </Container>
             <Footer />
+            <OpenApp
+                type="product"
+                item_id={params.id} org_id={params.org} id={params.id}
+            />
         </div>
     );
 }

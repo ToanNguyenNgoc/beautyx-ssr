@@ -5,10 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import "../../assets/styles/main.css";
 import LoadOrg from "../../components/LoadingSketion/LoadOrg";
-//import { clearServices } from '../../redux/org_services/orgServivesSlice';
-//import { clearProducts } from '../../redux/org_products/orgProductsSlice';
 import PageNotFound from "../../components/PageNotFound";
-// import { IDiscountPar } from "../../interface/discount";
 import { addVoucherByOrg } from "../../redux/cartSlice";
 import {
   fetchAsyncOrg,
@@ -36,6 +33,7 @@ import OrgDetail from "./components/OrgDetail";
 import IStore from "../../interface/IStore";
 import "./style.css";
 import { analytics, logEvent } from "../../firebase"
+import {OpenApp} from 'components/Layout'
 
 
 function MerchantDetail() {
@@ -150,6 +148,7 @@ function MerchantDetail() {
         </>
       )}
       <Footer />
+      {ORG.org && <OpenApp type="org" org_id={ORG.org.id} />}
     </div>
   );
 }

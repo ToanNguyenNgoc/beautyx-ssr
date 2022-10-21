@@ -230,7 +230,6 @@ function DiscountDetail() {
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     });
-    console.log(params.dis_id)
     useEffect(() => {
         GoogleTagPush(GoogleTagEvents.PROMOTION_LOAD);
         postHistoryView({ id: params.dis_id, organization_id: params.org_id, type: "DISCOUNT" })

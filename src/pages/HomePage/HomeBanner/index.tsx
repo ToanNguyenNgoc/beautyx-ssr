@@ -125,7 +125,7 @@ export default function HomeBanner() {
                 case "SEARCH_RESULT":
                     console.log(chooseBanner);
                     return history.push({
-                        pathname: `/campaign/${encodeURIComponent(chooseBanner.name+'')}`,
+                        pathname: `/campaign/${encodeURIComponent(chooseBanner.name + '')}`,
                         state: chooseBanner,
                     });
                 case "PROMOTION":
@@ -161,12 +161,7 @@ export default function HomeBanner() {
                                     key={index + item.url}
                                     className="banner-slide__img"
                                 >
-                                    <img
-                                        src={item.imageURL}
-                                        alt=""
-
-                                    />
-                                    {/* <img src={item.imageURL} alt="" /> */}
+                                    <img src={item.imageURL} alt="" />
                                 </div>
                             ))}
                         </Slider>

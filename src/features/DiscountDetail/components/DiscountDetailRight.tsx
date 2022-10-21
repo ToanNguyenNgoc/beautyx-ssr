@@ -103,6 +103,7 @@ function DiscountDetailRight(props: IProps) {
                 cart_id: parseInt(`${USER.id}${values.cart_id}`),
                 user_id: USER.id
             }));
+            // console.log(values)
             setPopupSuccess(true);
             tracking.ADD_CART_CLICK(
                 values.org_id,
@@ -111,7 +112,6 @@ function DiscountDetailRight(props: IProps) {
                 values.quantity
             );
             GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
-            dispatch(addCart(values));
             setPopupSuccess(true);
         } else {
             history.push("/sign-in?1")
