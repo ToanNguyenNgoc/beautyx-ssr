@@ -31,7 +31,7 @@ function Search(props: SearchProps) {
 
     const { specialItems } = useContext(AppContext)
     const dispatch = useDispatch()
-    const keysRecommend = useFetch(`${API_3RD.API_NODE}/history/view`).response
+    const keysRecommend = useFetch(true,`${API_3RD.API_NODE}/history/view`).response
     const { HISTORY } = useSelector((state: any) => state.SEARCH)
     const { key_work, key_work_debounce, onCloseSearchTimeOut } = props
     const IS_MB = useDeviceMobile()

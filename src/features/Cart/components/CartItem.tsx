@@ -10,12 +10,11 @@ import {
 import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
-import PopupConfirm from "../../popupConfirm/index";
 import slugify from "../../../utils/formatUrlString";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
-import PopupDiscountQuantity from "./PopupDiscountQuantity";
+import {PopupNotification} from 'components/Notification'
 
 // ==== api tracking ====
  import tracking from "../../../api/trackApi";
@@ -23,6 +22,7 @@ import PopupDiscountQuantity from "./PopupDiscountQuantity";
 
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { XButton } from "components/Layout";
 // end
 interface IProps {
     inPayment?: boolean;
@@ -31,7 +31,6 @@ interface IProps {
 
 function CartItem(props: IProps) {
     const { cartItem, inPayment } = props;
-    const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const [isCheck, setIsCheck] = useState(cartItem.isConfirm);
@@ -43,9 +42,6 @@ function CartItem(props: IProps) {
         dispatch(action);
     };
     const handleAscCart = () => {
-        if (cartItem.discount && cartItem.quantity === 1) {
-            setOpen(true);
-        }
         const action = ascItem(cartItem);
         dispatch(action);
     };
@@ -193,21 +189,21 @@ function CartItem(props: IProps) {
                     />
                 </div>
             </div>
-            {cartItem.discount && (
-                <PopupDiscountQuantity
-                    open={open}
-                    price_display={
-                        cartItem.discount?.items[0]?.view_price +
-                        cartItem.discount?.discount_value
-                    }
-                    setOpen={setOpen}
-                />
-            )}
-            <PopupConfirm
-                openConfirm={openConfirm}
-                setOpenConfirm={setOpenConfirm}
-                handleRemoveItemCart={handleRemoveItemCart}
-                title={cartItem.name}
+            <PopupNotification
+                open={openConfirm}
+                setOpen={setOpenConfirm}
+                title="Thông báo"
+                content={`Bạn có muốn xóa "${cartItem.name}" khỏi giở hàng không ?`}
+                children={<>
+                    <XButton
+                        title="Hủy"
+                        onClick={() => setOpenConfirm(false)}
+                    />
+                    <XButton
+                        title="Đồng ý"
+                        onClick={handleRemoveItemCart}
+                    />
+                </>}
             />
         </div>
     );

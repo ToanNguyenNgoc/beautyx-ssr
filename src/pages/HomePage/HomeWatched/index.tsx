@@ -6,9 +6,10 @@ import { SerProCommonWatched } from 'interface/servicePromo';
 import slugify from 'utils/formatUrlString';
 import API_3RD from 'api/3rd-api';
 import { AppContext } from 'context/AppProvider';
-
 import style from "./home-watched.module.css";
 import icon from 'constants/icon';
+import { useSelector } from 'react-redux';
+import IStore from 'interface/IStore';
 
 interface HomeWatchedProps {
     styleProp?: any
@@ -16,8 +17,9 @@ interface HomeWatchedProps {
 
 
 function HomeWatched(props: HomeWatchedProps) {
+    const {USER} = useSelector((state:IStore) => state.USER)
     const { styleProp } = props
-    const { response } = useFetch(`${API_3RD.API_NODE}/history`)
+    const { response } = useFetch(USER,`${API_3RD.API_NODE}/history`)
     return (
         response?.context?.data?.length > 0 ?
             <div

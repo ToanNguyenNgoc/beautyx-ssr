@@ -64,6 +64,7 @@ function ResetPassword() {
                 verification_id: result?.verificationId
             })
             setStep(2)
+            console.log(result?.verificationId)
             setLoad(false)
         } catch (error) {
             console.log(error)

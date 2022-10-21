@@ -13,11 +13,9 @@ import {
 import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";
-import PopupConfirm from "../../popupConfirm/index";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
-import PopupDiscountQuantity from "../../Cart/components/PopupDiscountQuantity";
 import {
     SwipeableList,
     SwipeableListItem,
@@ -40,6 +38,8 @@ import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import { analytics, logEvent } from "../../../firebase";
+import { PopupNotification } from "components/Notification";
+import { XButton } from "components/Layout";
 // end
 interface IProps {
     inPayment?: boolean;
@@ -129,14 +129,14 @@ function CartItem(props: IProps) {
                     discount,
                     discountItem
                 );
-                
-                logEvent(analytics,'detail_discount', {
+
+                logEvent(analytics, 'detail_discount', {
                     service: cartItem.cart_item.service_name,
                     merchant: org.name
                 })
                 history.push(pathDiscountOb);
             } else {
-                logEvent(analytics,'detail_service', {
+                logEvent(analytics, 'detail_service', {
                     service: cartItem.cart_item.service_name,
                     merchant: org.name
                 })
@@ -328,20 +328,36 @@ function CartItem(props: IProps) {
                         </div>
                     </div>
                     {cartItem.discount && (
-                        <PopupDiscountQuantity
+                        <PopupNotification
+                            title="Thông báo"
+                            content={`
+                            Giá bán này giới hạn mua tối đa chỉ 1 dịch vụ,\n
+                            từ dịch vụ thứ 2 giá bán sẽ thay đổi thành ${formatPrice(
+                                cartItem.discount?.items[0]?.view_price + cartItem.discount?.discount_value
+                            )}đ.
+                            `}
                             open={open}
-                            price_display={
-                                cartItem.discount?.items[0]?.view_price +
-                                cartItem.discount?.discount_value
-                            }
                             setOpen={setOpen}
+                            children={
+                                <XButton title="Đã hiểu" onClick={() => setOpen(false)} />
+                            }
                         />
                     )}
-                    <PopupConfirm
-                        openConfirm={openConfirm}
-                        setOpenConfirm={setOpenConfirm}
-                        handleRemoveItemCart={handleRemoveItemCart}
-                        title={cartItem.name}
+                    <PopupNotification
+                        open={openConfirm}
+                        setOpen={setOpenConfirm}
+                        title="Thông báo"
+                        content={`Bạn có muốn xóa "${cartItem.name}" khỏi giở hàng không ?`}
+                        children={<>
+                            <XButton
+                                title="Hủy"
+                                onClick={() => setOpenConfirm(false)}
+                            />
+                            <XButton
+                                title="Đồng ý"
+                                onClick={handleRemoveItemCart}
+                            />
+                        </>}
                     />
                 </div>
             </SwipeableListItem>

@@ -40,6 +40,8 @@ import { Service } from "../../interface/service";
 import IStore from "../../interface/IStore";
 import { analytics, logEvent } from "../../firebase";
 import { postHistoryView } from "../../user-behavior";
+import ExtraFlatForm from "rootComponents/extraFlatForm";
+import { OpenApp } from 'components/Layout'
 // end
 
 function ServiceDetail() {
@@ -184,6 +186,7 @@ function ServiceDetail() {
     };
     return (
         <>
+            <ExtraFlatForm />
             {SERVICE.status === STATUS.LOADING && <LoadDetail />}
             {SERVICE.status === STATUS.FAIL && <PageNotFound />}
             {/* title page servive */}
@@ -448,6 +451,10 @@ function ServiceDetail() {
             )}
             {/* footer */}
             <Footer />
+            <OpenApp
+                type="service"
+                item_id={params.id} org_id={params.org} id={params.id}
+            />
         </>
     );
 }

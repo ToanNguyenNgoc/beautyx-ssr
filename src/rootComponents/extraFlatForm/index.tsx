@@ -11,7 +11,8 @@ function ExtraFlatForm() {
     const location = useLocation();
     const params = extraParamsUrl();
 
-    const flatForm = location.pathname.slice(1, params ? location.pathname.length - 1 : location.pathname.length);
+    const flatForm = location.pathname.split('/')[1];
+    // console.log('location',location);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     if (!FLAT_FORM) {
         switch (flatForm) {
@@ -28,6 +29,9 @@ function ExtraFlatForm() {
                 // sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');
                 sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.MB);
                 // sessionStorage.setItem('_loginToken', params?.loginToken+'');
+                break
+            case FLAT_FORM_TYPE.ZALO:
+                sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.ZALO);
                 break
             default:
                 sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');

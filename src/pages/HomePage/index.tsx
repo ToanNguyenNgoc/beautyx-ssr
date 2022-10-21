@@ -22,6 +22,7 @@ import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import Footer from "features/Footer";
 import Bottom from "featuresMobile/Bottom";
+import {OpenApp} from 'components/Layout'
 export default function HomePage() {
     const dispatch = useDispatch();
     const banner_status = useSelector((state: any) => state.HOME.status);
@@ -36,6 +37,7 @@ export default function HomePage() {
     return (
         <div className="homepage">
             <ExtraFlatForm />
+            <OpenApp type="none" />
             <Head IN_HOME={true} />
             <Container>
                 <HomeCate />

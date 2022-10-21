@@ -13,6 +13,7 @@ import momoApi, { IUserConsentsData } from "../../api/momoApi";
 // import momoAuthApi from '../../api/_momoAuthApi';
 // import { AnyAaaaRecord } from 'dns';
 
+
 function LoginFlatForm(props: any) {
     const dispatch = useDispatch();
     const { flatForm, params } = props;
@@ -128,10 +129,10 @@ function LoginFlatForm(props: any) {
         if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
                 case FLAT_FORM_TYPE.MOMO:
-                    if(params){
+                    if (params) {
                         onLoginFlatFormMomowithParams();
                     }
-                    else{
+                    else {
                         onLoginFlatFormMomo();
                     }
                     break;
