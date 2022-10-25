@@ -1,10 +1,10 @@
 import icon from 'constants/icon';
-import { OpenVcProp } from 'features/Carts/components/CartBottom';
+import { OpenVcProp } from 'pages/Carts/components/CartBottom';
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from 'utils/formatPrice';
 import { DISCOUNT_TYPE } from 'utils/formatRouterLink/fileType';
-import { InputVoucher } from 'features/Carts/components/CartBottom';
+import { InputVoucher } from 'pages/Carts/components/CartBottom';
 import { IOrganization } from 'interface/organization';
 import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';

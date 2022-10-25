@@ -6,8 +6,6 @@ import servicesBookReducer from "./servicesBookSlice";
 import userAddressReducer from "./USER/userAddressSlice";
 import orgReducer from "./org/orgSlice";
 import orgCommentsReducer from "./org/orgCommentsSlice";
-import orgServicesReducer from "./org_services/orgServivesSlice";
-import orgProductsReducer from "./org_products/orgProductsSlice";
 import orgSpecialReducer from "./org_specials/orgSpecialSlice";
 import combosReducer from "./org_combos/orgCombosSlice";
 import orgDiscountsReducer from "./org_discounts/orgDiscountsSlice";
@@ -40,11 +38,9 @@ const rootReducer = {
     SERVICES_BOOK: servicesBookReducer,
     USER: userReducer,
     ORG: orgReducer,
-    ORG_SERVICES: orgServicesReducer,
     SERVICE: serviceReducer,
     PRODUCT: productReducer,
     ORG_COMBOS: combosReducer,
-    ORG_PRODUCTS: orgProductsReducer,
     ORG_SPECIALS: orgSpecialReducer,
     ORG_DISCOUNTS: orgDiscountsReducer,
     ADDRESS: userAddressReducer,

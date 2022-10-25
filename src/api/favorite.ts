@@ -4,8 +4,8 @@ import { pickBy, identity } from 'lodash';
 
 interface IPostFavoriteItem {
     org_id: number,
-    product_id?: number,
-    service_id?: number
+    product_id?: any,
+    service_id?: any
 }
 
 class Favorite {

@@ -210,7 +210,7 @@ export default function CommentItem(props: IProps) {
                                 <span>{displayTime}</span>
                                 <span>
                                     {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
-                                    Trả lời
+                                    {comment.children?.length > 0 ? comment.children?.length : ""}  Trả lời
                                 </span>
                                 {/* <span>{displayTime}</span> */}
                             </div>

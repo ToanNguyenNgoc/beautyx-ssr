@@ -7,6 +7,11 @@ import { ParamOrg, ParamService, ParamProduct } from "./param.interface"
 const PLAT_FORM = EXTRA_FLAT_FORM()
 
 // const LOCATION = AUTH_LOCATION();
+export const paramsGalleries = {
+    "include": "images|videos",
+    "limit": "15",
+    "page": "1"
+}
 export const paramOrgs: ParamOrg = {
     "limit": 15,
     "filter[keyword]": "",
@@ -65,4 +70,42 @@ export const paramOrderService = {
     "filter[withServicesSold]": true,
     "include": "items|items_count|organization|appointments",
     "sort": "-created_at"
+}
+export const paramDiscounts = {
+    "filter[platform]": "MOMO",
+    "filter[discount_type]": "",
+    "filter[organization_id]": "",
+    "filter[location]": "",
+    "sort": "-priority|-created_at|discount_value",
+    "append": "user_available_purchase_count"
+}
+export const paramServiceCatesOrg = {
+    "page": 1,
+    "limit": 15,
+    "include": "servicesCount",
+    "filter[is_momo_ecommerce_enable]": true
+}
+export const paramProductCatesOrg = {
+    "page": 1,
+    "limit": 15,
+    "include": "productsCount",
+    "filter[is_momo_ecommerce_enable]": true
+}
+export const paramsServicesOrg = {
+    "limit": 15,
+    "filter[keyword]": "",
+    "filter[service_group_id]": "",
+    "filter[special]": "",
+    "filter[is_momo_ecommerce_enable]": true,
+    "include": "category|favorites_count",
+    "append": "is_favorite|rating|bought_count"
+}
+export const paramsProductsOrg = {
+    "limit": 15,
+    "filter[keyword]": "",
+    "filter[product_category_id]": "",
+    "filter[special]": "",
+    "filter[is_momo_ecommerce_enable]": true,
+    "include": "category | favorites",
+    "append": "is_favorite|rating"
 }

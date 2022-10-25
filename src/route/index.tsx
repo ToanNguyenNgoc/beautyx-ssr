@@ -1,72 +1,50 @@
 import React from "react";
-//import Home from "../features/Home/index";
-import { BrowserRouter, Switch, Redirect } from "react-router-dom";
-import { RouteComponentProps } from "@reach/router";
-import MerchantDetail from "../features/MerchantDetail/index";
+import AuthRoute from "./AuthRoute";
+import { BrowserRouter as Router, Switch, Redirect, BrowserRouter, Route } from "react-router-dom";
+import MerchantDetail from "../pages/MerchantDetail/index";
 import Partner from "../features/Partner";
 import Cart from "../features/Cart/index";
-import CartPayment from "../features/CartPayment/index";
 import Account from "../features/Account";
-import ProductDetail from "../features/ProductDetail";
-import ServiceDetail from "../features/ServiceDetail";
-import SignPage from "../features/SignPage/index";
-import SignPageRequest from "../features/SignPageRequest/index";
-import PrivateRoute from "./PrivateRoute";
+import ProductDetail from "../pages/ProductDetail";
+import ServiceDetail from "../pages/ServiceDetail";
+import SignPage from "../pages/SignPage/index";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
-//import DatePicker from "../components/DatePicker"
 import SearchResults from "../pages/SearchResults/index";
 import HomePromo from "../features/HomeResults/HomePromo";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
 import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
-import Policy from "../features/Policy";
-import SellerCenter from "../features/SellerCenter";
-import CommentsDetail from "../features/Comments/CommentsDetail";
+import Policy from "../pages/Policy";
+import SellerCenter from "../pages/SellerCenter";
 import Otp from "../features/Otp";
-import ResetPassword from "../features/ResetPassword";
+import ResetPassword from "../pages/ResetPassword";
 import ComboDetail from "../features/ComboDetail";
-import DiscountDetail from "../features/DiscountDetail";
+import DiscountDetail from "../pages/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 import HomeMap from "../features/HomeMap";
 import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 import HomeCateResult from "../features/HomeResults/HomeCateResult"
-
-// feature mobile
-//import Calendar from "../featuresMobile/Calendar";
-//import MerchantComment from "../features/MerchantComment";
 import { useSelector } from "react-redux";
-// import HomePage from "../features/HomePage";
 import Videos from "../features/Feed/Videos";
 import Blog from "../features/Blog";
 import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
 import Calendar from "../features/Calendar";
 import BuyNow from "../features/BuyNow";
-import Carts from "../features/Carts";
+import Carts from "../pages/Carts";
 import AssistantBtn from "../components/AssistantBtn";
-
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
-
-import Result from "../features/Results";
+import Result from "../pages/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
 import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
-
-import MapBox from "../features/MapBeta";
 import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
 
-const RouterPage = (
-  props: { pageComponent: JSX.Element } & RouteComponentProps
-) => props.pageComponent;
-function RouterConfig(props: any) {
+function RouterConfig() {
   const USER = useSelector((state: any) => state.USER);
   const routes = [
-    {
-      path: '/map-box',
-      component: <MapBox />
-    },
     {
       path: `/home`,
       component: <HomePage />,
@@ -128,15 +106,7 @@ function RouterConfig(props: any) {
       component: <SignPage />,
     },
     {
-      path: "/sign-request",
-      component: <SignPageRequest />,
-    },
-    {
       path: "/cua-hang/:subdomain",
-      component: <MerchantDetail />,
-    },
-    {
-      path: "/org/:subdomain",
       component: <MerchantDetail />,
     },
     {
@@ -158,10 +128,6 @@ function RouterConfig(props: any) {
     {
       path: "/kenh-nguoi-ban",
       component: <SellerCenter />
-    },
-    {
-      path: "/danh-gia/",
-      component: <CommentsDetail />
     },
     {
       path: "/deal/:title",
@@ -195,10 +161,6 @@ function RouterConfig(props: any) {
       path: "/campaign/:name",
       component: <HomeBannerSearchResult />,
     },
-    // {
-    //   path: "/mua-hang",
-    //   component: <BoyNow />
-    // }
     {
       path: "/san-pham",
       component: <ProductsByCate />
@@ -223,44 +185,36 @@ function RouterConfig(props: any) {
       path: "/danh-sach-dich-vu/:tag_name",
       component: <HomeCateResult />
     },
-    {
-      path: "*",
-      component: <PageNotFound />
-    }
   ];
   const routesPrivate = [
     {
       path: '/goi-dich-vu',
-      component: ServicesUser
+      component: <ServicesUser />
     },
     {
       path: "/tai-khoan",
-      component: Account,
-    },
-    {
-      path: "/payment",
-      component: CartPayment,
+      component: <Account />,
     },
     {
       path: "/lich-hen",
-      component: Calendar,
+      component: <Calendar />,
     },
     {
       path: '/trang-thai-don-hang/',
-      component: CartPaymentStatus
+      component: <CartPaymentStatus />
     },
     {
       path: "/mua-hang",
-      component: BuyNow
+      component: <BuyNow />
     },
     {
       path: "/gio-hang",
-      component: Carts
+      component: <Carts />
     },
     {
       path: "/chat",
-      component: ChatAll
-    }
+      component: <ChatAll />
+    },
   ];
   logEvent(analytics, 'page_view', {
     page_title: document.title,
@@ -269,26 +223,30 @@ function RouterConfig(props: any) {
   });
   return (
     <BrowserRouter>
-      <Switch>
-        <Redirect exact from="/" to="homepage" />
-        {routesPrivate.map((item, index) => (
-          <PrivateRoute
-            USER={USER}
-            key={index}
-            path={`${item.path}`}
-            component={item.component}
-          />
-        ))}
-        {routes.map((item, index) => (
-          <RouterPage
-            key={index}
-            path={`${item.path}`}
-            pageComponent={item.component}
-          />
-        ))}
-      </Switch>
-      <AssistantBtn />
+      <Router>
+        <Switch>
+          <Redirect exact from="/" to="homepage" />
+          {
+            routes.map((item, index: number) => (
+              <Route key={index} path={item.path} >
+                {item.component}
+              </Route>
+            ))
+          }
+          <AuthRoute>
+            {
+              routesPrivate.map((item, index: number) => (
+                <Route key={index} path={item.path} >
+                  {item.component}
+                </Route>
+              ))
+            }
+          </AuthRoute>
+          <Route path="*" > <PageNotFound /> </Route>
+        </Switch>
+      </Router>
       {USER?.USER && <ChatOrg />}
+      <AssistantBtn />
     </BrowserRouter>
   );
 }

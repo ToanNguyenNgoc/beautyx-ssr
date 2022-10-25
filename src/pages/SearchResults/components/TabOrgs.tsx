@@ -7,7 +7,7 @@ import { fetchAsyncOrgsByFilter } from "../../../redux/search/searchResultSlice"
 import LoadingMore from "../../../components/LoadingMore";
 import { LoadingOrgs } from "../../../components/LoadingSketion";
 import { STATUS } from "../../../redux/status";
-import EmptyRes from "../../../features/EmptyRes";
+import { EmptyRes } from "components/Layout";
 
 function TabOrgs(props: any) {
     const { keyword, FILTER_ORGS_VAL, changeStyle } = props;

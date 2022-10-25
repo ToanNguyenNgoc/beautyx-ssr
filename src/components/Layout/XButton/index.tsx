@@ -6,7 +6,7 @@ interface IProps {
     loading?: boolean,
     title?: string,
     onClick?: () => void,
-    type?: any,
+    type?: "button" | "submit",
     className?: string,
     style?: any
     icon?: string,
@@ -30,7 +30,7 @@ export function XButton(props: IProps) {
             disabled={loading === true}
             className={`btn-loading ${className ? className : ""}`}
             onClick={onClick}
-            type={type}
+            type={type ?? "button"}
         >
             {
                 icon &&

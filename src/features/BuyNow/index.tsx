@@ -6,10 +6,10 @@ import HeadMobile from '../HeadMobile';
 import HeadTitle from '../HeadTitle';
 import { Container } from '@mui/material'
 import './style.css';
-import '../ServiceDetail/serviceDetail.css';
+import '../../pages/ServiceDetail/serviceDetail.css';
 import { useSelector } from 'react-redux';
 import UserPaymentInfo from '../Account/components/UserPaymentInfo';
-import DetailOrgCard from '../ServiceDetail/components/DetailOrgCard';
+import DetailOrgCard from '../../pages/ServiceDetail/components/DetailOrgCard';
 import ProductItem from './ProductItem';
 import formatPrice from '../../utils/formatPrice';
 import PaymentMethodCpn from '../PaymentMethod';

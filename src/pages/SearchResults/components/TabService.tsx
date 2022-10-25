@@ -7,8 +7,7 @@ import { fetchServicesByFilter } from "../../../redux/search/searchResultSlice";
 import { STATUS } from "../../../redux/status";
 import { LoadingServices } from "../../../components/LoadingSketion";
 import LoadingMore from "../../../components/LoadingMore";
-import EmptyRes from "../../../features/EmptyRes";
-import { SerProItem } from "components/Layout";
+import { EmptyRes, SerProItem } from "components/Layout";
 
 function TabService(props: any) {
     const { keyword } = props;

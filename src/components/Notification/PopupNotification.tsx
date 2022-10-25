@@ -17,12 +17,14 @@ interface PopupNotificationProps {
 export function PopupNotification(props: PopupNotificationProps) {
     const { children, title, content, open, setOpen, autoClose, fullScreen } = props
     useEffect(() => {
-        if (autoClose) {
-            const time = setTimeout(() => { setOpen && setOpen(false) }, 2000)
-            return () => { clearInterval(time) }
+        if (autoClose === true) {
+            const timer = setTimeout(() => {
+                onClose();
+            }, 1500);
+            return () => clearTimeout(timer);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [open])
     const onClose = () => {
         if (setOpen) setOpen(false)
     }

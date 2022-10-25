@@ -10,11 +10,11 @@ import { addCart } from "../../../redux/cartSlice";
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import onErrorImg from "../../../utils/errorImg";
 import formatPrice from "../../../utils/formatPrice";
-import { extraOrgTimeWork } from "../../MerchantDetail/components/Functions/extraOrg";
-import PopupSuccess from "../../PopupSuccess";
-import "../../ProductDetail/product.css";
-import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
+import { extraOrgTimeWork } from "../../../pages/MerchantDetail/Functions/extraOrg";
+import "../../../pages/ProductDetail/product.css";
+import DetailOrgCard from "../../../pages/ServiceDetail/components/DetailOrgCard";
 import ComboDetailRightReview from "./ComboDetailRightReview";
+import { PopupNotification } from 'components/Notification'
 
 interface IProps {
     combo: Combo;
@@ -159,13 +159,12 @@ function ComboDetailRight(props: IProps) {
                     <p>{t("detail_item.add_cart")}</p>
                 </div>
             </div>
-            {/* <Popu */}
-            <PopupSuccess
-                popup={popupSuccess}
-                setPopup={setPopupSuccess}
-                isNotSuccess={true}
-                title={`Đã thêm ${combo?.name} vào giỏ hàng`}
-                // title='Hiện tại BeautyX đang update tính năng sử dụng combo vui lòng thử lại sau nha!'
+            <PopupNotification
+                title="Thông báo"
+                content={`Đã thêm "${combo.name}" vào giỏ hàng`}
+                autoClose={true}
+                open={popupSuccess}
+                setOpen={setPopupSuccess}
             />
         </div>
     );
