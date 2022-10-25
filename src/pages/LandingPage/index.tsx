@@ -38,7 +38,7 @@ function LadingPage() {
                         </div>
                         <div className={style.body}>
                             {banner?.type === "SEARCH_RESULT" && <TypeSearchResult banner={banner} />}
-                            {banner?.type === "HTML" && <TypeLandingPage />}
+                            {banner?.type === "HTML" && <TypeLandingPage banner={banner} />}
                         </div>
                     </Container>
                 </div>
