@@ -22,8 +22,6 @@ function BookingNowBill(props: BookingNowBillProps) {
         voucher: ""
     })
     const services = location.state.services;
-    const discountInServices = services.map((item:any) => item.service.discount);
-    console.log(discountInServices)
     let { total } = services?.reduce(
         (cartTotal: any, cartItem: any) => {
             const { quantity, service } = cartItem;
@@ -64,7 +62,6 @@ function BookingNowBill(props: BookingNowBillProps) {
         vouchers_sub_total.map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre) : 0
 
      // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
-     console.log(discounts)
     return (
         <>
             {

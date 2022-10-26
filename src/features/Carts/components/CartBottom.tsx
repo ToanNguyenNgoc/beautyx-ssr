@@ -82,7 +82,7 @@ function CartBottom(props: any) {
     );
 
     const coupon_code_arr = listCouponCode.length > 0 ? listCouponCode : []
-    const coupon_code_apply = VOUCHER_APPLY.map((item: IDiscountPar) => item.coupon_code).filter(Boolean)
+    // const coupon_code_apply = VOUCHER_APPLY.map((item: IDiscountPar) => item.coupon_code).filter(Boolean)
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
@@ -95,8 +95,8 @@ function CartBottom(props: any) {
         services: services_id,
         treatment_combo: combos_id,
         // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
-        // coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
-        coupon_code: coupon_code_apply.length > 0 ? coupon_code_apply : coupon_code_arr
+        coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
+        // coupon_code: coupon_code_apply.length > 0 ? coupon_code_apply : coupon_code_arr
         //-------------------------------------------------------------------
     };
 
