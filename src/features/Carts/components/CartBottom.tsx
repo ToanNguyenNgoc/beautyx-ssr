@@ -487,7 +487,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             <li >
                                 <VoucherOrgItem
                                     voucher={voucher}
-                                    org={voucher_org ?? organization}
+                                    org={organization}
                                     showApplyBtn={true}
                                     cartAmount={cartAmount}
                                     services_id={services_id}
