@@ -188,12 +188,15 @@ function SearchResults(props: any) {
                             src={icon.closeBlack} alt=""
                         />
                     </div>
-                    <button
-                        onClick={onOpenFilterOrgs}
-                        className="filter"
-                    >
-                        <img src={icon.filterBlack} alt="" />
-                    </button>
+                    {
+                        valueTab === "3" &&
+                        <button
+                            onClick={onOpenFilterOrgs}
+                            className="filter"
+                        >
+                            <img src={icon.filterBlack} alt="" />
+                        </button>
+                    }
                 </div>
             ) : (
                 <Head prev_url="/homepage" />
