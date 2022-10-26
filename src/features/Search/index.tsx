@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, KeyboardEvent, useState, useContext } from "react"
 import { onErrorImg, useDeviceMobile, useFetch } from "utils"
 import { paramOrgs, paramsProducts, paramsServices } from "params-query"
@@ -28,10 +29,9 @@ interface SearchProps {
 
 function Search(props: SearchProps) {
     const location = useLocation();
-
     const { specialItems } = useContext(AppContext)
     const dispatch = useDispatch()
-    const keysRecommend = useFetch(true,`${API_3RD.API_NODE}/history/view`).response
+    const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
     const { HISTORY } = useSelector((state: any) => state.SEARCH)
     const { key_work, key_work_debounce, onCloseSearchTimeOut } = props
     const IS_MB = useDeviceMobile()
@@ -243,7 +243,7 @@ function Search(props: SearchProps) {
                             <ul className={style.list_special}>
                                 {specialItems.map((item: any, index: number) => (
                                     <li
-                                        onClick={()=>onItemSpecial(item)}
+                                        onClick={() => onItemSpecial(item)}
                                         key={index} className={style.list_special_item}
                                     >
                                         <SpecialItem item={item} />
@@ -259,13 +259,13 @@ function Search(props: SearchProps) {
                                         onClick={onCloseSearch}
                                         key={index} className={style.list_key_item}
                                     >
-                                       <Link 
-                                       className={style.key_item} 
-                                       to={{pathname:`/ket-qua-tim-kiem/?keyword=${item._id}`}} 
-                                       >
+                                        <Link
+                                            className={style.key_item}
+                                            to={{ pathname: `/ket-qua-tim-kiem/?keyword=${item._id}` }}
+                                        >
                                             <img src={icon.searchGray} alt="" />
                                             <span>{item._id}</span>
-                                       </Link>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>
