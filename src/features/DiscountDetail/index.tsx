@@ -44,6 +44,7 @@ import { STATUS } from "redux/status";
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import { postHistoryView } from "user-behavior";
 import { useLocation } from "react-router-dom";
+import { OpenApp } from "components/Layout";
 
 // end
 function DiscountDetail() {
@@ -479,6 +480,12 @@ function DiscountDetail() {
                     </div>
                 </Container>
             )}
+            <OpenApp
+                type="discount"
+                org_id={params.org_id}
+                id={params.dis_id}
+                item_id={params.item_id}
+            />
             <Footer />
         </>
     );

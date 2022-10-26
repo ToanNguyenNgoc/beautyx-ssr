@@ -35,6 +35,15 @@ import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
 import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
+import { AxiosError } from "axios";
+import { OpenVcProp } from "features/Carts/components/CartBottom";
+import RenderRecatpcha, { FieldOtps } from "features/Otp/dialogOtp";
+import { IDataOtp } from "features/Otp/_model";
+import authentication from "api/authApi";
+import { putUser } from "redux/USER/userSlice";
+import { checkPhoneValid } from "utils/phoneUpdate";
+import { ExecException } from "child_process";
+import UserPaymentInfo from "features/Account/components/UserPaymentInfo";
 
 // end
 const date = dayjs();
@@ -83,7 +92,6 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
-    // console.log(servicesBook);
     const branches = org?.branches?.concat(org);
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
@@ -99,7 +107,7 @@ function Booking() {
             quantity: item.quantity,
         };
     });
-    const [seatAmount, SetSeatAmount] = useState(services[0]?.quantity || 1);
+    const [seatAmount, SetSeatAmount] = useState(1);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -123,7 +131,6 @@ function Booking() {
     );
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code)).filter(Boolean)
-    console.log(coupon_codes)
     const params_string = {
         products: [],
         services: services,
@@ -274,6 +281,7 @@ function Booking() {
             if (bookTime.time) {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
+
                         handlePostOrder();
                         // if (chooseE_wall) return 
                         // else {
@@ -283,6 +291,23 @@ function Booking() {
                         //         title: "Bạn Chưa chọn phương thức thanh toán!",
                         //     });
                         // }
+                    }
+                    else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+                        // if (!checkPhoneValid('090000000')) {
+                        setOpenNoti({
+                            open: true,
+                            content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
+                            children: <>
+                                <XButton
+                                    title="Cập nhập"
+                                    onClick={handleOtp}
+                                />
+                                <XButton
+                                    title="Để sau"
+                                    onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                                />
+                            </>
+                        });
                     } else {
                         return handlePostOrder();
                     }
@@ -301,6 +326,62 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
+    //* [ OTP  update telephone number ]
+    const [otp, setOtp] = useState(false);
+    // const [otpCode, setOtpCode] = useState(false);
+    const [dataOtp, setDataOtp] = useState({
+        open: false,
+        telephone: '',
+        code: '',
+        verification_id: ''
+    });
+    const handleOtp = () => {
+        setOtp(true);
+        setOpenNoti({ ...openNoti, open: false })
+    }
+    //* [END]  OTP  update telephone number
+    const [address, setAddress] = useState<any>();
+    const handleUpdatePhone = async (props: IDataOtp) => {
+        console.log(props);
+        try {
+
+            const paramsOb = {
+                "telephone": props.telephone,
+                "code": props.code,
+                "verification_id": props.verification_id
+            }
+            const res = await authentication.putUserProfile(paramsOb);
+            dispatch(putUser({ ...USER, }));
+            if (res) {
+                setDataOtp({
+                    ...dataOtp,
+                    open: false
+                })
+                alert('cập nhập thành công');
+                window.location.reload();
+            }
+        } catch (err) {
+            console.log('err.code', err.response);
+            switch (err.response) {
+                case 400:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng vui lòng thử số khác!'
+                    });
+                    break;
+                default:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
+                    });
+                    break;
+            }
+        }
+    }
     return (
         <>
             <Container>
@@ -323,8 +404,13 @@ function Booking() {
                             {IS_MB === false && org && (
                                 <></>
                             )}
+                            
                         </div>
                         <div className="booking-cnt__right">
+                        {IS_MB&&<UserPaymentInfo
+                                onSetAddressDefault={setAddress}
+                            />}
+                            <br />
                             <div className="booking-cnt__right-org">
                                 <img
                                     src={org?.image_url}
@@ -339,6 +425,27 @@ function Booking() {
                                     </p>
                                 </div>
                             </div>
+                            
+                            {/* {
+                                IS_MB ?
+                                    <div className="booking-cnt__right-org">
+                                        <img
+                                            src={org?.image_url}
+                                            onError={(e) => onErrorImg(e)}
+                                            alt=""
+                                            className="org-avt"
+                                        />
+                                        <div className="book-org-detail">
+                                            <p className="org-name">{org?.name}</p>
+                                            <p className="org-address">
+                                                {org?.full_address}
+                                            </p>
+                                        </div>
+                                    </div> :
+                                    <UserPaymentInfo
+                                        onSetAddressDefault={setAddress}
+                                    />
+                            } */}
                             {
                                 location.state?.vouchers?.length > 0 &&
                                 <>
@@ -574,6 +681,24 @@ function Booking() {
                     setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                 />
             </Container>
+            {
+                otp && <RenderRecatpcha
+                    setOpen={setOtp}
+                    open={otp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                    handleSubmit={handleUpdatePhone}
+                />
+            }
+            {
+                dataOtp.verification_id && <FieldOtps
+                    open={dataOtp.open}
+                    setOpen={setDataOtp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                    handleSubmit={handleUpdatePhone}
+                />
+            }
             <Footer />
         </>
     );

@@ -27,10 +27,10 @@ import ResetPassword from "../features/ResetPassword";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../features/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
-import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 import HomeMap from "../features/HomeMap";
 import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 import HomeCateResult from "../features/HomeResults/HomeCateResult"
+import LadingPage from "pages/LandingPage";
 
 // feature mobile
 //import Calendar from "../featuresMobile/Calendar";
@@ -216,8 +216,8 @@ function RouterConfig(props: any) {
       component: <Booking />
     },
     {
-      path: "/campaign/:name",
-      component: <HomeBannerSearchResult />,
+      path: "/landingpage/:name",
+      component: <LadingPage />,
     },
     // {
     //   path: "/mua-hang",

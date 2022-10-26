@@ -7,11 +7,9 @@ import Slider from "react-slick";
 import icon from "../../../constants/icon";
 import { dealHot } from "../../../constants/img";
 import { IBanner } from "../../../interface/banner";
-import slugify from "../../../utils/formatUrlString";
 import scrollTop from "../../../utils/scrollTop";
 import HomeBannerPopup from "./HomeBannerPopup";
-// import {LazyLoadImage} from 'react-lazy-load-image-component'
-
+import {slugify} from 'utils/formatUrlString'
 import "../../../assets/styles/main.css";
 import "./homeBanner.css";
 // ==== api tracking ====
@@ -123,9 +121,8 @@ export default function HomeBanner() {
                 case "WEB":
                     return openWeb();
                 case "SEARCH_RESULT":
-                    console.log(chooseBanner);
                     return history.push({
-                        pathname: `/campaign/${encodeURIComponent(chooseBanner.name+'')}`,
+                        pathname: `/landingpage/${slugify(chooseBanner.name)}?id=${chooseBanner.id}`,
                         state: chooseBanner,
                     });
                 case "PROMOTION":

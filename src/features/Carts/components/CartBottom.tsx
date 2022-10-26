@@ -163,6 +163,7 @@ function CartBottom(props: any) {
                 });
             }
             else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+            // else if (!checkPhoneValid('090000000')) {
                 setOpenNoti({
                     open: true,
                     content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
@@ -487,7 +488,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             <li >
                                 <VoucherOrgItem
                                     voucher={voucher}
-                                    org={voucher_org ?? organization}
+                                    org={organization}
                                     showApplyBtn={true}
                                     cartAmount={cartAmount}
                                     services_id={services_id}

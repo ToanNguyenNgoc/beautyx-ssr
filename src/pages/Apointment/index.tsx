@@ -13,6 +13,7 @@ import { AppContext } from 'context/AppProvider';
 
 import style from "./app.module.css";
 import AppDetail from './AppDetail';
+import { PopupNotification } from 'components/Notification';
 
 const getDaysInWeek = (dayObj: any) => {
   const days: any = [];
@@ -252,6 +253,13 @@ const AppointmentCardItem = ({ item }: { item: AppointmentTime }) => {
           </div>
         </div>
       </div>
+      <PopupNotification
+        open={openQr} setOpen={setOpenQr}
+        title="Quét mã dành cho cửa hàng"
+        children={<div className={style.app_item_bottom_qr} >
+          <img src={item.qr_link} alt="" />
+        </div>}
+      />
     </>
   )
 }
