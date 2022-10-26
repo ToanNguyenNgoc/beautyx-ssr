@@ -78,7 +78,7 @@ function RouterConfig() {
       component: <ResetPassword />
     },
     {
-      path: '/ket-qua-tim-kiem/',
+      path: '/ket-qua-tim-kiem/:tab',
       component: <SearchResults />
     },
     {

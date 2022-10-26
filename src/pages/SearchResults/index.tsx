@@ -2,16 +2,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import Head from "../../features/Head";
 import HeadTitle from "../../features/HeadTitle";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { AppContext } from "../../context/AppProvider";
-import "./search-results.css";
 import { Container, Tab } from "@mui/material";
-import TabService from "./components/TabService";
 import Footer from "../../features/Footer";
-import TabOrgs from "./components/TabOrgs";
 import icon from "../../constants/icon";
 import { Drawer } from "@mui/material";
-import TabProduct from "./components/TabProduct";
 import { useDispatch, useSelector } from "react-redux";
 import {
     onSetTabResult,
@@ -22,7 +18,7 @@ import {
     onSetEmptyServices,
 } from "../../redux/search/searchResultSlice";
 import useFullScreen from "../../utils/useDeviceMobile";
-import { BackTopButton } from "components/Layout";
+import { BackTopButton, SerProItem } from "components/Layout";
 import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import Map from "../../components/Map";
 import { STATUS } from "../../redux/status";
@@ -32,386 +28,161 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import FilterService from "../../features/Filter/FilterService";
 import { ISortList } from "../../features/Filter/FilterService";
 
+import { useDeviceMobile } from 'utils'
+import { useProducts, useServices } from 'features/Search/hook'
+import { paramsServices, paramsProducts } from 'params-query'
+import style from './search-result.module.css'
+import { ICON } from "constants/icon2";
+import { IServicePromo } from "interface";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { LoadGrid } from "components/LoadingSketion";
+
 function SearchResults(props: any) {
-    const history = useHistory();
-    const { t } = useContext(AppContext);
-    const IS_MB = useFullScreen();
-    const dispatch = useDispatch();
-    const location: any = useLocation();
-    const params: any = extraParamsUrl();
-
-    const searchKey = params?.keyword;
-    const { tab, RE_ORGS, RE_SERVICES, RE_PRODUCTS } = useSelector(
-        (state: any) => state.SEARCH_RESULT
-    );
-    const valueTab = params.tab || tab
-
-    const { FILTER_ORG } = useSelector((state: any) => state.FILTER);
-    const FILTER_ORGS_VAL = {
-        ...FILTER_ORG,
-        tags: FILTER_ORG.tags.join("|"),
-        province_code: FILTER_ORG.province?.province_code,
-        district_code: FILTER_ORG.district?.district_code,
-    };
-    const [openMap, setOpenMap] = useState(false);
-
-    let tabs = [
-        {
-            value: "1",
-            title: t("Mer_de.services"),
-            total: location.state?.servicesTotal,
-        },
-        {
-            value: "2",
-            title: t("Mer_de.products"),
-            total: location.state?.productsTotal,
-        },
-        {
-            value: "3",
-            title: t("my_ser.business"),
-            total: location.state?.orgsTotal,
-        },
-    ];
-    if (location.state) {
-        tabs = tabs.sort((a, b) => b.total - a.total);
+    const params = useParams();
+    const paramsUrl: any = extraParamsUrl()
+    const keyword = paramsUrl.keyword ?? ''
+    const tab = params.tab ?? 'dich-vu'
+    const links = [
+        { link: "dich-vu", title: 'Dịch vụ', icon: ICON.servicePurple, act_icon: ICON.serviceWhite },
+        { link: "san-pham", title: 'Sản phẩm', icon: ICON.barberPurple, act_icon: ICON.barberWhite },
+        { link: "cua-hang", title: 'Dịch vụ', icon: ICON.orgPurple, act_icon: ICON.orgWhite },
+    ]
+    const onSwitchLick = (link: string) => {
+        return {
+            pathname: `/ket-qua-tim-kiem/${link}`,
+            search: `keyword=${keyword}`
+        }
     }
-    //const [valueTab, setValueTab] = useState(params?.tab || "1");
-    const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-        //setValueTab(newValue);
-        // history.push(`/lich-hen?tab=${newValue}`);
-        history.push({
-            pathname: "/ket-qua-tim-kiem/",
-            search: `?keyword=${encodeURIComponent(searchKey)}?tab=${newValue}`,
-        });
-    };
-    const callOrgsByKeyword = () => {
-        if (RE_ORGS.status !== STATUS.SUCCESS) {
-            dispatch(onSetTabResult(tabs[0].value));
-            dispatch(
-                fetchAsyncOrgsByFilter({
-                    keyword: searchKey,
-                    page: 1,
-                })
-            );
-        }
-    };
-    const callServicesByKeyword = () => {
-        if (RE_SERVICES.status !== STATUS.SUCCESS) {
-            dispatch(
-                fetchServicesByFilter({
-                    page: 1,
-                    keyword: searchKey,
-                })
-            );
-        }
-    };
-    const callProductsByKeyword = () => {
-        if (RE_PRODUCTS.status !== STATUS.SUCCESS) {
-            dispatch(
-                fetchProductsByFilter({
-                    page: 1,
-                    keyword: searchKey,
-                })
-            );
-        }
-    };
-
-    useEffect(() => {
-        callOrgsByKeyword();
-        callServicesByKeyword();
-        callProductsByKeyword();
-    }, [searchKey]);
-    const [openFilter, setOpenFilter] = useState(false);
-
-    const handleApplyFilterOrgs = () => {
-        setOpenFilter(false);
-        dispatch(onSetEmptyOrgs());
-        dispatch(
-            fetchAsyncOrgsByFilter({
-                ...FILTER_ORGS_VAL,
-                page: 1,
-                keyword: searchKey,
-            })
-        );
-    };
-
     //
-    const onGoBack = () => {
-        history.goBack();
-        dispatch(onToggleSearchCnt(true));
-    };
-    //open filter orgs mobile
-    const onOpenFilterOrgs = useCallback(() => {
-        if (valueTab === "3") {
-            setOpenFilter(true)
-        }
-    }, [valueTab])
-    //on filter services
-    const { FILTER_PROMO } = useSelector((state: any) => state.FILTER)
-    const handleFilterServices = (sort: ISortList) => {
-        if (FILTER_PROMO.query !== sort.query) {
-            dispatch(onSetEmptyServices())
-            dispatch(
-                fetchServicesByFilter({
-                    page: 1,
-                    keyword: searchKey,
-                    sort: sort.query
-                })
-            );
-        }
-    }
     return (
         <>
-            <HeadTitle
-                title={`${t("Search_result.text_result")} : ${searchKey}`}
-            />
-            {IS_MB ? (
-                // <HeadMobile
-                //     element={
-                //         valueTab === "3" && (
-                //             <button onClick={() => setOpenFilter(true)}>
-                //                 <img src={icon.settingsSliders} alt="" />
-                //             </button>
-                //         )
-                //     }
-                //     onBackFunc={onGoBack}
-                //     title="Kết quả tìm kiếm"
-                // />
-                <div className="flex-row-sp se-re-header-mb">
-                    <div className="flex-row-sp input">
-                        <div className="flex-row">
-                            <img onClick={() => history.push("/homepage")} src={icon.chevronLeft} alt="" />
-                            <span onClick={onGoBack} >{searchKey}</span>
-                        </div>
-                        <img
-                            onClick={onGoBack}
-                            src={icon.closeBlack} alt=""
-                        />
-                    </div>
-                    <button
-                        onClick={onOpenFilterOrgs}
-                        className="filter"
-                    >
-                        <img src={icon.filterBlack} alt="" />
-                    </button>
-                </div>
-            ) : (
-                <Head prev_url="/homepage" />
-            )}
+            <Head />
             <Container>
-                <div className="se-re-cnt">
-                    <TabContext value={valueTab}>
-                        <div className="se-re-cnt__left">
-                            {IS_MB === true ? (
-                                <>
-                                    <TabList
-                                        orientation="horizontal"
-                                        onChange={onChangeTab}
-                                    >
-                                        {tabs.map((item, index) => (
-                                            <Tab
-                                                key={index}
-                                                label={item.title}
-                                                value={item.value}
-                                            />
-                                        ))}
-                                    </TabList>
-                                </>
-                            ) : (
-                                <>
-                                    <TabList
-                                        orientation="vertical"
-                                        onChange={onChangeTab}
-                                    >
-                                        {tabs.map((item, index) => (
-                                            <Tab
-                                                key={index}
-                                                label={item.title}
-                                                value={item.value}
-                                            />
-                                        ))}
-                                    </TabList>
-                                </>
-                            )}
-                            {valueTab === "3" && (
-                                <>
-                                    {IS_MB ? (
-                                        <Drawer
-                                            anchor="bottom"
-                                            open={openFilter}
-                                            onClose={() => setOpenFilter(false)}
-                                        >
-                                            <div className="result-cont__mobile">
-                                                <div className="filter-orgs-wrap">
-                                                    <button
-                                                        onClick={() => setOpenFilter(false)}
-                                                        className="filter-orgs-cnt__head-btn"
-                                                    >
-                                                        <img src={icon.lineGray} alt="" />
-                                                    </button>
-                                                    <FilterOrgs
-                                                        onApplyFilterOrgs={handleApplyFilterOrgs}
-                                                    />
-                                                </div>
-                                            </div>
-                                        </Drawer>
-                                    ) : (
-                                        <FilterOrgs
-                                            onApplyFilterOrgs={
-                                                handleApplyFilterOrgs
-                                            }
-                                        />
-                                    )}
-                                </>
-                            )}
-                        </div>
-                        <div className="se-re-cnt__right">
-                            <div className="cnt-right__top">
-                                <span className="se-re-cnt-title">
-                                    {t("se.search_results_for_keyword")} : "
-                                    {searchKey}"
-                                </span>
-
-                                {valueTab === "3" && (
-                                    <div
-                                        onClick={() => {
-                                            setOpenMap(true);
-                                        }}
-                                        className="open-map"
-                                    >
-                                        <div className="flexX-gap-4">
-                                            <p>{t("pr.map")}</p>
-                                            <img
-                                                src={icon.mapPinRed}
-                                                alt=""
-                                                style={{ width: "16px" }}
-                                            ></img>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                            <TabPanel value="1">
-                                <FilterService
-                                    onChangeFilter={handleFilterServices}
-                                />
-                                <TabService keyword={searchKey} />
-                            </TabPanel>
-                            <TabPanel value="2">
-                                <TabProduct keyword={searchKey} />
-                            </TabPanel>
+                <div className={style.container}>
+                    <div className={style.left_cnt}>
+                        <ul className={style.list_link}>
                             {
-                                // tab === 3 && (data?.orgs.length == 0) && <EmptyRes title={'Không tìm được kết quả phù hợp cho "' + searchKey + '"'} />
-                            }
-                            <TabPanel value="3">
-                                <TabOrgs
-                                    keyword={searchKey}
-                                    FILTER_ORGS_VAL={FILTER_ORGS_VAL}
-                                    changeStyle={true}
-                                />
-                            </TabPanel>
-                        </div>
-                    </TabContext>
-                </div>
-                {/* <div className="se-re-cnt">
-                    <div className="se-re-cnt__left">
-                        <div className="se-re-cnt__left-top">
-                            <ul className="se-re-cnt__left-list">
-                                {tabs.map((item) => (
-                                    <li
-                                        style={
-                                            tab === item.id
-                                                ? {
-                                                      backgroundColor:
-                                                          "var(--purple)",
-                                                      color: "var(--bgWhite)",
-                                                  }
-                                                : {}
-                                        }
-                                        onClick={() => onActiveTab(item)}
-                                        key={item.id}
-                                    >
-                                        {item.title}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        {tab === 3 &&
-                            <>
-                                {
-                                    IS_MB ?
-                                        <Drawer
-                                            anchor="right"
-                                            open={openFilter}
-                                            onClose={() => setOpenFilter(false)}
-                                        >
-                                            <div
-                                                style={{ width: "80vw", height: "100vh" }}
-                                            >
-                                                <FilterOrgs
-                                                    onApplyFilterOrgs={handleApplyFilterOrgs}
-                                                />
+                                links.map(link => (
+                                    <li key={link.link} className={style.link_item_cnt}>
+                                        <Link
+                                            className={tab === link.link ? `${style.link_item} ${style.link_item_act}` : style.link_item}
+                                            to={onSwitchLick(link.link)} >
+                                            <div style={tab === link.link ? {
+                                                backgroundColor: "var(--purple)"
+                                            } : {}} className={style.link_item_icon}>
+                                                <img src={tab === link.link ? link.act_icon : link.icon} alt="" />
                                             </div>
-                                        </Drawer>
-                                        :
-                                        <FilterOrgs
-                                            onApplyFilterOrgs={handleApplyFilterOrgs}
-                                        />
-                                }
-                            </>
-                        }
-                    </div>
-                    <div className="se-re-cnt__right">
-                        <div
-                            style={{
-                                paddingRight: "6px 12px",
-                                paddingBottom: "6px",
-                            }}
-                            className="cnt-right__top"
-                        >
-                            <span className="se-re-cnt-title">
-                                {t("se.search_results_for_keyword")} : "
-                                {searchKey}"
-                            </span>
-
-                            {tab === 3 && (
-                                <div
-                                    onClick={() => {
-                                        setOpenMap(true);
-                                    }}
-                                    className="open-map"
-                                >
-                                    <div className="flexX-gap-4">
-                                        <p>{t("pr.map")}</p>
-                                        <img
-                                            src={icon.mapPinRed}
-                                            alt=""
-                                            style={{ width: "16px" }}
-                                        ></img>
-                                    </div>
-                                </div>
+                                            <span className={style.link_item_text}>{link.title}</span>
+                                        </Link>
+                                    </li>
+                                ))
                             }
-                        </div>
-                        <TabService keyword={searchKey} acTab={tab} />
-                        <TabProduct keyword={searchKey} acTab={tab} />
-                        <TabOrgs
-                            acTab={tab}
-                            keyword={searchKey}
-                            FILTER_ORGS_VAL={FILTER_ORGS_VAL}
-                        />
+                        </ul>
                     </div>
-                </div> */}
+                    <div className={style.right_cnt}>
+                        {tab === "dich-vu" && <TabService keyword={keyword} />}
+                        {tab === "san-pham" && <TabProduct keyword={keyword} />}
+                    </div>
+                </div>
             </Container>
-            {RE_ORGS.orgs.length > 0 && (
-                <Map
-                    data={RE_ORGS.orgs}
-                    open={openMap}
-                    setOpenMap={setOpenMap}
-                />
-            )}
-            <BackTopButton />
             <Footer />
         </>
     );
 }
 
 export default SearchResults;
+
+const TabService = ({ keyword }: { keyword: string }) => {
+    const IS_MB = useDeviceMobile()
+    const PARAMS_SERVICES = {
+        ...paramsServices,
+        "filter[keyword]": keyword
+    }
+    const { services, totalService, onLoadMoreService } = useServices(PARAMS_SERVICES, true)
+    const onViewMore = () => {
+        if (services.length >= 30 && services.length < totalService) {
+            onLoadMoreService()
+        }
+    }
+    return (
+        <div className={style.result_body}>
+            <InfiniteScroll
+                dataLength={services.length}
+                hasMore={true}
+                loader={<></>}
+                next={onViewMore}
+            >
+                <ul className={style.result_list}>
+                    {
+                        services.map((item: IServicePromo) => (
+                            <li key={item.id} className={style.result_list_item}>
+                                <SerProItem
+                                    type="SERVICE"
+                                    item={item}
+                                />
+                            </li>
+                        ))
+                    }
+                </ul>
+                {services.length < totalService && <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />}
+            </InfiniteScroll>
+        </div>
+    )
+}
+const TabProduct = ({ keyword }: { keyword: string }) => {
+    const IS_MB = useDeviceMobile()
+    const PARAMS_PRODUCTS = {
+        ...paramsProducts,
+        "filter[keyword]": keyword
+    }
+    const { products, totalProduct, onLoadMoreProduct } = useProducts(PARAMS_PRODUCTS, true)
+    const onViewMore = () => {
+        if (products.length >= 30 && products.length < totalProduct) {
+            onLoadMoreProduct()
+        }
+    }
+    return (
+        <div className={style.result_body}>
+            <InfiniteScroll
+                dataLength={products.length}
+                hasMore={true}
+                loader={<></>}
+                next={onViewMore}
+            >
+                <ul className={style.result_list}>
+                    {
+                        products.map((item: IServicePromo) => (
+                            <li key={item.id} className={style.result_list_item}>
+                                <SerProItem
+                                    type="SERVICE"
+                                    item={item}
+                                />
+                            </li>
+                        ))
+                    }
+                </ul>
+                {products.length < totalProduct && <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />}
+            </InfiniteScroll>
+        </div>
+    )
+}
+
+
+
+// let tabs = [
+//     {
+//         value: "1",
+//         title: t("Mer_de.services"),
+//         total: location.state?.servicesTotal,
+//     },
+//     {
+//         value: "2",
+//         title: t("Mer_de.products"),
+//         total: location.state?.productsTotal,
+//     },
+//     {
+//         value: "3",
+//         title: t("my_ser.business"),
+//         total: location.state?.orgsTotal,
+//     },
+// ];

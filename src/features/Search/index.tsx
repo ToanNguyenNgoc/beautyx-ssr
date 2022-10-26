@@ -17,7 +17,6 @@ import { addHistory } from "redux/search/searchSlice"
 import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
 import slugify from "utils/formatUrlString"
-import { useLocation } from "react-router-dom";
 
 interface SearchProps {
     key_work?: string,
@@ -27,11 +26,10 @@ interface SearchProps {
 
 
 function Search(props: SearchProps) {
-    const location = useLocation();
 
     const { specialItems } = useContext(AppContext)
     const dispatch = useDispatch()
-    const keysRecommend = useFetch(true,`${API_3RD.API_NODE}/history/view`).response
+    const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
     const { HISTORY } = useSelector((state: any) => state.SEARCH)
     const { key_work, key_work_debounce, onCloseSearchTimeOut } = props
     const IS_MB = useDeviceMobile()
@@ -72,13 +70,19 @@ function Search(props: SearchProps) {
         "limit": IS_MB ? 4 : 6,
         "filter[keyword]": KEY_WORD_DE
     }
-    const { orgs, totalOrg } = useOrgs(PARAM_ORG, true)
-    const { services, totalService } = useServices(PARAM_SERVICE, true)
-    const { products, totalProduct } = useProducts(PARAM_PRODUCT, true)
+    const { orgs, totalOrg } = useOrgs(PARAM_ORG, key_work !== "")
+    const { services, totalService } = useServices(PARAM_SERVICE, key_work !== "")
+    const { products, totalProduct } = useProducts(PARAM_PRODUCT, key_work !== "")
     //
+    const tabs = [
+        { link: "dich-vu", total: totalService },
+        { link: "cua-hang", total: totalOrg },
+        { link: "san-pham", total: totalProduct }
+    ]
+    const tabSort = tabs.sort((a, b) => b.total - a.total);
     const onResult = () => {
         if (KEY_WORD_DE !== "") history.push({
-            pathname: "/ket-qua-tim-kiem/",
+            pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
         })
     }
@@ -128,7 +132,7 @@ function Search(props: SearchProps) {
                     <Link
                         onClick={onCloseSearch}
                         to={{
-                            pathname: "/ket-qua-tim-kiem/",
+                            pathname: `/ket-qua-tim-kiem/${tabSort[0].link}`,
                             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
                         }} className={style.search_head_link} >
                         Tìm kiếm kết quả cho <h3>{KEY_WORD}</h3>
@@ -243,7 +247,7 @@ function Search(props: SearchProps) {
                             <ul className={style.list_special}>
                                 {specialItems.map((item: any, index: number) => (
                                     <li
-                                        onClick={()=>onItemSpecial(item)}
+                                        onClick={() => onItemSpecial(item)}
                                         key={index} className={style.list_special_item}
                                     >
                                         <SpecialItem item={item} />
@@ -259,13 +263,13 @@ function Search(props: SearchProps) {
                                         onClick={onCloseSearch}
                                         key={index} className={style.list_key_item}
                                     >
-                                       <Link 
-                                       className={style.key_item} 
-                                       to={{pathname:`/ket-qua-tim-kiem/?keyword=${item._id}`}} 
-                                       >
+                                        <Link
+                                            className={style.key_item}
+                                            to={{ pathname: `/ket-qua-tim-kiem/dich-vu/?keyword=${item._id}` }}
+                                        >
                                             <img src={icon.searchGray} alt="" />
                                             <span>{item._id}</span>
-                                       </Link>
+                                        </Link>
                                     </li>
                                 ))}
                             </ul>

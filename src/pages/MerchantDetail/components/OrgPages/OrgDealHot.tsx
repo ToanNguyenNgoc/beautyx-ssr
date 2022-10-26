@@ -40,9 +40,9 @@ export function OrgDealHot(props: OrgDealHotProps) {
         )
             history.push(`/cua-hang/${org.subdomain}/thong-tin`)
     }
-    useEffect(() => {
-        onNavigate()
-    }, [discounts, loadDiscounts, services_special, loadServices, products_special, loadProducts])
+    // useEffect(() => {
+    //     onNavigate()
+    // }, [discounts, loadDiscounts, services_special, loadServices, products_special, loadProducts])
 
     return (
         <div className="org-deal-hot">
