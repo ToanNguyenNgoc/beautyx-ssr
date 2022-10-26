@@ -43,10 +43,11 @@ export const formatRouterLinkDiscount = (
     };
     const type = onCheckType();
     const name = discountChild.productable.service_name ?? discountChild.productable.product_name
-    const patchDiscountOb = {
-        pathname: `/chi-tiet-giam-gia/${slugify(name)}`,
-        search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountChild.productable_id}`,
-    }
+    // const patchDiscountOb = {
+    //     pathname: `/chi-tiet-giam-gia/${slugify(name)}`,
+    //     search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountChild.productable_id}`,
+    // }
+    const patchDiscountOb = `/chi-tiet-giam-gia/${type}_${org?.id}_${discountPar.id}_${discountChild.productable_id}_${slugify(name)}`
     return patchDiscountOb
 }
 export const formatRouterLinkOrg = (subdomain: any) => {

@@ -77,7 +77,6 @@ function OrderItem(props: IProp) {
     const handleOpenDetail = () => {
         setOpen(true);
     };
-    console.log(order);
     return (
         <>
             <PopupQr open={openQr} setOpen={setOpenQr} qr={order.qr_link} />
