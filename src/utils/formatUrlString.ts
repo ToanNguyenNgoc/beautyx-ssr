@@ -1,4 +1,4 @@
-export default function slugify(string: any) {
+export function slugify(string: any) {
       const a = `àáäâãåăæąçćčđďèéěėëêęğǵḧìíïîįłḿǹńňñòóöôœøṕŕřßşśšșťțùúüûǘůűūųẃẍÿýźžż·/_,:;`
       const b = `aaaaaaaaacccddeeeeeeegghiiiiilmnnnnooooooprrsssssttuuuuuuuuuwxyyzzz------`
       const p = new RegExp(a.split('').join('| '), 'g')
@@ -20,6 +20,7 @@ export default function slugify(string: any) {
             .replace(/^-+/, '')
             .replace(/-+$/, '')
 }
+export default slugify
 export const formatParam = (url: string) => {
       const params = url.split("?");
       return params

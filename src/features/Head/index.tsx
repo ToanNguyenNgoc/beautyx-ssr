@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState, KeyboardEvent } from "react";
 import img from "constants/img";
 import icon from "constants/icon";
 import { ICON } from "constants/icon2"
@@ -52,11 +52,11 @@ function Head(props: IProps) {
         if (dis === "hide") return refMenu?.current?.classList.remove(style.head_menu_show)
     }
     const onToggleNoti = (dis: "show" | "hide") => {
-        if(IS_MB){
+        if (IS_MB) {
             return refNoti?.current?.classList.toggle(style.head_menu_show)
-        }else{
+        } else {
             if (dis === "show") return refNoti?.current?.classList.add(style.head_menu_show)
-        if (dis === "hide") return refNoti?.current?.classList.remove(style.head_menu_show)
+            if (dis === "hide") return refNoti?.current?.classList.remove(style.head_menu_show)
         }
     }
     const onToggleSearch = (dis: "show" | "hide") => {
@@ -84,6 +84,17 @@ function Head(props: IProps) {
         onSetDebounceKeyword(e.target.value)
         setKey({ ...key, key: e.target.value })
     }
+    const onResult = () => {
+        if (key.key_debounce !== "") history.push({
+            pathname: "/ket-qua-tim-kiem/",
+            search: `?keyword=${encodeURIComponent(key.key_debounce)}`,
+        })
+    }
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
+            onResult()
+        }
+    }
     return (
         <div className={style.container}>
             <Container>
@@ -99,12 +110,13 @@ function Head(props: IProps) {
                                 onClick={() => onToggleSearch("show")}
                                 onBlur={() => onToggleSearch("hide")}
                             >
-                                <img className={style.head_search_icon} alt="" src={icon.searchPurple} />
+                                <img onClick={onResult} className={style.head_search_icon} alt="" src={icon.searchPurple} />
                                 <input
                                     onChange={onChange}
                                     className={style.head_search_input}
                                     type="text" placeholder="Bạn muốn tìm kiếm gì..."
                                     disabled={IS_MB}
+                                    onKeyDown={handleKeyDown}
                                 />
                                 <div ref={refSearch} className={style.head_search}>
                                     <Search
