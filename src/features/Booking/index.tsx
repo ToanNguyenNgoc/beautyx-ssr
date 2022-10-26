@@ -35,6 +35,14 @@ import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
 import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
+import { AxiosError } from "axios";
+import { OpenVcProp } from "features/Carts/components/CartBottom";
+import RenderRecatpcha, { FieldOtps } from "features/Otp/dialogOtp";
+import { IDataOtp } from "features/Otp/_model";
+import authentication from "api/authApi";
+import { putUser } from "redux/USER/userSlice";
+import { checkPhoneValid } from "utils/phoneUpdate";
+import { ExecException } from "child_process";
 
 // end
 const date = dayjs();
@@ -123,7 +131,6 @@ function Booking() {
     );
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code)).filter(Boolean)
-    console.log(coupon_codes)
     const params_string = {
         products: [],
         services: services,
@@ -274,7 +281,8 @@ function Booking() {
             if (bookTime.time) {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
-                        handlePostOrder();
+
+                        // handlePostOrder();
                         // if (chooseE_wall) return 
                         // else {
                         //     setOpenAlertSnack({
@@ -283,6 +291,23 @@ function Booking() {
                         //         title: "Bạn Chưa chọn phương thức thanh toán!",
                         //     });
                         // }
+                    }
+                    // else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+                    if (!checkPhoneValid('090000000')) {
+                        setOpenNoti({
+                            open: true,
+                            content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
+                            children: <>
+                                <XButton
+                                    title="Cập nhập"
+                                    onClick={handleOtp}
+                                />
+                                <XButton
+                                    title="Để sau"
+                                    onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                                />
+                            </>
+                        });
                     } else {
                         return handlePostOrder();
                     }
@@ -301,6 +326,61 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
+    //* [ OTP  update telephone number ]
+    const [otp, setOtp] = useState(false);
+    // const [otpCode, setOtpCode] = useState(false);
+    const [dataOtp, setDataOtp] = useState({
+        open: false,
+        telephone: '',
+        code: '',
+        verification_id: ''
+    });
+    const handleOtp = () => {
+        setOtp(true);
+        setOpenNoti({ ...openNoti, open: false })
+    }
+    //* [END]  OTP  update telephone number
+    const handleUpdatePhone = async (props: IDataOtp) => {
+        console.log(props);
+        try {
+
+            const paramsOb = {
+                "telephone": props.telephone,
+                "code": props.code,
+                "verification_id": props.verification_id
+            }
+            const res = await authentication.putUserProfile(paramsOb);
+            dispatch(putUser({ ...USER, }));
+            if (res) {
+                setDataOtp({
+                    ...dataOtp,
+                    open: false
+                })
+                alert('cập nhập thành công');
+                window.location.reload();
+            }
+        } catch (err) {
+            console.log('err.code', err.response);
+            switch (err.response) {
+                case 400:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng vui lòng thử số khác!'
+                    });
+                    break;
+                default:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
+                    });
+                    break;
+            }
+        }
+    }
     return (
         <>
             <Container>
@@ -574,6 +654,24 @@ function Booking() {
                     setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                 />
             </Container>
+            {
+                otp && <RenderRecatpcha
+                    setOpen={setOtp}
+                    open={otp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                    handleSubmit={handleUpdatePhone}
+                />
+            }
+            {
+                dataOtp.verification_id && <FieldOtps
+                    open={dataOtp.open}
+                    setOpen={setDataOtp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                    handleSubmit={handleUpdatePhone}
+                />
+            }
             <Footer />
         </>
     );

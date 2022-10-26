@@ -93,7 +93,7 @@ function Review(props: IProps) {
     const values = pickBy(valuesStr, identity);
 
     const handlePostComment = () => {
-        if (comment.body.length > 0 && user) {
+        if (comment.body.length >= 0 && user) {
             dispatch(clearPrevState());
             switch (commentable_type) {
                 case "ORGANIZATION":
