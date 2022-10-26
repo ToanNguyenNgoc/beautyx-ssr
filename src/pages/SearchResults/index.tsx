@@ -45,7 +45,7 @@ function SearchResults(props: any) {
     const links = [
         { link: "dich-vu", title: 'Dịch vụ', icon: ICON.servicePurple, act_icon: ICON.serviceWhite },
         { link: "san-pham", title: 'Sản phẩm', icon: ICON.barberPurple, act_icon: ICON.barberWhite },
-        { link: "cua-hang", title: 'Dịch vụ', icon: ICON.orgPurple, act_icon: ICON.orgWhite },
+        { link: "cua-hang", title: 'Cửa hàng', icon: ICON.orgPurple, act_icon: ICON.orgWhite },
     ]
     const onSwitchLick = (link: string) => {
         return {
