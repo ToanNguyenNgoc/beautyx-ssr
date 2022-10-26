@@ -43,6 +43,7 @@ import authentication from "api/authApi";
 import { putUser } from "redux/USER/userSlice";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import { ExecException } from "child_process";
+import UserPaymentInfo from "features/Account/components/UserPaymentInfo";
 
 // end
 const date = dayjs();
@@ -91,7 +92,6 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
-    // console.log(servicesBook);
     const branches = org?.branches?.concat(org);
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
@@ -107,7 +107,7 @@ function Booking() {
             quantity: item.quantity,
         };
     });
-    const [seatAmount, SetSeatAmount] = useState(services[0]?.quantity || 1);
+    const [seatAmount, SetSeatAmount] = useState(1);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -282,7 +282,7 @@ function Booking() {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
 
-                        // handlePostOrder();
+                        handlePostOrder();
                         // if (chooseE_wall) return 
                         // else {
                         //     setOpenAlertSnack({
@@ -292,8 +292,8 @@ function Booking() {
                         //     });
                         // }
                     }
-                    // else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
-                    if (!checkPhoneValid('090000000')) {
+                    else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+                        // if (!checkPhoneValid('090000000')) {
                         setOpenNoti({
                             open: true,
                             content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
@@ -340,6 +340,7 @@ function Booking() {
         setOpenNoti({ ...openNoti, open: false })
     }
     //* [END]  OTP  update telephone number
+    const [address, setAddress] = useState<any>();
     const handleUpdatePhone = async (props: IDataOtp) => {
         console.log(props);
         try {
@@ -403,8 +404,13 @@ function Booking() {
                             {IS_MB === false && org && (
                                 <></>
                             )}
+                            
                         </div>
                         <div className="booking-cnt__right">
+                        {IS_MB&&<UserPaymentInfo
+                                onSetAddressDefault={setAddress}
+                            />}
+                            <br />
                             <div className="booking-cnt__right-org">
                                 <img
                                     src={org?.image_url}
@@ -419,6 +425,27 @@ function Booking() {
                                     </p>
                                 </div>
                             </div>
+                            
+                            {/* {
+                                IS_MB ?
+                                    <div className="booking-cnt__right-org">
+                                        <img
+                                            src={org?.image_url}
+                                            onError={(e) => onErrorImg(e)}
+                                            alt=""
+                                            className="org-avt"
+                                        />
+                                        <div className="book-org-detail">
+                                            <p className="org-name">{org?.name}</p>
+                                            <p className="org-address">
+                                                {org?.full_address}
+                                            </p>
+                                        </div>
+                                    </div> :
+                                    <UserPaymentInfo
+                                        onSetAddressDefault={setAddress}
+                                    />
+                            } */}
                             {
                                 location.state?.vouchers?.length > 0 &&
                                 <>

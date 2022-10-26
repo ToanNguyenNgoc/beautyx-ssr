@@ -198,7 +198,7 @@ function Head(props: IProps) {
                                 className={style.head_top_right_btn}
                             >
                                 <span className={style.head_top_right_badge}>
-                                    {cartQuantity >= 9 ? "9+" : cartQuantity}
+                                    {cartQuantity == 0 ? '' : cartQuantity >= 9 ? "9+" : cartQuantity}
                                 </span>
                                 <img src={icon.cartPurpleBold} alt="" />
                             </button>

@@ -40,7 +40,7 @@ function Review(props: IProps) {
     } = props;
     const { t } = useContext(AppContext);
     const USER = useSelector((state: any) => state.USER);
-    const {comment} = useSelector((state: IStore) => state.COMMENT_MEDIA)
+    const { comment } = useSelector((state: IStore) => state.COMMENT_MEDIA)
     const SERVICE = useSelector((state: any) => state.SERVICE.SERVICE.service);
     const user = USER.USER;
     const dispatch = useDispatch();
@@ -84,8 +84,8 @@ function Review(props: IProps) {
         page: 1,
         org_id: id,
         type: commentable_type,
-        body: comment.body,
-        rate:comment.rate,
+        body: comment.body.length > 0 ? comment.body : '‭',
+        rate: comment.rate,
         media_ids: comment.media_ids.length > 0 && comment.media_ids,
         id: detail_id,
         image_url: comment.image_url
@@ -93,7 +93,7 @@ function Review(props: IProps) {
     const values = pickBy(valuesStr, identity);
 
     const handlePostComment = () => {
-        if (comment.body.length >= 0 && user) {
+        if ((comment.body.length > 0 || comment.image_url.length > 0) && user) {
             dispatch(clearPrevState());
             switch (commentable_type) {
                 case "ORGANIZATION":
