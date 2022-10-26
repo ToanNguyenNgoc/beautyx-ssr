@@ -4,7 +4,7 @@ import { AUTH_HEADER } from "utils/authHeader"
 
 interface PostHistoryViewProps {
     id: string | number,
-    organization_id: number,
+    organization_id: number | string,
     type: "SERVICE" | "PRODUCT" | "DISCOUNT"
 }
 export async function postHistoryView(params: PostHistoryViewProps) {

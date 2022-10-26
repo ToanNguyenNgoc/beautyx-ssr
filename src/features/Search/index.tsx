@@ -94,7 +94,7 @@ function Search(props: SearchProps) {
     }
     const onItemSpecial = (item: any) => {
         if (item.type === "DISCOUNT") return history.push(`/chi-tiet-giam-gia/${slugify(item.name)}?type=service&org_id=${item.organization_id}&dis_id=${item.id}&item_id=${item.item_id}`);
-        if (item.type === "SERVICE") return history.push(`/dich-vu/${slugify(item.name)}?id=${item.id}&org=${item.organization_id}`);
+        if (item.type === "SERVICE") return history.push(`/dich-vu/${item.id}_${item.organization_id}_${slugify(item.name)}`);
     }
     return (
         <div className={style.container}>

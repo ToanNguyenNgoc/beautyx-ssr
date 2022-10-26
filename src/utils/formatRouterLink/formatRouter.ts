@@ -8,7 +8,8 @@ export const formatRouterLinkProduct = (
     org_id: number | string,
     name: string
 ) => {
-    const pathname = `/san-pham/${slugify(name)}?id=${id}&org=${org_id}`
+    // const pathname = `/san-pham/${slugify(name)}?id=${id}&org=${org_id}`
+    const pathname = `/san-pham/${id}_${org_id}_${slugify(name)}`
     return pathname
 }
 export const formatRouterLinkService = (
@@ -16,7 +17,8 @@ export const formatRouterLinkService = (
     org_id: number | string,
     name: string
 ) => {
-    const pathname = `/dich-vu/${slugify(name)}?id=${id}&org=${org_id}`
+    // const pathname = `/dich-vu/${slugify(name)}?id=${id}&org=${org_id}`
+    const pathname = `/dich-vu/${id}_${org_id}_${slugify(name)}`
     return pathname
 }
 export const formatRouterLinkDiscount = (
@@ -40,11 +42,9 @@ export const formatRouterLinkDiscount = (
         return type;
     };
     const type = onCheckType();
+    const name = discountChild.productable.service_name ?? discountChild.productable.product_name
     const patchDiscountOb = {
-        pathname: `/chi-tiet-giam-gia/${slugify(
-            discountChild.productable.service_name ||
-            discountChild.productable.product_name
-        )}`,
+        pathname: `/chi-tiet-giam-gia/${slugify(name)}`,
         search: `type=${type}&org_id=${org?.id}&dis_id=${discountPar?.id}&item_id=${discountChild.productable_id}`,
     }
     return patchDiscountOb
