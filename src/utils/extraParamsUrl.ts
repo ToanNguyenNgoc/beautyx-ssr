@@ -1,5 +1,5 @@
 export function extraParamsUrl() {
-    const string = window.location.search;
+    const string = decodeURIComponent(window.location.search);
     if (string) {
         const queryString = string.split("?");
         const result =
