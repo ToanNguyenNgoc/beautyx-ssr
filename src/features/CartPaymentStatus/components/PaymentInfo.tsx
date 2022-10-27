@@ -9,7 +9,7 @@ import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
 import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
 import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
 import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
-import {doPostMakePaymentMessageMB} from '../../../rootComponents/mb/doPostMessageMBbank';
+import { doPostMakePaymentMessageMB } from '../../../rootComponents/mb/doPostMessageMBbank';
 import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 // import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
@@ -29,7 +29,7 @@ function PaymentInfo(props: any) {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const deepLink = EX_PAYMENT?.deepLink;
     const EXTRA_PAYMENT_ID = EX_PAYMENT?.EXTRA_PAYMENT_ID;
-    const openPaymentPlatformTiki = () =>{
+    const openPaymentPlatformTiki = () => {
         doPostMakePaymentMessageTiki({
             TYPE: "ORDER",
             params: EXTRA_PAYMENT_ID
@@ -45,7 +45,7 @@ function PaymentInfo(props: any) {
                     return openPaymentPlatformTiki()
                 case FLAT_FORM_TYPE.MB:
                     // return
-                    return  doPostMakePaymentMessageMB(EX_PAYMENT?.EXTRA_PAYMENT_DATA)
+                    return doPostMakePaymentMessageMB(EX_PAYMENT?.EXTRA_PAYMENT_DATA)
                 default:
                     const newWindow = window.open(`${deepLink}`, '_blank', 'noopener,noreferrer');
                     if (newWindow) newWindow.opener = null
@@ -68,9 +68,9 @@ function PaymentInfo(props: any) {
         history.push('/home')
     }
     // const response =FLAT_FORM_TYPE.MB?useGetMessage():{'flatForm': FLAT_FORM};
-    
+
     // useMemo(() => {
-        // alert(JSON.stringify(response))
+    // alert(JSON.stringify(response))
     // }, [response])
     const onCheckStatus = () => {
         switch (data.orderStatus) {
@@ -157,6 +157,7 @@ function PaymentInfo(props: any) {
                 break
         }
     }
+    console.log(orderItems);
     return (
         <>
             <div className="pm-status-user">
@@ -164,7 +165,7 @@ function PaymentInfo(props: any) {
                 <UserPaymentInfo disableEdit={true} />
                 <div className="pm-status-user__detail">
                     <div className="flex-row org">
-                        <img src={organization?.image_url} onError={(e)=>onErrorImg(e)} alt="" />
+                        <img src={organization?.image_url} onError={(e) => onErrorImg(e)} alt="" />
                         <span>{organization?.name}</span>
                     </div>
                     <div className="pm-status-user__list">
@@ -175,7 +176,7 @@ function PaymentInfo(props: any) {
                                         className='pm-order-item'
                                         key={index}
                                     >
-                                        <img className='pm-order-item__img' src={item.cart_item.image_url??""} onError={(e)=>onErrorImg(e)} alt="" />
+                                        <img className='pm-order-item__img' src={item.cart_item.image_url ?? ""} onError={(e) => onErrorImg(e)} alt="" />
                                         <div className="pm-order-item__de">
                                             <span className="pm-order-item__name">
                                                 {item.name}
@@ -185,8 +186,22 @@ function PaymentInfo(props: any) {
                                                     {
                                                         item.discount ?
                                                             <>
-                                                                <span>{formatPrice(item.price_discount)}đ</span>
-                                                                <span style={{textDecoration: "line-through",marginLeft: "5px",fontSize: "smaller"}}>{formatPrice(item.price)}đ</span>
+                                                                <span>
+                                                                    {
+                                                                        item.quantity === 1
+                                                                            ?
+                                                                            formatPrice(item.price_discount)
+                                                                            :
+                                                                            (
+                                                                                item.discount.discount_type === "FINAL_PRICE"
+                                                                                    ?
+                                                                                    formatPrice(item.price_discount * item.quantity)
+                                                                                    :
+                                                                                    formatPrice((item.price * (item.quantity - 1)) + item.price_discount)
+                                                                            )
+                                                                    }đ
+                                                                </span>
+                                                                <span style={{ textDecoration: "line-through", marginLeft: "5px", fontSize: "smaller" }}>{formatPrice(item.price * item.quantity)}đ</span>
                                                             </>
                                                             :
                                                             <span>{" "}{formatPrice(item.price)}</span>
