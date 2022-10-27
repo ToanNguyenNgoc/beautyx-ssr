@@ -1,14 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { extraParamsUrl } from "../../../utils/extraParamsUrl";
 import { STATUS } from "../../../redux/status";
 import { Service } from "../../../interface/service";
 import { fetchAsyncServicesRec } from "../../../redux/org_services/serviceSlice";
 import { AppContext } from "../../../context/AppProvider";
 import { SerProItem } from "components/Layout";
+import { useGetParamUrl } from "utils";
 
 function DetailRecommend(props: any) {
-    const params: any = extraParamsUrl();
+    const paramsArr = useGetParamUrl();
+    const params = {
+        org: paramsArr[1] ? paramsArr[1] : 1,
+        id: paramsArr[0] ?? 1
+
+    }
     const { org } = props;
     const dispatch = useDispatch();
     const { SERVICE, SERVICES_REC } = useSelector(
@@ -40,22 +45,22 @@ function DetailRecommend(props: any) {
     }, [SERVICE.status]);
     return (
         <div className="detail-recommend">
-            {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).length>0&&
-            <>
-            <div className="detail-recommend__title">{`${t(
-                "detail_item.similar_service"
-            )}`}</div>
-            <ul className="detail-recommend__list">
-                {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).map((item: Service, index: number) => (
-                    <li key={index}>
-                        <SerProItem 
-                            item={item} org={org} 
-                            type="SERVICE"
-                        />
-                    </li>
-                ))}
-            </ul>
-            </>
+            {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).length > 0 &&
+                <>
+                    <div className="detail-recommend__title">{`${t(
+                        "detail_item.similar_service"
+                    )}`}</div>
+                    <ul className="detail-recommend__list">
+                        {SERVICES_REC.services.filter((e: any) => e.id !== curService.id).map((item: Service, index: number) => (
+                            <li key={index}>
+                                <SerProItem
+                                    item={item} org={org}
+                                    type="SERVICE"
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                </>
             }
         </div>
     );

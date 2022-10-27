@@ -1,29 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGetParamUrl } from 'utils';
 // import { VoucherOrgItem } from '../../features/Carts/components/CartGroupItem';
 import { IDiscountPar } from '../../interface/discount';
 import IStore from '../../interface/IStore';
 import { IOrganization } from '../../interface/organization';
 import { fetchAsyncOrgDiscounts } from '../../redux/org_discounts/orgDiscountsSlice';
 import { IS_VOUCHER } from '../../utils/cart/checkConditionVoucher';
-import { extraParamsUrl } from '../../utils/extraParamsUrl';
+// import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import { EX_VOUCHER_TITLE_DISCOUNT } from '../../utils/formatRouterLink/fileType';
 import './style.css'
 
 
 function DetailOrgVoucher({ org }: { org: IOrganization }) {
+    const paramsArr = useGetParamUrl();
+    const params = {
+        org: paramsArr[1] ? paramsArr[1] : 1,
+        id: paramsArr[0] ?? 1
 
+    }
     const dispatch = useDispatch();
-    const params: any = extraParamsUrl();
+    // const params: any = extraParamsUrl();
     const { org_id, DISCOUNTS } = useSelector((state: IStore) => state.ORG_DISCOUNTS)
     const { discounts } = DISCOUNTS
     const callOrgDiscounts = () => {
-        if (params.org && parseInt(params.org) !== org_id) {
-            dispatch(fetchAsyncOrgDiscounts({
-                org_id: params.org
-            }))
-        }
+        dispatch(fetchAsyncOrgDiscounts({
+            org_id: params.org
+        }))
     }
     const vouchers = IS_VOUCHER(discounts)
     useEffect(() => {

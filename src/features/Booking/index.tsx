@@ -131,12 +131,14 @@ function Booking() {
     );
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code)).filter(Boolean)
+    //[FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     const params_string = {
         products: [],
         services: services,
         treatment_combo: [],
         payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
         coupon_code: coupon_codes.length > 0 ? coupon_codes : [],
+        // coupon_code: VOUCHER_APPLY.length > 0 ? VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code).filter(Boolean) : listCouponCode,
         description: "",
         branch_id: bookTime.branch_id,
     };
@@ -563,7 +565,7 @@ function Booking() {
                             <div className="flex-row-sp booking-cnt__right-time">
                                 <div className="book-seats-amount">
                                     <span className="book-section-title">
-                                        Số lượng người
+                                        Số người sử dụng dịch vụ
                                     </span>
                                     <div className="seats_amount-cnt">
                                         <button

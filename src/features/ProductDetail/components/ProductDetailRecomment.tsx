@@ -6,7 +6,7 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsynProductRecomment } from "redux/org_products/productSlice";
 import { STATUS } from "redux/status";
-import { extraParamsUrl } from "utils/extraParamsUrl";
+import { useGetParamUrl } from "utils";
 // import { AppContext } from "../../../context/AppProvider";
 // import { IOrganization } from "../../../interface/organization";
 // import { Product } from "../../../interface/product";
@@ -19,7 +19,11 @@ interface IProps {
     org: IOrganization;
 }
 export default function ProductDetailRecomment(props: IProps) {
-    const params: any = extraParamsUrl();
+    const paramsArr = useGetParamUrl();
+    const params = {
+        org: paramsArr[1] ? paramsArr[1] : 1,
+        id: paramsArr[0] ?? 1
+    }
     const { t } = useContext(AppContext);
     const { org } = props;
     const dispatch = useDispatch();
