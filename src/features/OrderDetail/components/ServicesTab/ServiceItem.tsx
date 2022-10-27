@@ -16,6 +16,7 @@ import tracking from "../../../../api/trackApi";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
 import { AlertSnack } from "components/Layout";
+import { formatRouterLinkService } from "utils/formatRouterLink/formatRouter";
 // end
 function ServiceItem(props: any) {
     const { t } = useContext(AppContext);
@@ -93,17 +94,24 @@ function ServiceItem(props: any) {
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (IS_DISCOUNT) {
             const type = onCheckType();
+            // history.push({
+            //     pathname: `/chi-tiet-giam-gia/${slugify(
+            //         IS_DISCOUNT.productable.service_name ||
+            //         IS_DISCOUNT.productable.product_name
+            //     )}`,
+            //     search: `type=${type}&org_id=${org?.id}&dis_id=${IS_DISCOUNT?.discount_id}&item_id=${IS_DISCOUNT.productable_id}`,
+            // });
             history.push({
-                pathname: `/chi-tiet-giam-gia/${slugify(
+                pathname: `/chi-tiet-giam-gia/${type}_${org.id}_${IS_DISCOUNT.discount_id}_${IS_DISCOUNT.productable_id}_${slugify(
                     IS_DISCOUNT.productable.service_name ||
                     IS_DISCOUNT.productable.product_name
                 )}`,
-                search: `type=${type}&org_id=${org?.id}&dis_id=${IS_DISCOUNT?.discount_id}&item_id=${IS_DISCOUNT.productable_id}`,
             });
         } else {
             history.push({
-                pathname: `/dich-vu/${slugify(service?.service_name)}`,
-                search: `id=${service.id}?org=${org?.id}`,
+                // pathname: `/dich-vu/${slugify(service?.service_name)}`,
+                // search: `id=${service.id}?org=${org?.id}`,
+                pathname: formatRouterLinkService(service.id, org.id, service.service_name)
             });
         }
     };

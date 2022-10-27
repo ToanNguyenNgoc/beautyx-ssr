@@ -252,7 +252,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     ) {
         applyCondition = true;
     }
-
+    
     const handleApplyVoucher = () => {
         if (active) {
             dispatch(onCancelApplyVoucher(voucher.id))

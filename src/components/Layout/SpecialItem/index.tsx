@@ -7,9 +7,9 @@ import slugify from 'utils/formatUrlString';
 
 export function SpecialItem({ item }: { item: ISpecialItem }) {
     let link = ``
-    if (item.type === "SERVICE") link = `/dich-vu/${slugify(item.name)}?id=${item.id}&org=${item.organization_id}`
+    if (item.type === "SERVICE") link = `/dich-vu/${item.id}_${item.organization_id}_${slugify(item.name)}`
     if (item.type === "DISCOUNT") {
-        link = `/chi-tiet-giam-gia/${slugify(item.name)}?type=service&org_id=${item.organization_id}&dis_id=${item.id}&item_id=${item.item_id}`
+        link = `/chi-tiet-giam-gia/service_${item.organization_id}_${item.id}_${item.item_id}_${slugify(item.name)}`
     }
     return (
         <Link to={{ pathname: link }} >

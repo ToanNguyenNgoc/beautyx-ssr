@@ -11,6 +11,7 @@ import onErrorImg from "../../../../utils/errorImg";
 import { formatAddCart } from "../../../../utils/cart/formatAddCart";
 import { fetchAsyncProductDetail } from '../../../../redux/org_products/productSlice'
 import { Alert, Snackbar } from "@mui/material";
+import {formatRouterLinkProduct} from 'utils/formatRouterLink/formatRouter'
 
 function ProductItem(props: any) {
   const { productItem, org } = props;
@@ -25,9 +26,12 @@ function ProductItem(props: any) {
   })
   const handleDetailProduct = () => {
     scrollTop();
+    // history.push({
+    //   pathname: `/san-pham/${slugify(product?.product_name)}`,
+    //   search: `id=${product?.id}&org=${org?.id}`,
+    // })
     history.push({
-      pathname: `/san-pham/${slugify(product?.product_name)}`,
-      search: `id=${product?.id}&org=${org?.id}`,
+      pathname:formatRouterLinkProduct(product.id, org.id, product.product_name)
     })
   };
   // add cart

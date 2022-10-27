@@ -53,7 +53,7 @@ function TabService(props: any) {
             merchant: service.org_name
         })
         const pathServiceOb = formatRouterLinkService(
-            service.service_id, service.org_id, service.name
+            service.service_id, service.org_id, service.service_name
         );
         history.push(pathServiceOb);
     };

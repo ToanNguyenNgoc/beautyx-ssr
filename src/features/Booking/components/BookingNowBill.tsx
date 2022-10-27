@@ -60,6 +60,8 @@ function BookingNowBill(props: BookingNowBillProps) {
     const vouchers_sub_total: IDiscountPar[] = VOUCHER_APPLY.filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
     const subTotalVouchers = vouchers_sub_total.length > 0 ?
         vouchers_sub_total.map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre) : 0
+
+     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     return (
         <>
             {
@@ -80,13 +82,16 @@ function BookingNowBill(props: BookingNowBillProps) {
                     <span className="booking_calc_item_right">{formatPrice(total)}đ</span>
                 </div>
                 {
-                    vouchers_calc.map((item: IDiscountPar, index: number) => (
-                        <div key={index} className="booking_calc_item">
-                            <span className="booking_calc_item_left">{item.description}</span>
+                    // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
+                    // VOUCHER_APPLY.length === 0 &&
+                    //-------------------------------------------------------------------
+                    discounts.map((item:number) => (
+                        <div key={item} className="booking_calc_item">
+                            <span className="booking_calc_item_left">Giảm giá</span>
                             <span
                                 style={{ color: "var(--text-orange)" }}
                                 className="booking_calc_item_right">
-                                -{formatPrice(item.discount_value)}đ
+                                -{formatPrice(item)}đ
                             </span>
                         </div>
                     ))
@@ -106,6 +111,15 @@ function BookingNowBill(props: BookingNowBillProps) {
                 <div className="booking_calc_item">
                     <span className="booking_calc_item_left">Thanh toán</span>
                     <span style={{ fontWeight: "700" }} className="booking_calc_item_right">
+                        {/* [FIX]: Temple fix apply multi coupon code follow MYSPA Manager---- */}
+
+                        {/* {
+                            VOUCHER_APPLY.length > 0 ?
+                            formatPrice(total - subTotalVouchers)
+                            :
+                            formatPrice(total - totalDiscounts - totalVouchers - subTotalVouchers)
+                        } */}
+
                         {formatPrice(total - totalDiscounts - totalVouchers - subTotalVouchers)}đ
                     </span>
                 </div>

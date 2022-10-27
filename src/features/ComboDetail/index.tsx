@@ -32,11 +32,17 @@ import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import ComboDetailDesc from "./components/ComboDetailDesc";
+import { useGetParamUrl } from "utils";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile();
-    const params: any = shareLink();
+    const paramsUrl: any = shareLink();
+    const paramsArr = useGetParamUrl();
+    const params = {
+        org_id: paramsUrl?.org_id ?? paramsArr[1],
+        id: paramsUrl?.id ?? paramsArr[0]
+    }
     const dispatch = useDispatch();
     const ORG = useSelector((state: any) => state.ORG);
     const { COMBO, COMMENTS } = useSelector((state: any) => state.COMBO);
@@ -57,7 +63,6 @@ function ComboDetail() {
 
     const org = ORG.org;
     const combo = COMBO.combo;
-    console.log("combo", combo);
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();
@@ -180,7 +185,7 @@ function ComboDetail() {
                                             className="service-detail__description"
                                         >
                                             {combo?.products?.length === 0 &&
-                                            combo?.services?.length === 0 ? (
+                                                combo?.services?.length === 0 ? (
                                                 <p>{`${t(
                                                     "detail_item.updating"
                                                 )}`}</p>
@@ -211,7 +216,7 @@ function ComboDetail() {
                                                 }
                                             />
                                             {COMMENTS.comments &&
-                                            COMMENTS.comments.length >= 8 ? (
+                                                COMMENTS.comments.length >= 8 ? (
                                                 <div
                                                     style={{
                                                         justifyContent:
