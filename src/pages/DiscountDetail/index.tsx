@@ -43,6 +43,8 @@ import { STATUS } from "redux/status";
 import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import { postHistoryView } from "user-behavior";
 import { useLocation } from "react-router-dom";
+import { OpenApp } from "components/Layout";
+import { useGetParamUrl } from "utils";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
 
 // end
@@ -64,8 +66,15 @@ function DiscountDetail() {
     };
 
     const dispatch = useDispatch();
-    const params: any = extraParamsUrl();
-    const TYPE = params.type;
+    const paramsUrl: any = extraParamsUrl();
+    const paramsArr = useGetParamUrl()
+    const params = {
+        type: paramsUrl?.type ?? paramsArr[0],
+        dis_id: paramsUrl?.dis_id ?? paramsArr[2],
+        item_id: paramsUrl?.item_id ?? paramsArr[3],
+        org_id: paramsUrl?.org_id ?? paramsArr[1]
+    }
+    const TYPE = params?.type
     const ORG = useSelector((state: any) => state.ORG);
     const org = ORG.org;
 
@@ -85,7 +94,7 @@ function DiscountDetail() {
     }
     const values = {
         // org_id: params.org_id,
-        id: params.dis_id,
+        id: params?.dis_id
     };
 
     const callDiscountDetail = () => {
@@ -479,6 +488,12 @@ function DiscountDetail() {
                     </div>
                 </Container>
             )}
+            <OpenApp
+                type="discount"
+                org_id={params.org_id}
+                id={params.dis_id}
+                item_id={params.item_id}
+            />
             <Footer />
         </>
     );

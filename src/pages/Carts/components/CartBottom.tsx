@@ -82,6 +82,7 @@ function CartBottom(props: any) {
     );
 
     const coupon_code_arr = listCouponCode.length > 0 ? listCouponCode : []
+    // const coupon_code_apply = VOUCHER_APPLY.map((item: IDiscountPar) => item.coupon_code).filter(Boolean)
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
@@ -93,7 +94,10 @@ function CartBottom(props: any) {
         products: products_id,
         services: services_id,
         treatment_combo: combos_id,
+        // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
         coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
+        // coupon_code: coupon_code_apply.length > 0 ? coupon_code_apply : coupon_code_arr
+        //-------------------------------------------------------------------
     };
 
     async function handlePostOrder() {
@@ -216,7 +220,7 @@ function CartBottom(props: any) {
     let discountVoucherTotal = 0
     if (VOUCHER_APPLY.length > 0) {
         discountVoucherTotal = vouchersCal
-            .map((i: IDiscountPar) => i.discount_value) 
+            .map((i: IDiscountPar) => i.discount_value)
             .reduce((pre: number, cur: number) => pre + cur)
     }
     const handleOtp = () => {
@@ -252,6 +256,9 @@ function CartBottom(props: any) {
             });
         }
     }
+    // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
+    // const discountAmount = VOUCHER_APPLY.length === 0 ? DATA_CART.cartAmountDiscount : 0
+    //-------------------------------------------------------------------
     return (
         <>
             <InputVoucher
@@ -303,18 +310,22 @@ function CartBottom(props: any) {
                                         {formatPrice(DATA_CART.cartAmount)}đ
                                     </span>
                                 </div>
-                                {listDiscount.filter(Boolean).length > 0 && (
-                                    <div className="flex-row-sp re-cart-bottom__cal-item">
-                                        <span>{`${t("pm.sale")}`}</span>
-                                        <span>
-                                            -
-                                            {formatPrice(
-                                                DATA_CART.cartAmountDiscount
-                                            )}
-                                            đ
-                                        </span>
-                                    </div>
-                                )}
+                                {
+                                    // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
+                                    // VOUCHER_APPLY.length === 0 &&
+                                    //-------------------------------------------------------------------
+                                    listDiscount.filter(Boolean).length > 0 && (
+                                        <div className="flex-row-sp re-cart-bottom__cal-item">
+                                            <span>{`${t("pm.sale")}`}</span>
+                                            <span>
+                                                -
+                                                {formatPrice(
+                                                    DATA_CART.cartAmountDiscount
+                                                )}
+                                                đ
+                                            </span>
+                                        </div>
+                                    )}
                                 {
                                     VOUCHER_APPLY.length > 0 &&
                                     vouchersCal
@@ -487,7 +498,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             <li >
                                 <VoucherOrgItem
                                     voucher={voucher}
-                                    org={voucher_org ?? organization}
+                                    org={organization}
                                     showApplyBtn={true}
                                     cartAmount={cartAmount}
                                     services_id={services_id}

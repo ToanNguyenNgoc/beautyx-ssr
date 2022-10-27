@@ -90,3 +90,7 @@
 .pr-result-cnt__list-item .item-detail__bot .right-item-last{
     margin-left: 18px;
 }
+.pr-result-cnt__list li{
+    padding: 8px 0px;
+    height: 116px;
+}

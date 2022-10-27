@@ -123,10 +123,8 @@ export default function HomeBanner() {
                 case "WEB":
                     return openWeb();
                 case "SEARCH_RESULT":
-                    console.log(chooseBanner);
                     return history.push({
-                        pathname: `/campaign/${encodeURIComponent(chooseBanner.name + '')}`,
-                        state: chooseBanner,
+                        pathname: `/landingpage/${slugify(chooseBanner.name)}?id=${chooseBanner.id}`,
                     });
                 case "PROMOTION":
                     return console.log("PROMOTION");

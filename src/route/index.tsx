@@ -21,7 +21,6 @@ import ResetPassword from "../pages/ResetPassword";
 import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../pages/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
-import HomeBannerSearchResult from "../features/HomePage/HomeBanner/homeSearchReasult";
 import HomeMap from "../features/HomeMap";
 import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 import HomeCateResult from "../features/HomeResults/HomeCateResult"
@@ -41,6 +40,7 @@ import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
 import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
+import LadingPage from "pages/LandingPage";
 
 function RouterConfig() {
   const USER = useSelector((state: any) => state.USER);
@@ -158,8 +158,8 @@ function RouterConfig() {
       component: <Booking />
     },
     {
-      path: "/campaign/:name",
-      component: <HomeBannerSearchResult />,
+      path: "/landingpage/:name",
+      component: <LadingPage />,
     },
     {
       path: "/san-pham",

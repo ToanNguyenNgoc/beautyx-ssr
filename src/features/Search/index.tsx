@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, KeyboardEvent, useState, useContext } from "react"
 import { onErrorImg, useDeviceMobile, useFetch } from "utils"
 import { paramOrgs, paramsProducts, paramsServices } from "params-query"
@@ -26,7 +27,6 @@ interface SearchProps {
 
 
 function Search(props: SearchProps) {
-
     const { specialItems } = useContext(AppContext)
     const dispatch = useDispatch()
     const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
@@ -97,8 +97,12 @@ function Search(props: SearchProps) {
         }))
     }
     const onItemSpecial = (item: any) => {
-        if (item.type === "DISCOUNT") return history.push(`/chi-tiet-giam-gia/${slugify(item.name)}?type=service&org_id=${item.organization_id}&dis_id=${item.id}&item_id=${item.item_id}`);
-        if (item.type === "SERVICE") return history.push(`/dich-vu/${slugify(item.name)}?id=${item.id}&org=${item.organization_id}`);
+        if (item.type === "DISCOUNT") {
+            history.push({
+                pathname: `/chi-tiet-giam-gia/service_${item.organization_id}_${item.id}_${item.item_id}_${slugify(item.name)}`,
+            });
+        }
+        if (item.type === "SERVICE") return history.push(`/dich-vu/${item.id}_${item.organization_id}_${slugify(item.name)}`);
     }
     return (
         <div className={style.container}>

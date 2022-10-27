@@ -24,7 +24,7 @@ class Comments {
             commentable_type: "ORGANIZATION",
             commentable_id: values.org_id,
             organization_id: values.org_id,
-            body: values.body,
+            body: values.body !== "" ? values.body : '‭',
             media_ids: values.media_ids,
             rate: values.rate
         };
@@ -61,3 +61,5 @@ class Comments {
 }
 const commentsApi = new Comments();
 export default commentsApi;
+
+

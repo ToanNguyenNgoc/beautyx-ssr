@@ -19,8 +19,7 @@ function OrgComboItem(props: IProps) {
     return (
         <Link
             to={{
-                pathname: `/combo-detail/${slugify(combo?.name)}`,
-                search: `org_id=${org?.id}&id=${combo?.id}`,
+                pathname: `/combo-detail/${combo.id}_${org.id}_${slugify(combo?.name)}`,
                 state: { org_state: org, combo_state: combo }
             }}
             onClick={() => {

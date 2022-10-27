@@ -530,6 +530,7 @@
     padding: 4px 12px;
     border: solid 1px var(--bg-color);
     border-radius: 4px;
+    text-transform:uppercase
 }
 
 .vc_body_input_btn {
@@ -635,7 +636,7 @@
 
     .cart-vouchers-list__item-right .item-right__bottom .item-right__expired {
         font-size: 12px;
-        width: calc(100% - 76px);
+        width: calc(100% - 102px);
     }
 
     .re-cart-cnt__head {

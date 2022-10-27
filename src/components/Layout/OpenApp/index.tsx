@@ -27,7 +27,7 @@ export function OpenApp(props: OpenAppProps) {
     if (type === "org") {
         deepLink = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?org%3D${org_id}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`
     }
-    if (type === "none") deepLink = 'https://beautyx.page.link'
+    if (type === "none") deepLink = 'https://beautyx.page.link/myspa'
     const onOpenDeepLink = () => {
         const newWindow = window.open(deepLink, '_blank', 'noopener,noreferrer');
         if (newWindow) newWindow.opener = null

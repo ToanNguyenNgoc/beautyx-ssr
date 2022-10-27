@@ -408,6 +408,7 @@ function OrgDetail(props: IProps) {
                 </div>
             </Container>
             <PopupDetailContact
+                org={org}
                 openPopupContact={openPopupContact}
                 setOpenPopupContact={setOpenPopupContact}
             />

@@ -40,6 +40,7 @@ import IStore from "../../interface/IStore";
 import { analytics, logEvent } from "../../firebase";
 import { postHistoryView } from "../../user-behavior";
 import { OpenApp } from 'components/Layout'
+import { useGetParamUrl } from "utils";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
 // end
 
@@ -51,7 +52,14 @@ function ServiceDetail() {
     const IS_MB = useFullScreen();
     const ORG = useSelector((state: IStore) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: IStore) => state.SERVICE);
-    const params: any = extraParamsUrl();
+    // const params: any = extraParamsUrl();
+    // useGetParamUrl()
+    const paramsArr = useGetParamUrl();
+    const params = {
+        org: paramsArr[1] ? paramsArr[1] : 1,
+        id: paramsArr[0] ?? 1
+
+    }
     const history = useHistory();
     const is_mobile = useFullScreen();
     const service: Service = EXTRA_DETAIL_SERVICE(SERVICE.service);
@@ -117,11 +125,7 @@ function ServiceDetail() {
     };
     // call api org detail
     const callOrgDetail = () => {
-        if (
-            parseInt(params.org) !== ORG.org?.id
-        ) {
-            dispatch(fetchAsyncOrg(params.org));
-        }
+        dispatch(fetchAsyncOrg(params.org));
     };
     // call api service comment
     const callServiceComments = () => {

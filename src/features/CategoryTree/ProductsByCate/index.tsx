@@ -9,13 +9,13 @@ import { STATUS } from "../../../redux/status";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import ProductCateItem from "./ProductCateItem";
 import { extraParamsUrl } from "../../../utils/extraParamsUrl";
 import InfiniteScroll from "react-infinite-scroll-component";
 import "./style.css";
 
 // ==== api tracking ====
  import tracking from "../../../api/trackApi";
+import { SerProItem } from "components/Layout";
 // end
 
 function ProductsByCate(props: any) {
@@ -67,7 +67,11 @@ function ProductsByCate(props: any) {
                                     () => tracking.CATEGORY_TREE_ITEM_CLICK(PRODUCTS.CATE_CHILD.id,item.org_id,item.product_id)
                                 }
                             >
-                                <ProductCateItem item={item} />
+                                <SerProItem
+                                    changeStyle={true}
+                                    type="PRODUCT"
+                                    item={item}
+                                />
                             </li>
                         ))}
                     </ul>

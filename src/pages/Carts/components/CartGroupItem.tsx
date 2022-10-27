@@ -147,7 +147,7 @@ interface IPopUpVoucherOrg {
 
 export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     const IS_MB = useDeviceMobile();
-    const { open, setOpen, org, vouchers } = props;
+    const { open, setOpen, org, vouchers } = props
     const { cartAmount, cartList } = useSelector((state: any) => state.carts)
     const { services_id, products_id } = cartReducer(cartList)
     return (
@@ -252,7 +252,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     ) {
         applyCondition = true;
     }
-
+    
     const handleApplyVoucher = () => {
         if (active) {
             dispatch(onCancelApplyVoucher(voucher.id))
@@ -262,6 +262,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
             }
         }
     };
+    const orgOnVoucher = voucher?.organizations[0] ?? org
     return (
         <div
             style={
@@ -285,12 +286,12 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
                 <div className="item-left__img">
                     <img
                         onError={(e) => onErrorImg(e)}
-                        src={org?.image_url ? org?.image_url : img.imgDefault}
+                        src={orgOnVoucher?.image_url ? orgOnVoucher?.image_url : img.imgDefault}
                         alt=""
                     />
                 </div>
                 <div className="item-left__name">
-                    <span>{org?.name}</span>
+                    <span>{orgOnVoucher?.name}</span>
                 </div>
             </div>
             <div className="cart-vouchers-list__item-right">
@@ -347,7 +348,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
                                         <span>{
                                             active
                                                 ?
-                                                "Bỏ lưu" : "Lưu"
+                                                "Đã sử dụng" : "Sử dụng"
                                         }</span>
                                     </div>
                                     :
