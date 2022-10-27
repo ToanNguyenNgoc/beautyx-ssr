@@ -197,9 +197,10 @@ function Head(props: IProps) {
                                 onClick={() => history.push("/gio-hang")}
                                 className={style.head_top_right_btn}
                             >
+                                {cartQuantity != 0 &&
                                 <span className={style.head_top_right_badge}>
-                                    {cartQuantity == 0 ? '' : cartQuantity >= 9 ? "9+" : cartQuantity}
-                                </span>
+                                    {cartQuantity >= 9 ? "9+" : cartQuantity}
+                                </span>}
                                 <img src={icon.cartPurpleBold} alt="" />
                             </button>
                         </div>

@@ -496,12 +496,12 @@ function Booking() {
                                                 alt=""
                                             />
                                             {bookTime.branch_id
-                                                ? org?.branches?.find(
+                                                ? 'Chi nhánh: '+org?.branches?.find(
                                                     (i: any) =>
                                                         i.id ===
                                                         bookTime.branch_id
                                                 )?.full_address
-                                                : org?.full_address}
+                                                : 'Trụ sở: '+org?.full_address}
                                         </span>
                                         {org?.branches?.length > 0 && (
                                             <img
@@ -531,6 +531,7 @@ function Booking() {
                                                         }
                                                         key={index}
                                                     >
+                                                        {(index+1 == branches.length)? 'Trụ sở: ':'Chi nhánh: '}
                                                         {item?.full_address}
                                                     </li>
                                                 )
