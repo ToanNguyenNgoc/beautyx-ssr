@@ -52,12 +52,12 @@ function ServiceDetail() {
     const IS_MB = useFullScreen();
     const ORG = useSelector((state: IStore) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: IStore) => state.SERVICE);
-    // const params: any = extraParamsUrl();
+    const paramsUrl: any = extraParamsUrl();
     // useGetParamUrl()
     const paramsArr = useGetParamUrl();
     const params = {
-        org: paramsArr[1] ? paramsArr[1] : 1,
-        id: paramsArr[0] ?? 1
+        org: paramsUrl?.org ?? paramsArr[1],
+        id: paramsUrl?.id ?? paramsArr[0]
 
     }
     const history = useHistory();

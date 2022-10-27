@@ -5,13 +5,14 @@ import { Service } from "../../../interface/service";
 import { fetchAsyncServicesRec } from "../../../redux/org_services/serviceSlice";
 import { AppContext } from "../../../context/AppProvider";
 import { SerProItem } from "components/Layout";
-import { useGetParamUrl } from "utils";
+import { extraParamsUrl, useGetParamUrl } from "utils";
 
 function DetailRecommend(props: any) {
+    const paramsUrl = extraParamsUrl();
     const paramsArr = useGetParamUrl();
     const params = {
-        org: paramsArr[1] ? paramsArr[1] : 1,
-        id: paramsArr[0] ?? 1
+        org: paramsUrl?.org ?? paramsArr[1],
+        id: paramsUrl?.id ?? paramsArr[0]
 
     }
     const { org } = props;
