@@ -34,13 +34,14 @@ import IStore from "../../interface/IStore";
 import "./style.css";
 import { analytics, logEvent } from "../../firebase"
 import {OpenApp} from 'components/Layout'
+import ExtraFlatForm from "rootComponents/extraFlatForm";
 
 
 function MerchantDetail() {
   const IS_MB = useFullScreen();
-  const location: any = useLocation();
+  // const location: any = useLocation();
   const dispatch = useDispatch();
-  const param = formatOrgParam(location.pathname);
+  const param = formatOrgParam();
   const { sub_domain } = param;
 
   const ORG = useSelector((state: IStore) => state.ORG);
@@ -131,6 +132,7 @@ function MerchantDetail() {
 
   return (
     <div className="mb-cnt">
+      <ExtraFlatForm />
       {loading === true && <LoadOrg />}
       {!ORG.org && <PageNotFound />}
       <HeadTitle title={org?.name ? org.name : "Đang tải..."} />

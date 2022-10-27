@@ -186,7 +186,7 @@ function PaymentInfo(props: any) {
                                                         item.discount ?
                                                             <>
                                                                 <span>{formatPrice(item.price_discount)}đ</span>
-                                                                <span>{formatPrice(item.price)}đ</span>
+                                                                <span style={{textDecoration: "line-through",marginLeft: "5px",fontSize: "smaller"}}>{formatPrice(item.price)}đ</span>
                                                             </>
                                                             :
                                                             <span>{" "}{formatPrice(item.price)}</span>

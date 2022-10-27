@@ -1,7 +1,8 @@
-export const formatOrgParam = (pathname: string) => {
-    const query = pathname.split("?");
-    const urlParam = new URLSearchParams(`?${query[1]}`);
+export const formatOrgParam = () => {
+    const locationCus = window.location;
+    const query = locationCus.search;
+    const urlParam = new URLSearchParams(query);
     const tab = Object.fromEntries(urlParam.entries());
-    const sub_domain = query[0].slice(10, pathname.length);
+    const sub_domain = locationCus.pathname.split("/")[locationCus.pathname.split("/").findIndex((e:any)=>e==='cua-hang')+1]
     return { sub_domain, tab }
 }

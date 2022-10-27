@@ -178,6 +178,7 @@
     border-radius: 8px;
 }
 
+.accountMobile-bot .accountMobile-bot__tutorial a,
 .accountMobile-bot .accountMobile-bot__tutorial p {
     font-weight: 500;
     font-size: 12px;

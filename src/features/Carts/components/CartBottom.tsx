@@ -167,6 +167,7 @@ function CartBottom(props: any) {
                 });
             }
             else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+            // else if (!checkPhoneValid('090000000')) {
                 setOpenNoti({
                     open: true,
                     content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,

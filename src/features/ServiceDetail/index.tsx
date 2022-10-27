@@ -40,6 +40,7 @@ import { Service } from "../../interface/service";
 import IStore from "../../interface/IStore";
 import { analytics, logEvent } from "../../firebase";
 import { postHistoryView } from "../../user-behavior";
+import ExtraFlatForm from "rootComponents/extraFlatForm";
 import { OpenApp } from 'components/Layout'
 import { useGetParamUrl } from "utils";
 // end
@@ -188,6 +189,7 @@ function ServiceDetail() {
     };
     return (
         <>
+            <ExtraFlatForm />
             {SERVICE.status === STATUS.LOADING && <LoadDetail />}
             {SERVICE.status === STATUS.FAIL && <PageNotFound />}
             {/* title page servive */}

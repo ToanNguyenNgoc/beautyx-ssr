@@ -46,3 +46,27 @@ export const handleChat = () => {
             break;
     }
 };
+export const handleCallingPhone = () => {
+    const FLAT_FORM = sessionStorage.getItem("FLAT_FORM");
+    const deepLinkMessenger = "tel:02899959938";
+    switch (FLAT_FORM) {
+        case FLAT_FORM_TYPE.TIKI:
+            // callApiFromTiki('openNativeAppStore',{
+            //     googlePlayId: 'com.facebook.orca',
+            //     appleStoreId: '454638411'
+            // })
+            window.open(deepLinkMessenger, "_blank");
+            break;
+        case FLAT_FORM_TYPE.MOMO:
+            MOMO.openURL(deepLinkMessenger);
+            // alert(deepLinkMessenger)
+            break;
+        case FLAT_FORM_TYPE.MB:
+            // openUrlIn_Mb('messenger',deepLinkMessenger)
+            window.open(deepLinkMessenger, "_blank");
+            break;
+        default:
+            window.open(deepLinkMessenger, "_blank");
+            break;
+    }
+};
