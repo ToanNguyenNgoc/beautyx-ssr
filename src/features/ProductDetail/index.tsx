@@ -37,7 +37,7 @@ import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import IStore from "../../interface/IStore";
 import { postHistoryView } from "../../user-behavior";
 import { OpenApp } from 'components/Layout'
-import { useGetParamUrl } from "utils";
+import { extraParamsUrl, useGetParamUrl } from "utils";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
@@ -47,11 +47,11 @@ function ProductDetail(props: any) {
     const history = useHistory();
     const ORG = useSelector((state: IStore) => state.ORG);
     const { PRODUCT, COMMENTS } = useSelector((state: IStore) => state.PRODUCT);
-    // const params: any = extraParamsUrl();
+    const paramsUrl: any = extraParamsUrl();
     const paramsArr = useGetParamUrl();
     const params = {
-        org: paramsArr[1] ? paramsArr[1] : 1,
-        id: paramsArr[0] ?? 1
+        org: paramsUrl?.org ?? paramsArr[1] ? paramsArr[1] : 1,
+        id: paramsUrl?.id ?? paramsArr[0] ?? 1
     }
     const is_mobile = useFullScreen();
     const [open, setOpen] = useState({

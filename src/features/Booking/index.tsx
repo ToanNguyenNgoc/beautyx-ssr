@@ -7,7 +7,7 @@ import "./style.css";
 import onErrorImg from "../../utils/errorImg";
 import ServiceBookItem from "./components/ServiceItem";
 import { useHistory, useLocation } from "react-router-dom";
-import { addServiceBookNow } from "../../redux/servicesBookSlice";
+import { addServiceBookNow, clearAllServices } from "../../redux/servicesBookSlice";
 import icon from "../../constants/icon";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
@@ -26,7 +26,7 @@ import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
-import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
+import { onRefreshServices, onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
@@ -231,6 +231,7 @@ function Booking() {
         try {
             await apointmentApi.postAppointment(action, org?.id);
             dispatch(onRefreshServicesNoBookCount());
+            dispatch(clearAllServices())
             setOpenNoti({
                 open: true,
                 content: "Đặt hẹn thành công",

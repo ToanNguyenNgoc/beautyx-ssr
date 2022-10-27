@@ -106,6 +106,13 @@
     background-color: var(--text-orange);
     border-radius: 100%;
 }
+.list_dots_item_plus{
+    color: var(--text-orange);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 14px;
+    margin-top: -1px;
+}
 
 .day_fade {
     color: var(--text-hover);
