@@ -7,10 +7,12 @@ import icon from "../../../constants/icon";
 // import { ITag } from "../../../interface/tags";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 
 function HomeTags(props: any) {
     //const history = useHistory();
     const { t, geo } = useContext(AppContext);
+    const FLAT_FORM = sessionStorage.getItem("FLAT_FORM");
     // console.log(geo)
     // const tagsList: ITag[] = useSelector((state: any) => state.HOME.tags);
     // const tags = tagsList.filter(e => e.children && e.children?.length > 0 && e.organizations_count > 0);
@@ -63,6 +65,8 @@ function HomeTags(props: any) {
             </div> */}
             <div className="home-tags">
                 <ul className="home-tags-list">
+                {
+                        FLAT_FORM !== FLAT_FORM_TYPE.MB &&
                     <li
                     //onClick={() => gotoDetail(item.title)}
                     >
@@ -113,7 +117,7 @@ function HomeTags(props: any) {
                                 {geo ? currentLocation : "Gần bạn"}
                             </div>
                         </Link>
-                    </li>
+                    </li>}
                     {tags_data.map((item) => (
                         <li
                             //onClick={() => gotoDetail(item.title)}

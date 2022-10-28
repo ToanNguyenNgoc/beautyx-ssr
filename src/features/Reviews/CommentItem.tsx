@@ -209,8 +209,13 @@ export default function CommentItem(props: IProps) {
                             <div className="evaluate-comment__bot-title">
                                 <span>{displayTime}</span>
                                 <span>
-                                    {/* {comment.children.length > 0 && `${comment.children.length}  `} */}
-                                    Trả lời
+                                    {
+                                        comment.children.length > 0
+                                            ?
+                                            `${comment.children.length}  phản hồi`
+                                            :
+                                            "Trả lời"
+                                    }
                                 </span>
                                 {/* <span>{displayTime}</span> */}
                             </div>

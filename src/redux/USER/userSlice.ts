@@ -13,6 +13,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
             const res = await authentication.getUserProfile();
             let context = res?.data.context;
             if (context.telephone && !checkPhoneValid(context.telephone)) {
+            // if (context.telephone && !checkPhoneValid('context.telephone')) {
                 context = { ...context, telephone: 'số điện thoại' }
             }
             logEvent(analytics, 'login', {

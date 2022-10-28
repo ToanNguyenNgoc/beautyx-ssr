@@ -243,7 +243,7 @@ export default function AccountMobile() {
             <div onClick={() => handleCallingPhone()} className="accountMobile-bot">
                 <div className="accountMobile-bot__tutorial">
                     <img src={icon.suppportIcon} alt="" />
-                   <a href="tel:02899959938">0289 9959 938</a>
+                   <a>0289 9959 938</a>
                 </div>
             </div>
             <Bottom />

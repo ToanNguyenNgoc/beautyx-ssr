@@ -7,9 +7,11 @@ import icon from "../../../constants/icon";
 // import { ITag } from "../../../interface/tags";
 import onErrorImg from "../../../utils/errorImg";
 import scrollTop from "../../../utils/scrollTop";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 
 function HomeTags(props: any) {
     //const history = useHistory();
+    const FLAT_FORM = sessionStorage.getItem("FLAT_FORM");
     const { t, geo } = useContext(AppContext);
     // console.log(geo)
     // const tagsList: ITag[] = useSelector((state: any) => state.HOME.tags);
@@ -63,16 +65,18 @@ function HomeTags(props: any) {
             </div> */}
             <div className="home-tags">
                 <ul className="home-tags-list">
-                    <li
-                    //onClick={() => gotoDetail(item.title)}
-                    >
-                        <Link
-                            to={{
-                                pathname: "/ban-do",
-                            }}
-                            onClick={() => scrollTop()}
-                            className="flex-column tag-item-cnt">
-                            {/* {
+                    {
+                        FLAT_FORM !== FLAT_FORM_TYPE.MB &&
+                        <li
+                        //onClick={() => gotoDetail(item.title)}
+                        >
+                            <Link
+                                to={{
+                                    pathname: "/ban-do",
+                                }}
+                                onClick={() => scrollTop()}
+                                className="flex-column tag-item-cnt">
+                                {/* {
                                 geo
                                     ?
                                     <div className="tag-item-title"
@@ -105,15 +109,16 @@ function HomeTags(props: any) {
                                     </>
 
                             } */}
-                            <img
-                                // src={item.img.length > 0 ? item.img[0].original_url : ""} 
-                                src={icon.locationCate}
-                                onError={(e) => onErrorImg(e)} alt="" />
-                            <div className="tag-item-title">
-                                {geo ? currentLocation : "Gần bạn"}
-                            </div>
-                        </Link>
-                    </li>
+                                <img
+                                    // src={item.img.length > 0 ? item.img[0].original_url : ""} 
+                                    src={icon.locationCate}
+                                    onError={(e) => onErrorImg(e)} alt="" />
+                                <div className="tag-item-title">
+                                    {geo ? currentLocation : "Gần bạn"}
+                                </div>
+                            </Link>
+                        </li>
+                    }
                     {tags_data.map((item) => (
                         <li
                             //onClick={() => gotoDetail(item.title)}
