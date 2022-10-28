@@ -296,6 +296,7 @@ function Booking() {
                         // }
                     }
                     else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+                    // else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid('090000000')) {
                         // if (!checkPhoneValid('090000000')) {
                         setOpenNoti({
                             open: true,
@@ -345,7 +346,6 @@ function Booking() {
     //* [END]  OTP  update telephone number
     const [address, setAddress] = useState<any>();
     const handleUpdatePhone = async (props: IDataOtp) => {
-        console.log(props);
         try {
 
             const paramsOb = {
@@ -365,13 +365,29 @@ function Booking() {
             }
         } catch (err) {
             console.log('err.code', err.response);
-            switch (err.response) {
+            switch (err.response.status) {
                 case 400:
                     setOpenAlertSnack({
                         ...openAlertSnack,
                         open: true,
                         // title: JSON.stringify(err),
-                        title: 'Số điện thoại đã được sử dụng vui lòng thử số khác!'
+                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
+                    });
+                    break;
+                case 501:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
+                    });
+                    break;
+                case 502:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Lỗi hệ thống gửi sms quý khách vui lòng thử lại sau!'
                     });
                     break;
                 default:
@@ -407,10 +423,10 @@ function Booking() {
                             {IS_MB === false && org && (
                                 <></>
                             )}
-                            
+
                         </div>
                         <div className="booking-cnt__right">
-                        {IS_MB&&<UserPaymentInfo
+                            {IS_MB && <UserPaymentInfo
                                 onSetAddressDefault={setAddress}
                             />}
                             <br />
@@ -428,7 +444,7 @@ function Booking() {
                                     </p>
                                 </div>
                             </div>
-                            
+
                             {/* {
                                 IS_MB ?
                                     <div className="booking-cnt__right-org">
@@ -497,12 +513,12 @@ function Booking() {
                                                 alt=""
                                             />
                                             {bookTime.branch_id
-                                                ? 'Chi nhánh: '+org?.branches?.find(
+                                                ? 'Chi nhánh: ' + org?.branches?.find(
                                                     (i: any) =>
                                                         i.id ===
                                                         bookTime.branch_id
                                                 )?.full_address
-                                                : 'Trụ sở: '+org?.full_address}
+                                                : 'Trụ sở: ' + org?.full_address}
                                         </span>
                                         {org?.branches?.length > 0 && (
                                             <img
@@ -532,7 +548,7 @@ function Booking() {
                                                         }
                                                         key={index}
                                                     >
-                                                        {(index+1 == branches.length)? 'Trụ sở: ':'Chi nhánh: '}
+                                                        {(index + 1 == branches.length) ? 'Trụ sở: ' : 'Chi nhánh: '}
                                                         {item?.full_address}
                                                     </li>
                                                 )

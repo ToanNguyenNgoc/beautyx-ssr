@@ -51,9 +51,10 @@ function ComboDetailLeft(props: IProps) {
 
                     <div className="service-detail__mobile-bottom">
                         {combo?.use_value > 0 && (
-                            <div className="service-detail__mobile-percent">
-                                Giảm {percent}%
-                            </div>
+                            percent && percent > 1 ?
+                                <div className="service-detail__mobile-percent">
+                                    Giảm {percent}%
+                                </div> : ''
                         )}
                         <div className="service-detail__mobile-price">
                             {combo?.use_value > 0 ? (

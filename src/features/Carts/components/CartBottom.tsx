@@ -167,7 +167,8 @@ function CartBottom(props: any) {
                 });
             }
             else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
-            // else if (!checkPhoneValid('090000000')) {
+            // else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid('090000000')) {
+                // else if (!checkPhoneValid('090000000')) {
                 setOpenNoti({
                     open: true,
                     content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
@@ -248,13 +249,41 @@ function CartBottom(props: any) {
                 window.location.reload();
             }
         } catch (err) {
-            console.log(err);
-            setOpenAlertSnack({
-                ...openAlertSnack,
-                open: true,
-                // title: JSON.stringify(err),
-                title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
-            });
+            console.log(err.response);
+            switch (err.response.status) {
+                case 400:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
+                    });
+                    break;
+                case 501:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
+                    });
+                    break;
+                case 502:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Lỗi hệ thống gửi sms quý khách vui lòng thử lại sau!'
+                    });
+                    break;
+                default:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
+                    });
+                    break;
+            }
         }
     }
     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----

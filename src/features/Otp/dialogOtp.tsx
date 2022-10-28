@@ -115,6 +115,7 @@ function RenderRecatpcha(props: IPropOtp) {
                         status: snackStatus.FAIL
                     })
                 }
+                window.location.reload();
             });
     }
     const handleTelephone = (props: number) => {
@@ -153,9 +154,11 @@ function RenderRecatpcha(props: IPropOtp) {
                 open={notiWarning.open}
                 title={notiWarning.title}
                 status={notiWarning.status}
-                onClose={() => setNotiWarning({
-                    ...notiWarning, open: false
-                })}
+                onClose={() => {
+                    setNotiWarning({
+                        ...notiWarning, open: false
+                    })
+                }}
             />
         </>
     );
@@ -178,6 +181,7 @@ export function FieldOtps(props: any) {
             ...dataOtp,
             open: false
         })
+        window.location.reload();
         window.recaptchaVerifier.clear();
     }
     return (

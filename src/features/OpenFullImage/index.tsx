@@ -14,7 +14,7 @@ interface IProps {
 }
 
 function FullImage(props: IProps) {
-    const { open, setOpen, comment, image_url } = props;
+    const { open, setOpen, comment } = props;
     const fullScreen = useFullScreen();
     let body;
     try {
@@ -41,14 +41,15 @@ function FullImage(props: IProps) {
                         <img src={icon.closeCircleWhite} alt="" />
                     </button>
                 </div>
-                {body.image_url?.length > 0 && (
+                {(body.image_url?.length > 0) && (
                     <img
                         className="full-img-cnt__img"
                         src={body.image_url}
                         alt=""
                     />
                 )}
-                {image_url && (
+                {
+                    comment?.media_url && comment?.media_url.length > 0 && (
                     <div
                         style={{
                             height: "100%",
@@ -59,7 +60,7 @@ function FullImage(props: IProps) {
                     >
                         <img
                             className="full-img-cnt__img"
-                            src={image_url}
+                            src={comment?.media_url[0]}
                             alt=""
                         />
                     </div>

@@ -359,14 +359,17 @@ const HeadMenu = (props: HeadMenuProps) => {
                     </div>
                 </li>
             </ul>
-            <div className={style.menu_bottom}>
-                <div
-                    onClick={handleSignOut}
-                    className={style.menu_bottom_btn}
-                >
-                    {t('Header.sign_out')}
+            {
+                USER &&
+                <div className={style.menu_bottom}>
+                    <div
+                        onClick={handleSignOut}
+                        className={style.menu_bottom_btn}
+                    >
+                        {t('Header.sign_out')}
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }

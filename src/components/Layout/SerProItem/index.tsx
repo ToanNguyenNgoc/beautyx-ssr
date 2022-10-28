@@ -67,9 +67,10 @@ export function SerProItem(props: SerProItemProps) {
             >
                 <div className={!changeStyle ? style.img_container : style.img_container_change}>
                     {special_price > 0 &&
+                        percent && percent > 1 ?
                         <div className={style.item_percent}>
                             Giảm {percent}%
-                        </div>
+                        </div>:''
                     }
                     <img
                         style={changeStyle ? { borderRadius: "8px" } : {}}

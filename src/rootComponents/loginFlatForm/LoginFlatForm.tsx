@@ -115,6 +115,11 @@ function LoginFlatForm(props: any) {
     };
     const onLoginFlatFormMB = async () => {
         try {
+            // const $:any = window;
+            // $["ReactNativeWebView"].postMessage(JSON.stringify({
+            //     type: "GET_CONTACT",
+            //   }));
+              
             await dispatch(
                 loginAsyncMb({
                     token: params.loginToken,
