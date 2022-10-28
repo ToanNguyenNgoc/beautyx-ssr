@@ -158,6 +158,35 @@
     width: 100%;
     border-radius: 6px;
 }
+/* tags */
+.tag_item_cnt{
+    padding: 4px;
+    cursor: pointer;
+    padding-left: 28px;
+    position: relative;
+}
+.tag_check{
+    width: 18px;
+    height: 18px;
+    border: solid 1.5px var(--text-hover);
+    position: absolute;
+    left: 4px;
+    top: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+}
+.tag_check span{
+    width: 10px;
+    height: 10px;
+    background-color: var(--purple);
+    border-radius: 2px;
+}
+.tag_name{
+    font-size: 14px;
+    font-weight: 700;
+}
 @media only screen and (max-width: 1023px) {
     .title{
         display: none;

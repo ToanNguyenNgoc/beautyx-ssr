@@ -4,7 +4,7 @@ export interface ParamOrg {
     "filter[keyword]"?: string,
     "filter[location]"?: string,
     "filter[is_momo_ecommerce_enable]"?: boolean | "",
-    "filter[tags]"?: string[] | "",
+    "filter[tags]"?: "",
     "filter[min_price]"?: number | string,
     "filter[max_price]"?: number | string,
     "filter[province_code]"?: number | string,

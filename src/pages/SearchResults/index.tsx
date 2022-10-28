@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clst, extraParamsUrl, useDeviceMobile } from 'utils'
@@ -11,12 +11,12 @@ import { IOrganization, IServicePromo } from "interface";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadGrid } from "components/LoadingSketion";
 import { ParamOrg, ParamService } from "params-query/param.interface";
-import { FilterLocation, FilterPrice } from "components/Filter";
+import { FilterLocation, FilterPrice, FilterTags } from "components/Filter";
 import { EventLocation } from "components/Filter";
 import IStore from "interface/IStore";
 import { onChangeFilterOrg, onChangeFilterService, onResetFilter, onSaveKeyword } from "redux/filter-result";
 import Head from "features/Head";
-import { Container } from "@mui/material";
+import { Container, Drawer } from "@mui/material";
 import Footer from "features/Footer";
 import { OrgItemSec, SerProItem, XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
@@ -88,6 +88,7 @@ export default SearchResults;
 const TabService = ({ keyword }: { keyword: string }) => {
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
+    const [openFilter, setOpenFilter] = useState(false);
     const { SERVICE_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
     const PARAMS_SERVICES: ParamService = {
         ...paramsServices,
@@ -135,7 +136,17 @@ const TabService = ({ keyword }: { keyword: string }) => {
                                     icon={icon.settingsSliders}
                                     title="Bộ lọc"
                                     className={style.filter_btn}
+                                    onClick={() => setOpenFilter(true)}
                                 />
+                                <Drawer open={openFilter} onClose={()=>setOpenFilter(false)} anchor="bottom" >
+                                    <div className={style.filter_cnt_mt}>
+                                        <FilterPrice
+                                            onChangePrice={onChangePrice}
+                                            min_price={SERVICE_PR["filter[min_price]"]}
+                                            max_price={SERVICE_PR["filter[max_price]"]}
+                                        />
+                                    </div>
+                                </Drawer>
                             </>
                             :
                             <FilterPrice
@@ -240,6 +251,9 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
             "filter[max_price]": e.max_price
         }))
     }
+    const onChangeTag = (e:string)=>{
+        console.log(e)
+    }
     return (
         <>
             <div className={style.filter_container}>
@@ -261,11 +275,17 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
                                 />
                             </>
                             :
-                            <FilterPrice
-                                onChangePrice={onChangePrice}
-                                min_price={ORG_PR["filter[min_price]"]}
-                                max_price={ORG_PR["filter[max_price]"]}
-                            />
+                            <>
+                                <FilterTags
+                                    onChange={onChangeTag}
+                                    value={ORG_PR["filter[tags]"] ?? ""}
+                                />
+                                <FilterPrice
+                                    onChangePrice={onChangePrice}
+                                    min_price={ORG_PR["filter[min_price]"]}
+                                    max_price={ORG_PR["filter[max_price]"]}
+                                />
+                            </>
                     }
                 </div>
             </div>
