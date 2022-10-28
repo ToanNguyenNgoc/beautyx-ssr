@@ -33,7 +33,7 @@ function RenderRecatpcha(props: IPropOtp) {
         open: false,
         status: ""
     });
-    const generateRecaptcha = () => {
+    const generateRecaptcha = async () => {
         try {
             if (!window.recaptchaVerifier) {
                 window.recaptchaVerifier = new RecaptchaVerifier(
@@ -51,7 +51,7 @@ function RenderRecatpcha(props: IPropOtp) {
                     authentication
                 )
             } else {
-                window.recaptchaVerifier.render()
+                window.recaptchaVerifier.render();
             }
         } catch (err: any) {
             console.log(err)
@@ -66,7 +66,6 @@ function RenderRecatpcha(props: IPropOtp) {
             window.recaptchaVerifier
         )
             .then((confirmationResult: any) => {
-                console.log(confirmationResult)
                 setDataOtp({
                     ...dataOtp,
                     open: true,
@@ -74,12 +73,9 @@ function RenderRecatpcha(props: IPropOtp) {
                     verification_id: confirmationResult.verificationId
                 });
                 setOpen(false);
-
-                window.confirmationResult = confirmationResult;
-                // setLoading(false);
+                window.recaptchaVerifier.reset()
             })
             .catch((error) => {
-                // setLoading(false);
                 console.log(error);
                 let errorCode = error.code;
                 let messCode = error.message;
@@ -97,8 +93,6 @@ function RenderRecatpcha(props: IPropOtp) {
                     messCode ===
                     "reCAPTCHA has already been rendered in this element"
                 ) {
-                    // setOpenDialogReloadPage(true);
-                    window.location.reload();
                     setNotiWarning({
                         ...notiWarning,
                         open: true,
@@ -107,7 +101,6 @@ function RenderRecatpcha(props: IPropOtp) {
                     })
                 }
                 else {
-                    // window.location.reload();
                     setNotiWarning({
                         ...notiWarning,
                         open: true,
@@ -117,21 +110,19 @@ function RenderRecatpcha(props: IPropOtp) {
                 }
             });
     }
-    const handleTelephone = (props: number) => {
-
+    const handleTelephone = async (props: number) => {
         generateRecaptcha();
         verifyWithPhone(props)
-
     }
     const handleClose = () => {
-        if (window.recaptchaVerifier) {
-            try {
-                window.recaptchaVerifier.clear();
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
+        // if (window.recaptchaVerifier) {
+        //     try {
+        //         window.recaptchaVerifier.clear();
+        //     }
+        //     catch (err) {
+        //         console.log(err);
+        //     }
+        // }
         return setOpen(false)
     }
     return (
