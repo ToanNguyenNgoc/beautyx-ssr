@@ -10,7 +10,7 @@ interface IProps {
     className?: string,
     style?: any
     icon?: string,
-    iconSize?: number
+    iconSize?: number,
 }
 
 export function XButton(props: IProps) {
@@ -22,7 +22,7 @@ export function XButton(props: IProps) {
         className,
         style,
         icon,
-        iconSize
+        iconSize,
     } = props;
     return (
         <button

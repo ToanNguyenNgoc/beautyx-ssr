@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "context/AppProvider";
 import { STATUS } from "redux/status";
 import { fetchAsyncOrgsFavorite } from "redux/home/homePageSlice";
-import OrgItem from "features/ViewItemCommon/OrgItem";
+import { OrgItem } from "components/Layout";
 
 export default function HomeFavorite() {
     const { ORGS_FAVORITE } = useSelector((state: any) => state.HOME_PAGE);

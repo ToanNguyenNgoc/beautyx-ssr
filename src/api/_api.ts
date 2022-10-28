@@ -1,4 +1,5 @@
 const API_ROUTE = {
+    PROVINCES_CODE_DISTRICTS:(province_code:number|string) => `/provinces/${province_code}/districts`,
     ORGS: '/organizations',
     ORG: (id: number | string) => `/organizations/${id}`,
     GALLERIES_ORG_ID: (id: number | string) => `/organizations/${id}/moba_galleries`,

@@ -1,51 +1,39 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import Head from "../../features/Head";
-import HeadTitle from "../../features/HeadTitle";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
-import { AppContext } from "../../context/AppProvider";
-import { Container, Tab } from "@mui/material";
-import Footer from "../../features/Footer";
-import icon from "../../constants/icon";
-import { Drawer } from "@mui/material";
+import React, { useContext, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    onSetTabResult,
-    fetchAsyncOrgsByFilter,
-    fetchServicesByFilter,
-    fetchProductsByFilter,
-    onSetEmptyOrgs,
-    onSetEmptyServices,
-} from "../../redux/search/searchResultSlice";
-import useFullScreen from "../../utils/useDeviceMobile";
-import { BackTopButton, SerProItem } from "components/Layout";
-import { onToggleSearchCnt } from "../../redux/search/searchSlice";
-import Map from "../../components/Map";
-import { STATUS } from "../../redux/status";
-import FilterOrgs from "../../features/Filter/FilterOrgs";
-import { extraParamsUrl } from "../../utils/extraParamsUrl";
-import { TabContext, TabList, TabPanel } from "@mui/lab";
-import FilterService from "../../features/Filter/FilterService";
-import { ISortList } from "../../features/Filter/FilterService";
-
-import { useDeviceMobile } from 'utils'
-import { useProducts, useServices } from 'features/Search/hook'
-import { paramsServices, paramsProducts } from 'params-query'
+import { clst, extraParamsUrl, useDeviceMobile } from 'utils'
+import { useOrgs, useProducts, useServices } from 'features/Search/hook'
+import { paramsServices, paramsProducts, paramOrgs } from 'params-query'
 import style from './search-result.module.css'
 import { ICON } from "constants/icon2";
-import { IServicePromo } from "interface";
+import { IOrganization, IServicePromo } from "interface";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadGrid } from "components/LoadingSketion";
+import { ParamOrg, ParamService } from "params-query/param.interface";
+import { FilterLocation, FilterPrice } from "components/Filter";
+import { EventLocation } from "components/Filter";
+import IStore from "interface/IStore";
+import { onChangeFilterOrg, onChangeFilterService, onResetFilter, onSaveKeyword } from "redux/filter-result";
+import Head from "features/Head";
+import { Container } from "@mui/material";
+import Footer from "features/Footer";
+import { OrgItemSec, SerProItem, XButton } from "components/Layout";
+import { AppContext } from "context/AppProvider";
+import icon from "constants/icon";
 
-function SearchResults(props: any) {
+function SearchResults() {
+    const { t } = useContext(AppContext)
+    const dispatch = useDispatch()
+    const { keyword_re } = useSelector((state: IStore) => state.FILTER_RESULT)
     const params = useParams();
     const paramsUrl: any = extraParamsUrl()
     const keyword = paramsUrl.keyword ?? ''
     const tab = params.tab ?? 'dich-vu'
     const links = [
-        { link: "dich-vu", title: 'Dịch vụ', icon: ICON.servicePurple, act_icon: ICON.serviceWhite },
-        { link: "san-pham", title: 'Sản phẩm', icon: ICON.barberPurple, act_icon: ICON.barberWhite },
-        { link: "cua-hang", title: 'Cửa hàng', icon: ICON.orgPurple, act_icon: ICON.orgWhite },
+        { link: "dich-vu", title: t('Mer_de.services'), icon: ICON.servicePurple, act_icon: ICON.serviceWhite },
+        { link: "san-pham", title: t('Mer_de.products'), icon: ICON.barberPurple, act_icon: ICON.barberWhite },
+        { link: "cua-hang", title: t('my_ser.business'), icon: ICON.orgPurple, act_icon: ICON.orgWhite },
     ]
     const onSwitchLick = (link: string) => {
         return {
@@ -53,6 +41,10 @@ function SearchResults(props: any) {
             search: `keyword=${keyword}`
         }
     }
+    useEffect(() => {
+        dispatch(onSaveKeyword(keyword))
+        if (keyword !== keyword_re) dispatch(onResetFilter())
+    }, [keyword])
     //
     return (
         <>
@@ -82,6 +74,7 @@ function SearchResults(props: any) {
                     <div className={style.right_cnt}>
                         {tab === "dich-vu" && <TabService keyword={keyword} />}
                         {tab === "san-pham" && <TabProduct keyword={keyword} />}
+                        {tab === "cua-hang" && <TabOrg keyword={keyword} />}
                     </div>
                 </div>
             </Container>
@@ -94,9 +87,14 @@ export default SearchResults;
 
 const TabService = ({ keyword }: { keyword: string }) => {
     const IS_MB = useDeviceMobile()
-    const PARAMS_SERVICES = {
+    const dispatch = useDispatch()
+    const { SERVICE_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
+    const PARAMS_SERVICES: ParamService = {
         ...paramsServices,
-        "filter[keyword]": keyword
+        "filter[keyword]": keyword,
+        "filter[location]": SERVICE_PR["filter[location]"],
+        "filter[min_price]": SERVICE_PR["filter[min_price]"],
+        "filter[max_price]": SERVICE_PR["filter[max_price]"]
     }
     const { services, totalService, onLoadMoreService } = useServices(PARAMS_SERVICES, true)
     const onViewMore = () => {
@@ -104,29 +102,73 @@ const TabService = ({ keyword }: { keyword: string }) => {
             onLoadMoreService()
         }
     }
+    const onChangeFilterLocation = (e: EventLocation) => {
+        dispatch(onChangeFilterService({
+            ...SERVICE_PR,
+            "filter[location]": e.coords,
+            "filter[province_code]": e.province?.province_code ?? "cur",
+            "filter[district_code]": e.district?.district_code ?? "cur"
+        }))
+    }
+    const onChangePrice = (e: any) => {
+        dispatch(onChangeFilterService({
+            ...PARAMS_SERVICES,
+            "filter[min_price]": e.min_price,
+            "filter[max_price]": e.max_price
+        }))
+    }
     return (
-        <div className={style.result_body}>
-            <InfiniteScroll
-                dataLength={services.length}
-                hasMore={true}
-                loader={<></>}
-                next={onViewMore}
-            >
-                <ul className={style.result_list}>
+        <>
+            <div className={style.filter_container}>
+                <div className={style.filter_right}>
+                    <FilterLocation
+                        onChange={onChangeFilterLocation}
+                        province_code={SERVICE_PR["filter[province_code]"]}
+                        district_code={SERVICE_PR["filter[district_code]"]}
+                    />
+                </div>
+                <div className={style.filter_left}>
                     {
-                        services.map((item: IServicePromo) => (
-                            <li key={item.id} className={style.result_list_item}>
-                                <SerProItem
-                                    type="SERVICE"
-                                    item={item}
+                        IS_MB ?
+                            <>
+                                <XButton
+                                    icon={icon.settingsSliders}
+                                    title="Bộ lọc"
+                                    className={style.filter_btn}
                                 />
-                            </li>
-                        ))
+                            </>
+                            :
+                            <FilterPrice
+                                onChangePrice={onChangePrice}
+                                min_price={SERVICE_PR["filter[min_price]"]}
+                                max_price={SERVICE_PR["filter[max_price]"]}
+                            />
                     }
-                </ul>
-                {services.length < totalService && <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />}
-            </InfiniteScroll>
-        </div>
+                </div>
+            </div>
+            <div className={style.result_body}>
+                <InfiniteScroll
+                    dataLength={services.length}
+                    hasMore={true}
+                    loader={<></>}
+                    next={onViewMore}
+                >
+                    <ul className={style.result_list}>
+                        {
+                            services.map((item: IServicePromo) => (
+                                <li key={item.id} className={style.result_list_item}>
+                                    <SerProItem
+                                        type="SERVICE"
+                                        item={item}
+                                    />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    {services.length < totalService && <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />}
+                </InfiniteScroll>
+            </div>
+        </>
     )
 }
 const TabProduct = ({ keyword }: { keyword: string }) => {
@@ -161,28 +203,91 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
                         ))
                     }
                 </ul>
-                {products.length < totalProduct && <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />}
+                {products.length < totalProduct && <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />}
             </InfiniteScroll>
         </div>
     )
 }
-
-
-
-// let tabs = [
-//     {
-//         value: "1",
-//         title: t("Mer_de.services"),
-//         total: location.state?.servicesTotal,
-//     },
-//     {
-//         value: "2",
-//         title: t("Mer_de.products"),
-//         total: location.state?.productsTotal,
-//     },
-//     {
-//         value: "3",
-//         title: t("my_ser.business"),
-//         total: location.state?.orgsTotal,
-//     },
-// ];
+const TabOrg = ({ keyword }: { keyword: string }) => {
+    const IS_MB = useDeviceMobile()
+    const dispatch = useDispatch()
+    const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
+    const PRAMS_ORG: ParamOrg = {
+        ...paramOrgs,
+        ...ORG_PR,
+        "filter[province_code]": ORG_PR["filter[province_code]"] === "cur" ? "" : ORG_PR["filter[province_code]"],
+        "filter[district_code]": ORG_PR["filter[district_code]"] === "cur" ? "" : ORG_PR["filter[district_code]"],
+        "filter[keyword]": keyword
+    }
+    const { orgs, totalOrg, onLoadMoreOrg } = useOrgs(PRAMS_ORG, true)
+    const onViewMore = () => {
+        if (orgs.length >= 15 && orgs.length < totalOrg) {
+            onLoadMoreOrg()
+        }
+    }
+    const onFilterLocation = (e: EventLocation) => {
+        dispatch(onChangeFilterOrg({
+            ...ORG_PR,
+            "filter[location]": e.coords,
+            "filter[province_code]": e.province?.province_code ?? "cur",
+            "filter[district_code]": e.district?.district_code ?? "cur"
+        }))
+    }
+    const onChangePrice = (e: any) => {
+        dispatch(onChangeFilterOrg({
+            ...ORG_PR,
+            "filter[min_price]": e.min_price,
+            "filter[max_price]": e.max_price
+        }))
+    }
+    return (
+        <>
+            <div className={style.filter_container}>
+                <div className={style.filter_right}>
+                    <FilterLocation
+                        onChange={onFilterLocation}
+                        province_code={ORG_PR["filter[province_code]"]}
+                        district_code={ORG_PR["filter[district_code]"]}
+                    />
+                </div>
+                <div className={style.filter_left}>
+                    {
+                        IS_MB ?
+                            <>
+                                <XButton
+                                    icon={icon.settingsSliders}
+                                    title="Bộ lọc"
+                                    className={style.filter_btn}
+                                />
+                            </>
+                            :
+                            <FilterPrice
+                                onChangePrice={onChangePrice}
+                                min_price={ORG_PR["filter[min_price]"]}
+                                max_price={ORG_PR["filter[max_price]"]}
+                            />
+                    }
+                </div>
+            </div>
+            <div className={style.result_body}>
+                <InfiniteScroll
+                    dataLength={orgs.length}
+                    hasMore={true}
+                    loader={<></>}
+                    next={onViewMore}
+                >
+                    <ul className={clst([style.result_list, style.result_list_org])}>
+                        {
+                            orgs.map((item: IOrganization) => (
+                                <li key={item.id} className={clst([style.result_list_item, style.result_list_item_org])}>
+                                    <OrgItemSec changeStyle={IS_MB} org={item} />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    {orgs.length < totalOrg && <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />}
+                </InfiniteScroll>
+            </div>
+        </>
+    )
+}

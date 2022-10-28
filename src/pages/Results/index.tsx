@@ -8,10 +8,9 @@ import Head from '../../features/Head';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import { useDispatch, useSelector } from 'react-redux';
 import { IOrganization } from '../../interface/organization';
-import OrgItem from '../../features/ViewItemCommon/OrgItem';
 import { STATUS } from '../../redux/status';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { BackTopButton, EmptyRes } from 'components/Layout';
+import { BackTopButton, EmptyRes, OrgItem } from 'components/Layout';
 import Footer from '../../features/Footer';
 import {
     fetchAsyncOrgsByFilter,

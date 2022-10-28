@@ -6,7 +6,7 @@ export function useGetLocation(req: string) {
     const API_URL = `https://api.mapbox.com/geocoding/v5/mapbox.places/${req}.json?access_token=${keyMapBox}&language=vi&country=vn`
     const { response } = useFetch(true, API_URL)
     if (response) {
-        const LatLng = response.features?.length > 0 ? response.features[0]?.center?.reverse().join(",") : ""
+        const LatLng = response.features?.length > 0 ? response.features[0]?.center?.sort((a: number, b: number) => a - b).join(",") : ""
         q_location = LatLng
     }
     return { q_location }

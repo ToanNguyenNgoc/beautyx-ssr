@@ -8,7 +8,8 @@ import { ISERVICE } from '../redux/org_services/serviceSlice';
 import { ICOMMENT_MEDIA } from '../redux/commentSlice';
 import { IFILTER } from "../redux/filter/filterSlice"
 import { IORDER } from "../redux/order/orderSlice"
-import {IUSER} from "redux/USER/userSlice"
+import { IUSER } from "redux/USER/userSlice"
+import { IFilterResult } from 'redux/filter-result'
 
 
 export default interface IStore {
@@ -22,5 +23,6 @@ export default interface IStore {
     COMMENT_MEDIA: ICOMMENT_MEDIA,
     FILTER: IFILTER,
     ORDER: IORDER,
-    USER: IUSER
+    USER: IUSER,
+    FILTER_RESULT: IFilterResult
 }

@@ -14,7 +14,6 @@ import { debounce } from "lodash"
 import tracking from "api/trackApi"
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter"
 import { AppContext } from "context/AppProvider"
-import { addHistory } from "redux/search/searchSlice"
 import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
 import slugify from "utils/formatUrlString"
@@ -28,9 +27,7 @@ interface SearchProps {
 
 function Search(props: SearchProps) {
     const { specialItems } = useContext(AppContext)
-    const dispatch = useDispatch()
     const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
-    const { HISTORY } = useSelector((state: any) => state.SEARCH)
     const { key_work, key_work_debounce, onCloseSearchTimeOut } = props
     const IS_MB = useDeviceMobile()
     const history = useHistory()
@@ -70,9 +67,9 @@ function Search(props: SearchProps) {
         "limit": IS_MB ? 4 : 6,
         "filter[keyword]": KEY_WORD_DE
     }
-    const { orgs, totalOrg } = useOrgs(PARAM_ORG, key_work !== "")
-    const { services, totalService } = useServices(PARAM_SERVICE, key_work !== "")
-    const { products, totalProduct } = useProducts(PARAM_PRODUCT, key_work !== "")
+    const { orgs, totalOrg } = useOrgs(PARAM_ORG, KEY_WORD !== "")
+    const { services, totalService } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    const { products, totalProduct } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
     //
     const tabs = [
         { link: "dich-vu", total: totalService },
@@ -91,11 +88,11 @@ function Search(props: SearchProps) {
             onResult()
         }
     }
-    const onSaveOrg = (item: IOrganization) => {
-        dispatch(addHistory({
-            TYPE: "ORG", id: item.id, item: item
-        }))
-    }
+    // const onSaveOrg = (item: IOrganization) => {
+    //     dispatch(addHistory({
+    //         TYPE: "ORG", id: item.id, item: item
+    //     }))
+    // }
     const onItemSpecial = (item: any) => {
         if (item.type === "DISCOUNT") {
             history.push({
@@ -156,7 +153,7 @@ function Search(props: SearchProps) {
                                 {
                                     orgs.map((item: IOrganization) => (
                                         <Link
-                                            onClick={() => onSaveOrg(item)}
+                                            // onClick={() => onSaveOrg(item)}
                                             key={item.id} to={{ pathname: formatRouterLinkOrg(item.subdomain) }}
                                         >
                                             <div className={style.org_item}>
@@ -221,7 +218,7 @@ function Search(props: SearchProps) {
                                 onClick={onCloseSearch}
                                 className={style.org_list_wrapper}
                             >
-                                {
+                                {/* {
                                     HISTORY
                                         .filter((i: any) => i.TYPE === "ORG")
                                         .map((item: any) => (
@@ -238,7 +235,7 @@ function Search(props: SearchProps) {
                                                 </div>
                                             </Link>
                                         ))
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>

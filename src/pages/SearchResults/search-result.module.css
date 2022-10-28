@@ -8,7 +8,7 @@
 
 .left_cnt {
     width: 20%;
-    padding: 12px 6px 12px 12px;
+    padding: 12px 6px;
     border-right: 1px solid var(--bg-color);
 }
 
@@ -31,7 +31,6 @@
     line-height: 20px;
     font-weight: 600;
     color: #374957;
-    margin-left: 6px;
 }
 
 .link_item_act {
@@ -64,6 +63,7 @@
 .right_cnt {
     width: 80%;
     padding: 12px 12px 12px 6px;
+    position: relative;
 }
 
 .result_list {
@@ -71,4 +71,108 @@
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 12px;
+}
+/* filter_container */
+.filter_container{
+    position: absolute;
+    z-index: 2;
+    width: calc(25% - 12px);
+    margin-left: calc(-25%);
+    margin-top: 152px;
+}
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        margin-top: 6px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .left_cnt {
+        width: 100%;
+        padding: 0px 12px;
+    }
+
+    .list_link {
+        background-color: var(--bg-color);
+        padding: 8px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .link_item_cnt {
+        margin: 0px;
+        width: 30%;
+    }
+
+    .link_item {
+        display: flex;
+        justify-content: center;
+        margin: 0px;
+        border-radius: 16px;
+    }
+
+    .link_item_act {
+        background-color: var(--purple) !important;
+    }
+
+    .link_item_act span {
+        color: var(--bg-white);
+    }
+
+    .link_item_icon {
+        display: none;
+    }
+
+    .right_cnt {
+        width: 100%;
+        padding: 12px;
+    }
+
+    .result_list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .result_list_org {
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: 0px;
+    }
+
+    .result_list_item_org {
+        height: 112px;
+        padding: 6px 0px;
+    }
+    /* filter */
+    .filter_container{
+        background-color: var(--bg-white);
+        width: calc(100% - 24px);
+        margin: 0px;
+        padding-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .filter_right{
+        width: calc(66.66% - 6px);
+    }
+    .filter_left{
+       width: calc(33.33% - 6px);
+    }
+    .filter_btn{
+        padding: 9px;
+        width: 100%;
+        display: flex;
+        flex-direction: row-reverse;
+        background-color: var(--grey_2);
+        color: var(--text-black);
+    }
+    .filter_btn img{
+        margin: 0px;
+        margin-left: 6px;
+    }
+    .result_body{
+        padding-top: 54px;
+    }
 }

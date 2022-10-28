@@ -1,0 +1,177 @@
+.container {
+    width: 100%;
+    padding: 12px 8px;
+}
+
+.title {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+}
+
+.location {
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.location_text {
+    width: calc(100% - 32px);
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: var(--text-black);
+    display: -webkit-box;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.location_btn {
+    padding: 6px;
+    background-color: transparent;
+    border: none;
+}
+
+.province_cnt {
+    width: 23vw;
+    height: 100vh;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.province_list_cnt {
+    height: calc(100% - 50px);
+    overflow-y: scroll;
+}
+
+.province_item {
+    padding: 4px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.province_item_name {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 700;
+}
+
+.radio_btn {
+    width: 20px;
+    height: 20px;
+    border: solid 2px var(--black);
+    border-radius: 100%;
+    cursor: pointer;
+    margin-right: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio_btn_check {
+    width: 11px;
+    height: 11px;
+    background-color: var(--purple);
+    border-radius: 100px;
+}
+
+.province_name {
+    width: calc(100% - 20px);
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: var(--text-black);
+    display: -webkit-box;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    cursor: pointer;
+}
+
+.che_right_btn {
+    background-color: transparent;
+    border: none;
+    padding: 2px;
+    width: 64px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.che_right_btn img {
+    margin: 0px;
+}
+
+/* price */
+.container {
+    width: 100%;
+    height: fit-content;
+    padding: 6px;
+    border-bottom: solid 1px var(--bg-color);
+}
+
+.filter_title {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+}
+
+.body_title {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--text-hover);
+}
+
+.price_cnt {
+    padding: 8px 0px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+}
+
+.price_item {
+    height: 34px;
+}
+
+.price_item input {
+    padding: 8px 6px;
+}
+
+.price_invalid {
+    margin: 4px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--red-cl);
+}
+
+.price_btn {
+    width: 100%;
+    border-radius: 6px;
+}
+@media only screen and (max-width: 1023px) {
+    .title{
+        display: none;
+    }
+    .container{
+        border-bottom: none;
+        background-color: var(--grey_2);
+        border-radius: 8px;
+    }
+    .province_cnt{
+        width: 100vw;
+        height: 75vh;
+    }
+    .province_name{
+        width: calc(100% - 26px);
+    }
+}

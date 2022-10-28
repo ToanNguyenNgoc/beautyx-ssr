@@ -18,8 +18,8 @@ import style from "./home-cate.module.css"
 import icon from '../../../constants/icon';
 import { Container } from '@mui/system';
 import { AUTH_LOCATION } from '../../../api/authLocation';
-import { FilterPrice } from "../../../components/FilterCate"
 import { SerProItem } from 'components/Layout';
+import { FilterPrice } from 'components/Filter';
 // import useGetLocation from '../../../utils/useGetLocation';
 
 function HomeCateResult() {

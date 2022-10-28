@@ -1,19 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
-import { onToggleSearchCnt } from "../../redux/search/searchSlice";
 import { handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
 import "./style.css";
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
 // end
 import useDeviceMobile from "../../utils/useDeviceMobile";
 // import useScript from "../../utils/useScript";
 
 export default function AssistantBtn() {
-    const dispatch = useDispatch();
     const location: any = useLocation();
     // const FLAT_FORM = EXTRA_FLAT_FORM();
 
@@ -23,16 +19,10 @@ export default function AssistantBtn() {
     if (viewDisable.includes(location.pathname)) {
         disable = true;
     }
-    const { open } = useSelector((state: any) => state.SEARCH);
     const [overLay, setOverLay] = useState(false);
     const is_mb = useDeviceMobile();
     const history = useHistory();
 
-    const handleOpenSearch = () => {
-        const action = open ? false : true;
-        tracking.SEARCH_CLICK();
-        dispatch(onToggleSearchCnt(action));
-    };
     const handleGoToHome = () => {
         history.push("/homepage");
     };
@@ -91,31 +81,6 @@ export default function AssistantBtn() {
                     ref={refAssisBtn}
                     className="assistantBtn-wrap"
                 >
-                    {location.pathname ===
-                        "/ket-qua-tim-kiem/" ? null : is_mb === true ? (
-                            <div
-                                onTouchStart={() => handleOpenSearch()}
-                                className="btn2 buttons"
-                            >
-                                <div className="btn-img">
-                                    <img src={icon.search} alt="" />
-                                </div>
-                            </div>
-                        ) : (
-                        <div
-                            onClick={() => handleOpenSearch()}
-                            className="btn2 buttons"
-                        >
-                            <div className="btn-img">
-                                <img
-                                    style={{ width: "20px" }}
-                                    src={icon.search}
-                                    alt=""
-                                />
-                            </div>
-                        </div>
-                    )}
-
                     {is_mb === true ? (
                         <div
                             onTouchStart={() => handleChat()}
