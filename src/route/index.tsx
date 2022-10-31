@@ -25,7 +25,6 @@ import HomeMap from "../features/HomeMap";
 import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 import HomeCateResult from "../features/HomeResults/HomeCateResult"
 import { useSelector } from "react-redux";
-import Videos from "../features/Feed/Videos";
 import Blog from "../features/Blog";
 import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
@@ -132,10 +131,6 @@ function RouterConfig() {
     {
       path: "/deal/:title",
       component: <HomeDealBanner />
-    },
-    {
-      path: "/beautyx-videos",
-      component: <Videos />
     },
     {
       path: "/tin-tuc",

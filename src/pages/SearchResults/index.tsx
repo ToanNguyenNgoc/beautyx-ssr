@@ -251,8 +251,11 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
             "filter[max_price]": e.max_price
         }))
     }
-    const onChangeTag = (e:string)=>{
-        console.log(e)
+    const onChangeTag = (e: string) => {
+        dispatch(onChangeFilterOrg({
+            ...ORG_PR,
+            "filter[tags]": e
+        }))
     }
     return (
         <>
