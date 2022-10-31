@@ -19,7 +19,7 @@ export const cartReducer = (carts: any[]) => {
     return { products, services, combos, cart_confirm, services_id, products_id, combos_id }
 }
 export const discountReducerItem = (items: IITEMS_DISCOUNT[]) => {
-    const productsInDis = items.filter((i: IITEMS_DISCOUNT) => i.productable_type === "App\\Models\\CI\\Product")
-    const servicesInDis = items.filter((i: IITEMS_DISCOUNT) => i.productable_type === "App\\Models\\CI\\Service")
+    const productsInDis = items?.filter((i: IITEMS_DISCOUNT) => i.productable_type === "App\\Models\\CI\\Product")
+    const servicesInDis = items?.filter((i: IITEMS_DISCOUNT) => i.productable_type === "App\\Models\\CI\\Service")
     return { productsInDis, servicesInDis }
 }

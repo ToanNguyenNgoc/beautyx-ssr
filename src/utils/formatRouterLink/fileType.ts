@@ -58,7 +58,7 @@ export const EX_DISCOUNT_UNIT = (discount: IDiscountPar) => {
     return value
 }
 export const EX_DISCOUNT_TYPE = (discount: IDiscountPar) => {
-    const { discount_type } = discount
+    const discount_type = discount?.discount_type
     let text = "";
     // let TYPE = ""
     const value = EX_DISCOUNT_UNIT(discount)

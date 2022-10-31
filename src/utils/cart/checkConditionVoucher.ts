@@ -1,11 +1,17 @@
 import { IOrganization } from "interface/organization";
-import moment from "moment";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
 import { discountReducerItem } from "./cartReducer";
+import dayjs from "dayjs";
 
 const date = new Date();
 
-const dayNow = moment(date).format("YYYY-MM-YY HH:MM:SS");
+// const dayNow = dayjs().format("YYYY-MM-YY HH:MM:ss");
+const day = `${date.getDate()}`.slice(-2)
+const month = `${date.getMonth() + 1}`.slice(-2)
+const year = date.getFullYear()
+
+const dayNow = `${year}-${month}-${day} ${dayjs().format('HH:MM:ss')}`
+
 function unique(arr: any) {
     var newArr = [];
     for (var i = 0; i < arr.length; i++) {
@@ -37,6 +43,7 @@ export const IS_VOUCHER = (discounts: IDiscountPar[]) => {
 
 export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
     let dateCondition = false;
+    // const dayNow = '2022-10-31 01:01:01'
     if (!voucher.valid_from && !voucher.valid_util) {
         dateCondition = true
     } else if (voucher.valid_from && dayNow > voucher.valid_from && !voucher.valid_util) {
@@ -44,6 +51,7 @@ export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
     } else if (voucher.valid_from < dayNow && voucher.valid_util > dayNow) {
         dateCondition = true
     }
+    // console.log(voucher.valid_from, dayNow, voucher.valid_util)
     return dateCondition
 }
 export const EX_CHECK_VALID_TIME = (voucher: IDiscountPar) => {

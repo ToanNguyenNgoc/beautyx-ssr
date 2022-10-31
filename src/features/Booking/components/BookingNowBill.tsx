@@ -61,7 +61,9 @@ function BookingNowBill(props: BookingNowBillProps) {
     const subTotalVouchers = vouchers_sub_total.length > 0 ?
         vouchers_sub_total.map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre) : 0
 
-     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
+    // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
+    const outDiscounts = services.map((item:any) => item?.service?.discount).filter(Boolean)
+
     return (
         <>
             {
@@ -111,20 +113,12 @@ function BookingNowBill(props: BookingNowBillProps) {
                 <div className="booking_calc_item">
                     <span className="booking_calc_item_left">Thanh toán</span>
                     <span style={{ fontWeight: "700" }} className="booking_calc_item_right">
-                        {/* [FIX]: Temple fix apply multi coupon code follow MYSPA Manager---- */}
-
-                        {/* {
-                            VOUCHER_APPLY.length > 0 ?
-                            formatPrice(total - subTotalVouchers)
-                            :
-                            formatPrice(total - totalDiscounts - totalVouchers - subTotalVouchers)
-                        } */}
-
                         {formatPrice(total - totalDiscounts - totalVouchers - subTotalVouchers)}đ
                     </span>
                 </div>
             </div>
             <InputVoucher
+                outDiscounts={outDiscounts}
                 open={openVc}
                 setOpen={setOpenVc}
                 cart_confirm={services_id}

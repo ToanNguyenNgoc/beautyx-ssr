@@ -26,7 +26,7 @@ import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
-import { onRefreshServices, onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
+import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "../Carts/components/CartGroupItem";
@@ -35,14 +35,7 @@ import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
 import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
-import { AxiosError } from "axios";
-import { OpenVcProp } from "features/Carts/components/CartBottom";
-import RenderRecatpcha, { FieldOtps } from "features/Otp/dialogOtp";
-import { IDataOtp } from "features/Otp/_model";
-import authentication from "api/authApi";
-import { putUser } from "redux/USER/userSlice";
 import { checkPhoneValid } from "utils/phoneUpdate";
-import { ExecException } from "child_process";
 import UserPaymentInfo from "features/Account/components/UserPaymentInfo";
 
 // end
@@ -260,12 +253,6 @@ function Booking() {
             });
         }
     };
-    const onChangeCardMap = (itemMap: any) => {
-        setBookTime({
-            ...bookTime,
-            branch_id: itemMap.subdomain ? null : itemMap.id,
-        });
-    };
     const handleSeatsAmount = (props: any) => {
         switch (props) {
             case "asc":
@@ -296,15 +283,13 @@ function Booking() {
                         // }
                     }
                     else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
-                    // else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid('090000000')) {
-                        // if (!checkPhoneValid('090000000')) {
                         setOpenNoti({
                             open: true,
                             content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
                             children: <>
                                 <XButton
                                     title="Cập nhập"
-                                    onClick={handleOtp}
+                                    onClick={() => history.push('/otp-form')}
                                 />
                                 <XButton
                                     title="Để sau"
@@ -330,77 +315,7 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
-    //* [ OTP  update telephone number ]
-    const [otp, setOtp] = useState(false);
-    // const [otpCode, setOtpCode] = useState(false);
-    const [dataOtp, setDataOtp] = useState({
-        open: false,
-        telephone: '',
-        code: '',
-        verification_id: ''
-    });
-    const handleOtp = () => {
-        setOtp(true);
-        setOpenNoti({ ...openNoti, open: false })
-    }
-    //* [END]  OTP  update telephone number
     const [address, setAddress] = useState<any>();
-    const handleUpdatePhone = async (props: IDataOtp) => {
-        try {
-
-            const paramsOb = {
-                "telephone": props.telephone,
-                "code": props.code,
-                "verification_id": props.verification_id
-            }
-            const res = await authentication.putUserProfile(paramsOb);
-            dispatch(putUser({ ...USER, }));
-            if (res) {
-                setDataOtp({
-                    ...dataOtp,
-                    open: false
-                })
-                alert('cập nhập thành công');
-                window.location.reload();
-            }
-        } catch (err) {
-            console.log('err.code', err.response);
-            switch (err.response.status) {
-                case 400:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
-                    });
-                    break;
-                case 501:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
-                    });
-                    break;
-                case 502:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Lỗi hệ thống gửi sms quý khách vui lòng thử lại sau!'
-                    });
-                    break;
-                default:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
-                    });
-                    break;
-            }
-        }
-    }
     return (
         <>
             <Container>
@@ -701,24 +616,6 @@ function Booking() {
                     setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                 />
             </Container>
-            {
-                otp && <RenderRecatpcha
-                    setOpen={setOtp}
-                    open={otp}
-                    dataOtp={dataOtp}
-                    setDataOtp={setDataOtp}
-                    handleSubmit={handleUpdatePhone}
-                />
-            }
-            {
-                dataOtp.verification_id && <FieldOtps
-                    open={dataOtp.open}
-                    setOpen={setDataOtp}
-                    dataOtp={dataOtp}
-                    setDataOtp={setDataOtp}
-                    handleSubmit={handleUpdatePhone}
-                />
-            }
             <Footer />
         </>
     );

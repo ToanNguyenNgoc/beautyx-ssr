@@ -6,24 +6,22 @@ import { identity, pickBy } from "lodash";
 import { PopupNotification } from "components/Notification";
 // ==== api tracking ====
 import tracking from "api/trackApi";
-import { IDataOtp } from "../../Otp/_model";
-import { IDiscountPar } from "interface/discount";
-import { cartReducer } from "utils/cart/cartReducer";
+import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
+import { cartReducer, discountReducerItem } from "utils/cart/cartReducer";
 import formatProductList from "utils/tracking";
 import order from "api/orderApi";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
-import authentication from "api/authApi";
-import { putUser } from "redux/USER/userSlice";
 import formatPrice from "utils/formatPrice";
 import { AppContext } from "context/AppProvider";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
-import RenderRecatpcha, { FieldOtps } from "features/Otp/dialogOtp";
-import { useDeviceMobile, useSwr } from "utils/index"
+import { onErrorImg, useDeviceMobile, useSwr } from "utils"
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cartSlice";
 import { AlertSnack, XButton } from "components/Layout";
+import img from "constants/img";
+import moment from "moment";
 
 export interface OpenVcProp {
     open: boolean,
@@ -34,20 +32,11 @@ function CartBottom(props: any) {
     const { DATA_CART, DATA_PMT } = props;
     const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
-    const dispatch = useDispatch();
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
     const { cartQuantityCheck } = useSelector((state: any) => state.carts);
     const [load, setLoad] = useState(false);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
-    //* [ OTP  update telephone number ]
-    const [otp, setOtp] = useState(false);
     // const [otpCode, setOtpCode] = useState(false);
-    const [dataOtp, setDataOtp] = useState({
-        open: false,
-        telephone: '',
-        code: '',
-        verification_id: ''
-    });
     const [openVc, setOpenVc] = useState<OpenVcProp>({
         open: false,
         voucher: ""
@@ -166,14 +155,15 @@ function CartBottom(props: any) {
                     title: "Chưa có địa chỉ giao hàng !",
                 });
             }
-            else if (checkPhoneValid(USER?.telephone)) {
+            else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+                // else if (checkPhoneValid(USER?.telephone)) {
                 setOpenNoti({
                     open: true,
                     content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
                     children: <>
                         <XButton
                             title="Cập nhập"
-                            onClick={handleOtp}
+                            onClick={() => history.push('/otp-form')}
                         />
                         <XButton
                             title="Để sau"
@@ -223,73 +213,16 @@ function CartBottom(props: any) {
             .map((i: IDiscountPar) => i.discount_value)
             .reduce((pre: number, cur: number) => pre + cur)
     }
-    const handleOtp = () => {
-        setOtp(true);
-        setOpenNoti({ ...openNoti, open: false })
-    }
-    const handleUpdatePhone = async (props: IDataOtp) => {
-        console.log(props);
-        try {
-
-            const paramsOb = {
-                "telephone": props.telephone,
-                "code": props.code,
-                "verification_id": props.verification_id
-            }
-            const res = await authentication.putUserProfile(paramsOb);
-            dispatch(putUser({ ...USER, }));
-            if (res) {
-                setDataOtp({
-                    ...dataOtp,
-                    open: false
-                })
-                alert('cập nhập thành công');
-                window.location.reload();
-            }
-        } catch (err) {
-            console.log(err.response);
-            switch (err.response.status) {
-                case 400:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
-                    });
-                    break;
-                case 501:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
-                    });
-                    break;
-                case 502:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Lỗi hệ thống gửi sms quý khách vui lòng thử lại sau!'
-                    });
-                    break;
-                default:
-                    setOpenAlertSnack({
-                        ...openAlertSnack,
-                        open: true,
-                        // title: JSON.stringify(err),
-                        title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
-                    });
-                    break;
-            }
-        }
-    }
     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     // const discountAmount = VOUCHER_APPLY.length === 0 ? DATA_CART.cartAmountDiscount : 0
     //-------------------------------------------------------------------
+
+    const outDiscounts = cart_confirm.map((item: any) => item.discount)
+
     return (
         <>
             <InputVoucher
+                outDiscounts={outDiscounts}
                 open={openVc}
                 setOpen={setOpenVc}
                 cart_confirm={cart_confirm}
@@ -402,24 +335,6 @@ function CartBottom(props: any) {
                     content={openNoti.content}
                 />
             </div>
-            {
-                otp && <RenderRecatpcha
-                    setOpen={setOtp}
-                    open={otp}
-                    dataOtp={dataOtp}
-                    setDataOtp={setDataOtp}
-                    handleSubmit={handleUpdatePhone}
-                />
-            }
-            {
-                dataOtp.verification_id && <FieldOtps
-                    open={dataOtp.open}
-                    setOpen={setDataOtp}
-                    dataOtp={dataOtp}
-                    setDataOtp={setDataOtp}
-                    handleSubmit={handleUpdatePhone}
-                />
-            }
         </>
     );
 }
@@ -434,12 +349,13 @@ interface InputVoucherProps {
     services_id: number[],
     products_id: number[],
     cartAmount: number
+    outDiscounts: IDiscountPar[]
 }
 
 export const InputVoucher = (props: InputVoucherProps) => {
     const dispatch = useDispatch();
     const IS_MB = useDeviceMobile();
-    const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id } = props;
+    const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const [shouldFetch, setShouldFetch] = useState(false);
     const [text, setText] = useState("");
     const onInputChange = (e: any) => {
@@ -522,9 +438,18 @@ export const InputVoucher = (props: InputVoucherProps) => {
                     }
                     <ul className="vc_cart_voucher_list">
                         {
+                            outDiscounts.length > 0 &&
+                            outDiscounts.map((item: IDiscountPar, index: number) => (
+                                <li className="voucher_list_item" key={index} >
+                                    <OutDiscountItem discount={item} />
+                                </li>
+                            ))
+                        }
+                        {
                             organization && response && text !== "" &&
-                            <li >
+                            <li className="voucher_list_item" >
                                 <VoucherOrgItem
+                                    outDiscounts={outDiscounts}
                                     voucher={voucher}
                                     org={organization}
                                     showApplyBtn={true}
@@ -544,5 +469,90 @@ export const InputVoucher = (props: InputVoucherProps) => {
                 </div>
             </div>
         </Dialog>
+    )
+}
+const OutDiscountItem = ({ discount }: { discount: IDiscountPar }) => {
+    const orgOnVoucher = discount?.organizations[0]
+    const { productsInDis, servicesInDis } = discountReducerItem(
+        discount?.items?.filter((i: IITEMS_DISCOUNT) => i.organization_id === orgOnVoucher?.id)
+    )
+    const productName = productsInDis?.map((i: IITEMS_DISCOUNT) => i.productable?.product_name);
+    const serviceName = servicesInDis?.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
+    const displayName = serviceName?.concat(productName)?.filter(Boolean)
+    return (
+        discount ?
+            <div
+                style={{
+                    backgroundColor: "#ffe3d2",
+                    border: "1px solid var(--red-cl)",
+                }}
+                className="cart-vouchers-list__item"
+            >
+                <div
+                    style={{ borderRight: "dashed 1px var(--red-cl)" }}
+                    className="cart-vouchers-list__item-left"
+                >
+                    <div className="item-left__img">
+                        <img
+                            onError={(e) => onErrorImg(e)}
+                            src={orgOnVoucher?.image_url ? orgOnVoucher?.image_url : img.imgDefault}
+                            alt=""
+                        />
+                    </div>
+                    <div className="item-left__name">
+                        <span>{orgOnVoucher?.name}</span>
+                    </div>
+                </div>
+                <div className="cart-vouchers-list__item-right">
+                    <div className="item-right__top">
+                        <span className="item-right__name">
+                            {
+                                discount?.discount_type === "FINAL_PRICE" ?
+                                    `Giảm giá ${formatPrice(discount?.discount_value)}đ trên mỗi item `
+                                    :
+                                    `Giảm giá ${formatPrice(discount.discount_value)}đ`
+                            }
+                        </span>
+                        {
+                            discount?.minimum_order_value &&
+                            <span className="item-right__desc">
+                                Cho đơn hàng từ {formatPrice(discount.minimum_order_value)}đ
+                            </span>
+                        }
+                        {
+                            (productsInDis.length === 0 && servicesInDis.length === 0) ?
+                                <span className="item-right__desc">
+                                    Áp dụng tất cả sản phẩm, dịch vụ
+                                </span>
+                                :
+                                <span className="item-right__desc">
+                                    Áp dụng cho các dịch vụ, sản phẩm : <span
+                                        style={{ fontWeight: "bold" }}
+                                    >
+                                        {displayName.join(", ")}
+                                    </span>
+                                </span>
+                        }
+                    </div>
+                    <div className="item-right__bottom">
+                        {
+                            (discount.valid_from || discount.valid_util) ?
+                                <span className="item-right__expired">
+                                    Áp dụng: {discount.valid_from && moment(discount.valid_from).format("DD/MM/YYYY")} -
+                                    {discount.valid_util && moment(discount.valid_util).format("DD/MM/YYYY")}
+                                </span>
+                                :
+                                <span className="item-right__expired"></span>
+                        }
+                        <div
+                            className="item-right__btn"
+                        >
+                            <span>Đã áp dụng</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            :
+            <></>
     )
 }

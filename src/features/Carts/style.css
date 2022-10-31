@@ -585,6 +585,9 @@
     width: 25%;
     border-radius: 4px;
 }
+.voucher_list_item{
+    padding: 10px 0px;
+}
 
 /* end popup input voucher container */
 

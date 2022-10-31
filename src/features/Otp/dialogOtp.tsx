@@ -58,7 +58,6 @@ function RenderRecatpcha(props: IPropOtp) {
         }
     }
     const verifyWithPhone = (values: string | number) => {
-        // console.log(window.recaptchaVerifier)
         let phoneNumberVN = "+84" + values.toString().slice(1);
         signInWithPhoneNumber(
             authentication,
@@ -108,7 +107,7 @@ function RenderRecatpcha(props: IPropOtp) {
                         status: snackStatus.FAIL
                     })
                 }
-                window.location.reload();
+                // window.location.reload();
             });
     }
     const handleTelephone = async (props: number) => {
@@ -116,14 +115,6 @@ function RenderRecatpcha(props: IPropOtp) {
         verifyWithPhone(props)
     }
     const handleClose = () => {
-        // if (window.recaptchaVerifier) {
-        //     try {
-        //         window.recaptchaVerifier.clear();
-        //     }
-        //     catch (err) {
-        //         console.log(err);
-        //     }
-        // }
         return setOpen(false)
     }
     return (

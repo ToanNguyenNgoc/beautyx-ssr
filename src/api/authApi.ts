@@ -32,4 +32,5 @@ class Auth {
 
 }
 const authentication = new Auth();
+export const auth = new Auth()
 export default authentication;

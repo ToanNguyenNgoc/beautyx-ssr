@@ -226,7 +226,7 @@ function FilterOrgs(props: IProps) {
                                 value={min_price || ""}
                                 className='filter-orgs-input'
                                 type="number"
-                                placeholder='Tốt thiểu'
+                                placeholder='Tối thiểu'
                             />
                             <input
                                 onChange={onChangeMaxPrice}
