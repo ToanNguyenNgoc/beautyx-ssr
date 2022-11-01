@@ -14,6 +14,7 @@ import RenderRecatpcha, { FieldOtps } from "../../../../features/Otp/dialogOtp";
 import { IDataOtp } from "../../../../features/Otp/_model";
 import { FLAT_FORM_TYPE } from "../../../../rootComponents/flatForm";
 import { AlertSnack } from "components/Layout";
+import validateForm from "utils/validateForm";
 export default function DialogChangeInfo(props: any) {
     const { open, setOpen } = props;
     const { t } = useContext(AppContext);
@@ -59,16 +60,29 @@ export default function DialogChangeInfo(props: any) {
     const formik = useFormik({
         initialValues: {
             fullname: USER?.fullname,
+            email: USER?.email ?? ''
         },
         validationSchema: Yup.object({
             fullname: Yup.string().required(t("form.please_enter_full_name")),
+            email: Yup.string()
+                .required("Vui lòng nhập Email hoặc Số điện thoại")
+                .matches(
+                    // eslint-disable-next-line no-useless-escape
+                    validateForm.email,
+                    "Vui lòng nhập đúng định dạng name@Example.com"
+                ),
         }),
         onSubmit: async (values) => {
             const params = {
                 fullname: values.fullname,
+                email: values.email !== USER?.email ? values.email : ''
             };
-            if (values.fullname !== USER?.fullname) {
-                await dispatch(updateAsyncUser(params));
+            const res = await dispatch(updateAsyncUser(params));
+            if (res?.payload?.status === 302) {
+                return setOpenAlertSnack({
+                    title: `"${values.email}" đã được sử dụng ! Vui lòng thử Email khác`,
+                    open: true
+                })
             }
             setOpen(false);
         },
@@ -90,7 +104,6 @@ export default function DialogChangeInfo(props: any) {
     //* [END]  OTP  update telephone number
     const handleUpdatePhone = async (props: IDataOtp) => {
         try {
-
             const paramsOb = {
                 "telephone": props.telephone,
                 "code": props.code,
@@ -201,9 +214,19 @@ export default function DialogChangeInfo(props: any) {
                                 </p>
                             )}
                         </div>
+                        <div className="edit-user__email">
+                            <img src={icon.emailPurple} alt="" />
+                            <input
+                                className="edit-user__email_inp"
+                                value={formik.values?.email}
+                                onChange={formik.handleChange}
+                                type="text"
+                                placeholder="Email"
+                                name="email"
+                            />
+                        </div>
                         <div className="edit-user__phone">
                             <img src={icon.phonePurple} alt="" />
-
                             <span>
                                 {
                                     USER?.telephone
@@ -211,10 +234,6 @@ export default function DialogChangeInfo(props: any) {
                                 {" "}
                                 {FLAT_FORM === FLAT_FORM_TYPE.MB && (!checkPhoneValid(USER?.telephone) && <div onClick={() => handleOtp()}>!__UPDATE_NOW__</div>)}
                             </span>
-                        </div>
-                        <div className="edit-user__email">
-                            <img src={icon.emailPurple} alt="" />
-                            <span>{USER?.email}</span>
                         </div>
                     </div>
                     <div className="edit-user__option">
