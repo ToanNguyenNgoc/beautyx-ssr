@@ -14,7 +14,7 @@ import i18next from "i18next";
 import { logoutUser } from "redux/USER/userSlice";
 import { onClearApps } from "redux/appointment/appSlice";
 import { onSetStatusServicesUser } from "redux/order/orderSlice";
-import { Appointment } from "interface/appointment";
+import { AppointmentNoti } from "interface/appointment";
 import dayjs from "dayjs";
 import { getTotal } from "redux/cartSlice";
 import Search from "features/Search";
@@ -22,6 +22,7 @@ import { debounce } from "lodash";
 import { useDeviceMobile } from "utils";
 import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
+import { onSetViewedNoti } from 'redux/notifications'
 
 interface IProps {
     IN_HOME?: boolean,
@@ -32,7 +33,7 @@ interface IProps {
 }
 
 function Head(props: IProps) {
-    const { t, appointment, orderService } = useContext(AppContext)
+    const { t, orderService } = useContext(AppContext)
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
     const { USER } = useSelector((state: IStore) => state.USER)
@@ -69,8 +70,9 @@ function Head(props: IProps) {
         }, 100)
     }
     //
-    const appointment_today = appointment.filter((a: Appointment) =>
-        dayjs(a.time_start).format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD")
+    const { appsNoti } = useSelector((state: IStore) => state.NOTI)
+    const appointment_today = appsNoti?.filter((a: AppointmentNoti) =>
+        dayjs(a.time_start).format("YYYY-MM-DD") === dayjs().format("YYYY-MM-DD") && a.viewed === false
     )
     const order_app = orderService.filter((a: IServiceUser) => a.appointments.length === 0)
     const notiCount = appointment_today.concat(order_app).length
@@ -229,12 +231,13 @@ function Head(props: IProps) {
 export default Head;
 
 interface HeadNotificationProps {
-    appointment_today: Appointment[],
+    appointment_today: AppointmentNoti[],
     order_app: IServiceUser[]
     refNoti: any
 }
 
 const HeadNotification = (props: HeadNotificationProps) => {
+    const dispatch = useDispatch()
     const { refNoti, appointment_today, order_app } = props;
     const { USER } = useSelector((state: IStore) => state.USER)
     const history = useHistory()
@@ -245,16 +248,25 @@ const HeadNotification = (props: HeadNotificationProps) => {
             count: appointment_today.length,
             title: `${USER?.fullname} ơi ! Hôm nay bạn có ${appointment_today.length} lịch hẹn ! Xem ngay nhé !`,
             url: "/lich-hen?tab=1",
-            icon: ICON.calendarAct
+            icon: ICON.calendarAct,
+            type: 'APP'
         },
         {
             id: 2,
             count: order_app.length,
             title: `${USER?.fullname} ơi ! Hôm nay bạn có ${order_app.length} thẻ dịch vụ chưa đặt hẹn ! Xem ngay nhé !`,
             url: "/lich-hen?tab=2",
-            icon: icon.servicesPurpleBold
+            icon: icon.servicesPurpleBold,
+            type: 'SER'
         }
     ]
+    const onViewedNoti = (type: string) => {
+        if (type === "APP") {
+            appointment_today.map((item: AppointmentNoti) => {
+                return dispatch(onSetViewedNoti(item.id))
+            })
+        }
+    }
     return (
         <div ref={refNoti} className={style.head_noti}>
             <div className={style.head_menu_title}>Thông báo</div>
@@ -275,7 +287,10 @@ const HeadNotification = (props: HeadNotificationProps) => {
                             notiList
                                 .filter(i => i.count > 0)
                                 .map(item => (
-                                    <li key={item.id} >
+                                    <li
+                                        onClick={() => onViewedNoti(item.type)}
+                                        key={item.id}
+                                    >
                                         <div
                                             onClick={() => history.push(item.url)}
                                             className={style.noti_list_link}

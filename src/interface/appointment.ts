@@ -34,4 +34,7 @@ export interface NewAppointments {
   year_month: string,
   month_day: string
 }
-
+//
+export interface AppointmentNoti extends Appointment {
+  viewed: boolean
+}
