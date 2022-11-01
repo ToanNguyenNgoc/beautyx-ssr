@@ -57,6 +57,7 @@ function SearchResults() {
                                 links.map(link => (
                                     <li key={link.link} className={style.link_item_cnt}>
                                         <Link
+                                            replace={true}
                                             className={tab === link.link ? `${style.link_item} ${style.link_item_act}` : style.link_item}
                                             to={onSwitchLick(link.link)} >
                                             <div style={tab === link.link ? {
@@ -220,6 +221,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
     )
 }
 const TabOrg = ({ keyword }: { keyword: string }) => {
+    const [openFilter, setOpenFilter] = useState(false)
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -275,7 +277,23 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
                                     icon={icon.settingsSliders}
                                     title="Bộ lọc"
                                     className={style.filter_btn}
+                                    onClick={()=>setOpenFilter(true)}
                                 />
+                                <Drawer
+                                    open={openFilter} onClose={()=>setOpenFilter(false)} anchor="bottom"
+                                >
+                                    <div className={style.filter_cnt_mt}>
+                                    <FilterTags
+                                    onChange={onChangeTag}
+                                    value={ORG_PR["filter[tags]"] ?? ""}
+                                />
+                                <FilterPrice
+                                    onChangePrice={onChangePrice}
+                                    min_price={ORG_PR["filter[min_price]"]}
+                                    max_price={ORG_PR["filter[max_price]"]}
+                                />
+                                    </div>
+                                </Drawer>
                             </>
                             :
                             <>
