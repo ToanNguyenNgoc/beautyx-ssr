@@ -111,20 +111,32 @@
     text-overflow: ellipsis;
     word-break: break-word;
 }
+.item_name_ch{
+    -webkit-line-clamp: 2;
+    font-size: 13px;
+    line-height: 14px;
+}
 
 .item_price {
     display: flex;
     flex-direction: column;
 }
+.item_price_ch{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 
-.item_price span:first-child {
+.item_price span:first-child,
+.item_price_ch span:first-child {
     color: var(--red-cl);
     font-size: 16px;
     font-weight: 700;
     line-height: 18px;
 }
 
-.item_price span:nth-child(2) {
+.item_price span:nth-child(2),
+.item_price_ch span:nth-child(2) {
     color: var(--text-hover);
     font-size: 12px;
     font-weight: 700;

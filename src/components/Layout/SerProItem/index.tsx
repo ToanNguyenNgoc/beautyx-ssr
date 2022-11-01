@@ -89,8 +89,13 @@ export function SerProItem(props: SerProItemProps) {
                 <div
                     className={!changeStyle ? style.detail_container : style.detail_container_change}
                 >
-                    <span className={style.item_name}>{name}</span>
-                    <div className={style.item_price}>
+                    <span className={
+                        !changeStyle ? style.item_name : `${style.item_name} ${style.item_name_ch}`
+                    }
+                    >{name}</span>
+                    <div className={
+                        !changeStyle ? style.item_price : style.item_price_ch
+                    }>
                         {
                             special_price > 0 ?
                                 <>
