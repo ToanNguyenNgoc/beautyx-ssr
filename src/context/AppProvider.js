@@ -14,6 +14,7 @@ import axios from "axios";
 import API_3RD from "api/3rd-api";
 import { paramAppointment, paramOrderService } from "../params-query";
 import { useSwr, useFetch } from "utils/index"
+import { onSetAppsNoti } from 'redux/notifications'
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -93,14 +94,22 @@ export default function AppProvider({ children }) {
     const productCatePage3 = useSwr("/tags", true, { page: 3, ...paramsProductsCate }).responseArray;
     const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
 
-    const serviceCate = useFetch(true,"https://beautyx.vercel.app/v1/tags-all").response
-    const specialItems = useFetch(true,"https://beautyx.vercel.app/v1/special-items").response
+    const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
+    const specialItems = useFetch(true, "https://beautyx.vercel.app/v1/special-items").response
     //get services, appointment user
     const { USER } = useSelector(state => state.USER)
     const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
 
+    const { appsNoti } = useSelector((state) => state.NOTI)
+    const appsMothPrev = appsNoti?.map(item => dayjs(item.time_start).format('YYYY-MM'))
 
+    useEffect(() => {
+        const today = dayjs().format('YYYY-MM')
+        if (!appsMothPrev?.includes(today)) {
+            dispatch(onSetAppsNoti(appointment))
+        }
+    }, [appsMothPrev, appointment])
 
     const value = {
         t,

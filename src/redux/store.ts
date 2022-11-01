@@ -30,6 +30,7 @@ import homePageReducer from "./home/homePageSlice";
 import chatOrgReducer from "./chat/chatOrgSlice";
 import tagsReducer from "./Tags/tagsSlice";
 import orgMapReducer from "./org/orgMapSlice";
+import notiReducer from "./notifications"
 
 const rootReducer = {
     TAGS: tagsReducer,
@@ -62,7 +63,8 @@ const rootReducer = {
     FILTER: filterReducer,
     HOME_PAGE: homePageReducer,
     CHAT_ORG: chatOrgReducer,
-    ORGS_MAP: orgMapReducer
+    ORGS_MAP: orgMapReducer,
+    NOTI: notiReducer
 };
 const store = configureStore({
     reducer: rootReducer,
