@@ -97,6 +97,12 @@ function Head(props: IProps) {
             onResult()
         }
     }
+    const onNavigateAppointment = () => {
+        appointment_today?.map((item: AppointmentNoti) => {
+            return dispatch(onSetViewedNoti(item.id))
+        })
+        history.push("/lich-hen?tab=1")
+    }
     return (
         <div className={style.container}>
             <Container>
@@ -140,7 +146,7 @@ function Head(props: IProps) {
                                             <span className={style.head_user_name}>{USER?.fullname}</span>
                                         </Link >
                                         <button
-                                            onClick={() => history.push("/lich-hen?tab=1")}
+                                            onClick={onNavigateAppointment}
                                             className={style.head_top_right_btn}
                                         >
                                             {
@@ -262,7 +268,7 @@ const HeadNotification = (props: HeadNotificationProps) => {
     ]
     const onViewedNoti = (type: string) => {
         if (type === "APP") {
-            appointment_today.map((item: AppointmentNoti) => {
+            appointment_today?.map((item: AppointmentNoti) => {
                 return dispatch(onSetViewedNoti(item.id))
             })
         }
