@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import apointmentApi from 'api/apointmentApi'
+import dayjs from 'dayjs'
 import { AppointmentNoti, Appointment } from 'interface/appointment'
-
 const localNoti = localStorage.getItem('noti')
 const appsNoti = localNoti ? JSON.parse(localNoti) : []
 
@@ -8,19 +9,42 @@ export interface INotification {
     appsNoti: AppointmentNoti[]
 }
 
+const curMoth = dayjs().format('YYYY-MM')
+const prevApps = appsNoti.map((item: Appointment) => dayjs(item.time_start).format('YYYY-MM'))
+
+export const fetchAsyncAppCur: any = createAsyncThunk(
+    "NOTI/fetchAsyncAppCur",
+    async () => {
+        const res = await apointmentApi.getAppoitment(curMoth)
+        const apps = res.data.context.data
+        return apps
+    }
+)
+
 const initialState: INotification = {
     appsNoti: appsNoti
 }
 const notiSlice = createSlice({
     name: "NOTI",
     initialState,
-    reducers: {
-        onSetAppsNoti: (state, action) => {
-            const inAppsNoti: AppointmentNoti[] = action.payload?.map((item: Appointment) => {
+    extraReducers: {
+        [fetchAsyncAppCur.fulfilled]: (state, { payload }) => {
+            const inAppsNoti: AppointmentNoti[] = payload?.map((item: Appointment) => {
                 return { ...item, viewed: false }
             })
-            state.appsNoti = inAppsNoti
-            localStorage.setItem('noti', JSON.stringify(state.appsNoti))
+            if (!prevApps.includes(curMoth)) {
+                state.appsNoti = inAppsNoti
+                localStorage.setItem('noti', JSON.stringify(state.appsNoti))
+            }
+        }
+    },
+    reducers: {
+        onSetAppsNoti: (state, action) => {
+            // const inAppsNoti: AppointmentNoti[] = action.payload?.map((item: Appointment) => {
+            //     return { ...item, viewed: false }
+            // })
+            // state.appsNoti = inAppsNoti
+            // localStorage.setItem('noti', JSON.stringify(state.appsNoti))
         },
         onSetViewedNoti: (state, action) => {
             const iIndex = state.appsNoti.findIndex(

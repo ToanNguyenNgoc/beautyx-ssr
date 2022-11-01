@@ -14,7 +14,7 @@ import axios from "axios";
 import API_3RD from "api/3rd-api";
 import { paramAppointment, paramOrderService } from "../params-query";
 import { useSwr, useFetch } from "utils/index"
-import { onSetAppsNoti } from 'redux/notifications'
+import {  fetchAsyncAppCur } from 'redux/notifications'
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -100,16 +100,9 @@ export default function AppProvider({ children }) {
     const { USER } = useSelector(state => state.USER)
     const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
-
-    const { appsNoti } = useSelector((state) => state.NOTI)
-    const appsMothPrev = appsNoti?.map(item => dayjs(item.time_start).format('YYYY-MM'))
-
-    useEffect(() => {
-        const today = dayjs().format('YYYY-MM')
-        if (!appsMothPrev?.includes(today)) {
-            dispatch(onSetAppsNoti(appointment))
-        }
-    }, [appsMothPrev, appointment])
+    useEffect(()=>{
+        if(USER) dispatch(fetchAsyncAppCur())
+    },[USER])
 
     const value = {
         t,
