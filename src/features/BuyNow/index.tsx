@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import Head from '../Head';
 import HeadMobile from '../HeadMobile';
