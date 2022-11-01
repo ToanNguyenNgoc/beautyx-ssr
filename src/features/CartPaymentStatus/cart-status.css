@@ -315,6 +315,20 @@
 #orderInfo{
     display: none !important;
 }
+.guide_line{
+    margin-top: 18px;
+    position: relative;
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: var(--box-shadow);
+    background-color: #ffe3d2;
+}
+.guide_line span{
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    color:  var(--text-orange);
+}
 /* Mobile */
 @media only screen and (max-width: 1023px) {
     .pay-view-pc {

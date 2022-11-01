@@ -508,7 +508,7 @@ const OutDiscountItem = ({ discount }: { discount: IDiscountPar }) => {
                         <span className="item-right__name">
                             {
                                 discount?.discount_type === "FINAL_PRICE" ?
-                                    `Giảm giá ${formatPrice(discount?.discount_value)}đ trên mỗi item `
+                                    `Giảm giá ${formatPrice(discount?.discount_value)}đ trên mỗi dịch vụ tương ứng `
                                     :
                                     `Giảm giá ${formatPrice(discount.discount_value)}đ`
                             }

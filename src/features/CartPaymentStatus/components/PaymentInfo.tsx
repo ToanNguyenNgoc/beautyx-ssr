@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Icon } from '@mui/material';
 import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
 import UserPaymentInfo from '../../Account/components/UserPaymentInfo';
@@ -14,6 +14,7 @@ import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 // import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
 import onErrorImg from '../../../utils/errorImg';
+import { ICON } from 'constants/icon2';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
@@ -214,6 +215,9 @@ function PaymentInfo(props: any) {
                                 ))
                             }
                         </ul>
+                    </div>
+                    <div className="guide_line">
+                        <span>Bạn cần đặt hẹn sau khi thanh toán thành công nhé! Cửa hàng sẽ liên hệ với bạn sớm nhất có thể</span>
                     </div>
                     {
                         data.orderStatus === "PENDING" &&
