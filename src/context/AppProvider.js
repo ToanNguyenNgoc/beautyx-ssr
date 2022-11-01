@@ -102,14 +102,14 @@ export default function AppProvider({ children }) {
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
 
     const { appsNoti } = useSelector((state) => state.NOTI)
-    const appsMothPrev = appsNoti?.map(item => dayjs(item.time_start).format('YYYY-MM'))
+    const appsMothPrev = appsNoti?.map(item => dayjs(item.time_start).format('YYYY-MM'));
 
-    useEffect(() => {
-        const today = dayjs().format('YYYY-MM')
-        if (!appsMothPrev?.includes(today)) {
-            dispatch(onSetAppsNoti(appointment))
-        }
-    }, [appsMothPrev, appointment])
+    // useEffect(() => {
+    //     const today = dayjs().format('YYYY-MM')
+    //     if (!appsMothPrev?.includes(today)) {
+    //         dispatch(onSetAppsNoti(appointment))
+    //     }
+    // }, [appsMothPrev, appointment])
 
     const value = {
         t,
