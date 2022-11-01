@@ -57,6 +57,7 @@ import MapBox from "../features/MapBeta";
 import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
 import ExtraFlatForm from "rootComponents/extraFlatForm";
+import OtpMbPage from "pages/OtpMbPage";
 
 const RouterPage = (
   props: { pageComponent: JSX.Element } & RouteComponentProps
@@ -284,6 +285,10 @@ function RouterConfig(props: any) {
     {
       path: "/chat",
       component: ChatAll
+    },
+    {
+      path:'/otp-form',
+      component: OtpMbPage
     }
   ];
   logEvent(analytics, 'page_view', {
