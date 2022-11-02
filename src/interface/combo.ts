@@ -95,5 +95,6 @@ export interface Combo {
       is_momo_ecommerce_enable: number,
       image_url: string
       products: ComboProduct[],
-      services: ComboService[]
+      services: ComboService[],
+      special_price_momo:number
 }
