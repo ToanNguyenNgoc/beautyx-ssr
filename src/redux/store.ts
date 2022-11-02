@@ -26,6 +26,7 @@ import homePageReducer from "./home/homePageSlice";
 import chatOrgReducer from "./chat/chatOrgSlice";
 import tagsReducer from "./Tags/tagsSlice";
 import orgMapReducer from "./org/orgMapSlice";
+import notiReducer from "./notifications"
 import filterResultReduce from "./filter-result"
 
 const rootReducer = {
@@ -56,6 +57,7 @@ const rootReducer = {
     HOME_PAGE: homePageReducer,
     CHAT_ORG: chatOrgReducer,
     ORGS_MAP: orgMapReducer,
+    NOTI: notiReducer,
     FILTER_RESULT: filterResultReduce
 };
 const store = configureStore({

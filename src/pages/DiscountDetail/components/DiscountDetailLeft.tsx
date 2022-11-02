@@ -101,9 +101,12 @@ function DiscountDetailLeft(props: IProps) {
                 ) : null}
 
                 <div className="service-detail__mobile-bottom">
-                    <div className="service-detail__mobile-percent">
-                        {t("detail_item.off")} {percent}%
-                    </div>
+                    {
+                        percent && percent > 1 ?
+                            <div className="service-detail__mobile-percent">
+                                {t("detail_item.off")} {percent}%
+                            </div> : ''
+                    }
                     <div className="service-detail__mobile-price">
                         <span>{formatPrice(finalDisplayPrice)}đ</span>
                         <span>

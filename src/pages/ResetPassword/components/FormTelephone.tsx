@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom'
@@ -17,11 +17,7 @@ function FormTelephone(props: any) {
         },
         validationSchema: Yup.object({
             telephone: Yup.string()
-                .required(t("form.please_enter_your_phone"))
-                .matches(validateForm.phone_new_rule,
-                    
-                    'Số điện thoại không hợp lệ'
-                ),
+                .required(t("form.please_enter_your_phone")),
         }),
         onSubmit: (values) => {
             values = {

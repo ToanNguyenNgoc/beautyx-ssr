@@ -1,5 +1,6 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER } from "../utils/authHeader";
+import { identity, pickBy } from "lodash";
 
 class Auth {
   login = (values: any) => {
@@ -27,9 +28,10 @@ class Auth {
   };
   putUserProfile = (params: any) => {
     const url = `/users/profile`;
-    return axiosClient.put(url, params, AUTH_HEADER())
+    return axiosClient.put(url, pickBy(params, identity), AUTH_HEADER())
   }
 
 }
 const authentication = new Auth();
+export const auth = new Auth()
 export default authentication;

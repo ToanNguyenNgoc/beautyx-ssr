@@ -9,6 +9,7 @@ import { ICOMMENT_MEDIA } from '../redux/commentSlice';
 import { IFILTER } from "../redux/filter/filterSlice"
 import { IORDER } from "../redux/order/orderSlice"
 import { IUSER } from "redux/USER/userSlice"
+import { INotification } from 'redux/notifications'
 import { IFilterResult } from 'redux/filter-result'
 
 
@@ -24,5 +25,6 @@ export default interface IStore {
     FILTER: IFILTER,
     ORDER: IORDER,
     USER: IUSER,
+    NOTI: INotification,
     FILTER_RESULT: IFilterResult
 }

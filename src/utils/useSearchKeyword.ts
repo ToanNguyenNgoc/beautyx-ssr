@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 
 export function useSearchKeyword(keyword: string, list: any[]) {
@@ -12,6 +13,6 @@ export function useSearchKeyword(keyword: string, list: any[]) {
                   setListBySearch(result);
             }
             handleSearchTerm()
-      }, [list, keyword])
+      }, [keyword])
       return listBySearch
 }

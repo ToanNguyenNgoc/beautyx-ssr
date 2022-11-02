@@ -52,7 +52,7 @@ class Comments {
             commentable_type: values.type,
             commentable_id: values.id,
             organization_id: values.org_id,
-            body: values.body,
+            body:  values.body !== "" ? values.body : '‭',
             media_ids: values.media_ids,
             rate: values.rate
         };

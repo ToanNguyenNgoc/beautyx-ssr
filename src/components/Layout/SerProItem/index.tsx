@@ -67,9 +67,10 @@ export function SerProItem(props: SerProItemProps) {
             >
                 <div className={!changeStyle ? style.img_container : style.img_container_change}>
                     {special_price > 0 &&
+                        percent && percent > 1 ?
                         <div className={style.item_percent}>
                             Giảm {percent}%
-                        </div>
+                        </div>:''
                     }
                     <img
                         style={changeStyle ? { borderRadius: "8px" } : {}}
@@ -88,8 +89,13 @@ export function SerProItem(props: SerProItemProps) {
                 <div
                     className={!changeStyle ? style.detail_container : style.detail_container_change}
                 >
-                    <span className={style.item_name}>{name}</span>
-                    <div className={style.item_price}>
+                    <span className={
+                        !changeStyle ? style.item_name : `${style.item_name} ${style.item_name_ch}`
+                    }
+                    >{name}</span>
+                    <div className={
+                        !changeStyle ? style.item_price : style.item_price_ch
+                    }>
                         {
                             special_price > 0 ?
                                 <>

@@ -89,7 +89,7 @@ function ComboItem(props: any) {
               />
               <ButtonCus
                 onClick={handleAddCart}
-                text="Pre-Order"
+                text="Re-Order"
                 padding="4px 8px"
                 color="var(--bgWhite)"
                 backColor="var(--purple)"

@@ -226,7 +226,7 @@ function FilterOrgs(props: IProps) {
                                 value={min_price || ""}
                                 className='filter-orgs-input'
                                 type="number"
-                                placeholder='Tốt thiểu'
+                                placeholder='Tối thiểu'
                             />
                             <input
                                 onChange={onChangeMaxPrice}
@@ -304,9 +304,9 @@ const DialogProvince = (props: any) => {
                     Chọn tỉnh, thành phố
                     <img onClick={() => setOpen(false)} src={icon.closeCircle} alt="" />
                 </div>
-                <div className="filter-org-province-list__input">
+                {/* <div className="filter-org-province-list__input">
                     <input type="text" placeholder='Tìm kiếm tỉnh, thành phố...' />
-                </div>
+                </div> */}
                 <ul className="list">
                     {
                         provinces.map((item: IProvince, index: number) => (

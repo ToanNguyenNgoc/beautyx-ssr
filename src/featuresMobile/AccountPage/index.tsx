@@ -17,6 +17,7 @@ import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import languages from "../../data/languages";
 import i18next from "i18next";
 import { onSetStatusServicesUser } from "../../redux/order/orderSlice";
+import { handleCallingPhone } from "utils/customChat";
 
 export default function AccountMobile() {
     const { t } = useContext(AppContext);
@@ -237,6 +238,12 @@ export default function AccountMobile() {
                 <div className="accountMobile-bot__tutorial">
                     <img src={icon.book} alt="" />
                     <p>{t("se.guide")}</p>
+                </div>
+            </div>
+            <div onClick={() => handleCallingPhone()} className="accountMobile-bot">
+                <div className="accountMobile-bot__tutorial">
+                    <img src={icon.phonePurple} alt="" />
+                   <a>0289 9959 938</a>
                 </div>
             </div>
             <Bottom />

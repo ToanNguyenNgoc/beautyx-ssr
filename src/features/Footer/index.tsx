@@ -28,9 +28,9 @@ function Footer() {
                     id: 12,
                     title: `${t(
                         "footer.customer_care_call_center"
-                    )} : 0899855223`,
+                    )} : 02899959938`,
                     type: "NUMBER",
-                    url: "0899855223",
+                    url: "0289 9959 938",
                 },
                 {
                     id: 13,

@@ -199,11 +199,12 @@ export default function ServiceDetailLeft(props: any) {
                 </div>
 
                 <div className="service-detail__mobile-bottom">
-                    {serviceSaleSpecialPrice > 0 && (
+                    {serviceSaleSpecialPrice > 0 && 
+                        percent && percent > 1 ?
                         <div className="service-detail__mobile-percent">
                             {t("detail_item.off")} {percent}%
-                        </div>
-                    )}
+                        </div>:''
+                    }
                     <div className="service-detail__mobile-price">
                         {serviceSaleSpecialPrice > 0 ? (
                             <>

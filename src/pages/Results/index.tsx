@@ -32,7 +32,7 @@ function Result() {
     const params: any = extraParamsUrl();
     const [openMap, setOpenMap] = useState(false);
     const location = useLocation();
-    // console.log(location);
+    // console.log(params);
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);
     const {

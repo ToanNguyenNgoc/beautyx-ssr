@@ -7,7 +7,7 @@ import "./style.css";
 import onErrorImg from "../../utils/errorImg";
 import ServiceBookItem from "./components/ServiceItem";
 import { useHistory, useLocation } from "react-router-dom";
-import { addServiceBookNow } from "../../redux/servicesBookSlice";
+import { addServiceBookNow, clearAllServices } from "../../redux/servicesBookSlice";
 import icon from "../../constants/icon";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
@@ -35,6 +35,8 @@ import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
 import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
+import { checkPhoneValid } from "utils/phoneUpdate";
+import UserPaymentInfo from "features/Account/components/UserPaymentInfo";
 
 // end
 const date = dayjs();
@@ -83,7 +85,6 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
-    // console.log(servicesBook);
     const branches = org?.branches?.concat(org);
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
@@ -99,7 +100,7 @@ function Booking() {
             quantity: item.quantity,
         };
     });
-    const [seatAmount, SetSeatAmount] = useState(services[0]?.quantity || 1);
+    const [seatAmount, SetSeatAmount] = useState(1);
     const onDropBranchList = () => {
         branchRef?.current?.classList?.toggle("drop-show-branches");
     };
@@ -223,6 +224,7 @@ function Booking() {
         try {
             await apointmentApi.postAppointment(action, org?.id);
             dispatch(onRefreshServicesNoBookCount());
+            dispatch(clearAllServices())
             setOpenNoti({
                 open: true,
                 content: "Đặt hẹn thành công",
@@ -251,12 +253,6 @@ function Booking() {
             });
         }
     };
-    const onChangeCardMap = (itemMap: any) => {
-        setBookTime({
-            ...bookTime,
-            branch_id: itemMap.subdomain ? null : itemMap.id,
-        });
-    };
     const handleSeatsAmount = (props: any) => {
         switch (props) {
             case "asc":
@@ -275,6 +271,7 @@ function Booking() {
             if (bookTime.time) {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
+
                         handlePostOrder();
                         // if (chooseE_wall) return 
                         // else {
@@ -284,6 +281,22 @@ function Booking() {
                         //         title: "Bạn Chưa chọn phương thức thanh toán!",
                         //     });
                         // }
+                    }
+                    else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+                        setOpenNoti({
+                            open: true,
+                            content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
+                            children: <>
+                                <XButton
+                                    title="Cập nhập"
+                                    onClick={() => history.push('/otp-form')}
+                                />
+                                <XButton
+                                    title="Để sau"
+                                    onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                                />
+                            </>
+                        });
                     } else {
                         return handlePostOrder();
                     }
@@ -302,6 +315,7 @@ function Booking() {
             history.push("/sign-in?1");
         }
     };
+    const [address, setAddress] = useState<any>();
     return (
         <>
             <Container>
@@ -324,8 +338,13 @@ function Booking() {
                             {IS_MB === false && org && (
                                 <></>
                             )}
+
                         </div>
                         <div className="booking-cnt__right">
+                            {IS_MB && <UserPaymentInfo
+                                onSetAddressDefault={setAddress}
+                            />}
+                            <br />
                             <div className="booking-cnt__right-org">
                                 <img
                                     src={org?.image_url}
@@ -340,6 +359,27 @@ function Booking() {
                                     </p>
                                 </div>
                             </div>
+
+                            {/* {
+                                IS_MB ?
+                                    <div className="booking-cnt__right-org">
+                                        <img
+                                            src={org?.image_url}
+                                            onError={(e) => onErrorImg(e)}
+                                            alt=""
+                                            className="org-avt"
+                                        />
+                                        <div className="book-org-detail">
+                                            <p className="org-name">{org?.name}</p>
+                                            <p className="org-address">
+                                                {org?.full_address}
+                                            </p>
+                                        </div>
+                                    </div> :
+                                    <UserPaymentInfo
+                                        onSetAddressDefault={setAddress}
+                                    />
+                            } */}
                             {
                                 location.state?.vouchers?.length > 0 &&
                                 <>
@@ -388,12 +428,12 @@ function Booking() {
                                                 alt=""
                                             />
                                             {bookTime.branch_id
-                                                ? org?.branches?.find(
+                                                ? 'Chi nhánh: ' + org?.branches?.find(
                                                     (i: any) =>
                                                         i.id ===
                                                         bookTime.branch_id
                                                 )?.full_address
-                                                : org?.full_address}
+                                                : 'Trụ sở: ' + org?.full_address}
                                         </span>
                                         {org?.branches?.length > 0 && (
                                             <img
@@ -423,6 +463,7 @@ function Booking() {
                                                         }
                                                         key={index}
                                                     >
+                                                        {(index + 1 == branches.length) ? 'Trụ sở: ' : 'Chi nhánh: '}
                                                         {item?.full_address}
                                                     </li>
                                                 )
@@ -457,7 +498,7 @@ function Booking() {
                             <div className="flex-row-sp booking-cnt__right-time">
                                 <div className="book-seats-amount">
                                     <span className="book-section-title">
-                                        Số lượng người
+                                        Số người sử dụng dịch vụ
                                     </span>
                                     <div className="seats_amount-cnt">
                                         <button

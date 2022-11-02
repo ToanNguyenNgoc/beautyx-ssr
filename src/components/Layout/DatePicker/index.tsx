@@ -177,6 +177,10 @@ export function DatePicker(props: DatePickerProps) {
                                                     <span key={app.id} className={style.list_dots_item}></span>
                                                 )))
                                         }
+                                        {
+                                            day_apps.apps?.length >= 4 &&
+                                            <span className={style.list_dots_item_plus}>+</span>
+                                        }
                                     </div>
                                 }
                             </div>

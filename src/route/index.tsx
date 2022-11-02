@@ -39,11 +39,36 @@ import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
 import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
+// import ExtraFlatForm from "rootComponents/extraFlatForm";
+import OtpMbPage from "pages/OtpMbPage";
 import LadingPage from "pages/LandingPage";
 
 function RouterConfig() {
   const USER = useSelector((state: any) => state.USER);
   const routes = [
+    // START mini app share link 
+    {
+      path: "/TIKI/dich-vu",
+      component: <ServiceDetail />,
+    },
+
+    {
+      path: "/TIKI/san-pham/:name",
+      component: <ProductDetail />,
+    },
+    {
+      path: "/TIKI/combo-detail/:name",
+      component: <ComboDetail />
+    },
+    {
+      path: "/TIKI/cua-hang/:subdomain",
+      component: <MerchantDetail />,
+    },
+    {
+      path: "/TIKI/org/:subdomain",
+      component: <MerchantDetail />,
+    },
+    // END mini app share link 
     {
       path: `/home`,
       component: <HomePage />,
@@ -208,8 +233,12 @@ function RouterConfig() {
     },
     {
       path: "/chat",
-      component: <ChatAll />
+      component: ChatAll
     },
+    {
+      path:'/otp-form',
+      component: OtpMbPage
+    }
   ];
   logEvent(analytics, 'page_view', {
     page_title: document.title,

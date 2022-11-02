@@ -10,21 +10,25 @@ import * as Yup from "yup";
 import "./dialogChangeInfo.css";
 import { AppContext } from "../../../../context/AppProvider";
 import { checkPhoneValid } from "../../../../utils/phoneUpdate";
-import RenderRecatpcha,{FieldOtps} from "../../../../features/Otp/dialogOtp";
+import RenderRecatpcha, { FieldOtps } from "../../../../features/Otp/dialogOtp";
 import { IDataOtp } from "../../../../features/Otp/_model";
 import { FLAT_FORM_TYPE } from "../../../../rootComponents/flatForm";
+import { AlertSnack } from "components/Layout";
+import validateForm from "utils/validateForm";
 export default function DialogChangeInfo(props: any) {
     const { open, setOpen } = props;
     const { t } = useContext(AppContext);
     const { USER } = useSelector((state: any) => state.USER);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     const dispatch = useDispatch();
-    const [otp, setOtp] = useState(false);
-    const [otpCode, setOtpCode] = useState(false);
-    const [dataOtp, setDataOtp] = useState<IDataOtp>({
-        telephone: '',
-        code: '',
-        verification_id: ''
+    const [openNoti, setOpenNoti] = useState({
+        content: "",
+        open: false,
+        children: <></>
+    });
+    const [openAlertSnack, setOpenAlertSnack] = useState({
+        title: "",
+        open: false,
     });
     // chose file
     const onFileChange = (e: any) => {
@@ -56,31 +60,117 @@ export default function DialogChangeInfo(props: any) {
     const formik = useFormik({
         initialValues: {
             fullname: USER?.fullname,
+            email: USER?.email ?? ''
         },
         validationSchema: Yup.object({
             fullname: Yup.string().required(t("form.please_enter_full_name")),
+            email: Yup.string()
+                .required("Vui lòng nhập Email hoặc Số điện thoại")
+                .matches(
+                    // eslint-disable-next-line no-useless-escape
+                    validateForm.email,
+                    "Vui lòng nhập đúng định dạng name@Example.com"
+                ),
         }),
         onSubmit: async (values) => {
             const params = {
                 fullname: values.fullname,
+                email: values.email !== USER?.email ? values.email : ''
             };
-            if (values.fullname !== USER?.fullname) {
-                await dispatch(updateAsyncUser(params));
+            const res = await dispatch(updateAsyncUser(params));
+            if (res?.payload?.status === 302) {
+                return setOpenAlertSnack({
+                    title: `"${values.email}" đã được sử dụng ! Vui lòng thử Email khác`,
+                    open: true
+                })
             }
             setOpen(false);
         },
     });
+    //* [ OTP  update telephone number ]
+    const [otp, setOtp] = useState(false);
+    // const [otpCode, setOtpCode] = useState(false);
+    const [dataOtp, setDataOtp] = useState({
+        open: false,
+        telephone: '',
+        code: '',
+        verification_id: ''
+    });
     const handleOtp = () => {
-        console.log('alo')
-        setOtp(true);
         setOpen(false);
+        setOtp(true);
+        setOpenNoti({ ...openNoti, open: false })
     }
-    const handleUpdatePhone = (props: any) => {
-        console.log(props);
+    //* [END]  OTP  update telephone number
+    const handleUpdatePhone = async (props: IDataOtp) => {
+        try {
+            const paramsOb = {
+                "telephone": props.telephone,
+                "code": props.code,
+                "verification_id": props.verification_id
+            }
+            const res = await authentication.putUserProfile(paramsOb);
+            dispatch(putUser({ ...USER, }));
+            if (res) {
+                setDataOtp({
+                    ...dataOtp,
+                    open: false
+                })
+                alert('cập nhập thành công');
+                window.location.reload();
+            }
+        } catch (err) {
+            console.log('err.code', err.response);
+            switch (err.response.status) {
+                case 400:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
+                    });
+                    break;
+                case 501:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Số điện thoại đã được sử dụng quý khách vui lòng thử số khác!'
+                    });
+                    break;
+                case 502:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Lỗi hệ thống gửi sms quý khách vui lòng thử lại sau!'
+                    });
+                    break;
+                default:
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: true,
+                        // title: JSON.stringify(err),
+                        title: 'Đã có lỗi xảy ra vui lòng thử lại sau!'
+                    });
+                    break;
+            }
+        }
     }
-    
+
     return (
         <>
+            <AlertSnack
+                title={openAlertSnack.title}
+                open={openAlertSnack.open}
+                status="FAIL"
+                onClose={() =>
+                    setOpenAlertSnack({
+                        ...openAlertSnack,
+                        open: false,
+                    })
+                }
+            />
             <Dialog open={open} onClose={() => setOpen(false)}>
                 <form
                     autoComplete="off"
@@ -124,20 +214,26 @@ export default function DialogChangeInfo(props: any) {
                                 </p>
                             )}
                         </div>
+                        <div className="edit-user__email">
+                            <img src={icon.emailPurple} alt="" />
+                            <input
+                                className="edit-user__email_inp"
+                                value={formik.values?.email}
+                                onChange={formik.handleChange}
+                                type="text"
+                                placeholder="Email"
+                                name="email"
+                            />
+                        </div>
                         <div className="edit-user__phone">
                             <img src={icon.phonePurple} alt="" />
-
                             <span>
                                 {
                                     USER?.telephone
                                 }
                                 {" "}
-                                {FLAT_FORM===FLAT_FORM_TYPE.MB&&(!checkPhoneValid(USER?.telephone) && <div onClick={() => handleOtp()}>!__UPDATE_NOW__</div>)}
+                                {FLAT_FORM === FLAT_FORM_TYPE.MB && (!checkPhoneValid(USER?.telephone) && <div onClick={() => handleOtp()}>!__UPDATE_NOW__</div>)}
                             </span>
-                        </div>
-                        <div className="edit-user__email">
-                            <img src={icon.emailPurple} alt="" />
-                            <span>{USER?.email}</span>
                         </div>
                     </div>
                     <div className="edit-user__option">
@@ -155,13 +251,12 @@ export default function DialogChangeInfo(props: any) {
                     dataOtp={dataOtp}
                     setDataOtp={setDataOtp}
                     handleSubmit={handleUpdatePhone}
-                    setOpenDialog={setOtpCode}
                 />
             }
             {
                 dataOtp.verification_id && <FieldOtps
-                    open={otpCode}
-                    setOpen={setOtpCode}
+                    open={dataOtp.open}
+                    setOpen={setDataOtp}
                     dataOtp={dataOtp}
                     setDataOtp={setDataOtp}
                     handleSubmit={handleUpdatePhone}

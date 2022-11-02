@@ -111,7 +111,7 @@ function ProductItem(props: any) {
               />
               <ButtonCus
                 onClick={handleAddCart}
-                text="Pre-Order"
+                text="Re-Order"
               />
             </div>
           </div>

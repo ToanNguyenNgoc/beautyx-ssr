@@ -325,6 +325,14 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
 }
 const TabOrg = ({ keyword }: { keyword: string }) => {
     const [openFilter, setOpenFilter] = useState(false)
+    const { tags } = useSelector((state: any) => state.HOME)
+    const resultTag = handlePassTagKeyword(keyword, tags)
+    useEffect(() => {
+        dispatch(onChangeFilterOrg({
+            ...ORG_PR,
+            "filter[tags]": resultTag[0]?.name
+        }))
+    }, [])
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -333,7 +341,7 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
         ...ORG_PR,
         "filter[province_code]": ORG_PR["filter[province_code]"] === "cur" ? "" : ORG_PR["filter[province_code]"],
         "filter[district_code]": ORG_PR["filter[district_code]"] === "cur" ? "" : ORG_PR["filter[district_code]"],
-        "filter[keyword]": keyword
+        "filter[keyword]": resultTag[0] ? "" : keyword
     }
     const { orgs, totalOrg, onLoadMoreOrg } = useOrgs(PRAMS_ORG, true)
     const onViewMore = () => {
@@ -451,4 +459,13 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
             </div>
         </>
     )
+}
+const handlePassTagKeyword = (keyword: string, list: any[]) => {
+    // console.log(list, keyword)
+    const result = list?.filter((item: { [x: string]: { toString: () => string; }; }) => {
+        return Object.keys(item).some(key =>
+            item[key]?.toString().toLowerCase().includes(keyword.toString().toLowerCase())
+        )
+    })
+    return result
 }

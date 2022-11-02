@@ -57,11 +57,24 @@ function BookingNowBill(props: BookingNowBillProps) {
     })
     const totalVouchers = vouchers_calc.length > 0 &&
         vouchers_calc.map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre)
-    const vouchers_sub_total: IDiscountPar[] = VOUCHER_APPLY.filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
-    const subTotalVouchers = vouchers_sub_total.length > 0 ?
-        vouchers_sub_total.map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre) : 0
+    const vouchers_sub_total: IDiscountPar[] = VOUCHER_APPLY
+        .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
+    const vouchers_sub_total_price = vouchers_sub_total.filter((item: IDiscountPar) => item.discount_unit === "PRICE")
+    const subTotalVouchers = vouchers_sub_total_price.length > 0 ?
+        vouchers_sub_total_price
+            .map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre) : 0
 
-     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
+    //
+    const outDiscounts = services.map((item: any) => item?.service?.discount).filter(Boolean)
+    //handle discount unit === "PERCENT"
+    const vouchers_sub_total_percent = vouchers_sub_total
+        .filter((item: IDiscountPar) => item.discount_unit === "PERCENT")
+        .map((item: IDiscountPar) => item.discount_value)
+    const totalPercent = vouchers_sub_total_percent.length > 0 ?
+        vouchers_sub_total_percent.reduce((cur: number, pre: number) => cur + pre) : 0
+    const TOTAL_PAYMENT = total - totalDiscounts - totalVouchers - subTotalVouchers
+    const totalDiscountPercent = totalPercent > 0 ? (TOTAL_PAYMENT * totalPercent / 100) : 0
+
     return (
         <>
             {
@@ -85,7 +98,7 @@ function BookingNowBill(props: BookingNowBillProps) {
                     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
                     // VOUCHER_APPLY.length === 0 &&
                     //-------------------------------------------------------------------
-                    discounts.map((item:number) => (
+                    discounts.map((item: number) => (
                         <div key={item} className="booking_calc_item">
                             <span className="booking_calc_item_left">Giảm giá</span>
                             <span
@@ -103,7 +116,12 @@ function BookingNowBill(props: BookingNowBillProps) {
                             <span
                                 style={{ color: "var(--text-orange)" }}
                                 className="booking_calc_item_right">
-                                -{formatPrice(item.discount_value)}đ
+                                {
+                                    item.discount_unit === "PRICE" && ` -${formatPrice(item.discount_value)}đ`
+                                }
+                                {
+                                    item.discount_unit === "PERCENT" && ` -${(item.discount_value)}%`
+                                }
                             </span>
                         </div>
                     ))
@@ -111,20 +129,12 @@ function BookingNowBill(props: BookingNowBillProps) {
                 <div className="booking_calc_item">
                     <span className="booking_calc_item_left">Thanh toán</span>
                     <span style={{ fontWeight: "700" }} className="booking_calc_item_right">
-                        {/* [FIX]: Temple fix apply multi coupon code follow MYSPA Manager---- */}
-
-                        {/* {
-                            VOUCHER_APPLY.length > 0 ?
-                            formatPrice(total - subTotalVouchers)
-                            :
-                            formatPrice(total - totalDiscounts - totalVouchers - subTotalVouchers)
-                        } */}
-
-                        {formatPrice(total - totalDiscounts - totalVouchers - subTotalVouchers)}đ
+                        {formatPrice(TOTAL_PAYMENT - totalDiscountPercent)}đ
                     </span>
                 </div>
             </div>
             <InputVoucher
+                outDiscounts={outDiscounts}
                 open={openVc}
                 setOpen={setOpenVc}
                 cart_confirm={services_id}

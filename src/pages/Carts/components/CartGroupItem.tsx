@@ -30,6 +30,7 @@ import moment from "moment";
 import { cartReducer, discountReducerItem } from "../../../utils/cart/cartReducer";
 import { Transition, TransitionUp } from "../../../utils/transition";
 import { XButton } from "components/Layout";
+import { PopupNotification } from "components/Notification";
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
@@ -196,7 +197,8 @@ interface IVoucherOrgItem {
     showApplyBtn: boolean,
     services_id: number[],
     products_id: number[],
-    cartAmount: number
+    cartAmount: number,
+    outDiscounts?: IDiscountPar[]
 }
 export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const { org, showApplyBtn, services_id, products_id, cartAmount } = props;
@@ -204,6 +206,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
         ...props.voucher,
     };
     const { timeCondition, displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
+    const [noti, setNoti] = useState(false);
 
     const { productsInDis, servicesInDis } = discountReducerItem(
         voucher.items.filter((i: IITEMS_DISCOUNT) => i.organization_id === org?.id)
@@ -252,8 +255,9 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     ) {
         applyCondition = true;
     }
-    
+    const outDiscounts = props.outDiscounts?.filter(Boolean)
     const handleApplyVoucher = () => {
+        if (outDiscounts && outDiscounts.length > 0) return setNoti(true)
         if (active) {
             dispatch(onCancelApplyVoucher(voucher.id))
         } else {
@@ -358,6 +362,17 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
                     }
                 </div>
             </div>
+            <PopupNotification
+                open={noti} setOpen={setNoti}
+                title="Thông báo"
+                content="Bạn chỉ có thể sử dụng một mã thanh toán với dịch vụ này"
+                children={
+                    <XButton
+                        title="Đã hiểu"
+                        onClick={() => setNoti(false)}
+                    />
+                }
+            />
         </div>
     );
 };

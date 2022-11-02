@@ -13,6 +13,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
             const res = await authentication.getUserProfile();
             let context = res?.data.context;
             if (context.telephone && !checkPhoneValid(context.telephone)) {
+                // if (context.telephone && !checkPhoneValid('context.telephone')) {
                 context = { ...context, telephone: 'số điện thoại' }
             }
             logEvent(analytics, 'login', {
@@ -26,10 +27,20 @@ export const fetchAsyncUser: any = createAsyncThunk(
 )
 export const updateAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
-    async (params) => {
-        const res = await authentication.putUserProfile(params);
-        const payload = res.data.context
-        return payload
+    async (params, { rejectWithValue }) => {
+        try {
+            const res = await authentication.putUserProfile(params);
+            const payload = res.data.context
+            if (res.data.context.token) {
+                localStorage.setItem('_WEB_TK', res.data.context.token)
+            }
+            return payload
+        } catch (error) {
+            if (!error.response) {
+                throw error
+            }
+            return rejectWithValue(error.response.data)
+        }
     }
 )
 
@@ -51,6 +62,7 @@ export const fetchAsyncDiscountsUser: any = createAsyncThunk(
 
 export interface IUSER {
     USER: any,
+    error: any,
     DISCOUNTS_USER: {
         discounts: IDiscountPar[],
         page: number,
@@ -62,6 +74,7 @@ export interface IUSER {
 
 const initialState: IUSER = {
     USER: null,
+    error: null,
     DISCOUNTS_USER: {
         discounts: [],
         page: 1,
@@ -95,6 +108,9 @@ const userSlice = createSlice({
         },
         [updateAsyncUser.fulfilled]: (state, { payload }) => {
             return { ...state, USER: payload, loading: false }
+        },
+        [updateAsyncUser.rejected]: (state, { payload }) => {
+            return { ...state, loading: false, error: payload }
         },
 
         [fetchAsyncDiscountsUser.pending]: (state) => {

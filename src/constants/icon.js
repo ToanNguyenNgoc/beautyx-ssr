@@ -36,6 +36,8 @@ import User_purple from "../assets/icon/user_box.svg";
 import Location from "../assets/icon/location.svg";
 import ArrowDownWhite from "../assets/icon/arrow-down-white.svg";
 import SearchWhite from "../assets/icon/search-white.svg";
+import suppportIcon from "../assets/icon/support.svg";
+
 
 import Lock from "../assets/icon/lock.svg";
 import eye from "../assets/icon/eye.svg";

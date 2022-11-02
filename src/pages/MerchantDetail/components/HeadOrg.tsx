@@ -141,9 +141,12 @@ function HeadOrg(props: IProps) {
                         className='mb-head-org-cnt__button'
                         onClick={onGotoCart}
                     >
-                        <div className="badge">
-                            {carts.cartQuantity >= 10 ? "9+" : carts.cartQuantity}
-                        </div>
+                        {
+                            carts.cartQuantity > 0 &&
+                            <div className="badge">
+                                {carts.cartQuantity >= 10 ? "9+" : carts.cartQuantity}
+                            </div>
+                        }
                         <div className="icon-btn">
                             <img src={icon.ShoppingCartSimple} alt="" />
                         </div>

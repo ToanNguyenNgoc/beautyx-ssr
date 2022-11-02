@@ -2,9 +2,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import "./product.css";
-// import Head from "../Head";
-// import Footer from "../Footer";
-// import HeadTitle from "../HeadTitle";
 import { STATUS } from "../../redux/status";
 import {
     fetchAsyncProductDetail,
@@ -36,7 +33,7 @@ import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import IStore from "../../interface/IStore";
 import { postHistoryView } from "../../user-behavior";
 import { OpenApp } from 'components/Layout'
-import { useGetParamUrl } from "utils";
+import { useGetParamUrl, extraParamsUrl } from "utils";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
 import HeadTitle from "features/HeadTitle";
 import Head from "features/Head";
@@ -50,11 +47,11 @@ function ProductDetail(props: any) {
     const history = useHistory();
     const ORG = useSelector((state: IStore) => state.ORG);
     const { PRODUCT, COMMENTS } = useSelector((state: IStore) => state.PRODUCT);
-    // const params: any = extraParamsUrl();
+    const paramsUrl: any = extraParamsUrl();
     const paramsArr = useGetParamUrl();
     const params = {
-        org: paramsArr[1] ? paramsArr[1] : 1,
-        id: paramsArr[0] ?? 1
+        org: paramsUrl?.org ?? paramsArr[1] ? paramsArr[1] : 1,
+        id: paramsUrl?.id ?? paramsArr[0] ?? 1
     }
     const is_mobile = useFullScreen();
     const [open, setOpen] = useState({
