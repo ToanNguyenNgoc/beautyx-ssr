@@ -42,6 +42,7 @@ import UserPaymentInfo from "features/Account/components/UserPaymentInfo";
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
+    const [finalAmount, setFinalAmount] = useState(0)
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const { org, status } = useSelector((state: any) => state.ORG);
     const IS_MB = useDeviceMobile();
@@ -165,7 +166,7 @@ function Booking() {
         try {
             //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
-            const state_payment = await response.data.context;
+            const state_payment = await {...response.data.context, FINAL_AMOUNT:finalAmount};
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
@@ -586,7 +587,7 @@ function Booking() {
                             </div>
                             <div className="booking-cnt__bot">
                                 {location.state.TYPE === "BOOK_NOW" && (
-                                    <BookingNowBill org={org} />
+                                    <BookingNowBill org={org} setFinalAmount={setFinalAmount} />
                                 )}
                                 <XButton
                                     title={
