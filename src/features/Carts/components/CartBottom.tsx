@@ -320,7 +320,7 @@ function CartBottom(props: any) {
                                         đ
                                     </span>
                                     <XButton
-                                        title={`${t("pm.total_payment")}`}
+                                        title={`Đặt hàng`}
                                         loading={load}
                                         onClick={handleSubmitOrder}
                                     />
