@@ -89,6 +89,7 @@ function CartBottom(props: any) {
         //-------------------------------------------------------------------
     };
 
+
     async function handlePostOrder() {
         setLoad(true)
         try {
@@ -100,7 +101,7 @@ function CartBottom(props: any) {
                 DATA_PMT.org.id,
                 pickBy(pramsOrder, identity)
             );
-            const state_payment = await response.data.context;
+            const state_payment = await {...response.data.context, FINAL_AMOUNT:FINAL_AMOUNT};
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
@@ -218,6 +219,9 @@ function CartBottom(props: any) {
     //-------------------------------------------------------------------
 
     const outDiscounts = cart_confirm.map((item: any) => item.discount)
+    const FINAL_AMOUNT = DATA_CART.cartAmount -
+        DATA_CART.cartAmountDiscount -
+        discountVoucherTotal
 
     return (
         <>
@@ -312,11 +316,7 @@ function CartBottom(props: any) {
                                 )}`}</span>
                                 <div className="right">
                                     <span className="right-money">
-                                        {formatPrice(
-                                            DATA_CART.cartAmount -
-                                            DATA_CART.cartAmountDiscount -
-                                            discountVoucherTotal
-                                        )}
+                                        {formatPrice(FINAL_AMOUNT)}
                                         đ
                                     </span>
                                     <XButton

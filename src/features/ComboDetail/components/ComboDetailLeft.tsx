@@ -12,9 +12,9 @@ interface IProps {
 
 function ComboDetailLeft(props: IProps) {
     const { combo, org } = props;
-    const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
-    const price = list_price[0];
-    const special_price = list_price[1];
+    const list_price = [combo?.special_price_momo, combo?.use_value].sort((a, b) => a-b);
+    const price = list_price[1];
+    const special_price = list_price[0];
     const percent = Math.round(100 - (special_price / price) * 100);
 
     return (
@@ -50,22 +50,22 @@ function ComboDetailLeft(props: IProps) {
                     </div> */}
 
                     <div className="service-detail__mobile-bottom">
-                        {combo?.use_value > 0 && (
+                        {special_price > 0 && (
                             percent && percent > 1 ?
                                 <div className="service-detail__mobile-percent">
                                     Giảm {percent}%
                                 </div> : ''
                         )}
                         <div className="service-detail__mobile-price">
-                            {combo?.use_value > 0 ? (
+                            {special_price > 0 ? (
                                 <>
                                     <span>
-                                        {formatPrice(combo?.use_value)}đ
+                                        {formatPrice(special_price)}đ
                                     </span>
-                                    <span>{formatPrice(combo?.price)}đ</span>
+                                    <span>{formatPrice(price)}đ</span>
                                 </>
                             ) : (
-                                <span>{formatPrice(combo?.price)}đ</span>
+                                <span>{formatPrice(price)}đ</span>
                             )}
                         </div>
                     </div>

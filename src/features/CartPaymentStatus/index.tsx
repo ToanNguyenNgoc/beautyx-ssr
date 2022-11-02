@@ -54,6 +54,27 @@ function CartPaymentStatus() {
     const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.actionAfter;
+    //[CASE]: when apply voucher payment_gateway_amount !== display_price
+    const onCloseNoti = () => setOpen({ ...open, open: false })
+    useEffect(() => {
+        if (res?.payment_gateway?.amount !== res?.FINAL_AMOUNT && res?.discounts?.length > 0) {
+            setOpen({
+                content: "Áp dụng mã thất bại. Bạn có muốn tiếp tục thanh toán",
+                open: true,
+                children: <>
+                    <XButton
+                        title="Trở lại"
+                        onClick={() => history.goBack()}
+                    />
+                    <XButton
+                        title="Tiếp tục"
+                        onClick={onCloseNoti}
+                    />
+                </>
+            })
+        }
+    }, [])
+    //-------------------------------------------------------------------
     //listPayment from page buy now product, booking now
     const listPayment: ICart[] = location.state?.listPayment;
     const handlePostApp = async () => {

@@ -158,7 +158,6 @@ function PaymentInfo(props: any) {
                 break
         }
     }
-    console.log(orderItems);
     return (
         <>
             <div className="pm-status-user">
