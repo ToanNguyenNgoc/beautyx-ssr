@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ParamOrg, ParamService } from 'params-query/param.interface'
+import { ParamOrg, ParamService, ParamProduct } from 'params-query/param.interface'
 
 export interface IFilterResult {
     keyword_re: string,
     SERVICE_PR: ParamService,
+    PRODUCT_PR: ParamProduct,
     ORG_PR: ParamOrg,
 }
 const initialState: IFilterResult = {
@@ -13,7 +14,16 @@ const initialState: IFilterResult = {
         "filter[province_code]": "",
         "filter[district_code]": "",
         "filter[min_price]": "",
-        "filter[max_price]": ""
+        "filter[max_price]": "",
+        "sort": ""
+    },
+    PRODUCT_PR: {
+        "filter[location]": "",
+        "filter[province_code]": "",
+        "filter[district_code]": "",
+        "filter[min_price]": "",
+        "filter[max_price]": "",
+        "sort": ""
     },
     ORG_PR: {
         "filter[tags]": "",
@@ -21,7 +31,8 @@ const initialState: IFilterResult = {
         "filter[province_code]": "",
         "filter[district_code]": "",
         "filter[min_price]": "",
-        "filter[max_price]": ""
+        "filter[max_price]": "",
+        "sort": ""
     }
 }
 const FilterResultSlice = createSlice({
@@ -34,6 +45,9 @@ const FilterResultSlice = createSlice({
         onChangeFilterService: (state, action) => {
             state.SERVICE_PR = { ...state.SERVICE_PR, ...action.payload }
         },
+        onChangeFilterProduct: (state, action) => {
+            state.PRODUCT_PR = { ...state.PRODUCT_PR, ...action.payload }
+        },
         onChangeFilterOrg: (state, action) => {
             state.ORG_PR = { ...state.ORG_PR, ...action.payload }
         },
@@ -43,5 +57,11 @@ const FilterResultSlice = createSlice({
     }
 })
 const { actions, reducer } = FilterResultSlice
-export const { onChangeFilterService, onResetFilter, onSaveKeyword,onChangeFilterOrg } = actions
+export const {
+    onChangeFilterService,
+    onResetFilter,
+    onSaveKeyword,
+    onChangeFilterOrg,
+    onChangeFilterProduct
+} = actions
 export default reducer

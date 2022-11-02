@@ -1,6 +1,7 @@
 import { ITag } from 'interface';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { clst } from 'utils'
 import style from './style.module.css'
 
 interface FilterTagsProps {
@@ -26,14 +27,31 @@ export function FilterTags(props: FilterTagsProps) {
             <span className={style.filter_title}>Danh mục</span>
             <ul className={style.tags_list}>
                 {
-                    tags?.map((item: ITag, index: number) => (
-                        <li onClick={() => onChangeTag(item.name)} key={index} className={style.tag_item_cnt}>
-                            <div className={style.tag_check}>
-                                {tagsArr.includes(item.name) && <span></span>}
-                            </div>
-                            <span className={style.tag_name}>{item.name}</span>
-                        </li>
-                    ))
+                    tags?.map((item: ITag, index: number) => {
+                        const actItem = tagsArr.includes(item.name)
+                        return (
+                            <li
+                                onClick={() => onChangeTag(item.name)}
+                                key={index}
+                                className={
+                                    actItem ?
+                                        clst([style.tag_item_cnt, style.tag_item_cnt_act])
+                                        :
+                                        style.tag_item_cnt
+                                }
+                            >
+                                <div className={style.tag_check}>
+                                    {actItem && <span></span>}
+                                </div>
+                                <span className={
+                                    actItem ?
+                                        clst([style.tag_name, style.tag_name_act])
+                                        :
+                                        style.tag_name
+                                }>{item.name}</span>
+                            </li>
+                        )
+                    })
                 }
             </ul>
         </div>

@@ -5,22 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { clst, extraParamsUrl, useDeviceMobile } from 'utils'
 import { useOrgs, useProducts, useServices } from 'features/Search/hook'
 import { paramsServices, paramsProducts, paramOrgs } from 'params-query'
-import style from './search-result.module.css'
 import { ICON } from "constants/icon2";
 import { IOrganization, IServicePromo } from "interface";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadGrid } from "components/LoadingSketion";
-import { ParamOrg, ParamService } from "params-query/param.interface";
-import { FilterLocation, FilterPrice, FilterTags } from "components/Filter";
+import { ParamOrg, ParamProduct, ParamService } from "params-query/param.interface";
+import { FilterLocation, FilterPrice, FilterSort, FilterTags } from "components/Filter";
 import { EventLocation } from "components/Filter";
 import IStore from "interface/IStore";
-import { onChangeFilterOrg, onChangeFilterService, onResetFilter, onSaveKeyword } from "redux/filter-result";
+import {
+    onChangeFilterOrg,
+    onChangeFilterService,
+    onResetFilter,
+    onSaveKeyword,
+    onChangeFilterProduct
+} from "redux/filter-result";
 import Head from "features/Head";
 import { Container, Drawer } from "@mui/material";
 import Footer from "features/Footer";
 import { OrgItemSec, SerProItem, XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
 import icon from "constants/icon";
+import style from './search-result.module.css'
 
 function SearchResults() {
     const { t } = useContext(AppContext)
@@ -96,7 +102,8 @@ const TabService = ({ keyword }: { keyword: string }) => {
         "filter[keyword]": keyword,
         "filter[location]": SERVICE_PR["filter[location]"],
         "filter[min_price]": SERVICE_PR["filter[min_price]"],
-        "filter[max_price]": SERVICE_PR["filter[max_price]"]
+        "filter[max_price]": SERVICE_PR["filter[max_price]"],
+        "sort": SERVICE_PR.sort
     }
     const { services, totalService, onLoadMoreService } = useServices(PARAMS_SERVICES, true)
     const onViewMore = () => {
@@ -119,6 +126,12 @@ const TabService = ({ keyword }: { keyword: string }) => {
             "filter[max_price]": e.max_price
         }))
     }
+    const onChangeSort = (query: string) => {
+        dispatch(onChangeFilterService({
+            ...PARAMS_SERVICES,
+            "sort": query
+        }))
+    }
     return (
         <>
             <div className={style.filter_container}>
@@ -139,8 +152,11 @@ const TabService = ({ keyword }: { keyword: string }) => {
                                     className={style.filter_btn}
                                     onClick={() => setOpenFilter(true)}
                                 />
-                                <Drawer open={openFilter} onClose={()=>setOpenFilter(false)} anchor="bottom" >
+                                <Drawer open={openFilter} onClose={() => setOpenFilter(false)} anchor="bottom" >
                                     <div className={style.filter_cnt_mt}>
+                                        <FilterSort
+                                            type="SERVICE"
+                                        />
                                         <FilterPrice
                                             onChangePrice={onChangePrice}
                                             min_price={SERVICE_PR["filter[min_price]"]}
@@ -150,11 +166,18 @@ const TabService = ({ keyword }: { keyword: string }) => {
                                 </Drawer>
                             </>
                             :
-                            <FilterPrice
-                                onChangePrice={onChangePrice}
-                                min_price={SERVICE_PR["filter[min_price]"]}
-                                max_price={SERVICE_PR["filter[max_price]"]}
-                            />
+                            <>
+                                <FilterSort
+                                    type="SERVICE"
+                                    onChange={onChangeSort}
+                                    value={SERVICE_PR.sort}
+                                />
+                                <FilterPrice
+                                    onChangePrice={onChangePrice}
+                                    min_price={SERVICE_PR["filter[min_price]"]}
+                                    max_price={SERVICE_PR["filter[max_price]"]}
+                                />
+                            </>
                     }
                 </div>
             </div>
@@ -185,9 +208,37 @@ const TabService = ({ keyword }: { keyword: string }) => {
 }
 const TabProduct = ({ keyword }: { keyword: string }) => {
     const IS_MB = useDeviceMobile()
-    const PARAMS_PRODUCTS = {
+    const dispatch = useDispatch()
+    const [openFilter, setOpenFilter] = useState(false);
+    const { PRODUCT_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
+    const PARAMS_PRODUCTS: ParamProduct = {
         ...paramsProducts,
-        "filter[keyword]": keyword
+        "filter[keyword]": keyword,
+        "filter[location]": PRODUCT_PR["filter[location]"],
+        "filter[min_price]": PRODUCT_PR["filter[min_price]"],
+        "filter[max_price]": PRODUCT_PR["filter[max_price]"],
+        "sort": PRODUCT_PR.sort
+    }
+    const onChangeFilterLocation = (e: EventLocation) => {
+        dispatch(onChangeFilterProduct({
+            ...PRODUCT_PR,
+            "filter[location]": e.coords,
+            "filter[province_code]": e.province?.province_code ?? "cur",
+            "filter[district_code]": e.district?.district_code ?? "cur"
+        }))
+    }
+    const onChangePrice = (e: any) => {
+        dispatch(onChangeFilterProduct({
+            ...PARAMS_PRODUCTS,
+            "filter[min_price]": e.min_price,
+            "filter[max_price]": e.max_price
+        }))
+    }
+    const onChangeSort = (query: string) => {
+        dispatch(onChangeFilterProduct({
+            ...PARAMS_PRODUCTS,
+            "sort": query
+        }))
     }
     const { products, totalProduct, onLoadMoreProduct } = useProducts(PARAMS_PRODUCTS, true)
     const onViewMore = () => {
@@ -196,28 +247,78 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
         }
     }
     return (
-        <div className={style.result_body}>
-            <InfiniteScroll
-                dataLength={products.length}
-                hasMore={true}
-                loader={<></>}
-                next={onViewMore}
-            >
-                <ul className={style.result_list}>
+        <>
+            <div className={style.filter_container}>
+                <div className={style.filter_right}>
+                    <FilterLocation
+                        title="Nơi bán"
+                        onChange={onChangeFilterLocation}
+                        province_code={PRODUCT_PR["filter[province_code]"]}
+                        district_code={PRODUCT_PR["filter[district_code]"]}
+                    />
+                </div>
+                <div className={style.filter_left}>
                     {
-                        products.map((item: IServicePromo) => (
-                            <li key={item.id} className={style.result_list_item}>
-                                <SerProItem
-                                    type="SERVICE"
-                                    item={item}
+                        IS_MB ?
+                            <>
+                                <XButton
+                                    icon={icon.settingsSliders}
+                                    title="Bộ lọc"
+                                    className={style.filter_btn}
+                                    onClick={() => setOpenFilter(true)}
                                 />
-                            </li>
-                        ))
+                                <Drawer open={openFilter} onClose={() => setOpenFilter(false)} anchor="bottom" >
+                                    <div className={style.filter_cnt_mt}>
+                                        <FilterSort
+                                            type="PRODUCT"
+                                        />
+                                        <FilterPrice
+                                            onChangePrice={onChangePrice}
+                                            min_price={PRODUCT_PR["filter[min_price]"]}
+                                            max_price={PRODUCT_PR["filter[max_price]"]}
+                                        />
+                                    </div>
+                                </Drawer>
+                            </>
+                            :
+                            <>
+                                <FilterSort
+                                    type="PRODUCT"
+                                    onChange={onChangeSort}
+                                    value={PRODUCT_PR.sort}
+                                />
+                                <FilterPrice
+                                    onChangePrice={onChangePrice}
+                                    min_price={PRODUCT_PR["filter[min_price]"]}
+                                    max_price={PRODUCT_PR["filter[max_price]"]}
+                                />
+                            </>
                     }
-                </ul>
-                {products.length < totalProduct && <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />}
-            </InfiniteScroll>
-        </div>
+                </div>
+            </div>
+            <div className={style.result_body}>
+                <InfiniteScroll
+                    dataLength={products.length}
+                    hasMore={true}
+                    loader={<></>}
+                    next={onViewMore}
+                >
+                    <ul className={style.result_list}>
+                        {
+                            products.map((item: IServicePromo) => (
+                                <li key={item.id} className={style.result_list_item}>
+                                    <SerProItem
+                                        type="PRODUCT"
+                                        item={item}
+                                    />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    {products.length < totalProduct && <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />}
+                </InfiniteScroll>
+            </div>
+        </>
     )
 }
 const TabOrg = ({ keyword }: { keyword: string }) => {
@@ -259,6 +360,12 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
             "filter[tags]": e
         }))
     }
+    const onChangeSort = (query: string) => {
+        dispatch(onChangeFilterOrg({
+            ...ORG_PR,
+            "sort": query
+        }))
+    }
     return (
         <>
             <div className={style.filter_container}>
@@ -277,21 +384,26 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
                                     icon={icon.settingsSliders}
                                     title="Bộ lọc"
                                     className={style.filter_btn}
-                                    onClick={()=>setOpenFilter(true)}
+                                    onClick={() => setOpenFilter(true)}
                                 />
                                 <Drawer
-                                    open={openFilter} onClose={()=>setOpenFilter(false)} anchor="bottom"
+                                    open={openFilter} onClose={() => setOpenFilter(false)} anchor="bottom"
                                 >
                                     <div className={style.filter_cnt_mt}>
-                                    <FilterTags
-                                    onChange={onChangeTag}
-                                    value={ORG_PR["filter[tags]"] ?? ""}
-                                />
-                                <FilterPrice
-                                    onChangePrice={onChangePrice}
-                                    min_price={ORG_PR["filter[min_price]"]}
-                                    max_price={ORG_PR["filter[max_price]"]}
-                                />
+                                        <FilterTags
+                                            onChange={onChangeTag}
+                                            value={ORG_PR["filter[tags]"] ?? ""}
+                                        />
+                                        <FilterSort
+                                            type="ORG"
+                                            onChange={onChangeSort}
+                                            value={ORG_PR.sort}
+                                        />
+                                        <FilterPrice
+                                            onChangePrice={onChangePrice}
+                                            min_price={ORG_PR["filter[min_price]"]}
+                                            max_price={ORG_PR["filter[max_price]"]}
+                                        />
                                     </div>
                                 </Drawer>
                             </>
@@ -300,6 +412,11 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
                                 <FilterTags
                                     onChange={onChangeTag}
                                     value={ORG_PR["filter[tags]"] ?? ""}
+                                />
+                                <FilterSort
+                                    type="ORG"
+                                    onChange={onChangeSort}
+                                    value={ORG_PR.sort}
                                 />
                                 <FilterPrice
                                     onChangePrice={onChangePrice}

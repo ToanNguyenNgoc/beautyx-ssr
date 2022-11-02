@@ -5,7 +5,7 @@ import './style.css';
 interface IProps {
     loading?: boolean,
     title?: string,
-    onClick?: () => void,
+    onClick?: (e?:any) => void,
     type?: "button" | "submit",
     className?: string,
     style?: any

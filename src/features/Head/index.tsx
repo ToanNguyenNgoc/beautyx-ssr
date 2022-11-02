@@ -77,7 +77,7 @@ function Head(props: IProps) {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const onSetDebounceKeyword = useCallback(
-        debounce((text) => setKey({ key: text, key_debounce: text }), 1000),
+        debounce((text) => setKey({ key: text, key_debounce: text }), 600),
         []
     )
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,10 +85,13 @@ function Head(props: IProps) {
         setKey({ ...key, key: e.target.value })
     }
     const onResult = () => {
-        if (key.key_debounce !== "") history.push({
-            pathname: "/ket-qua-tim-kiem/dich-vu",
-            search: `?keyword=${encodeURIComponent(key.key_debounce)}`,
-        })
+        if (key.key_debounce !== "") {
+            history.push({
+                pathname: "/ket-qua-tim-kiem/dich-vu",
+                search: `?keyword=${encodeURIComponent(key.key_debounce)}`,
+            })
+            onCloseSearchTimeOut()
+        }
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {

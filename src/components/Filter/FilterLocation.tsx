@@ -22,12 +22,13 @@ interface FilterLocationProps {
     onChange?: (e: EventLocation) => void,
     province_code?: number | string,
     district_code?: number | string,
+    title?: string
 }
 
 export function FilterLocation(props: FilterLocationProps) {
     const location = AUTH_LOCATION()
     const IS_MB = useDeviceMobile()
-    const { onChange, province_code, district_code } = props
+    const { onChange, province_code, district_code, title } = props
     const [open, setOpen] = useState({
         oProvince: false,
         oDistrict: false
@@ -93,7 +94,9 @@ export function FilterLocation(props: FilterLocationProps) {
     return (
         <div className={style.container}>
             <FormAddLocation open={openAddLo} setOpen={setOpenAddLo} />
-            <span className={style.title}>Khu vực</span>
+            <span className={style.title}>
+                {title ?? "Khu vực"}
+            </span>
             <div className={style.location}>
                 <span className={style.location_text}>
                     {
@@ -113,7 +116,7 @@ export function FilterLocation(props: FilterLocationProps) {
                 )}
                 open={open.oProvince}
                 onClose={() => setOpen({ oDistrict: false, oProvince: false })}
-                anchor={IS_MB ? "bottom":"left"}
+                anchor={IS_MB ? "bottom" : "left"}
             >
                 <div className={style.province_cnt}>
                     <div className={style.province_cnt_head}>
@@ -172,7 +175,7 @@ export function FilterLocation(props: FilterLocationProps) {
             <Drawer
                 open={open.oDistrict}
                 onClose={() => setOpen({ ...open, oDistrict: false })}
-                anchor={IS_MB ? "bottom":"left"}
+                anchor={IS_MB ? "bottom" : "left"}
             >
                 <div className={style.province_cnt}>
                     <div className={style.province_list_cnt}>

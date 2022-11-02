@@ -203,4 +203,30 @@
     .province_name{
         width: calc(100% - 26px);
     }
+    /* tag */
+    .tags_list{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .tag_item_cnt{
+        width: calc(50% - 6px);
+        padding: 6px;
+        margin: 4px 0px;
+        background-color: var(--bg-color);
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        transition: var(--trans);
+    }
+    .tag_check{
+        display: none;
+    }
+    .tag_item_cnt_act{
+        background-color: var(--purple);
+        transition: var(--trans);
+    }
+    .tag_name_act{
+        color: var(--bg-white);
+    }
 }

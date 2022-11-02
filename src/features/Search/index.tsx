@@ -38,12 +38,12 @@ function Search(props: SearchProps) {
     //onChange input
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onSetDebounceKeyword = useCallback(
-        debounce((text) => setKeyword({ key: text, key_debounce: text }), 1000),
+        debounce((text) => setKeyword({ key: text, key_debounce: text }), 600),
         []
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onDebounceGoogle = useCallback(
-        debounce((text) => tracking.SEARCH_ON_CHANGE(text), 1000),
+        debounce((text) => tracking.SEARCH_ON_CHANGE(text), 600),
         []
     )
 
@@ -82,6 +82,7 @@ function Search(props: SearchProps) {
             pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
         })
+        if (onCloseSearchTimeOut) onCloseSearchTimeOut()
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
