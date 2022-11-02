@@ -23,6 +23,7 @@ import { useDeviceMobile } from "utils";
 import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
 import { onSetViewedNoti } from 'redux/notifications'
+import { onResetFilter } from "redux/filter-result";
 
 interface IProps {
     IN_HOME?: boolean,
@@ -93,6 +94,7 @@ function Head(props: IProps) {
                 search: `?keyword=${encodeURIComponent(key.key_debounce)}`,
             })
             onCloseSearchTimeOut()
+            dispatch(onResetFilter())
         }
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

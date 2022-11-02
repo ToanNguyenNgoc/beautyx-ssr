@@ -33,7 +33,6 @@ import BuyNow from "../features/BuyNow";
 import Carts from "../pages/Carts";
 import AssistantBtn from "../components/AssistantBtn";
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
-import Result from "../pages/Results";
 import ChatOrg from "../features/Chat/ChatOrg";
 import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
@@ -184,10 +183,6 @@ function RouterConfig() {
     {
       path: "/san-pham",
       component: <ProductsByCate />
-    },
-    {
-      path: "/ket-qua",
-      component: <Result />
     },
     {
       path: "/ban-do",

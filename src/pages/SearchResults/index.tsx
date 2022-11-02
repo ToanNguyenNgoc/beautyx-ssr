@@ -16,8 +16,6 @@ import IStore from "interface/IStore";
 import {
     onChangeFilterOrg,
     onChangeFilterService,
-    onResetFilter,
-    onSaveKeyword,
     onChangeFilterProduct
 } from "redux/filter-result";
 import Head from "features/Head";
@@ -30,27 +28,31 @@ import style from './search-result.module.css'
 
 function SearchResults() {
     const { t } = useContext(AppContext)
-    const dispatch = useDispatch()
-    const { keyword_re } = useSelector((state: IStore) => state.FILTER_RESULT)
     const params = useParams();
     const paramsUrl: any = extraParamsUrl()
-    const keyword = paramsUrl.keyword ?? ''
+    const keyword = paramsUrl.keyword
+    const province = paramsUrl.province
     const tab = params.tab ?? 'dich-vu'
     const links = [
-        { link: "dich-vu", title: t('Mer_de.services'), icon: ICON.servicePurple, act_icon: ICON.serviceWhite },
-        { link: "san-pham", title: t('Mer_de.products'), icon: ICON.barberPurple, act_icon: ICON.barberWhite },
-        { link: "cua-hang", title: t('my_ser.business'), icon: ICON.orgPurple, act_icon: ICON.orgWhite },
+        {
+            link: "dich-vu", title: t('Mer_de.services'),
+            icon: ICON.servicePurple, act_icon: ICON.serviceWhite, show: province ? false:true
+        },
+        {
+            link: "san-pham", title: t('Mer_de.products'),
+            icon: ICON.barberPurple, act_icon: ICON.barberWhite, show: province ? false:true
+        },
+        {
+            link: "cua-hang", title: t('my_ser.business'),
+            icon: ICON.orgPurple, act_icon: ICON.orgWhite, show: true
+        },
     ]
     const onSwitchLick = (link: string) => {
         return {
             pathname: `/ket-qua-tim-kiem/${link}`,
-            search: `keyword=${keyword}`
+            search: province ? `province=${province}` : `keyword=${keyword}`
         }
     }
-    useEffect(() => {
-        dispatch(onSaveKeyword(keyword))
-        if (keyword !== keyword_re) dispatch(onResetFilter())
-    }, [keyword])
     //
     return (
         <>
@@ -60,7 +62,9 @@ function SearchResults() {
                     <div className={style.left_cnt}>
                         <ul className={style.list_link}>
                             {
-                                links.map(link => (
+                                links
+                                .filter(link => link.show)
+                                .map(link => (
                                     <li key={link.link} className={style.link_item_cnt}>
                                         <Link
                                             replace={true}
@@ -324,15 +328,10 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
     )
 }
 const TabOrg = ({ keyword }: { keyword: string }) => {
+    const params: any = extraParamsUrl()
     const [openFilter, setOpenFilter] = useState(false)
     const { tags } = useSelector((state: any) => state.HOME)
     const resultTag = handlePassTagKeyword(keyword, tags)
-    useEffect(() => {
-        dispatch(onChangeFilterOrg({
-            ...ORG_PR,
-            "filter[tags]": resultTag[0]?.name
-        }))
-    }, [])
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -343,6 +342,13 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
         "filter[district_code]": ORG_PR["filter[district_code]"] === "cur" ? "" : ORG_PR["filter[district_code]"],
         "filter[keyword]": resultTag[0] ? "" : keyword
     }
+    useEffect(() => {
+        dispatch(onChangeFilterOrg({
+            ...ORG_PR,
+            "filter[tags]": resultTag[0]?.name ?? ORG_PR["filter[tags]"],
+            "filter[province_code]": params?.province
+        }))
+    }, [])
     const { orgs, totalOrg, onLoadMoreOrg } = useOrgs(PRAMS_ORG, true)
     const onViewMore = () => {
         if (orgs.length >= 15 && orgs.length < totalOrg) {
@@ -461,8 +467,9 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
     )
 }
 const handlePassTagKeyword = (keyword: string, list: any[]) => {
-    // console.log(list, keyword)
-    const result = list?.filter((item: { [x: string]: { toString: () => string; }; }) => {
+    let result = []
+    if (!keyword || keyword === "") return result = []
+    result = list?.filter((item: { [x: string]: { toString: () => string; }; }) => {
         return Object.keys(item).some(key =>
             item[key]?.toString().toLowerCase().includes(keyword.toString().toLowerCase())
         )

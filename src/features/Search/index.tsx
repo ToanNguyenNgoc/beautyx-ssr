@@ -17,6 +17,7 @@ import { AppContext } from "context/AppProvider"
 import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
 import slugify from "utils/formatUrlString"
+import { onResetFilter } from "redux/filter-result"
 
 interface SearchProps {
     key_work?: string,
@@ -77,7 +78,9 @@ function Search(props: SearchProps) {
         { link: "san-pham", total: totalProduct }
     ]
     const tabSort = tabs.sort((a, b) => b.total - a.total);
+    const dispatch = useDispatch()
     const onResult = () => {
+        dispatch(onResetFilter())
         if (KEY_WORD_DE !== "") history.push({
             pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
@@ -132,7 +135,10 @@ function Search(props: SearchProps) {
                 {
                     KEY_WORD !== "" &&
                     <Link
-                        onClick={onCloseSearch}
+                        onClick={() => {
+                            onCloseSearch();
+                            dispatch(onCloseSearch())
+                        }}
                         to={{
                             pathname: `/ket-qua-tim-kiem/${tabSort[0].link}`,
                             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,

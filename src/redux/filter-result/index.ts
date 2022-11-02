@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit'
 import { ParamOrg, ParamService, ParamProduct } from 'params-query/param.interface'
 
 export interface IFilterResult {
-    keyword_re: string,
+    prev_param: string,
     SERVICE_PR: ParamService,
     PRODUCT_PR: ParamProduct,
     ORG_PR: ParamOrg,
 }
 const initialState: IFilterResult = {
-    keyword_re: "",
+    prev_param: "",
     SERVICE_PR: {
         "filter[location]": "",
         "filter[province_code]": "",
@@ -39,8 +39,8 @@ const FilterResultSlice = createSlice({
     name: "FILTER_RESULT",
     initialState,
     reducers: {
-        onSaveKeyword: (state, action) => {
-            state.keyword_re = action.payload
+        onSavePrevPa: (state, action) => {
+            state.prev_param = action.payload
         },
         onChangeFilterService: (state, action) => {
             state.SERVICE_PR = { ...state.SERVICE_PR, ...action.payload }
@@ -53,6 +53,8 @@ const FilterResultSlice = createSlice({
         },
         onResetFilter: (state) => {
             state.SERVICE_PR = initialState.SERVICE_PR
+            state.PRODUCT_PR = initialState.PRODUCT_PR
+            state.ORG_PR = initialState.ORG_PR
         }
     }
 })
@@ -60,7 +62,7 @@ const { actions, reducer } = FilterResultSlice
 export const {
     onChangeFilterService,
     onResetFilter,
-    onSaveKeyword,
+    onSavePrevPa,
     onChangeFilterOrg,
     onChangeFilterProduct
 } = actions

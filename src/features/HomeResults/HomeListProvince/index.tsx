@@ -7,19 +7,22 @@ import Head from "../../Head";
 import HeadTitle from "../../HeadTitle";
 import scrollTop from "../../../utils/scrollTop";
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatRoundOrgCount } from "../../../utils/format";
+import { onResetFilter } from "redux/filter-result";
 
 function HomeListProvince(props: any) {
+    const dispatch = useDispatch()
     const { t } = useContext(AppContext);
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;
     const history = useHistory();
     const gotoResult = (province: IProvince) => {
         history.push({
-            pathname: "/ket-qua/",
-            search: `?province=${province.province_code}&&name=${province.name}`,
+            pathname: "/ket-qua-tim-kiem/cua-hang",
+            search: `?province=${province.province_code}`,
         });
+        dispatch(onResetFilter())
         scrollTop();
     };
     return (
