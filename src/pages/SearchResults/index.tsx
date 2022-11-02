@@ -23,7 +23,7 @@ import {
 import Head from "features/Head";
 import { Container, Drawer } from "@mui/material";
 import Footer from "features/Footer";
-import { OrgItemSec, SerProItem, XButton } from "components/Layout";
+import { EmptyRes, OrgItemSec, SerProItem, XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
 import icon from "constants/icon";
 import style from './search-result.module.css'
@@ -182,6 +182,7 @@ const TabService = ({ keyword }: { keyword: string }) => {
                 </div>
             </div>
             <div className={style.result_body}>
+                {totalService === 0 && <EmptyRes title="Không có dịch vụ phù hợp !" />}
                 <InfiniteScroll
                     dataLength={services.length}
                     hasMore={true}
@@ -297,6 +298,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
                 </div>
             </div>
             <div className={style.result_body}>
+                {totalProduct === 0 && <EmptyRes title="Không có sản phẩm phù hợp !" />}
                 <InfiniteScroll
                     dataLength={products.length}
                     hasMore={true}
@@ -428,6 +430,7 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
                 </div>
             </div>
             <div className={style.result_body}>
+                {totalOrg === 0 && <EmptyRes title="Không có doanh nghiệp phù hợp !" />}
                 <InfiniteScroll
                     dataLength={orgs.length}
                     hasMore={true}

@@ -72,6 +72,9 @@
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 12px;
 }
+.result_body{
+    min-height: calc(100vh + 74px);
+}
 /* filter_container */
 .filter_container{
     position: absolute;
@@ -178,7 +181,9 @@
     .filter_cnt_mt{
         padding: 12px;
         width: 100%;
-        height: 75vh;
+        height: fit-content;
+        max-height: 75vh;
+        overflow-y: scroll;
         background-color: var(--bg-white);
     }
 }

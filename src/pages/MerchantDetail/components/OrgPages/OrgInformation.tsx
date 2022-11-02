@@ -3,9 +3,9 @@ import { IOrganization } from "../../../../interface/organization";
 import Slider from "react-slick";
 import onErrorImg from "../../../../utils/errorImg";
 import icon from "../../../../constants/icon";
-import { WrapperMap, OrgMapFull } from "../../../../features/Map/MapWarraper/WrapperMap";
 import { extraOrgTimeWork } from "../../Functions/extraOrg";
 import { AppContext } from "../../../../context/AppProvider";
+import { OrgItemMap } from "components/Layout/OrgItemMap";
 
 interface IProps {
     org: IOrganization;
@@ -39,9 +39,9 @@ export function OrgInformation(props: IProps) {
         <div className="org-information" ref={refMap}>
             <div className="org-information__map-cnt">
                 <div className="map-cnt">
-                    <WrapperMap
+                    {/* <WrapperMap
                         org={org}
-                    />
+                    /> */}
                 </div>
                 <div className="map-org__seemore">
                     <p
@@ -256,7 +256,7 @@ export function OrgInformation(props: IProps) {
                     </li>
                 </ul>
             </div> */}
-            <OrgMapFull
+            <OrgItemMap
                 open={openOrgMap}
                 setOpen={setOpenOrgMap}
                 org={org}

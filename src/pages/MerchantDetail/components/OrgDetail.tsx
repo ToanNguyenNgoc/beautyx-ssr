@@ -13,11 +13,10 @@ import { useHistory } from "react-router-dom";
 import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork } from "../Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
-// import { onToggleOpenChat } from "../../../redux/chat/chatOrgSlice";
-import { OrgMapFull } from "../../../features/Map/MapWarraper/WrapperMap";
 
 import { IOrgMobaGalleries, IOrganization } from 'interface'
 import IStore from "interface/IStore";
+import { OrgItemMap } from "components/Layout/OrgItemMap";
 
 interface IProps {
     org: IOrganization;
@@ -107,7 +106,7 @@ function OrgDetail(props: IProps) {
         <div className="org-detail">
             {
                 org &&
-                <OrgMapFull
+                <OrgItemMap
                     open={openPopupMap}
                     setOpen={setOpenPopupMap}
                     org={org}

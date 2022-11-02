@@ -16,7 +16,6 @@ import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import { fakeOrgStar } from "../../../utils/format";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
-import { OrgMapFull } from "../../../features/Map/MapWarraper/WrapperMap";
 
 interface IProps {
     org: IOrganization;
@@ -38,7 +37,6 @@ export function OrgItem(props: IProps) {
         });
     };
     const [open, setOpen] = useState(false);
-    const [openPopupMap, setOpenPopupMap] = useState(false);
 
     const handleFavoriteOrg = (org: any) => {
         if (USER) {
@@ -51,23 +49,8 @@ export function OrgItem(props: IProps) {
             history.push("/sign-in?1");
         }
     };
-    const handleOpenMap = () => {
-        if (org?.branches.length > 0) {
-            // open lit branch
-            setOpen(true);
-        } else {
-            setOpenPopupMap(true);
-        }
-    };
     return (
         <>
-            {org &&
-                <OrgMapFull
-                    open={openPopupMap}
-                    setOpen={setOpenPopupMap}
-                    org={org}
-                />
-            }
             <div onClick={gotoDetail} className="re-org-item">
                 {org?.is_momo_ecommerce_enable && (
                     <div className="re-org-item__enable">
@@ -158,26 +141,6 @@ export function OrgItem(props: IProps) {
                                         <></>
                                     )}
                                 </div>
-                            </div>
-                            <div
-                                onClick={(e) => {
-                                    handleOpenMap();
-                                    e.preventDefault();
-                                    e.stopPropagation();
-                                }}
-                                className="re-change-map"
-                            >
-                                <img src={icon.mapMarkerOrg} alt="" />
-                                <span className="re-change-map-text">
-                                    {t("pr.map")}
-                                </span>
-                                {org?.branches.length > 0 ? (
-                                    <>
-                                        <span className="re-change-map-total">
-                                            {org?.branches.length} CN
-                                        </span>
-                                    </>
-                                ) : null}
                             </div>
                         </div>
                     </>
@@ -272,16 +235,6 @@ export function OrgItem(props: IProps) {
                                             <p>{item?.address}</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div
-                                    onClick={(e) => {
-                                        setOpenPopupMap(true);
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                    }}
-                                    className="branch-item__pinmap"
-                                >
-                                    <img src={icon.mapMarkerOrg} alt="" />
                                 </div>
                             </div>
                         ))}

@@ -1,67 +1,16 @@
-import { Dialog } from '@mui/material';
-import React, { useRef } from 'react';
+import { Dialog } from "@mui/material";
+import icon from "constants/icon";
+import { IOrganization } from "interface";
+import { useRef } from "react";
 import MapGL, { Marker } from 'react-map-gl';
-import { IOrganization } from '../../../interface/organization';
-import icon from '../../../constants/icon';
-import "../map.css"
-import Slider from 'react-slick';
+import Slider from "react-slick";
+import "./map.css"
 
-interface IWrapperMapProps {
-    org: IOrganization,
-    mapRef?: any
-}
 interface OrgMapFullProps {
-    open: boolean,
-    setOpen: (open: boolean) => void,
-    org: IOrganization
+    open: boolean, setOpen: (open: boolean) => void, org: IOrganization
 }
 
-export const WrapperMap = (props: IWrapperMapProps) => {
-    const { org, mapRef } = props;
-    return (
-        <MapGL
-            ref={mapRef}
-            style={{
-                width: "100%",
-                height: "100%"
-            }}
-            initialViewState={{
-                latitude: org.latitude,
-                longitude: org.longitude,
-                zoom: 15
-            }}
-            attributionControl={true}
-            mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-            mapStyle="mapbox://styles/mapbox/streets-v10"
-        >
-            <Marker
-                latitude={org.latitude}
-                longitude={org.longitude}
-            >
-                <div className="org_map_marker_item">
-                    <img src={icon.pinMapRed} alt="" />
-                    <span>{org.name}</span>
-                </div>
-            </Marker>
-            {
-                org.branches.length > 0 &&
-                org.branches.map((item, index: number) => (
-                    <Marker
-                        key={index}
-                        latitude={item.latitude ?? 0}
-                        longitude={item.longitude ?? 0}
-                    >
-                        <div className="org_map_marker_item">
-                            <img src={icon.pinMapGreen} alt="" />
-                            <span>{item.name}</span>
-                        </div>
-                    </Marker>
-                ))
-            }
-        </MapGL>
-    );
-}
-export const OrgMapFull = (props: OrgMapFullProps) => {
+export function OrgItemMap(props: OrgMapFullProps) {
     const { open, setOpen, org } = props;
     const slideRef = useRef<any>();
     const orgArr = [org]
@@ -100,7 +49,46 @@ export const OrgMapFull = (props: OrgMapFullProps) => {
                 <button onClick={() => setOpen(false)} className="map_org_close">
                     <img src={icon.closeCircle} alt="" />
                 </button>
-                <WrapperMap mapRef={mapRef} org={org} />
+                <MapGL
+                    ref={mapRef}
+                    style={{
+                        width: "100%",
+                        height: "100%"
+                    }}
+                    initialViewState={{
+                        latitude: org.latitude,
+                        longitude: org.longitude,
+                        zoom: 15
+                    }}
+                    attributionControl={true}
+                    mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                    mapStyle="mapbox://styles/mapbox/streets-v10"
+                >
+                    <Marker
+                        latitude={org.latitude}
+                        longitude={org.longitude}
+                    >
+                        <div className="org_map_marker_item">
+                            <img src={icon.pinMapRed} alt="" />
+                            <span>{org.name}</span>
+                        </div>
+                    </Marker>
+                    {
+                        org.branches.length > 0 &&
+                        org.branches.map((item, index: number) => (
+                            <Marker
+                                key={index}
+                                latitude={item.latitude ?? 0}
+                                longitude={item.longitude ?? 0}
+                            >
+                                <div className="org_map_marker_item">
+                                    <img src={icon.pinMapGreen} alt="" />
+                                    <span>{item.name}</span>
+                                </div>
+                            </Marker>
+                        ))
+                    }
+                </MapGL>
                 <div className="map_org_list_wrapper">
                     <ul className="map_org_list">
                         <li className="map_org_list_item">

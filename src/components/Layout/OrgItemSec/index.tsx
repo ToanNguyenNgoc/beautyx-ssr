@@ -8,7 +8,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { onErrorImg, clst, formatDistance } from 'utils';
 import { XButton } from '../XButton';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter'
-import OrgBranches from './OrgBranches'
+import { OrgItemMap } from '../OrgItemMap'
 import style from './style.module.css'
 
 interface OrgItemSecProps {
@@ -89,7 +89,14 @@ export function OrgItemSec(props: OrgItemSecProps) {
                     <div className={changeStyle ? clst([style.org_detail, style.org_detail_ch]) : style.org_detail}>
                         <div>
                             <span className={changeStyle ? clst([style.org_name, style.org_name_ch]) : style.org_name}>{org.name}</span>
-                            <span className={style.org_address}>
+                            <span
+                                onClick={(e) => {
+                                    setOpen(true);
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
+                                className={style.org_address}
+                            >
                                 {org.full_address}
                             </span>
                         </div>
@@ -97,6 +104,8 @@ export function OrgItemSec(props: OrgItemSecProps) {
                             {
                                 org.branches?.length > 0 &&
                                 <XButton
+                                    icon={icon.mapMarkerOrg}
+                                    iconSize={11}
                                     onClick={(e) => {
                                         setOpen(true);
                                         e.preventDefault();
@@ -130,9 +139,12 @@ export function OrgItemSec(props: OrgItemSecProps) {
                     </div>
                 </div>
             </Link>
-            <OrgBranches
-                open={open} setOpen={setOpen} org={org}
-            />
+            {
+                open &&
+                <OrgItemMap
+                    open={open} setOpen={setOpen} org={org}
+                />
+            }
         </>
     );
 }

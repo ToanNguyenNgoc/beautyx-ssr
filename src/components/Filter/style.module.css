@@ -158,14 +158,36 @@
     width: 100%;
     border-radius: 6px;
 }
+
+.price_list_cnt {
+    display: none;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.price_list_item {
+    width: calc(50% - 6px);
+    padding: 6px;
+    margin: 4px 0px;
+    background-color: var(--bg-color);
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    transition: var(--trans);
+    font-size: 14px;
+    font-weight: 700;
+}
+
 /* tags */
-.tag_item_cnt{
+.tag_item_cnt {
     padding: 4px;
     cursor: pointer;
     padding-left: 28px;
     position: relative;
 }
-.tag_check{
+
+.tag_check {
     width: 18px;
     height: 18px;
     border: solid 1.5px var(--text-hover);
@@ -177,39 +199,50 @@
     justify-content: center;
     border-radius: 2px;
 }
-.tag_check span{
+
+.tag_check span {
     width: 10px;
     height: 10px;
     background-color: var(--purple);
     border-radius: 2px;
 }
-.tag_name{
+
+.tag_name {
     font-size: 14px;
     font-weight: 700;
 }
+
 @media only screen and (max-width: 1023px) {
-    .title{
+    .title {
         display: none;
     }
-    .container{
+
+    .container {
         border-bottom: none;
         background-color: var(--grey_2);
         border-radius: 8px;
     }
-    .province_cnt{
+
+    .province_cnt {
         width: 100vw;
         height: 75vh;
     }
-    .province_name{
+
+    .province_name {
         width: calc(100% - 26px);
     }
+    .price_list_cnt{
+        display: flex;
+    }
+
     /* tag */
-    .tags_list{
+    .tags_list {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .tag_item_cnt{
+
+    .tag_item_cnt {
         width: calc(50% - 6px);
         padding: 6px;
         margin: 4px 0px;
@@ -219,14 +252,17 @@
         justify-content: center;
         transition: var(--trans);
     }
-    .tag_check{
+
+    .tag_check {
         display: none;
     }
-    .tag_item_cnt_act{
+
+    .tag_item_cnt_act {
         background-color: var(--purple);
         transition: var(--trans);
     }
-    .tag_name_act{
+
+    .tag_name_act {
         color: var(--bg-white);
     }
 }
