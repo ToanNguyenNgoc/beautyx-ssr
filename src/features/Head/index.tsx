@@ -5,7 +5,7 @@ import icon from "constants/icon";
 import { ICON } from "constants/icon2"
 import style from "./head.module.css"
 import { Container } from "@mui/material"
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import IStore from "interface/IStore";
 import { AppContext } from "context/AppProvider";
@@ -19,7 +19,7 @@ import dayjs from "dayjs";
 import { getTotal } from "redux/cartSlice";
 import Search from "features/Search";
 import { debounce } from "lodash";
-import { useDeviceMobile } from "utils";
+import { extraParamsUrl, useDeviceMobile } from "utils";
 import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
 import { onSetViewedNoti } from 'redux/notifications'
@@ -108,6 +108,9 @@ function Head(props: IProps) {
         })
         history.push("/lich-hen?tab=1")
     }
+    //
+    const paramUrl:any = extraParamsUrl()
+    const keywordUrl = paramUrl?.keyword ?? ""
     return (
         <div className={style.container}>
             <Container>
@@ -117,6 +120,7 @@ function Head(props: IProps) {
                             <Link to={{ pathname: "/" }}>
                                 <img className={style.head_top_left_img} src={img.beautyX} alt="" />
                             </Link>
+                            <BackContainer />
                             <button
                                 className={style.head_top_left_search}
                                 onFocus={() => onToggleSearch("show")}
@@ -129,6 +133,7 @@ function Head(props: IProps) {
                                     className={style.head_search_input}
                                     type="text" placeholder="Bạn muốn tìm kiếm gì..."
                                     disabled={IS_MB}
+                                    value={IS_MB ? keywordUrl : key.key}
                                     onKeyDown={handleKeyDown}
                                 />
                                 <div ref={refSearch} className={style.head_search}>
@@ -397,5 +402,24 @@ const HeadMenu = (props: HeadMenuProps) => {
                 </div>
             }
         </div>
+    )
+}
+const BackContainer = () => {
+    const history = useHistory()
+    const location = useLocation()
+    const pathname = location.pathname
+    const homePath = ['/TIKI', '/MOMO', '/TIKI/', '/MOMO/', '/MBBANK', '/', '/homepage/','/homepage']
+    let show = true
+    if (homePath.includes(pathname)) show = false
+    return (
+        show ?
+            <XButton
+                className={style.head_back_btn}
+                icon={icon.chevronLeft}
+                iconSize={24}
+                onClick={() => history.goBack()}
+            />
+            :
+            <></>
     )
 }

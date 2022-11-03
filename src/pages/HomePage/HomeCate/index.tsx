@@ -11,7 +11,6 @@ import {
 import { Masonry } from "@mui/lab"
 import icon from '../../../constants/icon';
 import style from "./home-cate.module.css"
-import formatPrice from '../../../utils/formatPrice';
 import slugify from '../../../utils/formatUrlString';
 import { SpecialItem } from 'components/Layout';
 

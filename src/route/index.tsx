@@ -24,7 +24,6 @@ import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeMap from "../features/HomeMap";
 import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 import HomeCateResult from "../features/HomeResults/HomeCateResult"
-import { useSelector } from "react-redux";
 import Blog from "../features/Blog";
 import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
@@ -33,17 +32,14 @@ import BuyNow from "../features/BuyNow";
 import Carts from "../pages/Carts";
 import AssistantBtn from "../components/AssistantBtn";
 import ProductsByCate from "../features/CategoryTree/ProductsByCate";
-import ChatOrg from "../features/Chat/ChatOrg";
-import ChatAll from "../features/Chat/ChatAll";
 import PageNotFound from "../components/PageNotFound";
 import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
 // import ExtraFlatForm from "rootComponents/extraFlatForm";
-import OtpMbPage from "pages/OtpMbPage";
 import LadingPage from "pages/LandingPage";
+import OtpMbPage from "pages/OtpMbPage";
 
 function RouterConfig() {
-  const USER = useSelector((state: any) => state.USER);
   const routes = [
     // START mini app share link 
     {
@@ -227,12 +223,8 @@ function RouterConfig() {
       component: <Carts />
     },
     {
-      path: "/chat",
-      component: ChatAll
-    },
-    {
       path:'/otp-form',
-      component: OtpMbPage
+      component: <OtpMbPage/>
     }
   ];
   logEvent(analytics, 'page_view', {
@@ -264,7 +256,6 @@ function RouterConfig() {
           <Route path="*" > <PageNotFound /> </Route>
         </Switch>
       </Router>
-      {USER?.USER && <ChatOrg />}
       <AssistantBtn />
     </BrowserRouter>
   );
