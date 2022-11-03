@@ -49,9 +49,8 @@ function DetailRight(props: IProps) {
         }
         else {
             history.push("/sign-in?1")
-        //console.log(discount)
+        }
     }
-}
 //when quantity discount > 1
 const total = discount_item_child.productable.price * quantity;
 const discount_value = discount.discount_value
