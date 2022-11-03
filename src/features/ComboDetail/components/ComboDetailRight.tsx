@@ -24,7 +24,7 @@ interface IProps {
 function ComboDetailRight(props: IProps) {
     const { combo, org } = props;
     const dispatch = useDispatch();
-    const list_price = [combo?.price, combo?.use_value].sort((a, b) => b - a);
+    const list_price = [combo?.special_price_momo, combo?.use_value].sort((a, b) => b - a);
     const price = list_price[0];
     const { COMMENTS } = useSelector((state: any) => state.COMBO);
     const { USER } = useSelector((state: any) => state.USER);

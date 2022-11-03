@@ -275,9 +275,9 @@ function ComboDetail() {
                     </div>
                     {/* btn add cart */}
                     <div className="service-detail__bottom">
-                        <button>
+                        {/* <button>
                             <p>{t("cart.payment_now")}</p>
-                        </button>
+                        </button> */}
                         <button
                             onClick={() => {
                                 setOpen(true);

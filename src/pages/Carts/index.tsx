@@ -159,18 +159,6 @@ function Carts() {
                                 >
                                     <span>Phương thức thanh toán</span>
                                     <br />
-                                    {/* <div>
-                                        Thanh toán qua 
-                                        <span
-                                            style={{
-                                                backgroundColor:"var(--pink-momo)",
-                                                marginLeft:"12px",
-                                                padding:"0px 8px",
-                                                borderRadius:"6px",
-                                                color:"var(--white)"
-                                            }}
-                                        >MOMO</span>
-                                    </div> */}
                                     <span
                                         style={{
                                             backgroundColor: "var(--pink-momo)",

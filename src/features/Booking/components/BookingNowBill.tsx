@@ -1,6 +1,5 @@
 import icon from 'constants/icon';
-import { OpenVcProp } from 'pages/Carts/components/CartBottom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from 'utils/formatPrice';
 import { DISCOUNT_TYPE } from 'utils/formatRouterLink/fileType';
@@ -10,14 +9,16 @@ import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 
 interface BookingNowBillProps {
-    org: IOrganization
+    org: IOrganization,
+    setFinalAmount: (amount: number) => void
 }
 
 function BookingNowBill(props: BookingNowBillProps) {
+    const { setFinalAmount } = props
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
     const location: any = useLocation();
-    const [openVc, setOpenVc] = useState<OpenVcProp>({
+    const [openVc, setOpenVc] = useState<any>({
         open: false,
         voucher: ""
     })
@@ -74,6 +75,11 @@ function BookingNowBill(props: BookingNowBillProps) {
         vouchers_sub_total_percent.reduce((cur: number, pre: number) => cur + pre) : 0
     const TOTAL_PAYMENT = total - totalDiscounts - totalVouchers - subTotalVouchers
     const totalDiscountPercent = totalPercent > 0 ? (TOTAL_PAYMENT * totalPercent / 100) : 0
+
+    useEffect(() => {
+        setFinalAmount(TOTAL_PAYMENT - totalDiscountPercent)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [TOTAL_PAYMENT, totalDiscountPercent])
 
     return (
         <>

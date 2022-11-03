@@ -24,7 +24,7 @@ function OrgComboItem(props: IProps) {
             }}
             onClick={() => {
                 scrollTop();
-                logEvent(analytics,'detail_combo', {
+                logEvent(analytics, 'detail_combo', {
                     service: combo.name,
                     merchant: org.name
                 })
@@ -52,12 +52,21 @@ function OrgComboItem(props: IProps) {
                         {/* <span className="item-head__desc">{service?.description}</span> */}
                     </div>
                     <div className="item-price">
-                        <span className="item-price__special">
-                            {formatPrice(combo?.price)}đ
-                        </span>
-                        <span className="item-price__old">
-                            {formatPrice(combo?.use_value)}đ
-                        </span>
+                        {
+                            combo?.special_price_momo > 0 ?
+                                <>
+                                    <span className="item-price__special">
+                                        {formatPrice(combo?.special_price_momo)}đ
+                                    </span>
+                                    <span className="item-price__old">
+                                        {formatPrice(combo?.use_value)}đ
+                                    </span>
+                                </>
+                                :
+                                <span className="item-price__special">
+                                    {formatPrice(combo?.use_value)}đ
+                                </span>
+                        }
                     </div>
                 </div>
             </div>
