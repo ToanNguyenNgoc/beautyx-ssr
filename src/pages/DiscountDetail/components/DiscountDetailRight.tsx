@@ -25,7 +25,7 @@ import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/Functions/extraOrg";
 import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import { PopupNotification } from 'components/Notification'
-import { XButton } from "components/Layout";
+import {  AlertSnack } from "components/Layout";
 // end
 interface IProps {
     discount: IDiscountPar;
@@ -42,7 +42,7 @@ function DiscountDetailRight(props: IProps) {
         ...props.discount,
         // user_available_purchase_count: 0
     }
-    const [noti, setNoti] = useState({ open: false, child: <></> })
+    const [noti, setNoti] = useState(false)
     const IS_MB = useDeviceMobile();
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
@@ -169,29 +169,15 @@ function DiscountDetailRight(props: IProps) {
     }
     //[NOTI]: when user_available_purchase_count = 0
     const onAddCartBtn = () => {
+        handleAddCart()
         if (discount?.user_available_purchase_count === 0) {
-            setNoti({
-                open: true,
-                child: <XButton
-                    title="Tiếp tục"
-                    onClick={() => { handleAddCart(); setNoti({ ...noti, open: false }) }}
-                />
-            })
-        } else {
-            handleAddCart()
+            setNoti(true)
         }
     }
     const onBookNowBtn = () => {
+        onNow()
         if (discount?.user_available_purchase_count === 0) {
-            setNoti({
-                open: true,
-                child: <XButton
-                    title="Tiếp tục"
-                    onClick={() => { onBookNow(); setNoti({ ...noti, open: false }) }}
-                />
-            })
-        } else {
-            onNow()
+            setNoti(true)
         }
     }
     return (
@@ -377,23 +363,11 @@ function DiscountDetailRight(props: IProps) {
                 content={`Đã thêm ${detail?.service_name} vào giỏ hàng`}
                 autoClose={true}
             />
-            <PopupNotification
-                open={noti.open}
-                setOpen={() => setNoti({ ...noti, open: false })}
-                title="Thông báo"
-                content={` 
-                Bạn đã hết lượt mua với giá "${formatPrice(finalDisplayPrice)}đ". 
-                Nếu tiếp tục mua giá bán là "${formatPrice(
-                    ITEM_DISCOUNT?.productable.price ??
-                    ITEM_DISCOUNT?.productable?.retail_price
-                )}đ". Tiếp tục mua ?`}
-                children={<>
-                    <XButton
-                        title="Đóng"
-                        onClick={() => setNoti({ ...noti, open: false })}
-                    />
-                    {noti.child}
-                </>}
+            <AlertSnack
+                onClose={() => setNoti(false)}
+                open={noti}
+                status="WARNING"
+                title={`Giá bán này chỉ áp dụng ${discount.limit}lượt mua/người`}
             />
         </div>
     );

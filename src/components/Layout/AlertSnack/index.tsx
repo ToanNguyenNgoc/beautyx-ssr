@@ -26,7 +26,7 @@ export function AlertSnack(props: IProps) {
     return (
         <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
-            open={open} autoHideDuration={3000} onClose={handleClose}
+            open={open} autoHideDuration={3500} onClose={handleClose}
         >
             <Alert onClose={handleClose} severity={color} sx={{ width: '100%' }}>
                 {title}

@@ -6,8 +6,8 @@ import dayjs from "dayjs";
 const date = new Date();
 
 // const dayNow = dayjs().format("YYYY-MM-YY HH:MM:ss");
-const day = `${date.getDate()}`.slice(-2)
-const month = `${date.getMonth() + 1}`.slice(-2)
+const day = `0${date.getDate()}`.slice(-2)
+const month = `0${date.getMonth() + 1}`.slice(-2)
 const year = date.getFullYear()
 
 const dayNow = `${year}-${month}-${day} ${dayjs().format('HH:MM:ss')}`
@@ -51,7 +51,7 @@ export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
     } else if (voucher.valid_from < dayNow && voucher.valid_util > dayNow) {
         dateCondition = true
     }
-    // console.log(voucher.valid_from, dayNow, voucher.valid_util)
+    console.log(voucher.valid_from, dayNow, voucher.valid_util)
     return dateCondition
 }
 export const EX_CHECK_VALID_TIME = (voucher: IDiscountPar) => {
