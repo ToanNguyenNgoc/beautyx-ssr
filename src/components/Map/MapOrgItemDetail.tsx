@@ -1,11 +1,11 @@
+import { OrgReviews } from "pages/MerchantDetail/components/OrgPages";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import { ICON } from "../../constants/icon2";
 import { AppContext } from "../../context/AppProvider";
-import { extraOrgTimeWork } from "../../features/MerchantDetail/components/Functions/extraOrg";
-import OrgReviews from "../../features/MerchantDetail/components/OrgPages/OrgReviews";
+import { extraOrgTimeWork } from "../../pages/MerchantDetail/Functions/extraOrg";
 import {
     fetchOrgGalleries,
     onDeleteFavoriteOrg,

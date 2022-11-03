@@ -30,6 +30,7 @@ import MapGL from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import onErrorImg from "../../utils/errorImg";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
+import './style.css'
 
 // import MapDirection from './MapDirection';
 interface IProps {

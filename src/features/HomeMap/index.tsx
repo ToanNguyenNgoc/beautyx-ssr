@@ -32,7 +32,6 @@ function HomeMap() {
     };
     const IS_MB = useDeviceMobile();
     const platform = EXTRA_FLAT_FORM();
-    console.log("platform :>> ");
     useEffect(() => {
         callOrgsByDistance();
     }, []);

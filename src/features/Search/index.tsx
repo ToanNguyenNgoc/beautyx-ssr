@@ -14,11 +14,10 @@ import { debounce } from "lodash"
 import tracking from "api/trackApi"
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter"
 import { AppContext } from "context/AppProvider"
-import { addHistory } from "redux/search/searchSlice"
 import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
 import slugify from "utils/formatUrlString"
-import { useLocation } from "react-router-dom";
+import { onResetFilter } from "redux/filter-result"
 
 interface SearchProps {
     key_work?: string,
@@ -28,11 +27,8 @@ interface SearchProps {
 
 
 function Search(props: SearchProps) {
-    const location = useLocation();
     const { specialItems } = useContext(AppContext)
-    const dispatch = useDispatch()
     const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
-    const { HISTORY } = useSelector((state: any) => state.SEARCH)
     const { key_work, key_work_debounce, onCloseSearchTimeOut } = props
     const IS_MB = useDeviceMobile()
     const history = useHistory()
@@ -43,12 +39,12 @@ function Search(props: SearchProps) {
     //onChange input
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onSetDebounceKeyword = useCallback(
-        debounce((text) => setKeyword({ key: text, key_debounce: text }), 1000),
+        debounce((text) => setKeyword({ key: text, key_debounce: text }), 600),
         []
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const onDebounceGoogle = useCallback(
-        debounce((text) => tracking.SEARCH_ON_CHANGE(text), 1000),
+        debounce((text) => tracking.SEARCH_ON_CHANGE(text), 600),
         []
     )
 
@@ -72,26 +68,35 @@ function Search(props: SearchProps) {
         "limit": IS_MB ? 4 : 6,
         "filter[keyword]": KEY_WORD_DE
     }
-    const { orgs, totalOrg } = useOrgs(PARAM_ORG, true)
-    const { services, totalService } = useServices(PARAM_SERVICE, true)
-    const { products, totalProduct } = useProducts(PARAM_PRODUCT, true)
+    const { orgs, totalOrg } = useOrgs(PARAM_ORG, KEY_WORD !== "")
+    const { services, totalService } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    const { products, totalProduct } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
     //
+    const tabs = [
+        { link: "dich-vu", total: totalService },
+        { link: "cua-hang", total: totalOrg },
+        { link: "san-pham", total: totalProduct }
+    ]
+    const tabSort = tabs.sort((a, b) => b.total - a.total);
+    const dispatch = useDispatch()
     const onResult = () => {
+        dispatch(onResetFilter())
         if (KEY_WORD_DE !== "") history.push({
-            pathname: "/ket-qua-tim-kiem/",
+            pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
         })
+        if (onCloseSearchTimeOut) onCloseSearchTimeOut()
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             onResult()
         }
     }
-    const onSaveOrg = (item: IOrganization) => {
-        dispatch(addHistory({
-            TYPE: "ORG", id: item.id, item: item
-        }))
-    }
+    // const onSaveOrg = (item: IOrganization) => {
+    //     dispatch(addHistory({
+    //         TYPE: "ORG", id: item.id, item: item
+    //     }))
+    // }
     const onItemSpecial = (item: any) => {
         if (item.type === "DISCOUNT") {
             history.push({
@@ -130,9 +135,12 @@ function Search(props: SearchProps) {
                 {
                     KEY_WORD !== "" &&
                     <Link
-                        onClick={onCloseSearch}
+                        onClick={() => {
+                            onCloseSearch();
+                            dispatch(onCloseSearch())
+                        }}
                         to={{
-                            pathname: "/ket-qua-tim-kiem/",
+                            pathname: `/ket-qua-tim-kiem/${tabSort[0].link}`,
                             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
                         }} className={style.search_head_link} >
                         Tìm kiếm kết quả cho <h3>{KEY_WORD}</h3>
@@ -152,7 +160,7 @@ function Search(props: SearchProps) {
                                 {
                                     orgs.map((item: IOrganization) => (
                                         <Link
-                                            onClick={() => onSaveOrg(item)}
+                                            // onClick={() => onSaveOrg(item)}
                                             key={item.id} to={{ pathname: formatRouterLinkOrg(item.subdomain) }}
                                         >
                                             <div className={style.org_item}>
@@ -217,7 +225,7 @@ function Search(props: SearchProps) {
                                 onClick={onCloseSearch}
                                 className={style.org_list_wrapper}
                             >
-                                {
+                                {/* {
                                     HISTORY
                                         .filter((i: any) => i.TYPE === "ORG")
                                         .map((item: any) => (
@@ -234,7 +242,7 @@ function Search(props: SearchProps) {
                                                 </div>
                                             </Link>
                                         ))
-                                }
+                                } */}
                             </div>
                         </div>
                     </div>
@@ -265,7 +273,7 @@ function Search(props: SearchProps) {
                                     >
                                         <Link
                                             className={style.key_item}
-                                            to={{ pathname: `/ket-qua-tim-kiem/?keyword=${item._id}` }}
+                                            to={{ pathname: `/ket-qua-tim-kiem/dich-vu/?keyword=${item._id}` }}
                                         >
                                             <img src={icon.searchGray} alt="" />
                                             <span>{item._id}</span>

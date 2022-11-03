@@ -110,7 +110,7 @@ export function SerProItem(props: SerProItemProps) {
                         item._geoDistance &&
                         <div className={style.item_distance}>
                             <span></span>
-                            <h5>cách bạn: {formatDistance(item._geoDistance)}</h5>
+                            <h5>{formatDistance(item._geoDistance)}</h5>
                         </div>
                     }
                     <div className={style.item_address}>

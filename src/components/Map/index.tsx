@@ -1,5 +1,4 @@
 import { Dialog } from "@mui/material";
-import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import icon from "../../constants/icon";

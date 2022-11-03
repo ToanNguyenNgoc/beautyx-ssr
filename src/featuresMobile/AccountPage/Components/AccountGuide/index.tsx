@@ -13,7 +13,7 @@ import "./style.css";
 import { AppContext } from "../../../../context/AppProvider";
 
 function AccountGuide(props: any) {
-    const { open } = props;
+    const { openGuide, setOpenGuide } = props;
     const { t } = useContext(AppContext);
     const step = [
         {
@@ -71,8 +71,8 @@ function AccountGuide(props: any) {
     };
 
     return (
-        <Dialog open={open} fullScreen TransitionComponent={Transition}>
-            <HeadMobile title={`${t("account_guide.ac_gui_tutorial")}`} />
+        <Dialog open={openGuide} fullScreen TransitionComponent={Transition}>
+            <HeadMobile onBackFunc={() => setOpenGuide(false)} title={`${t("account_guide.ac_gui_tutorial")}`} />
             <div className="guided-section-content">
                 {step.map((item, index) => (
                     <GuideItem

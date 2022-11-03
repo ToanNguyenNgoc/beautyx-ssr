@@ -7,7 +7,7 @@ import { IPaymentMethod } from "../../interface/paymentMethod";
 import { fetAsyncPaymentMethod } from '../../redux/payments/paymentSlice';
 import { STATUS } from '../../redux/status'
 import { useDispatch, useSelector } from "react-redux";
-import '../CartPayment/cartPayment.css';
+import './cartPayment.css';
 
 interface IProps {
     e: any,

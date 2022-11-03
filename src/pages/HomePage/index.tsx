@@ -9,13 +9,12 @@ import HomeRecomment from "./HomeRecomment";
 import HomeTopService from "./HomeTopService";
 import HomeTags from "./HomeTags";
 import HomeProvince from "./HomeProvince";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 import HomeWatched from "./HomeWatched";
-import { onResetFilter } from "redux/filter/filterSlice";
 import ExtraFlatForm from "rootComponents/extraFlatForm";
 import Head from "features/Head";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
@@ -24,12 +23,10 @@ import Footer from "features/Footer";
 import Bottom from "featuresMobile/Bottom";
 import {OpenApp} from 'components/Layout'
 export default function HomePage() {
-    const dispatch = useDispatch();
     const banner_status = useSelector((state: any) => state.HOME.status);
 
     useEffect(() => {
         tracking.HOME_LOAD();
-        dispatch(onResetFilter());
     }, [])
 
 

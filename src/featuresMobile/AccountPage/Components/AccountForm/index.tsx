@@ -15,7 +15,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function AccountForm(props: any) {
-      const { open } = props;
+      const { open, setOpen } = props;
       const {t} = useContext(AppContext);
       return (
             <Dialog
@@ -26,7 +26,7 @@ function AccountForm(props: any) {
                   <div
                         style={{ minHeight: '100vh' }}
                   >
-                        <HeadMobile title={t("acc.order_address")} />
+                        <HeadMobile onBackFunc={()=>setOpen(false)} title={t("acc.order_address")} />
                         <Information />
                   </div>
             </Dialog>

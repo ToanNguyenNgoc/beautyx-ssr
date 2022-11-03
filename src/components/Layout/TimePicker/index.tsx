@@ -1,7 +1,7 @@
 import React from 'react';
 import dayjs from "dayjs";
 import style from "./time.module.css"
-import { extraOrgTimeWork } from 'features/MerchantDetail/components/Functions/extraOrg';
+import { extraOrgTimeWork } from 'pages/MerchantDetail/Functions/extraOrg';
 import { IOrganization } from 'interface/organization';
 
 interface TimePickerProps {

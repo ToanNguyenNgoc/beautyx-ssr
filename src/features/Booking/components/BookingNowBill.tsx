@@ -1,10 +1,9 @@
 import icon from 'constants/icon';
-import { OpenVcProp } from 'features/Carts/components/CartBottom';
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from 'utils/formatPrice';
 import { DISCOUNT_TYPE } from 'utils/formatRouterLink/fileType';
-import { InputVoucher } from 'features/Carts/components/CartBottom';
+import { InputVoucher } from 'pages/Carts/components/CartBottom';
 import { IOrganization } from 'interface/organization';
 import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
@@ -19,7 +18,7 @@ function BookingNowBill(props: BookingNowBillProps) {
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
     const location: any = useLocation();
-    const [openVc, setOpenVc] = useState<OpenVcProp>({
+    const [openVc, setOpenVc] = useState<any>({
         open: false,
         voucher: ""
     })
@@ -79,6 +78,7 @@ function BookingNowBill(props: BookingNowBillProps) {
 
     useEffect(() => {
         setFinalAmount(TOTAL_PAYMENT - totalDiscountPercent)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [TOTAL_PAYMENT, totalDiscountPercent])
 
     return (

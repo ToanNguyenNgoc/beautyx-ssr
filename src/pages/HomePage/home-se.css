@@ -559,4 +559,8 @@
         bottom: 8px;
         left: 8px;
     }
+    .home-promo-ser{
+        width: 100%;
+        overflow-x: scroll;
+    }
 }

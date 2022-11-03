@@ -1,6 +1,6 @@
 import React from 'react'
 import './style.css'
-import { Skeleton } from '@mui/material'
+import Skeleton from 'react-loading-skeleton'
 import useDeviceMobile from '../../utils/useDeviceMobile'
 export * from "./LoadGrid"
 
@@ -12,8 +12,8 @@ export const LoadingOrgs = () => {
             {
                 arr.map((i: number, index: number) => (
                     <li key={index} className="result-orgs-loading-cnt__item">
-                        <Skeleton animation="wave" />
-                        <Skeleton animation="wave" />
+                        <Skeleton />
+                        <Skeleton />
                     </li>
                 ))
             }
@@ -31,8 +31,8 @@ export const LoadingServices = (props: IPropsSer) => {
             {
                 arr.map((i: number, index: number) => (
                     <li style={(!IS_MB && width) ? { width: width } : {}} key={index} className="result-orgs-loading-cnt__item service-item">
-                        <Skeleton animation="wave" />
-                        <Skeleton animation="wave" />
+                        <Skeleton />
+                        <Skeleton />
                     </li>
                 ))
             }
@@ -45,10 +45,10 @@ export const LoadingServicesRow = () => {
             {
                 arr.map((i: number, index: number) => (
                     <li key={index} className="result-orgs-loading-cnt__item service-item">
-                        <Skeleton animation="wave" />
-                        <Skeleton animation="wave" />
-                        <Skeleton animation="wave" />
-                        <Skeleton animation="wave" />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
+                        <Skeleton />
                     </li>
                 ))
             }

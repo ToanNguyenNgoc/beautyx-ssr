@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 // css && library 
 import { Drawer } from "@mui/material";
-import "../ResetPassword/style.css";
+import "../../pages/ResetPassword/style.css";
 import "./style.css";
 // end 
 // interface
 import { IDataOtp, IPropOtp } from './_model'
 // end
 import { authentication, signInWithPhoneNumber, RecaptchaVerifier } from "../../firebase";
-import FormTelephone from "../ResetPassword/components/FormTelephone";
+import FormTelephone from "../../pages/ResetPassword/components/FormTelephone";
 import { AlertSnack } from "components/Layout";
 
 declare global {

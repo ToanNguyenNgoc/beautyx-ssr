@@ -44,7 +44,6 @@ const cart = createSlice({
     initialState,
     reducers: {
         addCart: (state, action) => {
-            console.log(action.payload)
             GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
             const iIndex = state.cartList.findIndex(
                 (item: any) => item.cart_id === action.payload.cart_id

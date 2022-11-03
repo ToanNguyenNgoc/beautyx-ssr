@@ -5,12 +5,12 @@ import './style.css';
 interface IProps {
     loading?: boolean,
     title?: string,
-    onClick?: () => void,
-    type?: any,
+    onClick?: (e?:any) => void,
+    type?: "button" | "submit",
     className?: string,
     style?: any
     icon?: string,
-    iconSize?: number
+    iconSize?: number,
 }
 
 export function XButton(props: IProps) {
@@ -22,7 +22,7 @@ export function XButton(props: IProps) {
         className,
         style,
         icon,
-        iconSize
+        iconSize,
     } = props;
     return (
         <button
@@ -30,7 +30,7 @@ export function XButton(props: IProps) {
             disabled={loading === true}
             className={`btn-loading ${className ? className : ""}`}
             onClick={onClick}
-            type={type}
+            type={type ?? "button"}
         >
             {
                 icon &&

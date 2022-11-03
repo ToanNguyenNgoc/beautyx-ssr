@@ -1,3 +1,4 @@
+import { identity, pickBy } from "lodash";
 import useSWR from "swr"
 
 export function useSwr(
@@ -12,7 +13,7 @@ export function useSwr(
     let paramsURL = "";
     let initData
     if (params) {
-        paramsURL = `?${new URLSearchParams(params).toString()}`
+        paramsURL = `?${new URLSearchParams(pickBy(params, identity)).toString()}`
     }
     const {
         data,

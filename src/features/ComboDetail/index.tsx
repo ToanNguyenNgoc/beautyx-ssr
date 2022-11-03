@@ -16,23 +16,23 @@ import {
 } from "../../redux/org_combos/comboSlice";
 import ComboDetailLeft from "./components/ComboDetailLeft";
 import ComboDetailRight from "./components/ComboDetailRight";
-import OrgInformation from "../MerchantDetail/components/OrgPages/OrgInformation";
 import Review from "../Reviews";
-import "../ServiceDetail/serviceDetail.css";
+import "../../pages/ServiceDetail/serviceDetail.css";
 import "./style.css";
-import "../ProductDetail/product.css";
+import "../../pages/ProductDetail/product.css";
 import icon from "../../constants/icon";
-import DetailOrgCard from "../ServiceDetail/components/DetailOrgCard";
-import HeadOrg from "../MerchantDetail/components/HeadOrg";
+import DetailOrgCard from "../../pages/ServiceDetail/components/DetailOrgCard";
+import HeadOrg from "../../pages/MerchantDetail/components/HeadOrg";
 import {
     handleChangeScroll,
     handleScroll,
-} from "../ServiceDetail/onScrollChange";
-import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
+} from "../../pages/ServiceDetail/onScrollChange";
+import DetailPolicy from "../../pages/ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import ComboDetailDesc from "./components/ComboDetailDesc";
-import { useGetParamUrl } from "utils";
+import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
+import { useGetParamUrl } from "utils/useParamsUrl";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);
@@ -63,6 +63,7 @@ function ComboDetail() {
 
     const org = ORG.org;
     const combo = COMBO.combo;
+    console.log("combo", combo);
     let refDesc = useRef<any>();
     let refReview = useRef<any>();
     let refMap = useRef<any>();

@@ -12,14 +12,12 @@ import {
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
-import FilterProduct from '../../Filter/FilterProduct';
-
 import style from "./home-cate.module.css"
 import icon from '../../../constants/icon';
 import { Container } from '@mui/system';
 import { AUTH_LOCATION } from '../../../api/authLocation';
-import { FilterPrice } from "../../../components/FilterCate"
 import { SerProItem } from 'components/Layout';
+import { FilterPrice } from 'components/Filter';
 // import useGetLocation from '../../../utils/useGetLocation';
 
 function HomeCateResult() {
@@ -144,14 +142,6 @@ function HomeCateResult() {
                             />
                         </div>
                         <div className={style.body_right}>
-                            <div className={style.body_right_sort}>
-                                <FilterProduct
-                                    onChangeFilter={onChangeFilter}
-                                    value={query}
-                                    type_price={type === "SERVICE" ? "price" : "retail_price"}
-                                />
-
-                            </div>
                             <InfiniteScroll
                                 dataLength={resData.length}
                                 hasMore={true}

@@ -347,6 +347,9 @@
     transition: var(--trans);
     visibility: visible;
 }
+.head_back_btn{
+    display: none;
+}
 
 @media only screen and (max-width: 1023px) {
     .head_wrapper {
@@ -404,5 +407,11 @@
     .head_search_icon {
         left: 12px;
         right: unset;
+    }
+    .head_back_btn{
+        display: block;
+        background-color: var(--bg-white);
+        padding: 0px;
+        padding-right: 6px;
     }
 }

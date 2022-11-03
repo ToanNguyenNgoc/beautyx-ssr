@@ -8,20 +8,11 @@ import { STATUS } from "../status";
 import { orgInit } from "../initials";
 import { IOrganization } from '../../interface/organization'
 // google tag event
-import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import { Service } from '../../interface/service';
 import { Product } from '../../interface/product';
-import {IOrgMobaGalleries} from '../../interface/IOrgMobaGalleries';
 // end
 export interface IOrgSlice {
     org: IOrganization,
-    status: string,
-    tab: number,
-    GALLERIES: {
-        galleries: IOrgMobaGalleries[],
-        org_subdomain: string,
-        status: string,
-    },
     SERVICES_KEYWORD: {
         services_keyword: Service[],
         status: string,
@@ -97,13 +88,6 @@ export const fetchAsyncByKeyword: any = createAsyncThunk(
 );
 const initialState: IOrgSlice = {
     org: orgInit,
-    status: "",
-    tab: 1,
-    GALLERIES: {
-        galleries: [],
-        org_subdomain: "",
-        status: "",
-    },
     SERVICES_KEYWORD: {
         services_keyword: [],
         status: "",
@@ -142,29 +126,6 @@ const orgSlice = createSlice({
         },
         [fetchAsyncOrg.rejected]: (state) => {
             return { ...state, status: STATUS.FAIL };
-        },
-        //get galleries by org id,
-        [fetchOrgGalleries.pending]: (state) => {
-            return {
-                ...state,
-                GALLERIES: { ...state.GALLERIES, status: STATUS.LOADING },
-            };
-        },
-        [fetchOrgGalleries.fulfilled]: (state, { payload }) => {
-            return {
-                ...state,
-                GALLERIES: {
-                    galleries: payload.galleries,
-                    org_subdomain: payload.org_id,
-                    status: STATUS.SUCCESS,
-                },
-            };
-        },
-        [fetchOrgGalleries.rejected]: (state) => {
-            return {
-                ...state,
-                GALLERIES: { ...state.GALLERIES, status: STATUS.FAIL },
-            };
         },
         // favorites org
         [onFavoriteOrg.pending]: (state) => {

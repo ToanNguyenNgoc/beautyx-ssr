@@ -1,26 +1,20 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppContext } from "../../../context/AppProvider";
 import { IProvince } from "../../../interface/provinces";
 import scrollTop from "../../../utils/scrollTop";
 import HomeTitle from "../Components/HomeTitle";
 import { formatRoundOrgCount } from "../../../utils/format";
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { onResetFilter } from "redux/filter-result";
 
 function HomeProvince(props: any) {
+    const dispatch = useDispatch()
     const { t } = useContext(AppContext);
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;
     const isOneRow = provinces_org.length <= 6;
-    //const history = useHistory();
-    // const gotoResult = (province: IProvince) => {
-    //     history.push({
-    //         pathname: `/khu-vuc/`,
-    //         search: `${province.name},${province.province_code}`,
-    //     });
-    //     scrollTop();
-    // };
 
     return (
         <div className="home-province">
@@ -37,10 +31,10 @@ function HomeProvince(props: any) {
                     (item: IProvince, index: number) => (
                         <Link
                             to={{
-                                pathname: "/ket-qua/",
-                                search: `?province=${item.province_code}&&name=${item.name}`,
+                                pathname: "/ket-qua-tim-kiem/cua-hang",
+                                search: `?province=${item.province_code}`,
                             }}
-                            onClick={() => scrollTop()}
+                            onClick={() => {scrollTop();dispatch(onResetFilter())}}
                             key={index}
                             className="home-province_item"
                         >

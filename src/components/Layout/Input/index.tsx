@@ -1,4 +1,5 @@
 import React, { KeyboardEvent } from 'react'
+import { clst } from "utils"
 import style from './input.module.css'
 
 interface InputProps {
@@ -9,9 +10,10 @@ interface InputProps {
     id?: string
     value?: any
     icon?: string
-    type?: 'number' | 'password'
+    type?: 'number' | 'password' | 'text'
     name?: string
-    disable?: boolean
+    disable?: boolean,
+    className?: string
 }
 
 export function Input(props: InputProps) {
@@ -22,6 +24,7 @@ export function Input(props: InputProps) {
             onKeyDown && onKeyDown()
         }
     };
+    const className = props.className ?? ""
 
     return (
         <div className={style.input_cnt}>
@@ -31,6 +34,7 @@ export function Input(props: InputProps) {
                 </div>
             )}
             <input
+                className={clst([style.input_cus, className])}
                 style={icon ? { paddingLeft: '40px' } : {}}
                 onChange={onChange}
                 onFocus={onFocus}

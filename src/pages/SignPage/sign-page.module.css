@@ -1,0 +1,180 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 96px;
+}
+
+.left_cnt_icon_mb {
+    display: none;
+}
+
+.left_cnt {
+    width: calc(41.5% - 24px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.right_cnt {
+    width: calc(58.1% - 24px);
+    padding: 24px 48px;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+}
+
+.right_cnt_tab_btn {
+    display: flex;
+    justify-content: center;
+}
+
+.right_cnt_tab_btn button {
+    margin: 0px 6px;
+    border: solid 1px var(--purple);
+    background-color: transparent;
+    color: var(--purple);
+}
+
+.btn_active {
+    background-color: var(--purple) !important;
+    color: var(--bg-white) !important;
+}
+
+.form_container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+}
+.input_wrapper {
+    width: 100%;
+    height: 36px;
+    position: relative;
+    margin-bottom: 24px;
+}
+.input_column{
+    display: flex;
+    align-items: center;
+}
+.input_column > div:first-child{
+    width: 50%;
+}
+.btn_change_phone{
+    color: var(--purple);
+    background-color: transparent;
+   margin-top: -22px;
+}
+
+.input_wrapper_icon_show {
+    position: absolute;
+    right: 0;
+    z-index: 10;
+    cursor: pointer;
+    margin: -26px 6px 0px 0px;
+}
+
+.input_wrapper_error {
+    position: absolute;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--red-cl);
+    margin: 2px 0px 0px 10px;
+}
+
+.sign_check {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.sign_check_left {
+    display: flex;
+    align-items: center;
+}
+
+.sign_check_forgot {
+    cursor: pointer;
+    color: var(--purple);
+}
+
+.form_submit_btn {
+    margin: 12px 0px;
+    display: flex;
+    justify-content: center;
+}
+
+.sign_other_setup {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.sign_other_setup span {
+    font-weight: 500;
+    color: var(--purple);
+    cursor: pointer;
+    margin-left: 4px;
+}
+.form_policy{
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 400;
+}
+.form_policy span{
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--purple);
+    margin-left: 4px;
+}
+.input{
+    border-radius: 18px !important;
+}
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 58px;
+    }
+
+    .left_cnt_icon_mb {
+        display: block;
+        width: 96px;
+        height: 96px;
+    }
+
+    .left_cnt {
+        display: none;
+    }
+
+    .right_cnt {
+        width: 100%;
+        margin-top: 24px;
+        box-shadow: none;
+        padding: 12px;
+    }
+
+    .form_submit_btn button {
+        width: 100%;
+    }
+
+    .right_cnt_tab_btn button {
+        background-color: transparent;
+        border: none;
+        border-bottom: solid 1px var(--bg-white);
+        color: var(--text-black);
+        border-radius: 0px;
+    }
+    .btn_active{
+        background-color: transparent !important;
+        color: var(--purple) !important;
+        border-bottom: solid 1px var(--purple) !important;
+    }
+    .btn_change_phone{
+        padding: 0px;
+        margin-left: 12px;
+    }
+}
