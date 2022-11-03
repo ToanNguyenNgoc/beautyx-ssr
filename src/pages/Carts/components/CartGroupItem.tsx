@@ -255,6 +255,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     ) {
         applyCondition = true;
     }
+    console.log(dateCondition)
     const outDiscounts = props.outDiscounts?.filter(Boolean)
     const handleApplyVoucher = () => {
         if (outDiscounts && outDiscounts.length > 0) return setNoti(true)
