@@ -2,7 +2,7 @@
 import { Container } from "@mui/material";
 import React, { useEffect } from "react";
 import HomeBanner from "./HomeBanner";
-import HomeFavorite from "./HomeFavorite";
+import HomeOrgDistance from "./HomeOrgDistance";
 import HomeHotDeal from "./HomeHotDeal";
 import HomeCate from "./HomeCate";
 import HomeRecomment from "./HomeRecomment";
@@ -53,7 +53,7 @@ export default function HomePage() {
                 <HomeHotDeal />
                 <HomeTopService />
                 <HomeRecomment />
-                <HomeFavorite />
+                <HomeOrgDistance />
                 <HomeWatched />
                 <HomeProvince />
             </Container>
