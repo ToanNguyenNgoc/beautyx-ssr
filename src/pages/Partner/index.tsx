@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { partnerStyle } from "./style";
-import Head from "../Head";
-import Footer from "../Footer/index";
+import Head from "../../features/Head";
+import Footer from "../../features/Footer/index";
 import Information from "./components/Information";
 import FormPartner from "./components/FormPartner";
-import HeadTitle from "../HeadTitle";
+import HeadTitle from "../../features/HeadTitle";
 import { AppContext } from "../../context/AppProvider";
 
 export default function Partner() {

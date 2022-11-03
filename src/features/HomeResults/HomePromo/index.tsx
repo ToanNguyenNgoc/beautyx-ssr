@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from "react";
 import { Container } from "@mui/material";
 import "../home-result.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { SerProItem, BackTopButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
@@ -11,14 +10,12 @@ import { useDeviceMobile } from "utils";
 import { extraParamsUrl } from "utils/extraParamsUrl";
 import { STATUS } from "redux/status";
 import { fetchAsyncServicesPromo } from "redux/home/homePageSlice";
-import { onSetFilterPromo } from "redux/filter/filterSlice";
 import { IServicePromo } from "interface/servicePromo";
 import { blockService } from "utils/blockCardItem";
 import HeadMobile from "features/HeadMobile";
 import Head from "features/Head";
 import HeadTitle from "features/HeadTitle";
 import HomeTitleSection from "pages/HomePage/HomeTitleSection/index";
-import FilterService from "features/Filter/FilterService";
 import { LoadingServices } from "components/LoadingSketion";
 import LoadingMore from "components/LoadingMore";
 import Footer from "features/Footer";
@@ -26,10 +23,9 @@ import Footer from "features/Footer";
 function HomePromo(props: any) {
     const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile();
-    const history = useHistory();
     const { SERVICES_PROMO } = useSelector((state: any) => state.HOME_PAGE);
     const dispatch = useDispatch();
-    const { services, status, query, page, totalItem } = SERVICES_PROMO
+    const { services, status, page, totalItem } = SERVICES_PROMO
     const params: any = extraParamsUrl();
 
     const callServicesPromo = () => {
@@ -41,22 +37,8 @@ function HomePromo(props: any) {
         }
     }
 
-    const onChangeServicesByFilter = (item: any) => {
-        if (query !== item.query) {
-            history.push(`/deal-lam-dep-cuc-HOT?sort=${item.query}`)
-            dispatch(fetchAsyncServicesPromo({
-                page: 1,
-                sort: item.query
-            }))
-        }
-    }
     useEffect(() => {
         callServicesPromo()
-        const action = {
-            id: 1,
-            query: params?.sort
-        }
-        dispatch(onSetFilterPromo(action))
     }, [])
 
     const onViewMore = () => {
@@ -96,9 +78,6 @@ function HomePromo(props: any) {
                     </div>
                 }
                 <div className="home-promo-ser home-promo-ser__mb">
-                    <FilterService
-                        onChangeFilter={onChangeServicesByFilter}
-                    />
                     {(status !== STATUS.SUCCESS && page === 1) && <LoadingServices />}
                     <InfiniteScroll
                         next={onViewMore}

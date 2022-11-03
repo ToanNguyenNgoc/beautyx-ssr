@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import icon from '../../../constants/icon';
 import { Dialog } from '@mui/material';
 import ButtonCus from '../../../components/ButtonCus';

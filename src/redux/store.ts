@@ -21,7 +21,6 @@ import trendReducer from "./video/trendSlice";
 import appReducer from "./appointment/appSlice";
 import commentReducer from "./commentSlice";
 import orderReducer from "./order/orderSlice";
-import filterReducer from "./filter/filterSlice";
 import homePageReducer from "./home/homePageSlice";
 import chatOrgReducer from "./chat/chatOrgSlice";
 import tagsReducer from "./Tags/tagsSlice";
@@ -53,7 +52,6 @@ const rootReducer = {
     APP: appReducer,
     COMMENT_MEDIA: commentReducer,
     ORDER: orderReducer,
-    FILTER: filterReducer,
     HOME_PAGE: homePageReducer,
     CHAT_ORG: chatOrgReducer,
     ORGS_MAP: orgMapReducer,

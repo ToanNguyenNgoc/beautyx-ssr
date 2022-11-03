@@ -2,7 +2,7 @@ import React from "react";
 import AuthRoute from "./AuthRoute";
 import { BrowserRouter as Router, Switch, Redirect, BrowserRouter, Route } from "react-router-dom";
 import MerchantDetail from "../pages/MerchantDetail/index";
-import Partner from "../features/Partner";
+import Partner from "../pages/Partner";
 import Cart from "../features/Cart/index";
 import Account from "../features/Account";
 import ProductDetail from "../pages/ProductDetail";
