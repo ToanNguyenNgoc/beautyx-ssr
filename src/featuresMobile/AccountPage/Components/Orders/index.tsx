@@ -14,7 +14,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 function OrderMb(props: any) {
-      const { openOrder } = props;
+      const { openOrder, setOpenOrder } = props;
       return (
             <Dialog
                   fullScreen
@@ -22,7 +22,7 @@ function OrderMb(props: any) {
                   TransitionComponent={Transition}
             >
                   <div style={{ minHeight: "100vh" }} className="mb-order">
-                        <HeadMobile title="Đơn hàng" />
+                        <HeadMobile onBackFunc={()=>setOpenOrder(false)} title="Đơn hàng" />
                         <Orders />
                   </div>
             </Dialog>

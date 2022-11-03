@@ -2,7 +2,7 @@ import React, { useContext, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
-import { extraParamsUrl } from "../../utils/extraParamsUrl";
+// import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import Bottom from "../Bottom";
 import "./accountPage.css";
 import AccountForm from "./Components/AccountForm";
@@ -28,18 +28,23 @@ export default function AccountMobile() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const dispatch = useDispatch();
     const { setSign, language, setLanguage } = useContext(AppContext);
-    const params: any = extraParamsUrl();
+    // const params: any = extraParamsUrl();
     const history = useHistory();
     const [open, setOpen] = useState(false);
-    const openAcc = params?.address ? true : false;
-    const openOrder = params?.order ? true : false;
-    const openGuide = params?.guide ? true : false;
+    // const openAcc = params?.address ? true : false;
+    // const openOrder = params?.order ? true : false;
+    // const openGuide = params?.guide ? true : false;
+    const [openOrder, setOpenOrder] = useState(false)
+    const [openGuide, setOpenGuide]  =useState(false)
+    const [openAcc, setOpenAcc]  =useState(false)
+    
     const refUserGuide: any = useRef();
     const handleToggleUserGuide = () => {
         refUserGuide.current.classList.toggle("userGuid-active");
     };
     const gotoOrder = () => {
-        history.push("/tai-khoan/lich-su-mua?order=true");
+        // history.push("/tai-khoan/lich-su-mua?order=true");
+        setOpenOrder(true)
     };
     const gotoAppointment = () => {
         const prevUrl = "/tai-khoan/thong-tin-ca-nhan";
@@ -50,10 +55,12 @@ export default function AccountMobile() {
         });
     };
     const gotoAddress = () => {
-        history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
+        // history.push("/tai-khoan/thong-tin-ca-nhan?address=true");
+        setOpenAcc(true)
     };
     const gotoAccountGuide = () => {
-        history.push("/tai-khoan/thong-tin-ca-nhan?guide=true");
+        // history.push("/tai-khoan/thong-tin-ca-nhan?guide=true");
+        setOpenGuide(true)
     };
     const handleSignOut = () => {
         setSign(false);
@@ -247,9 +254,9 @@ export default function AccountMobile() {
                 </div>
             </div>
             <Bottom />
-            <AccountForm open={openAcc} />
-            <OrderMb openOrder={openOrder} />
-            <AccountGuide open={openGuide} />
+            <AccountForm open={openAcc} setOpen={setOpenAcc} />
+            <OrderMb openOrder={openOrder} setOpenOrder={setOpenOrder}/>
+            <AccountGuide openGuide={openGuide} setOpenGuide={setOpenGuide} />
         </div>
     );
 }
