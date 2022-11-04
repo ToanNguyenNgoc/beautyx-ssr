@@ -47,8 +47,9 @@ export function FilterSort(props: FilterSortProps) {
         return list
     }
     const onChangeSort = (query: string) => {
-        if (onChange)
+        if (onChange){
             onChange(query)
+        }
     }
     return (
         <div className={style.container}>

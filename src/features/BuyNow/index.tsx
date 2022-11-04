@@ -8,7 +8,7 @@ import { Container } from '@mui/material'
 import './style.css';
 import '../../pages/ServiceDetail/serviceDetail.css';
 import { useSelector } from 'react-redux';
-import UserPaymentInfo from '../Account/components/UserPaymentInfo';
+import UserPaymentInfo from '../../pages/Account/components/UserPaymentInfo';
 import DetailOrgCard from '../../pages/ServiceDetail/components/DetailOrgCard';
 import ProductItem from './ProductItem';
 import formatPrice from '../../utils/formatPrice';

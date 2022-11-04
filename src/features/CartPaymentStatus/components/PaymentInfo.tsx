@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { CircularProgress, Icon } from '@mui/material';
 import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
-import UserPaymentInfo from '../../Account/components/UserPaymentInfo';
+import UserPaymentInfo from '../../../pages/Account/components/UserPaymentInfo';
 import '../cart-status.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';

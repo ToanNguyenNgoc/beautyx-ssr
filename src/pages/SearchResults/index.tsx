@@ -30,17 +30,17 @@ function SearchResults() {
     const { t } = useContext(AppContext)
     const params = useParams();
     const paramsUrl: any = extraParamsUrl()
-    const keyword = paramsUrl.keyword
-    const province = paramsUrl.province
+    const keyword = paramsUrl?.keyword ?? ''
+    const province = paramsUrl?.province ?? ''
     const tab = params.tab ?? 'dich-vu'
     const links = [
         {
             link: "dich-vu", title: t('Mer_de.services'),
-            icon: ICON.servicePurple, act_icon: ICON.serviceWhite, show: province ? false:true
+            icon: ICON.servicePurple, act_icon: ICON.serviceWhite, show: province ? false : true
         },
         {
             link: "san-pham", title: t('Mer_de.products'),
-            icon: ICON.barberPurple, act_icon: ICON.barberWhite, show: province ? false:true
+            icon: ICON.barberPurple, act_icon: ICON.barberWhite, show: province ? false : true
         },
         {
             link: "cua-hang", title: t('my_ser.business'),
@@ -63,22 +63,22 @@ function SearchResults() {
                         <ul className={style.list_link}>
                             {
                                 links
-                                .filter(link => link.show)
-                                .map(link => (
-                                    <li key={link.link} className={style.link_item_cnt}>
-                                        <Link
-                                            replace={true}
-                                            className={tab === link.link ? `${style.link_item} ${style.link_item_act}` : style.link_item}
-                                            to={onSwitchLick(link.link)} >
-                                            <div style={tab === link.link ? {
-                                                backgroundColor: "var(--purple)"
-                                            } : {}} className={style.link_item_icon}>
-                                                <img src={tab === link.link ? link.act_icon : link.icon} alt="" />
-                                            </div>
-                                            <span className={style.link_item_text}>{link.title}</span>
-                                        </Link>
-                                    </li>
-                                ))
+                                    .filter(link => link.show)
+                                    .map(link => (
+                                        <li key={link.link} className={style.link_item_cnt}>
+                                            <Link
+                                                replace={true}
+                                                className={tab === link.link ? `${style.link_item} ${style.link_item_act}` : style.link_item}
+                                                to={onSwitchLick(link.link)} >
+                                                <div style={tab === link.link ? {
+                                                    backgroundColor: "var(--purple)"
+                                                } : {}} className={style.link_item_icon}>
+                                                    <img src={tab === link.link ? link.act_icon : link.icon} alt="" />
+                                                </div>
+                                                <span className={style.link_item_text}>{link.title}</span>
+                                            </Link>
+                                        </li>
+                                    ))
                             }
                         </ul>
                     </div>
@@ -124,6 +124,7 @@ const TabService = ({ keyword }: { keyword: string }) => {
         }))
     }
     const onChangePrice = (e: any) => {
+        if(IS_MB) setOpenFilter(false)
         dispatch(onChangeFilterService({
             ...PARAMS_SERVICES,
             "filter[min_price]": e.min_price,
@@ -160,6 +161,8 @@ const TabService = ({ keyword }: { keyword: string }) => {
                                     <div className={style.filter_cnt_mt}>
                                         <FilterSort
                                             type="SERVICE"
+                                            onChange={onChangeSort}
+                                            value={SERVICE_PR.sort}
                                         />
                                         <FilterPrice
                                             onChangePrice={onChangePrice}
@@ -233,6 +236,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
         }))
     }
     const onChangePrice = (e: any) => {
+        if(IS_MB) setOpenFilter(false)
         dispatch(onChangeFilterProduct({
             ...PARAMS_PRODUCTS,
             "filter[min_price]": e.min_price,
@@ -276,6 +280,8 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
                                     <div className={style.filter_cnt_mt}>
                                         <FilterSort
                                             type="PRODUCT"
+                                            onChange={onChangeSort}
+                                            value={PRODUCT_PR.sort}
                                         />
                                         <FilterPrice
                                             onChangePrice={onChangePrice}
@@ -364,6 +370,7 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
         }))
     }
     const onChangePrice = (e: any) => {
+        if(IS_MB) setOpenFilter(false)
         dispatch(onChangeFilterOrg({
             ...ORG_PR,
             "filter[min_price]": e.min_price,

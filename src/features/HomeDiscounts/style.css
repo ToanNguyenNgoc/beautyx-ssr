@@ -1,7 +1,7 @@
 .home-discounts {
     margin: 32px 0px;
     width: 100vw;
-    background-color: #ffe3d2;
+    background-color: var(--bg-white);
     padding: 0 0 32px 0px;
 }
 
@@ -13,7 +13,7 @@
 
 .home-discounts__title {
     padding: 16px;
-    background-color: #ff721f;
+    background-color: var(--bg-white);
     margin-bottom: 16px;
     border-radius: 0 0 16px 16px;
 }
@@ -24,7 +24,7 @@
     font-size: 24px;
     line-height: normal;
     text-transform: uppercase;
-    color: white;
+    color: var(--text-orange);
     font-family: 'Nunito';
 }
 
@@ -32,8 +32,8 @@
     cursor: pointer;
     font-size: 16px;
     line-height: 18px;
-    font-weight: 700;
-    color: white;
+    font-weight: 600;
+    color: var(--text-hover);
     text-transform: capitalize;
 }
 
@@ -49,6 +49,8 @@
     transition: all 0.4s;
     cursor: pointer;
     position: relative;
+    box-shadow: var(--box-shadow);
+
 }
 .discount_item_img_cnt{
     position: relative;
@@ -104,7 +106,7 @@
     font-size: 16px;
     line-height: 18px;
     font-weight: 700;
-    color: var(--red-cl);
+    color: var(--red-2);
     margin-right: 6px;
 }
 

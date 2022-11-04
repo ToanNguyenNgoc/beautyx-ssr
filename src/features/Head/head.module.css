@@ -347,7 +347,8 @@
     transition: var(--trans);
     visibility: visible;
 }
-.head_back_btn{
+
+.head_back_btn {
     display: none;
 }
 
@@ -355,15 +356,18 @@
     .head_wrapper {
         padding: 8px 12px;
     }
+
     .head_top {
         margin: 0px;
     }
+
     .head_top_left_img,
     .head_bot,
     .head_top_right_user,
     .head_top_right_auth {
         display: none;
     }
+
     .head_search_input {
         background-color: var(--bg-color);
         border: solid 1px var(--bg-color);
@@ -376,19 +380,34 @@
         padding-left: 40px;
         box-shadow: none;
     }
+
     .head_top_right {
         width: fit-content;
     }
+
     .head_top_left {
         /* width: calc(100% - 138px); */
         width: 100%;
     }
+
     .head_top_left_search {
         width: 100%;
+        background-color: var(--bg-white);
+        border-radius: 8px;
     }
+
     .head_top_right_btn {
         background-color: var(--bg-color);
+        padding: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    .head_top_right_btn img{
+        width: 22px;
+        height: 22px;
+    }
+
     .head_search {
         position: fixed;
         width: 100vw;
@@ -397,21 +416,46 @@
         left: 0px;
         margin-top: 0;
     }
+
     .head_search_icon {
         left: 6px;
     }
+
     .head_noti {
         width: 100vw;
         margin-left: -329px;
     }
+
     .head_search_icon {
         left: 12px;
         right: unset;
     }
-    .head_back_btn{
+
+    .head_back_btn {
         display: block;
         background-color: var(--bg-white);
         padding: 0px;
         padding-right: 6px;
+    }
+
+    /* change style */
+    .container_ch {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: transparent;
+        z-index: 101;
+        transition: all .6s;
+        box-shadow: var(--box-shadow);
+    }
+    .container_ch_white{
+        transition: all .6s;
+        background-color: #7161bac9;
+        backdrop-filter: blur(10px);
+    }
+    .head_top_right_btn_ch{
+        background-color: transparent;
+        border: none;
     }
 }

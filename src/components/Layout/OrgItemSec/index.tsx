@@ -104,8 +104,6 @@ export function OrgItemSec(props: OrgItemSecProps) {
                             {
                                 org.branches?.length > 0 &&
                                 <XButton
-                                    icon={icon.mapMarkerOrg}
-                                    iconSize={11}
                                     onClick={(e) => {
                                         setOpen(true);
                                         e.preventDefault();

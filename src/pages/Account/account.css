@@ -1,0 +1,222 @@
+.pointer-events-none {
+  pointer-events: none;
+}
+.quicksand-xl {
+  font-family: Quicksand;
+  font-style: normal;
+  font-size: 32px;
+  line-height: 36px;
+}
+.quicksand-md {
+  font-family: Quicksand;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
+}
+.quicksand-sm {
+  font-family: Quicksand;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 12px;
+}
+.text-bold {
+  font-weight: bold;
+}
+.text-color-grey {
+  color: #a2a1ab;
+}
+.text-color-purple {
+  color: var(--purple);
+}
+.wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 64px 0;
+}
+.account_section {
+  display: flex;
+  flex-direction: row;
+}
+
+.infor_section {
+  background: #f5f5f7;
+  box-shadow: 0px 6px 15px #dcd8ee;
+  border-radius: 24px;
+  width: 380px;
+  padding: 36px;
+}
+.avatar {
+  max-width: 160px;
+  margin: auto;
+  margin-bottom: 24px;
+  position: relative;
+}
+.img_mask {
+  overflow: hidden;
+  background-blend-mode: multiply, normal;
+  border-radius: 80px;
+  position: relative;
+  padding-bottom: calc(100% * 3 / 3);
+}
+.img_mask > img {
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+  object-position: center;
+}
+.camera_icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background: #eeedf2;
+  border-radius: 22px;
+  padding: 14px;
+}
+.other_stuff {
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+}
+.other_stuff > div {
+  display: flex;
+  align-items: center;
+  background: #eeedf2;
+  border-radius: 8px;
+  padding: 4px 0;
+  width: calc(100% / 3);
+  justify-content: center;
+}
+.point {
+  max-width: 86px;
+}
+.amount {
+  max-width: 105px;
+}
+.rank {
+  max-width: 86px;
+}
+.other_stuff {
+  margin-bottom: 36px;
+}
+.other_stuff > div > img {
+  margin-right: 4px;
+}
+.other_stuff .content {
+  display: flex;
+  flex-direction: column;
+}
+.infor_section .tab {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 0 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.infor_section .logout {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0 4px;
+}
+.infor_section .logout span {
+  cursor: pointer;
+}
+.infor_section .tab .icon {
+  margin-right: 6px;
+  width: 24px;
+  height: 24px;
+}
+.infor_section .tab .icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.infor_section .tab:hover {
+  background-color: #eeedf2;
+}
+.infor_section .dropdown {
+  overflow: hidden;
+  border-radius: 8px;
+}
+.infor_section .dropdown .tab {
+  position: relative;
+}
+.infor_section .dropdown .tab::after {
+  width: 8px;
+  border: solid #7161ba;
+  height: 8px;
+  content: "";
+  display: block;
+  opacity: 1;
+  position: absolute;
+  transform: rotate(45deg);
+  transition: all 0.4s ease-out;
+  visibility: visible;
+  border-width: 0 2px 2px 0;
+  right: 17px;
+}
+.infor_section .dropdown ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 0px 44px;
+  max-height: 0;
+  transition: all 0.4s ease-out;
+}
+.infor_section .dropdown ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.infor_section .dropdown .tab.active {
+  background-color: #eeedf2;
+}
+.infor_section .dropdown .tab.active ~ ul {
+  height: max-content;
+  max-height: 200px;
+  padding: 0 16px 8px 44px;
+  background-color: #eeedf2;
+  position: relative;
+  z-index: 2;
+}
+.infor_section .dropdown .tab.active ~ ul::before {
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  content: "";
+  background-color: #eeedf2;
+  z-index: 1;
+  transition: all 0.4s ease-out;
+}
+.infor_section .dropdown .tab.active::after {
+  transform: rotate(225deg);
+}
+.purple_line {
+  border-top: 1px solid #7161ba;
+  border-bottom: none;
+}
+.infor_section .lang {
+  display: flex;
+  align-items: center;
+}
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .account_section {
+    padding: 64px 16px;
+  }
+  .title:nth-child(1) {
+    margin-bottom: 8px;
+  }
+}
+/* res-mobile */
+/* Mobile */
+@media only screen and (max-width: 767px) {
+  .account_section {
+    display: none;
+  }
+  .MuiPaper-root {
+    margin: 0 !important;
+  }
+}

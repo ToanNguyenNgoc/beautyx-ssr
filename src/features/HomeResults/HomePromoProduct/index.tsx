@@ -38,7 +38,7 @@ function HomePromoProduct() {
                         prevUrl="/homepage"
                     />
                     :
-                    <Head prev_url="/homepage" />
+                    <Head/>
             }
             <HeadTitle title={`TOP sản phẩm đang giảm giá`} />
             <Container>

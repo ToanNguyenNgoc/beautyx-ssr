@@ -44,7 +44,7 @@ function HomeDiscount() {
                         {t("trending.watch_all")} {">"}
                     </span>
                 </div>
-                {
+                {/* {
                     geo &&
                     <div className="home-discounts__location">
                         <div className="ring-container">
@@ -55,7 +55,7 @@ function HomeDiscount() {
                             {currentLocation}
                         </span>
                     </div>
-                }
+                } */}
                 <div className="home-discounts__list-wrap">
                     {(isValidating && resData.length === 0) && <LoadGrid />}
                     <ul className="home-discounts__list">

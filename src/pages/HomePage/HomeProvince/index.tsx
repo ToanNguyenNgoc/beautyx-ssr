@@ -19,39 +19,41 @@ function HomeProvince(props: any) {
     return (
         <div className="home-province">
             <HomeTitle
-                title={t("home_2.places_you_are_interested_in")}
+                title={'Địa điểm'}
                 url={"/dia-diem-quan-tam"}
                 seemore={t("trending.watch_all") + " > "}
             />
-            <div
-                className="home-province_list"
-                style={isOneRow ? { gridTemplateRows: '1fr' } : {}}
-            >
-                {provinces_org?.slice(0, 6).map(
-                    (item: IProvince, index: number) => (
-                        <Link
-                            to={{
-                                pathname: "/ket-qua-tim-kiem/cua-hang",
-                                search: `?province=${item.province_code}`,
-                            }}
-                            onClick={() => {scrollTop();dispatch(onResetFilter())}}
-                            key={index}
-                            className="home-province_item"
-                        >
-                            <LazyLoadImage
-                                src={`${item.media[1].original_url}`} alt=""
-                            />
-                            <div className="province-item-cnt">
-                                <span>{item.name}</span>
-                                <span>
-                                    {formatRoundOrgCount(item.organizations_count +
-                                        item.branches_count)}{" "}
-                                    {t("home_2.beauty_places")}{" "}
-                                </span>
-                            </div>
-                        </Link>
-                    )
-                )}
+            <div className="home_province_cnt">
+                <div
+                    className="home-province_list"
+                    style={isOneRow ? { gridTemplateRows: '1fr' } : {}}
+                >
+                    {provinces_org?.slice(0, 6).map(
+                        (item: IProvince, index: number) => (
+                            <Link
+                                to={{
+                                    pathname: "/ket-qua-tim-kiem/cua-hang",
+                                    search: `?province=${item.province_code}`,
+                                }}
+                                onClick={() => { scrollTop(); dispatch(onResetFilter()) }}
+                                key={index}
+                                className="home-province_item"
+                            >
+                                <LazyLoadImage
+                                    src={`${item.media[1].original_url}`} alt=""
+                                />
+                                <div className="province-item-cnt">
+                                    <span>{item.name}</span>
+                                    <span>
+                                        {formatRoundOrgCount(item.organizations_count +
+                                            item.branches_count)}{" "}
+                                        {t("home_2.beauty_places")}{" "}
+                                    </span>
+                                </div>
+                            </Link>
+                        )
+                    )}
+                </div>
             </div>
         </div>
     );

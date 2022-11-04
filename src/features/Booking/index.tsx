@@ -36,7 +36,7 @@ import { IDiscountPar } from "interface/discount";
 import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
-import UserPaymentInfo from "features/Account/components/UserPaymentInfo";
+import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
 
 // end
 const date = dayjs();

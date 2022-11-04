@@ -7,10 +7,11 @@ interface IProps {
     title: string;
     url?: string;
     seemore?: string;
+    onClick?: () => void
 }
 
 function HomeTitle(props: IProps) {
-    const { title, url, seemore } = props;
+    const { title, url, seemore, onClick } = props;
     const history = useHistory();
 
     const onSeeMoreClick = () => {
@@ -18,6 +19,7 @@ function HomeTitle(props: IProps) {
             history.push(url)
             scrollTop()
         }
+        if (onClick) onClick()
     }
 
     return (

@@ -5,26 +5,29 @@ import { clst } from 'utils'
 import style from './style.module.css'
 
 interface FilterTagsProps {
-    onChange: (e: string) => void, value: string
+    onChange?: (e: string) => void, value?: string,
+    title?: string
 }
 
 export function FilterTags(props: FilterTagsProps) {
-    const { onChange, value } = props;
-    const tagsArr = value.split('|').filter(Boolean) ?? []
+    const { onChange, value, title } = props;
+    const tagsArr = value?.split('|').filter(Boolean) ?? []
     const { tags } = useSelector((state: any) => state.HOME)
     const onChangeTag = (tag_name: string) => {
         if (tagsArr.includes(tag_name)) {
             const newArr = tagsArr.filter((i: string) => i !== tag_name)
-            onChange(newArr.join('|'))
+            if (onChange) onChange(newArr.join('|'))
         } else {
             const newArr = [...tagsArr, tag_name]
-            onChange(newArr.join('|'))
+            if (onChange) onChange(newArr.join('|'))
         }
     }
 
     return (
         <div className={style.container}>
-            <span className={style.filter_title}>Danh mục</span>
+            <span className={style.filter_title}>
+                {title ?? 'Danh mục'}
+            </span>
             <ul className={style.tags_list}>
                 {
                     tags?.map((item: ITag, index: number) => {

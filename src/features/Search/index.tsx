@@ -14,7 +14,7 @@ import { debounce } from "lodash"
 import tracking from "api/trackApi"
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter"
 import { AppContext } from "context/AppProvider"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 import API_3RD from "api/3rd-api"
 import slugify from "utils/formatUrlString"
 import { onResetFilter } from "redux/filter-result"
@@ -135,10 +135,7 @@ function Search(props: SearchProps) {
                 {
                     KEY_WORD !== "" &&
                     <Link
-                        onClick={() => {
-                            onCloseSearch();
-                            dispatch(onCloseSearch())
-                        }}
+                        onClick={() => onCloseSearch()}
                         to={{
                             pathname: `/ket-qua-tim-kiem/${tabSort[0].link}`,
                             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,

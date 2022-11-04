@@ -309,6 +309,10 @@
     grid-column: 3/5;
 }
 
+.home_province_name {
+    display: none;
+}
+
 
 /* home services recommend */
 
@@ -323,15 +327,19 @@
     .home-promo-ser .ser-list {
         grid-template-columns: repeat(4, 1fr);
     }
+
     .home-result-ser-cnt {
         padding: 0 24px !important;
     }
+
     .filter-ser-list li {
         flex-shrink: 0;
     }
+
     .home-result__cus {
         padding: 0 24px;
     }
+
     .product .product-cnt {
         flex-direction: row;
         padding: 24px;
@@ -350,38 +358,48 @@
         margin: 0;
         padding: 12px 0 0 12px;
     }
+
     .home-se-promo .home-promo-ser .ser-list {
         display: flex;
         padding: 0 12px 0 12px;
     }
+
     .home-cate-tree-cnt {
         display: none;
     }
+
     .home-se-promo__header {
         width: 100%;
         padding: 0 12px;
     }
+
     .home-title__tag {
         display: none;
     }
+
     .home-ca-cnt {
         display: none;
     }
+
     .home-province {
         margin: 0;
         padding: 16px 0px 90px 0px;
     }
+
     .home-card-cnt {
         margin: unset;
     }
+
     .home-card-cnt__left .card-list li {
         margin-bottom: unset;
         box-shadow: rgb(0 0 0 / 24%) 0px 15px 20px -16px;
     }
+
     .home-se-cnt {
         margin-top: 0;
         margin-bottom: 84px;
     }
+
     .home-se-sec-title {
         margin-bottom: 0px;
         padding: 6px 18px;
@@ -389,89 +407,109 @@
         font-size: 14px;
         line-height: 18px;
     }
+
     .home-se-sec-title::after {
         height: 25px;
         margin: 5px 0px 0px 17px;
     }
+
     .home-tags {
         width: 100%;
         overflow-x: scroll;
     }
+
     .home-tags-list {
         width: max-content;
         padding: 16px 12px 0 12px;
         display: flex;
         grid-gap: 0 8px;
     }
+
     .home-tags-list li {
         width: 96px;
         padding: 0;
     }
+
     .home-tags .tag-item-cnt {
         box-shadow: none;
         padding: 0;
         background-color: #fafafa;
         padding: 4px 0;
     }
+
     .home-tags .tag-item-cnt img {
         width: 44px;
         height: 44px;
         margin-bottom: 8px;
     }
+
     .home-tags .tag-item-cnt .tag-item-title {
         font-size: 12px;
         line-height: 18px;
         font-weight: 600;
         text-align: center;
     }
+
     .home-se-promo {
         margin: 0px;
         padding-top: 16px;
     }
+
     .home-se-promo__header button img {
         width: 16px;
         height: 16px;
     }
+
     .home-se-promo__header p {
         font-size: 14px;
     }
+
     .home-se-re {
         margin: 16px 0;
     }
+
     .home-promo-ser .ser-list li {
         /* width: 164px; */
         flex-shrink: 0;
     }
+
     .home-deal-cnt {
         flex-direction: column;
         padding: 16px;
         gap: 16px 0;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
+
     .deal-first {
         width: 100%;
     }
+
     .deal-second {
         width: 100%;
         gap: 0 16px;
         display: flex;
     }
+
     .home-card-cnt {
         flex-direction: column;
     }
+
     .home-card-cnt__left {
         width: 100%;
         padding: 16px;
         box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     }
+
     .home-card-cnt__right {
         width: 100%;
         padding: unset;
     }
+
     .home-card-list-org {
         width: 100%;
         overflow-x: scroll;
     }
+
     .home-card-list-org .org-list {
         flex-wrap: nowrap;
         width: max-content;
@@ -479,15 +517,18 @@
         display: flex;
         padding: 16px;
     }
+
     .home-card-list-org .org-list li {
         width: 164px;
         padding: unset;
     }
+
     .re-org-item .re-org-item__img {
         /* height: 164px; */
         flex-shrink: 0;
     }
-    .home-province_list {
+
+    /* .home-province_list {
         margin-top: 16px;
         padding: 0 12px;
         gap: 12px;
@@ -495,71 +536,62 @@
         grid-template-rows: 1fr 1fr 1fr 1fr;
         grid-template-columns: 1fr 1fr;
         height: 100%;
+    } */
+    .home_province_cnt {
+        width: 100%;
+        overflow-x: scroll;
+        padding: 12px;
     }
+
+    .home-province_list {
+        display: flex;
+        width: max-content;
+        margin-top: 0px;
+    }
+
     .home-province .home-province_item {
         border-radius: 8px;
+        width: 98px;
+        height: 98px;
     }
-    .home-province .home-province_item:nth-child(1) {
-        grid-row-start: 1;
-        grid-column-start: 1;
-        grid-row-end: 3;
-        grid-column-end: 2;
-    }
-    .home-province .home-province_item:nth-child(2) {
-        grid-row-start: 2;
-        grid-column-start: 2;
-        grid-row-end: 3;
-        grid-column-end: 3;
-    }
-    .home-province .home-province_item:nth-child(3) {
-        grid-row-start: 1;
-        grid-column-start: 2;
-        grid-row-end: 2;
-        grid-column-end: 3;
-    }
-    .home-province .home-province_item:nth-child(4) {
-        grid-row-start: 3;
-        grid-column-start: 2;
-        grid-row-end: 5;
-        grid-column-end: 3;
-    }
-    .home-province .home-province_item:nth-child(5) {
-        grid-row-start: 3;
-        grid-column-start: 1;
-        grid-row-end: 4;
-        grid-column-end: 2;
-    }
-    .home-province .home-province_item:nth-child(6) {
-        grid-row-start: 4;
-        grid-column-start: 1;
-        grid-row-end: 5;
-        grid-column-end: 2;
-    }
+
     .home-province .province-item-cnt {
         width: 100%;
         margin: 0px;
         padding: 4px;
         background-color: transparent;
     }
+
     .home-province .province-item-cnt span:nth-child(1) {
-        color: var(--bgWhite);
-        font-weight: 700;
+        display: none;
     }
+
     .home-province .province-item-cnt span:nth-child(2) {
-        font-size: 14px;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
         color: var(--bgWhite);
     }
+
+    .home_province_name {
+        display: block;
+        color: var(--text-black);
+    }
+
     .card-list {
         gap: 16px 0;
         display: flex;
         flex-direction: column;
     }
+
     .ser-promo__bot {
         position: absolute;
         bottom: 8px;
         left: 8px;
     }
-    .home-promo-ser{
+
+    .home-promo-ser {
         width: 100%;
         overflow-x: scroll;
     }

@@ -1,0 +1,10 @@
+.payment_section{
+    padding: 64px 36px;
+}
+.payment_section>.title{
+    font-family: Quicksand;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+}
