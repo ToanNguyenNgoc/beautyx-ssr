@@ -7,7 +7,7 @@ import Head from "../../features/Head";
 import HeadMobile from "../../features/HeadMobile";
 import HeadTitle from "../../features/HeadTitle";
 import { Container, Dialog } from "@mui/material";
-import UserPaymentInfo from "../../features/Account/components/UserPaymentInfo";
+import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
 import Footer from "../../features/Footer";

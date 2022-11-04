@@ -11,7 +11,7 @@ import {
 import style from "./style.module.css"
 import icon from "constants/icon"
 import scrollTop from 'utils/scrollTop'
-import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer'
+// import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer'
 import tracking from 'api/trackApi'
 import { logEvent, analytics } from '../../../firebase'
 
@@ -50,7 +50,7 @@ export function SerProItem(props: SerProItemProps) {
     }
     const onItemClick = async () => {
         scrollTop();
-        GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
+        // GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         tracking.USER_ITEM_CLICK(org_dis.id, id);
         logEvent(analytics, type === "SERVICE" ? 'detail_service' : 'detail_product', data_analytic)
     }

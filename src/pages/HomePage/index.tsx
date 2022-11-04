@@ -21,8 +21,10 @@ import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import Footer from "features/Footer";
 import Bottom from "featuresMobile/Bottom";
-import {OpenApp} from 'components/Layout'
+import { OpenApp } from 'components/Layout'
+import { useDeviceMobile } from "utils";
 export default function HomePage() {
+    const IS_MB = useDeviceMobile()
     const banner_status = useSelector((state: any) => state.HOME.status);
 
     useEffect(() => {
@@ -34,8 +36,7 @@ export default function HomePage() {
     return (
         <div className="homepage">
             <ExtraFlatForm />
-            <OpenApp type="none" />
-            <Head IN_HOME={true} />
+            <Head changeStyle={false} />
             <Container>
                 <HomeCate />
                 {
@@ -50,15 +51,16 @@ export default function HomePage() {
             </Container>
             <HomeDiscount />
             <Container>
+                <HomeOrgDistance />
                 <HomeHotDeal />
                 <HomeTopService />
                 <HomeRecomment />
-                <HomeOrgDistance />
                 <HomeWatched />
                 <HomeProvince />
             </Container>
             <Footer />
             <Bottom />
+            <OpenApp type="none" />
         </div>
     );
 }

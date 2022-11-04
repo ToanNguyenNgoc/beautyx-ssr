@@ -19,21 +19,27 @@ import dayjs from "dayjs";
 import { getTotal } from "redux/cartSlice";
 import Search from "features/Search";
 import { debounce } from "lodash";
-import { extraParamsUrl, useDeviceMobile } from "utils";
+import { clst, extraParamsUrl, useDeviceMobile } from "utils";
 import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
 import { onSetViewedNoti } from 'redux/notifications'
 import { onResetFilter } from "redux/filter-result";
 
 interface IProps {
-    IN_HOME?: boolean,
-    setCloseDialog?: (closeDialog?: boolean) => void,
-    headerStyle?: any,
-    handleCancelPayment?: () => void,
-    prev_url?: string,
+    changeStyle?: boolean
 }
+// onload event
+window.addEventListener("scroll", function () {
+    const scrolled = window.scrollY;
+    const header = document.getElementById('header')
+    const windowPosition = scrolled > 60;
+    if (header) {
+        header.classList.toggle(style.container_ch_white, windowPosition);
+    }
+});
 
 function Head(props: IProps) {
+    const { changeStyle } = props
     const { t, orderService } = useContext(AppContext)
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
@@ -109,10 +115,12 @@ function Head(props: IProps) {
         history.push("/lich-hen?tab=1")
     }
     //
-    const paramUrl:any = extraParamsUrl()
+    const paramUrl: any = extraParamsUrl()
     const keywordUrl = paramUrl?.keyword ?? ""
     return (
-        <div className={style.container}>
+        <div id='header' className={
+            changeStyle ? clst([style.container, style.container_ch]) : style.container
+        }>
             <Container>
                 <div className={style.head_wrapper}>
                     <div className={style.head_top}>
@@ -155,23 +163,31 @@ function Head(props: IProps) {
                                             <img className={style.head_user_avatar} src={USER?.avatar} alt="" />
                                             <span className={style.head_user_name}>{USER?.fullname}</span>
                                         </Link >
-                                        <button
-                                            onClick={onNavigateAppointment}
-                                            className={style.head_top_right_btn}
-                                        >
-                                            {
-                                                appointment_today.length > 0 &&
-                                                <span className={style.head_top_right_badge}>
-                                                    {appointment_today.length}
-                                                </span>
-                                            }
-                                            <img src={ICON.calendarAct} alt="" />
-                                        </button>
+                                        {
+                                            !IS_MB &&
+                                            <button
+                                                onClick={onNavigateAppointment}
+                                                className={style.head_top_right_btn}
+                                            >
+                                                {
+                                                    appointment_today.length > 0 &&
+                                                    <span className={style.head_top_right_badge}>
+                                                        {appointment_today.length}
+                                                    </span>
+                                                }
+                                                <img src={ICON.calendarAct} alt="" />
+                                            </button>
+                                        }
                                         <button
                                             onClick={() => onToggleNoti("show")}
                                             onFocus={() => onToggleNoti("show")}
                                             onBlur={() => onToggleNoti("hide")}
-                                            className={style.head_top_right_btn}
+                                            className={
+                                                changeStyle ? 
+                                                clst([style.head_top_right_btn,style.head_top_right_btn_ch])
+                                                :
+                                                style.head_top_right_btn
+                                            }
                                         >
                                             <HeadNotification
                                                 refNoti={refNoti}
@@ -184,7 +200,9 @@ function Head(props: IProps) {
                                                     {notiCount}
                                                 </span>
                                             }
-                                            <img src={icon.Bell} alt="" />
+                                            <img src={
+                                                changeStyle ? icon.bellWhite:icon.Bell
+                                            } alt="" />
                                         </button>
                                     </>
                                     :
@@ -213,7 +231,12 @@ function Head(props: IProps) {
                             }
                             <button
                                 onClick={() => history.push("/gio-hang")}
-                                className={style.head_top_right_btn}
+                                className={
+                                    changeStyle ? 
+                                    clst([style.head_top_right_btn,style.head_top_right_btn_ch])
+                                    :
+                                    style.head_top_right_btn
+                                }
                             >
                                 {
                                     cartQuantity > 0 &&
@@ -221,7 +244,9 @@ function Head(props: IProps) {
                                         {cartQuantity >= 9 ? "9+" : cartQuantity}
                                     </span>
                                 }
-                                <img src={icon.cartPurpleBold} alt="" />
+                                <img 
+                                    src={changeStyle ? icon.cartWhiteBold : icon.cartPurpleBold} 
+                                alt="" />
                             </button>
                         </div>
                     </div>
@@ -408,7 +433,7 @@ const BackContainer = () => {
     const history = useHistory()
     const location = useLocation()
     const pathname = location.pathname
-    const homePath = ['/TIKI', '/MOMO', '/TIKI/', '/MOMO/', '/MBBANK', '/', '/homepage/','/homepage']
+    const homePath = ['/TIKI', '/MOMO', '/TIKI/', '/MOMO/', '/MBBANK', '/', '/homepage/', '/homepage']
     let show = true
     if (homePath.includes(pathname)) show = false
     return (

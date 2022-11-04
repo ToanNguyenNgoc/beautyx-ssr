@@ -206,7 +206,9 @@ import listOrange from "../assets/icon/listOrange.svg"
 import barberOrange from "../assets/icon/barberOrange.svg";
 import lipstickOrange from "../assets/icon/lipstickOrange.svg";
 import boxOrange from "../assets/icon/boxOrange.svg";
-import mapMarker from 'assets/icon/mapMarker.svg'
+import mapMarker from 'assets/icon/mapMarker.svg';
+import bellWhite from 'assets/icon/bellWhite.svg';
+import cartWhiteBold from 'assets/icon/cartWhiteBold.svg'
 
 const icon = {
     noApply,
@@ -408,6 +410,7 @@ const icon = {
     archiveRed,
     pinMapRedGoogle,
     listOrange,
-    barberOrange, lipstickOrange, boxOrange, mapMarker
+    barberOrange, lipstickOrange, boxOrange, mapMarker,
+    bellWhite, cartWhiteBold
 };
 export default icon;

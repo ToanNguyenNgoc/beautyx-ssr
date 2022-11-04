@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Slide, Dialog } from '@mui/material'
 import { TransitionProps } from '@mui/material/transitions';
-import Information from '../../../../features/Account/components/Information/index';
+import Information from '../../../../pages/Account/components/Information/index';
 import HeadMobile from '../../../../features/HeadMobile';
 import { AppContext } from '../../../../context/AppProvider';
 

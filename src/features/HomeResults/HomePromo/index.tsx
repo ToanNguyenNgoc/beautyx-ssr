@@ -65,7 +65,7 @@ function HomePromo(props: any) {
                         prevUrl="/homepage"
                     />
                     :
-                    <Head prev_url="/homepage" />
+                    <Head />
             }
             <HeadTitle title={`${t("home_2.hot_beauty_deal")}`} />
             <Container>

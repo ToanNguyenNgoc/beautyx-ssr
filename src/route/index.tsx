@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Redirect, BrowserRouter, Route } from 
 import MerchantDetail from "../pages/MerchantDetail/index";
 import Partner from "../pages/Partner";
 import Cart from "../features/Cart/index";
-import Account from "../features/Account";
+import Account from "../pages/Account";
 import ProductDetail from "../pages/ProductDetail";
 import ServiceDetail from "../pages/ServiceDetail";
 import SignPage from "../pages/SignPage/index";
