@@ -44,7 +44,7 @@ function ExtraFlatForm() {
     // //[MOMO]: redirect to payment result:
     const now = dayjs().format('HHmmss')
     useEffect(() => {
-        if (currentPay && currentPay?.confirm === true) {
+        if (flatForm === 'MOMO' && currentPay?.confirm === true) {
             const state_payment = { ...currentPay, FINAL_AMOUNT: currentPay?.payment_gateway?.amount };
             const create = dayjs(currentPay.created_at).format('HHmmss')
             if (parseInt(now) - parseInt(create) < 400) {
