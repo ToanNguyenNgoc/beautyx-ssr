@@ -223,9 +223,9 @@ function RouterConfig() {
       component: <Carts />
     },
     {
-      path:'/otp-form',
-      component: <OtpMbPage/>
-    }
+      path: '/otp-form',
+      component: <OtpMbPage />
+    },
   ];
   logEvent(analytics, 'page_view', {
     page_title: document.title,

@@ -147,7 +147,7 @@ function CartPaymentStatus() {
             } else {
                 return clearInterval(intervalRef.current);
             }
-        }, 3000);
+        }, 1000);
     };
     useEffect(() => {
         if (transaction_uuid) {

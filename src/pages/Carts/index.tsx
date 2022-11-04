@@ -80,7 +80,6 @@ function Carts() {
 
     useEffect(() => {
         dispatch(getTotal(USER?.id));
-        // ((USER && FLAT_FORM === FLAT_FORM_TYPE.MB) && (!checkPhoneValid(USER.telephone) && (history.push('/otp'))));
     }, [dispatch, cartList, USER, VOUCHER_APPLY]);
 
     const [open, setOpen] = useState(false);

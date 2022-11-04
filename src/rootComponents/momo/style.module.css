@@ -1,0 +1,38 @@
+.container {
+    margin-top: 26px;
+}
+
+.head {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.head img {
+    width: 138px;
+    height: 138px;
+}
+
+.head_status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.head_status_left {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.head_status_right {
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: var(--green);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--white);
+}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { CircularProgress, Icon } from '@mui/material';
+import React from 'react';
+import { CircularProgress } from '@mui/material';
 import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
 import UserPaymentInfo from '../../../pages/Account/components/UserPaymentInfo';
@@ -14,7 +14,6 @@ import { onSetStatusApp } from '../../../redux/appointment/appSlice';
 import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
 // import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
 import onErrorImg from '../../../utils/errorImg';
-import { ICON } from 'constants/icon2';
 
 function PaymentInfo(props: any) {
     const history = useHistory();

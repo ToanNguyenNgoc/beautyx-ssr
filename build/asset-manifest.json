@@ -1,12 +1,7 @@
 {
   "files": {
-<<<<<<< HEAD
-    "main.css": "/static/css/main.0f67a9d1.css",
-    "main.js": "/static/js/main.4c12803a.js",
-=======
-    "main.css": "/static/css/main.4c7a78ce.css",
-    "main.js": "/static/js/main.1e368680.js",
->>>>>>> Dev_remake
+    "main.css": "/static/css/main.43689513.css",
+    "main.js": "/static/js/main.61ebc7e0.js",
     "static/js/483.3c77b5e7.chunk.js": "/static/js/483.3c77b5e7.chunk.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.1e3b8183.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.4cd9b040.chunk.js",
@@ -169,6 +164,7 @@
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/calendarWhite.svg": "/static/media/calendarWhite.ff590ad58e5e9c25bb0d4535f8e9888c.svg",
     "static/media/cartPurpleBold.svg": "/static/media/cartPurpleBold.5d92eecb102ada9b5450f0e0b38004e2.svg",
+    "static/media/cartWhiteBold.svg": "/static/media/cartWhiteBold.0395b1f39cc827f56bec08a928498e51.svg",
     "static/media/support.svg": "/static/media/support.662c434d1fae52459343c3a38c254497.svg",
     "static/media/edit.svg": "/static/media/edit.b72127ab86d50bf4fb8d418bd6942db3.svg",
     "static/media/Camera-acc.svg": "/static/media/Camera-acc.0f892cd1bcac348637adf7fe6fcfe631.svg",
@@ -207,6 +203,7 @@
     "static/media/bell.svg": "/static/media/bell.c625127ea829de31a4cd742fd405b68d.svg",
     "static/media/bell_1.svg": "/static/media/bell_1.d99a46b65c6304a671b09894b648f2e4.svg",
     "static/media/info.svg": "/static/media/info.267b42a68d4e26425c882c5ec723d8c1.svg",
+    "static/media/bellWhite.svg": "/static/media/bellWhite.6b7a7f36ec1bbd5c25428c5f14959b03.svg",
     "static/media/servicePurple.svg": "/static/media/servicePurple.9d1e79c4d8ee068ec761845f2b6043bd.svg",
     "static/media/serviceWhite.svg": "/static/media/serviceWhite.f6bb572addf9ce62a96afb65d4ee1b43.svg",
     "static/media/vector_down.svg": "/static/media/vector_down.cc9c89d071f04864dc6b41045e0dcb7e.svg",
@@ -328,13 +325,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-<<<<<<< HEAD
-    "main.0f67a9d1.css.map": "/static/css/main.0f67a9d1.css.map",
-    "main.4c12803a.js.map": "/static/js/main.4c12803a.js.map",
-=======
-    "main.4c7a78ce.css.map": "/static/css/main.4c7a78ce.css.map",
-    "main.1e368680.js.map": "/static/js/main.1e368680.js.map",
->>>>>>> Dev_remake
+    "main.43689513.css.map": "/static/css/main.43689513.css.map",
+    "main.61ebc7e0.js.map": "/static/js/main.61ebc7e0.js.map",
     "483.3c77b5e7.chunk.js.map": "/static/js/483.3c77b5e7.chunk.js.map",
     "reactPlayerYouTube.1e3b8183.chunk.js.map": "/static/js/reactPlayerYouTube.1e3b8183.chunk.js.map",
     "reactPlayerSoundCloud.4cd9b040.chunk.js.map": "/static/js/reactPlayerSoundCloud.4cd9b040.chunk.js.map",
@@ -352,12 +344,7 @@
     "787.476e4605.chunk.js.map": "/static/js/787.476e4605.chunk.js.map"
   },
   "entrypoints": [
-<<<<<<< HEAD
-    "static/css/main.0f67a9d1.css",
-    "static/js/main.4c12803a.js"
-=======
-    "static/css/main.4c7a78ce.css",
-    "static/js/main.1e368680.js"
->>>>>>> Dev_remake
+    "static/css/main.43689513.css",
+    "static/js/main.61ebc7e0.js"
   ]
 }
