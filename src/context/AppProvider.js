@@ -14,8 +14,8 @@ import axios from "axios";
 import API_3RD from "api/3rd-api";
 import { paramAppointment, paramOrderService } from "../params-query";
 import { useSwr, useFetch } from "utils/index"
-import { fetchAsyncAppCur } from 'redux/notifications'
-import { fetchAsyncOrderServices } from "redux/order/orderSlice";
+// import { fetchAsyncAppCur } from 'redux/notifications'
+// import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -101,29 +101,28 @@ export default function AppProvider({ children }) {
     const { USER } = useSelector(state => state.USER)
     const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
-    useEffect(() => {
-        if (USER) {
-            dispatch(fetchAsyncAppCur())
-            dispatch(fetchAsyncOrderServices({
-                page: 1
-            }))
-        }
-    }, [USER])
+    // useEffect(() => {
+    //     if (USER) {
+    //         dispatch(fetchAsyncAppCur())
+    //         dispatch(fetchAsyncOrderServices({
+    //             page: 1
+    //         }))
+    //     }
+    // }, [USER])
 
     //[MOMO]: redirect to payment result:
-    //  const { USER } = useSelector((state: IStore) => state.USER)
-    const { responseArray } = useSwr('/orders', USER, {
-        'filter[status]': 'PAID',
-        'include': 'items|organization|branch|user|paymentMethod|deliveryAddress',
-        'sort':'-created_at'
-    })
-    const currentOrder = responseArray[0]
-    const [currentPay, setCurrentPay] = useState()
-    useEffect(() => {
-        if (currentOrder) {
-            setCurrentPay({ ...currentOrder, confirm: true })
-        }
-    }, [currentOrder])
+    // const { responseArray } = useSwr('/orders', USER, {
+    //     'filter[status]': 'PAID',
+    //     'include': 'items|organization|branch|user|paymentMethod|deliveryAddress',
+    //     'sort':'-created_at'
+    // })
+    // const currentOrder = responseArray[0]
+    // const [currentPay, setCurrentPay] = useState()
+    // useEffect(() => {
+    //     if (currentOrder) {
+    //         setCurrentPay({ ...currentOrder, confirm: true })
+    //     }
+    // }, [currentOrder])
 
     const value = {
         t,
@@ -143,7 +142,7 @@ export default function AppProvider({ children }) {
         appointment,
         orderService,
 
-        currentPay, setCurrentPay
+        // currentPay, setCurrentPay
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }

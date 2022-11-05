@@ -26,7 +26,7 @@ function CateLeft(props: any) {
         dispatch(onChooseCate(action));
         dispatch(
             fetchOrgsByTag({
-                tag: item.title,
+                tags: item.title,
                 page: 1,
             })
         );

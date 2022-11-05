@@ -6,7 +6,7 @@ import style from "./search.module.css"
 import { Link, useHistory } from "react-router-dom"
 import { useOrgs, useProducts, useServices } from "./hook"
 import { IProductPromo } from "interface/productPromo"
-import { SerProItem, SpecialItem } from "components/Layout"
+import { SerProItem, SpecialItem, XButton } from "components/Layout"
 import { IServicePromo } from "interface/servicePromo"
 import { IOrganization } from "interface/organization"
 import icon from "constants/icon"
@@ -22,7 +22,7 @@ import { onResetFilter } from "redux/filter-result"
 interface SearchProps {
     key_work?: string,
     key_work_debounce?: string,
-    onCloseSearchTimeOut?: () => void
+    onCloseSearchTimeOut?: () => void,
 }
 
 
@@ -68,9 +68,9 @@ function Search(props: SearchProps) {
         "limit": IS_MB ? 4 : 6,
         "filter[keyword]": KEY_WORD_DE
     }
-    const { orgs, totalOrg } = useOrgs(PARAM_ORG, KEY_WORD !== "")
-    const { services, totalService } = useServices(PARAM_SERVICE, KEY_WORD !== "")
-    const { products, totalProduct } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
+    const { orgs, totalOrg, isLoad } = useOrgs(PARAM_ORG, KEY_WORD !== "")
+    const { services, totalService, isLoadSer } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    const { products, totalProduct, isLoadPr } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
     //
     const tabs = [
         { link: "dich-vu", total: totalService },
@@ -116,7 +116,6 @@ function Search(props: SearchProps) {
                         <img src={icon.chevronLeft} alt="" />
                     </div>
                     <input
-                        autoFocus={true}
                         onChange={onChange}
                         type="text" className={style.search_input_mb}
                         placeholder="Bạn muốn tìm gì..."
@@ -124,11 +123,13 @@ function Search(props: SearchProps) {
                         onKeyDown={handleKeyDown}
                     />
                     {
-                        KEY_WORD !== "" &&
-                        <img
+                        keyword.key !== '' &&
+                        <XButton
+                            iconSize={(isLoad && isLoadPr && isLoadPr) ? 0 : 22}
                             onClick={() => setKeyword({ key: "", key_debounce: "" })}
-                            className={style.search_input_x} src={icon.closeBlack}
-                            alt=""
+                            className={style.close_bnt}
+                            icon={icon.closeBlack}
+                            loading={isLoad && isLoadPr && isLoadPr}
                         />
                     }
                 </div>
@@ -213,7 +214,7 @@ function Search(props: SearchProps) {
                         </ul>
                     </div>
                 }
-                {
+                {/* {
                     KEY_WORD === "" &&
                     <div className={style.section_container}>
                         <span className={style.section_title}>Đã tìm kiếm</span>
@@ -222,7 +223,7 @@ function Search(props: SearchProps) {
                                 onClick={onCloseSearch}
                                 className={style.org_list_wrapper}
                             >
-                                {/* {
+                                {
                                     HISTORY
                                         .filter((i: any) => i.TYPE === "ORG")
                                         .map((item: any) => (
@@ -239,11 +240,11 @@ function Search(props: SearchProps) {
                                                 </div>
                                             </Link>
                                         ))
-                                } */}
+                                }
                             </div>
                         </div>
                     </div>
-                }
+                } */}
                 {
                     KEY_WORD === "" &&
                     <>

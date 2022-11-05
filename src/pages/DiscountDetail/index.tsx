@@ -46,9 +46,11 @@ import { useLocation } from "react-router-dom";
 import { OpenApp } from "components/Layout";
 import { useGetParamUrl } from "utils";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
+import PageNotFound from "components/PageNotFound";
 
 // end
 function DiscountDetail() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const location = useLocation()
     const { DISCOUNT } = useSelector((state: any) => state.ORG_DISCOUNTS);
     const IS_MB = useDeviceMobile();
@@ -115,8 +117,8 @@ function DiscountDetail() {
     };
     const handleOnSetItemDiscount = () => {
         if (status_detail === STATUS.SUCCESS) {
-            const values = discount.items.find(
-                (item: IITEMS_DISCOUNT) => item.productable_id == params.item_id
+            const values = discount?.items?.find(
+                (item: IITEMS_DISCOUNT) => item?.productable_id == params?.item_id
                 // (item: IITEMS_DISCOUNT) => 138 == params.item_id
             );
             dispatch(onSetItemDiscount(values));
@@ -255,6 +257,10 @@ function DiscountDetail() {
         handleOnSetItemDiscount();
     }, [status_detail]);
 
+    if (!discount && DISCOUNT.status === STATUS.SUCCESS) {
+        return <PageNotFound />
+    }
+
     return (
         <>
             {status_detail !== STATUS.SUCCESS && <LoadDetail />}
@@ -264,7 +270,7 @@ function DiscountDetail() {
                 }
             />
             {IS_MB ? <HeadOrg org={ORG.org} /> : <Head />}
-            {status_detail === STATUS.SUCCESS && (
+            {status_detail === STATUS.SUCCESS && discount && (
                 <Container>
                     <div className="service-detail">
                         <div className="service-detail__head">

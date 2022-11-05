@@ -415,6 +415,7 @@
         top: 0;
         left: 0px;
         margin-top: 0;
+        z-index: 1000;
     }
 
     .head_search_icon {
@@ -423,7 +424,7 @@
 
     .head_noti {
         width: 100vw;
-        margin-left: -329px;
+        margin-left: -261px;
     }
 
     .head_search_icon {

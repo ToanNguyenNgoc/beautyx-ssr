@@ -1,5 +1,5 @@
 const API_ROUTE = {
-    PROVINCES_CODE_DISTRICTS:(province_code:number|string) => `/provinces/${province_code}/districts`,
+    PROVINCES_CODE_DISTRICTS: (province_code: number | string) => `/provinces/${province_code}/districts`,
     ORGS: '/organizations',
     ORG: (id: number | string) => `/organizations/${id}`,
     GALLERIES_ORG_ID: (id: number | string) => `/organizations/${id}/moba_galleries`,
@@ -13,7 +13,8 @@ const API_ROUTE = {
     DISCOUNTS: '/discounts',
     SERVICE_CATES_ORG: (org_id: number | string) => `/organizations/${org_id}/service_categories`,
     PRODUCT_CATES_ORG: (org_id: number | string) => `/organizations/${org_id}/product_categories`,
-    PAYMENT_GATEWAYS: (tran_uid:string)=>`paymentgateways/${tran_uid}/status?cancel=false`
+    PAYMENT_GATEWAYS: (tran_uid: string) => `paymentgateways/${tran_uid}/status?cancel=false`,
+    ORDERS: `/orders`
 }
 
 export default API_ROUTE

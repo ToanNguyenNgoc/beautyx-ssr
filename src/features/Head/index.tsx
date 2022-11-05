@@ -29,14 +29,14 @@ interface IProps {
     changeStyle?: boolean
 }
 // onload event
-window.addEventListener("scroll", function () {
-    const scrolled = window.scrollY;
-    const header = document.getElementById('header')
-    const windowPosition = scrolled > 60;
-    if (header) {
-        header.classList.toggle(style.container_ch_white, windowPosition);
-    }
-});
+// window.addEventListener("scroll", function () {
+//     const scrolled = window.scrollY;
+//     const header = document.getElementById('header')
+//     const windowPosition = scrolled > 60;
+//     if (header) {
+//         header.classList.toggle(style.container_ch_white, windowPosition);
+//     }
+// });
 
 function Head(props: IProps) {
     const { changeStyle } = props
@@ -117,6 +117,19 @@ function Head(props: IProps) {
     //
     const paramUrl: any = extraParamsUrl()
     const keywordUrl = paramUrl?.keyword ?? ""
+    //handle scroll
+    const scroll = () => {
+        const scrolled = window.scrollY;
+        const header = document.getElementById('header')
+        const windowPosition = scrolled > 60;
+        if (header && changeStyle) {
+            header.classList.toggle(style.container_ch_white, windowPosition);
+        }
+    }
+    useEffect(() => {
+        window.addEventListener("scroll", scroll);
+        return () => window.removeEventListener("scroll", scroll);
+    }, [scroll])
     return (
         <div id='header' className={
             changeStyle ? clst([style.container, style.container_ch]) : style.container
@@ -183,10 +196,10 @@ function Head(props: IProps) {
                                             onFocus={() => onToggleNoti("show")}
                                             onBlur={() => onToggleNoti("hide")}
                                             className={
-                                                changeStyle ? 
-                                                clst([style.head_top_right_btn,style.head_top_right_btn_ch])
-                                                :
-                                                style.head_top_right_btn
+                                                changeStyle ?
+                                                    clst([style.head_top_right_btn, style.head_top_right_btn_ch])
+                                                    :
+                                                    style.head_top_right_btn
                                             }
                                         >
                                             <HeadNotification
@@ -201,7 +214,7 @@ function Head(props: IProps) {
                                                 </span>
                                             }
                                             <img src={
-                                                changeStyle ? icon.bellWhite:icon.Bell
+                                                changeStyle ? icon.bellWhite : icon.Bell
                                             } alt="" />
                                         </button>
                                     </>
@@ -232,10 +245,10 @@ function Head(props: IProps) {
                             <button
                                 onClick={() => history.push("/gio-hang")}
                                 className={
-                                    changeStyle ? 
-                                    clst([style.head_top_right_btn,style.head_top_right_btn_ch])
-                                    :
-                                    style.head_top_right_btn
+                                    changeStyle ?
+                                        clst([style.head_top_right_btn, style.head_top_right_btn_ch])
+                                        :
+                                        style.head_top_right_btn
                                 }
                             >
                                 {
@@ -244,9 +257,9 @@ function Head(props: IProps) {
                                         {cartQuantity >= 9 ? "9+" : cartQuantity}
                                     </span>
                                 }
-                                <img 
-                                    src={changeStyle ? icon.cartWhiteBold : icon.cartPurpleBold} 
-                                alt="" />
+                                <img
+                                    src={changeStyle ? icon.cartWhiteBold : icon.cartPurpleBold}
+                                    alt="" />
                             </button>
                         </div>
                     </div>

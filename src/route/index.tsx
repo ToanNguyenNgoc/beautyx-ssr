@@ -11,7 +11,6 @@ import SignPage from "../pages/SignPage/index";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 import SearchResults from "../pages/SearchResults/index";
-import HomePromo from "../features/HomeResults/HomePromo";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
 import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
 import Policy from "../pages/Policy";
@@ -22,7 +21,6 @@ import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../pages/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeMap from "../features/HomeMap";
-import HomePromoProduct from "../features/HomeResults/HomePromoProduct";
 import HomeCateResult from "../features/HomeResults/HomeCateResult"
 import Blog from "../features/Blog";
 import CategoryTree from "../features/CategoryTree";
@@ -130,10 +128,6 @@ function RouterConfig() {
       component: <MerchantDetail />,
     },
     {
-      path: '/deal-lam-dep-cuc-HOT',
-      component: <HomePromo />
-    },
-    {
       path: '/dia-diem-quan-tam',
       component: <HomeListProvince />
     },
@@ -184,10 +178,6 @@ function RouterConfig() {
     {
       path: "/ban-do",
       component: <HomeMap />
-    },
-    {
-      path: "/top-san-pham-giam-gia",
-      component: <HomePromoProduct />
     },
     {
       path: "/danh-sach-san-pham/:tag_name",

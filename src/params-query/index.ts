@@ -2,7 +2,7 @@
 
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm"
 import dayjs from "dayjs"
-import { ParamOrg, ParamService, ParamProduct } from "./param.interface"
+import { ParamOrg, ParamService, ParamProduct, ParamOrder } from "./param.interface"
 
 const PLAT_FORM = EXTRA_FLAT_FORM()
 
@@ -77,6 +77,15 @@ export const paramOrderService = {
     "filter[status]": "PAID",
     "filter[withServicesSold]": true,
     "include": "items|items_count|organization|appointments",
+    "sort": "-created_at"
+}
+export const paramOrder: ParamOrder = {
+    "limit": "14",
+    "filter[platform]": PLAT_FORM,
+    "filter[status]": "",
+    "filter[withServicesSold]": true,
+    "filter[productable]": true,
+    "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
     "sort": "-created_at"
 }
 export const paramDiscounts = {

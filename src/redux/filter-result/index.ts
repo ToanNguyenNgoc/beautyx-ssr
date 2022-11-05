@@ -13,7 +13,7 @@ const initialState: IFilterResult = {
         "filter[location]": "",
         "filter[province_code]": "",
         "filter[district_code]": "",
-        "filter[min_price]": "",
+        "filter[min_price]": 1000,
         "filter[max_price]": "",
         "sort": ""
     },
@@ -21,8 +21,9 @@ const initialState: IFilterResult = {
         "filter[location]": "",
         "filter[province_code]": "",
         "filter[district_code]": "",
-        "filter[min_price]": "",
+        "filter[min_price]": 1000,
         "filter[max_price]": "",
+        "filter[special_price]":"",
         "sort": ""
     },
     ORG_PR: {

@@ -107,7 +107,7 @@ function LoginFlatForm(props: any) {
         await dispatch(fetchAsyncUser())
         if (params.requestId) {
             //vLjAPB
-            history.push(`/thanh-toan-momo/${params.requestId}`)
+            history.replace(`/thanh-toan-momo/${params.requestId}`)
             // history.push(`/thanh-toan-momo/vLjAPB`)
         }
 

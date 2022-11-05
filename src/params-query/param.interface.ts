@@ -42,3 +42,12 @@ export interface ParamProduct {
     "filter[province_code]"?: number | string,
     "filter[district_code]"?: number | string,
 }
+export interface ParamOrder {
+    "limit": string | number,
+    "filter[platform]": string,
+    "filter[status]": string,
+    "filter[withServicesSold]": boolean,
+    "filter[productable]": boolean,
+    "include": string,
+    "sort": string
+}

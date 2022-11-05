@@ -24,6 +24,9 @@ function HomePromo(props: any) {
         if (status !== STATUS.SUCCESS && status !== STATUS.FAIL) {
             dispatch(fetchAsyncServicesPromo({
                 page: 1,
+                special_price:true,
+                is_momo_ecommerce_enable:true,
+                sort:'-discount_percent'
             }))
         }
     }

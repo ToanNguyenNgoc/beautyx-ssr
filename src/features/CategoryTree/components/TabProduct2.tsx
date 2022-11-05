@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
+import { onResetFilter } from "redux/filter-result";
 // end
 
 function TabProduct2(props: any) {
@@ -32,7 +33,7 @@ function TabProduct2(props: any) {
                         <li key={index}>
                             <Link
                                 to={{
-                                    pathname: `/san-pham`,
+                                    pathname: `/ket-qua-tim-kiem/san-pham`,
                                     search: `keyword=${item.title}`,
                                 }}
                                 onClick={() => {
@@ -42,6 +43,7 @@ function TabProduct2(props: any) {
                                     GoogleTagPush(
                                         GoogleTagEvents.PRODUCT_CLICK
                                     );
+                                    dispatch(onResetFilter())
                                 }}
                                 className="flex-column home-tree__pr-cate-child__item"
                             >
