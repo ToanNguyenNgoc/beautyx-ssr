@@ -10,7 +10,7 @@ export const loginAsyncMomo: any = createAsyncThunk(
     async (params: any) => {
         try {
             const res = await momoAuthApi.login(params);
-            window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
+            localStorage.setItem("_WEB_TK", res.data.context.token)
             const payload = res.data.context;
             return payload;
         } catch (error) {
