@@ -10,12 +10,14 @@ import {
 import { pickBy, identity } from "lodash";
 import MOMO from '../../api/_momoImport';
 import momoApi, { IUserConsentsData } from "../../api/momoApi";
+import { useHistory } from "react-router-dom";
 // import momoAuthApi from '../../api/_momoAuthApi';
 // import { AnyAaaaRecord } from 'dns';
 
 
 function LoginFlatForm(props: any) {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { flatForm, params } = props;
     const TOKEN = sessionStorage.getItem("_WEB_TK");
     const onLoginFlatFormMomo = async () => {
@@ -75,15 +77,19 @@ function LoginFlatForm(props: any) {
                 ],
             },
             async ({ data, status }: any) => {
-                // alert(JSON.stringify(data)+JSON.stringify(status))
                 if (data.phone) {
                     await dispatch(loginAsyncMomo(data));
                     await dispatch(fetchAsyncUser());
+                    if (params.requestId) {
+                        //vLjAPB
+                        history.push(`/thanh-toan-momo/${params.requestId}`)
+                        // history.push(`/thanh-toan-momo/vLjAPB`)
+                    }
                 } else {
                     MOMO.showToast({
                         description: "có lỗi khi nhận thông tin từ momo",
                         type: "failure",
-                        duration: 2000,
+                        duration: 3000,
                     });
                     MOMO.hideLoading();
                 }
@@ -99,6 +105,12 @@ function LoginFlatForm(props: any) {
         }
         await dispatch(loginAsyncMomo(PARAMS))
         await dispatch(fetchAsyncUser())
+        if (params.requestId) {
+            //vLjAPB
+            history.push(`/thanh-toan-momo/${params.requestId}`)
+            // history.push(`/thanh-toan-momo/vLjAPB`)
+        }
+
     }
     const onLoginFlatFormTiki = async () => {
         const PARAMS_OB = {
@@ -119,7 +131,7 @@ function LoginFlatForm(props: any) {
             // $["ReactNativeWebView"].postMessage(JSON.stringify({
             //     type: "GET_CONTACT",
             //   }));
-              
+
             await dispatch(
                 loginAsyncMb({
                     token: params.loginToken,

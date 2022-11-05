@@ -38,6 +38,7 @@ import HomePage from "pages/HomePage";
 // import ExtraFlatForm from "rootComponents/extraFlatForm";
 import LadingPage from "pages/LandingPage";
 import OtpMbPage from "pages/OtpMbPage";
+import PaymentStatus from "rootComponents/momo/PaymentStatus";
 
 function RouterConfig() {
   const routes = [
@@ -213,6 +214,10 @@ function RouterConfig() {
     {
       path: '/trang-thai-don-hang/',
       component: <CartPaymentStatus />
+    },
+    {
+      path:'/thanh-toan-momo/:tran_uid',
+      component:<PaymentStatus/>
     },
     {
       path: "/mua-hang",
