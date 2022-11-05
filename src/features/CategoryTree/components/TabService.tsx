@@ -15,6 +15,8 @@ import tracking from "../../../api/trackApi";
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
 import { analytics, logEvent } from "../../../firebase";
+import { XButton } from "components/Layout";
+import { onResetFilter } from "redux/filter-result";
 // end
 function TabService(props: any) {
     const { catesChild, CATE } = props;
@@ -57,6 +59,19 @@ function TabService(props: any) {
         );
         history.push(pathServiceOb);
     };
+    const onViewMore = () => {
+        dispatch(onResetFilter())
+        scrollTop()
+        const cateChildFirst = catesChild.filter(
+            (item: any) => item.type === "SERVICE"
+        )[0]?.title;
+        if (cateChildFirst) {
+            history.push({
+                pathname: '/ket-qua-tim-kiem/dich-vu',
+                search: `keyword=${cateChildFirst}`
+            })
+        }
+    }
     return (
         <div>
             <ul className="cate-services__list">
@@ -123,6 +138,11 @@ function TabService(props: any) {
                         </li>
                     );
                 })}
+                <XButton
+                    onClick={onViewMore}
+                    className="cate_service_btn_more"
+                    title="Xem thêm"
+                />
             </ul>
         </div>
     );

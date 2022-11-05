@@ -13,15 +13,17 @@ import {
 import { STATUS } from '../../../../redux/status';
 import ModalLoad from '../../../../components/ModalLoad';
 import UserAddressMoba from './components/UserAddressMoba';
+import IStore from 'interface/IStore';
 
 function Address(props: any) {
     const history = useHistory();
     const dispatch = useDispatch();
+    const { USER } = useSelector((state: IStore) => state.USER)
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { address, status, status_up, address_default } = ADDRESS;
     const [openMbAddress, setOpenMbAddress] = useState(false);
     const callUserAddress = () => {
-        if (status !== STATUS.SUCCESS) {
+        if (USER && status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
         }
     }
@@ -29,7 +31,7 @@ function Address(props: any) {
     useEffect(() => {
         callUserAddress()
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch])
+    }, [dispatch, USER])
     const handleRemoveAddress = (address: IUserAddress) => {
         dispatch(removeAsyncUserAddress(address.id))
     }

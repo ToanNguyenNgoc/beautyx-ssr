@@ -16,7 +16,6 @@ function PaymentStatus() {
     const tran_uid = params.tran_uid
     const { USER } = useSelector((state: IStore) => state.USER)
     const { response } = useSwr(API_ROUTE.PAYMENT_GATEWAYS(tran_uid), (tran_uid && USER))
-    console.log(response)
     return (
         <>
             <HeadMobile onBackFunc={() => history.push('/')} title='Trạng thái' />
@@ -63,6 +62,15 @@ function PaymentStatus() {
                         </p>
                     </div>
                 }
+                <div className={style.navigate_cnt}>
+                    <div className={style.navigate_cnt_body}>
+                        Xem các dịch vụ đã mua và đặt hẹn
+                        <span
+                            onClick={() => history.push('/lich-hen?tab=2')}
+                            className={style.navigate_cnt_btn}
+                        >Tại đây</span>
+                    </div>
+                </div>
                 <div className={style.bottom}>
                     <XButton
                         onClick={() => history.push('/')}

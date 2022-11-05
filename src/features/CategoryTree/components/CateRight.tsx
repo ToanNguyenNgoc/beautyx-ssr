@@ -14,17 +14,19 @@ import TabService from "./TabService";
 import TabProduct2 from "./TabProduct2";
 import { Link } from "react-router-dom";
 // ==== api tracking ====
- import tracking from "../../../api/trackApi";
+import tracking from "../../../api/trackApi";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
+import { onResetFilter } from "redux/filter-result";
 // end
 function CateRight(props: any) {
     const { CATE, ORGS, catesChild, SERVICES, VALUE, PRODUCTS } = props;
     const dispatch = useDispatch();
     const history = useHistory();
     const gotoTagsResult = () => {
+        dispatch(onResetFilter())
         history.push({
-            pathname: "/ket-qua/",
-            search: `${CATE.title}`,
+            pathname: "/ket-qua-tim-kiem/cua-hang",
+            search: `keyword=${CATE.title}`,
         });
     };
     //const [value, setValue] = useState('SERVICE');
@@ -75,9 +77,9 @@ function CateRight(props: any) {
                                 style={
                                     item.id === cateChildId
                                         ? {
-                                              color: "var(--hover)",
-                                              fontWeight: "700",
-                                          }
+                                            color: "var(--hover)",
+                                            fontWeight: "700",
+                                        }
                                         : {}
                                 }
                             >

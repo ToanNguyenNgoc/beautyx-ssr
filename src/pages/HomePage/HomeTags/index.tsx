@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import { onErrorImg } from "utils";
 import scrollTop from "utils/scrollTop";
+import '../home-se.css'
 
 function HomeTags(props: any) {
     //const history = useHistory();

@@ -85,8 +85,17 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .head_wrapper{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 101;
+        background-color: var(--bg-white);
+        box-shadow: var(--box-shadow);
+    }
     .container {
-        margin-top: 6px;
+        margin-top: 66px;
         display: flex;
         flex-direction: column;
     }

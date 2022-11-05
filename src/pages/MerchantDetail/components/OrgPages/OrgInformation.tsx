@@ -6,6 +6,7 @@ import icon from "../../../../constants/icon";
 import { extraOrgTimeWork } from "../../Functions/extraOrg";
 import { AppContext } from "../../../../context/AppProvider";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
+import { OrgMapQuick } from "components/Layout";
 
 interface IProps {
     org: IOrganization;
@@ -39,9 +40,7 @@ export function OrgInformation(props: IProps) {
         <div className="org-information" ref={refMap}>
             <div className="org-information__map-cnt">
                 <div className="map-cnt">
-                    {/* <WrapperMap
-                        org={org}
-                    /> */}
+                    {org && <OrgMapQuick org={org} />}
                 </div>
                 <div className="map-org__seemore">
                     <p

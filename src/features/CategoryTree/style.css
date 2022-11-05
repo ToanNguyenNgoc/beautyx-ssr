@@ -62,7 +62,7 @@
 .cate-tree-cnt__right {
     width: 100%;
     padding-left: 25vw;
-    padding-bottom: 64px;
+    padding-bottom: 84px;
     min-height: 100vh;
 }
 
@@ -261,4 +261,9 @@
     line-height: 14px;
     font-weight: 600;
     color: var(--black2);
+}
+.cate_service_btn_more{
+    width: 100%;
+    background-color: transparent;
+    color: var(--purple);
 }

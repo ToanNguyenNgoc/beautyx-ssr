@@ -21,7 +21,7 @@ import {
 import Head from "features/Head";
 import { Container, Drawer } from "@mui/material";
 import Footer from "features/Footer";
-import { EmptyRes, OrgItemSec, SerProItem, XButton } from "components/Layout";
+import { BackTopButton, EmptyRes, OrgItemSec, SerProItem, XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
 import icon from "constants/icon";
 import style from './search-result.module.css'
@@ -56,7 +56,9 @@ function SearchResults() {
     //
     return (
         <>
-            <Head />
+            <div className={style.head_wrapper}>
+                <Head />
+            </div>
             <Container>
                 <div className={style.container}>
                     <div className={style.left_cnt}>
@@ -89,6 +91,7 @@ function SearchResults() {
                     </div>
                 </div>
             </Container>
+            <BackTopButton/>
             <Footer />
         </>
     );
@@ -225,6 +228,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
         "filter[location]": PRODUCT_PR["filter[location]"],
         "filter[min_price]": PRODUCT_PR["filter[min_price]"],
         "filter[max_price]": PRODUCT_PR["filter[max_price]"],
+        "filter[special_price]":PRODUCT_PR["filter[special_price]"],
         "sort": PRODUCT_PR.sort
     }
     const onChangeFilterLocation = (e: EventLocation) => {
