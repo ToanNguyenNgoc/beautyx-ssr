@@ -1,0 +1,127 @@
+.container {
+    width: 80%;
+}
+
+.form_row {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0px;
+}
+
+.form_row_error {
+    position: absolute;
+    margin-left: 164px;
+    bottom: -2px;
+    font-size: 12px;
+    line-height: 13px;
+    font-weight: 600;
+    color: var(--red-cl);
+}
+
+.form_row div {
+    width: calc(100% - 150px);
+}
+
+.form_row_labe {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 500;
+    color: var(--text-black)
+}
+
+.form_bot {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form_row_avatar {
+    display: none;
+}
+
+.avatar_cnt {
+    width: 132px !important;
+    height: 132px;
+    border-radius: 100%;
+    background-color: var(--bg-color);
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar_img {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.avatar_btn {
+    position: absolute;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    backdrop-filter: blur(2px);
+}
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        width: 100%;
+    }
+
+    .form_row {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 0px;
+    }
+
+    .form_row_labe {
+        margin-bottom: 6px;
+    }
+
+    .form_row div {
+        width: 100%;
+    }
+
+    .form_row_error {
+        margin: 4px 0px 0px 0px;
+        bottom: -6px;
+    }
+
+    .form_row_avatar {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 0px;
+    }
+
+    .form_row_avatar span {
+        display: none;
+    }
+
+    .avatar_cnt {
+        margin: 0px auto;
+    }
+
+    .form_bot {
+        position: fixed;
+        bottom: 0px;
+        left: 0px;
+        width: 100%;
+        z-index: 10;
+        background-color: var(--bg-white);
+        padding: 12px;
+    }
+
+    .form_bot button {
+        width: 100%;
+    }
+}

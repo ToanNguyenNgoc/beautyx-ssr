@@ -208,7 +208,20 @@ import lipstickOrange from "../assets/icon/lipstickOrange.svg";
 import boxOrange from "../assets/icon/boxOrange.svg";
 import mapMarker from 'assets/icon/mapMarker.svg';
 import bellWhite from 'assets/icon/bellWhite.svg';
-import cartWhiteBold from 'assets/icon/cartWhiteBold.svg'
+import cartWhiteBold from 'assets/icon/cartWhiteBold.svg';
+import cartLineBlack from 'assets/icon/cartLineBlack.svg';
+import settingLineBlack from 'assets/icon/settingLineBlack.svg';
+import calendarGreen from 'assets/icon/calendarGreen.svg';
+import communityPurple from 'assets/icon/communityPurple.svg';
+import rewardOrange from 'assets/icon/rewardOrange.svg';
+import ticketRed from 'assets/icon/ticketRed.svg';
+import cateClinic from 'assets/icon/cateClinic.svg';
+import cateNail from 'assets/icon/cateNail.svg';
+import cateSalon from 'assets/icon/cateSalon.svg';
+import cateSanpham from 'assets/icon/cateSanpham.svg';
+import cateSpa from 'assets/icon/cateSpa.svg';
+import flash from 'assets/icon/flash.svg';
+
 
 const icon = {
     noApply,
@@ -411,6 +424,9 @@ const icon = {
     pinMapRedGoogle,
     listOrange,
     barberOrange, lipstickOrange, boxOrange, mapMarker,
-    bellWhite, cartWhiteBold
+    bellWhite, cartWhiteBold, cartLineBlack, settingLineBlack,
+    calendarGreen, rewardOrange, ticketRed, communityPurple,
+    cateClinic, cateSalon, cateSanpham, cateSpa, cateNail,
+    flash
 };
 export default icon;

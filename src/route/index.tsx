@@ -37,6 +37,8 @@ import HomePage from "pages/HomePage";
 import LadingPage from "pages/LandingPage";
 import OtpMbPage from "pages/OtpMbPage";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
+import Trends from "pages/Trends"
+import Community from 'pages/Community'
 
 function RouterConfig() {
   const routes = [
@@ -187,6 +189,14 @@ function RouterConfig() {
       path: "/danh-sach-dich-vu/:tag_name",
       component: <HomeCateResult />
     },
+    {
+      path: "/xu-huong",
+      component: <Trends />
+    },
+    {
+      path:'/cong-dong',
+      component:<Community/>
+    }
   ];
   const routesPrivate = [
     {
@@ -206,8 +216,8 @@ function RouterConfig() {
       component: <CartPaymentStatus />
     },
     {
-      path:'/thanh-toan-momo/:tran_uid',
-      component:<PaymentStatus/>
+      path: '/thanh-toan-momo/:tran_uid',
+      component: <PaymentStatus />
     },
     {
       path: "/mua-hang",
@@ -250,8 +260,8 @@ function RouterConfig() {
           </AuthRoute>
           <Route path="*" > <PageNotFound /> </Route>
         </Switch>
+        <AssistantBtn />
       </Router>
-      <AssistantBtn />
     </BrowserRouter>
   );
 }

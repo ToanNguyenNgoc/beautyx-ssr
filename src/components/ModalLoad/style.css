@@ -21,9 +21,9 @@
 }
 
 .modal-cnt__body-img {
-    width: 94px;
-    height: 94px;
-    animation: spin 4s linear infinite;
+    /* width: 94px; */
+    /* height: 94px; */
+    /* animation: spin 4s linear infinite; */
 }
 
 .modal-cnt__body .text {

@@ -101,28 +101,6 @@ export default function AppProvider({ children }) {
     const { USER } = useSelector(state => state.USER)
     const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
-    // useEffect(() => {
-    //     if (USER) {
-    //         dispatch(fetchAsyncAppCur())
-    //         dispatch(fetchAsyncOrderServices({
-    //             page: 1
-    //         }))
-    //     }
-    // }, [USER])
-
-    //[MOMO]: redirect to payment result:
-    // const { responseArray } = useSwr('/orders', USER, {
-    //     'filter[status]': 'PAID',
-    //     'include': 'items|organization|branch|user|paymentMethod|deliveryAddress',
-    //     'sort':'-created_at'
-    // })
-    // const currentOrder = responseArray[0]
-    // const [currentPay, setCurrentPay] = useState()
-    // useEffect(() => {
-    //     if (currentOrder) {
-    //         setCurrentPay({ ...currentOrder, confirm: true })
-    //     }
-    // }, [currentOrder])
 
     const value = {
         t,

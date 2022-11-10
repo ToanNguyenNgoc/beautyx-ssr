@@ -107,7 +107,11 @@ const userSlice = createSlice({
             return { ...state, loading: true }
         },
         [updateAsyncUser.fulfilled]: (state, { payload }) => {
-            return { ...state, USER: payload, loading: false }
+            return {
+                ...state,
+                USER: payload,
+                loading: false
+            }
         },
         [updateAsyncUser.rejected]: (state, { payload }) => {
             return { ...state, loading: false, error: payload }

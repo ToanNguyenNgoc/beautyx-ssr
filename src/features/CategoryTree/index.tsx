@@ -6,9 +6,9 @@ import CateRight from "./components/CateRight";
 import { useSelector } from "react-redux";
 import { STATUS } from "../../redux/status";
 import { cateChild1 } from "../../data/category";
-import Bottom from "../../featuresMobile/Bottom";
 // ==== api tracking ====
  import tracking from "../../api/trackApi";
+import { Bottom } from "components/Layout";
 // end
 
 function HomeCategory(props: any) {

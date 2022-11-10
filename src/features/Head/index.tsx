@@ -28,15 +28,6 @@ import { onResetFilter } from "redux/filter-result";
 interface IProps {
     changeStyle?: boolean
 }
-// onload event
-// window.addEventListener("scroll", function () {
-//     const scrolled = window.scrollY;
-//     const header = document.getElementById('header')
-//     const windowPosition = scrolled > 60;
-//     if (header) {
-//         header.classList.toggle(style.container_ch_white, windowPosition);
-//     }
-// });
 
 function Head(props: IProps) {
     const { changeStyle } = props
@@ -139,7 +130,7 @@ function Head(props: IProps) {
                     <div className={style.head_top}>
                         <div className={style.head_top_left}>
                             <Link to={{ pathname: "/" }}>
-                                <img className={style.head_top_left_img} src={img.beautyX} alt="" />
+                                <img className={style.head_top_left_img} src={img.beautyxSlogan} alt="" />
                             </Link>
                             <BackContainer />
                             <button
@@ -269,6 +260,12 @@ function Head(props: IProps) {
                             className={style.head_bot_btn}
                             title={t("Header.seller_center")}
                         />
+                        {/* <div
+                            onClick={() => history.push('/xu-huong')}
+                            className={style.head_bot_link}
+                        >
+                            Xu hướng
+                        </div> */}
                         <div
                             onClick={() => window.open('https://beautyx.vn/blog', '_blank')}
                             className={style.head_bot_link}

@@ -13,7 +13,8 @@ import authentication from "api/authApi";
 import { fetchAsyncUser } from "redux/USER/userSlice";
 import { fetchAsyncApps } from "redux/appointment/appSlice";
 import { fetchAsyncOrderServices } from "redux/order/orderSlice";
-import { PopupNotification } from 'components/Notification'
+import { PopupNotification } from 'components/Notification';
+import { useNoti } from 'utils'
 import icon from "constants/icon";
 
 function SignIn(props: any) {
@@ -22,14 +23,11 @@ function SignIn(props: any) {
     const { setActiveTabSign } = props;
     const history = useHistory();
     const [typePass, setTypePass] = useState<"text" | "password">("password");
-    const [loading, setLoading] = useState(false);
-    const [errPass, setErrPass] = useState("");
-    const [display_email, setDisplay_email] = useState("");
-    const [popup, setPopup] = useState(false);
+    const [child, setChild] = useState<React.ReactElement>(<></>)
+    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
     const [remember, setRemember] = useState(true);
-    //
-    //handle submit login form
     async function submitLogin(values: any) {
+        firstLoad()
         try {
             const response = await authentication.login(values);
             if (remember === true) {
@@ -45,27 +43,28 @@ function SignIn(props: any) {
                 dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
                 dispatch(fetchAsyncOrderServices({ page: 1 }))
             }
-            setLoading(false);
             history.goBack()
         } catch (error) {
-            setLoading(false);
             const err = error as AxiosError;
             switch (err.response?.status) {
                 case 401:
-                    return setErrPass(
-                        "Mật khẩu chưa chính xác. Vui lòng thử lại !"
-                    );
+                    resultLoad('Mật khẩu chưa chính xác. Vui lòng thử lại !')
+                    break;
                 case 404:
-                    return setPopup(true);
+                    resultLoad(`Emai "${values.email}" ${t("form.is_not_registered")}`)
+                    setChild(<XButton
+                        title={`${t('Home.Sign_up')} ${t('form.now')}`}
+                        onClick={() => history.replace({ pathname: '/sign-up', search: '2' })}
+                    />)
+                    break;
                 default:
+                    resultLoad(`Có lỗi xảy ra (${err.response?.status}).Vui lòng thử lại sau!`,)
                     break;
             }
         }
     }
 
     const handleLogin = (values: any) => {
-        setLoading(true);
-        setDisplay_email(values.email);
         submitLogin(values);
     };
     const formik = useFormik({
@@ -88,6 +87,9 @@ function SignIn(props: any) {
             handleLogin(values);
         },
     });
+    // const onMouseEnter = () =>{
+    //     console.log(refPassword)
+    // }
 
     return (
         <div>
@@ -138,9 +140,9 @@ function SignIn(props: any) {
                             {formik.errors.password}
                         </p>
                     )}
-                    <p style={{ marginTop: "16px" }} className={style.input_wrapper_error}>
+                    {/* <p style={{ marginTop: "16px" }} className={style.input_wrapper_error}>
                         {errPass}
-                    </p>
+                    </p> */}
                 </div>
                 <div className={style.sign_check}>
                     <div className={style.sign_check_left}>
@@ -164,7 +166,7 @@ function SignIn(props: any) {
                     <XButton
                         title={t("Home.Sign_in")}
                         type="submit"
-                        loading={loading}
+                        loading={noti.load}
                     />
                 </div>
             </form>
@@ -175,16 +177,11 @@ function SignIn(props: any) {
                 </span>
             </p>
             <PopupNotification
-                open={popup}
-                setOpen={setPopup}
+                open={noti.openAlert}
+                setOpen={onCloseNoti}
                 title="Thông báo"
-                content={`Emai "${display_email}" ${t("form.is_not_registered")}`}
-                children={
-                    <XButton
-                        title={`${t('Home.Sign_up')} ${t('form.now')}`}
-                        onClick={() => history.replace({ pathname: '/sign-up', search: '2' })}
-                    />
-                }
+                content={noti.message}
+                children={child}
             />
         </div>
     );

@@ -35,7 +35,7 @@ export function FilterPrice(props: FilterPriceProps) {
         if (max > 0 || max === "") setValue({ ...value, max_price: max })
     }
     const onApplyPrice = () => {
-        if (value.max_price > value.min_price || (value.min_price === "" && value.max_price === "")) {
+        if (parseInt(value.max_price) > parseInt(value.min_price) || (value.min_price === "" && value.max_price === "")) {
             if (onChangePrice) onChangePrice(value)
         }
     }
@@ -59,7 +59,7 @@ export function FilterPrice(props: FilterPriceProps) {
                     </div>
                 </div>
                 {
-                    value.min_price >= value.max_price && value.min_price !== "" && value.max_price !== "" &&
+                    parseInt(value.min_price) >= parseInt(value.max_price) && value.min_price !== "" && value.max_price !== "" &&
                     <div className={style.price_invalid}>
                         Vui lòng điền khoảng giá phù hợp
                     </div>

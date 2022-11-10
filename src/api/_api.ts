@@ -14,7 +14,8 @@ const API_ROUTE = {
     SERVICE_CATES_ORG: (org_id: number | string) => `/organizations/${org_id}/service_categories`,
     PRODUCT_CATES_ORG: (org_id: number | string) => `/organizations/${org_id}/product_categories`,
     PAYMENT_GATEWAYS: (tran_uid: string) => `paymentgateways/${tran_uid}/status?cancel=false`,
-    ORDERS: `/orders`
+    ORDERS: `/orders`,
+    FAVORITES: '/favorites'
 }
 
 export default API_ROUTE

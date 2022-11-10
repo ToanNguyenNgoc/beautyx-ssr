@@ -1,0 +1,15 @@
+.container {
+    padding: 16px 0px;
+    display: flex;
+    align-items: center;
+}
+
+.item_btn {
+    padding: 0px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    background-color: transparent;
+    margin-right: 24px;
+    color: var(--text-orange);
+}

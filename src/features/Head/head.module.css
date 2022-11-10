@@ -448,12 +448,12 @@
         background-color: transparent;
         z-index: 101;
         transition: all .6s;
-        box-shadow: var(--box-shadow);
     }
     .container_ch_white{
         transition: all .6s;
         background-color: #7161bac9;
         backdrop-filter: blur(10px);
+        box-shadow: var(--box-shadow);
     }
     .head_top_right_btn_ch{
         background-color: transparent;

@@ -67,6 +67,7 @@ import visa from "../assets/image/paymentMethod/visa.svg";
 import vnPay from "../assets/image/paymentMethod/vnPay.svg";
 import zaloPay from "../assets/image/paymentMethod/zaloPay.svg";
 import bannerBlur from "../assets/image/bannerBlur.png";
+import beautyxSlogan from 'assets/image/beautyxSlogan.svg'
 
 const img = {
     appStore,
@@ -105,6 +106,7 @@ const img = {
     sellerCenterImg,
     beautyx,
     bannerBlur,
+    beautyxSlogan
 };
 export const social = {
     facebook,

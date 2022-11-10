@@ -9,11 +9,11 @@ import ServicesUser from "../ServiceUser";
 import icon from "../../constants/icon";
 import { useHistory, useLocation } from "react-router-dom";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
-import Bottom from "../../featuresMobile/Bottom";
 import { AppContext } from "../../context/AppProvider";
 import Footer from "../Footer";
 import useDeviceMobile from "../../utils/useDeviceMobile";
 import { ApointmentTab } from "pages/Apointment";
+import { Bottom } from "components/Layout";
 
 function Calendar() {
     const { t } = useContext(AppContext);

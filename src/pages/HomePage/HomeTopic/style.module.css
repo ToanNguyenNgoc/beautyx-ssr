@@ -1,0 +1,18 @@
+.container {
+    padding: 10px;
+    background-color: var(--bg-white);
+}
+
+.title {
+    display: flex;
+    align-items: center;
+}
+.title_icon{
+    margin-right: 6px;
+}
+.title h2{
+    color: var(--purple);
+}
+.body{
+    margin: 24px 0px;
+}

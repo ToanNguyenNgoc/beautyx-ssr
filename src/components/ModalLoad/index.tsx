@@ -13,7 +13,7 @@ function ModalLoad(props: IProps) {
             <div
                 className='modal-cnt__body'
             >
-                <img className='modal-cnt__body-img' src={img.beautyx} alt="" />
+                <img className='modal-cnt__body-img' src={img.beautyxSlogan} alt="" />
                 <span className="text">
                     {title ? title : "Đang xử lý..."}
                 </span>

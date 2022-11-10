@@ -3,20 +3,20 @@ import React, { useContext, useEffect } from "react";
 import { Container } from "@mui/material";
 import "./mySer.css";
 import { useDispatch, useSelector } from "react-redux";
-import useFullScreen from "../../utils/useDeviceMobile";
 import { Masonry } from "@mui/lab";
 import { AppContext } from "context/AppProvider";
 import { STATUS } from "redux/status";
 import { fetchAsyncOrderServices } from "redux/order/orderSlice";
-import ModalLoad from "components/ModalLoad";
 import { IServiceUser } from "interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { XButton } from "components/Layout";
+import { useDeviceMobile } from "utils";
+import { OrderSkelton } from 'features/Orders/components/TabOrderPaid'
 
-function ServicesUser(props: any) {
+function ServicesUser() {
     const dispatch = useDispatch();
     const { t } = useContext(AppContext);
-    const fullScreen = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const { services, status, totalItem, page } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
 
     const callServicesUser = () => {
@@ -42,15 +42,15 @@ function ServicesUser(props: any) {
     }
     return (
         <>
-            {page === 0 && status !== STATUS.SUCCESS && <ModalLoad />}
+            {page === 0 && status !== STATUS.SUCCESS && <OrderSkelton />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">
                         <div className="my-ser-book__cnt">
                             <div className="my-ser-book">
                                 <Masonry
-                                    columns={fullScreen ? 1 : 2}
-                                    spacing={fullScreen ? 1 : 3}
+                                    columns={IS_MB ? 1 : 2}
+                                    spacing={IS_MB ? 1 : 3}
                                 >
                                     {services.map(
                                         (item: IServiceUser, index: number) => (

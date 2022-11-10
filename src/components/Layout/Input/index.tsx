@@ -13,12 +13,11 @@ interface InputProps {
     type?: 'number' | 'password' | 'text'
     name?: string
     disable?: boolean,
-    className?: string
+    className?: string,
 }
 
 export function Input(props: InputProps) {
     const { onChange, onFocus, placeholder, icon, id, value, type, name, disable, onKeyDown } = props
-
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             onKeyDown && onKeyDown()

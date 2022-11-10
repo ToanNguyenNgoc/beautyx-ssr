@@ -1,27 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from '../../../../context/AppProvider';
-import { IUserAddress } from '../../../../interface/userAddress';
+import { AppContext } from 'context/AppProvider';
+import { IUserAddress } from 'interface/userAddress';
 import AddressItem from './components/AddressItem';
-import icon from '../../../../constants/icon';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     fetchAsyncUserAddress,
     removeAsyncUserAddress,
     updateAsyncAddress,
-} from '../../../../redux/USER/userAddressSlice';
-import { STATUS } from '../../../../redux/status';
-import ModalLoad from '../../../../components/ModalLoad';
-import UserAddressMoba from './components/UserAddressMoba';
+} from 'redux/USER/userAddressSlice';
+import { STATUS } from 'redux/status';
+import ModalLoad from 'components/ModalLoad';
 import IStore from 'interface/IStore';
+import { HeadTitle } from 'pages/Account';
+import { XButton } from 'components/Layout';
+import { useDeviceMobile } from 'utils';
+import icon from 'constants/icon';
 
-function Address(props: any) {
+function Address() {
+    const IS_MB = useDeviceMobile()
     const history = useHistory();
     const dispatch = useDispatch();
     const { USER } = useSelector((state: IStore) => state.USER)
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { address, status, status_up, address_default } = ADDRESS;
-    const [openMbAddress, setOpenMbAddress] = useState(false);
     const callUserAddress = () => {
         if (USER && status !== STATUS.SUCCESS) {
             dispatch(fetchAsyncUserAddress())
@@ -49,18 +51,18 @@ function Address(props: any) {
             {
                 status_up === STATUS.LOADING && <ModalLoad />
             }
-            <div className="title_section text-color-purple">
-                <h1 className="title">{t("acc.order_address")}</h1>
-                <span
-                    onClick={gotoAddNewAddress}
-                    className="subtitle cursor-pointer"
-                >
-                    {t("acc.add_other_address")}
-                </span>
-                <button onClick={() => setOpenMbAddress(true)} className="acc-add__btn">
-                    <img src={icon.plus} alt="" />
-                </button>
-            </div>
+            <HeadTitle
+                rightBtn={
+                    <XButton
+                        onClick={gotoAddNewAddress}
+                        iconSize={14}
+                        className='add_address_btn'
+                        title={IS_MB ? '' : 'Thêm mới'}
+                        icon={icon.plusPurple}
+                    />
+                }
+                title='Địa chỉ giao hàng'
+            />
             {
                 address?.map((item: IUserAddress, index: number) => (
                     <AddressItem
@@ -73,10 +75,6 @@ function Address(props: any) {
                     />
                 ))
             }
-            <UserAddressMoba
-                open={openMbAddress}
-                setOpen={setOpenMbAddress}
-            />
         </>
     );
 }
