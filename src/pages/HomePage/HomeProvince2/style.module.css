@@ -1,0 +1,124 @@
+.home_province {
+    margin-top: 24px;
+}
+.province_item_img {
+    height: 174px;
+    border-radius: 12px;
+    overflow: hidden;
+    filter: brightness(70%);
+    transition: all 0.3s ease;
+}
+
+.home_province_item,
+.home_province_item .province_item_img img {
+    transition: all 0.3s ease;
+}
+.home_province_item:hover .province_item_img {
+    transition: all 0.3s ease;
+    filter: brightness(100%);
+}
+.home_province_item:hover .province_item_img img {
+    transition: all 0.3s ease;
+    filter: brightness(100%);
+    transform: scale(1.05);
+}
+
+.province_item_top {
+    position: relative;
+}
+.province_item_img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.home_province_list {
+    margin-top: 32px;
+    grid-gap: 0 24px;
+}
+.province_item_content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.province_item_bottom {
+    margin-top: 12px;
+}
+.province_item_content p {
+    text-align: center;
+    color: #fff;
+}
+.province_item_content > p:first-child {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 28px;
+}
+.province_item_content > p:last-child,
+.province_item_bottom p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: center;
+}
+.home_province_list {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+@media screen and (max-width: 1023.98px) {
+    .province_title_wrap {
+        padding: 0 16px;
+    }
+    .home_province_list {
+        display: flex;
+        grid-gap: 0 8px;
+        overflow-x: scroll;
+        width: 100%;
+        margin: 16px 0 0 0;
+        grid-gap: 0 16px;
+        padding: 0 16px;
+    }
+    .home_province {
+        padding: 24px 0;
+    }
+    .home_province_item {
+        width: 140px;
+        flex-shrink: 0;
+    }
+    .province_item_img {
+        height: 140px;
+    }
+}
+
+@media screen and (max-width: 767.98px) {
+    .province_item_img {
+        height: 77px;
+    }
+    .home_province {
+        padding: 0;
+    }
+    .home_province_item {
+        width: 77px;
+        flex-shrink: 0;
+    }
+    .home_province_list {
+        grid-gap: 0 8px;
+        margin-top: 12px;
+    }
+    .province_item_content > p:first-child {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 16.37px;
+    }
+    .province_item_content > p:last-child,
+    .province_item_bottom p {
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 12px;
+        text-align: center;
+    }
+    .province_item_content > p:last-child {
+        font-size: 10px;
+        white-space: nowrap;
+        margin-top: 2px;
+    }
+}
