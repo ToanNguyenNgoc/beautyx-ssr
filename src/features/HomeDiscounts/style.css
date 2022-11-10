@@ -1,6 +1,6 @@
 .home-discounts {
     margin: 32px 0px;
-    width: 100vw;
+    width: 100%;
     background-color: var(--bg-white);
     padding: 0 0 32px 0px;
 }
@@ -25,7 +25,7 @@
     line-height: normal;
     text-transform: uppercase;
     color: var(--text-orange);
-    font-family: 'Nunito';
+    font-family: "Nunito";
 }
 
 .home-discounts__title span:nth-child(2) {
@@ -50,9 +50,8 @@
     cursor: pointer;
     position: relative;
     box-shadow: var(--box-shadow);
-
 }
-.discount_item_img_cnt{
+.discount_item_img_cnt {
     position: relative;
     padding-bottom: 100%;
     background-color: var(--bg-color);
@@ -131,7 +130,7 @@
     height: 6px;
     background-color: var(--purple);
     border-radius: 100%;
-    margin: 0px 2px
+    margin: 0px 2px;
 }
 
 .home-discount-item__cnt .address {
@@ -223,7 +222,7 @@
     margin: -5px 0px 0px -5px;
     animation: pulsate 1s ease-out;
     animation-iteration-count: infinite;
-    opacity: 0.0
+    opacity: 0;
 }
 
 .home-discounts__location .text {
@@ -236,19 +235,18 @@
 @keyframes pulsate {
     0% {
         -webkit-transform: scale(0.1, 0.1);
-        opacity: 0.0;
+        opacity: 0;
     }
 
     50% {
-        opacity: 1.0;
+        opacity: 1;
     }
 
     100% {
         -webkit-transform: scale(1.2, 1.2);
-        opacity: 0.0;
+        opacity: 0;
     }
 }
-
 
 /* Tablet */
 
@@ -261,7 +259,6 @@
         grid-template-columns: repeat(5, 1fr);
     }
 }
-
 
 /* Mobile */
 
@@ -317,7 +314,7 @@
         border-radius: 8px;
     }
 
-    .watch-more-card li>div {
+    .watch-more-card li > div {
         width: fit-content;
         margin: auto;
         padding: 5px 10px;
@@ -327,9 +324,9 @@
         border-radius: 100%;
     }
 
-    .watch-more-card li>span {
+    .watch-more-card li > span {
         line-height: 3;
-        font-family: 'Nunito';
+        font-family: "Nunito";
         font-weight: 600;
     }
 
@@ -346,16 +343,16 @@
         text-overflow: ellipsis;
         word-break: break-word;
     }
-    .home-discounts__list-wrap > div{
+    .home-discounts__list-wrap > div {
         width: 100%;
         overflow-x: scroll;
         padding: 12px;
     }
-    .home-discounts__list-wrap .load_grid_list{
+    .home-discounts__list-wrap .load_grid_list {
         display: flex;
         width: max-content;
     }
-    .home-discounts__list-wrap .load_grid_list_item{
+    .home-discounts__list-wrap .load_grid_list_item {
         width: 164px;
         margin-right: 4px;
     }
