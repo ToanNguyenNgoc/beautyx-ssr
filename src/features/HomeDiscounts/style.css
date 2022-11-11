@@ -256,7 +256,7 @@
     }
 
     .home-discounts__list {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -265,7 +265,7 @@
 @media only screen and (max-width: 767px) {
     .home-discounts {
         padding: 0px;
-        padding-top: 12px;
+        padding-top: 16px;
         margin: 16px 0;
     }
 
@@ -283,7 +283,7 @@
     }
 
     .home-discounts__title {
-        padding: 5px 12px;
+        padding: 0;
         /* border-radius: 0 0 8px 8px; */
         border-radius: 8px;
         margin: 0 12px;

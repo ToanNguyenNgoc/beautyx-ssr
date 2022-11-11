@@ -27,6 +27,7 @@
     border-radius: 10px;
     background-color: var(--bg-color);
     position: relative;
+    overflow: hidden;
 }
 
 .link_item_img img {
@@ -57,4 +58,28 @@
     font-size: 24px;
     line-height: 30px;
     color: var(--bg-white);
+}
+
+@media screen and (max-width: 767.98px) {
+    .container {
+        padding: 16px 12px;
+        margin: 16px 0;
+    }
+    .product_list {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+
+    .link_item_img {
+        height: 100px;
+        object-fit: cover;
+    }
+    .link_item_cate {
+        font-size: 14px;
+        line-height: 16px;
+        font-weight: 500;
+    }
+    .content {
+        margin-top: 16px;
+    }
 }

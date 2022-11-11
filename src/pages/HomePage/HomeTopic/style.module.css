@@ -17,7 +17,10 @@
 }
 
 .body {
-    margin: 24px 0px;
+    margin: 24px 0 0 0px;
+}
+.body_top {
+    padding: 0 12px;
 }
 
 .detail_item_cnt {
@@ -60,21 +63,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
     position: absolute;
     z-index: 2;
-    margin-top: 122px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-
+.body_top .slide_btn_prev {
+    left: -16px;
+}
+.body_top .slide_btn_next {
+    right: -16px;
+}
 .slide_btn_prev {
-    right: 0;
-    margin-top: -154px;
+    left: -4px;
+}
+.slide_btn_next {
+    right: -4px;
 }
 
 .body_bot {
     margin-top: 42px;
     width: 100%;
-
 }
 
 .topic_item {
@@ -102,7 +113,11 @@
     z-index: 2;
     padding: 36px 0px 36px 12px;
     top: 0;
-    background: linear-gradient(90deg, #F8EBD8 44.79%, rgba(255, 255, 255, 0) 100%);
+    background: linear-gradient(
+        90deg,
+        #f8ebd8 44.79%,
+        rgba(255, 255, 255, 0) 100%
+    );
     border-radius: 10px 0px 0px 10px;
 }
 
@@ -110,7 +125,7 @@
     font-weight: 500;
     font-size: 20px;
     line-height: 28px;
-    color: #1F1F1F;
+    color: #1f1f1f;
 }
 
 .topic_item_desc_content {
@@ -121,20 +136,34 @@
 }
 
 .topic_item_btn {
-    padding: 8px 26px;
+    padding: 10px 26px;
     background-color: var(--bg-color);
     box-shadow: var(--box-shadow);
     border-radius: 6px;
     color: var(--tex-black);
     width: max-content;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
 }
 
 @media only screen and (max-width: 1023px) {
+    .topic_item_btn {
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 700;
+    }
+    .container {
+        padding: 16px 0;
+        margin: 16px 0;
+    }
     .detail_item_cnt {
         height: 150px;
         padding: 0px 6px;
     }
-
+    .body {
+        margin-bottom: 0;
+    }
     .detail_item_on {
         backdrop-filter: blur(10px);
     }
@@ -142,14 +171,17 @@
     .body_bot {
         margin-top: 32px;
     }
-
+    .topic_title {
+        padding: 0 12px;
+    }
     .topic_item {
         width: 100vw;
         padding: 0px;
-        margin-left: -10px;
         height: 180px;
-        margin-bottom: 10px;
         border-radius: 0px;
+    }
+    .topic_item:not(:last-child) {
+        margin-bottom: 10px;
     }
 
     .topic_item_img {

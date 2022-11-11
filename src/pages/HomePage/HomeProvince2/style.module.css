@@ -1,5 +1,8 @@
 .home_province {
     margin-top: 24px;
+    background-color: var(--bg-white);
+    margin: 24px 0;
+    padding: 10px;
 }
 .province_item_img {
     height: 174px;
@@ -95,14 +98,15 @@
     }
     .home_province {
         padding: 0;
+        margin-bottom: 150px;
     }
     .home_province_item {
         width: 77px;
         flex-shrink: 0;
+        overflow-y: hidden;
     }
     .home_province_list {
         grid-gap: 0 8px;
-        margin-top: 12px;
     }
     .province_item_content > p:first-child {
         font-size: 12px;
