@@ -1,6 +1,7 @@
 .container {
     width: 100%;
     padding: 12px 8px;
+    border-top: solid 1px var(--bg-color);
 }
 
 .title {

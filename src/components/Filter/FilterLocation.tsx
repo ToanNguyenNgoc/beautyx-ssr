@@ -9,7 +9,7 @@ import icon from 'constants/icon';
 import { IProvince, IDistrict } from 'interface';
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSwr, useGetLocation, useSearchKeyword, useDeviceMobile } from 'utils';
+import { useSwr, useGetLocation, useDeviceMobile } from 'utils';
 import style from './style.module.css'
 
 export interface EventLocation {
@@ -25,6 +25,22 @@ interface FilterLocationProps {
     title?: string
 }
 
+const useSearchProvinces = (keyword: string, list: any[]) => {
+    const [listBySearch, setListBySearch] = useState<any[]>(list)
+    useEffect(() => {
+        function handleSearchTerm() {
+            const result = list?.filter((item: { [x: string]: { toString: () => string; }; }) => {
+                return Object.keys(item).some(key =>
+                    item[key]?.toString().toLowerCase().includes(keyword.toString().toLowerCase())
+                )
+            })
+            setListBySearch(result);
+        }
+        handleSearchTerm()
+    }, [keyword, list])
+    return listBySearch
+}
+
 export function FilterLocation(props: FilterLocationProps) {
     const location = AUTH_LOCATION()
     const IS_MB = useDeviceMobile()
@@ -38,7 +54,7 @@ export function FilterLocation(props: FilterLocationProps) {
     const [district, setDistrict] = useState<IDistrict | any>()
     const [keyword, setKeyword] = useState('')
     const provincesSelect = useSelector((state: any) => state.HOME.provinces)
-    const provinces = useSearchKeyword(keyword, provincesSelect)
+    const provinces = useSearchProvinces(keyword, provincesSelect)
     const { q_location } = useGetLocation(district?.name ?? province?.name ?? "")
     const handleChange = (currentCoords?: string) => {
         if (onChange && (q_location !== "" || currentCoords !== "")) {

@@ -132,7 +132,7 @@ function Head(props: IProps) {
                             <Link to={{ pathname: "/" }}>
                                 <img className={style.head_top_left_img} src={img.beautyxSlogan} alt="" />
                             </Link>
-                            <BackContainer />
+                            <BackContainer changeStyle = {changeStyle} />
                             <button
                                 className={style.head_top_left_search}
                                 onFocus={() => onToggleSearch("show")}
@@ -439,7 +439,7 @@ const HeadMenu = (props: HeadMenuProps) => {
         </div>
     )
 }
-const BackContainer = () => {
+const BackContainer = ({changeStyle}:{changeStyle?:boolean}) => {
     const history = useHistory()
     const location = useLocation()
     const pathname = location.pathname
@@ -449,6 +449,9 @@ const BackContainer = () => {
     return (
         show ?
             <XButton
+                style={changeStyle ? {
+                    backgroundColor:'transparent'
+                }:{}}
                 className={style.head_back_btn}
                 icon={icon.chevronLeft}
                 iconSize={24}

@@ -188,6 +188,7 @@
     }
 
     .cal_left_date {
+        padding-top: 46px;
         margin-bottom: 6px;
     }
 
@@ -203,6 +204,9 @@
 
     .week_cont {
         display: none;
+    }
+    .week_apps_cnt{
+        height: max-content;
     }
 
     .week_app_item {

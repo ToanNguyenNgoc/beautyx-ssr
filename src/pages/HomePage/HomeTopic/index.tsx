@@ -1,8 +1,9 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { clst, useDeviceMobile } from 'utils';
+import { clst, slugify, useDeviceMobile } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import { deals, topics } from '../data'
 import style from './style.module.css'
@@ -62,12 +63,18 @@ function HomeTopic() {
                     <Slider {...settingsSlideTop} >
                         {
                             deals.map(item => (
-                                <div key={item.id} className={style.detail_item_cnt}>
+                                <Link
+                                    to={{
+                                        pathname: `/deal/${slugify(item.title)}`,
+                                        search: `${item.id}`,
+                                    }}
+                                    key={item.id} className={style.detail_item_cnt}
+                                >
                                     <img className={style.detail_item_img} src={item.img} alt="" />
                                     <div className={style.detail_item_on}>
                                         <img src={item.img} alt="" className={style.detail_item_on_img} />
                                     </div>
-                                </div>
+                                </Link>
                             ))
                         }
                     </Slider>

@@ -23,7 +23,7 @@ const initialState: IFilterResult = {
         "filter[district_code]": "",
         "filter[min_price]": 1000,
         "filter[max_price]": "",
-        "filter[special_price]":"",
+        "filter[special_price]": "",
         "sort": ""
     },
     ORG_PR: {
@@ -56,6 +56,14 @@ const FilterResultSlice = createSlice({
             state.SERVICE_PR = initialState.SERVICE_PR
             state.PRODUCT_PR = initialState.PRODUCT_PR
             state.ORG_PR = initialState.ORG_PR
+        },
+        onResetFilterOrg: (state) => {
+            state.ORG_PR = {
+                ...state.ORG_PR,
+                "filter[district_code]": '',
+                "filter[province_code]": '',
+                'sort': ''
+            }
         }
     }
 })
@@ -63,6 +71,7 @@ const { actions, reducer } = FilterResultSlice
 export const {
     onChangeFilterService,
     onResetFilter,
+    onResetFilterOrg,
     onSavePrevPa,
     onChangeFilterOrg,
     onChangeFilterProduct

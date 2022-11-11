@@ -7,12 +7,12 @@ import { Link, useHistory } from 'react-router-dom';
 import {
     formatRouterCateResult,
 } from '../../../utils/formatRouterLink/formatRouter';
-
 import { Masonry } from "@mui/lab"
-import icon from '../../../constants/icon';
 import style from "./home-cate.module.css"
 import slugify from '../../../utils/formatUrlString';
 import { SpecialItem } from 'components/Layout';
+import { clst, useSwr } from 'utils';
+import API_ROUTE from 'api/_api';
 
 function HomeCate() {
     const { tags } = useSelector((state: any) => state.HOME)
@@ -61,10 +61,10 @@ function HomeCate() {
                 onFocus={() => onToggleCateSerPar(true)}
                 onBlur={() => onToggleCateSerPar(false)}
             >
-                <div className={style.cate_header}>
+                {/* <div className={style.cate_header}>
                     <img src={icon.boxOrange} alt="" />
                     <span className={style.cate_header_title}>Danh mục dịch vụ </span>
-                </div>
+                </div> */}
                 <div ref={refCateSerPar} className={style.cate_par_cnt}>
                     <ul className={style.cate_par_list}>
                         {
@@ -89,8 +89,8 @@ function HomeCate() {
                 onBlur={() => onToggleCatePar(false)}
             >
                 <div className={style.cate_header}>
-                    <img src={icon.lipstickOrange} alt="" />
-                    <span className={style.cate_header_title}>Danh mục Sản phẩm </span>
+                    {/* <img src={icon.lipstickOrange} alt="" /> */}
+                    <span className={style.cate_header_title}>Sản phẩm </span>
                 </div>
                 <div ref={refCatePar} className={style.cate_par_cnt}>
                     <ul className={style.cate_par_list}>
@@ -110,6 +110,11 @@ function HomeCate() {
                     </ul>
                 </div>
             </button>
+            {
+                TAGS_SERVICE.map((tag: ITag, index: number) => (
+                    <TagItemService tag={tag} key={index} />
+                ))
+            }
         </div>
     );
 }
@@ -231,6 +236,69 @@ const CateChildHover = ({ parent }: { parent: ITag[] }) => {
                     ))
                 }
             </ul>
+        </div>
+    )
+}
+const TagItemService = ({ tag }: { tag: ITag }) => {
+    const [openChild, setOpenChild] = useState(false)
+    const onBlurTagItem = () => {
+        setTimeout(() => { setOpenChild(false) }, 100)
+    }
+    return (
+        <button
+            onFocus={() => setOpenChild(true)}
+            onBlur={onBlurTagItem}
+            className={style.tag_item_services}
+        >
+            {tag.name}
+            <div
+                className={
+                    openChild ? clst([style.tag_service_child_cnt, style.tag_service_child_show])
+                        :
+                        style.tag_service_child_cnt
+                }
+            >
+                {openChild && <TagItemServiceChild parent={tag} />}
+            </div>
+        </button>
+    )
+}
+const TagItemServiceChild = ({ parent }: { parent: ITag }) => {
+    const { response } = useSwr(API_ROUTE.TAGS_ID(parent?.id), parent.id)
+    return (
+        <div className={style.tag_service_child_list}>
+            {
+                response &&
+                <Masonry columns={3} spacing={3} >
+                    {
+                        response?.children?.map((i: ITag, index: number) => (
+                            <div key={index} className={style.child_list_cnt}>
+                                <Link
+                                    to={{ pathname: formatRouterCateResult(i.id, i.name, "SERVICE") }}
+                                >
+                                    <span className={style.child_list_name}>
+                                        <img src={i?.media[0]?.original_url} alt="" />
+                                        {i.name}
+                                    </span>
+                                </Link>
+                                <ul className={style.child_child_list}>
+                                    {
+                                        i.children?.map((child: ITag, i_child: number) => (
+                                            <li key={i_child} className={style.child_child_item}>
+                                                <Link
+                                                    to={{ pathname: formatRouterCateResult(child.id, child.name, "SERVICE") }}
+                                                >
+                                                    {child.name}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        ))
+                    }
+                </Masonry>
+            }
         </div>
     )
 }

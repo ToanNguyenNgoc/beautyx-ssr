@@ -9,6 +9,7 @@ import Head from "features/Head";
 import { Container } from "@mui/material";
 import { blockService } from "utils/blockCardItem";
 import "../home-result.css";
+import { useDeviceMobile } from "utils";
 
 interface IBanner {
     id: number;
@@ -57,6 +58,7 @@ export const deals = [
 
 function HomeDealBanner() {
     const location = useLocation();
+    const IS_MB = useDeviceMobile()
     const id_banner = location.search.slice(1, location.search.length);
     const bannerDeals = deals.find(
         (item: IBanner) => item.id === parseInt(id_banner)
@@ -103,7 +105,7 @@ function HomeDealBanner() {
     return (
         <>
             <HeadTitle title={bannerDeals?.title} />
-            <Head />
+            <Head changeStyle={IS_MB} />
             <div
                 className="deal-banner"
                 style={{

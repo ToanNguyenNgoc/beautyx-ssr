@@ -1,12 +1,18 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { onChooseTab } from 'redux/CateTree/cateTreeSlice';
+import { onResetFilter } from 'redux/filter-result';
 import { useDeviceMobile } from 'utils';
 import style from './style.module.css'
 
 
 function HomeCate2() {
     const IS_MB = useDeviceMobile()
+    const dispatch = useDispatch()
+    const history = useHistory()
     const cates = [
         { title: 'Sản phẩm', icon: icon.cateSanpham, link: `product` },
         { title: 'Spa', icon: icon.cateSpa, link: `/ket-qua-tim-kiem/cua-hang?keyword=spa` },
@@ -14,12 +20,24 @@ function HomeCate2() {
         { title: 'Salon', icon: icon.cateSalon, link: `/ket-qua-tim-kiem/cua-hang?keyword=salon` },
         { title: 'Clinic', icon: icon.cateClinic, link: `/ket-qua-tim-kiem/cua-hang?keyword=clinic` },
     ]
+    const onCateClick = (cate: any) => {
+        if (cate.link === 'product') {
+            dispatch(onChooseTab('PRODUCT'));
+            history.push('/-danh-muc')
+        } else {
+            dispatch(onResetFilter())
+            history.push(cate.link)
+        }
+    }
     return (
         <div className={style.wrapper}>
             <div className={style.container}>
                 {
                     cates.map(item => (
-                        <div key={item.title} className={style.item_cnt}>
+                        <div
+                            onClick={() => onCateClick(item)}
+                            key={item.title} className={style.item_cnt}
+                        >
                             <XButton
                                 icon={IS_MB ? item.icon : ''}
                                 title={IS_MB ? '' : item.title}

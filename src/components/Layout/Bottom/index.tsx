@@ -47,7 +47,7 @@ export function Bottom() {
             icon: ICON.calendar,
             iconAct: ICON.calendarAct,
             path: "/lich-hen",
-            params: "tab=2",
+            params: "tab=1",
             badge: 0
         },
         // {

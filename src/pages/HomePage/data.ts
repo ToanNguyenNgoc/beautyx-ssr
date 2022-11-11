@@ -11,7 +11,16 @@ import homeWhy2 from 'assets/icon/homeWhy2.svg';
 import homeWhy3 from 'assets/icon/homeWhy3.svg';
 import homeWhy4 from 'assets/icon/homeWhy4.svg';
 
-export const deals = [
+export interface Ideals {
+    id: number,
+    title: string,
+    min_price?: number | null,
+    max_price?: number | null,
+    img: string,
+    percent?: number
+}
+
+export const deals: Ideals[] = [
     {
         id: 1,
         title: "Deal hot từ 50-100k",

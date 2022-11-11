@@ -3,7 +3,6 @@ import { Container } from "@mui/material";
 import React, { useEffect } from "react";
 import HomeOrgDistance from "./HomeOrgDistance";
 import HomeRecomment from "./HomeRecomment";
-import HomeProvince from "./HomeProvince";
 import { useSelector } from "react-redux";
 
 // ==== api tracking ====
@@ -27,6 +26,7 @@ import HomeDownApp from "./HomeDownApp";
 import HomeWhyNot from "./HomeWhyNot";
 import HomeProvince2 from "./HomeProvince2";
 import HomePartners from "./HomePartners";
+import HomeCate from "./HomeCate";
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
     const banner_status = useSelector((state: any) => state.HOME.status);
@@ -41,7 +41,7 @@ export default function HomePage() {
             <Head changeStyle={IS_MB} />
             <div className="home_container_par">
                 <Container>
-                    {!IS_MB && <HomeCate2 />}
+                    <HomeCate/>
                     {
                         banner_status !== STATUS.SUCCESS ?
                             <LoadHomeBanner />
