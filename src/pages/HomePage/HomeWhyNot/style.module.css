@@ -1,0 +1,24 @@
+.container {
+    margin: 86px 0px 66px 0px;
+    padding: 10px;
+}
+
+.list {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 24px;
+}
+
+.list_item_title {
+    margin: 16px 0px;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.list_item_content {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+}

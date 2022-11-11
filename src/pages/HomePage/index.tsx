@@ -22,6 +22,9 @@ import HomeCate2 from "./HomeCate2";
 import HomeTags2 from "./HomeTags2";
 import './home-se.css'
 import HomeTopic from "./HomeTopic";
+import HomeProducts from "./HomeProducts";
+import HomeDownApp from "./HomeDownApp";
+import HomeWhyNot from "./HomeWhyNot";
 export default function HomePage() {
     const IS_MB = useDeviceMobile()
     const banner_status = useSelector((state: any) => state.HOME.status);
@@ -45,7 +48,7 @@ export default function HomePage() {
                             :
                             <>
                                 <HomeBanner2 />
-                                <HomeTags2 />
+                                {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
                             </>
                     }
                 </Container>
@@ -53,7 +56,10 @@ export default function HomePage() {
             <HomeDiscount />
             <Container>
                 <HomeOrgDistance />
-                <HomeTopic/>
+                <HomeTopic />
+                <HomeProducts />
+                <HomeDownApp />
+                <HomeWhyNot />
                 <HomeRecomment />
                 <HomeWatched />
                 <HomeProvince />

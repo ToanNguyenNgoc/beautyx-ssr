@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
+import { slugify, scrollTop } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import style from './style.module.css'
 
@@ -67,7 +68,11 @@ function HomeTags2() {
                         {
                             cateList.slice(0, 16).map((item: ITag, index: number) => (
                                 <li key={index} className={style.cate_item_cnt}>
-                                    <Link className={style.cate_link} to={{ pathname: '/' }}>
+                                    <Link
+                                        onClick={scrollTop}
+                                        className={style.cate_link}
+                                        to={{ pathname: `/danh-sach-dich-vu/${slugify(item.name)}?id=${item.id}` }}
+                                    >
                                         <div className={style.cate_link_img}>
                                             <img src={item.media[0]?.original_url} alt="" />
                                         </div>
@@ -85,7 +90,11 @@ function HomeTags2() {
                         {
                             cateList.slice(16, 32).map((item: ITag, index: number) => (
                                 <li key={index} className={style.cate_item_cnt}>
-                                    <Link className={style.cate_link} to={{ pathname: '/' }}>
+                                    <Link
+                                        onClick={scrollTop}
+                                        className={style.cate_link}
+                                        to={{ pathname: `/danh-sach-dich-vu/${slugify(item.name)}?id=${item.id}` }}
+                                    >
                                         <div className={style.cate_link_img}>
                                             <img src={item.media[0]?.original_url} alt="" />
                                         </div>
