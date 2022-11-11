@@ -5,6 +5,7 @@
     box-shadow: var(--box-shadow);
     cursor: pointer;
     transition: var(--trans);
+    background-color: var(--bgWhite);
 }
 
 .container_change {

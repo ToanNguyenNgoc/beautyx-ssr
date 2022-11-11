@@ -3,6 +3,14 @@ package-lock.json
 node_modules/
 *.cache
 
+customChat.ts
+handleMomo.ts
+LoginFlatForm.tsx
+trackApi.ts   
+momoApi.ts 
+_momoImport.js
+package.json
+
 dist/
 .history
 .prettierrc
