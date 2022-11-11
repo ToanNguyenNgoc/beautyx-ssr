@@ -69,7 +69,7 @@
 }
 @media screen and (max-width: 1023.98px) {
     .province_title_wrap {
-        padding: 0 16px;
+        padding: 0 12px;
     }
     .home_province_list {
         display: flex;
@@ -78,7 +78,7 @@
         width: 100%;
         margin: 16px 0 0 0;
         grid-gap: 0 16px;
-        padding: 0 16px;
+        padding: 0 12px;
     }
     .home_province {
         padding: 24px 0;
@@ -97,7 +97,7 @@
         height: 77px;
     }
     .home_province {
-        padding: 0;
+        padding: 16px 0;
         margin-bottom: 150px;
     }
     .home_province_item {
