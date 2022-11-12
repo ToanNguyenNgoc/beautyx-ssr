@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 16px;
-    margin: 24px 0;
+    margin: 24px 0 10px 0;
 }
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .home-recomment {
@@ -22,6 +22,7 @@
 @media screen and (max-width: 767px) {
     .home-recomment {
         margin: 12px 0px;
+        padding: 16px 12px;
     }
     .home-recomment_cnt {
         width: 100%;

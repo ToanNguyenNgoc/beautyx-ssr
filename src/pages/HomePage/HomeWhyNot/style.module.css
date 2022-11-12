@@ -1,6 +1,7 @@
 .container {
     margin: 86px 0px 66px 0px;
     padding: 10px;
+    background-color: var(--bg-white);
 }
 
 .list {
@@ -17,8 +18,43 @@
     line-height: 24px;
 }
 
-.list_item_content {
+.list_item_desc {
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
+}
+@media screen and (max-width: 767.98px) {
+    .container {
+        margin: 16px 0;
+        padding: 16px 0;
+        overflow: hidden;
+    }
+    .slick-initialized .slick-slide {
+        margin: 0 16px;
+    }
+    .list_item_content {
+        padding: 8px;
+        margin: 0 8px;
+        background-color: #fafafa;
+        border-radius: 10px;
+        text-align: center;
+        border: 1px solid rgba(204, 204, 204, 0.075);
+    }
+
+    .list_item_title {
+        margin: 16px 0 8px 0;
+    }
+    .list_item_content > img {
+        margin: 0 auto;
+    }
+    .list_item {
+        width: max-content;
+    }
+    .whynot_title {
+        padding: 0 12px;
+    }
+    .list {
+        margin-top: 16px;
+        display: block;
+    }
 }

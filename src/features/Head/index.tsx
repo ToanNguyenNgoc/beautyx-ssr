@@ -24,10 +24,12 @@ import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
 import { onSetViewedNoti } from 'redux/notifications'
 import { onResetFilter } from "redux/filter-result";
+import Slider from "react-slick";
 
 interface IProps {
     changeStyle?: boolean
 }
+const homePath = ['/TIKI', '/MOMO', '/TIKI/', '/MOMO/', '/MBBANK', '/', '/homepage/', '/homepage']
 
 function Head(props: IProps) {
     const { changeStyle } = props
@@ -40,6 +42,7 @@ function Head(props: IProps) {
     const refNoti = useRef<HTMLDivElement>()
     const refSearch = useRef<any>()
     const dispatch = useDispatch();
+    const location = useLocation()
 
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
     useEffect(() => {
@@ -121,6 +124,9 @@ function Head(props: IProps) {
         window.addEventListener("scroll", scroll);
         return () => window.removeEventListener("scroll", scroll);
     }, [scroll])
+    const pathname = location.pathname
+    let showRecommendKey = false
+    if (homePath.includes(pathname)) showRecommendKey = true
     return (
         <div id='header' className={
             changeStyle ? clst([style.container, style.container_ch]) : style.container
@@ -132,7 +138,7 @@ function Head(props: IProps) {
                             <Link to={{ pathname: "/" }}>
                                 <img className={style.head_top_left_img} src={img.beautyxSlogan} alt="" />
                             </Link>
-                            <BackContainer changeStyle = {changeStyle} />
+                            <BackContainer changeStyle={changeStyle} />
                             <button
                                 className={style.head_top_left_search}
                                 onFocus={() => onToggleSearch("show")}
@@ -148,6 +154,7 @@ function Head(props: IProps) {
                                     value={IS_MB ? keywordUrl : key.key}
                                     onKeyDown={handleKeyDown}
                                 />
+                                {(IS_MB && showRecommendKey) && <SearchRecommend />}
                                 <div ref={refSearch} className={style.head_search}>
                                     <Search
                                         onCloseSearchTimeOut={onCloseSearchTimeOut}
@@ -439,19 +446,65 @@ const HeadMenu = (props: HeadMenuProps) => {
         </div>
     )
 }
-const BackContainer = ({changeStyle}:{changeStyle?:boolean}) => {
+const SearchRecommend = () => {
+    const keywords = ['Gội đầu', 'Trị mụn y khoa', 'Xăm chân mày', 'Triệt lông', 'Chăm sóc da']
+    const [key, setKey] = useState('Gội đầu')
+    const history = useHistory()
+    const settings = {
+        dots: false,
+        infinite: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        vertical: true,
+        verticalSwiping: true,
+        arrows: false,
+        autoplay: true,
+        autoplaySpeed: 2600,
+        speed: 650,
+        afterChange: function (index: number) {
+            setKey(keywords[index])
+        },
+    };
+    const onResult = () => {
+        history.push({
+            pathname: "/ket-qua-tim-kiem/dich-vu",
+            search: `?keyword=${encodeURIComponent(key)}`,
+        })
+    }
+    return (
+        <div className={style.re_container}>
+            <Slider {...settings} >
+                {
+                    keywords.map(item => (
+                        <span key={item} className={style.re_container_text}>{item}</span>
+                    ))
+                }
+            </Slider>
+            <div
+                onClick={(e) => {
+                    onResult()
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+                className={style.re_container_btn}
+            >
+                <img src={icon.searchPurple} alt="" />
+            </div>
+        </div>
+    )
+}
+const BackContainer = ({ changeStyle }: { changeStyle?: boolean }) => {
     const history = useHistory()
     const location = useLocation()
     const pathname = location.pathname
-    const homePath = ['/TIKI', '/MOMO', '/TIKI/', '/MOMO/', '/MBBANK', '/', '/homepage/', '/homepage']
     let show = true
     if (homePath.includes(pathname)) show = false
     return (
         show ?
             <XButton
                 style={changeStyle ? {
-                    backgroundColor:'transparent'
-                }:{}}
+                    backgroundColor: 'transparent'
+                } : {}}
                 className={style.head_back_btn}
                 icon={icon.chevronLeft}
                 iconSize={24}

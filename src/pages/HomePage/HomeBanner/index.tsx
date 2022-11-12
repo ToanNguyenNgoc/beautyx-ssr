@@ -56,7 +56,7 @@ export default function HomeBanner() {
         nextArrow: <NextButton />,
         prevArrow: <PrevButton />,
         swipe: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 2500,
         //fade: true,
         responsive: [
             {

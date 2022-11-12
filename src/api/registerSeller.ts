@@ -2,7 +2,7 @@ import axios from "axios";
 import queryString from "query-string";
 
 const axiosClientSeller = axios.create({
-    baseURL: "https://4659-42-117-36-77.ap.ngrok.io/myspa_website",
+    baseURL: "https://myspa.vn/myspa_website",
     headers: {
         // Accept: "application/json",
         "Content-Type": "multipart/form-data",

@@ -3,7 +3,7 @@ import { IProvince } from "interface";
 import React, { useContext } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useSelector } from "react-redux";
-import { formatRoundOrgCount } from "utils";
+import { formatRoundOrgCount, scrollTop } from "utils";
 import HomeTitle from "../Components/HomeTitle";
 import style from "./style.module.css";
 import { Link } from "react-router-dom";
@@ -27,6 +27,7 @@ export default function HomeProvince2() {
                     ?.slice(0, 6)
                     .map((item: IProvince, index: number) => (
                         <Link
+                            onClick={scrollTop}
                             key={index}
                             to={{
                                 pathname: "/ket-qua-tim-kiem/cua-hang",
@@ -45,7 +46,7 @@ export default function HomeProvince2() {
                                     <p>
                                         {formatRoundOrgCount(
                                             item.organizations_count +
-                                                item.branches_count
+                                            item.branches_count
                                         )}
                                     </p>
                                     <p>{t("Home.location")}</p>
