@@ -189,4 +189,7 @@
         padding: 8px 16px;
         border-radius: 100px;
     }
+    .voucher_loadmore_btn:hover {
+        opacity: 1;
+    }
 }
