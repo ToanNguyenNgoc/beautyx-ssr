@@ -148,7 +148,9 @@
     .detail_item_on {
         backdrop-filter: blur(10px);
     }
-
+    .body_top{
+        padding: 0px;
+    }
     .body_bot {
         margin-top: 32px;
     }

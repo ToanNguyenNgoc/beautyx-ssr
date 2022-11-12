@@ -47,7 +47,7 @@ function SearchResults() {
             icon: ICON.orgPurple, act_icon: ICON.orgWhite, show: true
         },
     ]
-    const onSwitchLick = (link: string) => {
+    const onSwitchLink = (link: string) => {
         return {
             pathname: `/ket-qua-tim-kiem/${link}`,
             search: province ? `province=${province}` : `keyword=${keyword}`
@@ -71,7 +71,7 @@ function SearchResults() {
                                             <Link
                                                 replace={true}
                                                 className={tab === link.link ? `${style.link_item} ${style.link_item_act}` : style.link_item}
-                                                to={onSwitchLick(link.link)} >
+                                                to={onSwitchLink(link.link)} >
                                                 <div style={tab === link.link ? {
                                                     backgroundColor: "var(--purple)"
                                                 } : {}} className={style.link_item_icon}>

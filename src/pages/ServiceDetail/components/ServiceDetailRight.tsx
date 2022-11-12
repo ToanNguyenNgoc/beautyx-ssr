@@ -21,7 +21,7 @@ import { Rating } from "@mui/material";
 import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 import IStore from "../../../interface/IStore";
 import { IS_VOUCHER } from "../../../utils/cart/checkConditionVoucher";
-import {PopupNotification} from 'components/Notification'
+import { PopupNotification } from 'components/Notification'
 
 interface IProps {
     org: IOrganization;
@@ -34,7 +34,7 @@ interface IProps {
 export default function ServiceDetailRight(props: IProps) {
     const { org, service, setOpenDrawer, NOW } = props;
     const { t } = useContext(AppContext);
-    const {discounts} = useSelector((state:IStore) => state.ORG_DISCOUNTS.DISCOUNTS);
+    const { discounts } = useSelector((state: IStore) => state.ORG_DISCOUNTS.DISCOUNTS);
     const vouchers = IS_VOUCHER(discounts);
     const IS_MB = useFullScreen();
     const dispatch = useDispatch();
@@ -168,7 +168,7 @@ export default function ServiceDetailRight(props: IProps) {
                                 size="small"
                                 readOnly
                                 name="simple-controlled"
-                                value={(service.rating === 5) ? 5 : 4+(service.rating/10)}
+                                value={(service.rating === 5) ? 5 : 4 + (service.rating / 10)}
                             />
 
                             {COMMENTS.totalItem > 0 ? (
@@ -231,7 +231,7 @@ export default function ServiceDetailRight(props: IProps) {
                                 <>
                                     <span>
                                         {formatPrice(
-                                           serviceSaleSpecial
+                                            serviceSaleSpecial
                                         )}đ
                                     </span>
                                     <span>

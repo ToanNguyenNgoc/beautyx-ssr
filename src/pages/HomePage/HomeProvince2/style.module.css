@@ -35,7 +35,7 @@
     object-fit: cover;
 }
 .home_province_list {
-    margin-top: 32px;
+    margin-top: 24px;
     grid-gap: 0 24px;
 }
 .province_item_content {
@@ -93,6 +93,9 @@
 }
 
 @media screen and (max-width: 767.98px) {
+    .home_province {
+        margin-top: 16px;
+    }
     .province_item_img {
         height: 77px;
     }

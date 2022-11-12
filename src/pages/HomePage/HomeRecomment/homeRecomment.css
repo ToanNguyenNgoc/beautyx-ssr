@@ -22,7 +22,7 @@
 @media screen and (max-width: 767px) {
     .home-recomment {
         margin: 12px 0px;
-        padding: 16px 12px;
+        padding: 16px 12px 10px 12px;
     }
     .home-recomment_cnt {
         width: 100%;

@@ -42,6 +42,7 @@ const NextButton = (props: any) => {
 };
 
 const features = [
+    // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },
     { title: "Cộng đồng", icon: icon.communityPurple, func: "COM" },
     { title: "Lịch hẹn", icon: icon.calendarGreen, func: "CAL" },
     { title: "Mã giảm giá", icon: icon.ticketRed, func: "DIS" },
@@ -124,6 +125,8 @@ function HomeBanner2() {
                 });
             case "CAL":
                 return history.push("/lich-hen?tab=1");
+            case "MAP":
+                return history.push("/ban-do");
             case "DIS":
                 return history.push("/ma-giam-gia");
             default:

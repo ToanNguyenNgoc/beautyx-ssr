@@ -86,7 +86,8 @@ export const paramOrder: ParamOrder = {
     "filter[withServicesSold]": true,
     "filter[productable]": true,
     "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
-    "sort": "-created_at"
+    "sort": "-created_at",
+    "append": ""
 }
 export const paramDiscounts = {
     "filter[platform]": "MOMO",
