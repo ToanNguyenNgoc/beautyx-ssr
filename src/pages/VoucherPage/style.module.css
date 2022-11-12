@@ -1,11 +1,13 @@
-.container {
+.voucher_page {
     padding: 36px;
+    height: 100%;
 }
 
 .voucher_list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-gap: 12px;
+    grid-gap: 24px;
+    overflow-y: unset;
 }
 
 .voucher_item {
@@ -132,6 +134,16 @@
     opacity: 1;
 }
 
+.infinite-scroll-component {
+    overflow: unset;
+}
+
+.vouvher_loadmore_wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+}
+
 .load_item_cnt {
     height: 164px;
     border-radius: 16px;
@@ -165,9 +177,9 @@
         grid-gap: 16px;
     }
 
-    .container {
-        padding: 44px 12px;
-        margin-top: 16px;
+    .voucher_page {
+        padding: 44px 12px 100px 12px;
+        margin: 16px 0 0 0;
         background-color: #f5f5f7;
     }
 
@@ -225,6 +237,16 @@
     .voucher_item_btn {
         padding: 4px 8px;
         font-size: 10px;
+    }
+
+    .voucher_loadmore_btn {
+        font-size: 12px;
+        padding: 8px 16px;
+        border-radius: 100px;
+    }
+
+    .voucher_loadmore_btn:hover {
+        opacity: 1;
     }
 
     .load_item_cnt {
