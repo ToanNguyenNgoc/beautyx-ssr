@@ -82,10 +82,11 @@ function HomeTopic() {
                                     }}
                                     key={item.id} className={style.detail_item_cnt}
                                 >
-                                    <img className={style.detail_item_img} src={item.img} alt="" />
+                                    {/* <img className={style.detail_item_img} src={item.img} alt="" />
                                     <div className={style.detail_item_on}>
                                         <img src={item.img} alt="" className={style.detail_item_on_img} />
-                                    </div>
+                                    </div> */}
+                                    <img className={style.detail_item_cnt_img} src={item.banner} alt="" />
                                 </Link>
                             ))
                         }

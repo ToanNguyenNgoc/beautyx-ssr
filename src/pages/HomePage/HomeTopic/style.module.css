@@ -24,35 +24,16 @@
 }
 
 .detail_item_cnt {
-    height: 220px;
-    padding: 0px 11px;
+    height: 230px;
+    padding: 0px 32px;
     border-radius: 10px;
     position: relative;
 }
-
-.detail_item_img {
-    width: 100%;
-    height: 100%;
+.detail_item_cnt_img{
     object-fit: cover;
-    border-radius: 10px;
-}
-
-.detail_item_on_img {
-    object-fit: contain;
-}
-
-.detail_item_on {
-    position: absolute;
-    border-radius: 10px;
-    width: calc(100% - 22px);
-    left: 0px;
     height: 100%;
-    z-index: 2;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    margin: 0px 11px;
-    backdrop-filter: blur(20px);
+    width: 100%;
+    border-radius: 10px;
 }
 
 .slide_btn {

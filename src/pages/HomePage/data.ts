@@ -11,12 +11,18 @@ import homeWhy2 from "assets/icon/homeWhy2.svg";
 import homeWhy3 from "assets/icon/homeWhy3.svg";
 import homeWhy4 from "assets/icon/homeWhy4.svg";
 
+import deal0 from "assets/image/deal0.png"
+import deal1 from "assets/image/deal1.png"
+import deal2 from "assets/image/deal2.png"
+
+
 export interface Ideals {
     id: number,
     title: string,
     min_price?: number | null,
     max_price?: number | null,
     img: string,
+    banner: string,
     percent?: number
 }
 
@@ -27,6 +33,7 @@ export const deals: Ideals[] = [
         min_price: 50000,
         max_price: 100000,
         img: dealHot.dealhot,
+        banner: deal0
     },
     {
         id: 2,
@@ -34,6 +41,7 @@ export const deals: Ideals[] = [
         min_price: null,
         img: dealHot.dealhot1,
         percent: 50,
+        banner: deal1
     },
     {
         id: 3,
@@ -41,6 +49,7 @@ export const deals: Ideals[] = [
         min_price: null,
         img: dealHot.dealhot2,
         percent: 30,
+        banner: deal2
     },
 ];
 export const topics = [

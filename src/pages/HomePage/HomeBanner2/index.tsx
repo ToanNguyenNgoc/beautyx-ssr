@@ -11,6 +11,7 @@ import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import { useHistory } from "react-router-dom";
 import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
+import { PopupMessage } from "components/Notification";
 
 interface PopupProps {
     open: boolean;
@@ -102,10 +103,25 @@ function HomeBanner2() {
             }
         }
     };
+    const [message, setMessage] = useState({
+        open: false,
+        content: '',
+        icon: ''
+    })
     const onFeatureClick = (func: string) => {
         switch (func) {
             case "COM":
-                return console.log(func);
+                return setMessage({
+                    open: true,
+                    content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
+                    icon: icon.communityPurple
+                });
+            case "REW":
+                return setMessage({
+                    open: true,
+                    content: 'Tính năng "Rewards" đang trong giai đoạn phát triển.',
+                    icon: icon.rewardOrange
+                });
             case "CAL":
                 return history.push("/lich-hen?tab=1");
             case "DIS":
@@ -162,6 +178,14 @@ function HomeBanner2() {
                     ))}
                 </div>
             </div>
+            <PopupMessage
+                open={message.open}
+                onClose={() => setMessage({ ...message, open: false })}
+                content={message.content}
+                autoHide={true}
+                iconLabel={message.icon}
+                iconSize={40}
+            />
         </div>
     );
 }
