@@ -4,7 +4,7 @@ import { useDeviceMobile, useSwrInfinite } from "utils";
 import HeadMobile from "features/HeadMobile";
 import Head from "features/Head";
 import Footer from "features/Footer";
-import { Container } from "@mui/material";
+import { Container, Hidden } from "@mui/material";
 import { EmptyRes, XButton } from "components/Layout";
 import { paramsDiscounts } from "params-query";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
@@ -25,7 +25,6 @@ export default function VoucherPage() {
     const history = useHistory();
     const newParams = {
         ...paramsDiscounts,
-        page: 1,
         limit: 10,
         sort: PLAT_FORM === "TIKI" ? "-priority" : "",
     };
@@ -47,179 +46,177 @@ export default function VoucherPage() {
         });
         history.push(formatRouterLinkDiscount(discount, item));
     };
-    const onViewMore = () => {
-        if (discounts.length >= 10 && discounts.length < totalItem) {
-            onLoadMore();
-        }
-    };
+
     return (
-        <div className={style.voucher_page}>
+        <div>
             {IS_MB ? <HeadMobile title="Voucher" /> : <Head />}
             <Container>
-                <div className={style.container}>
+                <div className={style.voucher_page}>
                     {/* {isValidating && resData.length === 0 && (
                         <EmptyRes title="Không có voucher phù hợp !" />
                     )} */}
                     {isValidating && resData.length === 0 && (
                         <LoadGrid grid={IS_MB ? 1 : 2} item_count={12} />
                     )}
-                    <InfiniteScroll
+                    {/* <InfiniteScroll
                         dataLength={discounts.length}
                         hasMore={true}
                         loader={<></>}
                         next={onViewMore}
-                    >
-                        <div className={style.voucher_list}>
-                            {discounts
-                                .filter(
-                                    (i: IDiscountPar) =>
-                                        i.items.length > 0 &&
-                                        (i.discount_type ===
-                                            DISCOUNT_TYPE.PRODUCT.key ||
-                                            i.discount_type ===
-                                                DISCOUNT_TYPE.FINAL_PRICE.key)
-                                )
-                                .map(
-                                    (discount: IDiscountPar, index: number) => (
-                                        <div key={index}>
-                                            {discount.items.map(
-                                                (
-                                                    item: IITEMS_DISCOUNT,
-                                                    i: number
-                                                ) => (
+                    > */}
+                    <div className={style.voucher_list}>
+                        {discounts
+                            .filter(
+                                (i: IDiscountPar) =>
+                                    i.items.length > 0 &&
+                                    (i.discount_type ===
+                                        DISCOUNT_TYPE.PRODUCT.key ||
+                                        i.discount_type ===
+                                            DISCOUNT_TYPE.FINAL_PRICE.key)
+                            )
+                            .map((discount: IDiscountPar, index: number) => (
+                                <div key={index}>
+                                    {discount.items.map(
+                                        (item: IITEMS_DISCOUNT, i: number) => (
+                                            <div
+                                                key={index}
+                                                className={style.voucher_item}
+                                            >
+                                                <div
+                                                    className={
+                                                        style.voucher_item_left
+                                                    }
+                                                >
                                                     <div
-                                                        key={index}
                                                         className={
-                                                            style.voucher_item
+                                                            style.voucher_item_img
+                                                        }
+                                                    >
+                                                        <img
+                                                            src={
+                                                                item
+                                                                    ?.productable
+                                                                    ?.image
+                                                                    ? item
+                                                                          .productable
+                                                                          ?.image_url
+                                                                    : item
+                                                                          .organization
+                                                                          ?.image_url
+                                                            }
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className={
+                                                        style.voucher_item_right
+                                                    }
+                                                >
+                                                    <div
+                                                        className={
+                                                            style.voucher_item_info
                                                         }
                                                     >
                                                         <div
                                                             className={
-                                                                style.voucher_item_left
+                                                                style.voucher_info_name
                                                             }
                                                         >
-                                                            <div
-                                                                className={
-                                                                    style.voucher_item_img
-                                                                }
-                                                            >
-                                                                <img
-                                                                    src={
-                                                                        item
-                                                                            ?.productable
-                                                                            ?.image
-                                                                            ? item
-                                                                                  .productable
-                                                                                  ?.image_url
-                                                                            : item
-                                                                                  .organization
-                                                                                  ?.image_url
-                                                                    }
-                                                                    alt=""
-                                                                />
-                                                            </div>
+                                                            <span>
+                                                                {item
+                                                                    ?.productable
+                                                                    ?.service_name ||
+                                                                    item
+                                                                        ?.productable
+                                                                        ?.product_name}
+                                                            </span>
                                                         </div>
                                                         <div
                                                             className={
-                                                                style.voucher_item_right
+                                                                style.voucher_info_price
                                                             }
                                                         >
-                                                            <div
-                                                                className={
-                                                                    style.voucher_item_info
-                                                                }
-                                                            >
-                                                                <div
-                                                                    className={
-                                                                        style.voucher_info_name
-                                                                    }
-                                                                >
-                                                                    <span>
-                                                                        {item
+                                                            <p>
+                                                                {formatPrice(
+                                                                    item
+                                                                        ?.productable
+                                                                        ?.price ||
+                                                                        item
                                                                             ?.productable
-                                                                            ?.service_name ||
-                                                                            item
-                                                                                ?.productable
-                                                                                ?.product_name}
-                                                                    </span>
-                                                                </div>
-                                                                <div
-                                                                    className={
-                                                                        style.voucher_info_price
-                                                                    }
-                                                                >
-                                                                    <p>
-                                                                        {formatPrice(
-                                                                            item
-                                                                                ?.productable
-                                                                                ?.price ||
-                                                                                item
-                                                                                    ?.productable
-                                                                                    ?.retail_price
-                                                                        )}
-                                                                        đ
-                                                                    </p>
-                                                                    <p>
-                                                                        Giảm
-                                                                        còn:{" "}
-                                                                        <span>
-                                                                            {discount?.discount_type ===
-                                                                            DISCOUNT_TYPE
-                                                                                .FINAL_PRICE
-                                                                                .key
-                                                                                ? `${formatPrice(
-                                                                                      discount?.discount_value
-                                                                                  )}đ`
-                                                                                : `${formatPrice(
-                                                                                      item?.view_price
-                                                                                  )}đ`}
-                                                                        </span>
-                                                                    </p>
-                                                                </div>
-                                                                <div
-                                                                    className={
-                                                                        style.voucher_item_expiry
-                                                                    }
-                                                                >
-                                                                    <p>
-                                                                        HSD:{" "}
-                                                                        {discount?.valid_from &&
-                                                                            dayjs(
-                                                                                discount?.valid_from
-                                                                            ).format(
-                                                                                "DD/MM/YYYY"
-                                                                            )}{" "}
-                                                                        {"- "}
-                                                                        {discount?.valid_util &&
-                                                                            dayjs(
-                                                                                discount?.valid_util
-                                                                            ).format(
-                                                                                "DD/MM/YYYY"
-                                                                            )}
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                            <XButton
-                                                                onClick={() =>
-                                                                    onDetail(
-                                                                        item,
-                                                                        discount
-                                                                    )
-                                                                }
-                                                                title={
-                                                                    "Chi tiết"
-                                                                }
-                                                                className={`${style.voucher_item_btn}`}
-                                                            />
+                                                                            ?.retail_price
+                                                                )}
+                                                                đ
+                                                            </p>
+                                                            <p>
+                                                                Giảm còn:{" "}
+                                                                <span>
+                                                                    {discount?.discount_type ===
+                                                                    DISCOUNT_TYPE
+                                                                        .FINAL_PRICE
+                                                                        .key
+                                                                        ? `${formatPrice(
+                                                                              discount?.discount_value
+                                                                          )}đ`
+                                                                        : `${formatPrice(
+                                                                              item?.view_price
+                                                                          )}đ`}
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                        <div
+                                                            className={
+                                                                style.voucher_item_expiry
+                                                            }
+                                                        >
+                                                            <p>
+                                                                HSD:{" "}
+                                                                {discount?.valid_from &&
+                                                                    dayjs(
+                                                                        discount?.valid_from
+                                                                    ).format(
+                                                                        "DD/MM/YYYY"
+                                                                    )}{" "}
+                                                                {"- "}
+                                                                {discount?.valid_util &&
+                                                                    dayjs(
+                                                                        discount?.valid_util
+                                                                    ).format(
+                                                                        "DD/MM/YYYY"
+                                                                    )}
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                )
-                                            )}
-                                        </div>
-                                    )
-                                )}
+                                                    <XButton
+                                                        onClick={() =>
+                                                            onDetail(
+                                                                item,
+                                                                discount
+                                                            )
+                                                        }
+                                                        title={"Chi tiết"}
+                                                        className={`${style.voucher_item_btn}`}
+                                                    />
+                                                </div>
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            ))}
+                    </div>
+
+                    {discounts.length >= 10 && discounts.length < totalItem && (
+                        <div className={style.vouvher_loadmore_wrap}>
+                            <XButton
+                                loading={isValidating ? true : false}
+                                type="button"
+                                onClick={() => onLoadMore()}
+                                title="Xem thêm"
+                                className={`${style.voucher_loadmore_btn}`}
+                            />
                         </div>
-                    </InfiniteScroll>
+                    )}
+                    {/* </InfiniteScroll> */}
                 </div>
             </Container>
             <Footer />
