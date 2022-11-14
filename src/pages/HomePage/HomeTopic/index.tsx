@@ -126,10 +126,10 @@ const TopicItem = (props: any) => {
         {item.content}
     </p> */}
                 </div>
-                <XButton
+                {/* <XButton
                     className={style.topic_item_btn}
                     title="Xem chi tiết"
-                />
+                /> */}
             </div>
         </div>
     );

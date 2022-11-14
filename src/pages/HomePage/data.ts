@@ -25,6 +25,13 @@ export interface Ideals {
     banner: string,
     percent?: number
 }
+export interface IProductsSection {
+    id: number,
+    cate: string,
+    text: string,
+    image_url: string,
+    url: string
+}
 
 export const deals: Ideals[] = [
     {
@@ -76,10 +83,10 @@ export const topics = [
     },
 ];
 export const productsSection = [
-    { id: 1, cate: "Sản phẩm", text: "làm đẹp", image_url: product1 },
-    { id: 2, cate: "Chăm sóc tóc", text: "khỏe", image_url: product2 },
-    { id: 3, cate: "Make up", text: "xịn mịn", image_url: product3 },
-    { id: 4, cate: "Dưỡng body", text: "trắng sáng", image_url: product4 },
+    { id: 1, cate: "Sản phẩm", text: "làm đẹp", image_url: product1, url: '/danh-sach-san-pham/cham-soc-da-mat?id=130' },
+    { id: 2, cate: "Chăm sóc tóc", text: "khỏe", image_url: product2, url: '/danh-sach-san-pham/salon-toc?id=5' },
+    { id: 3, cate: "Make up", text: "xịn mịn", image_url: product3, url: '/danh-sach-san-pham/khac?id=185' },
+    { id: 4, cate: "Dưỡng body", text: "trắng sáng", image_url: product4, url: '/danh-sach-san-pham/cham-soc-co-the?id=141' },
 ];
 export const whyNots = [
     {

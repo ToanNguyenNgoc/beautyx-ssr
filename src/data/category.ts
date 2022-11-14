@@ -141,11 +141,11 @@ export const cateChild1 = [
             { title: "Nước tẩy trang", image_url: "https://file.hstatic.net/1000036599/file/nuoc_tay_trang_dr.belmeur_amino_clear_cleansing_water_1_a69067e79c414008b6b3d212ca0a8c98.jpg" },
             { title: "Sữa rửa mặt", image_url: "https://cdn.chanhtuoi.com/uploads/2021/02/sua-rua-mat-la-roche-posay-effaclar-purifying-foaming-gel.jpg" },
             { title: "Toner", image_url: "https://jeju.com.vn/wp-content/uploads/2018/06/nuoc-hoa-hong-lam-sach-ba-nhon-se-khit-lo-chan-long-mamonde-pore-clean-toner-250ml-jeju-cosmetics-14-1.jpg" },
-            { title: "Lotion", image_url: "https://product.hstatic.net/200000061098/product/theperfectbodylotion_c935b3bb0d08463fb594f382b46dc39b_master.jpg" },
+            { title: "Lotion", image_url: "https://devapi.myspa.vn/media/1653/210517_final_KR_BodyLotionWhiteBreath_PDP_1.jpeg?v=1668398283" },
             { title: "Xịt khoáng", image_url: "https://www.hangngoainhap.com.vn/images/202103/goods_img/3566-p2-1616334268.jpg" },
             { title: "Mặt nạ", image_url: "https://rivi.vn/wp-content/uploads/thumbs_dir/mat-na-nen-dap-mat-na-khi-nao-thi-tot-nhat-cho-da-06-oo5a7fovzimm8vuqmz0b13ow662utgzpwm9lg1qfko.jpg" },
             { title: "Tẩy tế bào chết", image_url: "https://cocoshop.vn/uploads/shops/2021_01/tay-te-bao-chet-ca-phe-dak-lak-cocoon-150ml.png" },
-            { title: "Serum", image_url: "https://www.lancome.vn/wp-content/uploads/2018/05/1.4-30ml.jpeg" },
+            { title: "Serum", image_url: "https://devapi.myspa.vn/media/1654/Image-Vital-C-Hydrating-ACE-Serum-(2)(1).jpeg?v=1668398390" },
             { title: "Kem dưỡng", image_url: "https://media.hasaki.vn/catalog/product/f/a/facebook-dynamic-kem-duong-skin1004-lam-diu-da-chiet-xuat-rau-ma-75ml-1646013905_img_380x380_64adc6_fit_center.jpg" },
             { title: "Kem chống nắng", image_url: "http://product.hstatic.net/200000135107/product/untitled-10_20210319041411_7f77dd1f6f944cc5878a03b1eeb72799_grande.jpg" },
         ], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaQMtqNNRnf8HG7UwaZbTkLGm3vVsKPKarA&usqp=CAU"
