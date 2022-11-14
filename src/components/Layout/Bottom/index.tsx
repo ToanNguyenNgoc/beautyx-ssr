@@ -25,13 +25,13 @@ export function Bottom() {
             params: "",
             badge: 0
         },
-        {
-            id: 2,
-            title: t("Home.trending"),
-            icon: ICON.trend,
-            iconAct: ICON.trendAct,
-            path: "/xu-huong",
-        },
+        // {
+        //     id: 2,
+        //     title: t("Home.trending"),
+        //     icon: ICON.trend,
+        //     iconAct: ICON.trendAct,
+        //     path: "/xu-huong",
+        // },
         {
             id: 3,
             title: t("Home.cate"),

@@ -109,7 +109,7 @@ export const cateChild1 = [
             { title: "Tẩy tế bào chết", image_url: "https://cocoshop.vn/uploads/shops/2021_01/tay-te-bao-chet-ca-phe-dak-lak-cocoon-150ml.png" },
             { title: "Serum", image_url: "https://www.vichy.com.vn/wp-content/uploads/2021/07/VICHY_MINERAL-89-PROBIOTIC-FRACTIONS.jpg" },
             { title: "Kem dưỡng", image_url: "https://media.hasaki.vn/catalog/product/f/a/facebook-dynamic-kem-duong-skin1004-lam-diu-da-chiet-xuat-rau-ma-75ml-1646013905_img_380x380_64adc6_fit_center.jpg" },
-            { title: "Kem chống nắng", image_url: "http://product.hstatic.net/200000135107/product/untitled-10_20210319041411_7f77dd1f6f944cc5878a03b1eeb72799_grande.jpg" },
+            { title: "Kem chống nắng", image_url: "https://devapi.myspa.vn/media/1655/Kem-chống-nắng-nhẹ-dịu-và-làm-đều-màu-da-Skin1004-Madagascar-Centella-Air-Fit-Suncream-SPF30.jpeg?v=1668399104" },
         ], image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqaQMtqNNRnf8HG7UwaZbTkLGm3vVsKPKarA&usqp=CAU"
     },
     {

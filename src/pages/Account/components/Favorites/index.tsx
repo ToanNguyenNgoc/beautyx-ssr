@@ -75,7 +75,7 @@ const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
     }
     return (
         <Link
-            to={{ pathname: formatRouterLinkOrg(favorite.organization_id) }}
+            to={{ pathname: formatRouterLinkOrg(favorite.organization?.subdomain) }}
             className={style.favorite_item_cnt}
         >
             <div className={style.favorite_org_img}>

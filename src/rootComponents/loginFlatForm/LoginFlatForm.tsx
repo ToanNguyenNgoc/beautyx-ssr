@@ -80,9 +80,7 @@ function LoginFlatForm(props: any) {
                     await dispatch(loginAsyncMomo(data));
                     await dispatch(fetchAsyncUser());
                     if (params.requestId) {
-                        //vLjAPB
                         history.push(`/thanh-toan-momo/${params.requestId}`)
-                        // history.push(`/thanh-toan-momo/vLjAPB`)
                     }
                 } else {
                     MOMO.showToast({

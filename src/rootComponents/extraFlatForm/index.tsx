@@ -1,15 +1,11 @@
-import { AppContext } from 'context/AppProvider';
-import dayjs from 'dayjs';
-import React, { useContext, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 import { FLAT_FORM_TYPE } from '../flatForm';
 import LoginFlatForm from '../loginFlatForm/LoginFlatForm';
 
 
 function ExtraFlatForm() {
-    // const history = useHistory()
-    const { currentPay, setCurrentPay } = useContext(AppContext)
     //?email=toan@myspa.vn&telephone=0392645745&name=Nguyễn Ngọc Toàn&avatar=&authCode=ZVq7VgWLum0PJnDB_IoYH5TQDvk-9Kf7xqlhrwUXRvg.DFhW9eR9MBHs4ph0E7fF--DilhrB_MOGjexM0XccP00&customerId=9252438"
     //?email=toan@myspa.vn&telephone=0392645745&name=m&momo=true
     const location = useLocation();

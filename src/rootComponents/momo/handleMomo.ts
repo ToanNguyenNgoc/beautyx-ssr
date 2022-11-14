@@ -37,10 +37,10 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
             if (dataOb.phone) {
                 const res = await momoAuthApi.login(dataOb)
                 window.sessionStorage.setItem("_WEB_TK", res.data.context.token)
-                callBack&&callBack()
+                callBack && callBack()
             }
             else {
-                requestUserConsents(callBack,loading);
+                requestUserConsents(callBack, loading);
             }
             return { data: data }
         })
@@ -50,7 +50,7 @@ export const getUserConsents = async (callBack?: any, loading?: any) => {
     }
 };
 export const requestUserConsents = (callBack?: any, loading?: any) => {
-    // alert('requestUserConsents')
+    alert('requestUserConsents')
     MOMO.showLoading([""]);
     MOMO.requestUserConsents({
         "permissions": [
@@ -73,9 +73,9 @@ export const requestUserConsents = (callBack?: any, loading?: any) => {
             // alert('res' + JSON.stringify(res))
             let status = res.data.status;
             let context = res.data.context;
-            if(status === 200 && context && context.token){
+            if (status === 200 && context && context.token) {
                 window.sessionStorage.setItem("_WEB_TK", context.token)
-                callBack&&callBack();
+                callBack && callBack();
             }
         }
         else {
@@ -84,7 +84,7 @@ export const requestUserConsents = (callBack?: any, loading?: any) => {
                 type: "failure",
                 duration: 2000
             });
-            loading&&loading(false)
+            loading && loading(false)
             MOMO.hideLoading()
         }
         return { data: data }
