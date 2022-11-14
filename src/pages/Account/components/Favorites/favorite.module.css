@@ -152,10 +152,41 @@
     border: solid 1px var(--red-cl);
 }
 
+.load_item {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.load_item_img {
+    width: 100px;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.load_item_img_right {
+    width: calc(100% - 108px);
+    height: 100%;
+}
+
+.favorite_list_btn {
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.favorite_list_btn button {
+    background-color: transparent;
+    color: var(--purple);
+}
+
 @media only screen and (max-width: 1023px) {
     .favorite_list {
         grid-gap: 12px;
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .favorite_list_btn {
         padding-bottom: 60px;
     }
 }

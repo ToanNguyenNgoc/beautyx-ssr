@@ -1,3 +1,5 @@
+import { IOrganization } from "./organization";
+
 export interface Favorite {
     id: number,
     user_id: number,
@@ -5,5 +7,6 @@ export interface Favorite {
     favoritetable_type: string,
     favoritetable_id: number,
     created_at: string,
-    updated_at: string
+    updated_at: string,
+    organization?:IOrganization
 }

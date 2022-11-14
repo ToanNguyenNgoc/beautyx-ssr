@@ -2,38 +2,49 @@ import API_ROUTE from 'api/_api';
 import IStore from 'interface/IStore';
 import { HeadTitle } from 'pages/Account';
 import React, { useRef } from 'react';
-import { Favorite, IOrganization } from 'interface'
+import { Favorite } from 'interface'
 import { useSelector } from 'react-redux';
-import { useSwr, useSwrInfinite, onErrorImg } from 'utils'
+import { useSwrInfinite, onErrorImg } from 'utils'
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter'
 import style from './favorite.module.css'
 import { Link } from 'react-router-dom';
 import icon from 'constants/icon';
 import { XButton } from 'components/Layout';
+import Skeleton from 'react-loading-skeleton';
 
 function Favorites() {
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
         'user_id': USER?.id,
-        // 'filter[favoritetable]':true,
-        // 'include':'organization'
+        'limit': 14,
+        'filter[favoritetable]': true,
+        'include': 'organization'
     }
-    const { resData } = useSwrInfinite(USER?.id, `${API_ROUTE.FAVORITES}`, params)
+    const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite(USER?.id, `${API_ROUTE.FAVORITES}`, params)
     return (
         <>
             <HeadTitle title='Đang theo dõi' />
             <div className={style.container}>
                 <ul className={style.favorite_list}>
                     {
-                        resData
-                            ?.slice(0, 10)
-                            ?.map((item: Favorite, index: number) => (
-                                <li key={index} className={style.favorite_list_item}>
-                                    <FavoriteItem favorite={item} />
-                                </li>
-                            ))
+                        resData?.map((item: Favorite, index: number) => (
+                            <li key={index} className={style.favorite_list_item}>
+                                <FavoriteItem favorite={item} />
+                            </li>
+                        ))
                     }
                 </ul>
+                {resData.length === 0 && <LoadSkelton />}
+                {
+                    resData.length >= 12 && resData.length < totalItem &&
+                    <div className={style.favorite_list_btn}>
+                        <XButton
+                            onClick={onLoadMore}
+                            loading={isValidating}
+                            title='Xem thêm'
+                        />
+                    </div>
+                }
             </div>
         </>
     );
@@ -42,8 +53,7 @@ function Favorites() {
 export default Favorites;
 
 const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
-    const { response } = useSwr(API_ROUTE.ORG(favorite?.organization_id), favorite?.organization_id)
-    const org: IOrganization = response
+    const org = favorite.organization
     const refLink = useRef<HTMLDivElement>(null)
     const refView = useRef<HTMLDivElement>(null)
     const toggleView = (className: string) => {
@@ -121,5 +131,26 @@ const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
                 }
             </div>
         </Link>
+    )
+}
+const LoadSkelton = () => {
+    const counts = [1, 2, 3, 4, 5, 6, 7, 8]
+    return (
+        <ul className={style.favorite_list}>
+            {
+                counts.map(i => (
+                    <div key={i} className={style.favorite_list_item}>
+                        <div className={style.load_item}>
+                            <div className={style.load_item_img}>
+                                <Skeleton width={'100%'} height={'100%'} />
+                            </div>
+                            <div className={style.load_item_img_right}>
+                                <Skeleton width={'100%'} height={'100%'} />
+                            </div>
+                        </div>
+                    </div>
+                ))
+            }
+        </ul>
     )
 }
