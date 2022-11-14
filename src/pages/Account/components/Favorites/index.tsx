@@ -14,7 +14,9 @@ import { XButton } from 'components/Layout';
 function Favorites() {
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
-        user_id: USER?.id,
+        'user_id': USER?.id,
+        // 'filter[favoritetable]':true,
+        // 'include':'organization'
     }
     const { resData } = useSwrInfinite(USER?.id, `${API_ROUTE.FAVORITES}`, params)
     return (
