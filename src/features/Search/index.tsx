@@ -23,17 +23,21 @@ interface SearchProps {
     key_work?: string,
     key_work_debounce?: string,
     onCloseSearchTimeOut?: () => void,
+    onCloseSearchDialog?: () => void
 }
 
 
 function Search(props: SearchProps) {
     const { specialItems } = useContext(AppContext)
     const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
-    const { key_work, key_work_debounce, onCloseSearchTimeOut } = props
+    const { key_work, key_work_debounce, onCloseSearchTimeOut, onCloseSearchDialog } = props
     const IS_MB = useDeviceMobile()
     const history = useHistory()
     const [keyword, setKeyword] = useState({ key: "", key_debounce: "" })
-    const onCloseSearch = () => onCloseSearchTimeOut && onCloseSearchTimeOut()
+    const onCloseSearch = () => {
+        onCloseSearchTimeOut && onCloseSearchTimeOut()
+        onCloseSearchDialog && onCloseSearchDialog()
+    }
     const KEY_WORD = IS_MB ? keyword.key : (key_work ?? "")
     const KEY_WORD_DE = IS_MB ? keyword.key_debounce : (key_work_debounce ?? "")
     //onChange input
@@ -85,7 +89,8 @@ function Search(props: SearchProps) {
             pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
         })
-        if (onCloseSearchTimeOut) onCloseSearchTimeOut()
+        onCloseSearchTimeOut && onCloseSearchTimeOut()
+        onCloseSearchDialog && onCloseSearchDialog()
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
@@ -106,7 +111,13 @@ function Search(props: SearchProps) {
         if (item.type === "SERVICE") return history.push(`/dich-vu/${item.id}_${item.organization_id}_${slugify(item.name)}`);
     }
     return (
-        <div className={style.container}>
+        <div
+            onScroll={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }}
+            className={style.container}
+        >
             <div className={style.search_head}>
                 <div className={style.search_head_input}>
                     <div
@@ -116,6 +127,7 @@ function Search(props: SearchProps) {
                         <img src={icon.chevronLeft} alt="" />
                     </div>
                     <input
+                        autoFocus={true}
                         onChange={onChange}
                         type="text" className={style.search_input_mb}
                         placeholder="Bạn muốn tìm gì..."
@@ -145,7 +157,13 @@ function Search(props: SearchProps) {
                     </Link>
                 }
             </div>
-            <div className={style.search_body}>
+            <div
+                onScroll={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }}
+                className={style.search_body}
+            >
                 {
                     (KEY_WORD !== "" && totalOrg > 0) &&
                     <div className={style.section_container}>

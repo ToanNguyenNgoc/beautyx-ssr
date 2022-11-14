@@ -91,7 +91,7 @@ function SearchResults() {
                     </div>
                 </div>
             </Container>
-            <BackTopButton/>
+            <BackTopButton />
             <Footer />
         </>
     );
@@ -127,7 +127,7 @@ const TabService = ({ keyword }: { keyword: string }) => {
         }))
     }
     const onChangePrice = (e: any) => {
-        if(IS_MB) setOpenFilter(false)
+        if (IS_MB) setOpenFilter(false)
         dispatch(onChangeFilterService({
             ...PARAMS_SERVICES,
             "filter[min_price]": e.min_price,
@@ -211,7 +211,14 @@ const TabService = ({ keyword }: { keyword: string }) => {
                             ))
                         }
                     </ul>
-                    {services.length < totalService && <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />}
+                    {services.length < totalService && <>
+                        <>
+                            <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />
+                            <div className={style.load_bottom}>
+                                <XButton title="" loading={true} />
+                            </div>
+                        </>
+                    </>}
                 </InfiniteScroll>
             </div>
         </>
@@ -228,7 +235,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
         "filter[location]": PRODUCT_PR["filter[location]"],
         "filter[min_price]": PRODUCT_PR["filter[min_price]"],
         "filter[max_price]": PRODUCT_PR["filter[max_price]"],
-        "filter[special_price]":PRODUCT_PR["filter[special_price]"],
+        "filter[special_price]": PRODUCT_PR["filter[special_price]"],
         "sort": PRODUCT_PR.sort
     }
     const onChangeFilterLocation = (e: EventLocation) => {
@@ -240,7 +247,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
         }))
     }
     const onChangePrice = (e: any) => {
-        if(IS_MB) setOpenFilter(false)
+        if (IS_MB) setOpenFilter(false)
         dispatch(onChangeFilterProduct({
             ...PARAMS_PRODUCTS,
             "filter[min_price]": e.min_price,
@@ -331,7 +338,14 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
                             ))
                         }
                     </ul>
-                    {products.length < totalProduct && <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />}
+                    {products.length < totalProduct &&
+                        <>
+                            <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />
+                            <div className={style.load_bottom}>
+                                <XButton title="" loading={true} />
+                            </div>
+                        </>
+                    }
                 </InfiniteScroll>
             </div>
         </>
@@ -374,7 +388,7 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
         }))
     }
     const onChangePrice = (e: any) => {
-        if(IS_MB) setOpenFilter(false)
+        if (IS_MB) setOpenFilter(false)
         dispatch(onChangeFilterOrg({
             ...ORG_PR,
             "filter[min_price]": e.min_price,
@@ -471,7 +485,12 @@ const TabOrg = ({ keyword }: { keyword: string }) => {
                             ))
                         }
                     </ul>
-                    {orgs.length < totalOrg && <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />}
+                    {orgs.length < totalOrg && <>
+                        <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />
+                        <div className={style.load_bottom}>
+                            <XButton title="" loading={true} />
+                        </div>
+                    </>}
                 </InfiniteScroll>
             </div>
         </>

@@ -367,6 +367,9 @@
     .head_top_right_auth {
         display: none;
     }
+    .head_search{
+        display: none;
+    }
 
     .head_search_input {
         background-color: var(--bg-color);
@@ -437,7 +440,8 @@
         display: block;
         background-color: var(--bg-white);
         padding: 0px;
-        padding-right: 6px;
+        height: 35px;
+        width: 44px;
     }
 
     /* change style */

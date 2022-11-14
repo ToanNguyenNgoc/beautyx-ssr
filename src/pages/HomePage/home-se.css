@@ -528,35 +528,28 @@
     }
 
     .re-org-item .re-org-item__img {
-        /* height: 164px; */
         flex-shrink: 0;
     }
 
-    /* .home-province_list {
-        margin-top: 16px;
-        padding: 0 12px;
-        gap: 12px;
+    .home-province_list {
+        margin-top: 0px;
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr;
-        grid-template-columns: 1fr 1fr;
-        height: 100%;
-    } */
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 16px;
+        padding: 0px 12px;
+    }
+
     .home_province_cnt {
         width: 100%;
         overflow-x: scroll;
         padding: 12px;
     }
 
-    .home-province_list {
-        display: flex;
-        width: max-content;
-        margin-top: 0px;
-    }
-
     .home-province .home-province_item {
         border-radius: 8px;
-        width: 98px;
-        height: 98px;
+        grid-row: unset !important;
+        grid-column: unset !important;
+
     }
 
     .home-province .province-item-cnt {
@@ -567,14 +560,16 @@
     }
 
     .home-province .province-item-cnt span:nth-child(1) {
-        display: none;
+       color: var(--bgWhite);
+       font-size: 16px;
+       line-height: 18px;
+       font-weight: 700;
     }
 
     .home-province .province-item-cnt span:nth-child(2) {
         font-weight: 600;
         font-size: 12px;
         line-height: 16px;
-        text-align: center;
         color: var(--bgWhite);
     }
 
