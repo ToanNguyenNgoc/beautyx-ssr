@@ -1,5 +1,5 @@
 .home-recomment {
-    margin: 24px 0 32px 0;
+    margin: 24px 0;
     padding: 10px;
     background: #fff;
 }
@@ -7,7 +7,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 16px;
-    margin: 24px 0 48px 0;
+    margin: 24px 0 10px 0;
 }
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
     .home-recomment {
@@ -20,20 +20,21 @@
     }
 }
 @media screen and (max-width: 767px) {
-    .home-recomment{
+    .home-recomment {
         margin: 12px 0px;
+        padding: 16px 12px 10px 12px;
     }
-    .home-recomment_cnt{
+    .home-recomment_cnt {
         width: 100%;
         overflow-x: scroll;
     }
-    .home-recomment__list{
+    .home-recomment__list {
         display: flex;
         width: max-content;
         flex-wrap: nowrap;
         margin: 12px 0px;
     }
-    .home-recomment__item{
+    .home-recomment__item {
         width: 164px;
     }
 }

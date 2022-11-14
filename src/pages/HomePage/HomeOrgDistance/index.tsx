@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import HomeTitle from '../Components/HomeTitle';
 import { ParamOrg } from 'params-query/param.interface';
 import { formatDistance, onErrorImg, useDeviceMobile, useSwr } from 'utils';
@@ -12,7 +13,7 @@ import { LoadGrid } from 'components/LoadingSketion';
 import icon from 'constants/icon';
 import { AUTH_LOCATION } from 'api/authLocation';
 import { useDispatch, useSelector } from 'react-redux';
-import { onChangeFilterOrg, onResetFilter } from 'redux/filter-result';
+import { onChangeFilterOrg, onResetFilter, onResetFilterOrg } from 'redux/filter-result';
 import IStore from 'interface/IStore';
 import Skeleton from 'react-loading-skeleton';
 
@@ -22,6 +23,9 @@ function HomeOrgDistance() {
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
     const LOCATION = AUTH_LOCATION()
     const IS_MB = useDeviceMobile()
+    useEffect(() => {
+        dispatch(onResetFilterOrg())
+    }, [])
     const params: ParamOrg = {
         ...ORG_PR,
         "limit": 8,

@@ -40,15 +40,15 @@ export default function MapGalleries(props: any) {
         setChildren(item.map((item: any) => item?.image_url));
         setOpen(true);
     };
-    useEffect(() => {
-        setTotalCountGalleries(totalGalleries);
-        if (open === false) {
-            setChooseImg(null);
-        } else {
-            setChooseImg(totalGalleries[0]);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [GALLERIES, setChooseImg]);
+    // useEffect(() => {
+    //     setTotalCountGalleries(totalGalleries);
+    //     if (open === false) {
+    //         setChooseImg(null);
+    //     } else {
+    //         setChooseImg(totalGalleries[0]);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [GALLERIES, setChooseImg]);
 
     return (
         <>

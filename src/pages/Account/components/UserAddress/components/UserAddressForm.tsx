@@ -3,12 +3,12 @@ import { XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
 import { IDistrict, IWard } from 'interface/district';
 import { IProvince } from 'interface/provinces';
+import { HeadTitle } from 'pages/Account';
 import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { STATUS } from 'redux/status';
 import { postAsyncAddress } from 'redux/USER/userAddressSlice';
-import { useDeviceMobile } from 'utils';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -46,11 +46,9 @@ const onToggleWard = () => {
     $('.us_address-cnt .from-label__list-district')?.classList.remove('lis-province-ac')
 }
 function UserAddressForm(props: any) {
-    const { setOpen } = props;
-    const {t} = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { provinces } = useSelector((state: any) => state.HOME);
-    const fullScreen = useDeviceMobile();
     const { status_up } = ADDRESS;
     const dispatch = useDispatch();
     const history = useHistory();
@@ -155,156 +153,157 @@ function UserAddressForm(props: any) {
             await dispatch(postAsyncAddress(values))
             //const action = removeDefaultItem(address_default);
             //dispatch(action)
-            if (fullScreen === false) return history.goBack();
-            if (setOpen && fullScreen === true) return setOpen(false)
+            // if (fullScreen === false) return history.goBack();
+            // if (setOpen && fullScreen === true) return setOpen(false)
+            history.goBack()
         }
     }
     return (
-        <div
-            className='us_address-cnt'
-        >
-            <span className="title">
-                {t("acc.add_new_address")}
-            </span>
-            <div className="form">
-                <div
-                    onClick={onToggleProvince}
-                    className="from-label"
-                >
-                    <span className="text-bold from-label_title">
-                        {t("acc.province")}
-                    </span>
-                    <div className="from-label_ip">
-                        {
-                            address.province.name ?
-                                <span
-                                    style={{ color: 'var(--black)', fontWeight: 'bold' }}
-                                >
-                                    {address.province.name}
-                                </span>
-                                :
-                                <span>
-                                    Vui lòng chọn tỉnh/thành phố
-                                </span>
-                        }
-                    </div>
-                    <div className="from-label__list-province">
-                        <ul>
+        <>
+            <HeadTitle title='Thêm mới địa chỉ' />
+            <div
+                className='us_address-cnt'
+            >
+                <div className="form">
+                    <div
+                        onClick={onToggleProvince}
+                        className="from-label"
+                    >
+                        <span className="text-bold from-label_title">
+                            {t("acc.province")}
+                        </span>
+                        <div className="from-label_ip">
                             {
-                                provinces.map((item: IProvince, index: number) => (
-                                    <li
-                                        className='province-item'
-                                        style={item.province_code === address.province.code ?
-                                            { color: 'var(--purple)' } : { color: 'var(--black)' }}
-                                        onClick={() => onChooseProvince(item)}
-                                        key={index}
+                                address.province.name ?
+                                    <span
+                                        style={{ color: 'var(--black)', fontWeight: 'bold' }}
                                     >
-                                        {item.name}
-                                    </li>
-                                ))
+                                        {address.province.name}
+                                    </span>
+                                    :
+                                    <span>
+                                        Vui lòng chọn tỉnh/thành phố
+                                    </span>
                             }
-                        </ul>
+                        </div>
+                        <div className="from-label__list-province">
+                            <ul>
+                                {
+                                    provinces.map((item: IProvince, index: number) => (
+                                        <li
+                                            className='province-item'
+                                            style={item.province_code === address.province.code ?
+                                                { color: 'var(--purple)' } : { color: 'var(--black)' }}
+                                            onClick={() => onChooseProvince(item)}
+                                            key={index}
+                                        >
+                                            {item.name}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div
-                    onClick={toggleDistrict}
-                    className="from-label"
-                >
-                    <span className="text-bold from-label_title">
-                        Quận / Huyện
-                    </span>
-                    <div className="from-label_ip">
-                        {
-                            address.district.name ?
-                                <span
-                                    style={{ color: 'var(--black)', fontWeight: 'bold' }}
-                                >
-                                    {address.district.name}
-                                </span>
-                                :
-                                <span>
-                                    Vui lòng chọn quận / huyện
-                                </span>
-                        }
-                    </div>
-                    <div className="from-label__list-district">
-                        <ul>
+                    <div
+                        onClick={toggleDistrict}
+                        className="from-label"
+                    >
+                        <span className="text-bold from-label_title">
+                            Quận / Huyện
+                        </span>
+                        <div className="from-label_ip">
                             {
-                                dataAdd.districts.map((item: IDistrict, index: number) => (
-                                    <li
-                                        className='province-item'
-                                        style={item.province_code === address.province.code ?
-                                            { color: 'var(--purple)' } : { color: 'var(--black)' }}
-                                        onClick={() => onChooseDistrict(item)}
-                                        key={index}
+                                address.district.name ?
+                                    <span
+                                        style={{ color: 'var(--black)', fontWeight: 'bold' }}
                                     >
-                                        {item.name}
-                                    </li>
-                                ))
+                                        {address.district.name}
+                                    </span>
+                                    :
+                                    <span>
+                                        Vui lòng chọn quận / huyện
+                                    </span>
                             }
-                        </ul>
+                        </div>
+                        <div className="from-label__list-district">
+                            <ul>
+                                {
+                                    dataAdd.districts.map((item: IDistrict, index: number) => (
+                                        <li
+                                            className='province-item'
+                                            style={item.province_code === address.province.code ?
+                                                { color: 'var(--purple)' } : { color: 'var(--black)' }}
+                                            onClick={() => onChooseDistrict(item)}
+                                            key={index}
+                                        >
+                                            {item.name}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div
-                    onClick={onToggleWard}
-                    className="from-label"
-                >
-                    <span className="text-bold from-label_title">
-                        Xã / Phường
-                    </span>
-                    <div className="from-label_ip">
-                        {
-                            address.ward.name ?
-                                <span
-                                    style={{ color: 'var(--black)', fontWeight: 'bold' }}
-                                >
-                                    {address.ward.name}
-                                </span>
-                                :
-                                <span>
-                                    Vui lòng chọn Xã / Phường
-                                </span>
-                        }
-                    </div>
-                    <div className="from-label__list-ward">
-                        <ul>
+                    <div
+                        onClick={onToggleWard}
+                        className="from-label"
+                    >
+                        <span className="text-bold from-label_title">
+                            Xã / Phường
+                        </span>
+                        <div className="from-label_ip">
                             {
-                                dataAdd.wards?.map((item: IWard, index: number) => (
-                                    <li
-                                        className='province-item'
-                                        style={item.province_code === address.province.code ?
-                                            { color: 'var(--purple)' } : { color: 'var(--black)' }}
-                                        onClick={() => onChooseWard(item)}
-                                        key={index}
+                                address.ward.name ?
+                                    <span
+                                        style={{ color: 'var(--black)', fontWeight: 'bold' }}
                                     >
-                                        {item.name}
-                                    </li>
-                                ))
+                                        {address.ward.name}
+                                    </span>
+                                    :
+                                    <span>
+                                        Vui lòng chọn Xã / Phường
+                                    </span>
                             }
-                        </ul>
+                        </div>
+                        <div className="from-label__list-ward">
+                            <ul>
+                                {
+                                    dataAdd.wards?.map((item: IWard, index: number) => (
+                                        <li
+                                            className='province-item'
+                                            style={item.province_code === address.province.code ?
+                                                { color: 'var(--purple)' } : { color: 'var(--black)' }}
+                                            onClick={() => onChooseWard(item)}
+                                            key={index}
+                                        >
+                                            {item.name}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                <div className="from-label">
-                    <span className="text-bold from-label_title">
-                        Địa chỉ nhận hàng
-                    </span>
-                    <div className="from-label_ip">
-                        <input
-                            onChange={(e) => setAddress({ ...address, short_address: e.target.value })}
-                            type="text"
-                            placeholder='Vui lòng nhập địa chỉ của bạn'
+                    <div className="from-label">
+                        <span className="text-bold from-label_title">
+                            Địa chỉ nhận hàng
+                        </span>
+                        <div className="from-label_ip">
+                            <input
+                                onChange={(e) => setAddress({ ...address, short_address: e.target.value })}
+                                type="text"
+                                placeholder='Vui lòng nhập địa chỉ của bạn'
+                            />
+                        </div>
+                    </div>
+                    <div className="form-btn">
+                        <XButton
+                            loading={status_up === STATUS.LOADING ? true : false}
+                            onClick={handleSubmitForm}
+                            title="Thêm mới địa chỉ"
                         />
                     </div>
                 </div>
-                <div className="form-btn">
-                    <XButton
-                        loading={status_up === STATUS.LOADING ? true : false}
-                        onClick={handleSubmitForm}
-                        title="Thêm mới địa chỉ"
-                    />
-                </div>
             </div>
-        </div>
+        </>
     );
 }
 

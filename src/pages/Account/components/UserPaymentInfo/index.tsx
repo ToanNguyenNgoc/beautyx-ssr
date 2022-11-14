@@ -6,7 +6,7 @@ import icon from '../../../../constants/icon';
 import { AppContext } from '../../../../context/AppProvider';
 import { STATUS } from '../../../../redux/status';
 import { fetchAsyncUserAddress } from '../../../../redux/USER/userAddressSlice';
-import DialogChangeInfo from '../../../../featuresMobile/AccountPage/Components/DialogChangeInfo';
+import DialogChangeInfo from '../DialogChangeInfo';
 
 import "./style.css";
 import useDeviceMobile from '../../../../utils/useDeviceMobile';

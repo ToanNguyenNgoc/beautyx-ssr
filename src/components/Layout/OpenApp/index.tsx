@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import style from './open-app.module.css'
-import { PopupNotification } from 'components/Notification'
 import { XButton } from 'components/Layout'
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { useDeviceMobile } from 'utils';
+import { Drawer } from '@mui/material';
+import img from 'constants/img';
 
 interface OpenAppProps {
     type: 'product' | 'service' | 'org' | 'discount' | 'none',
@@ -38,19 +39,35 @@ export function OpenApp(props: OpenAppProps) {
     }
     return (
         show ?
-            <PopupNotification
-                open={open}
-                setOpen={onClosePopup}
-                title="Thông báo"
-                content="Mở app BeautyX để có trải nghiệm tốt hơn nhé !"
-                children={<>
-                    <XButton
-                        onClick={onOpenDeepLink}
-                        className={style.open_app_btn}
-                        title='Mở App BeautyX'
-                    />
-                </>}
-            />
+            <Drawer
+                open={open} onClose={onClosePopup}
+                anchor="top"
+            >
+                <div className={style.wrapper}>
+                    <div className={style.container}>
+                        <div className={style.left}>
+                            <img src={img.beautyx} alt="" />
+                        </div>
+                        <div className={style.right}>
+                            <span className={style.right_title}>
+                                Mở app BeautyX để có trải nghiệm tốt hơn nhé !
+                            </span>
+                            <div className={style.right_bot}>
+                                <XButton
+                                    className={style.right_btn}
+                                    title='Sử dụng bản Web'
+                                    onClick={onClosePopup}
+                                />
+                                <XButton
+                                    className={style.right_btn}
+                                    title='Mở App'
+                                    onClick={onOpenDeepLink}
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Drawer>
             :
             <></>
     );

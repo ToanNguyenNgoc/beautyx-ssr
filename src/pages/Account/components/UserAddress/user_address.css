@@ -1,14 +1,17 @@
+.add_address_btn{
+    color: var(--purple);
+    background-color: var(--bg-white);
+    border: solid 1px var(--purple);
+    font-size: 15px;
+    padding: 6px 10px;
+}
 .us_address-cnt {
-    padding: 0px 36px;
     width: 100%;
 }
 
 .us_address-cnt .form {
     background-color: var(--bgWhite);
-    padding: 36px;
-    border-radius: 24px;
-    margin-top: 12px;
-    box-shadow: 0px 6px 15px #dcd8ee;
+    padding-right: 100px;
 }
 
 .us_address-cnt .from-label {
@@ -175,9 +178,11 @@
 
     .us_address-cnt .form {
         height: 100%;
-        padding: 12px;
+        padding: 0px;
         border-radius: 0px;
         margin: 0px;
-        margin-top: 48px;
+    }
+    .add_address_btn{
+        padding: 8px;
     }
 }

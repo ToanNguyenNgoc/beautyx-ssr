@@ -183,6 +183,46 @@
     transition: all .3s;
 }
 
+.tag_item_services {
+    background-color: transparent;
+    color: var(--text-orange);
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 700;
+    border: none;
+    outline: none;
+    margin-right: 12px;
+    text-transform: capitalize;
+    position: relative;
+    text-align: start;
+}
+
+.tag_service_child_cnt {
+    position: absolute;
+    width: 55vw;
+    min-height: 300px;
+    height: fit-content;
+    background-color: var(--bg-white);
+    border-radius: 4px;
+    box-shadow: var(--box-shadow);
+    z-index: 1000;
+    top: 46px;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--trans);
+    padding: 8px;
+}
+.tag_service_child_show{
+    top: 36px;
+    opacity: 1;
+    visibility: visible;
+    transition: var(--trans);
+    height: fit-content;
+}
+.tag_service_child_list{
+    color: var(--text-black);
+}
+
 @media only screen and (max-width: 1023px) {
     .container {
         display: none;

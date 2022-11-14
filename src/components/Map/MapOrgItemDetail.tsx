@@ -14,6 +14,10 @@ import {
 import onErrorImg from "../../utils/errorImg";
 import MapGalleries from "./MapGalleries";
 import MapSpecial from "./MapSpecial";
+import {paramsGalleries} from 'params-query'
+import {useSwrInfinite} from 'utils'
+import API_ROUTE from "api/_api";
+import {IOrgMobaGalleries} from 'interface'
 
 interface IProps {
     org: any;
@@ -23,7 +27,7 @@ interface IProps {
 }
 
 export default function MapOrgItemDetail(props: IProps) {
-    const { org, setOpenDetail, openDetail, handleDirection } = props;
+    const { org, setOpenDetail, openDetail } = props;
     const { t } = useContext(AppContext);
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
@@ -33,8 +37,11 @@ export default function MapOrgItemDetail(props: IProps) {
     const refListTimeWorks = useRef<any>();
     const [open, setOpen] = useState(false);
     // galleries
-    const galleries = useSelector((state: any) => state.ORG.GALLERIES);
-    const [totalCountGalleries, setTotalCountGalleries] = useState("");
+    const { resData, totalItem } = useSwrInfinite(
+        (open && org?.id),
+        API_ROUTE.GALLERIES_ORG_ID(org?.id),
+        paramsGalleries)
+    const galleries:IOrgMobaGalleries [] = resData
     // close galleries
     // time open ORG
     const now = new Date();
@@ -122,23 +129,23 @@ export default function MapOrgItemDetail(props: IProps) {
                     {/* image */}
                     <div
                         onClick={() =>
-                            totalCountGalleries.length > 0 && setOpen(true)
+                            totalItem > 0 && setOpen(true)
                         }
                         className="content-img"
                     >
                         <img
                             onError={(e) => onErrorImg(e)}
                             src={
-                                galleries?.galleries[0]?.image_url
-                                    ? galleries?.galleries[0]?.image_url
+                                galleries[0]?.image_url
+                                    ? galleries[0]?.image_url
                                     : org?.image_url
                             }
                             alt=""
                         />
-                        {totalCountGalleries.length > 0 && (
+                        {totalItem > 0 && (
                             <div className="content-seemore__img">
                                 <img src={ICON.photoLibraryWhite} alt="" />
-                                <span>{totalCountGalleries.length} ảnh</span>
+                                <span>{totalItem} ảnh</span>
                             </div>
                         )}
                     </div>
@@ -304,8 +311,7 @@ export default function MapOrgItemDetail(props: IProps) {
 
                     {/* galleries */}
                     <MapGalleries
-                        GALLERIES={galleries.galleries}
-                        setTotalCountGalleries={setTotalCountGalleries}
+                        GALLERIES={galleries}
                         open={open}
                         setOpen={setOpen}
                     />

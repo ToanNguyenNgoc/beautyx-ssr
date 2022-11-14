@@ -51,6 +51,12 @@ export function OrgItemSec(props: OrgItemSecProps) {
                 }}
             >
                 <div className={changeStyle ? clst([style.container, style.container_ch]) : style.container}>
+                    {
+                        org.is_momo_ecommerce_enable &&
+                        <div className={style.org_on_e}>
+                            <img className={style.org_on_e_icon} src={icon.flash} alt="" />
+                        </div>
+                    }
                     <div className={
                         changeStyle ? (clst([style.img_container, style.img_container_ch])) : style.img_container
                     }>

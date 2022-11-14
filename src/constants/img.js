@@ -28,6 +28,8 @@ import thumb from "../assets/image/thumb.png";
 import thumb_1 from "../assets/image/thumb_1.png";
 import thumb_2 from "../assets/image/thumb_2.png";
 import imgDefault from "../assets/image/imgDefault.png";
+import home_blog from "../assets/image/home-blog.png";
+import home_partners from "../assets/image/home-partner.png";
 
 import hairSalon from "../assets/image/tags/hairSalon.svg";
 import massage from "../assets/image/tags/message.svg";
@@ -67,6 +69,7 @@ import visa from "../assets/image/paymentMethod/visa.svg";
 import vnPay from "../assets/image/paymentMethod/vnPay.svg";
 import zaloPay from "../assets/image/paymentMethod/zaloPay.svg";
 import bannerBlur from "../assets/image/bannerBlur.png";
+import beautyxSlogan from "assets/image/beautyxSlogan.svg";
 
 const img = {
     appStore,
@@ -105,6 +108,9 @@ const img = {
     sellerCenterImg,
     beautyx,
     bannerBlur,
+    beautyxSlogan,
+    home_blog,
+    home_partners,
 };
 export const social = {
     facebook,

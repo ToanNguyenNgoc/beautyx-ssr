@@ -13,8 +13,8 @@ export async function MOMO_API(EVENT_NAME: String, PARAMs: Object) {
             service_name: 'myspa',
             ...params
         });
-        //   alert(JSON.stringify(EVENT_NAME+JSON.stringify(params)+JSON.stringify(res)));
-        // return res;
+        // alert(JSON.stringify(EVENT_NAME + JSON.stringify(params) + JSON.stringify(res)));
+        return res;
     } catch (err) {
         console.log(err);
     }
@@ -285,7 +285,3 @@ class TRACKING_EVENT {
 }
 export const EVENT = new TRACKING_EVENT();
 export default EVENT;
-
-function extraParamsUrl() {
-    throw new Error("Function not implemented.");
-}

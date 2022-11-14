@@ -1,46 +1,36 @@
 import React from 'react';
-import Head from '../../Head';
-import { extraParamsUrl } from '../../../utils/extraParamsUrl';
-import { useSwr } from '../../../utils/useSwr';
-import useSwrInfinite from '../../../utils/useSwrInfinite';
-import { paramsProductsCate, paramsProducts } from "../../../params-query"
-import { ITag } from '../../../interface/tags';
-import {
-    formatRouterCateResult,
-    formatParamsString
-} from "../../../utils/formatRouterLink/formatRouter"
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import LoadGrid from '../../../components/LoadingSketion/LoadGrid';
-import style from "./home-cate.module.css"
-import icon from '../../../constants/icon';
 import { Container } from '@mui/system';
-import { AUTH_LOCATION } from '../../../api/authLocation';
 import { SerProItem } from 'components/Layout';
-import { FilterPrice } from 'components/Filter';
-// import useGetLocation from '../../../utils/useGetLocation';
+import { FilterPrice, FilterLocation, EventLocation, FilterSort } from 'components/Filter';
+import { extraParamsUrl, useSwr, useSwrInfinite } from 'utils';
+import { ITag } from 'interface';
+import { paramsProducts, paramsProductsCate } from 'params-query';
+import { formatParamsString, formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
+import Head from 'features/Head';
+import icon from 'constants/icon';
+import { LoadGrid } from 'components/LoadingSketion';
+import style from "./home-cate.module.css"
 
 function HomeCateResult() {
     const params: any = extraParamsUrl();
     const location = useLocation();
-    const LOCATION = AUTH_LOCATION();
     const page_url = location.pathname.split("/")[1];
     const history = useHistory();
     const id = params?.id
     const type = page_url === "danh-sach-dich-vu" ? "SERVICE" : "PRODUCT"
     const query = params?.sort ?? ""
-
+    const userLocation = params?.location ?? ''
     const tag: ITag = useSwr(`/tags/${id}`, id, paramsProductsCate).response
     const tagParent: ITag = useSwr(`/tags/${tag?.parent_id}`, tag?.parent_id, paramsProductsCate).response
     const tagParParent: ITag = useSwr(
         `/tags/${tagParent?.parent_id}`,
         tagParent?.parent_id,
         paramsProductsCate).response
-    // const { q_location } = useGetLocation(params.province)
-
     const newParams = {
         ...paramsProducts,
-        "filter[location]": query === "location" && LOCATION,
+        "filter[location]": userLocation,
         "filter[keyword]": tag?.name,
         "filter[min_price]": parseInt(params.min_price) ?? "",
         "filter[max_price]": parseInt(params.max_price) ?? "",
@@ -65,12 +55,26 @@ function HomeCateResult() {
     }
     //handle sort & filter
     const onChangeFilter = (values: any) => {
-        const sortArr = ["location", "-discount_percent", "price", "-price", "retail_price", "-retail_price"]
         const paramsChange = {
             ...params,
-            sort: sortArr.includes(values) ? values : params?.sort,
             min_price: values.min_price ?? params?.min_price,
             max_price: values.max_price ?? params?.max_price
+        }
+        const pathname = location.pathname
+        history.push(`${pathname}?${formatParamsString(paramsChange)}`)
+    }
+    const onChangeLocation = (e: EventLocation) => {
+        const paramsChange = {
+            ...params,
+            location: e.coords
+        }
+        const pathname = location.pathname
+        history.push(`${pathname}?${formatParamsString(paramsChange)}`)
+    }
+    const onChangeSort = (e: string) => {
+        const paramsChange = {
+            ...params,
+            sort: e
         }
         const pathname = location.pathname
         history.push(`${pathname}?${formatParamsString(paramsChange)}`)
@@ -134,7 +138,14 @@ function HomeCateResult() {
                                     ))
                                 }
                             </ul>
-                            {/* <FilterProvince/> */}
+                            <FilterLocation
+                                onChange={onChangeLocation}
+                            />
+                            <FilterSort
+                                type={type}
+                                onChange={onChangeSort}
+                                value={query}
+                            />
                             <FilterPrice
                                 onChangePrice={onChangeFilter}
                                 min_price={params?.min_price ?? ""}

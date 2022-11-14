@@ -18,7 +18,8 @@ function TabOrderPaid() {
     const { USER } = useSelector((state: IStore) => state.USER)
     const param: ParamOrder = {
         ...paramOrder,
-        "filter[status]": 'PAID'
+        "filter[status]": 'PAID',
+        "append": "qr_link|origin"
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, param)
     const orders: IOrderV2[] = resData ?? []

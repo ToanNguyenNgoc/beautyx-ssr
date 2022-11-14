@@ -33,6 +33,10 @@ function DiscountItem(props: IProps) {
         history.push(pathDiscountOb);
     };
     // console.log(discountItem);
+    const displayDisPrice = discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
+        discountPar.discount_value : discountItem.view_price
+    const displayPrice = discountItem.productable.price || discountItem.productable.retail_price
+    const percent = Math.round(100 - displayDisPrice / displayPrice * 100)
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
             <div className="discount_item_img_cnt">
@@ -41,6 +45,9 @@ function DiscountItem(props: IProps) {
                     discountItem.organization.image_url !== null &&
                     <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
                 }
+                <div className='discount_item_percent'>
+                    -{percent}%
+                </div>
                 <img
                     alt=""
                     src={
@@ -60,16 +67,11 @@ function DiscountItem(props: IProps) {
                 </h2>
                 <div className="flex-row price">
                     <span className="sale-price">
-                        {
-                            discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
-                                `${formatPrice(discountPar.discount_value)}đ`
-                                :
-                                `${formatPrice(discountItem.view_price)}đ`
-                        }
+                        {formatPrice(displayDisPrice)}đ
                     </span>
                     <span className="old-price">
 
-                        {formatPrice(discountItem.productable.price || discountItem.productable.retail_price)}đ
+                        {formatPrice(displayPrice)}đ
                     </span>
                 </div>
                 {

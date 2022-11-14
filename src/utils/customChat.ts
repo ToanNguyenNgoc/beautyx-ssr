@@ -25,27 +25,28 @@ export const handleChat = () => {
     const deepLinkMessenger = "https://m.me/beautyxdatlichlamdep/";
     switch (FLAT_FORM) {
         case FLAT_FORM_TYPE.TIKI:
-            // callApiFromTiki('openNativeAppStore',{
-            //     googlePlayId: 'com.facebook.orca',
-            //     appleStoreId: '454638411'
-            // })
+            callApiFromTiki("openNativeAppStore", {
+                googlePlayId: "com.facebook.orca",
+                appleStoreId: "454638411",
+            });
             handleSubiz();
-            // openUrlIn_Tiki(deepLinkMessenger);
-            // window.open(deepLinkMessenger, "_blank");
+            openUrlIn_Tiki(deepLinkMessenger);
+            window.open(deepLinkMessenger, "_blank");
             break;
         case FLAT_FORM_TYPE.MOMO:
-            
-            MOMO.openURL(deepLinkMessenger);
+            // MOMO.openURL(deepLinkMessenger);
             // alert(deepLinkMessenger)
             break;
         case FLAT_FORM_TYPE.MB:
-            // const $:any=window;
-            // $['ReactNativeWebView'].postMessage(JSON.stringify({
-            //     type: 'OPEN_BROWSER',
-            //     link: deepLinkMessenger,
-            // }));
-            // openUrlIn_Mb('messenger',deepLinkMessenger)
-            // window.open(deepLinkMessenger, "_blank");
+            const $: any = window;
+            $["ReactNativeWebView"].postMessage(
+                JSON.stringify({
+                    type: "OPEN_BROWSER",
+                    link: deepLinkMessenger,
+                })
+            );
+            openUrlIn_Mb("messenger", deepLinkMessenger);
+            window.open(deepLinkMessenger, "_blank");
             handleSubiz();
             break;
         default:
@@ -58,10 +59,10 @@ export const handleCallingPhone = () => {
     const phoneNumber = "tel:02899959938";
     switch (FLAT_FORM) {
         case FLAT_FORM_TYPE.TIKI:
-            // callApiFromTiki('openNativeAppStore',{
-            //     googlePlayId: 'com.facebook.orca',
-            //     appleStoreId: '454638411'
-            // })
+            callApiFromTiki("openNativeAppStore", {
+                googlePlayId: "com.facebook.orca",
+                appleStoreId: "454638411",
+            });
             window.open(phoneNumber, "_blank");
             break;
         case FLAT_FORM_TYPE.MOMO:
@@ -69,14 +70,16 @@ export const handleCallingPhone = () => {
             // alert(phoneNumber)
             break;
         case FLAT_FORM_TYPE.MB:
-            // openUrlIn_Mb('messenger',phoneNumber)
-            const $:any = window;
-            $['ReactNativeWebView'].postMessage(JSON.stringify({
-                type: 'TEL',
-                data: {
-                    tel: phoneNumber
-                }
-            }));
+            openUrlIn_Mb("messenger", phoneNumber);
+            const $: any = window;
+            $["ReactNativeWebView"].postMessage(
+                JSON.stringify({
+                    type: "TEL",
+                    data: {
+                        tel: phoneNumber,
+                    },
+                })
+            );
             break;
         default:
             window.open(phoneNumber, "_blank");

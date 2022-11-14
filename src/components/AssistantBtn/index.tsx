@@ -24,7 +24,7 @@ export default function AssistantBtn() {
     const history = useHistory();
 
     const handleGoToHome = () => {
-        history.push("/homepage");
+        history.push("/");
     };
 
     const refOverLay: any = useRef();
@@ -50,11 +50,11 @@ export default function AssistantBtn() {
     useEffect(() => {
         if (is_mb === true) {
             if (overLay === true) {
-                refOverLay.current.classList.add("active");
+                refOverLay.current.classList.add("active_btn");
                 refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
                 document.body.style.overflow = "hidden";
             } else {
-                refOverLay.current.classList.remove("active");
+                refOverLay.current.classList.remove("active_btn");
                 refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
                 document.body.style.overflow = "unset";
             }

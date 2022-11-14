@@ -14,7 +14,6 @@ import { useHistory } from "react-router-dom";
 // import momoAuthApi from '../../api/_momoAuthApi';
 // import { AnyAaaaRecord } from 'dns';
 
-
 function LoginFlatForm(props: any) {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -81,9 +80,7 @@ function LoginFlatForm(props: any) {
                     await dispatch(loginAsyncMomo(data));
                     await dispatch(fetchAsyncUser());
                     if (params.requestId) {
-                        //vLjAPB
                         history.push(`/thanh-toan-momo/${params.requestId}`)
-                        // history.push(`/thanh-toan-momo/vLjAPB`)
                     }
                 } else {
                     MOMO.showToast({
@@ -99,19 +96,16 @@ function LoginFlatForm(props: any) {
     };
     const onLoginFlatFormMomowithParams = async () => {
         const PARAMS = {
-            "fullname": params?.fullname,
-            "email": params?.email,
-            "phone": params?.telephone
-        }
-        await dispatch(loginAsyncMomo(PARAMS))
-        await dispatch(fetchAsyncUser())
+            fullname: params?.fullname,
+            email: params?.email,
+            phone: params?.telephone,
+        };
+        await dispatch(loginAsyncMomo(PARAMS));
+        await dispatch(fetchAsyncUser());
         if (params.requestId) {
-            //vLjAPB
-            history.replace(`/thanh-toan-momo/${params.requestId}`)
-            // history.push(`/thanh-toan-momo/vLjAPB`)
+            history.replace(`/thanh-toan-momo/${params.requestId}`);
         }
-
-    }
+    };
     const onLoginFlatFormTiki = async () => {
         const PARAMS_OB = {
             customerId: params?.customerId,
@@ -148,8 +142,7 @@ function LoginFlatForm(props: any) {
                 case FLAT_FORM_TYPE.MOMO:
                     if (params) {
                         onLoginFlatFormMomowithParams();
-                    }
-                    else {
+                    } else {
                         onLoginFlatFormMomo();
                     }
                     break;

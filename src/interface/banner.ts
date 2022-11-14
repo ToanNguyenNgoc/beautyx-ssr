@@ -2,7 +2,7 @@ export interface IBanner {
   id: number;
   name: string | null;
   type: string | null;
-  imageURL: string | null;
+  imageURL?: string;
   htmlTemplate: string | null;
   url: string | null;
   target: string | null;

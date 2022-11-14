@@ -17,6 +17,7 @@ import "./homeBanner.css";
 // ==== api tracking ====
 import tracking from "../../../api/trackApi";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
+import { deals } from "../data";
 // end
 const PrevButton = (props: any) => {
     const { onClick } = props;
@@ -35,29 +36,6 @@ const NextButton = (props: any) => {
     );
 };
 
-export const deals = [
-    {
-        id: 1,
-        title: "Deal hot từ 50-100k",
-        min_price: 50000,
-        max_price: 100000,
-        img: dealHot.dealhot,
-    },
-    {
-        id: 2,
-        title: "Deal chăm sóc da làm đẹp Giảm 50%",
-        min_price: null,
-        img: dealHot.dealhot1,
-        percent: 50,
-    },
-    {
-        id: 3,
-        title: "Dịch vụ xâm lấn Giảm 30%",
-        min_price: null,
-        img: dealHot.dealhot2,
-        percent: 30,
-    },
-];
 
 export default function HomeBanner() {
     const history = useHistory();
@@ -78,7 +56,7 @@ export default function HomeBanner() {
         nextArrow: <NextButton />,
         prevArrow: <PrevButton />,
         swipe: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 2500,
         //fade: true,
         responsive: [
             {

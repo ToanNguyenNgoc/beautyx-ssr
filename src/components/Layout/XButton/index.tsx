@@ -5,7 +5,7 @@ import './style.css';
 interface IProps {
     loading?: boolean,
     title?: string,
-    onClick?: (e?:any) => void,
+    onClick?: (e?: any) => void,
     type?: "button" | "submit",
     className?: string,
     style?: any
@@ -34,7 +34,14 @@ export function XButton(props: IProps) {
         >
             {
                 icon &&
-                <img src={icon} alt="" height={iconSize ?? 18} width={iconSize ?? 18} />
+                <img
+                    style={(!title || title === '') ? {
+                        marginRight: '0px'
+                    } : {}}
+                    src={icon} alt=""
+                    height={iconSize ?? 18}
+                    width={iconSize ?? 18}
+                />
             }
             {
                 loading === true &&
