@@ -5,7 +5,7 @@ import HeadMobile from "features/HeadMobile";
 import Head from "features/Head";
 import Footer from "features/Footer";
 import { Container } from "@mui/material";
-import {  XButton } from "components/Layout";
+import { XButton } from "components/Layout";
 import { paramsDiscounts } from "params-query";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface";
@@ -54,9 +54,7 @@ export default function VoucherPage() {
                     {/* {isValidating && resData.length === 0 && (
                         <EmptyRes title="Không có voucher phù hợp !" />
                     )} */}
-                    {isValidating && resData.length === 0 && (
-                        <LoadSkelton/>
-                    )}
+                    {isValidating && resData.length === 0 && <LoadSkelton />}
                     {/* <InfiniteScroll
                         dataLength={discounts.length}
                         hasMore={true}
@@ -223,26 +221,24 @@ export default function VoucherPage() {
     );
 }
 const LoadSkelton = () => {
-    const counts = [1, 2, 3, 4, 5, 6, 7, 8]
+    const counts = [1, 2, 3, 4, 5, 6, 7, 8];
     return (
         <div className={style.voucher_list}>
-            {
-                counts.map(i => (
-                    <div key={i} className={style.load_item_cnt}>
-                        <div className={style.load_item_left}>
-                            <Skeleton width={'100%'} height={'100%'} />
+            {counts.map((i) => (
+                <div key={i} className={style.load_item_cnt}>
+                    <div className={style.load_item_left}>
+                        <Skeleton width={"100%"} height={"100%"} />
+                    </div>
+                    <div className={style.load_item_right}>
+                        <div className={style.load_item_right_item}>
+                            <Skeleton width={"100%"} height={"100%"} />
                         </div>
-                        <div className={style.load_item_right}>
-                            <div className={style.load_item_right_item}>
-                                <Skeleton width={'100%'} height={'100%'} />
-                            </div>
-                            <div className={style.load_item_right_item}>
-                                <Skeleton width={'100%'} height={'100%'} />
-                            </div>
+                        <div className={style.load_item_right_item}>
+                            <Skeleton width={"100%"} height={"100%"} />
                         </div>
                     </div>
-                ))
-            }
+                </div>
+            ))}
         </div>
-    )
-}
+    );
+};

@@ -57,15 +57,15 @@
     background-color: var(--bg-color);
     border-radius: 8px 8px 0px 0px;
 }
-.discount_item_percent{
+.discount_item_percent {
     position: absolute;
     z-index: 10;
     right: 0;
     padding: 5px;
     font-weight: 700;
-font-size: 12px;
-line-height: 16px;
-color: var(--bg-white);
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--bg-white);
     background-color: var(--text-orange);
     border-radius: 0px 8px 0px 8px;
 }
@@ -277,8 +277,8 @@ color: var(--bg-white);
 @media only screen and (max-width: 767px) {
     .home-discounts {
         padding: 0px;
-        padding-top: 16px;
-        margin: 16px 0;
+        padding-top: 48px;
+        margin: 24px 0 16px 0;
     }
 
     .home-discounts__list-wrap {
