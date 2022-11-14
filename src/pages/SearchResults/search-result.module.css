@@ -75,6 +75,15 @@
 .result_body{
     min-height: calc(100vh + 74px);
 }
+.load_bottom{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 60px;
+}
+.load_bottom button{
+    background-color: transparent;
+    color: var(--purple);
+}
 /* filter_container */
 .filter_container{
     position: absolute;

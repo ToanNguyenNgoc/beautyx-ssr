@@ -11,7 +11,7 @@ import img from "constants/img";
 import icon from "constants/icon";
 import { ICON } from "constants/icon2";
 import style from "./head.module.css";
-import { Container } from "@mui/material";
+import { Container, Dialog } from "@mui/material";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import IStore from "interface/IStore";
@@ -81,6 +81,7 @@ function Head(props: IProps) {
                 return refNoti?.current?.classList.remove(style.head_menu_show);
         }
     };
+    const [openSearch, setOpenSearch] = useState(false)
     const onToggleSearch = (dis: "show" | "hide") => {
         if (dis === "show")
             return refSearch?.current?.classList.add(style.head_search_show);
@@ -97,7 +98,7 @@ function Head(props: IProps) {
     const appointment_today = appsNoti?.filter(
         (a: AppointmentNoti) =>
             dayjs(a.time_start).format("YYYY-MM-DD") ===
-                dayjs().format("YYYY-MM-DD") && a.viewed === false
+            dayjs().format("YYYY-MM-DD") && a.viewed === false
     );
     const order_app = orderService.filter(
         (a: IServiceUser) => a.appointments.length === 0
@@ -177,7 +178,10 @@ function Head(props: IProps) {
                             <button
                                 className={style.head_top_left_search}
                                 onFocus={() => onToggleSearch("show")}
-                                onClick={() => onToggleSearch("show")}
+                                onClick={() => {
+                                    onToggleSearch("show");
+                                    IS_MB && setOpenSearch(true)
+                                }}
                                 onBlur={() => onToggleSearch("hide")}
                             >
                                 <img
@@ -198,19 +202,35 @@ function Head(props: IProps) {
                                 {IS_MB && showRecommendKey && (
                                     <SearchRecommend />
                                 )}
-                                <div
-                                    ref={refSearch}
-                                    className={style.head_search}
-                                >
-                                    <Search
-                                        onCloseSearchTimeOut={
-                                            onCloseSearchTimeOut
-                                        }
-                                        key_work={key.key}
-                                        key_work_debounce={key.key_debounce}
-                                    />
-                                </div>
+                                {
+                                    !IS_MB &&
+                                    <div
+                                        ref={refSearch}
+                                        className={style.head_search}
+                                    >
+                                        <Search
+                                            onCloseSearchTimeOut={
+                                                onCloseSearchTimeOut
+                                            }
+                                            key_work={key.key}
+                                            key_work_debounce={key.key_debounce}
+                                        />
+                                    </div>
+                                }
                             </button>
+                            <Dialog
+                                open={openSearch}
+                                fullScreen={true}
+                            >
+                                <Search
+                                    onCloseSearchTimeOut={
+                                        onCloseSearchTimeOut
+                                    }
+                                    onCloseSearchDialog={() => setOpenSearch(!openSearch)}
+                                    key_work={key.key}
+                                    key_work_debounce={key.key_debounce}
+                                />
+                            </Dialog>
                         </div>
                         <div className={style.head_top_right}>
                             {USER ? (
@@ -258,9 +278,9 @@ function Head(props: IProps) {
                                         className={
                                             changeStyle
                                                 ? clst([
-                                                      style.head_top_right_btn,
-                                                      style.head_top_right_btn_ch,
-                                                  ])
+                                                    style.head_top_right_btn,
+                                                    style.head_top_right_btn_ch,
+                                                ])
                                                 : style.head_top_right_btn
                                         }
                                     >
@@ -323,9 +343,9 @@ function Head(props: IProps) {
                                 className={
                                     changeStyle
                                         ? clst([
-                                              style.head_top_right_btn,
-                                              style.head_top_right_btn_ch,
-                                          ])
+                                            style.head_top_right_btn,
+                                            style.head_top_right_btn_ch,
+                                        ])
                                         : style.head_top_right_btn
                                 }
                             >
@@ -529,9 +549,9 @@ const HeadMenu = (props: HeadMenuProps) => {
                                 style={
                                     language === lang.code
                                         ? {
-                                              backgroundColor: "var(--purple)",
-                                              color: "var(--bg-white)",
-                                          }
+                                            backgroundColor: "var(--purple)",
+                                            color: "var(--bg-white)",
+                                        }
                                         : {}
                                 }
                                 onClick={() => handleChangeLang(lang.code)}
@@ -621,13 +641,13 @@ const BackContainer = ({ changeStyle }: { changeStyle?: boolean }) => {
             style={
                 changeStyle
                     ? {
-                          backgroundColor: "transparent",
-                      }
+                        backgroundColor: "transparent",
+                    }
                     : {}
             }
             className={style.head_back_btn}
             icon={icon.chevronLeft}
-            iconSize={24}
+            iconSize={28}
             onClick={() => history.goBack()}
         />
     ) : (

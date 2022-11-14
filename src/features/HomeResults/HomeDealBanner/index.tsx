@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { SerProItem, XButton } from "components/Layout";
 import { IServicePromo } from "interface/servicePromo";
 import { dealHot } from "constants/img";
 import { useLocation } from "react-router-dom";
-import servicePromoApi from "api/servicePromoApi";
+import { LoadGrid } from "components/LoadingSketion";
 import HeadTitle from "features/HeadTitle";
 import Head from "features/Head";
 import { Container } from "@mui/material";
 import { blockService } from "utils/blockCardItem";
 import "../home-result.css";
-import { useDeviceMobile } from "utils";
+import { useDeviceMobile, useSwrInfinite } from "utils";
+import { paramsServices } from 'params-query'
+import { ParamService } from 'params-query/param.interface'
+import API_ROUTE from "api/_api";
+import { AUTH_LOCATION } from "api/authLocation";
 
 interface IBanner {
     id: number;
@@ -18,12 +22,6 @@ interface IBanner {
     max_price?: number | null;
     percent?: number;
     img: string;
-}
-interface IData {
-    services: IServicePromo[];
-    page: number;
-    totalItem: number;
-    loadPage: boolean;
 }
 
 export const deals = [
@@ -58,54 +56,29 @@ export const deals = [
 
 function HomeDealBanner() {
     const location = useLocation();
+    const LOCATION = AUTH_LOCATION()
     const IS_MB = useDeviceMobile()
     const id_banner = location.search.slice(1, location.search.length);
     const bannerDeals = deals.find(
         (item: IBanner) => item.id === parseInt(id_banner)
     );
-    const [dataSort, setDataSort] = useState("-discount_percent");
-    const [data, setData] = useState<IData>({
-        services: [],
-        page: 1,
-        totalItem: 1,
-        loadPage: false,
-    });
-    const handleGetServices = async () => {
-        try {
-            const res = await servicePromoApi.getServicesPromo({
-                page: data.page,
-                min_price: bannerDeals?.min_price,
-                max_price: bannerDeals?.max_price,
-                percent: bannerDeals?.percent,
-                location: dataSort,
-                sort: dataSort,
-            });
-            setData({
-                ...data,
-                services: [...data.services, ...res.data.data.hits],
-                totalItem: res.data.total,
-                loadPage: false,
-            });
-        } catch (error) {
-            console.log(error);
-            setData({ ...data, loadPage: false });
-        }
-    };
-    useEffect(() => {
-        handleGetServices();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataSort, data.page]);
+    const params: ParamService = {
+        ...paramsServices,
+        "filter[min_price]": bannerDeals?.min_price ?? '',
+        "filter[max_price]": bannerDeals?.max_price ?? '',
+        "filter[discount_percent]": bannerDeals?.percent ?? '',
+        "filter[is_momo_ecommerce_enable]": true,
+        "filter[location]": LOCATION
+    }
+    const { resData, totalItem, isValidating, onLoadMore } = useSwrInfinite(bannerDeals, API_ROUTE.SERVICES, params)
     const onViewMore = () => {
-        setData({
-            ...data,
-            page: data.page + 1,
-            loadPage: true,
-        });
+        onLoadMore()
     };
+    const services: IServicePromo[] = resData ?? []
     return (
         <>
             <HeadTitle title={bannerDeals?.title} />
-            <Head changeStyle={IS_MB} />
+            <Head />
             <div
                 className="deal-banner"
                 style={{
@@ -127,12 +100,12 @@ function HomeDealBanner() {
                                 alt=""
                                 className="deal-banner__img"
                             />
-                            {data.services
-                                .filter(
-                                    (e) =>
+                            {services
+                                ?.filter(
+                                    (e: IServicePromo) =>
                                         !blockService(e.price, e.special_price)
                                 )
-                                .map((item: IServicePromo, index: number) => (
+                                ?.map((item: IServicePromo, index: number) => (
                                     <li key={index}>
                                         <SerProItem
                                             item={item}
@@ -141,12 +114,13 @@ function HomeDealBanner() {
                                     </li>
                                 ))}
                         </ul>
+                        {services.length === 0 && <LoadGrid item_count={12} grid={IS_MB ? 2 : 6} />}
                         <div className="deal-banner__bot">
-                            {data.services.length < data.totalItem && (
+                            {services.length < totalItem && (
                                 <XButton
                                     title="Xem thêm"
                                     onClick={onViewMore}
-                                    loading={data.loadPage}
+                                    loading={isValidating}
                                 />
                             )}
                         </div>

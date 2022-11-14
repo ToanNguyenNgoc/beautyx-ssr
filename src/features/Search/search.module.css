@@ -142,7 +142,7 @@
 
 @media only screen and (max-width: 1023px) {
     .container {
-        height: 100vh;
+        height: 100%;
         padding: 0px;
     }
     .search_head_input {
@@ -160,11 +160,15 @@
         top: 17px;
     }
     .search_head_btn {
-        width: 36px;
+        width: 46px;
         height: 36px;
         display: flex;
         align-items: center;
         background-color: transparent;
+    }
+    .search_head_btn img{
+        width: 28px;
+        height: 28px;
     }
     .search_input_mb {
         width: calc(100% - 36px);
@@ -192,9 +196,9 @@
     }
     
     .search_body {
-        height: calc(100vh - 80px);
+        height: calc(100% - 80px);
         padding: 8px 12px;
-        max-height: unset;
+        padding-bottom: 70px;
     }
     .search_head_link {
         padding: 4px 12px;

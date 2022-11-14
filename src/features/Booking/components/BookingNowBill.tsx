@@ -68,16 +68,31 @@ function BookingNowBill(props: BookingNowBillProps) {
     //
     const outDiscounts = services.map((item: any) => item?.service?.discount).filter(Boolean)
     //handle discount unit === "PERCENT"
-    const vouchers_sub_total_percent = vouchers_sub_total
-        .filter((item: IDiscountPar) => item.discount_unit === "PERCENT")
-        .map((item: IDiscountPar) => item.discount_value)
-    const totalPercent = vouchers_sub_total_percent.length > 0 ?
-        vouchers_sub_total_percent.reduce((cur: number, pre: number) => cur + pre) : 0
+
     const TOTAL_PAYMENT = total - totalDiscounts - totalVouchers - subTotalVouchers
-    const totalDiscountPercent = totalPercent > 0 ? (TOTAL_PAYMENT * totalPercent / 100) : 0
+    const disPercentTypeTotal = vouchers_sub_total.filter(i => (i.discount_type === 'SUB_TOTAL' && i.discount_unit === 'PERCENT'))
+    const disPercentTypeTotalCal = disPercentTypeTotal.map(i => {
+        let cal = 0
+        const calTotal = TOTAL_PAYMENT * i.discount_value / 100
+        if (!i.maximum_discount_value || calTotal < i.maximum_discount_value) {
+            cal = calTotal
+        }
+        if (i.maximum_discount_value && calTotal > i.maximum_discount_value) {
+            cal = i.maximum_discount_value
+        }
+        return { ...i, discount_value: cal }
+    })
+    const disPercentTypeTotalCalAmount = disPercentTypeTotalCal.filter(Boolean).length > 0 ?
+        disPercentTypeTotalCal.map(i => i.discount_value).reduce((a, b) => a + b) : 0
+
+
+
+    const totalDiscountPercent = disPercentTypeTotalCalAmount
+
+
 
     useEffect(() => {
-        setFinalAmount(TOTAL_PAYMENT - totalDiscountPercent)
+        setFinalAmount(TOTAL_PAYMENT - disPercentTypeTotalCalAmount)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [TOTAL_PAYMENT, totalDiscountPercent])
 

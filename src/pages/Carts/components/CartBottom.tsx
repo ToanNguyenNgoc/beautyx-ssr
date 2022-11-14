@@ -101,7 +101,7 @@ function CartBottom(props: any) {
                 DATA_PMT.org.id,
                 pickBy(pramsOrder, identity)
             );
-            const state_payment = await {...response.data.context, FINAL_AMOUNT:FINAL_AMOUNT};
+            const state_payment = await { ...response.data.context, FINAL_AMOUNT: FINAL_AMOUNT };
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
@@ -173,6 +173,14 @@ function CartBottom(props: any) {
                     </>
                 });
             }
+            else if (FINAL_AMOUNT < 1000) {
+                setOpenNoti({
+                    open: true,
+                    content: `Giao dịch tối thiểu là 1.000đ `,
+                    children: <>
+                    </>
+                });
+            }
             else {
                 handlePostOrder();
             }
@@ -188,14 +196,18 @@ function CartBottom(props: any) {
 
     const vouchersCal = VOUCHER_APPLY.map((i: IDiscountPar) => {
         let discountValue = i.discount_value;
-        if (!i.maximum_discount_value || cartAmount < i.maximum_discount_value) {
-            discountValue = cartAmount - (cartAmount * i.discount_value / 100)
-        }
-        if (i.maximum_discount_value && cartAmount > i.maximum_discount_value) {
-            discountValue = i.maximum_discount_value
+        if (i.discount_unit === 'PERCENT' && i.discount_type === 'SUB_TOTAL') {
+            let cal = 0
+            const calTotal = cartAmount * i.discount_value / 100
+            if (!i.maximum_discount_value || calTotal < i.maximum_discount_value) {
+                cal = calTotal
+            }
+            if (i.maximum_discount_value && calTotal > i.maximum_discount_value) {
+                cal = i.maximum_discount_value
+            }
+            discountValue = cal
         }
         if (i.discount_type === "PRODUCT" && i.items_count === 0 && i.discount_unit === "PRICE") {
-            // console.log(cartQuantityCheck, i.discount_value)
             discountValue = cartQuantityCheck * i.discount_value
         }
         if (i.discount_type === "FINAL_PRICE" && i.items_count > 0) {
@@ -217,7 +229,6 @@ function CartBottom(props: any) {
     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     // const discountAmount = VOUCHER_APPLY.length === 0 ? DATA_CART.cartAmountDiscount : 0
     //-------------------------------------------------------------------
-
     const outDiscounts = cart_confirm.map((item: any) => item.discount)
     const FINAL_AMOUNT = DATA_CART.cartAmount -
         DATA_CART.cartAmountDiscount -
@@ -330,6 +341,7 @@ function CartBottom(props: any) {
                     </div>
                 </Container>
                 <PopupNotification
+                    setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                     open={openNoti.open}
                     children={openNoti.children}
                     content={openNoti.content}
@@ -391,6 +403,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                 <div className="vc_body">
                     <div className="vc_body_input">
                         <input
+                            autoFocus={true}
                             disabled={cart_confirm.length > 0 && false}
                             value={text} onChange={onInputChange} type="text"
                         />

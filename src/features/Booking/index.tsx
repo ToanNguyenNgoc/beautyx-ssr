@@ -166,7 +166,7 @@ function Booking() {
         try {
             //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
-            const state_payment = await {...response.data.context, FINAL_AMOUNT:finalAmount};
+            const state_payment = await { ...response.data.context, FINAL_AMOUNT: finalAmount };
             const transaction_uuid =
                 state_payment.payment_gateway.transaction_uuid;
             if (response.data.context.status !== "CANCELED") {
@@ -271,6 +271,13 @@ function Booking() {
         if (USER) {
             if (bookTime.time) {
                 if (location.state.TYPE === "BOOK_NOW") {
+                    if (finalAmount < 1000) {
+                        return setOpenNoti({
+                            open: true,
+                            content: `Đơn hàng tối thiểu là 1.000đ`,
+                            children: <></>
+                        });
+                    }
                     if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
 
                         handlePostOrder();
