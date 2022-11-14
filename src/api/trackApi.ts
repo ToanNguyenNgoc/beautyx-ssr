@@ -1,6 +1,6 @@
-// import momoApi from './_momoImport';
+import momoApi from './_momoImport';
 import { pickBy, identity } from "lodash";
-// momoApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
+momoApi.init({ appId: process.env.REACT_APP_MOMO_APP_ID });
 /**
  * @name MOMO_API
  * @description send event tracking to MOMO APPLITCATION
@@ -9,12 +9,12 @@ import { pickBy, identity } from "lodash";
 export async function MOMO_API(EVENT_NAME: String, PARAMs: Object) {
     try {
         const params = pickBy(PARAMs, identity);
-        // const res = await momoApi.track(EVENT_NAME, {
-        //     service_name: 'myspa',
-        //     ...params
-        // });
+        const res = await momoApi.track(EVENT_NAME, {
+            service_name: 'myspa',
+            ...params
+        });
         // alert(JSON.stringify(EVENT_NAME + JSON.stringify(params) + JSON.stringify(res)));
-        // return res;
+        return res;
     } catch (err) {
         console.log(err);
     }
