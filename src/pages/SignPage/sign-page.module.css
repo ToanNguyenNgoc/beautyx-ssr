@@ -65,10 +65,12 @@
 
 .input_wrapper_icon_show {
     position: absolute;
-    right: 0;
+    right: 16px;
     z-index: 10;
     cursor: pointer;
-    margin: -26px 6px 0px 0px;
+    top:50%;
+    transform: translateY(-50%);
+    width: 20px;
 }
 
 .input_wrapper_error {
@@ -134,6 +136,9 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .input_wrapper_icon_show {
+        width: 18px;
+    }
     .container {
         flex-direction: column;
         align-items: center;

@@ -36,7 +36,8 @@ import User_purple from "../assets/icon/user_box.svg";
 import Location from "../assets/icon/location.svg";
 import ArrowDownWhite from "../assets/icon/arrow-down-white.svg";
 import SearchWhite from "../assets/icon/search-white.svg";
-import suppportIcon from "../assets/icon/support.svg";
+// import suppportIcon from "../assets/icon/support.svg";
+import hiddenEye from "../assets/icon/hiddenEye.svg";
 
 
 import Lock from "../assets/icon/lock.svg";
@@ -224,6 +225,7 @@ import flash from 'assets/icon/flash.svg';
 
 
 const icon = {
+    hiddenEye,
     noApply,
     payon,
     momo,

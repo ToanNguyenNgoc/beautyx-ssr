@@ -6,15 +6,15 @@ import { useHistory } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
 import dayjs from "dayjs";
-import { Input, XButton } from 'components/Layout'
-import style from '../sign-page.module.css'
+import { Input, XButton } from "components/Layout";
+import style from "../sign-page.module.css";
 import { AppContext } from "context/AppProvider";
 import authentication from "api/authApi";
 import { fetchAsyncUser } from "redux/USER/userSlice";
 import { fetchAsyncApps } from "redux/appointment/appSlice";
 import { fetchAsyncOrderServices } from "redux/order/orderSlice";
-import { PopupNotification } from 'components/Notification';
-import { useNoti } from 'utils'
+import { PopupNotification } from "components/Notification";
+import { useNoti } from "utils";
 import icon from "constants/icon";
 
 function SignIn(props: any) {
@@ -23,11 +23,13 @@ function SignIn(props: any) {
     const { setActiveTabSign } = props;
     const history = useHistory();
     const [typePass, setTypePass] = useState<"text" | "password">("password");
-    const [child, setChild] = useState<React.ReactElement>(<></>)
-    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
+    const [checkType, setCheckType] = useState<boolean>(true);
+
+    const [child, setChild] = useState<React.ReactElement>(<></>);
+    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti();
     const [remember, setRemember] = useState(true);
     async function submitLogin(values: any) {
-        firstLoad()
+        firstLoad();
         try {
             const response = await authentication.login(values);
             if (remember === true) {
@@ -40,25 +42,36 @@ function SignIn(props: any) {
             }
             const res = await dispatch(fetchAsyncUser());
             if (res?.payload) {
-                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
-                dispatch(fetchAsyncOrderServices({ page: 1 }))
+                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")));
+                dispatch(fetchAsyncOrderServices({ page: 1 }));
             }
-            history.goBack()
+            history.goBack();
         } catch (error) {
             const err = error as AxiosError;
             switch (err.response?.status) {
                 case 401:
-                    resultLoad('Mật khẩu chưa chính xác. Vui lòng thử lại !')
+                    resultLoad("Mật khẩu chưa chính xác. Vui lòng thử lại !");
                     break;
                 case 404:
-                    resultLoad(`Emai "${values.email}" ${t("form.is_not_registered")}`)
-                    setChild(<XButton
-                        title={`${t('Home.Sign_up')} ${t('form.now')}`}
-                        onClick={() => history.replace({ pathname: '/sign-up', search: '2' })}
-                    />)
+                    resultLoad(
+                        `Emai "${values.email}" ${t("form.is_not_registered")}`
+                    );
+                    setChild(
+                        <XButton
+                            title={`${t("Home.Sign_up")} ${t("form.now")}`}
+                            onClick={() =>
+                                history.replace({
+                                    pathname: "/sign-up",
+                                    search: "2",
+                                })
+                            }
+                        />
+                    );
                     break;
                 default:
-                    resultLoad(`Có lỗi xảy ra (${err.response?.status}).Vui lòng thử lại sau!`,)
+                    resultLoad(
+                        `Có lỗi xảy ra (${err.response?.status}).Vui lòng thử lại sau!`
+                    );
                     break;
             }
         }
@@ -66,6 +79,12 @@ function SignIn(props: any) {
 
     const handleLogin = (values: any) => {
         submitLogin(values);
+    };
+    const handleToggleSeePass = () => {
+        setCheckType(!checkType);
+        checkType && checkType === true
+            ? setTypePass("text")
+            : setTypePass("password");
     };
     const formik = useFormik({
         initialValues: {
@@ -87,10 +106,6 @@ function SignIn(props: any) {
             handleLogin(values);
         },
     });
-    // const onMouseEnter = () =>{
-    //     console.log(refPassword)
-    // }
-
     return (
         <div>
             <form
@@ -98,7 +113,7 @@ function SignIn(props: any) {
                 autoComplete="off"
                 className={style.form_container}
             >
-                <div className={style.input_wrapper} >
+                <div className={style.input_wrapper}>
                     <Input
                         className={style.input}
                         icon={icon.User}
@@ -109,14 +124,12 @@ function SignIn(props: any) {
                         onChange={formik.handleChange}
                     />
                     {formik.errors.email && formik.touched.email && (
-                        <p
-                            className={style.input_wrapper_error}
-                        >
+                        <p className={style.input_wrapper_error}>
                             {formik.errors.email}
                         </p>
                     )}
                 </div>
-                <div className={style.input_wrapper} >
+                <div className={style.input_wrapper}>
                     <Input
                         className={style.input}
                         icon={icon.Lock}
@@ -127,16 +140,13 @@ function SignIn(props: any) {
                         placeholder={t("Home.Sign_in_pl_password")}
                     />
                     <img
-                        onMouseEnter={() => setTypePass("text")}
-                        onMouseLeave={() => setTypePass("password")}
+                        onClick={() => handleToggleSeePass()}
                         className={style.input_wrapper_icon_show}
-                        src={icon.eye}
+                        src={checkType === true ? icon.eye : icon.hiddenEye}
                         alt=""
                     />
                     {formik.errors.password && formik.touched.password && (
-                        <p
-                            className={style.input_wrapper_error}
-                        >
+                        <p className={style.input_wrapper_error}>
                             {formik.errors.password}
                         </p>
                     )}
@@ -158,7 +168,10 @@ function SignIn(props: any) {
                         />
                         <span>{t("Home.Sign_remember")}</span>
                     </div>
-                    <span className={style.sign_check_forgot} onClick={() => history.replace("/doi-mat-khau")}>
+                    <span
+                        className={style.sign_check_forgot}
+                        onClick={() => history.replace("/doi-mat-khau")}
+                    >
                         {t("Home.Sign_forgot")} ?
                     </span>
                 </div>
