@@ -9,7 +9,7 @@ import icon from 'constants/icon';
 import { IProvince, IDistrict } from 'interface';
 import React, { useState, ChangeEvent, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useSwr, useGetLocation, useDeviceMobile } from 'utils';
+import { useSwr, useGetLocation, useDeviceMobile } from 'hooks';
 import style from './style.module.css'
 
 export interface EventLocation {

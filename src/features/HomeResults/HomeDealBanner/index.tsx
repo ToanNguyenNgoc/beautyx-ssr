@@ -9,7 +9,7 @@ import Head from "features/Head";
 import { Container } from "@mui/material";
 import { blockService } from "utils/blockCardItem";
 import "../home-result.css";
-import { useDeviceMobile, useSwrInfinite } from "utils";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
 import { paramsServices } from 'params-query'
 import { ParamService } from 'params-query/param.interface'
 import API_ROUTE from "api/_api";

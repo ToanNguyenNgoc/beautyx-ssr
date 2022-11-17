@@ -5,7 +5,8 @@ import { Service } from "../../../interface/service";
 import { fetchAsyncServicesRec } from "../../../redux/org_services/serviceSlice";
 import { AppContext } from "../../../context/AppProvider";
 import { SerProItem } from "components/Layout";
-import { extraParamsUrl, useGetParamUrl } from "utils";
+import { extraParamsUrl } from "utils";
+import { useGetParamUrl } from "hooks";
 
 function DetailRecommend(props: any) {
     const paramsUrl = extraParamsUrl();

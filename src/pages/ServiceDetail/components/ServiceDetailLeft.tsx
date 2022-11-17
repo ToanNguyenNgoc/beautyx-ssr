@@ -11,7 +11,7 @@ import formatPrice, {
     formatSalePriceService,
 } from "../../../utils/formatPrice";
 import Slider from "react-slick";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
+import {useDeviceMobile} from "hooks";
 import { AppContext } from "../../../context/AppProvider";
 import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 const PrevButton = (props: any) => {

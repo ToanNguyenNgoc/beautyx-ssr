@@ -26,15 +26,18 @@ import dayjs from "dayjs";
 import { getTotal } from "redux/cartSlice";
 import Search from "features/Search";
 import { debounce } from "lodash";
-import { clst, extraParamsUrl, useDeviceMobile } from "utils";
+import { clst, extraParamsUrl } from "utils";
 import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
 import { onSetViewedNoti } from "redux/notifications";
 import { onResetFilter } from "redux/filter-result";
 import Slider from "react-slick";
+import { useDeviceMobile } from "hooks";
+import HeadTitle from "features/HeadTitle";
 
 interface IProps {
     changeStyle?: boolean;
+    title?: string
 }
 const homePath = [
     "/TIKI",
@@ -48,7 +51,7 @@ const homePath = [
 ];
 
 function Head(props: IProps) {
-    const { changeStyle } = props;
+    const { changeStyle, title } = props;
     const { t, orderService } = useContext(AppContext);
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
@@ -163,6 +166,7 @@ function Head(props: IProps) {
                     : style.container
             }
         >
+            <HeadTitle title={title} />
             <Container>
                 <div className={style.head_wrapper}>
                     <div className={style.head_top}>
@@ -371,24 +375,18 @@ function Head(props: IProps) {
                     </div>
                     <div className={style.head_bot}>
                         <XButton
-                            onClick={() => history.push("/kenh-nguoi-ban")}
+                            onClick={() => history.push("/partner")}
                             className={style.head_bot_btn}
-                            title={t("Header.seller_center")}
+                            title={t("Header.1")}
                         />
                         {/* <div
-                            onClick={() => history.push('/xu-huong')}
-                            className={style.head_bot_link}
-                        >
-                            Xu hướng
-                        </div> */}
-                        <div
                             onClick={() =>
                                 window.open("https://beautyx.vn/blog", "_blank")
                             }
                             className={style.head_bot_link}
                         >
                             Tin tức
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </Container>

@@ -12,7 +12,7 @@ import {
 } from "../../../redux/org_products/productSlice";
 import { AppContext } from "../../../context/AppProvider";
 import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
+import {useDeviceMobile} from "hooks";
 
 interface IProps {
     product: Product;

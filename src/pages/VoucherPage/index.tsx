@@ -1,6 +1,6 @@
 import React from "react";
 import style from "./style.module.css";
-import { useDeviceMobile, useSwrInfinite } from "utils";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
 import HeadMobile from "features/HeadMobile";
 import Head from "features/Head";
 import Footer from "features/Footer";

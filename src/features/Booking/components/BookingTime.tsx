@@ -4,7 +4,7 @@ import TimePicker from "../../../components/TimePicker";
 import { Dialog } from "@mui/material";
 import HeadMobile from "../../HeadMobile";
 import { Transition } from "../../../utils/transition";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
+import { useDeviceMobile } from "hooks";
 
 function BookingTime(props: any) {
     const { open, setOpen, bookTime, setBookTime, org } = props;

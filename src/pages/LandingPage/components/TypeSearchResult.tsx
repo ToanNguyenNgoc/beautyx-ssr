@@ -1,6 +1,6 @@
 import { IBanner } from 'interface/banner';
 import React from 'react';
-import { useFetch } from 'utils';
+import { useFetch } from 'hooks';
 import { SerProItem } from 'components/Layout'
 import style from "./style.module.css"
 import { IServicePromo } from 'interface/servicePromo';

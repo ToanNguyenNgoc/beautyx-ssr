@@ -12,13 +12,13 @@ import {
 import { formatAddCart } from "../../../utils/cart/formatAddCart";
 import { addCart } from "../../../redux/cartSlice";
 import onErrorImg from "../../../utils/errorImg";
-import useFullScreen from "../../../utils/useDeviceMobile";
 import DetailOrgCard from "../../ServiceDetail/components/DetailOrgCard";
 import { extraOrgTimeWork } from "../../MerchantDetail/Functions/extraOrg";
 import { AppContext } from "../../../context/AppProvider";
 import ProductDetailRightReview from "./ProductDetailRightReview";
 import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 import {PopupNotification} from 'components/Notification'
+import { useDeviceMobile } from "hooks";
 
 interface IProps {
     product: Product;
@@ -30,7 +30,7 @@ function ProductDetailRight(props: IProps) {
     const { org, product, NOW } = props;
     const { COMMENTS } = useSelector((state: any) => state.SERVICE);
 
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);

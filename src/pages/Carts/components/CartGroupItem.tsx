@@ -13,7 +13,7 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
 import { IOrganization } from "../../../interface/organization";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
+import {useDeviceMobile} from "hooks";
 import {
     EX_CHECK_DATE,
     EX_CHECK_INCLUDE_ITEMS,
@@ -161,7 +161,6 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
             <div className="cart-item-pop-voucher">
                 <div className="flex-row-sp">
                     <span className="title">{org?.name} khuyến mại</span>
-
                     <img
                         className="cursor-pointer"
                         onClick={() => setOpen(false)}
@@ -209,7 +208,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const [noti, setNoti] = useState(false);
 
     const { productsInDis, servicesInDis } = discountReducerItem(
-        voucher.items.filter((i: IITEMS_DISCOUNT) => i.organization_id === org?.id)
+        voucher?.items?.filter((i: IITEMS_DISCOUNT) => i.organization_id === org?.id)
     )
     const productName = productsInDis.map((i: IITEMS_DISCOUNT) => i.productable?.product_name);
     const serviceName = servicesInDis.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
@@ -255,7 +254,6 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     ) {
         applyCondition = true;
     }
-    console.log(dateCondition)
     const outDiscounts = props.outDiscounts?.filter(Boolean)
     const handleApplyVoucher = () => {
         if (outDiscounts && outDiscounts.length > 0) return setNoti(true)

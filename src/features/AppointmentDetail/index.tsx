@@ -5,9 +5,9 @@ import { TransitionProps } from "@mui/material/transitions";
 import formatPrice from "../../utils/formatPrice";
 import onErrorImg from "../../utils/errorImg";
 import { Service } from "../../interface/service";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 import HeadMobile from "../HeadMobile";
 import { AppContext } from "../../context/AppProvider";
+import { useDeviceMobile } from "hooks";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(

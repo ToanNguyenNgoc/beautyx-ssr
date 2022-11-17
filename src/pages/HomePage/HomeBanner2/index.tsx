@@ -4,7 +4,7 @@ import { IBanner } from "interface";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
-import { clst, slugify, useDeviceMobile } from "utils";
+import { clst, slugify } from "utils";
 import tracking from "api/trackApi";
 import style from "./banner-mobile.module.css";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
@@ -12,6 +12,8 @@ import { useHistory } from "react-router-dom";
 import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import { PopupMessage } from "components/Notification";
+import { useDeviceMobile } from "hooks";
+import bannerInit from 'assets/image/bannerInit.png'
 
 interface PopupProps {
     open: boolean;
@@ -147,17 +149,9 @@ function HomeBanner2() {
                             <img
                                 className={style.banner_img}
                                 src={item.imageURL}
+                                // src={bannerInit}
                                 alt=""
                             />
-                            {IS_MB && (
-                                <div className={style.banner_mb_cnt}>
-                                    <img
-                                        className={style.banner_mb_cnt_img}
-                                        src={item.imageURL}
-                                        alt=""
-                                    />
-                                </div>
-                            )}
                         </div>
                     ))}
                 </Slider>

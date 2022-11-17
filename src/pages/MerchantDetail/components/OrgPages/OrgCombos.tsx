@@ -4,7 +4,7 @@ import OrgComboItem from './OrgComboItem';
 import InfiniteScroll from "react-infinite-scroll-component";
 import { IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
-import { useDeviceMobile, useSwrInfinite } from 'utils';
+import { useDeviceMobile, useSwrInfinite } from 'hooks';
 import { LoadGrid } from "components/LoadingSketion";
 import {EmptyRes} from "components/Layout";
 

@@ -13,7 +13,6 @@ import { IOrganization } from "../../interface/organization";
 import MapOrgItemDetail from "./MapOrgItemDetail";
 import MapOrgFilter from "./MapOrgFilter";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
 import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
@@ -31,6 +30,7 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import onErrorImg from "../../utils/errorImg";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import './style.css'
+import { useDeviceMobile } from "hooks";
 
 // import MapDirection from './MapDirection';
 interface IProps {

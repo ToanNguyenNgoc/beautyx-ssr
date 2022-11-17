@@ -29,10 +29,9 @@ import {
 } from "../../pages/ServiceDetail/onScrollChange";
 import DetailPolicy from "../../pages/ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../ReviewsContainer";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 import ComboDetailDesc from "./components/ComboDetailDesc";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
-import { useGetParamUrl } from "utils/useParamsUrl";
+import { useDeviceMobile, useGetParamUrl } from "hooks";
 
 function ComboDetail() {
     const { t } = useContext(AppContext);

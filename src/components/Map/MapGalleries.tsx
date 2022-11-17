@@ -1,9 +1,9 @@
 import { Masonry } from "@mui/lab";
 import { Dialog } from "@mui/material";
+import { useDeviceMobile } from "hooks";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import icon from "../../constants/icon";
-import useFullScreen from "../../utils/useDeviceMobile";
 const PrevButton = (props: any) => {
     const { onClick } = props;
     return (
@@ -22,7 +22,7 @@ const NextButton = (props: any) => {
 };
 export default function MapGalleries(props: any) {
     const { GALLERIES, setTotalCountGalleries, open, setOpen } = props;
-    const IS_MOBILE = useFullScreen();
+    const IS_MOBILE = useDeviceMobile();
     const galleriesChild = GALLERIES.map((i: any) => i.images)
         .flat()
         .map((i: any) => i.image_url);

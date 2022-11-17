@@ -46,6 +46,7 @@ import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import Trends from "pages/Trends";
 import Community from "pages/Community";
 import VoucherPage from "pages/VoucherPage";
+import TrendsDetail from "pages/TrendsDetail";
 
 function RouterConfig() {
     const routes = [
@@ -199,6 +200,10 @@ function RouterConfig() {
         {
             path: "/xu-huong",
             component: <Trends />,
+        },
+        {
+            path: "/video/:id",
+            component: <TrendsDetail />,
         },
         {
             path: "/cong-dong",

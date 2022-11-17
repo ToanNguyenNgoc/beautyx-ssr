@@ -4,7 +4,7 @@ import { IComment } from "../../interface/comments";
 import formatDate from "../../utils/formatDate";
 import "./full-img.css";
 import icon from "../../constants/icon";
-import useFullScreen from "../../utils/useDeviceMobile";
+import { useDeviceMobile } from "hooks";
 
 interface IProps {
     open: boolean;
@@ -14,8 +14,8 @@ interface IProps {
 }
 
 function FullImage(props: IProps) {
-    const { open, setOpen, comment } = props;
-    const fullScreen = useFullScreen();
+    const { open, setOpen, comment, image_url } = props;
+    const fullScreen = useDeviceMobile();
     let body;
     try {
         const cmt = JSON.parse(`${comment?.body}`);
@@ -26,14 +26,14 @@ function FullImage(props: IProps) {
     } catch (error) {
         body = {
             text: comment?.body,
-            image_url: "",
+            image_url: image_url,
         };
     }
     return (
         <Dialog
             open={open}
             fullScreen={fullScreen}
-            onClose={() => setOpen(false)}
+            onClick={() => setOpen(false)}
         >
             <div className="full-img-cnt">
                 <div className="full-img-cnt__head">
@@ -44,27 +44,35 @@ function FullImage(props: IProps) {
                 {(body.image_url?.length > 0) && (
                     <img
                         className="full-img-cnt__img"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }}
                         src={body.image_url}
                         alt=""
                     />
                 )}
                 {
                     comment?.media_url && comment?.media_url.length > 0 && (
-                    <div
-                        style={{
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                        }}
-                    >
-                        <img
-                            className="full-img-cnt__img"
-                            src={comment?.media_url[0]}
-                            alt=""
-                        />
-                    </div>
-                )}
+                        <div
+                            style={{
+                                height: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                justifyContent: "center",
+                            }}
+                        >
+                            <img
+                                className="full-img-cnt__img"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                }}
+                                src={comment?.media_url[0]}
+                                alt=""
+                            />
+                        </div>
+                    )}
                 {comment && (
                     <div className="full-img-cnt__de">
                         <div className="flex-row full-img-cnt__de-info">

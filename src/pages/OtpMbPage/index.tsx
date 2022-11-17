@@ -6,7 +6,7 @@ import style from './otp.module.css'
 import { useFormik } from 'formik';
 import { Input, XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
-import { useNoti } from "utils"
+import { useNoti } from "hooks"
 import { PopupNotification } from 'components/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';

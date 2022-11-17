@@ -1,14 +1,14 @@
+import { useDeviceMobile } from 'hooks';
 import React from 'react';
 import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm'
-import useFullScreen from '../../utils/useDeviceMobile';
 
 interface IProps {
-      title: string | any
+      title?: string
 }
 
 function HeadTitle(props: IProps) {
-      const IS_MB = useFullScreen();
+      const IS_MB = useDeviceMobile();
       const { title } = props;
       const FLAT_FORM = EXTRA_FLAT_FORM();
 
@@ -17,7 +17,7 @@ function HeadTitle(props: IProps) {
             document.title = t
       }
       else {
-            document.title = FLAT_FORM === FLAT_FORM_TYPE.MOMO ? 'BeautyX' : `${title} - ${FLAT_FORM}`
+            document.title = FLAT_FORM === FLAT_FORM_TYPE.MOMO ? 'BeautyX' : `${title ?? '【BeautyX】- App đặt lịch làm đẹp online với nhiều địa điểm uy tín gần bạn'} - ${FLAT_FORM}`
       }
       return (
             <></>

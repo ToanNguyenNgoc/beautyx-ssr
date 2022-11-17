@@ -6,7 +6,7 @@ import IStore from 'interface/IStore';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { useSwr } from 'utils';
+import { useSwr } from 'hooks';
 import formatPrice from 'utils/formatPrice';
 import style from './style.module.css'
 

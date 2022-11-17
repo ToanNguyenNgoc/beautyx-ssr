@@ -15,7 +15,7 @@ import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import Footer from "features/Footer";
 import { Bottom, OpenApp } from "components/Layout";
-import { useDeviceMobile } from "utils";
+import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
 import HomeTags2 from "./HomeTags2";

@@ -24,7 +24,7 @@ import { Transition } from "../../utils/transition";
 import { IOrganization } from "../../interface/organization";
 import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";
-import useDeviceMobile from "../../utils/useDeviceMobile";
+import {useDeviceMobile} from "hooks";
 import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
 import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
 // end

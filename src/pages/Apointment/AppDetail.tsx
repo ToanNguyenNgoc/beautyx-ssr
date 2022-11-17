@@ -2,7 +2,7 @@ import React from 'react';
 import { Dialog } from '@mui/material';
 import style from "./appdetail.module.css";
 import dayjs from 'dayjs';
-import { useDeviceMobile } from 'utils';
+import { useDeviceMobile } from 'hooks';
 import icon from 'constants/icon';
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { AppointmentTime } from 'interface/appointment';

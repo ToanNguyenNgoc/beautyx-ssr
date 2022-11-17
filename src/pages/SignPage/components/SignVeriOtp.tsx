@@ -6,28 +6,24 @@ import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from "../../
 import FormTelephone from "../../ResetPassword/components/FormTelephone";
 
 function SignVeriOtp(props: any) {
-    const { open, setOpen, setDataOtp } = props;
+    const { open, setOpen, setDataOtp, prevUrl } = props;
     const [load, setLoad] = useState(false);
     const generateRecaptcha = () => {
         try {
-            if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new RecaptchaVerifier(
-                    'recaptcha-container',
-                    {
-                        size: 'invisible',
-                        callback: (value: any) => {
-                            // handleSubmit(value, true)
-                        },
-                        'expired-callback': () => {
-                            // Response expired. Ask user to solve reCAPTCHA again.
-                            // ...
-                        },
+            window.recaptchaVerifier = new RecaptchaVerifier(
+                'recaptcha-container',
+                {
+                    size: 'invisible',
+                    callback: (value: any) => {
+                        // handleSubmit(value, true)
                     },
-                    authentication
-                )
-            } else {
-                window.recaptchaVerifier.render()
-            }
+                    'expired-callback': () => {
+                        // Response expired. Ask user to solve reCAPTCHA again.
+                        // ...
+                    },
+                },
+                authentication
+            )
         } catch (err: any) {
             console.log(err)
         }
@@ -57,6 +53,7 @@ function SignVeriOtp(props: any) {
                 <div className="for-pass-cnt__phone">
                     <div id="recaptcha-container"></div>
                     <FormTelephone
+                        prevUrl={prevUrl}
                         title="Đăng ký"
                         load={load}
                         handlePostTelephone={handlePostTelephone}

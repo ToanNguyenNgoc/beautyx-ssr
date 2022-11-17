@@ -6,7 +6,7 @@ import React, { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAsynProductRecomment } from "redux/org_products/productSlice";
 import { STATUS } from "redux/status";
-import { useGetParamUrl } from "utils";
+import { useGetParamUrl } from "hooks";
 // import { AppContext } from "../../../context/AppProvider";
 // import { IOrganization } from "../../../interface/organization";
 // import { Product } from "../../../interface/product";

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { clst, extraParamsUrl, useDeviceMobile } from 'utils'
+import { clst, extraParamsUrl } from 'utils'
 import { useOrgs, useProducts, useServices } from 'features/Search/hook'
 import { paramsServices, paramsProducts, paramOrgs } from 'params-query'
 import { ICON } from "constants/icon2";
@@ -25,6 +25,7 @@ import { BackTopButton, EmptyRes, OrgItemSec, SerProItem, XButton } from "compon
 import { AppContext } from "context/AppProvider";
 import icon from "constants/icon";
 import style from './search-result.module.css'
+import { useDeviceMobile } from "hooks";
 
 function SearchResults() {
     const { t } = useContext(AppContext)

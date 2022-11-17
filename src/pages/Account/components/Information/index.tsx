@@ -7,7 +7,8 @@ import IStore from 'interface/IStore';
 import { User } from 'interface';
 import * as Yup from "yup";
 import { Input, XButton } from 'components/Layout'
-import { clst, useNoti } from 'utils';
+import { clst } from 'utils';
+import { useNoti } from 'hooks'
 import { PopupNotification } from 'components/Notification'
 import authentication from 'api/authApi';
 import { AxiosError } from 'axios';
@@ -15,6 +16,8 @@ import { putUser, updateAsyncUser } from 'redux/USER/userSlice'
 import { postMedia } from 'hooks'
 import validateForm from 'utils/validateForm'
 import icon from 'constants/icon';
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
 
 function Information() {
   const { USER } = useSelector((state: IStore) => state.USER)
@@ -30,10 +33,14 @@ function Information() {
 
 export default Information;
 
+interface IValues {
+  fullname: string, email: string
+}
+
 const Form = ({ USER }: { USER: User }) => {
   const dispatch = useDispatch()
   const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
-
+  const PLAT_FORM = EXTRA_FLAT_FORM()
   const formik = useFormik({
     initialValues: {
       fullname: USER.fullname ?? '',
@@ -42,40 +49,48 @@ const Form = ({ USER }: { USER: User }) => {
     validationSchema: Yup.object({
       fullname: Yup.string()
         .required("Vui lòng nhập Họ và tên")
-        .min(8, 'Tên đầy đủ phải từ 2 đến 128 ký tự')
+        .min(2, 'Tên đầy đủ phải từ 2 đến 128 ký tự')
         .max(128, 'Tên đầy đủ phải từ 2 đến 128 ký tự'),
       email: Yup.string()
         .required('Vui lòng nhập Email')
         .matches(validateForm.email, 'Vui lòng nhập đúng định dạng Email')
     }),
     onSubmit: async (values) => {
-      firstLoad()
-      try {
-        await authentication.putUserProfile({
-          fullname: values.fullname,
-          email: USER.email !== values.email ? values.email : ''
-        })
-        dispatch(putUser({ ...USER, ...values }))
-        resultLoad('Lưu thông tin thành công')
-      } catch (error) {
-        const err = error as AxiosError;
-        switch (err.response?.status) {
-          case 302:
-            return resultLoad(`Email "${values.email}" đã được sử dụng ! Vui lòng thử Email khác`)
-          default:
-            return resultLoad(`Có lỗi xảy ra. Vui lòng thử lại (${err.response?.status}) `)
-
-        }
-      }
+      handleUpdateUser(values)
     },
   })
+  const handleUpdateUser = async (values: IValues) => {
+    firstLoad()
+    try {
+      await authentication.putUserProfile({
+        fullname: values.fullname,
+        email: USER.email !== values.email ? values.email : ''
+      })
+      dispatch(putUser({ ...USER, ...values }))
+      resultLoad('Lưu thông tin thành công')
+    } catch (error) {
+      const err = error as AxiosError;
+      switch (err.response?.status) {
+        case 302:
+          resultLoad(`Email "${values.email}" đã được sử dụng ! Vui lòng thử Email khác`)
+          formik.setFieldValue('email', USER.email)
+          break;
+        default:
+          resultLoad(`Có lỗi xảy ra. Vui lòng thử lại (${err.response?.status}) `)
+          break;
+      }
+    }
+  }
   const onChangeAvatar = async (e: any) => {
     const { model_id } = await postMedia(e)
     await dispatch(updateAsyncUser({
       media_id: model_id
     }))
   }
-
+  const onNavigateChangePass = () => {
+    // window.location.reload()
+    window.location.assign('/tai-khoan/doi-mat-khau')
+  }
 
   return (
     <div className={style.form_cnt}>
@@ -106,6 +121,7 @@ const Form = ({ USER }: { USER: User }) => {
         <div className={style.form_row}>
           <span className={style.form_row_labe}>Họ và tên</span>
           <Input
+            autoFocus={true}
             value={formik.values.fullname}
             name='fullname'
             onChange={formik.handleChange}
@@ -143,6 +159,16 @@ const Form = ({ USER }: { USER: User }) => {
           />
         </div>
         <div className={style.form_bot}>
+          {
+            PLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
+            <XButton
+              className={style.form_bot_btn}
+              title='Đổi mật khẩu'
+              // onClick={() => history.push('/tai-khoan/doi-mat-khau')}
+              onClick={onNavigateChangePass}
+              type='button'
+            />
+          }
           <XButton
             title='Lưu thay đổi'
             type='submit'

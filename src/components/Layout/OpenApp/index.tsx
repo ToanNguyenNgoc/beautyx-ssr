@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import style from './open-app.module.css'
 import { XButton } from 'components/Layout'
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
-import { useDeviceMobile } from 'utils';
+import { useDeviceMobile } from 'hooks';
 import { Drawer } from '@mui/material';
 import img from 'constants/img';
 

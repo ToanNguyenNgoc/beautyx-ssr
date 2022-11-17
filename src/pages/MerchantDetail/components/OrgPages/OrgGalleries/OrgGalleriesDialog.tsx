@@ -1,11 +1,11 @@
 import React from "react";
 import { Dialog, Tab } from "@mui/material";
 import { Masonry, TabContext, TabList, TabPanel } from "@mui/lab";
-import useFullScreen from "../../../../../utils/useDeviceMobile";
 import OrgGalleryItem from "./OrgGalleryItem";
 import { Transition } from "../../../../../utils/transition";
 import icon from "../../../../../constants/icon";
 import OrgGalleriesVideo from "./OrgGalleriesVideo";
+import { useDeviceMobile } from "hooks";
 
 function OrgGalleriesDialog(props: any) {
     const { chooseThumb, open, setOpen } = props;
@@ -14,7 +14,7 @@ function OrgGalleriesDialog(props: any) {
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
-    const IS_MOBILE = useFullScreen();
+    const IS_MOBILE = useDeviceMobile();
     return (
         <Dialog fullScreen open={open} TransitionComponent={Transition}>
             <div className="org-galleries__images-section">

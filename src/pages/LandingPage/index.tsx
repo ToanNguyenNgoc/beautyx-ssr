@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { extraParamsUrl, useDeviceMobile, useSwr } from 'utils'
+import {  useDeviceMobile, useSwr } from 'hooks'
 import PageNotFound from 'components/PageNotFound';
 import { IBanner } from 'interface/banner'
 import Footer from 'features/Footer';
@@ -11,6 +11,7 @@ import Skeleton from 'react-loading-skeleton';
 import { TypeLandingPage, TypeSearchResult } from "./components"
 import { useHistory } from 'react-router-dom';
 import HeadMobile from 'features/HeadMobile';
+import { extraParamsUrl } from 'utils';
 
 function LadingPage() {
     const IS_MB = useDeviceMobile()

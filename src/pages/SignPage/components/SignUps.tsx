@@ -8,7 +8,7 @@ import { AppContext } from 'context/AppProvider';
 import authentication from 'api/authApi';
 import validateForm from 'utils/validateForm';
 import icon from 'constants/icon';
-import { Input, XButton } from 'components/Layout'
+import { BackButton, Input, XButton } from 'components/Layout'
 import { PopupNotification } from 'components/Notification'
 import { useHistory } from 'react-router-dom';
 
@@ -19,6 +19,7 @@ function SignUps(props: any) {
     const { setActiveTabSign } = props;
     const history = useHistory()
     const [loading, setLoading] = useState(false);
+    const [show, setShow] = useState({ pass: false, confirm: false })
     const [noti, setNoti] = useState({
         content: "",
         open: false,
@@ -52,14 +53,10 @@ function SignUps(props: any) {
                 />
             })
         } catch (error) {
-            console.log(error)
             setNoti({
-                content: "Có lỗi xảy ra. Vui lòng thử lại!",
+                content: `Có lỗi xảy ra. Vui lòng thử lại!`,
                 open: true,
-                children: <XButton
-                    title='Quay vè trang đăng nhập'
-                    onClick={onBackSignIn}
-                />
+                children: <></>
             })
         }
     }
@@ -89,16 +86,16 @@ function SignUps(props: any) {
             const err = error as AxiosError;
             if (err.response?.status === 400) {
                 handleAsyncForgotPass(params)
-                // setErrAlready({
-                //     errMail: err.response.data.context.email ? t("form.email_already") : ``,
-                //     errPhone: err.response.data.context.telephone ? t("form.phone_already") : ``
-                // })
+            } else {
+                setNoti({
+                    content: `Có lỗi xảy ra. Vui lòng thử lại (${err.response?.status})`,
+                    open: true,
+                    children: <></>
+                })
             }
         }
     }
 
-
-    const [typePass, setTypePass] = useState<'password' | 'text'>('password')
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -148,210 +145,212 @@ function SignUps(props: any) {
         }
     })
     return (
-        <div>
-            <SignVeriOtp
-                open={openOtp}
-                setOpen={setOpenOtp}
-                dataOtp={dataOtp}
-                setDataOtp={setDataOtp}
-            />
-            <form
-                onSubmit={formik.handleSubmit}
-                autoComplete='off'
-                className={style.form_container}
-            >
-                <div className={style.input_wrapper} >
-                    <Input
-                        className={style.input}
-                        icon={icon.User}
-                        value={formik.values.name}
-                        onChange={formik.handleChange}
-                        name="name"
-                        type="text"
-                        placeholder={t("pm.full_name")}
-                    />
-                    {formik.errors.name && formik.touched.name && (
-                        <p className={style.input_wrapper_error} >
-                            {formik.errors.name}
-                        </p>
-                    )}
-                </div>
-                <div className={style.input_wrapper}>
-                    <FormControl component="fieldset">
-                        <RadioGroup
-                            row
-                            aria-label="gender"
-                            name="sex"
-                            value={formik.values.sex}
+        <>
+            <BackButton onBackFunc={onBackSignIn} />
+            <div>
+                <SignVeriOtp
+                    prevUrl={'/sign-in?1'}
+                    open={openOtp}
+                    setOpen={setOpenOtp}
+                    dataOtp={dataOtp}
+                    setDataOtp={setDataOtp}
+                />
+                <form
+                    onSubmit={formik.handleSubmit}
+                    autoComplete='off'
+                    className={style.form_container}
+                >
+                    <div className={style.input_wrapper} >
+                        <Input
+                            className={style.input}
+                            icon={icon.User}
+                            value={formik.values.name}
                             onChange={formik.handleChange}
-                        >
-                            <FormControlLabel
-                                value="male"
-                                control={
-                                    <Radio
-                                        sx={{
-                                            color: "#7161BA",
-                                            "&.Mui-checked": {
+                            name="name"
+                            type="text"
+                            placeholder={t("pm.full_name")}
+                        />
+                        {formik.errors.name && formik.touched.name && (
+                            <p className={style.input_wrapper_error} >
+                                {formik.errors.name}
+                            </p>
+                        )}
+                    </div>
+                    <div className={style.input_wrapper}>
+                        <FormControl component="fieldset">
+                            <RadioGroup
+                                row
+                                aria-label="gender"
+                                name="sex"
+                                value={formik.values.sex}
+                                onChange={formik.handleChange}
+                            >
+                                <FormControlLabel
+                                    value="male"
+                                    control={
+                                        <Radio
+                                            sx={{
                                                 color: "#7161BA",
-                                            },
-                                        }}
-                                    />
-                                }
-                                label={t("form.male")}
-                            />
-                            <FormControlLabel
-                                value="female"
-                                control={
-                                    <Radio
-                                        sx={{
-                                            color: "#7161BA",
-                                            "&.Mui-checked": {
+                                                "&.Mui-checked": {
+                                                    color: "#7161BA",
+                                                },
+                                            }}
+                                        />
+                                    }
+                                    label={t("form.male")}
+                                />
+                                <FormControlLabel
+                                    value="female"
+                                    control={
+                                        <Radio
+                                            sx={{
                                                 color: "#7161BA",
-                                            },
-                                        }}
-                                    />
-                                }
-                                label={t("form.female")}
-                            />
-                            <FormControlLabel
-                                value="other"
-                                control={
-                                    <Radio
-                                        sx={{
-                                            color: "#7161BA",
-                                            "&.Mui-checked": {
+                                                "&.Mui-checked": {
+                                                    color: "#7161BA",
+                                                },
+                                            }}
+                                        />
+                                    }
+                                    label={t("form.female")}
+                                />
+                                <FormControlLabel
+                                    value="other"
+                                    control={
+                                        <Radio
+                                            sx={{
                                                 color: "#7161BA",
-                                            },
-                                        }}
-                                    />
-                                }
-                                label={t("form.other")}
+                                                "&.Mui-checked": {
+                                                    color: "#7161BA",
+                                                },
+                                            }}
+                                        />
+                                    }
+                                    label={t("form.other")}
+                                />
+                            </RadioGroup>
+                        </FormControl>
+                        {formik.errors.sex && formik.touched.sex && (
+                            <p className={style.input_wrapper_error}>
+                                {formik.errors.sex}
+                            </p>
+                        )}
+                    </div>
+                    <div className={style.input_wrapper}>
+                        <Input
+                            className={style.input}
+                            icon={icon.Message}
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            name="email"
+                            type="text"
+                            placeholder="Email"
+                        />
+                        {formik.errors.email && formik.touched.email && (
+                            <p className={style.input_wrapper_error}>{formik.errors.email}</p>
+                        )}
+                    </div>
+                    <div className={style.input_column}>
+                        <div className={style.input_wrapper}>
+                            <Input
+                                className={style.input}
+                                icon={icon.Lock}
+                                value={formik.values.code}
+                                onChange={formik.handleChange}
+                                name="code"
+                                type="text"
+                                placeholder="Mã xác thực"
                             />
-                        </RadioGroup>
-                    </FormControl>
-                    {formik.errors.sex && formik.touched.sex && (
-                        <p className={style.input_wrapper_error}>
-                            {formik.errors.sex}
-                        </p>
-                    )}
-                </div>
-                <div className={style.input_wrapper}>
-                    <Input
-                        className={style.input}
-                        icon={icon.Message}
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        name="email"
-                        type="text"
-                        placeholder="Email"
-                    />
-                    {formik.errors.email && formik.touched.email && (
-                        <p className={style.input_wrapper_error}>{formik.errors.email}</p>
-                    )}
-                </div>
-                <div className={style.input_column}>
+                            {formik.errors.code && formik.touched.code && (
+                                <p className={style.input_wrapper_error}>{formik.errors.code}</p>
+                            )}
+                        </div>
+                        <XButton
+                            className={style.btn_change_phone}
+                            title='Đổi số điện thoại'
+                            onClick={() => setOpenOtp(true)}
+                        />
+                    </div>
                     <div className={style.input_wrapper}>
                         <Input
                             className={style.input}
                             icon={icon.Lock}
-                            value={formik.values.code}
+                            value={formik.values.password}
                             onChange={formik.handleChange}
-                            name="code"
-                            type="text"
-                            placeholder="Mã xác thực"
+                            name="password"
+                            type={show.pass ? 'text' : 'password'}
+                            placeholder={t("Home.Sign_in_pl_password")}
                         />
-                        {formik.errors.code && formik.touched.code && (
-                            <p className={style.input_wrapper_error}>{formik.errors.code}</p>
+                        <img
+                            onClick={() => setShow({ ...show, pass: !show.pass })}
+                            className={style.input_wrapper_icon_show}
+                            src={show.pass ? icon.eyeCrossPurple : icon.eye}
+                            alt=""
+                        />
+                        {formik.errors.password && formik.touched.password && (
+                            <p className={style.input_wrapper_error}>{formik.errors.password}</p>
                         )}
                     </div>
-                    <XButton
-                        className={style.btn_change_phone}
-                        title='Đổi số điện thoại'
-                        onClick={() => setOpenOtp(true)}
-                    />
-                </div>
-                <div className={style.input_wrapper}>
-                    <Input
-                        className={style.input}
-                        icon={icon.Lock}
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        name="password"
-                        type={typePass}
-                        placeholder={t("Home.Sign_in_pl_password")}
-                    />
-                    <img
-                        onMouseEnter={() => setTypePass("text")}
-                        onMouseLeave={() => setTypePass("password")}
-                        className={style.input_wrapper_icon_show}
-                        src={icon.eye}
-                        alt=""
-                    />
-                    {formik.errors.password && formik.touched.password && (
-                        <p className={style.input_wrapper_error}>{formik.errors.password}</p>
-                    )}
-                </div>
-                <div className={style.input_wrapper}>
-                    <Input
-                        className={style.input}
-                        icon={icon.Lock}
-                        value={formik.values.confirm_password}
-                        onChange={formik.handleChange}
-                        name="confirm_password"
-                        type={typePass}
-                        placeholder={t("form.confirm_password")}
-                    />
-                    <img
-                        onMouseEnter={() => setTypePass("text")}
-                        onMouseLeave={() => setTypePass("password")}
-                        className={style.input_wrapper_icon_show}
-                        src={icon.eye}
-                        alt=""
-                    />
-                    {formik.errors.confirm_password && formik.touched.confirm_password && (
-                        <p className={style.input_wrapper_error}>{formik.errors.confirm_password}</p>
-                    )}
-                </div>
-                <div className={style.input_wrapper}>
-                    <div className={style.sign_check_left}>
-                        <Checkbox
-                            value={formik.values.agree}
+                    <div className={style.input_wrapper}>
+                        <Input
+                            className={style.input}
+                            icon={icon.Lock}
+                            value={formik.values.confirm_password}
                             onChange={formik.handleChange}
-                            name="agree"
-                            sx={{
-                                color: "#7161BA",
-                                "&.Mui-checked": {
-                                    color: "#7161BA",
-                                },
-                            }}
+                            name="confirm_password"
+                            type={show.confirm ? 'text' : 'password'}
+                            placeholder={t("form.confirm_password")}
                         />
-                        <div className={style.form_policy}>
-                            {t("form.i_agree")}
-                            <span>{t("form.myspa_s_terms")}</span>
-                        </div>
+                        <img
+                            onClick={() => setShow({ ...show, confirm: !show.confirm })}
+                            className={style.input_wrapper_icon_show}
+                            src={show.confirm ? icon.eyeCrossPurple : icon.eye}
+                            alt=""
+                        />
+                        {formik.errors.confirm_password && formik.touched.confirm_password && (
+                            <p className={style.input_wrapper_error}>{formik.errors.confirm_password}</p>
+                        )}
                     </div>
-                    {formik.errors.agree && formik.touched.agree && (
-                        <p className={style.input_wrapper_error}>
-                            {formik.errors.agree}
-                        </p>
-                    )}
-                </div>
-                <div className={style.form_submit_btn}>
-                    <XButton
-                        title={t("Home.Sign_up")}
-                        type="submit"
-                        loading={loading}
-                    />
-                </div>
-            </form>
-            <PopupNotification
-                title='Thông báo'
-                open={noti.open}
-                content={noti.content}
-                children={noti.children}
-                setOpen={() => setNoti({ ...noti, open: false })}
-            />
-        </div>
+                    <div className={style.input_wrapper}>
+                        <div className={style.sign_check_left}>
+                            <Checkbox
+                                value={formik.values.agree}
+                                onChange={formik.handleChange}
+                                name="agree"
+                                sx={{
+                                    color: "#7161BA",
+                                    "&.Mui-checked": {
+                                        color: "#7161BA",
+                                    },
+                                }}
+                            />
+                            <div className={style.form_policy}>
+                                {t("form.i_agree")}
+                                <span>{t("form.myspa_s_terms")}</span>
+                            </div>
+                        </div>
+                        {formik.errors.agree && formik.touched.agree && (
+                            <p className={style.input_wrapper_error}>
+                                {formik.errors.agree}
+                            </p>
+                        )}
+                    </div>
+                    <div className={style.form_submit_btn}>
+                        <XButton
+                            title={t("Home.Sign_up")}
+                            type="submit"
+                            loading={loading}
+                        />
+                    </div>
+                </form>
+                <PopupNotification
+                    title='Thông báo'
+                    open={noti.open}
+                    content={noti.content}
+                    children={noti.children}
+                    setOpen={() => setNoti({ ...noti, open: false })}
+                />
+            </div>
+        </>
     );
 }
 

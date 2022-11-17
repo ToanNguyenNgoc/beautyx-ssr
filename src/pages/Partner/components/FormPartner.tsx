@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { partnerStyle } from "../style";
 import ButtonCus from "../../../components/ButtonCus";
 import Checkbox from "@mui/material/Checkbox";
@@ -6,64 +6,67 @@ import icon from "../../../constants/icon";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { AppContext } from "../../../context/AppProvider";
-import PopupSuccess from "./popUpSuccess";
 import axios from "axios";
 import {
     GoogleReCaptchaProvider,
     GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
-import registerSeller from "../../../api/registerSeller";
+// import registerSeller from "../../../api/registerSeller";
+import { useNoti } from "hooks";
+import { PopupNotification } from "components/Notification";
 
 
 export default function FormPartner() {
     const { t } = useContext(AppContext);
     const parner = partnerStyle();
-    const [popup, setPopup] = useState(false);
+    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
     const params = new URLSearchParams();
     const [captcha, setCaptcha] = useState("");
-    const verifyRecaptchaCallback = React.useCallback((token:any) => {
+    const verifyRecaptchaCallback = React.useCallback((token: any) => {
         setCaptcha(token);
-        console.log(token)
     }, []);
     const handleContact = async (values: any) => {
-        setPopup(true);
-        const params = {
-            "reg_phone": values.Phone,
-            "reg_email": values.Email,
-            "reg_name": values.Name,
-            "reg_business_name": values.Enterprise,
-            "reg_business_add": values.Address,
-            "reg_captcha": captcha,
-            "reg_action": "submit",
-            "reg_type": "ĐĂNG+KÝ+LIÊN+KẾT+VÍ+MOMO"
-        }
-        await registerSeller.post(params)
-        // params.append("reg_phone", `${values.Phone}`);
-        // params.append("reg_email", `${values.Email}`);
-        // params.append("reg_name", `${values.Name}`);
-        // params.append("reg_business_name", `${values.Enterprise}`);
-        // params.append("reg_business_add", `${values.Address}`);
-        // params.append("reg_captcha", `${captcha}`);
-        // params.append("reg_action", "submit");
-        // params.append("reg_type","ĐĂNG+KÝ+LIÊN+KẾT+VÍ+MOMO")
-        // const config = {
-        //     headers: {
-        //         "Content-Type": "multipart/form-data",
-        //     },
-        // };
-        // axios
-        //     .post(
-        //         `https://4659-42-117-36-77.ap.ngrok.io/myspa_website/Frontend/register_momo `,
-        //         params,
-        //         config
-        //     )
-        //     .then(function (response: any) {
-        //         console.log("response :>> ", JSON.stringify(response));
-        //     })
-        //     .catch(function (err: any) {
-        //         console.log(`err`, err);
-        //         throw new Error("Token error");
-        //     });
+        // setPopup(true);
+        // const params = {
+        //     "reg_phone": values.Phone,
+        //     "reg_email": values.Email,
+        //     "reg_name": values.Name,
+        //     "reg_business_name": values.Enterprise,
+        //     "reg_business_add": values.Address,
+        //     "reg_captcha": captcha,
+        //     "reg_action": "submit",
+        //     "reg_type": "ĐĂNG+KÝ+LIÊN+KẾT+VÍ+MOMO"
+        // }
+        // await registerSeller.post(params)
+        params.append("reg_phone", `${values.Phone}`);
+        params.append("reg_email", `${values.Email}`);
+        params.append("reg_name", `${values.Name}`);
+        params.append("reg_business_name", `${values.Enterprise}`);
+        params.append("reg_business_add", `${values.Address}`);
+        params.append("reg_captcha", `${captcha}`);
+        params.append("reg_action", "submit");
+        params.append("reg_type", "ĐĂNG+KÝ+LIÊN+KẾT+VÍ+MOMO")
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        firstLoad()
+        axios
+            .post(
+                `https://myspa.vn/Frontend/register_momo `,
+                params,
+                config
+            )
+            .then(function (response: any) {
+                console.log("response :>> ", JSON.stringify(response));
+                resultLoad('Đăng ký thành công')
+            })
+            .catch(function (err: any) {
+                console.log(`err`, err);
+                resultLoad('Có lỗi xảy ra. Vui lòng thử lại!')
+                throw new Error("Token error");
+            });
     };
     const formikPartner = useFormik({
         initialValues: {
@@ -325,11 +328,11 @@ export default function FormPartner() {
                     </div>
                 </form>
             </GoogleReCaptchaProvider>
-
-            <PopupSuccess
-                popup={popup}
-                setPopup={setPopup}
-                title={t("Contact.success")}
+            <PopupNotification
+                open={noti.openAlert}
+                setOpen={onCloseNoti}
+                title="Thông báo"
+                content={noti.message}
             />
         </div>
     );

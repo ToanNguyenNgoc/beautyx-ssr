@@ -1,0 +1,23 @@
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container_image_mb {
+    display: none;
+}
+
+@media only screen and (max-width: 767px) {
+    .container_image {
+        display: none;
+    }
+
+    .container_image_mb {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+    }
+}

@@ -27,7 +27,6 @@ import { STATUS } from "../../redux/status";
 import apointmentApi from "../../api/apointmentApi";
 import { onSetStatusApp } from "../../redux/appointment/appSlice";
 import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "../../pages/Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
@@ -37,6 +36,7 @@ import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
+import { useDeviceMobile } from "hooks";
 
 // end
 const date = dayjs();

@@ -11,8 +11,9 @@ import { Masonry } from "@mui/lab"
 import style from "./home-cate.module.css"
 import slugify from '../../../utils/formatUrlString';
 import { SpecialItem } from 'components/Layout';
-import { clst, useSwr } from 'utils';
+import { clst } from 'utils';
 import API_ROUTE from 'api/_api';
+import { useSwr } from 'hooks';
 
 function HomeCate() {
     const { tags } = useSelector((state: any) => state.HOME)

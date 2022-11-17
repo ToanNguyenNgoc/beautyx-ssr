@@ -14,7 +14,6 @@ import DetailOrgCard from "./DetailOrgCard";
 import { clearAllServices } from "../../../redux/servicesBookSlice";
 import { IOrganization } from "../../../interface/organization";
 import { Service } from "../../../interface/service";
-import useFullScreen from "../../../utils/useDeviceMobile";
 import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/Functions/extraOrg";
 import { Rating } from "@mui/material";
@@ -22,6 +21,7 @@ import DetailOrgVoucher from "../../../components/DetailVoucherOrg";
 import IStore from "../../../interface/IStore";
 import { IS_VOUCHER } from "../../../utils/cart/checkConditionVoucher";
 import { PopupNotification } from 'components/Notification'
+import { useDeviceMobile } from "hooks";
 
 interface IProps {
     org: IOrganization;
@@ -36,7 +36,7 @@ export default function ServiceDetailRight(props: IProps) {
     const { t } = useContext(AppContext);
     const { discounts } = useSelector((state: IStore) => state.ORG_DISCOUNTS.DISCOUNTS);
     const vouchers = IS_VOUCHER(discounts);
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const dispatch = useDispatch();
     const { COMMENTS } = useSelector((state: any) => state.SERVICE);
     const history = useHistory();

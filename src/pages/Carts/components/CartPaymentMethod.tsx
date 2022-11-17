@@ -1,6 +1,6 @@
 import React from 'react';
 import { Drawer } from '@mui/material';
-import useDeviceMobile from '../../../utils/useDeviceMobile';
+import {useDeviceMobile} from 'hooks';
 import PaymentMethod from './PaymentMethod';
 
 function CartPaymentMethod(props: any) {

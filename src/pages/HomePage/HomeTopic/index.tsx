@@ -1,9 +1,10 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
+import { useDeviceMobile } from 'hooks';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { clst, scrollTop, slugify, useDeviceMobile } from 'utils';
+import { clst, scrollTop, slugify } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import { deals, topics } from '../data'
 import style from './style.module.css'

@@ -16,10 +16,7 @@ declare global {
 }
 
 export const formatTelephone = (telephone: string) => {
-    // const phone = `${telephone}`.slice(-9);
-    console.log('phone',"+84" + telephone.toString().slice(1));
     return "+84" + telephone.toString().slice(1);
-    // return `+84${phone}`
 }
 function ResetPassword() {
     const [values, setValues] = useState({
@@ -33,24 +30,32 @@ function ResetPassword() {
     //send otp
     const generateRecaptcha = () => {
         try {
-            if (!window.recaptchaVerifier) {
-                window.recaptchaVerifier = new RecaptchaVerifier(
-                    'recaptcha-container',
-                    {
-                        size: 'invisible',
-                        callback: (value: any) => {
-                            // handleSubmit(value, true)
-                        },
-                        'expired-callback': () => {
-                            // Response expired. Ask user to solve reCAPTCHA again.
-                            // ...
-                        },
+            // if (!window.recaptchaVerifier) {
+            //     window.recaptchaVerifier = new RecaptchaVerifier(
+            //         'recaptcha-container',
+            //         {
+            //             size: 'invisible',
+            //             callback: (value: any) => {
+            //             },
+            //             'expired-callback': () => {
+            //             },
+            //         },
+            //         authentication
+            //     )
+            // } else {
+            //     window.recaptchaVerifier.render()
+            // }
+            window.recaptchaVerifier = new RecaptchaVerifier(
+                'recaptcha-container',
+                {
+                    size: 'invisible',
+                    callback: (value: any) => {
                     },
-                    authentication
-                )
-            } else {
-                window.recaptchaVerifier.render()
-            }
+                    'expired-callback': () => {
+                    },
+                },
+                authentication
+            )
         } catch (err: any) {
             console.log(err)
         }
@@ -101,7 +106,6 @@ function ResetPassword() {
 
     return (
         <>
-            <div id="recaptcha-container"></div>
             <FormHead />
             <Container>
                 <div

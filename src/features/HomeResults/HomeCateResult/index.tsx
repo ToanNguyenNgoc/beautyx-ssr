@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Container } from '@mui/system';
 import { SerProItem } from 'components/Layout';
 import { FilterPrice, FilterLocation, EventLocation, FilterSort } from 'components/Filter';
-import { extraParamsUrl, useSwr, useSwrInfinite } from 'utils';
+import {  useSwr, useSwrInfinite } from 'hooks';
 import { ITag } from 'interface';
 import { paramsProducts, paramsProductsCate } from 'params-query';
 import { formatParamsString, formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
@@ -12,6 +12,7 @@ import Head from 'features/Head';
 import icon from 'constants/icon';
 import { LoadGrid } from 'components/LoadingSketion';
 import style from "./home-cate.module.css"
+import { extraParamsUrl } from 'utils';
 
 function HomeCateResult() {
     const params: any = extraParamsUrl();
