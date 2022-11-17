@@ -154,6 +154,7 @@ function SignUps(props: any) {
                     setOpen={setOpenOtp}
                     dataOtp={dataOtp}
                     setDataOtp={setDataOtp}
+                    setActiveTabSign={setActiveTabSign}
                 />
                 <form
                     onSubmit={formik.handleSubmit}
