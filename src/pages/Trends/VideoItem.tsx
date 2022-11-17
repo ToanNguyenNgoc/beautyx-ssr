@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { onErrorImg, useSwr } from 'utils';
+import { onErrorImg } from 'utils';
 import { ITrend, ITrendService } from './trend.interface';
 import { formatRouterLinkOrg, formatRouterLinkService } from 'utils/formatRouterLink/formatRouter'
-import { useElementOnScreen } from 'hooks'
+import { useElementOnScreen, useSwr } from 'hooks'
 import style from './trends.module.css'
 import formatPrice from 'utils/formatPrice';
 import moment from 'moment';

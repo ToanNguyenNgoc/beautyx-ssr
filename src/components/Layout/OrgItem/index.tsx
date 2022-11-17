@@ -12,10 +12,10 @@ import {
     onDeleteFavoriteOrg,
     onFavoriteOrg,
 } from "../../../redux/org/orgSlice";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import { fakeOrgStar } from "../../../utils/format";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
+import { useDeviceMobile } from "hooks";
 
 interface IProps {
     org: IOrganization;

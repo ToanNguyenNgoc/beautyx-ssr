@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useGetParamUrl } from 'utils';
+import { useGetParamUrl } from 'hooks';
 // import { VoucherOrgItem } from '../../features/Carts/components/CartGroupItem';
 import { IDiscountPar } from '../../interface/discount';
 import IStore from '../../interface/IStore';

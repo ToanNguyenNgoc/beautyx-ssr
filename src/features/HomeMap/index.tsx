@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useDeviceMobile } from "hooks";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -9,7 +10,6 @@ import MapContent from "../../components/Map/MapContent";
 import icon from "../../constants/icon";
 import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import { STATUS } from "../../redux/status";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 
 function HomeMap() {
     const dispatch = useDispatch();

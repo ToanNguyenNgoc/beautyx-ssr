@@ -1,9 +1,10 @@
 import { cateChild1 } from 'data/category';
+import { useDeviceMobile } from 'hooks';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchOrgsByTag, onChooseCate, onChooseTab, onSetFirstCateProducts } from 'redux/CateTree/cateTreeSlice';
-import { useDeviceMobile, scrollTop } from 'utils';
+import {  scrollTop } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import { productsSection, IProductsSection } from '../data'
 import style from './style.module.css'

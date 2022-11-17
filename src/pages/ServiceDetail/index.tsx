@@ -19,7 +19,6 @@ import { STATUS } from "../../redux/status";
 import Review from "../../features/Reviews";
 import icon from "../../constants/icon";
 import DetailOrgCard from "./components/DetailOrgCard";
-import useFullScreen from "../../utils/useDeviceMobile";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
 import DetailPolicy from "./components/DetailPolicy";
 import DetailRecommend from "./components/DetailRecommend";
@@ -41,7 +40,7 @@ import { analytics, logEvent } from "../../firebase";
 import { postHistoryView } from "../../user-behavior";
 import ExtraFlatForm from "rootComponents/extraFlatForm";
 import { OpenApp } from 'components/Layout'
-import { useGetParamUrl } from "utils";
+import { useDeviceMobile, useGetParamUrl } from "hooks";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
 // end
 
@@ -50,7 +49,7 @@ function ServiceDetail() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const location = useLocation();
     const dispatch = useDispatch();
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const ORG = useSelector((state: IStore) => state.ORG);
     const { SERVICE, COMMENTS } = useSelector((state: IStore) => state.SERVICE);
     const paramsUrl: any = extraParamsUrl();
@@ -62,7 +61,7 @@ function ServiceDetail() {
 
     }
     const history = useHistory();
-    const is_mobile = useFullScreen();
+    const is_mobile = useDeviceMobile();
     const service: Service = EXTRA_DETAIL_SERVICE(SERVICE.service);
     const org = ORG.org;
     const [open, setOpen] = useState({

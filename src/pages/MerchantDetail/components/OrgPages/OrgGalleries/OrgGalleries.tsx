@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Masonry, TabContext, TabList, TabPanel } from "@mui/lab";
 import OrgGalleryItem from "./OrgGalleryItem";
-import useFullScreen from "../../../../../utils/useDeviceMobile";
 import OrgGalleriesDialog from "./OrgGalleriesDialog";
 import { Tab } from "@mui/material";
 import OrgGalleriesVideo from "./OrgGalleriesVideo";
 import { IOrgMobaGalleries } from "interface";
+import { useDeviceMobile } from "hooks";
 
 
 export function OrgGalleries({ galleries }: { galleries: IOrgMobaGalleries[] }) {
-    const IS_MOBILE = useFullScreen();
+    const IS_MOBILE = useDeviceMobile();
     const [chooseThumb, setChooseThumb] = useState<IOrgMobaGalleries>(galleries[0]);
     const [openImages, setOpenImages] = useState(false);
     const onChooseThumb = (thumb: any) => {

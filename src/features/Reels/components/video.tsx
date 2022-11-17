@@ -1,14 +1,13 @@
 import { useRef, useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
-import EvaluateInput from "../../Reviews/EvaluateInput";
 
 import icon from "../../../constants/icon";
-import { useElementOnScreen } from "../../../utils/useElementScreen";
 import onErrorImg from "../../../utils/errorImg";
 // interface
 import { IOrganization } from '../../../interface/organization';
 import { IComment } from '../../../interface/comments';
 import { Service } from '../../../interface/service';
+import { useElementOnScreen } from "hooks";
 // end
 export default function Video(props: any) {
     const videoRef = useRef<any>();
@@ -24,13 +23,13 @@ export default function Video(props: any) {
         isFavorite: Boolean;
     }
     interface Comments {
-        comments?:IComment[]|null;
-        totalItem?:number
+        comments?: IComment[] | null;
+        totalItem?: number
     }
     interface IData {
         org?: IOrganization | null;
-        ser?: Service[]|null;
-        cmt?: Comments|undefined|null
+        ser?: Service[] | null;
+        cmt?: Comments | undefined | null
     }
     // ---- video ----
 
@@ -40,7 +39,7 @@ export default function Video(props: any) {
         video?.excerpt?.rendered?.length - 12
     );
     // ---- org - service - comments ---- 
-    const [data, setData] = useState<IData|undefined>({
+    const [data, setData] = useState<IData | undefined>({
         org: org,
         ser: sers,
         cmt: cmt
@@ -57,11 +56,11 @@ export default function Video(props: any) {
         star: 5,
     });
     // ---- end ---- 
-    useEffect(()=>{
-        if (videoRef && videoRef.current && videoRef.current.id === ("reel_"+initialIndex)) {
+    useEffect(() => {
+        if (videoRef && videoRef.current && videoRef.current.id === ("reel_" + initialIndex)) {
             videoRef.current.scrollIntoView()
         }
-    },[initialIndex])
+    }, [initialIndex])
     useEffect(() => {
         if (isVisable) {
             videoRef.current.play();
@@ -112,7 +111,7 @@ export default function Video(props: any) {
                                     : icon.unHeart
                             }
                             alt=""
-                            // src={icon.unHeart}
+                        // src={icon.unHeart}
                         />
                         <span className="right-item__count">
                             {reaction.favoriteCount}
@@ -180,7 +179,7 @@ export default function Video(props: any) {
             </div>
             <video
                 ref={videoRef}
-                id={"reel_"+index}
+                id={"reel_" + index}
                 className="video-item__pc"
                 webkit-playsinline="webkit-playsinline"
                 playsInline={true}

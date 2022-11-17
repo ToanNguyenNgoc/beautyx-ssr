@@ -14,7 +14,7 @@ import ModalLoad from 'components/ModalLoad';
 import IStore from 'interface/IStore';
 import { HeadTitle } from 'pages/Account';
 import { XButton } from 'components/Layout';
-import { useDeviceMobile } from 'utils';
+import { useDeviceMobile } from 'hooks';
 import icon from 'constants/icon';
 
 function Address() {

@@ -1,7 +1,7 @@
 import API_ROUTE from "api/_api";
 import { IOrganization } from "interface";
 import { paramDiscounts } from "params-query";
-import { useSwr } from "utils";
+import { useSwr } from "hooks";
 
 export function useDiscountsOrg(org: IOrganization) {
     const { responseArray, isValidating } = useSwr(

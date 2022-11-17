@@ -13,7 +13,7 @@ import { paramsProductsCate } from "../params-query";
 import axios from "axios";
 import API_3RD from "api/3rd-api";
 import { paramAppointment, paramOrderService } from "../params-query";
-import { useSwr, useFetch } from "utils/index"
+import { useSwr, useFetch } from "hooks"
 // import { fetchAsyncAppCur } from 'redux/notifications'
 // import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 

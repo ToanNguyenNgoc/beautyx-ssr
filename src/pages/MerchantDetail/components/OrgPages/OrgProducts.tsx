@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { EmptyRes, SerProItem } from "components/Layout";
-import { extraParamsUrl, useDeviceMobile } from "utils";
+import { extraParamsUrl } from "utils";
 import { Category, IOrganization, Product } from "interface";
-import { useSwr, useSwrInfinite } from 'utils'
+import { useDeviceMobile, useSwr, useSwrInfinite } from 'hooks'
 import { AppContext } from "context/AppProvider";
 import { paramProductCatesOrg, paramsProductsOrg } from 'params-query'
 import API_ROUTE from "api/_api";

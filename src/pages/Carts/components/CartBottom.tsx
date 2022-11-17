@@ -15,7 +15,8 @@ import formatPrice from "utils/formatPrice";
 import { AppContext } from "context/AppProvider";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
-import { onErrorImg, useDeviceMobile, useSwr } from "utils"
+import { onErrorImg } from "utils";
+import {useDeviceMobile, useSwr} from 'hooks';
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cartSlice";
@@ -71,7 +72,6 @@ function CartBottom(props: any) {
     );
 
     const coupon_code_arr = listCouponCode.length > 0 ? listCouponCode : []
-    // const coupon_code_apply = VOUCHER_APPLY.map((item: IDiscountPar) => item.coupon_code).filter(Boolean)
 
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
@@ -79,14 +79,10 @@ function CartBottom(props: any) {
         payment_method_id: DATA_PMT.payment_method_id
             ? DATA_PMT.payment_method_id
             : DATA_PMT.pmtMethod?.id,
-        // payment_method_id: 5,
         products: products_id,
         services: services_id,
         treatment_combo: combos_id,
-        // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
         coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
-        // coupon_code: coupon_code_apply.length > 0 ? coupon_code_apply : coupon_code_arr
-        //-------------------------------------------------------------------
     };
 
 
@@ -150,15 +146,15 @@ function CartBottom(props: any) {
     const handleSubmitOrder = () => {
         if (USER && DATA_PMT.org && pramsOrder.payment_method_id) {
             if (!DATA_PMT.address && products.length > 0) {
-                setOpenAlertSnack({
+                return setOpenAlertSnack({
                     ...openAlertSnack,
                     open: true,
                     title: "Chưa có địa chỉ giao hàng !",
                 });
             }
-            else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
+            if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
                 // else if (checkPhoneValid(USER?.telephone)) {
-                setOpenNoti({
+                return setOpenNoti({
                     open: true,
                     content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
                     children: <>
@@ -173,8 +169,8 @@ function CartBottom(props: any) {
                     </>
                 });
             }
-            else if (FINAL_AMOUNT < 1000) {
-                setOpenNoti({
+            if (FINAL_AMOUNT < 1000) {
+                return setOpenNoti({
                     open: true,
                     content: `Giao dịch tối thiểu là 1.000đ `,
                     children: <>
@@ -211,7 +207,7 @@ function CartBottom(props: any) {
             discountValue = cartQuantityCheck * i.discount_value
         }
         if (i.discount_type === "FINAL_PRICE" && i.items_count > 0) {
-            discountValue = i.items[0].productable.price - i.discount_value
+            discountValue = i.items[0]?.productable?.price - i.discount_value
         }
         return {
             ...i,
@@ -380,7 +376,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const voucher: IDiscountPar = { ...response, coupon_code: text }
 
     let voucher_org: any
-    if (text !== "" && response) voucher_org = response?.organizations[0]
+    if (text !== "" && response?.organizations?.length > 0) voucher_org = response?.organizations[0]
 
     return (
         <Dialog

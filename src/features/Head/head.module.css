@@ -310,9 +310,11 @@
     font-size: 14px;
     line-height: 16px;
     font-weight: 700;
-    background-color: #ebe8fd;
-    padding: 2px 8px;
+    /* background-color: #ebe8fd; */
+    background-color: transparent;
+    padding: 3px 12px;
     border-radius: 4px;
+    border: solid 1px var(--green);
 }
 
 .head_bot_link {

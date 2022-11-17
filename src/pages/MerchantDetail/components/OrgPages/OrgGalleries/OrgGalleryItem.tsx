@@ -4,6 +4,7 @@ import FullImage from '../../../../../features/OpenFullImage';
 function OrgGalleryItem(props: any) {
     const { image_url } = props;
     const [open, setOpen] = useState(false);
+    console.log(image_url)
     return (
         <>
             <div onClick={() => setOpen(true)} className="org-image-items__box">

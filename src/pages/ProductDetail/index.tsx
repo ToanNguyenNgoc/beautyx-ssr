@@ -15,7 +15,6 @@ import { Container, Drawer, Tab } from "@mui/material";
 import ProductDetailLeft from "./components/ProductDetailLeft";
 import ProductDetailRight from "./components/ProductDetailRight";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import useFullScreen from "../../utils/useDeviceMobile";
 import icon from "../../constants/icon";
 import Review from "../../features/Reviews";
 import HeadOrg from "../MerchantDetail/components/HeadOrg";
@@ -33,17 +32,18 @@ import LoadDetail from "../../components/LoadingSketion/LoadDetail";
 import IStore from "../../interface/IStore";
 import { postHistoryView } from "../../user-behavior";
 import { OpenApp } from 'components/Layout'
-import { useGetParamUrl, extraParamsUrl } from "utils";
+import {  extraParamsUrl } from "utils";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
 import HeadTitle from "features/HeadTitle";
 import Head from "features/Head";
 import Footer from "features/Footer";
+import { useDeviceMobile, useGetParamUrl } from "hooks";
 
 function ProductDetail(props: any) {
     const dispatch = useDispatch();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const location = useLocation();
-    const IS_MB = useFullScreen();
+    const IS_MB = useDeviceMobile();
     const history = useHistory();
     const ORG = useSelector((state: IStore) => state.ORG);
     const { PRODUCT, COMMENTS } = useSelector((state: IStore) => state.PRODUCT);
@@ -53,7 +53,7 @@ function ProductDetail(props: any) {
         org: paramsUrl?.org ?? paramsArr[1] ? paramsArr[1] : 1,
         id: paramsUrl?.id ?? paramsArr[0] ?? 1
     }
-    const is_mobile = useFullScreen();
+    const is_mobile = useDeviceMobile();
     const [open, setOpen] = useState({
         NOW: true,
         open: false,

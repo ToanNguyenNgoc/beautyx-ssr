@@ -302,6 +302,7 @@
         "verification_invalid": "Mã xác thực không hợp lệ",
         "verification_code_of_6_characters": "Mã xác thực gồm 6 ký tự",
         "change_password_successfully": "Đổi mật khẩu thành công",
+        "please_enter_your_verification_code": "Vui lòng nhập mã xác thực",
         "sending": "Đang gửi..."
     },
     "partner": {
@@ -402,7 +403,7 @@
         "beauty_places": "Địa điểm làm đẹp",
         "top_deal": "Top Deal Khủng",
         "top_selling_services": "Top Dịch Vụ Bán Chạy",
-        "top_selling_products":"Top Sản Phẩm Bạn Chạy",
+        "top_selling_products": "Top Sản Phẩm Bạn Chạy",
         "favorite_places": "Địa điểm được yêu thích",
         "suggestions_for_you": "Gợi ý dành cho bạn"
     },

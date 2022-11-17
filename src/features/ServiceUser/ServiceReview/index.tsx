@@ -3,7 +3,7 @@ import { Alert, Dialog, Snackbar } from "@mui/material";
 import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { identity, pickBy } from "lodash";
-import { onErrorImg, useDeviceMobile } from "utils";
+import { onErrorImg } from "utils";
 import { useHistory } from "react-router-dom";
 import icon from "constants/icon";
 import { clearPrevState, postAsyncMediaComment } from "redux/commentSlice";
@@ -11,6 +11,7 @@ import { postAsyncComment } from "redux/org_services/serviceSlice";
 import { STATUS } from "redux/status";
 import HeadMobile from "features/HeadMobile";
 import { XButton } from "components/Layout";
+import { useDeviceMobile } from "hooks";
 
 function ServiceReview(props: any) {
     const { open, setOpen, service, org } = props;

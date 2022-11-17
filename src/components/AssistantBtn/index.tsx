@@ -4,9 +4,9 @@ import icon from "../../constants/icon";
 import { handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
 import "./style.css";
+import { useDeviceMobile } from "hooks";
 // ==== api tracking ====
 // end
-import useDeviceMobile from "../../utils/useDeviceMobile";
 // import useScript from "../../utils/useScript";
 
 export default function AssistantBtn() {

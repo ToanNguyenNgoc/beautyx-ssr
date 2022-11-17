@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { onErrorImg, useFetch } from 'utils';
+import {  useFetch } from 'hooks';
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { Link } from 'react-router-dom';
 import { SerProCommonWatched } from 'interface/servicePromo';
-import slugify from 'utils/formatUrlString';
+import {slugify, onErrorImg} from 'utils';
 import API_3RD from 'api/3rd-api';
 import { AppContext } from 'context/AppProvider';
 import style from "./home-watched.module.css";

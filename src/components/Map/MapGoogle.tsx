@@ -12,7 +12,7 @@ import { AUTH_LOCATION } from '../../api/authLocation'
 import icon from '../../constants/icon'
 import { IOrganization } from '../../interface/organization'
 import { fetchAsyncOrg } from '../../redux/org/orgSlice'
-import useDeviceMobile from '../../utils/useDeviceMobile'
+import { useDeviceMobile } from 'hooks'
 
 // const lib = ["places"];
 

@@ -4,8 +4,8 @@ import { EmptyRes, SerProItem } from 'components/Layout';
 import DiscountItem from 'features/HomeDiscounts/DiscountItem';
 import { IOrganization } from 'interface';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
-import React, { useEffect } from 'react';
-import { useDeviceMobile } from 'utils';
+import React from 'react';
+import { useDeviceMobile } from 'hooks';
 import { Service, Product } from 'interface'
 import {
     useDiscountsOrg,

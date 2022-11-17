@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import '../../HomeDiscounts/style.css'
 import './style.css';
 import { AUTH_LOCATION } from 'api/authLocation';
-import { useDeviceMobile, useSwrInfinite } from 'utils';
+import { useDeviceMobile, useSwrInfinite } from 'hooks';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import HeadTitle from 'features/HeadTitle';
 import HeadMobile from 'features/HeadMobile';

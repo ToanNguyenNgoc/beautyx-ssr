@@ -20,7 +20,7 @@ import tracking from '../../../api/trackApi'
 // end
 // google tag event
 import { GoogleTagPush, GoogleTagEvents } from "../../../utils/dataLayer";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
+import {useDeviceMobile} from "hooks";
 import { AppContext } from "../../../context/AppProvider";
 import { extraOrgTimeWork } from "../../MerchantDetail/Functions/extraOrg";
 import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";

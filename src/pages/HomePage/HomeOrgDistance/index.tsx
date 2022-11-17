@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import HomeTitle from '../Components/HomeTitle';
 import { ParamOrg } from 'params-query/param.interface';
-import { formatDistance, onErrorImg, useDeviceMobile, useSwr } from 'utils';
+import { formatDistance, onErrorImg } from 'utils';
 import style from './home-distance.style.module.css';
 import API_ROUTE from 'api/_api';
 import { IOrganization, IOrgMobaGalleries, ITag } from 'interface';
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onChangeFilterOrg, onResetFilter, onResetFilterOrg } from 'redux/filter-result';
 import IStore from 'interface/IStore';
 import Skeleton from 'react-loading-skeleton';
+import { useDeviceMobile, useSwr } from 'hooks';
 
 function HomeOrgDistance() {
     const dispatch = useDispatch()

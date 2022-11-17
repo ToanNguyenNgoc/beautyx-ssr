@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { AppContext } from 'context/AppProvider';
 import favorites from 'api/favorite';
-import { useSwr } from 'utils';
+import { useSwr } from 'hooks';
 
 interface ButtonFavoriteProps {
     id?: number,

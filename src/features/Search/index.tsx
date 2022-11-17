@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useCallback, KeyboardEvent, useState, useContext } from "react"
-import { onErrorImg, useDeviceMobile, useFetch } from "utils"
+import {  useDeviceMobile, useFetch } from "hooks"
+import {onErrorImg} from 'utils'
 import { paramOrgs, paramsProducts, paramsServices } from "params-query"
 import style from "./search.module.css"
 import { Link, useHistory } from "react-router-dom"

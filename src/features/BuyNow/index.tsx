@@ -21,7 +21,6 @@ import order from '../../api/orderApi';
 import { IUserAddress } from '../../interface/userAddress'
 import Footer from '../Footer';
 import { formatAddCart } from '../../utils/cart/formatAddCart';
-import useDeviceMobile from '../../utils/useDeviceMobile';
 import { DISCOUNT_TYPE } from '../../utils/formatRouterLink/fileType';
 import SectionTitle from '../SectionTitle';
 
@@ -29,6 +28,7 @@ import SectionTitle from '../SectionTitle';
 import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 import { XButton } from 'components/Layout';
+import { useDeviceMobile } from 'hooks';
 // end
 function BuyNow() {
     const IS_MB = useDeviceMobile();

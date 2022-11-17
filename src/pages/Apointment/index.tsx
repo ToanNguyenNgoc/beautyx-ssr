@@ -4,7 +4,8 @@ import dayjs from 'dayjs';
 import { paramAppointment } from "params-query"
 import icon from 'constants/icon';
 import { Appointment, AppointmentTime, NewAppointments } from 'interface/appointment';
-import { unique, useDeviceMobile, useSwrInfinite } from 'utils';
+import {  useDeviceMobile, useSwrInfinite } from 'hooks';
+import {unique} from 'utils'
 import { useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { formatTime } from 'utils/format';

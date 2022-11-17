@@ -10,7 +10,7 @@ import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 import { IServiceUser } from "interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { XButton } from "components/Layout";
-import { useDeviceMobile } from "utils";
+import { useDeviceMobile } from "hooks";
 import { OrderSkelton } from 'features/Orders/components/TabOrderPaid'
 
 function ServicesUser() {

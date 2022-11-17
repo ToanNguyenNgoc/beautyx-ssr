@@ -43,7 +43,6 @@ function SignPage(props: any) {
   }
   return (
     <>
-      <BackButton />
       <div className="page-sign">
         {
           FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ?
@@ -80,11 +79,14 @@ function SignPage(props: any) {
               </div>
             </Container>
             :
-            <Container>
-              <LoginFlatFormRequest
-                pathname={pathname}
-              />
-            </Container>
+            <>
+              <BackButton/>
+              <Container>
+                <LoginFlatFormRequest
+                  pathname={pathname}
+                />
+              </Container>
+            </>
         }
       </div>
     </>

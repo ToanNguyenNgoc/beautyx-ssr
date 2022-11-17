@@ -10,13 +10,12 @@ import React, { useEffect, useState } from "react";
 import { fetchAsyncDiscountsUser, logoutUser } from "redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from "redux/status";
-import useDeviceMobile from "utils/useDeviceMobile";
 import style from './account.module.css'
 import { Container } from "@mui/system";
 import IStore from "interface/IStore";
 import { onErrorImg } from 'utils'
 import icon from "constants/icon";
-import { postMedia } from "hooks";
+import { postMedia, useDeviceMobile } from "hooks";
 import { updateAsyncUser } from 'redux/USER/userSlice'
 import { ICON } from "constants/icon2";
 import { XButton, Bottom } from "components/Layout";
@@ -28,11 +27,16 @@ import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import Guide from "./components/Guide";
 import { handleCallingPhone } from "utils/customChat";
+import ChangePassword from "./components/ChangePassword";
 
 const routes = [
     {
         path: `/tai-khoan/thong-tin-ca-nhan`,
         component: <Information />,
+    },
+    {
+        path:'/tai-khoan/doi-mat-khau',
+        component:<ChangePassword/>
     },
     {
         path: "/tai-khoan/lich-su-mua",

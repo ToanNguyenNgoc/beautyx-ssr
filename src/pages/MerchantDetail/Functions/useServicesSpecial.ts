@@ -1,7 +1,7 @@
 import API_ROUTE from "api/_api";
 import { IOrganization } from "interface";
 import { paramsServices } from "params-query";
-import { useSwr } from "utils";
+import { useSwr } from "hooks";
 
 export function useServicesSpecial(org: IOrganization) {
     const { responseArray, isValidating } = useSwr(

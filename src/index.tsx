@@ -9,10 +9,10 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 // import * as Sentry from "@sentry/react";
 // import { BrowserTracing } from "@sentry/tracing";
-import ModalLoad from "./components/ModalLoad/index";
 import { SWRConfig } from "swr";
 import axiosClient from "./api/axios";
 import { AUTH_HEADER } from "./utils/authHeader"
+import { PlashScreen } from "components/Layout";
 
 // Sentry.init({
 //     dsn: "https://38eb6d00469546558bd815998210f77f@o1108259.ingest.sentry.io/6554425",
@@ -30,7 +30,7 @@ ReactDOM.render(
             value={{ fetcher: (url) => axiosClient.get(url, AUTH_HEADER()), shouldRetryOnError: false }}
         >
             <Provider store={store}>
-                <Suspense fallback={<ModalLoad title="Đang tải..." />}>
+                <Suspense fallback={<PlashScreen />}>
                     <App />
                 </Suspense>
             </Provider>

@@ -6,11 +6,12 @@ import { IOrganization } from "interface/organization";
 import { Service } from "interface/service";
 import React, { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDeviceMobile, useSwr, useSwrInfinite, extraParamsUrl } from "utils";
+import { useDeviceMobile, useSwr, useSwrInfinite } from "hooks";
 import { paramServiceCatesOrg, paramsServicesOrg } from 'params-query'
 import API_ROUTE from "api/_api";
 import { useHistory, useLocation } from "react-router-dom";
 import { LoadGrid } from "components/LoadingSketion";
+import { extraParamsUrl } from "utils";
 
 interface IProps {
     org: IOrganization;

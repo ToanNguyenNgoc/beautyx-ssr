@@ -1,5 +1,6 @@
 .full-img-cnt__img {
     height: 100vh;
+    object-fit: contain;
 }
 
 .full-img-cnt {
@@ -71,11 +72,14 @@
         background-color: var(--hover);
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: center;
     }
     .full-img-cnt__head{
         display: block;
+        position: fixed;
         width: 100%;
+        top: 0;
+        right: 0;
         padding: 12px 20px;
     }
     .full-img-cnt__head button{

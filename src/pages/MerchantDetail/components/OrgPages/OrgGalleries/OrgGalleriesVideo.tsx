@@ -1,11 +1,11 @@
 import { Dialog } from "@mui/material";
+import { useDeviceMobile } from "hooks";
 import React, { useState } from "react";
 import ReactPlayer from "react-player/lazy";
-import useFullScreen from "../../../../../utils/useDeviceMobile";
 
 export default function OrgGalleriesVideo(props: any) {
     const { item } = props;
-    const is_mb = useFullScreen();
+    const is_mb = useDeviceMobile()
 
     const [open, setOpen] = useState(false);
     return (

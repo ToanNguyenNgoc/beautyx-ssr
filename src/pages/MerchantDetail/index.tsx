@@ -13,7 +13,7 @@ import "../../assets/styles/main.css";
 import HeadOrg from "./components/HeadOrg";
 import OrgDetail from "./components/OrgDetail";
 import { OpenApp } from 'components/Layout'
-import { useSwr, useDeviceMobile } from 'utils'
+import { useSwr, useDeviceMobile } from 'hooks'
 import { IOrganization, IOrgMobaGalleries } from 'interface'
 import { AppContext } from "context/AppProvider";
 import LoadOrg from "components/LoadingSketion/LoadOrg";

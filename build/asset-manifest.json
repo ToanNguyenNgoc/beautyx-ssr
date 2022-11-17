@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.f600e45b.css",
-    "main.js": "/static/js/main.801fd685.js",
+    "main.css": "/static/css/main.214545fa.css",
+    "main.js": "/static/js/main.f84e99fc.js",
     "static/js/483.3c77b5e7.chunk.js": "/static/js/483.3c77b5e7.chunk.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.1e3b8183.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.4cd9b040.chunk.js",
@@ -29,6 +29,7 @@
     "static/media/banner.png": "/static/media/banner.bf63306a8769cebd159a.png",
     "static/media/homeSt1.png": "/static/media/homeSt1.a5abc39b5bdb36431411.png",
     "static/media/flatform2.png": "/static/media/flatform2.4948e61ab278aaed36e2.png",
+    "static/media/plashScreenMb.jpg": "/static/media/plashScreenMb.173cd4fbf9282ca18de3.jpg",
     "static/media/homeSt2.png": "/static/media/homeSt2.20c379521040b1fafb52.png",
     "static/media/flatform3.png": "/static/media/flatform3.30fbde6b88d0a1300967.png",
     "static/media/flatform1.png": "/static/media/flatform1.7f82c0a9b3a54f4aa530.png",
@@ -150,6 +151,7 @@
     "static/media/momoPay.svg": "/static/media/momoPay.652eff20712a6112f6dd6cdc38751bc2.svg",
     "static/media/sheild.svg": "/static/media/sheild.2a28609027cb125e91771ce422d8e044.svg",
     "static/media/mapMarkerOrg.svg": "/static/media/mapMarkerOrg.322f2a8f86ebc142b9a726f83efa1ffd.svg",
+    "static/media/eyeCrossPurple.svg": "/static/media/eyeCrossPurple.5d5dbf0cfd9d9796f7426606c32cbc2a.svg",
     "static/media/wifiBlack.svg": "/static/media/wifiBlack.c98dd190163e7be49edcbabbf4ed6e60.svg",
     "static/media/cardDiscountOrange.svg": "/static/media/cardDiscountOrange.e46ae100ff9c3348c54635dc6552eac2.svg",
     "static/media/cardDiscountWhite.svg": "/static/media/cardDiscountWhite.1b1810a95a4ca80528345d3b0537b8e5.svg",
@@ -172,6 +174,7 @@
     "static/media/cartLineBlack.svg": "/static/media/cartLineBlack.685366d133eea49aefa226b33b38f94d.svg",
     "static/media/add-img.svg": "/static/media/add-img.46f2953bb783e664c791adfbe3f0f7ba.svg",
     "static/media/slick.svg": "/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/eye.svg": "/static/media/eye.d660f3b43f0c5b8cbad1d6e5406b7483.svg",
     "static/media/locate.svg": "/static/media/locate.60368083fcd55b52fcd73f1669df0f86.svg",
     "static/media/chatPurple.svg": "/static/media/chatPurple.a43c73c5e526e45e61e9f4664f419d17.svg",
     "static/media/order_pending.svg": "/static/media/order_pending.027186c483cb993ce3036e96a79f134e.svg",
@@ -285,7 +288,6 @@
     "static/media/x-white.svg": "/static/media/x-white.6a9383cf6eedad66509ae93d488fcf93.svg",
     "static/media/camera_purple.svg": "/static/media/camera_purple.e4643e122b48b4a9e4ec8cbb29fe84fa.svg",
     "static/media/favorite_fill.svg": "/static/media/favorite_fill.2d0fb1eec5019bffc02a3388c74c6a93.svg",
-    "static/media/eye.svg": "/static/media/eye.b9e1ff6b46c95175ff4e92d8a547ab0a.svg",
     "static/media/trend.svg": "/static/media/trend.bf327c53b09ceb686753cbef79d792b9.svg",
     "static/media/editWhite.svg": "/static/media/editWhite.1ebe629af08c7822736a7a0e53729fbe.svg",
     "static/media/calendar_1.svg": "/static/media/calendar_1.7c77787f23520a846a87958011bdba50.svg",
@@ -355,8 +357,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-    "main.f600e45b.css.map": "/static/css/main.f600e45b.css.map",
-    "main.801fd685.js.map": "/static/js/main.801fd685.js.map",
+    "main.214545fa.css.map": "/static/css/main.214545fa.css.map",
+    "main.f84e99fc.js.map": "/static/js/main.f84e99fc.js.map",
     "483.3c77b5e7.chunk.js.map": "/static/js/483.3c77b5e7.chunk.js.map",
     "reactPlayerYouTube.1e3b8183.chunk.js.map": "/static/js/reactPlayerYouTube.1e3b8183.chunk.js.map",
     "reactPlayerSoundCloud.4cd9b040.chunk.js.map": "/static/js/reactPlayerSoundCloud.4cd9b040.chunk.js.map",
@@ -374,7 +376,7 @@
     "787.476e4605.chunk.js.map": "/static/js/787.476e4605.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f600e45b.css",
-    "static/js/main.801fd685.js"
+    "static/css/main.214545fa.css",
+    "static/js/main.f84e99fc.js"
   ]
 }

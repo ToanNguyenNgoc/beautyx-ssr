@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import HeadTitle from "../HeadTitle";
 import "./cart-status.css";
 import { Container } from "@mui/material";
-import useCountDown from "../../utils/useCountDown";
 import { useLocation } from "react-router-dom";
 import paymentGatewayApi from "../../api/paymentGatewayApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +27,7 @@ import {
 } from "../../redux/order/orderSlice";
 import ModalLoad from "../../components/ModalLoad";
 import { XButton } from "components/Layout";
+import { useCountDown } from "hooks";
 // end
 const timerRender = [0];
 const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];

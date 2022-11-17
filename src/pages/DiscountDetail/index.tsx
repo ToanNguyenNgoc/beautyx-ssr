@@ -31,7 +31,7 @@ import DetailPolicy from "../ServiceDetail/components/DetailPolicy";
 import ReviewsContainer from "../../features/ReviewsContainer";
 import Footer from "../../features/Footer";
 import LoadDetail from "../../components/LoadingSketion/LoadDetail";
-import useDeviceMobile from "../../utils/useDeviceMobile";
+import {useDeviceMobile} from "hooks";
 import { AppContext } from "../../context/AppProvider";
 import Head from "features/Head";
 import { extraParamsUrl } from "utils/extraParamsUrl";
@@ -44,7 +44,7 @@ import { GoogleTagPush, GoogleTagEvents } from "../../utils/dataLayer";
 import { postHistoryView } from "user-behavior";
 import { useLocation } from "react-router-dom";
 import { OpenApp } from "components/Layout";
-import { useGetParamUrl } from "utils";
+import { useGetParamUrl } from "hooks";
 import { OrgInformation } from "pages/MerchantDetail/components/OrgPages";
 import PageNotFound from "components/PageNotFound";
 

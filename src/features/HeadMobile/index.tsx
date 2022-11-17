@@ -5,7 +5,7 @@ import style from './head-mobile.module.css'
 import { XButton } from "components/Layout"
 import img from 'constants/img';
 import { Container } from '@mui/system';
-import { useDeviceMobile } from 'utils';
+import { useDeviceMobile } from 'hooks';
 
 interface IProps {
     title: string,
