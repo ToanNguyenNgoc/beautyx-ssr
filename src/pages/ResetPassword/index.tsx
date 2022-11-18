@@ -89,6 +89,7 @@ function ResetPassword() {
                 return <FormTelephone
                     setValues={setValues}
                     setStep={setStep}
+                    prevUrl={'/sign-in?1'}
                     load={load}
                     handlePostTelephone={handlePostTelephone}
                 />;

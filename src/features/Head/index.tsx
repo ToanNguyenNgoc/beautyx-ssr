@@ -37,7 +37,7 @@ import HeadTitle from "features/HeadTitle";
 
 interface IProps {
     changeStyle?: boolean;
-    title?: string
+    title?: string,
 }
 const homePath = [
     "/TIKI",
@@ -83,6 +83,10 @@ function Head(props: IProps) {
             if (dis === "hide")
                 return refNoti?.current?.classList.remove(style.head_menu_show);
         }
+        //     if (dis === "show")
+        //     return refNoti?.current?.classList.add(style.head_menu_show);
+        // if (dis === "hide")
+        //     return refNoti?.current?.classList.remove(style.head_menu_show);
     };
     const [openSearch, setOpenSearch] = useState(false)
     const onToggleSearch = (dis: "show" | "hide") => {
@@ -142,18 +146,18 @@ function Head(props: IProps) {
     const paramUrl: any = extraParamsUrl();
     const keywordUrl = paramUrl?.keyword ?? "";
     //handle scroll
-    const scroll = () => {
-        const scrolled = window.scrollY;
-        const header = document.getElementById("header");
-        const windowPosition = scrolled > 60;
-        if (header && changeStyle) {
-            header.classList.toggle(style.container_ch_white, windowPosition);
-        }
-    };
-    useEffect(() => {
-        window.addEventListener("scroll", scroll);
-        return () => window.removeEventListener("scroll", scroll);
-    }, [scroll]);
+    // const scroll = () => {
+    //     const scrolled = window.scrollY;
+    //     const header = document.getElementById("header");
+    //     const windowPosition = scrolled > 60;
+    //     if (header && changeStyle) {
+    //         header.classList.toggle(style.container_ch_white, windowPosition);
+    //     }
+    // };
+    // useEffect(() => {
+    //     window.addEventListener("scroll", scroll);
+    //     return () => window.removeEventListener("scroll", scroll);
+    // }, [scroll]);
     const pathname = location.pathname;
     let showRecommendKey = false;
     if (homePath.includes(pathname)) showRecommendKey = true;
@@ -236,7 +240,14 @@ function Head(props: IProps) {
                                 />
                             </Dialog>
                         </div>
+                        {/* <div className={style.head_top_center}>
+                        </div> */}
                         <div className={style.head_top_right}>
+                            <XButton
+                                className={style.head_btn_partner}
+                                title={t("Header.1")}
+                                onClick={() => history.push("/partner")}
+                            />
                             {USER ? (
                                 <>
                                     <Link
@@ -374,11 +385,11 @@ function Head(props: IProps) {
                         </div>
                     </div>
                     <div className={style.head_bot}>
-                        <XButton
-                            onClick={() => history.push("/partner")}
+                        {/* <XButton
                             className={style.head_bot_btn}
                             title={t("Header.1")}
-                        />
+                            onClick={() => history.push("/partner")}
+                        /> */}
                         {/* <div
                             onClick={() =>
                                 window.open("https://beautyx.vn/blog", "_blank")
@@ -608,6 +619,7 @@ const SearchRecommend = () => {
     };
     return (
         <div className={style.re_container}>
+            <div className={style.slider_wrapper}></div>
             <Slider {...settings}>
                 {keywords.map((item) => (
                     <span key={item} className={style.re_container_text}>

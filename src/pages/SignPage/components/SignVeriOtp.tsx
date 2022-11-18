@@ -6,7 +6,7 @@ import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from "../../
 import FormTelephone from "../../ResetPassword/components/FormTelephone";
 
 function SignVeriOtp(props: any) {
-    const { open, setOpen, setDataOtp, prevUrl } = props;
+    const { open, setOpen, setDataOtp, prevUrl,setActiveTabSign } = props;
     const [load, setLoad] = useState(false);
     const generateRecaptcha = () => {
         try {
@@ -53,6 +53,7 @@ function SignVeriOtp(props: any) {
                 <div className="for-pass-cnt__phone">
                     <div id="recaptcha-container"></div>
                     <FormTelephone
+                        setActiveTabSign={setActiveTabSign}
                         prevUrl={prevUrl}
                         title="Đăng ký"
                         load={load}

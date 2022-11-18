@@ -1,5 +1,6 @@
 .homepage {
     background-color: #FAFAFA;
+    height: 100%;
 }
 
 .home-se-cnt {
@@ -355,6 +356,11 @@
 /* Mobile */
 
 @media only screen and (max-width: 767px) {
+    .homepage{
+        height: calc(100vh - 80px);
+        overflow-y: scroll;
+        /* padding-bottom: 64px; */
+    }
     .home-promo-ser .ser-list {
         grid-template-columns: repeat(2, 1fr);
         display: grid;

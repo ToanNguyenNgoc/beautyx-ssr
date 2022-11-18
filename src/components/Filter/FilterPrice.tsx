@@ -17,7 +17,7 @@ export const pricesList: PriceList[] = [
     { id: 3, min_price: "4000000", max_price: "8000000", title: "Từ 4 - 8 triệu" },
     { id: 4, min_price: "8000000", max_price: "12000000", title: "Từ 8 - 12 triệu" },
     { id: 5, min_price: "12000000", max_price: "20000000", title: "Từ 12 - 20 triệu" },
-    { id: 6, min_price: "20000000", max_price: "", title: "Trên 20 triệu" }
+    { id: 6, min_price: "20000000", max_price: "10000000000", title: "Trên 20 triệu" }
 ]
 
 export function FilterPrice(props: FilterPriceProps) {
@@ -35,7 +35,8 @@ export function FilterPrice(props: FilterPriceProps) {
         if (max > 0 || max === "") setValue({ ...value, max_price: max })
     }
     const onApplyPrice = () => {
-        if (parseInt(value.max_price) > parseInt(value.min_price) || (value.min_price === "" && value.max_price === "")) {
+        if (
+            parseInt(value.max_price) > parseInt(value.min_price) || (value.min_price === "" && value.max_price === "")) {
             if (onChangePrice) onChangePrice(value)
         }
     }
