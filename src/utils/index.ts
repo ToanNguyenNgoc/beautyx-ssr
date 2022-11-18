@@ -10,3 +10,4 @@ export * from "./imageToBase64"
 export * from "./scrollTop"
 export * from './format'
 export * from './transition'
+export * from './phoneUpdate'

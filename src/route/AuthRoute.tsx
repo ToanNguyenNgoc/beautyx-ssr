@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAuth } from 'hooks'
-import { useHistory } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 import React, { ReactNode, useEffect } from 'react'
+import PageNotFound from 'components/PageNotFound'
 
 interface LayoutProps {
-    children: ReactNode
+    children: ReactNode[]
 }
 
 function AuthRoute({ children }: LayoutProps) {
@@ -21,3 +22,11 @@ function AuthRoute({ children }: LayoutProps) {
 }
 
 export default AuthRoute;
+
+// export const PrivateRoute = ({children, ...res})=>{
+//     return (
+//         <Route>
+
+//         </Route>
+//     )
+// }

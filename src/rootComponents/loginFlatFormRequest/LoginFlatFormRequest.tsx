@@ -18,12 +18,12 @@ import { EXTRA_REDUCER_STATUS } from "../../redux/status";
 
 // MOMO
 
-import momoApi, {
-    IUserConsentsData,
-    IUserConsentsStatus,
-    IUserConsents,
-} from "../../api/momoApi";
-import momoAuthApi from "../../api/_momoAuthApi";
+// import momoApi, {
+//     IUserConsentsData,
+//     IUserConsentsStatus,
+//     IUserConsents,
+// } from "../../api/momoApi";
+// import momoAuthApi from "../../api/_momoAuthApi";
 import { handleGetUserInfoMomo } from "../momo/handleMomo";
 
 // ==== END

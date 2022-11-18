@@ -11,8 +11,8 @@ import MerchantDetail from "../pages/MerchantDetail/index";
 import Partner from "../pages/Partner";
 import Cart from "../features/Cart/index";
 import Account from "../pages/Account";
-import ProductDetail from "../pages/ProductDetail";
-import ServiceDetail from "../pages/ServiceDetail";
+// import ProductDetail from "../pages/ProductDetail";
+// import ServiceDetail from "../pages/ServiceDetail";
 import SignPage from "../pages/SignPage/index";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
@@ -23,7 +23,7 @@ import Policy from "../pages/Policy";
 import SellerCenter from "../pages/SellerCenter";
 import Otp from "../features/Otp";
 import ResetPassword from "../pages/ResetPassword";
-import ComboDetail from "../features/ComboDetail";
+// import ComboDetail from "../features/ComboDetail";
 import DiscountDetail from "../pages/DiscountDetail";
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeMap from "../features/HomeMap";
@@ -47,22 +47,24 @@ import Trends from "pages/Trends";
 import Community from "pages/Community";
 import VoucherPage from "pages/VoucherPage";
 import TrendsDetail from "pages/TrendsDetail";
+import SerProCoDetail from "pages/SerProCoDetail";
+import { useAuth } from "hooks";
 
 function RouterConfig() {
     const routes = [
         // START mini app share link
         {
             path: "/TIKI/dich-vu",
-            component: <ServiceDetail />,
+            component: <SerProCoDetail />,
         },
 
         {
             path: "/TIKI/san-pham/:name",
-            component: <ProductDetail />,
+            component: <SerProCoDetail />,
         },
         {
             path: "/TIKI/combo-detail/:name",
-            component: <ComboDetail />,
+            component: <SerProCoDetail />,
         },
         {
             path: "/TIKI/cua-hang/:subdomain",
@@ -115,15 +117,15 @@ function RouterConfig() {
         },
         {
             path: "/san-pham/:name",
-            component: <ProductDetail />,
+            component: <SerProCoDetail />,
         },
         {
             path: "/combo-detail/:name",
-            component: <ComboDetail />,
+            component: <SerProCoDetail />,
         },
         {
             path: "/dich-vu/",
-            component: <ServiceDetail />,
+            component: <SerProCoDetail />,
         },
         {
             path: "/sign-up",
@@ -209,6 +211,10 @@ function RouterConfig() {
             path: "/cong-dong",
             component: <Community />,
         },
+        {
+            path: "/error",
+            component: <PageNotFound />,
+        },
     ];
     const routesPrivate = [
         {
@@ -247,12 +253,17 @@ function RouterConfig() {
             path: "/ma-giam-gia",
             component: <VoucherPage />,
         },
+        // {
+        //     path: "*",
+        //     component: <PageNotFound />,
+        // },
     ];
     logEvent(analytics, "page_view", {
         page_title: document.title,
         page_path: window.location.pathname,
         page_location: window.location.href,
     });
+    const { firstLoad } = useAuth()
     return (
         <BrowserRouter>
             <Router>
@@ -270,10 +281,7 @@ function RouterConfig() {
                             </Route>
                         ))}
                     </AuthRoute>
-                    <Route path="*">
-                        {" "}
-                        <PageNotFound />{" "}
-                    </Route>
+                    <Redirect exact from="*" to="error" />
                 </Switch>
                 <AssistantBtn />
             </Router>
