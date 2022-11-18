@@ -48,7 +48,6 @@ import Community from "pages/Community";
 import VoucherPage from "pages/VoucherPage";
 import TrendsDetail from "pages/TrendsDetail";
 import SerProCoDetail from "pages/SerProCoDetail";
-import { useAuth } from "hooks";
 
 function RouterConfig() {
     const routes = [
@@ -253,17 +252,16 @@ function RouterConfig() {
             path: "/ma-giam-gia",
             component: <VoucherPage />,
         },
-        // {
-        //     path: "*",
-        //     component: <PageNotFound />,
-        // },
+        {
+            path: "*",
+            component: <PageNotFound />,
+        },
     ];
     logEvent(analytics, "page_view", {
         page_title: document.title,
         page_path: window.location.pathname,
         page_location: window.location.href,
     });
-    const { firstLoad } = useAuth()
     return (
         <BrowserRouter>
             <Router>
@@ -281,7 +279,7 @@ function RouterConfig() {
                             </Route>
                         ))}
                     </AuthRoute>
-                    <Redirect exact from="*" to="error" />
+                    {/* <Redirect exact from="*" to="error" /> */}
                 </Switch>
                 <AssistantBtn />
             </Router>

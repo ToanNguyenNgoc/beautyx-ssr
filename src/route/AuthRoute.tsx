@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAuth } from 'hooks'
-import { Route, useHistory } from 'react-router-dom'
+import { Redirect, Route, useHistory } from 'react-router-dom'
 import React, { ReactNode, useEffect } from 'react'
-import PageNotFound from 'components/PageNotFound'
 
 interface LayoutProps {
     children: ReactNode[]
@@ -23,10 +22,23 @@ function AuthRoute({ children }: LayoutProps) {
 
 export default AuthRoute;
 
-// export const PrivateRoute = ({children, ...res})=>{
-//     return (
-//         <Route>
-
-//         </Route>
-//     )
-// }
+function PrivateRoute({ children, ...rest }: any) {
+    const user = true
+    return (
+        <Route
+            {...rest}
+            render={({ location }: any) =>
+                user ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: { from: location }
+                        }}
+                    />
+                )
+            }
+        />
+    );
+}
