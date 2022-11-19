@@ -14,13 +14,14 @@ import axios from "axios";
 import API_3RD from "api/3rd-api";
 import { paramAppointment, paramOrderService } from "../params-query";
 import { useSwr, useFetch } from "hooks"
-// import { fetchAsyncAppCur } from 'redux/notifications'
-// import { fetchAsyncOrderServices } from "redux/order/orderSlice";
+import { fetchAsyncAppCur } from 'redux/notifications'
+import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
     const [geo, setGeo] = useState();
+    const { USER } = useSelector(state => state.USER)
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const [language, setLanguage] = useState(
@@ -45,10 +46,14 @@ export default function AppProvider({ children }) {
     }
     useEffect(() => {
         const callUserProfile = async () => {
-            await dispatch(fetchAsyncUser());
+            const res =  await dispatch(fetchAsyncUser());
+            if(res.payload){
+                dispatch(fetchAsyncAppCur())
+                dispatch(fetchAsyncOrderServices())
+            }
         }
         callUserProfile()
-    }, [sign, dispatch]);
+    }, [sign, dispatch, USER]);
     useEffect(() => {
         dispatch(fetchAsyncHome())
         dispatch(fetchAsyncNews());
@@ -98,7 +103,6 @@ export default function AppProvider({ children }) {
     const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
     const specialItems = useFetch(true, "https://beautyx.vercel.app/v1/special-items").response
     //get services, appointment user
-    const { USER } = useSelector(state => state.USER)
     const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
 
