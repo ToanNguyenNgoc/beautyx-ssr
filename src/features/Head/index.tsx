@@ -52,7 +52,7 @@ const homePath = [
 
 function Head(props: IProps) {
     const { changeStyle, title } = props;
-    const { t, orderService } = useContext(AppContext);
+    const { t, orderService, appointment } = useContext(AppContext);
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
     const { USER } = useSelector((state: IStore) => state.USER);
@@ -102,11 +102,11 @@ function Head(props: IProps) {
         }, 100);
     };
     //
-    const { appsNoti } = useSelector((state: IStore) => state.NOTI);
-    const appointment_today = appsNoti?.filter(
+    // const { appsNoti } = useSelector((state: IStore) => state.NOTI);
+    const appointment_today = appointment?.filter(
         (a: AppointmentNoti) =>
             dayjs(a.time_start).format("YYYY-MM-DD") ===
-            dayjs().format("YYYY-MM-DD") && a.viewed === false
+            dayjs().format("YYYY-MM-DD")
     );
     const order_app = orderService.filter(
         (a: IServiceUser) => a.appointments.length === 0
