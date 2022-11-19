@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAuth } from 'hooks'
-import { Redirect, Route, useHistory } from 'react-router-dom'
+import {  useHistory } from 'react-router-dom'
 import React, { ReactNode, useEffect } from 'react'
 
 interface LayoutProps {
@@ -22,23 +22,3 @@ function AuthRoute({ children }: LayoutProps) {
 
 export default AuthRoute;
 
-function PrivateRoute({ children, ...rest }: any) {
-    const user = true
-    return (
-        <Route
-            {...rest}
-            render={({ location }: any) =>
-                user ? (
-                    children
-                ) : (
-                    <Redirect
-                        to={{
-                            pathname: "/login",
-                            state: { from: location }
-                        }}
-                    />
-                )
-            }
-        />
-    );
-}

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import HomeOrgDistance from "./HomeOrgDistance";
 import HomeRecomment from "./HomeRecomment";
 import { useSelector } from "react-redux";
@@ -15,7 +15,7 @@ import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import Footer from "features/Footer";
 import { Bottom, OpenApp } from "components/Layout";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useElementOnScreen } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
 import HomeTags2 from "./HomeTags2";
@@ -30,24 +30,39 @@ import HomeCate from "./HomeCate";
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
     const banner_status = useSelector((state: any) => state.HOME.status);
-
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
-
+    const refBanner = useRef<HTMLDivElement>(null)
+    const options = {
+        root: null,
+        rootMargin: "-10px",
+        threshold: 0.3,
+    }
+    const isVisible = useElementOnScreen(options, refBanner)
+    const header = document.getElementById("header");
+    const onScrollHome = () => {
+        if (header) {
+            if (!isVisible) {
+                header.style.backgroundColor = 'var(--purple)'
+            } else {
+                header.style.backgroundColor = 'transparent'
+            }
+        }
+    }
     return (
-        <div className="homepage">
+        <div onScroll={onScrollHome} className="homepage">
             <ExtraFlatForm />
             <Head changeStyle={IS_MB} />
             <div className="home_container_par">
                 <Container>
-                    <HomeCate/>
+                    <HomeCate />
                     {
                         banner_status !== STATUS.SUCCESS ?
                             <LoadHomeBanner />
                             :
                             <>
-                                <HomeBanner2 />
+                                <HomeBanner2 refBanner={refBanner} />
                                 {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
                             </>
                     }

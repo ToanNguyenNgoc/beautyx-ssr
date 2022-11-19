@@ -25,7 +25,8 @@
 }
 
 .head_top_left {
-    width: calc(70% + 25px);
+    /* width: calc(60% + 25px); */
+    width: calc(65% - 12px);
     display: flex;
 }
 
@@ -64,11 +65,19 @@
 }
 
 .head_top_right {
-    width: calc(30% - 50px);
+    /* width: calc(30% - 50px); */
+    width: 45%;
     height: 44px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.head_btn_partner {
+    margin-right: 12px;
+    background-color: transparent;
+    border: solid 1px var(--green);
+    color: var(--purple);
 }
 
 .head_sign_btn {
@@ -369,9 +378,10 @@
     .head_top_right_auth {
         display: none;
     }
-    .head_search{
+
+    /* .head_search{
         display: none;
-    }
+    } */
 
     .head_search_input {
         background-color: var(--bg-color);
@@ -399,6 +409,10 @@
         width: 100%;
         background-color: var(--bg-white);
         border-radius: 8px;
+    }
+
+    .head_btn_partner {
+        display: none;
     }
 
     .head_top_right_btn {
@@ -489,7 +503,16 @@
         font-size: 13px;
         font-weight: 600;
     }
-    .re_container_btn{
+
+    .slider_wrapper {
+        position: absolute;
+        width: calc(100% - 70px);
+        height: 100%;
+        background-color: transparent;
+        z-index: 10;
+    }
+
+    .re_container_btn {
         position: absolute;
         right: 0;
         margin-right: 3px;
@@ -502,7 +525,8 @@
         align-items: center;
         justify-content: center;
     }
-    .re_container_btn img{
+
+    .re_container_btn img {
         width: 22px;
         height: 22px;
     }

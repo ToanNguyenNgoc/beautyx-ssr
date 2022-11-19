@@ -53,16 +53,16 @@ function RouterConfig() {
     const routes = [
         // START mini app share link
         {
-            path: "/TIKI/dich-vu",
+            path: "/TIKI/dich-vu/",
             component: <SerProCoDetail />,
         },
 
         {
-            path: "/TIKI/san-pham/:name",
+            path: "/TIKI/san-pham/",
             component: <SerProCoDetail />,
         },
         {
-            path: "/TIKI/combo-detail/:name",
+            path: "/TIKI/combo-detail/",
             component: <SerProCoDetail />,
         },
         {
@@ -115,11 +115,11 @@ function RouterConfig() {
             component: <Cart />,
         },
         {
-            path: "/san-pham/:name",
+            path: "/san-pham/",
             component: <SerProCoDetail />,
         },
         {
-            path: "/combo-detail/:name",
+            path: "/combo-detail/",
             component: <SerProCoDetail />,
         },
         {
@@ -252,10 +252,6 @@ function RouterConfig() {
             path: "/ma-giam-gia",
             component: <VoucherPage />,
         },
-        {
-            path: "*",
-            component: <PageNotFound />,
-        },
     ];
     logEvent(analytics, "page_view", {
         page_title: document.title,
@@ -279,7 +275,7 @@ function RouterConfig() {
                             </Route>
                         ))}
                     </AuthRoute>
-                    {/* <Redirect exact from="*" to="error" /> */}
+                    <Redirect exact from="*" to="error" />
                 </Switch>
                 <AssistantBtn />
             </Router>

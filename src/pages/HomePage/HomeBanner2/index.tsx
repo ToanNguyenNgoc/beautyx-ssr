@@ -13,7 +13,7 @@ import { Dialog } from "@mui/material";
 import ReactPlayer from "react-player";
 import { PopupMessage } from "components/Notification";
 import { useDeviceMobile } from "hooks";
-import bannerInit from 'assets/image/bannerInit.png'
+// import bannerInit from 'assets/image/bannerInit.png'
 
 interface PopupProps {
     open: boolean;
@@ -51,7 +51,7 @@ const features = [
     { title: "Rewards", icon: icon.rewardOrange, func: "REW" },
 ];
 
-function HomeBanner2() {
+function HomeBanner2({ refBanner }: { refBanner: any }) {
     const { banners } = useSelector((state: any) => state.HOME);
     const [popup, setPopup] = useState<PopupProps>({
         open: false,
@@ -137,7 +137,7 @@ function HomeBanner2() {
     };
 
     return (
-        <div className={style.container}>
+        <div ref={refBanner} className={style.container}>
             <div className={style.banner_container}>
                 <Slider {...settings}>
                     {banners.map((item: IBanner, index: number) => (
