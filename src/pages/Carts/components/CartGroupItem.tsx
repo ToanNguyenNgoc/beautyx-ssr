@@ -173,11 +173,11 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                         Danh sách mã ưu đãi
                     </span>
                     <ul className="list">
-                        {vouchers.map((item: IDiscountPar, index: number) => (
+                        {vouchers?.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
                                 <VoucherOrgItem
-                                    services_id={services_id.map(i => i.id)}
-                                    products_id={products_id.map(i => i.id)}
+                                    services_id={services_id?.map(i => i.id)}
+                                    products_id={products_id?.map(i => i.id)}
                                     cartAmount={cartAmount}
                                     showApplyBtn={true} org={org}
                                     voucher={item}
@@ -210,14 +210,14 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const { productsInDis, servicesInDis } = discountReducerItem(
         voucher?.items?.filter((i: IITEMS_DISCOUNT) => i.organization_id === org?.id)
     )
-    const productName = productsInDis.map((i: IITEMS_DISCOUNT) => i.productable?.product_name);
-    const serviceName = servicesInDis.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
+    const productName = productsInDis?.map((i: IITEMS_DISCOUNT) => i.productable?.product_name);
+    const serviceName = servicesInDis?.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
     const displayName = serviceName.concat(productName).filter(Boolean)
     const dispatch = useDispatch();
     const { VOUCHER_APPLY } = useSelector(
         (state: any) => state.carts
     );
-    const active = VOUCHER_APPLY.map((i: IDiscountPar) => i.id).includes(voucher.id)
+    const active = VOUCHER_APPLY?.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
     const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products_id, services_id);

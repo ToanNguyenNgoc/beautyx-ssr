@@ -25,8 +25,7 @@
 }
 
 .head_top_left {
-    /* width: calc(60% + 25px); */
-    width: calc(65% - 12px);
+    width: calc(60% - 12px);
     display: flex;
 }
 
@@ -105,7 +104,7 @@
     min-width: unset;
     cursor: pointer;
     transition: var(--trans);
-    z-index: 101;
+    z-index: 1000;
     text-align: start;
 }
 
@@ -444,7 +443,10 @@
 
     .head_noti {
         width: 100vw;
-        margin-left: -261px;
+        position: fixed;
+        left: 0;
+        top: 60px;
+        margin-left: 0px;
     }
 
     .head_search_icon {

@@ -16,13 +16,14 @@ import { AppContext } from "context/AppProvider";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
 import { onErrorImg } from "utils";
-import {useDeviceMobile, useSwr} from 'hooks';
+import { useDeviceMobile } from 'hooks';
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cartSlice";
 import { AlertSnack, XButton } from "components/Layout";
 import img from "constants/img";
 import moment from "moment";
+import discountApi from "api/discountApi";
 
 export interface OpenVcProp {
     open: boolean,
@@ -58,11 +59,11 @@ function CartBottom(props: any) {
     const USER = useSelector((state: any) => state.USER.USER);
     const listDiscount = DATA_CART.cartList
         .filter((item: any) => item.isConfirm === true)
-        .map((item: any) => item.discount);
+        ?.map((item: any) => item.discount);
     const listCouponCode = listDiscount
-        .map((item: any) => item?.coupon_code)
+        ?.map((item: any) => item?.coupon_code)
         .filter(Boolean)
-        .concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code))
+        .concat(VOUCHER_APPLY?.map((i: IDiscountPar) => i.coupon_code))
         ;
     const {
         products, cart_confirm,
@@ -190,7 +191,7 @@ function CartBottom(props: any) {
     };
 
 
-    const vouchersCal = VOUCHER_APPLY.map((i: IDiscountPar) => {
+    const vouchersCal = VOUCHER_APPLY?.map((i: IDiscountPar) => {
         let discountValue = i.discount_value;
         if (i.discount_unit === 'PERCENT' && i.discount_type === 'SUB_TOTAL') {
             let cal = 0
@@ -219,13 +220,13 @@ function CartBottom(props: any) {
     let discountVoucherTotal = 0
     if (VOUCHER_APPLY.length > 0) {
         discountVoucherTotal = vouchersCal
-            .map((i: IDiscountPar) => i.discount_value)
-            .reduce((pre: number, cur: number) => pre + cur)
+            ?.map((i: IDiscountPar) => i.discount_value)
+            ?.reduce((pre: number, cur: number) => pre + cur)
     }
     // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     // const discountAmount = VOUCHER_APPLY.length === 0 ? DATA_CART.cartAmountDiscount : 0
     //-------------------------------------------------------------------
-    const outDiscounts = cart_confirm.map((item: any) => item.discount)
+    const outDiscounts = cart_confirm?.map((item: any) => item.discount)
     const FINAL_AMOUNT = DATA_CART.cartAmount -
         DATA_CART.cartAmountDiscount -
         discountVoucherTotal
@@ -239,8 +240,8 @@ function CartBottom(props: any) {
                 cart_confirm={cart_confirm}
                 organization={DATA_PMT.org}
                 cartAmount={cartAmount}
-                services_id={services_id.map(i => i.id)}
-                products_id={products_id.map(i => i.id)}
+                services_id={services_id?.map(i => i.id)}
+                products_id={products_id?.map(i => i.id)}
             />
             <div className="re-cart-bottom">
                 <AlertSnack
@@ -302,7 +303,7 @@ function CartBottom(props: any) {
                                     VOUCHER_APPLY.length > 0 &&
                                     vouchersCal
                                         // .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
-                                        .map((item: IDiscountPar) => (
+                                        ?.map((item: IDiscountPar) => (
                                             <div key={item.id} className="flex-row-sp re-cart-bottom__cal-item">
                                                 <span>{item.title}</span>
                                                 <span>
@@ -364,15 +365,24 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const dispatch = useDispatch();
     const IS_MB = useDeviceMobile();
     const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id, outDiscounts } = props;
-    const [shouldFetch, setShouldFetch] = useState(false);
     const [text, setText] = useState("");
+    const [response, setResponse] = useState<IDiscountPar | any>()
+    const [error, setError] = useState(false)
     const onInputChange = (e: any) => {
         if (text.length <= 25) {
             setText(e.target.value)
-            setShouldFetch(false)
+            setError(false)
         }
     }
-    const { response, error } = useSwr(`/discounts/${text}`, (shouldFetch && text !== ""))
+    const getDiscountDetail = async () => {
+        try {
+            const res = await discountApi.getById({ id: text })
+            setResponse(res.data.context)
+        } catch (error) {
+            console.log(error)
+            setError(true)
+        }
+    }
     const voucher: IDiscountPar = { ...response, coupon_code: text }
 
     let voucher_org: any
@@ -411,7 +421,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             className="vc_body_input_btn"
                             title="Áp dụng"
                             loading={false}
-                            onClick={() => setShouldFetch(true)}
+                            onClick={getDiscountDetail}
                         />
                         {
                             text !== "" &&
@@ -447,8 +457,8 @@ export const InputVoucher = (props: InputVoucherProps) => {
                     }
                     <ul className="vc_cart_voucher_list">
                         {
-                            outDiscounts.length > 0 &&
-                            outDiscounts.map((item: IDiscountPar, index: number) => (
+                            outDiscounts?.length > 0 &&
+                            outDiscounts?.map((item: IDiscountPar, index: number) => (
                                 <li className="voucher_list_item" key={index} >
                                     <OutDiscountItem discount={item} />
                                 </li>

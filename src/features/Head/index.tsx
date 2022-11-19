@@ -56,6 +56,7 @@ function Head(props: IProps) {
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
     const { USER } = useSelector((state: IStore) => state.USER);
+    // const USER = { id: 1, fullname: '', avatar: '' }
     const IS_MB = useDeviceMobile();
     const refMenu = useRef<HTMLDivElement>();
     const refNoti = useRef<HTMLDivElement>();
@@ -83,11 +84,11 @@ function Head(props: IProps) {
             if (dis === "hide")
                 return refNoti?.current?.classList.remove(style.head_menu_show);
         }
-        //     if (dis === "show")
-        //     return refNoti?.current?.classList.add(style.head_menu_show);
-        // if (dis === "hide")
-        //     return refNoti?.current?.classList.remove(style.head_menu_show);
     };
+    window.onclick = () => {
+        return refNoti?.current?.classList.remove(style.head_menu_show);
+    }
+    //
     const [openSearch, setOpenSearch] = useState(false)
     const onToggleSearch = (dis: "show" | "hide") => {
         if (dis === "show")
@@ -287,9 +288,11 @@ function Head(props: IProps) {
                                         </button>
                                     )}
                                     <button
-                                        onClick={() => onToggleNoti("show")}
-                                        onFocus={() => onToggleNoti("show")}
-                                        onBlur={() => onToggleNoti("hide")}
+                                        onClick={(e) => {
+                                            onToggleNoti("show");
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                        }}
                                         className={
                                             changeStyle
                                                 ? clst([
@@ -445,7 +448,13 @@ const HeadNotification = (props: HeadNotificationProps) => {
         }
     };
     return (
-        <div ref={refNoti} className={style.head_noti}>
+        <div
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }}
+            ref={refNoti} className={style.head_noti}
+        >
             <div className={style.head_menu_title}>Thông báo</div>
             {!USER && (
                 <div className={style.head_required_sign}>
