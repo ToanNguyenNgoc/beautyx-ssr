@@ -16,6 +16,7 @@ export const fetchAsyncAppCur: any = createAsyncThunk(
     "NOTI/fetchAsyncAppCur",
     async () => {
         const res = await apointmentApi.getAppoitment(curMoth)
+        console.log(res)
         const apps = res.data.context.data
         return apps
     }

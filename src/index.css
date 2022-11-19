@@ -78,7 +78,8 @@ body>iframe {
     font-family: "Quicksand";
 }
 .MuiPaper-root{
-    -webkit-overflow-scrolling: touch !important
+    -webkit-overflow-scrolling: touch !important;
+    margin: 0px !important;
 }
 .MuiDrawer-paperAnchorTop{
     background-color: transparent !important;

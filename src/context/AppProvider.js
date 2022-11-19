@@ -14,8 +14,8 @@ import axios from "axios";
 import API_3RD from "api/3rd-api";
 import { paramAppointment, paramOrderService } from "../params-query";
 import { useSwr, useFetch } from "hooks"
-// import { fetchAsyncAppCur } from 'redux/notifications'
-// import { fetchAsyncOrderServices } from "redux/order/orderSlice";
+import { fetchAsyncAppCur } from 'redux/notifications'
+import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -45,7 +45,12 @@ export default function AppProvider({ children }) {
     }
     useEffect(() => {
         const callUserProfile = async () => {
-            await dispatch(fetchAsyncUser());
+            const res =  await dispatch(fetchAsyncUser());
+            console.log(res)
+            // if(res){
+            //     dispatch(fetchAsyncAppCur())
+            //     dispatch(fetchAsyncOrderServices())
+            // }
         }
         callUserProfile()
     }, [sign, dispatch]);

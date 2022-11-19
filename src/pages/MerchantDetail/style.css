@@ -1138,6 +1138,21 @@
     line-height: 14px;
     font-weight: 500;
 }
+.err-text{
+    margin: 2px 0px 0px 0px !important;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--red-cl);
+}
+.dialog-forgot__password-btn{
+    display: flex;
+    margin-top: 8px;
+    justify-content: space-between;
+}
+.dialog-forgot__password-btn button{
+    width: calc(50% - 6px);
+}
 
 @media only screen and (max-width: 1023px) {
     .org-mess-flo {
@@ -1607,5 +1622,10 @@
     .org-information__map-cnt .map-org-detail__slide {
         width: 100%;
         min-width: 240px;
+    }
+    .form-contact {
+        width: 90vw;
+        padding: 12px;
+        border-radius: 6px;
     }
 }
