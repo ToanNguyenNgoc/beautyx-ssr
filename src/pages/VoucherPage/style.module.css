@@ -178,9 +178,11 @@
     }
 
     .voucher_page {
-        padding: 44px 12px 100px 12px;
-        margin: 16px 0 0 0;
+        /* padding: 44px 12px 100px 12px; */
+        /* margin: 16px 0 0 0; */
         background-color: #f5f5f7;
+        margin: 50px 0px;
+        padding: 0px 12px;
     }
 
     .voucher_item_img {
