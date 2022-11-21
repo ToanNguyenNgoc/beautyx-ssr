@@ -1,15 +1,13 @@
-import favorites from 'api/favorite';
 import icon from 'constants/icon';
 import { IOrganization } from 'interface';
-import IStore from 'interface/IStore';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { onErrorImg, clst, formatDistance } from 'utils';
 import { XButton } from '../XButton';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter'
 import { OrgItemMap } from '../OrgItemMap'
 import style from './style.module.css'
+import { useFavorite } from 'hooks';
 
 interface OrgItemSecProps {
     org: IOrganization,
@@ -17,32 +15,15 @@ interface OrgItemSecProps {
 }
 
 export function OrgItemSec(props: OrgItemSecProps) {
-    const history = useHistory()
     const { changeStyle } = props;
     const [open, setOpen] = useState(false)
-    const [org, setSetOrg] = useState<IOrganization>(props.org)
-    const { USER } = useSelector((state: IStore) => state.USER)
-    const handleFavorite = async () => {
-        if (!org.is_favorite) {
-            await favorites.postFavorite(org.id)
-            setSetOrg({
-                ...org,
-                is_favorite: true,
-                favorites_count: org.favorites_count + 1
-            })
-        } else {
-            await favorites.deleteFavorite(org.id)
-            setSetOrg({
-                ...org,
-                is_favorite: false,
-                favorites_count: org.favorites_count - 1
-            })
-        }
-    }
-    const onToggleFavorite = () => {
-        if (USER) return handleFavorite()
-        if (!USER) return history.push('/sign-in?1')
-    }
+    const [org,] = useState<IOrganization>(props.org)
+    const { favoriteSt, onToggleFavorite } = useFavorite({
+        org_id: org.id,
+        type: 'ORG',
+        count: props.org.favorites_count,
+        favorite: props.org.is_favorite ?? true
+    })
     return (
         <>
             <Link
@@ -73,7 +54,7 @@ export function OrgItemSec(props: OrgItemSecProps) {
                                     !changeStyle &&
                                     <span
                                         className={style.org_react_cnt_heart_count}>
-                                        {org.favorites_count}
+                                        {favoriteSt.favorite_count}
                                     </span>
                                 }
                                 <img
@@ -86,7 +67,7 @@ export function OrgItemSec(props: OrgItemSecProps) {
                                         width: "20px",
                                         height: "20px",
                                     } : {}}
-                                    src={org.is_favorite ? icon.Favorite : icon.favoriteStroke}
+                                    src={favoriteSt.is_favorite ? icon.Favorite : icon.favoriteStroke}
                                     alt="" className={style.org_react_cnt_heart_icon}
                                 />
                             </div>
@@ -127,7 +108,7 @@ export function OrgItemSec(props: OrgItemSecProps) {
                                 changeStyle &&
                                 <div className={style.org_bot_star}>
                                     <img src={icon.heart} className={style.org_bot_icon} alt="" />
-                                    <span className={style.org_bot_text}>{org.favorites_count}</span>
+                                    <span className={style.org_bot_text}>{favoriteSt.favorite_count}</span>
                                 </div>
                             }
                             {

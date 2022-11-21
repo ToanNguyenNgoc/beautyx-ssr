@@ -222,6 +222,7 @@ import cateSanpham from 'assets/icon/cateSanpham.svg';
 import cateSpa from 'assets/icon/cateSpa.svg';
 import flash from 'assets/icon/flash.svg';
 import eyeCrossPurple from 'assets/icon/eyeCrossPurple.svg'
+import clockGray from 'assets/icon/clockGray.svg'
 
 
 const icon = {
@@ -428,6 +429,6 @@ const icon = {
     bellWhite, cartWhiteBold, cartLineBlack, settingLineBlack,
     calendarGreen, rewardOrange, ticketRed, communityPurple,
     cateClinic, cateSalon, cateSanpham, cateSpa, cateNail,
-    flash, eyeCrossPurple
+    flash, eyeCrossPurple, clockGray
 };
 export default icon;

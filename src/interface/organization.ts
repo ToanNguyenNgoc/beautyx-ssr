@@ -31,7 +31,7 @@ export interface IOrganization {
     opening_time: any;
     description: string | null;
     favorites_count: number;
-    is_favorite?: boolean | null;
+    is_favorite: boolean;
     favorites: IFavorite[];
     distance: number | undefined;
     tags: [];

@@ -1,22 +1,24 @@
 import React, { useContext } from 'react';
-// import style from "../detail.module.css"
 import { useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { AppContext } from 'context/AppProvider';
 import favorites from 'api/favorite';
 import { useSwr } from 'hooks';
+import style from './button-favorite.module.css'
+import { useHistory } from 'react-router-dom';
 
 interface ButtonFavoriteProps {
     id?: number,
     subdomain?: string,
     org_id: number,
     is_icon?: boolean
-    type: "ORG" | "SERVICE" | "PRODUCT"
+    type: "ORG" | "SERVICE" | "PRODUCT" | "COMBO"
 }
 
 export function ButtonFavorite(props: ButtonFavoriteProps) {
     const { id, type, org_id, subdomain, is_icon } = props;
     const { t } = useContext(AppContext)
+    const history = useHistory()
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
         include: "category|favorites_count",
@@ -63,7 +65,7 @@ export function ButtonFavorite(props: ButtonFavoriteProps) {
                 is_favorite: response?.is_favorite ? false : true
             }, true)
         } else {
-            // Router.push("/sign")
+            history.replace('/sign-in?1')
         }
     }
 

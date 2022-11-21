@@ -136,7 +136,7 @@ function Booking() {
         description: "",
         branch_id: bookTime.branch_id,
     };
-    const listPayment = location.state?.services.map((item: any) => {
+    const listPayment = location.state?.services?.map((item: any) => {
         const is_type = 2;
         const sale_price =
             item.service?.special_price > 0
