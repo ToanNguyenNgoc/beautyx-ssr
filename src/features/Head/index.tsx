@@ -147,18 +147,18 @@ function Head(props: IProps) {
     const paramUrl: any = extraParamsUrl();
     const keywordUrl = paramUrl?.keyword ?? "";
     //handle scroll
-    // const scroll = () => {
-    //     const scrolled = window.scrollY;
-    //     const header = document.getElementById("header");
-    //     const windowPosition = scrolled > 60;
-    //     if (header && changeStyle) {
-    //         header.classList.toggle(style.container_ch_white, windowPosition);
-    //     }
-    // };
-    // useEffect(() => {
-    //     window.addEventListener("scroll", scroll);
-    //     return () => window.removeEventListener("scroll", scroll);
-    // }, [scroll]);
+    const scroll = () => {
+        const scrolled = window.scrollY;
+        const header = document.getElementById("header");
+        const windowPosition = scrolled > 60;
+        if (header && changeStyle) {
+            header.classList.toggle(style.container_ch_white, windowPosition);
+        }
+    };
+    useEffect(() => {
+        window.addEventListener("scroll", scroll);
+        return () => window.removeEventListener("scroll", scroll);
+    }, [scroll]);
     const pathname = location.pathname;
     let showRecommendKey = false;
     if (homePath.includes(pathname)) showRecommendKey = true;

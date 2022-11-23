@@ -9,12 +9,12 @@ import { useSelector } from "react-redux";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 import HomeWatched from "./HomeWatched";
-import ExtraFlatForm from "rootComponents/extraFlatForm";
+// import ExtraFlatForm from "rootComponents/extraFlatForm";
 import Head from "features/Head";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import Footer from "features/Footer";
-import { Bottom, OpenApp } from "components/Layout";
+import { Bottom, OpenApp, PlashScreen } from "components/Layout";
 import { useDeviceMobile, useElementOnScreen } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
@@ -52,14 +52,16 @@ export default function HomePage() {
     }
     return (
         <div onScroll={onScrollHome} className="homepage">
-            <ExtraFlatForm />
+            {/* <ExtraFlatForm /> */}
             <Head changeStyle={IS_MB} />
             <div className="home_container_par">
                 <Container>
                     <HomeCate />
                     {
                         banner_status !== STATUS.SUCCESS ?
-                            <LoadHomeBanner />
+                            <>
+                                {IS_MB ? <PlashScreen /> : <LoadHomeBanner />}
+                            </>
                             :
                             <>
                                 <HomeBanner2 refBanner={refBanner} />

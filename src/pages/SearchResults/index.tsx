@@ -214,7 +214,7 @@ const TabService = ({ keyword }: { keyword: string }) => {
                     </ul>
                     {services.length < totalService && <>
                         <>
-                            <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />
+                            <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />
                             <div className={style.load_bottom}>
                                 <XButton title="" loading={true} />
                             </div>
@@ -341,7 +341,7 @@ const TabProduct = ({ keyword }: { keyword: string }) => {
                     </ul>
                     {products.length < totalProduct &&
                         <>
-                            <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />
+                            <LoadGrid grid={IS_MB ? 2 : 5} item_count={10} />
                             <div className={style.load_bottom}>
                                 <XButton title="" loading={true} />
                             </div>

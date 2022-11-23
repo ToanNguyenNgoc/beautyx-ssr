@@ -6,10 +6,9 @@ import HeadMobile from '../HeadMobile';
 import HeadTitle from '../HeadTitle';
 import { Container } from '@mui/material'
 import './style.css';
-import '../../pages/ServiceDetail/serviceDetail.css';
+import './serviceDetail.css';
 import { useSelector } from 'react-redux';
 import UserPaymentInfo from '../../pages/Account/components/UserPaymentInfo';
-import DetailOrgCard from '../../pages/ServiceDetail/components/DetailOrgCard';
 import ProductItem from './ProductItem';
 import formatPrice from '../../utils/formatPrice';
 import PaymentMethodCpn from '../PaymentMethod';
@@ -29,6 +28,7 @@ import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 import { XButton } from 'components/Layout';
 import { useDeviceMobile } from 'hooks';
+import { DetailOrgCard } from 'pages/_SerProCoDetail';
 // end
 function BuyNow() {
     const IS_MB = useDeviceMobile();

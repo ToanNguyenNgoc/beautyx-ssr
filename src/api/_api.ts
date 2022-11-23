@@ -11,6 +11,7 @@ const API_ROUTE = {
     ORG_PRODUCT: (org_id: number | string, id: number | string) => `/organizations/${org_id}/products/${id}`,
     ORG_PRODUCTS: (org_id: number | string) => `/organizations/${org_id}/products`,
     DISCOUNTS: '/discounts',
+    DISCOUNTS_ID:(id:number | string) => `/discounts/${id}`,
     SERVICE_CATES_ORG: (org_id: number | string) => `/organizations/${org_id}/service_categories`,
     PRODUCT_CATES_ORG: (org_id: number | string) => `/organizations/${org_id}/product_categories`,
     PAYMENT_GATEWAYS: (tran_uid: string) => `paymentgateways/${tran_uid}/status?cancel=false`,

@@ -1,5 +1,6 @@
 import axiosClient from "./axios";
 import { AUTH_HEADER } from "../utils/authHeader";
+import { identity, pickBy } from "lodash";
 
 class Comments {
     //get comments org
@@ -58,6 +59,14 @@ class Comments {
         };
         return axiosClient.post(url, params, AUTH_HEADER());
     };
+    postComment2 = (values:any)=>{
+        const url = `/comments`;
+        const params = {
+            ...values,
+            body:  values.body !== "" ? values.body : '‭',
+        }
+        return axiosClient.post(url, pickBy(params, identity), AUTH_HEADER());
+    }
 }
 const commentsApi = new Comments();
 export default commentsApi;

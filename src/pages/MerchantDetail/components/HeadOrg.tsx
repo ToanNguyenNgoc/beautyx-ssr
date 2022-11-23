@@ -36,7 +36,7 @@ function HeadOrg(props: IProps) {
     const dispatch = useDispatch();
     const history = useHistory();
     const { org, isShowSearch, onBackFunc } = props;
-    const org_redux = useSelector((state:IStore) => state.ORG.org)
+    const org_redux = useSelector((state: IStore) => state.ORG.org)
     const orgHeadRef = useRef<any>();
     const orgSearchBtn = useRef<any>();
     const orgSearchCnt = useRef<any>();
@@ -164,11 +164,14 @@ function HeadOrg(props: IProps) {
                     }
                 </div>
             </div>
-            <OrgSearch
-                orgSearchCnt={orgSearchCnt}
-                keyword={keyword}
-                org={org}
-            />
+            {
+                isShowSearch &&
+                <OrgSearch
+                    orgSearchCnt={orgSearchCnt}
+                    keyword={keyword}
+                    org={org}
+                />
+            }
         </>
     );
 }

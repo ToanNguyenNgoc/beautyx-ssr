@@ -63,6 +63,7 @@
 .message_left_icon {
     width: 70px;
     height: 70px;
+    border-radius: 12px;
 }
 
 .message_right {

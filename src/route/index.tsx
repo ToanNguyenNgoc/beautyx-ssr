@@ -7,12 +7,10 @@ import {
     BrowserRouter,
     Route,
 } from "react-router-dom";
-import MerchantDetail from "../pages/MerchantDetail/index";
+import MerchantDetail from "../pages/MerchantDetail";
 import Partner from "../pages/Partner";
 import Cart from "../features/Cart/index";
 import Account from "../pages/Account";
-// import ProductDetail from "../pages/ProductDetail";
-// import ServiceDetail from "../pages/ServiceDetail";
 import SignPage from "../pages/SignPage/index";
 import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
@@ -23,8 +21,8 @@ import Policy from "../pages/Policy";
 import SellerCenter from "../pages/SellerCenter";
 import Otp from "../features/Otp";
 import ResetPassword from "../pages/ResetPassword";
-// import ComboDetail from "../features/ComboDetail";
-import DiscountDetail from "../pages/DiscountDetail";
+// import DiscountDetail from "../pages/DiscountDetail";
+import DiscountDetail from 'pages/_DiscountDetail'
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeMap from "../features/HomeMap";
 import HomeCateResult from "../features/HomeResults/HomeCateResult";
@@ -39,7 +37,7 @@ import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 import PageNotFound from "../components/PageNotFound";
 import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
-// import ExtraFlatForm from "rootComponents/extraFlatForm";
+import ExtraFlatForm from "rootComponents/extraFlatForm";
 import LadingPage from "pages/LandingPage";
 import OtpMbPage from "pages/OtpMbPage";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
@@ -47,7 +45,7 @@ import Trends from "pages/Trends";
 import Community from "pages/Community";
 import VoucherPage from "pages/VoucherPage";
 import TrendsDetail from "pages/TrendsDetail";
-import SerProCoDetail from "pages/SerProCoDetail";
+import SerProCoDetail from "pages/_SerProCoDetail";
 
 function RouterConfig() {
     const routes = [
@@ -71,6 +69,28 @@ function RouterConfig() {
         },
         {
             path: "/TIKI/org/:subdomain",
+            component: <MerchantDetail />,
+        },
+        //
+        {
+            path: "/MOMO/dich-vu/",
+            component: <SerProCoDetail />,
+        },
+
+        {
+            path: "/MOMO/san-pham/",
+            component: <SerProCoDetail />,
+        },
+        {
+            path: "/MOMO/combo-detail/",
+            component: <SerProCoDetail />,
+        },
+        {
+            path: "/MOMO/cua-hang/:subdomain",
+            component: <MerchantDetail />,
+        },
+        {
+            path: "/MOMO/org/:subdomain",
             component: <MerchantDetail />,
         },
         // END mini app share link
@@ -278,6 +298,7 @@ function RouterConfig() {
                     <Redirect exact from="*" to="error" />
                 </Switch>
                 <AssistantBtn />
+                <ExtraFlatForm />
             </Router>
         </BrowserRouter>
     );

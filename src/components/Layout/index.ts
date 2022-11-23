@@ -18,3 +18,5 @@ export * from "./OrgMapQuick"
 export * from "./Bottom"
 export * from "./PlashScreen"
 export * from './ButtonFavorite'
+export * from './BeautyxCare'
+export * from './ShareSocial'

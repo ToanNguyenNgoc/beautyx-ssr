@@ -24,15 +24,15 @@ export function useFavorite(
         setFavoriteSt({ is_favorite: favorite, favorite_count: count })
     }, [favorite, count])
     const { USER } = useSelector((state: IStore) => state.USER)
-    const onToggleFavoriteOrg = async () => {
+    const onToggleFavoriteOrg =  () => {
         if (favoriteSt?.is_favorite) {
-            await favorites.deleteFavorite(org_id)
+            favorites.deleteFavorite(org_id)
             setFavoriteSt({
                 is_favorite: false,
                 favorite_count: favoriteSt.favorite_count - 1
             })
         } else {
-            await favorites.postFavorite(org_id)
+            favorites.postFavorite(org_id)
             setFavoriteSt({
                 is_favorite: true,
                 favorite_count: favoriteSt.favorite_count + 1

@@ -11,7 +11,6 @@ export const handleSubiz = () => {
     !su_widget &&
         (su_widget = document.getElementById("cprhliqipldavybercftg"));
     // eslint-disable-next-line no-undef
-    console.log(su_widget);
     su_widget?.classList.add("myspa_subiz_widget");
     // eslint-disable-next-line no-undef
     $.subiz("expandWidget");
