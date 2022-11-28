@@ -20,7 +20,6 @@ import {
 } from "redux/filter-result";
 import Head from "features/Head";
 import { Container, Drawer } from "@mui/material";
-import Footer from "features/Footer";
 import { BackTopButton, EmptyRes, OrgItemSec, SerProItem, XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
 import icon from "constants/icon";
@@ -93,7 +92,6 @@ function SearchResults() {
                 </div>
             </Container>
             <BackTopButton />
-            <Footer />
         </>
     );
 }

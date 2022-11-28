@@ -16,8 +16,6 @@ import paymentsReducer from "./payments/paymentSlice";
 import blogReducer from "./blog/blogSlice";
 import cateReducer from "./CateTree/cateTreeSlice";
 import comboReducer from "./org_combos/comboSlice";
-import videosReducer from "./video/videosSlice";
-import trendReducer from "./video/trendSlice";
 import appReducer from "./appointment/appSlice";
 import commentReducer from "./commentSlice";
 import orderReducer from "./order/orderSlice";
@@ -26,7 +24,8 @@ import chatOrgReducer from "./chat/chatOrgSlice";
 import tagsReducer from "./Tags/tagsSlice";
 import orgMapReducer from "./org/orgMapSlice";
 import notiReducer from "./notifications"
-import filterResultReduce from "./filter-result"
+import filterResultReduce from "./filter-result";
+import TrendDetailReducer from './trend_detail'
 
 const rootReducer = {
     TAGS: tagsReducer,
@@ -47,8 +46,6 @@ const rootReducer = {
     BLOG: blogReducer,
     CATE_TREE: cateReducer,
     COMBO: comboReducer,
-    VID: videosReducer,
-    TRENDs: trendReducer,
     APP: appReducer,
     COMMENT_MEDIA: commentReducer,
     ORDER: orderReducer,
@@ -56,7 +53,8 @@ const rootReducer = {
     CHAT_ORG: chatOrgReducer,
     ORGS_MAP: orgMapReducer,
     NOTI: notiReducer,
-    FILTER_RESULT: filterResultReduce
+    FILTER_RESULT: filterResultReduce,
+    TREND_DETAIL: TrendDetailReducer
 };
 const store = configureStore({
     reducer: rootReducer,

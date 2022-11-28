@@ -38,6 +38,7 @@ import HeadTitle from "features/HeadTitle";
 interface IProps {
     changeStyle?: boolean;
     title?: string,
+    iconBack?: string
 }
 const homePath = [
     "/TIKI",
@@ -51,7 +52,7 @@ const homePath = [
 ];
 
 function Head(props: IProps) {
-    const { changeStyle, title } = props;
+    const { changeStyle, title, iconBack } = props;
     const { t, orderService, appointment } = useContext(AppContext);
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
@@ -183,7 +184,7 @@ function Head(props: IProps) {
                                     alt=""
                                 />
                             </Link>
-                            <BackContainer changeStyle={changeStyle} />
+                            <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
                             <button
                                 className={style.head_top_left_search}
                                 onFocus={() => onToggleSearch("show")}
@@ -649,7 +650,7 @@ const SearchRecommend = () => {
         </div>
     );
 };
-const BackContainer = ({ changeStyle }: { changeStyle?: boolean }) => {
+const BackContainer = ({ changeStyle, iconBack }: { changeStyle?: boolean, iconBack?: string }) => {
     const history = useHistory();
     const location = useLocation();
     const pathname = location.pathname;
@@ -665,7 +666,7 @@ const BackContainer = ({ changeStyle }: { changeStyle?: boolean }) => {
                     : {}
             }
             className={style.head_back_btn}
-            icon={icon.chevronLeft}
+            icon={iconBack ?? icon.chevronLeft}
             iconSize={28}
             onClick={() => history.goBack()}
         />

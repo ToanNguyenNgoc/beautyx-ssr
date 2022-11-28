@@ -26,7 +26,6 @@ import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
 import { paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import Comment from 'components/Comment';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
-import Footer from 'features/Footer';
 import { postHistoryView } from 'user-behavior';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import { analytics, logEvent } from '../../firebase';
@@ -299,7 +298,6 @@ function SerProCoDetail() {
                     item_id={DETAIL.id}
                     org_id={org?.id}
                 />
-                <Footer />
             </>
             :
             <LoadDetail />

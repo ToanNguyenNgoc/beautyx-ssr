@@ -1,4 +1,3 @@
-import { OrgReviews } from "pages/MerchantDetail/components/OrgPages";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -324,9 +323,6 @@ export default function MapOrgItemDetail(props: IProps) {
                     {/* close discount */}
 
                     {/* rating */}
-                    <div className="content-info__rating">
-                        <OrgReviews org={org} isMapReview={true} />
-                    </div>
                     {/* close rating */}
                 </div>
                 {/* close content */}

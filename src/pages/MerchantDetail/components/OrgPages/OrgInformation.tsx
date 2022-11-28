@@ -7,6 +7,7 @@ import { extraOrgTimeWork } from "../../Functions/extraOrg";
 import { AppContext } from "../../../../context/AppProvider";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
 import { OrgMapQuick } from "components/Layout";
+import Comment from 'components/Comment'
 
 interface IProps {
     org: IOrganization;
@@ -160,7 +161,7 @@ export function OrgInformation(props: IProps) {
                                                 className="icon"
                                             />
                                             <div className="rate-item__text">
-                                                122 +
+                                                {org.favorites_count}+
                                             </div>
                                         </div>
                                     </div>
@@ -259,6 +260,11 @@ export function OrgInformation(props: IProps) {
                 open={openOrgMap}
                 setOpen={setOpenOrgMap}
                 org={org}
+            />
+            <Comment
+                org_id={org.id}
+                commentable_id={org.id}
+                commentable_type="ORGANIZATION"
             />
         </div>
     );

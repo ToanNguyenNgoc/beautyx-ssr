@@ -2,18 +2,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import icon from '../../../constants/icon';
-import { IOrganization } from '../../../interface/organization';
-import {
-    onDeleteFavoriteOrg,
-    onFavoriteOrg,
-    fetchAsyncByKeyword
-} from '../../../redux/org/orgSlice';
 import OrgSearch from './OrgPages/OrgSearch/OrgSearch';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from 'lodash';
-import { getTotal } from '../../../redux/cartSlice';
-import IStore from 'interface/IStore';
+import { getTotal } from 'redux/cartSlice';
+import { IOrganization } from 'interface';
+import { fetchAsyncByKeyword } from 'redux/org/orgSlice';
+import icon from 'constants/icon';
+import { useFavorite } from 'hooks';
 
 interface IProps {
     org: IOrganization,
@@ -32,27 +28,20 @@ window.addEventListener("scroll", function () {
 });
 
 function HeadOrg(props: IProps) {
+    const { org, isShowSearch, onBackFunc } = props;
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
+    const {onToggleFavorite, favoriteSt} = useFavorite({
+        org_id:org?.id,
+        type:'ORG',
+        count:org.favorites_count,
+        favorite: org.is_favorite
+    })
     const history = useHistory();
-    const { org, isShowSearch, onBackFunc } = props;
-    const org_redux = useSelector((state: IStore) => state.ORG.org)
     const orgHeadRef = useRef<any>();
     const orgSearchBtn = useRef<any>();
     const orgSearchCnt = useRef<any>();
     const orgInputRef = useRef<any>();
-    const handleFavoriteOrg = () => {
-        if (USER) {
-            if (org_redux?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org_redux))
-            } else {
-                dispatch(onFavoriteOrg(org_redux))
-            }
-        }
-        else {
-            history.push('/sign-in?1')
-        }
-    }
     const onBackClick = () => {
         if (onBackFunc) {
             return onBackFunc()
@@ -155,10 +144,10 @@ function HeadOrg(props: IProps) {
                         isShowSearch &&
                         <button
                             className='mb-head-org-cnt__button'
-                            onClick={handleFavoriteOrg}
+                            onClick={onToggleFavorite}
                         >
                             <div className="icon-btn">
-                                <img src={org_redux?.is_favorite ? icon.heart : icon.unHeart} alt="" />
+                                <img src={favoriteSt?.is_favorite ? icon.heart : icon.unHeart} alt="" />
                             </div>
                         </button>
                     }

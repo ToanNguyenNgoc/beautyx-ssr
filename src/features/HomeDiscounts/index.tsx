@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@mui/material";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
-import useSwrInfinite from "../../hooks/useSwrInfinite";
+import {useSwrInfinite} from "hooks";
 import DiscountItem from "./DiscountItem";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   Link,
   RouteComponentProps,
@@ -20,17 +20,13 @@ import LoadOrg from "components/LoadingSketion/LoadOrg";
 import PageNotFound from "components/PageNotFound";
 import HeadTitle from "features/HeadTitle";
 import Head from "features/Head";
-
 import "./style.css";
 import { usePostAnalytics } from "./Functions";
-import Footer from "features/Footer";
 import {
   OrgProducts, OrgServices, OrgCombos,
-  OrgInformation, OrgDealHot, OrgReviews, OrgGalleries
+  OrgInformation, OrgDealHot, OrgGalleries
 } from "./components/OrgPages";
 import API_ROUTE from "api/_api";
-import { useDispatch } from "react-redux";
-import { onSetOrgDetail } from "redux/org/orgSlice";
 
 
 function MerchantDetail() {
@@ -38,7 +34,6 @@ function MerchantDetail() {
   const IS_MB = useDeviceMobile()
   const location: any = useLocation()
   const params: any = useParams()
-  const dispatch = useDispatch()
   const { subdomain } = params
 
   const { response, error, isValidating } = useSwr(`/organizations/${subdomain}`, subdomain)
@@ -74,10 +69,6 @@ function MerchantDetail() {
     },
     {
       open: true,
-      id: 6, title: `${t("Mer_de.feedback")}`, path: 'phan-hoi'
-    },
-    {
-      open: true,
       id: 7, title: t("Mer_de.galleries"), path: 'thu-vien'
     },
   ];
@@ -86,9 +77,6 @@ function MerchantDetail() {
     return active
   }
   usePostAnalytics(org)
-  useEffect(() => {
-    dispatch(onSetOrgDetail(org))
-  }, [org])
 
 
   return (
@@ -133,7 +121,6 @@ function MerchantDetail() {
           </Container>
         </>
       )}
-      <Footer />
       {org && <OpenApp type="org" org_id={org.id} />}
     </div>
   );
@@ -170,10 +157,6 @@ const ChildPage = (props: ChildPageProps) => {
     {
       path: `/cua-hang/:id/thong-tin`,
       component: <OrgInformation org={org} />
-    },
-    {
-      path: `/cua-hang/:id/phan-hoi`,
-      component: <OrgReviews org={org} />
     },
     {
       path: `/cua-hang/:id/thu-vien`,

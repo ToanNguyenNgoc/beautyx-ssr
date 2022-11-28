@@ -10,23 +10,22 @@ import { Container, Dialog } from "@mui/material";
 import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
-import Footer from "../../features/Footer";
 import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "../../redux/cartSlice";
 import CartPaymentMethod from "./components/CartPaymentMethod";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
 import PaymentMethodCpn from "../../features/PaymentMethod";
 import { extraPaymentMethodId } from "../../features/PaymentMethod/extraPaymentMethodId";
-import CartNull from "../../features/Cart/components/CartNull";
 import { Transition } from "../../utils/transition";
 
 // ==== api tracking ====
 import { IOrganization } from "../../interface/organization";
 import { IBranch } from "../../interface/branch";
 import onErrorImg from "../../utils/errorImg";
-import {useDeviceMobile} from "hooks";
+import { useDeviceMobile } from "hooks";
 import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
 import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
+import { EmptyRes } from "components/Layout";
 // end
 
 const initialMomoForBeautyx = {
@@ -141,7 +140,7 @@ function Carts() {
                 <Head />
             )}
             {cartList?.length === 0 || !cartList ? (
-                <CartNull />
+                <EmptyRes title='Không có Dịch vụ/Sản phẩm trong giỏ hàng !' />
             ) : (
                 <>
                     <Container>
@@ -217,7 +216,6 @@ function Carts() {
                     />
                 </>
             )}
-            <Footer />
         </>
     );
 }

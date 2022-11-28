@@ -4,12 +4,12 @@ import dayjs from 'dayjs';
 import { paramAppointment } from "params-query"
 import icon from 'constants/icon';
 import { Appointment, AppointmentTime, NewAppointments } from 'interface/appointment';
-import {  useDeviceMobile, useSwrInfinite } from 'hooks';
-import {unique} from 'utils'
+import { useDeviceMobile, useSwrInfinite } from 'hooks';
+import { onErrorImg, unique } from 'utils'
 import { useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { formatTime } from 'utils/format';
-import { DatePicker } from 'components/Layout';
+import { DatePicker, XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
 
 import style from "./app.module.css";
@@ -209,8 +209,8 @@ const AppointmentWeek = (props: AppointmentWeekProps) => {
                   ))
                 }
                 {
-                // app.apps.length>1 && 
-                <li style={{width: 'auto',height:'100px'}}></li>
+                  // app.apps.length>1 && 
+                  <li style={{ width: 'auto', height: '100px' }}></li>
                 }
               </ul>
             </div>
@@ -230,33 +230,63 @@ const AppointmentCardItem = ({ item }: { item: AppointmentTime }) => {
         open={open}
         setOpen={setOpen}
       />
-      <div className={style.app_item}>
+      <div
+        className={style.app_item}
+        onClick={() => setOpen(true)}
+      >
+        <img
+          className={style.app_item_org_img}
+          src={item.organization?.image_url}
+          onError={(e) => onErrorImg(e)} alt=""
+        />
         <span className={style.app_item_status}>
           {item.status}
         </span>
-        <div className={style.app_item_info}>
-          <h3>{formatTime(item.time_start)}</h3>
-          <h5>{dayjs(item.time_start).format("DD/MM/YYYY")}</h5>
-        </div>
-        <div className={style.app_item_detail}>
-          <span className={style.app_item_time}>
-            {formatTime(item.time_start)}-{formatTime(item.time_end)}
-          </span>
-          <span className={style.app_item_org}>
-            {item.organization?.name}
-          </span>
-          <span className={style.app_item_address}>
-            {item.branch?.full_address ?? item.organization?.full_address}
-          </span>
-          <div className={style.app_item_bottom}>
-            <button onClick={() => setOpenQr(true)}>
-              Quét mã QR
-            </button>
-            <button onClick={() => setOpen(true)}>
-              Xem chi tiết
-            </button>
+        <XButton
+          className={style.app_icon_scan_btn}
+          icon={icon.scanQrBtn}
+          iconSize={20}
+          onClick={(e) => {
+            setOpenQr(true); e.preventDefault(); e.stopPropagation();
+          }}
+        />
+        <div className={style.app_item_head} >
+          <div className={style.app_item_info}>
+            <img src={icon.clockAppGray} className={style.app_item_icon} alt="" />
+            <h3>{formatTime(item.time_start)}</h3>
+            <h5>{dayjs(item.time_start).format("DD/MM/YYYY")}</h5>
+          </div>
+          <div className={style.app_item_detail}>
+            <span className={style.app_item_time}>
+              {formatTime(item.time_start)}-{formatTime(item.time_end)}
+            </span>
+            <span className={style.app_item_org}>
+              {item.organization?.name}
+            </span>
+            <span className={style.app_item_address}>
+              {item.branch?.full_address ?? item.organization?.full_address}
+            </span>
+            <div className={style.app_item_bottom}>
+              <button
+                onClick={(e) => { setOpenQr(true); e.preventDefault(); e.stopPropagation() }}
+              >
+                Quét mã QR
+              </button>
+              <button
+                onClick={(e) => { setOpen(true); e.preventDefault(); e.stopPropagation() }}
+              >
+                Xem chi tiết
+              </button>
+            </div>
           </div>
         </div>
+        <ul className={style.app_item_services}>
+          {
+            item.services?.map(service => (
+              <li className={style.app_item_service_name}>{service.service_name}</li>
+            ))
+          }
+        </ul>
       </div>
       <PopupNotification
         open={openQr} setOpen={setOpenQr}

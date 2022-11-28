@@ -3,14 +3,12 @@ import React, { useContext, useRef, useState } from 'react';
 import { AppContext } from '../../../context/AppProvider';
 import { ITag, ITagParent } from "../../../interface/tags";
 import { useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
     formatRouterCateResult,
 } from '../../../utils/formatRouterLink/formatRouter';
 import { Masonry } from "@mui/lab"
 import style from "./home-cate.module.css"
-import slugify from '../../../utils/formatUrlString';
-import { SpecialItem } from 'components/Layout';
 import { clst } from 'utils';
 import API_ROUTE from 'api/_api';
 import { useSwr } from 'hooks';
@@ -128,22 +126,13 @@ interface TagsChildGroup {
 }
 
 const CateSerChildHover = ({ parent }: { parent: ITag[] }) => {
-    const { serviceCate, specialItems } = useContext(AppContext);
-    const history = useHistory();
+    const { serviceCate } = useContext(AppContext);
     const tagsChildGroup: TagsChildGroup[] = parent.map((par: ITag) => {
         return {
             parent: par,
             children: serviceCate.filter((child: ITag) => child.parent_id === par.id)
         }
     })
-    const onItemSpecial = (item: any) => {
-        if (item.type === "DISCOUNT") {
-            return history.push(`/chi-tiet-giam-gia/service_${item.organization_id}_${item.id}_${item.item_id}_${slugify(item.name)}`)
-        }
-        if (item.type === "SERVICE") {
-            return history.push(`/dich-vu/${item.id}_${item.organization_id}_${slugify(item.name)}`)
-        }
-    }
     return (
         <div className={`${style.item_child_cnt} ${style.item_child_cnt_ser}`}>
             <div className={style.item_child_cnt_right}>
@@ -176,23 +165,6 @@ const CateSerChildHover = ({ parent }: { parent: ITag[] }) => {
                         ))
                     }
                 </Masonry>
-            </div>
-            <div className={style.item_child_cnt_left}>
-                <span className={style.item_child_cnt_title}>
-                    Top dịch vụ bán chạy
-                </span>
-                <ul className={style.special_list}>
-                    {
-                        specialItems.map((item: any, index: number) => (
-                            <li
-                                onClick={() => onItemSpecial(item)}
-                                key={index} className={style.special_list_item}
-                            >
-                                <SpecialItem item={item} />
-                            </li>
-                        ))
-                    }
-                </ul>
             </div>
         </div>
     )

@@ -36,9 +36,6 @@ import User_purple from "../assets/icon/user_box.svg";
 import Location from "../assets/icon/location.svg";
 import ArrowDownWhite from "../assets/icon/arrow-down-white.svg";
 import SearchWhite from "../assets/icon/search-white.svg";
-import suppportIcon from "../assets/icon/support.svg";
-
-
 import Lock from "../assets/icon/lock.svg";
 import eye from "../assets/icon/eye.svg";
 import facebook from "../assets/icon/facebook.svg";
@@ -224,7 +221,15 @@ import flash from 'assets/icon/flash.svg';
 import eyeCrossPurple from 'assets/icon/eyeCrossPurple.svg'
 import clockGray from 'assets/icon/clockGray.svg'
 import shareWhite from 'assets/icon/shareWhite.svg'
-
+import heartBoldBlack from 'assets/icon/heartBoldBlack.svg'
+import heartBoldRed from 'assets/icon/heartBoldRed.svg'
+import commentBoldBlack from 'assets/icon/commentBoldBlack.svg'
+import eyeBoldBlack from 'assets/icon/eyeBoldBlack.svg'
+import shareBoldBlack from 'assets/icon/shareBoldBlack.svg'
+import chevronLeftWhite from 'assets/icon/chevronLeftWhite.svg'
+import clockAppGray from 'assets/icon/clockAppGray.svg'
+import scanQrBtn from 'assets/icon/scanQrBtn.svg'
+import phoneWhiteBold from 'assets/icon/phoneWhiteBold.svg'
 
 const icon = {
     noApply,
@@ -430,6 +435,12 @@ const icon = {
     bellWhite, cartWhiteBold, cartLineBlack, settingLineBlack,
     calendarGreen, rewardOrange, ticketRed, communityPurple,
     cateClinic, cateSalon, cateSanpham, cateSpa, cateNail,
-    flash, eyeCrossPurple, clockGray, shareWhite
+    flash, eyeCrossPurple, clockGray, shareWhite, heartBoldBlack, heartBoldRed,
+    commentBoldBlack, eyeBoldBlack,
+    shareBoldBlack,
+    chevronLeftWhite,
+    clockAppGray,
+    scanQrBtn,
+    phoneWhiteBold
 };
 export default icon;

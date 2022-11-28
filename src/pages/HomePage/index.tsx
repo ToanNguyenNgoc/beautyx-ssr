@@ -13,8 +13,7 @@ import HomeWatched from "./HomeWatched";
 import Head from "features/Head";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
-import Footer from "features/Footer";
-import { Bottom, OpenApp, PlashScreen } from "components/Layout";
+import { Bottom, OpenApp, PlashScreen, XButton } from "components/Layout";
 import { useDeviceMobile, useElementOnScreen } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
@@ -27,6 +26,8 @@ import HomeWhyNot from "./HomeWhyNot";
 import HomeProvince2 from "./HomeProvince2";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
+import { handleCallingPhone } from "utils/customChat";
+import AssistantBtn from "components/AssistantBtn";
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
     const banner_status = useSelector((state: any) => state.HOME.status);
@@ -82,7 +83,6 @@ export default function HomePage() {
                 <HomeProvince2 />
                 <HomePartners />
             </Container>
-            <Footer />
             <Bottom />
             <OpenApp type="none" />
         </div>

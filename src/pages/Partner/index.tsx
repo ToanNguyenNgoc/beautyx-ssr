@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { partnerStyle } from "./style";
 import Head from "../../features/Head";
-import Footer from "../../features/Footer/index";
 import Information from "./components/Information";
 import FormPartner from "./components/FormPartner";
 import HeadTitle from "../../features/HeadTitle";
@@ -27,7 +26,6 @@ export default function Partner() {
                     </div>
                 </div>
             </section>
-            <Footer />
         </div>
     );
 }

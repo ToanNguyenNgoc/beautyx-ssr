@@ -18,7 +18,6 @@ import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 import { pickBy, identity } from 'lodash'
 import order from '../../api/orderApi';
 import { IUserAddress } from '../../interface/userAddress'
-import Footer from '../Footer';
 import { formatAddCart } from '../../utils/cart/formatAddCart';
 import { DISCOUNT_TYPE } from '../../utils/formatRouterLink/fileType';
 import SectionTitle from '../SectionTitle';
@@ -220,7 +219,6 @@ function BuyNow() {
                     </div>
                 </div>
             </Container>
-            <Footer />
         </>
     );
 }

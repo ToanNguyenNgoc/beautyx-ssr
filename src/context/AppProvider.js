@@ -17,8 +17,6 @@ import {
     paramOrderService
 } from "../params-query";
 import { useSwr, useFetch } from "hooks"
-// import { fetchAsyncAppCur } from 'redux/notifications'
-// import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -53,12 +51,6 @@ export default function AppProvider({ children }) {
         }
         callUserProfile()
     }, [sign, dispatch]);
-    // useEffect(() => {
-    //     if (USER) {
-    //         dispatch(fetchAsyncAppCur())
-    //         dispatch(fetchAsyncOrderServices())
-    //     }
-    // }, [USER])
     useEffect(() => {
         dispatch(fetchAsyncHome())
         dispatch(fetchAsyncNews());
@@ -106,7 +98,6 @@ export default function AppProvider({ children }) {
     const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
 
     const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
-    const specialItems = useFetch(true, "https://beautyx.vercel.app/v1/special-items").response
     //get services, appointment user
     const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
     const orderService = useSwr("/orders", USER, paramOrderService).responseArray
@@ -125,7 +116,6 @@ export default function AppProvider({ children }) {
         geo,
         productCate,
         serviceCate,
-        specialItems,
         appointment,
         orderService,
 

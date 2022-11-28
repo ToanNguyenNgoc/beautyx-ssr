@@ -10,7 +10,6 @@ import icon from "../../constants/icon";
 import { useHistory, useLocation } from "react-router-dom";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { AppContext } from "../../context/AppProvider";
-import Footer from "../Footer";
 import { ApointmentTab } from "pages/Apointment";
 import { Bottom } from "components/Layout";
 import { useDeviceMobile } from "hooks";
@@ -77,7 +76,6 @@ function Calendar() {
                 </div>
             </div>
             <Bottom />
-            <Footer />
         </>
     );
 }

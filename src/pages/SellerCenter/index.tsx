@@ -4,7 +4,6 @@ import './style.css'
 import { AppContext } from '../../context/AppProvider';
 import { Container } from '@mui/material';
 import { useHistory } from 'react-router-dom';
-import Footer from '../../features/Footer';
 import icon from '../../constants/icon';
 
 const onDropList = () => {
@@ -98,7 +97,6 @@ function SellerCenter() {
                     </div>
                 </div>
             </div>
-            <Footer />
         </>
     );
 }

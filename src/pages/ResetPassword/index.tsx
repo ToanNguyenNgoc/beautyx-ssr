@@ -5,7 +5,6 @@ import FormTelephone from './components/FormTelephone';
 import FormOtp from './components/FormOtp';
 import { authentication, RecaptchaVerifier, signInWithPhoneNumber } from '../../firebase';
 import FormHead from './components/FormHead';
-import Footer from '../../features/Footer';
 
 declare global {
     interface Window {
@@ -117,9 +116,6 @@ function ResetPassword() {
                     </div>
                 </div>
             </Container>
-            <div className="for-footer">
-                <Footer />
-            </div>
         </>
     );
 }

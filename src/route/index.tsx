@@ -16,17 +16,15 @@ import CartPaymentStatus from "../features/CartPaymentStatus";
 import ServicesUser from "../features/ServiceUser";
 import SearchResults from "../pages/SearchResults/index";
 import HomeListProvince from "../features/HomeResults/HomeListProvince";
-import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
+import DealBanner from 'pages/DealBanner'
 import Policy from "../pages/Policy";
 import SellerCenter from "../pages/SellerCenter";
 import Otp from "../features/Otp";
 import ResetPassword from "../pages/ResetPassword";
-// import DiscountDetail from "../pages/DiscountDetail";
 import DiscountDetail from 'pages/_DiscountDetail'
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeMap from "../features/HomeMap";
 import HomeCateResult from "../features/HomeResults/HomeCateResult";
-import Blog from "../features/Blog";
 import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
 import Calendar from "../features/Calendar";
@@ -46,6 +44,7 @@ import Community from "pages/Community";
 import VoucherPage from "pages/VoucherPage";
 import TrendsDetail from "pages/TrendsDetail";
 import SerProCoDetail from "pages/_SerProCoDetail";
+import Footer from "components/Footer";
 
 function RouterConfig() {
     const routes = [
@@ -175,12 +174,8 @@ function RouterConfig() {
             component: <SellerCenter />,
         },
         {
-            path: "/deal/:title",
-            component: <HomeDealBanner />,
-        },
-        {
-            path: "/tin-tuc",
-            component: <Blog />,
+            path: "/deal/:_id",
+            component: <DealBanner />,
         },
         {
             path: "/chi-tiet-giam-gia/:name",
@@ -297,8 +292,9 @@ function RouterConfig() {
                     </AuthRoute>
                     <Redirect exact from="*" to="error" />
                 </Switch>
-                <AssistantBtn />
                 <ExtraFlatForm />
+                <AssistantBtn />
+                <Footer />
             </Router>
         </BrowserRouter>
     );

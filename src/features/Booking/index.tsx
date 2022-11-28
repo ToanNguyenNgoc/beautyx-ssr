@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import Head from "../Head";
@@ -11,7 +11,6 @@ import { addServiceBookNow, clearAllServices } from "../../redux/servicesBookSli
 import icon from "../../constants/icon";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
-import Footer from "../Footer";
 import order from "../../api/orderApi";
 import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
@@ -37,11 +36,13 @@ import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
 import { useDeviceMobile } from "hooks";
+import { AppContext } from "context/AppProvider";
 
 // end
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
+    const {t} = useContext(AppContext)
     const [finalAmount, setFinalAmount] = useState(0)
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const { org, status } = useSelector((state: any) => state.ORG);
@@ -64,6 +65,7 @@ function Booking() {
     const branchRef = useRef<any>();
     const history = useHistory();
     const location: any = useLocation();
+    const TYPE_PAGE = location.state?.TYPE
     //api discount apply for book now
     //-------------------------------
 
@@ -350,6 +352,7 @@ function Booking() {
                         </div>
                         <div className="booking-cnt__right">
                             {IS_MB && <UserPaymentInfo
+                                title={TYPE_PAGE === 'BOOK_NOW' ? t('pm.payment_info'): t('pm.payment_booking')}
                                 onSetAddressDefault={setAddress}
                             />}
                             <br />
@@ -367,27 +370,6 @@ function Booking() {
                                     </p>
                                 </div>
                             </div>
-
-                            {/* {
-                                IS_MB ?
-                                    <div className="booking-cnt__right-org">
-                                        <img
-                                            src={org?.image_url}
-                                            onError={(e) => onErrorImg(e)}
-                                            alt=""
-                                            className="org-avt"
-                                        />
-                                        <div className="book-org-detail">
-                                            <p className="org-name">{org?.name}</p>
-                                            <p className="org-address">
-                                                {org?.full_address}
-                                            </p>
-                                        </div>
-                                    </div> :
-                                    <UserPaymentInfo
-                                        onSetAddressDefault={setAddress}
-                                    />
-                            } */}
                             {
                                 location.state?.vouchers?.length > 0 &&
                                 <>
@@ -624,7 +606,6 @@ function Booking() {
                     setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                 />
             </Container>
-            <Footer />
         </>
     );
 }
