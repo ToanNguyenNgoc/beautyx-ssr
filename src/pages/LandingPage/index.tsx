@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import {  useDeviceMobile, useSwr } from 'hooks'
 import PageNotFound from 'components/PageNotFound';
 import { IBanner } from 'interface/banner'
-import Footer from 'features/Footer';
 import style from './landing.module.css'
 import { Container } from '@mui/material';
 import Head from 'features/Head';
@@ -43,7 +42,6 @@ function LadingPage() {
                         </div>
                     </Container>
                 </div>
-                <Footer />
             </>
             {!render && <PageNotFound />}
         </>

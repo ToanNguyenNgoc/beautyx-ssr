@@ -13,11 +13,12 @@ import { IUserAddress } from 'interface';
 interface IProps {
     onSetAddressDefault?: (address?: any) => void;
     disableEdit?: boolean;
+    title?: string
 }
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext);
-    const { onSetAddressDefault, disableEdit } = props;
+    const { onSetAddressDefault, disableEdit, title } = props;
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
     const { response } = useSwr(API_ROUTE.ADDRESSES, USER)
@@ -30,7 +31,9 @@ function UserPaymentInfo(props: IProps) {
     }, [addresses])
     return (
         <div className={style.container}>
-            <span className={style.title}>{t("pm.payment_info")}</span>
+            <span className={style.title}>
+                {title ?? t("pm.payment_info")}
+            </span>
             <div className={style.container_user}>
                 <div className={style.user_row}>
                     <div className={style.user_row_label}>{t("pm.buyer")}</div>

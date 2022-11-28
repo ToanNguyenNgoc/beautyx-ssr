@@ -10,7 +10,6 @@ import HeadMobile from 'features/HeadMobile';
 import Head from 'features/Head';
 import DiscountItem from 'features/HomeDiscounts/DiscountItem';
 import { LoadGrid } from 'components/LoadingSketion';
-import Footer from 'features/Footer';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 function HomeDiscountList() {
@@ -76,7 +75,6 @@ function HomeDiscountList() {
                     </div> */}
                 </div>
             </Container>
-            <Footer />
         </>
     );
 }

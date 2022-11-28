@@ -174,8 +174,16 @@
 .app_item_bottom button:first-child {
     display: none;
 }
-.app_item_bottom_qr{
+
+.app_item_bottom_qr {
     width: 90vw;
+}
+
+.app_item_org_img,
+.app_item_icon,
+.app_icon_scan_btn,
+.app_item_services {
+    display: none;
 }
 
 @media screen and (max-width: 1023.98px) {
@@ -205,50 +213,96 @@
     .week_cont {
         display: none;
     }
-    .week_apps_cnt{
+
+    .week_apps_cnt {
         height: max-content;
     }
 
     .week_app_item {
         width: 100%;
-        padding-bottom: 82px;
+        padding: 0px 12px 82px 12px;
     }
 
+    /* appointment item */
     .app_item {
-        padding: 0px;
+        padding: 12px;
         background-color: var(--bg-white);
-        border: solid 1px var(--bg-color);
+        box-shadow: var(--box-shadow);
         border-radius: 8px;
         display: flex;
-        height: 100px;
+        flex-direction: column;
         justify-content: flex-end;
         margin: 18px 0px;
+        border: none;
+        position: relative;
+    }
+
+    .app_icon_scan_btn {
+        display: flex;
+        justify-content: center;
+        padding: 6px;
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        top: 12px;
+        right: 12px;
+        z-index: 1;
+        background-color: var(--text-orange);
+    }
+
+    .app_item_org_img {
+        display: block;
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        background-color: #84828c;
+        border-radius: 6px;
+        top: 12px;
+    }
+
+    .app_item_head {
+        padding-left: 52px;
     }
 
     .app_item_status {
         top: -10px;
         background-color: #e1daff;
         color: var(--purple);
+        display: none;
     }
 
     .app_item_info {
         display: flex;
-        position: absolute;
-        height: 100px;
-        width: 100px;
-        background-color: var(--bg-color);
         border-radius: 8px 0px 0px 8px;
-        flex-direction: column;
         align-items: center;
-        justify-content: center;
+        color: var(--purple);
+    }
+
+    .app_item_icon {
+        display: block;
+    }
+
+    .app_item_info h3 {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+        margin: 0px 5px;
+    }
+
+    .app_item_info h5 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
     }
 
     .app_item_detail {
-        height: 100px;
-        width: calc(100% - 100px);
-        position: absolute;
-        right: 0;
-        padding: 4px 4px 4px 8px;
+        padding: 0px;
+        margin-top: 4px;
+        width: calc(100% - 44px);
+    }
+
+    .app_item_org {
+        display: none;
     }
 
     .app_item_time {
@@ -256,7 +310,8 @@
     }
 
     .app_item_bottom {
-        display: flex;
+        /* display: flex; */
+        display: none;
         justify-content: flex-end;
     }
 
@@ -271,5 +326,17 @@
         display: block;
         margin-right: 6px;
         background-color: var(--text-orange);
+    }
+
+    .app_item_services {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .app_item_service_name {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 2px;
     }
 }

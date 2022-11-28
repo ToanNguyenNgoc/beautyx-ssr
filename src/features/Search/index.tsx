@@ -29,7 +29,6 @@ interface SearchProps {
 
 
 function Search(props: SearchProps) {
-    const { specialItems } = useContext(AppContext)
     const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
     const { key_work, key_work_debounce, onCloseSearchTimeOut, onCloseSearchDialog } = props
     const IS_MB = useDeviceMobile()
@@ -267,19 +266,6 @@ function Search(props: SearchProps) {
                 {
                     KEY_WORD === "" &&
                     <>
-                        <div className={style.section_recommend}>
-                            <span className={style.section_title}>Dịch vụ bán chạy</span>
-                            <ul className={style.list_special}>
-                                {specialItems.map((item: any, index: number) => (
-                                    <li
-                                        onClick={() => onItemSpecial(item)}
-                                        key={index} className={style.list_special_item}
-                                    >
-                                        <SpecialItem item={item} />
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
                         <div className={style.section_recommend}>
                             <span className={style.section_title}>Gợi ý tìm kiếm</span>
                             <ul className={style.list_key}>

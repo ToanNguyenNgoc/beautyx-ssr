@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import TimeItem from "./components/TimeItem";
 import "./timePicker.css";
-import { IOrganization } from "../../interface/organization";
-import { extraOrgTimeWork } from "../../pages/MerchantDetail/Functions/extraOrg";
+import { IOrganization } from "interface";
+import { extraOrgTimeWork } from "pages/MerchantDetail/Functions/extraOrg";
 
 interface IProps {
     onChange: (e: string) => void;
@@ -23,22 +23,22 @@ function TimePicker(props: IProps) {
     const time_works_today = orgTimes?.find(
         (item: any, index: number) => index + 2 === today
     );
-    const { from_time_opening, to_time_opening } = time_works_today;
+    // const { from_time_opening, to_time_opening } = time_works_today;
+    const from_time_opening = time_works_today?.from_time_opening ?? ''
+    const to_time_opening = time_works_today?.to_time_opening ?? ''
     const timeOpen = from_time_opening.split(":");
     const timeClose = to_time_opening.split(":");
-    // console.log("timeClose", timeClose);
-    // let times = 25;
     const [t, setT] = useState();
     // var rows = [];
     let timeOpens = dayjs()
-        .set("hour", timeOpen[0])
-        .set("minute", timeOpen[1])
+        .set("hour", parseInt(timeOpen[0]) ?? 8)
+        .set("minute", parseInt(timeOpen[1]) ?? 0)
         .set("second", 0)
         .subtract(30, "minute");
 
     let timeCloses = dayjs()
-        .set("hour", timeClose[0])
-        .set("minute", timeClose[1])
+        .set("hour", parseInt(timeClose[0]) ?? 21)
+        .set("minute", (parseInt(timeClose[1])) ?? 0)
         .set("second", 0);
 
     const arr: any = [];
@@ -46,27 +46,6 @@ function TimePicker(props: IProps) {
         timeOpens = timeOpens.add(30, "minute");
         arr.push(timeOpens);
     }
-
-    // for (var i = 0; i <= times; i++) {
-    //     if (i !== 8 && i !== 9) {
-    //         rows.push(
-    //             <TimeItem
-    //                 key={i}
-    //                 Time={timeOpens}
-    //                 onChangeItem={(e) => onChange(e)}
-    //                 disablePrev={disablePrev}
-    //                 t={t}
-    //                 setT={setT}
-    //                 // Now={now}
-    //                 // handleClick={handleTime}
-    //                 // activeTime={activeTime}
-    //                 // activeDate={activeDate}
-    //             />
-    //         );
-    //     }
-    //     timeOpens = timeOpens.add(30, "minute");
-    // }
-    // return <div className="time-pk">{rows}</div>;
     return (
         <div className="time-pk">
             {arr.map((item: any, i: number) => (
@@ -78,10 +57,6 @@ function TimePicker(props: IProps) {
                     disablePrev={disablePrev}
                     t={t}
                     setT={setT}
-                // Now={now}
-                // handleClick={handleTime}
-                // activeTime={activeTime}
-                // activeDate={activeDate}
                 />
             ))}
         </div>

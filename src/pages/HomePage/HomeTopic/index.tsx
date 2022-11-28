@@ -46,7 +46,7 @@ function HomeTopic() {
         dots: false,
         infinite: true,
         arrows: true,
-        centerPadding: IS_MB ? "18px" : "100px",
+        centerPadding: IS_MB ? "14px" : "62px",
         centerMode: true,
         speed: 800,
         slidesToShow: 1,
@@ -81,8 +81,7 @@ function HomeTopic() {
                                 <Link
                                     onClick={scrollTop}
                                     to={{
-                                        pathname: `/deal/${slugify(item.title)}`,
-                                        search: `${item.id}`,
+                                        pathname: `/deal/${slugify(item.title)}`
                                     }}
                                     key={item.id} className={style.detail_item_cnt}
                                 >

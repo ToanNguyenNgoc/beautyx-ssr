@@ -3,7 +3,6 @@ import style from "./style.module.css";
 import { useDeviceMobile, useSwrInfinite } from "hooks";
 import HeadMobile from "features/HeadMobile";
 import Head from "features/Head";
-import Footer from "features/Footer";
 import { Container } from "@mui/material";
 import { XButton } from "components/Layout";
 import { paramsDiscounts } from "params-query";
@@ -79,7 +78,6 @@ export default function VoucherPage() {
                 </div>
             </Container>
             <BackTopButton />
-            <Footer />
         </div>
     );
 }

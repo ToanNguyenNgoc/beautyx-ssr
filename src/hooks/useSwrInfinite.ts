@@ -34,4 +34,3 @@ export function useSwrInfinite(
         mutate
     }
 }
-export default useSwrInfinite

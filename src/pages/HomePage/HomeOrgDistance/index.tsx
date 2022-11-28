@@ -102,7 +102,7 @@ function HomeOrgDistance() {
 export default HomeOrgDistance;
 
 const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
-    const { responseArray } = useSwr(API_ROUTE.GALLERIES_ORG_ID(org?.id), org?.id)
+    const { responseArray } = useSwr(API_ROUTE.GALLERIES_ORG_ID(org?.id), (org?.id))
     const galleries: IOrgMobaGalleries[] = responseArray
     return (
         <Link

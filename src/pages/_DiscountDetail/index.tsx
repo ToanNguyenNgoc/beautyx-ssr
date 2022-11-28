@@ -24,7 +24,6 @@ import { addCart } from 'redux/cartSlice';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
 import { clearAllServices } from 'redux/servicesBookSlice';
-import Footer from 'features/Footer';
 
 function DiscountDetail() {
     const IS_MB = useDeviceMobile()
@@ -209,7 +208,6 @@ function DiscountDetail() {
                         }
                     </div>
                 </Container>
-                <Footer/>
                 <OpenApp
                     type='discount'
                     id={discount.id}

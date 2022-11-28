@@ -1,13 +1,11 @@
 import API_3RD from "api/3rd-api";
 import Head from "features/Head";
-import HeadMobile from "features/HeadMobile";
 import React, { useRef } from "react";
 import { useDeviceMobile, useFetch } from "hooks";
 import { ITrend } from "./trend.interface";
-import style from "./trends.module.css";
-import VideoItem from "./VideoItem";
 import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
+import style from "./trends.module.css";
 
 function Trends() {
     const { response } = useFetch(
@@ -22,20 +20,6 @@ function Trends() {
             <Container>
                 <div className={style.container_large}>
                     <ul className={style.trend_list}>
-                        {
-                            trends.map((item: ITrend, index: number) => (
-                                <li key={index} className={style.trend_list_video_thumb}>
-                                    <VideoItemThumb item={item} />
-                                </li>
-                            ))
-                        }
-                        {
-                            trends.map((item: ITrend, index: number) => (
-                                <li key={index} className={style.trend_list_video_thumb}>
-                                    <VideoItemThumb item={item} />
-                                </li>
-                            ))
-                        }
                         {
                             trends.map((item: ITrend, index: number) => (
                                 <li key={index} className={style.trend_list_video_thumb}>
@@ -64,8 +48,8 @@ const VideoItemThumb = ({ item }: { item: ITrend }) => {
     return (
         <Link
             to={{ pathname: `/video/${item._id}` }}
-            onMouseEnter={() => onTogglePlayVideo(true)}
-            onMouseLeave={() => onTogglePlayVideo(false)}
+            // onMouseEnter={() => onTogglePlayVideo(true)}
+            // onMouseLeave={() => onTogglePlayVideo(false)}
         >
             <video
                 ref={refVideo}

@@ -27,7 +27,10 @@ import { PlashScreen } from "components/Layout";
 ReactDOM.render(
     <React.StrictMode>
         <SWRConfig
-            value={{ fetcher: (url) => axiosClient.get(url, AUTH_HEADER()), shouldRetryOnError: false }}
+            value={{
+                fetcher: (url) => axiosClient.get(url, AUTH_HEADER()),
+                shouldRetryOnError: false
+            }}
         >
             <Provider store={store}>
                 <Suspense fallback={<PlashScreen />}>

@@ -5,7 +5,6 @@ import Information from "./components/Information/index";
 import Head from "features/Head/index";
 import Orders from "features/Orders/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
-import Footer from "features/Footer";
 import React, { useEffect, useState } from "react";
 import { fetchAsyncDiscountsUser, logoutUser } from "redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -216,7 +215,6 @@ function Account() {
             </Container>
             {IS_MB && location.pathname === '/tai-khoan' && <Bottom />}
             <Guide open={guide} setOpen={setGuide} />
-            <Footer />
         </>
     );
 }

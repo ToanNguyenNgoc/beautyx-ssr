@@ -58,10 +58,13 @@ export const handleCallingPhone = () => {
     const phoneNumber = "tel:02899959938";
     switch (FLAT_FORM) {
         case FLAT_FORM_TYPE.TIKI:
-            callApiFromTiki("openNativeAppStore", {
-                googlePlayId: "com.facebook.orca",
-                appleStoreId: "454638411",
-            });
+            // callApiFromTiki("openNativeAppStore", {
+            //     googlePlayId: "com.facebook.orca",
+            //     appleStoreId: "454638411",
+            // });
+            callApiFromTiki('makePhoneCall', {
+                number: '02899959938'
+            })
             window.open(phoneNumber, "_blank");
             break;
         case FLAT_FORM_TYPE.MOMO:

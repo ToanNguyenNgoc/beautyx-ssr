@@ -31,6 +31,8 @@ export function Bottom() {
         //     icon: ICON.trend,
         //     iconAct: ICON.trendAct,
         //     path: "/xu-huong",
+        //     params: "",
+        //     badge: 0
         // },
         {
             id: 3,

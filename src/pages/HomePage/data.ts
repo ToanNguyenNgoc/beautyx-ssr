@@ -11,9 +11,10 @@ import homeWhy2 from "assets/icon/homeWhy2.svg";
 import homeWhy3 from "assets/icon/homeWhy3.svg";
 import homeWhy4 from "assets/icon/homeWhy4.svg";
 
-import deal0 from "assets/image/deal0.png"
-import deal1 from "assets/image/deal1.png"
-import deal2 from "assets/image/deal2.png"
+import deal0 from "assets/image/deal0.jpg"
+import deal1 from "assets/image/deal1.jpg"
+import deal2 from "assets/image/deal2.jpg"
+
 
 
 export interface Ideals {

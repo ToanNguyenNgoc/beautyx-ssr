@@ -32,11 +32,12 @@ function SignIn(props: any) {
             const response = await authentication.login(values);
             if (remember === true) {
                 localStorage.setItem("_WEB_TK", response.data.context.token);
+                localStorage.setItem('_WEB_TK_RE', response.data.context.refresh_token)
+                localStorage.setItem('_WEB_TK_EX', response.data.context.token_expired_at)
             } else {
-                window.sessionStorage.setItem(
-                    "_WEB_TK",
-                    response.data.context.token
-                );
+                sessionStorage.setItem("_WEB_TK", response.data.context.token);
+                sessionStorage.setItem('_WEB_TK_RE', response.data.context.refresh_token)
+                sessionStorage.setItem('_WEB_TK_EX', response.data.context.token_expired_at)
             }
             const res = await dispatch(fetchAsyncUser());
             if (res?.payload) {
