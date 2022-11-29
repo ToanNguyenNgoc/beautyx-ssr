@@ -1,6 +1,6 @@
 import React from 'react';
 import img from 'constants/img';
-import plashScreenMb from 'assets/image/plashScreenMb.jpg'
+import plashScreenMb from 'assets/image/plashScreen.png'
 import style from './plash.module.css'
 
 export function PlashScreen() {

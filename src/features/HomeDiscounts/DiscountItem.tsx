@@ -62,10 +62,17 @@ function DiscountItem(props: IProps) {
                 />
             </div>
             <div className="home-discount-item__detail">
+                {
+                    discountPar.distance_organization &&
+                    <div className="distance">
+                        {/* <span className="dot"></span> */}
+                        {formatDistance(discountPar.distance_organization)}
+                    </div>
+                }
                 <h2 className="name">
                     {discountItem.productable.service_name || discountItem.productable.product_name}
                 </h2>
-                <div className="flex-row price">
+                <div className="flex-column price">
                     <span className="sale-price">
                         {formatPrice(displayDisPrice)}đ
                     </span>
@@ -74,18 +81,11 @@ function DiscountItem(props: IProps) {
                         {formatPrice(displayPrice)}đ
                     </span>
                 </div>
-                {
-                    discountPar.distance_organization &&
-                    <div className="distance">
-                        <span className="dot"></span>
-                        Cách bạn: {formatDistance(discountPar.distance_organization)}
-                    </div>
-                }
-                <div className="address">
+                {/* <div className="address">
                     <img src={icon.mapPinRed} alt="" />
                     <span>{discountItem.organization.full_address}</span>
-                </div>
-                <div className="limit-bar">
+                </div> */}
+                {/* <div className="limit-bar">
                     <div
                         style={
                             !discountPar.total ||
@@ -105,7 +105,7 @@ function DiscountItem(props: IProps) {
                             ? `Đã bán ${discountPar.used}/${discountPar.total}`
                             : "Đang mở"}
                     </span>
-                </div>
+                </div> */}
             </div>
         </div>
     );

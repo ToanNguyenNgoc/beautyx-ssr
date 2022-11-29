@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Container } from '@mui/system';
-import { SerProItem } from 'components/Layout';
+import { SerProItem, XButton } from 'components/Layout';
 import { FilterPrice, FilterLocation, EventLocation, FilterSort } from 'components/Filter';
-import {  useSwr, useSwrInfinite } from 'hooks';
+import { useSwr, useSwrInfinite } from 'hooks';
 import { ITag } from 'interface';
 import { paramsProducts, paramsProductsCate } from 'params-query';
 import { formatParamsString, formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
@@ -13,6 +13,32 @@ import icon from 'constants/icon';
 import { LoadGrid } from 'components/LoadingSketion';
 import style from "./home-cate.module.css"
 import { extraParamsUrl } from 'utils';
+import Slider from 'react-slick';
+import Skeleton from 'react-loading-skeleton';
+
+interface IPageGroup {
+    page: number,
+    items: ITag[]
+}
+const NextButton = (props: any) => {
+    return (
+        <XButton
+            className={style.next_btn}
+            onClick={() => props.onClick()}
+            icon={icon.chevronRight}
+        />
+    )
+}
+const PrevButton = (props: any) => {
+    const { onClick } = props;
+    return (
+        <XButton
+            className={style.prev_btn}
+            onClick={onClick}
+            icon={icon.chevronLeft}
+        />
+    )
+}
 
 function HomeCateResult() {
     const params: any = extraParamsUrl();
@@ -23,7 +49,8 @@ function HomeCateResult() {
     const type = page_url === "danh-sach-dich-vu" ? "SERVICE" : "PRODUCT"
     const query = params?.sort ?? ""
     const userLocation = params?.location ?? ''
-    const tag: ITag = useSwr(`/tags/${id}`, id, paramsProductsCate).response
+    const { response, isValidating } = useSwr(`/tags/${id}`, id, paramsProductsCate)
+    const tag: ITag = response
     const tagParent: ITag = useSwr(`/tags/${tag?.parent_id}`, tag?.parent_id, paramsProductsCate).response
     const tagParParent: ITag = useSwr(
         `/tags/${tagParent?.parent_id}`,
@@ -80,6 +107,33 @@ function HomeCateResult() {
         const pathname = location.pathname
         history.push(`${pathname}?${formatParamsString(paramsChange)}`)
     }
+    //pagination tags child
+    const perPage = 6
+    const totalTagChild = tag?.children?.length ?? 0
+    const totalPage = Math.ceil(totalTagChild / perPage)
+    const pageGroup: IPageGroup[] = []
+    for (var i = 0; i < totalPage; i++) {
+        const pageItem = {
+            page: i + 1,
+            items: tag?.children?.slice(i * perPage, i * perPage + perPage) ?? []
+        }
+        pageGroup.push(pageItem)
+    }
+    const [slide, setSlide] = useState(0)
+    const settings = {
+        dots: false,
+        infinite: true,
+        arrows: true,
+        speed: 800,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow: slide === 0 ? <NextButton /> : <></>,
+        prevArrow: slide === 1 ? <PrevButton /> : <></>,
+        swipe: true,
+        afterChange: function (index: number) {
+            setSlide(index)
+        },
+    }
 
     return (
         <>
@@ -124,21 +178,38 @@ function HomeCateResult() {
                             </span>
                         }
                     </div>
+                    <div className={style.cate_child_cnt}>
+                        {!tag && isValidating && <LoadCateChild />}
+                        <Slider {...settings} >
+                            {
+                                pageGroup.map((page: IPageGroup) => (
+                                    <ul
+                                        key={page.page} className={style.cate_child_list}
+                                    >
+                                        {
+                                            page.items?.map((tag_child: ITag, index: number) => (
+                                                <li key={index} className={style.cate_child_item}>
+                                                    <Link
+                                                        to={{ pathname: formatRouterCateResult(tag_child.id, tag_child.name, type) }}
+                                                        className={style.cate_child_item_cnt}
+                                                    >
+                                                        <div className={style.cate_child_item_img}>
+                                                            <img src={tag_child.media[0]?.original_url} alt="" />
+                                                        </div>
+                                                        <p className={style.cate_child_item_title}>
+                                                            {tag_child.name}
+                                                        </p>
+                                                    </Link>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
+                                ))
+                            }
+                        </Slider>
+                    </div>
                     <div className={style.body}>
                         <div className={style.body_left}>
-                            <ul className={style.body_left_cate_list}>
-                                {
-                                    tag?.children?.map((tag_child: ITag, index: number) => (
-                                        <li className={style.body_left_cate_name} key={index}>
-                                            <Link
-                                                to={{ pathname: formatRouterCateResult(tag_child.id, tag_child.name, type) }}
-                                            >
-                                                {tag_child.name}
-                                            </Link>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
                             <FilterLocation
                                 onChange={onChangeLocation}
                             />
@@ -181,3 +252,25 @@ function HomeCateResult() {
 }
 
 export default HomeCateResult;
+
+const LoadCateChild = () => {
+    const renderGridChild = () => {
+        let GridChildElement: ReactElement[] = []
+        for (var i = 0; i < 6; i++) {
+            GridChildElement.push(
+                <li key={i} className={style.cate_child_item_load}>
+                    <Skeleton
+                        style={{ width: '100%', height: '100%' }}
+                    />
+                </li>
+            )
+        }
+        return GridChildElement
+    }
+
+    return (
+        <ul className={style.cate_child_list}>
+            {renderGridChild()}
+        </ul>
+    )
+}

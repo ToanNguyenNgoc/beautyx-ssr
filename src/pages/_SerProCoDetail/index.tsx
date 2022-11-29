@@ -13,7 +13,7 @@ import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
 import Slider from 'react-slick';
 import icon from 'constants/icon';
-import { clst, formatDistance, onErrorImg } from 'utils';
+import { clst, extraParamsUrl, formatDistance, onErrorImg } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
@@ -61,6 +61,7 @@ const routeType: RouteType[] = [
 
 function SerProCoDetail() {
     const match = useRouteMatch()
+    const paramsOld: any = extraParamsUrl();
     const history = useHistory()
     const LOCATION = AUTH_LOCATION()
     const location = useLocation()
@@ -70,12 +71,11 @@ function SerProCoDetail() {
     const paramsArr = useGetParamUrl();
     let redirectPageError = false
     const params = {
-        org: parseInt(paramsArr[1]),
-        id: parseInt(paramsArr[0])
+        org: paramsOld ? parseInt(paramsOld?.org) : parseInt(paramsArr[1]),
+        id: paramsOld ? parseInt(paramsOld?.id) : parseInt(paramsArr[0])
     }
     if (!params.id || !params.org) redirectPageError = true
     if (!currentRouteType) redirectPageError = true
-
     const { response, error } = useSwr(
         `/organizations/${params.org}/${currentRouteType?.api}/${params.id}`,
         (params.id && params.org && currentRouteType),
@@ -225,17 +225,6 @@ function SerProCoDetail() {
                                                         iconSize={20}
                                                         onClick={onToggleFavorite}
                                                     />
-                                                    {/* <XButton
-                                                        className={clst([style.right_btn, style.right_btn_share])}
-                                                        icon={icon.share}
-                                                        iconSize={20}
-                                                        onClick={()=>setOpenShare(true)}
-                                                    />
-                                                    <Drawer open={openShare} onClose={()=>setOpenShare(false)} anchor='bottom' >
-                                                        <div className={style.share_cnt_mb}>
-                                                            <ShareSocial url={location.pathname} />
-                                                        </div>
-                                                    </Drawer> */}
                                                 </div>
                                             </div>
                                             <div className={style.detail_rate}>
@@ -293,7 +282,7 @@ function SerProCoDetail() {
                     </div>
                 </Container>
                 <OpenApp
-                    type={DETAIL.type === "SERVICE" ? 'service':'product'}
+                    type={DETAIL.type === "SERVICE" ? 'service' : 'product'}
                     id={DETAIL.id}
                     item_id={DETAIL.id}
                     org_id={org?.id}
