@@ -21,6 +21,7 @@ function HomeDiscount() {
     const newParams = {
         ...paramsDiscounts,
         page: 1,
+        limit:5,
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
@@ -57,7 +58,7 @@ function HomeDiscount() {
                     </div>
                 } */}
                 <div className="home-discounts__list-wrap">
-                    {(isValidating && resData.length === 0) && <LoadGrid />}
+                    {(isValidating && resData.length === 0) && <LoadGrid item_count={5} grid={5} />}
                     <ul className="home-discounts__list">
                         {discounts
                             .filter((i: IDiscountPar) =>

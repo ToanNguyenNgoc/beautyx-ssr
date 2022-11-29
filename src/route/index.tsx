@@ -24,7 +24,7 @@ import ResetPassword from "../pages/ResetPassword";
 import DiscountDetail from 'pages/_DiscountDetail'
 import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
 import HomeMap from "../features/HomeMap";
-import HomeCateResult from "../features/HomeResults/HomeCateResult";
+import HomeCateResult from "../pages/HomeCateResult";
 import CategoryTree from "../features/CategoryTree";
 import Booking from "../features/Booking";
 import Calendar from "../features/Calendar";

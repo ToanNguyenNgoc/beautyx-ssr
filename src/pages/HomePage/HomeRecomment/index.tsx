@@ -20,14 +20,14 @@ export default function HomeRecomment() {
     const paramsKeyword = {
         ...paramsServices,
         "filter[keyword]": service?.service_name,
-        "limit": 6
+        "limit": 5
     }
     const services_keyword = useSwrInfinite(true, "/services", paramsKeyword).resData
     const LOCATION = AUTH_LOCATION()
 
     const params = {
         ...paramsServices,
-        "limit": 6,
+        "limit": 5,
         "filter[location]": LOCATION,
     }
     const { resData } = useSwrInfinite(true, "/services", params)
