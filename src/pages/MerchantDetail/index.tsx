@@ -12,7 +12,7 @@ import {
 import "../../assets/styles/main.css";
 import HeadOrg from "./components/HeadOrg";
 import OrgDetail from "./components/OrgDetail";
-import { OpenApp } from 'components/Layout'
+import { OpenApp, Seo } from 'components/Layout'
 import { useSwr, useDeviceMobile } from 'hooks'
 import { IOrganization, IOrgMobaGalleries } from 'interface'
 import { AppContext } from "context/AppProvider";
@@ -83,6 +83,7 @@ function MerchantDetail() {
     <div className="mb-cnt">
       {!org && isValidating && <LoadOrg />}
       {error && <PageNotFound />}
+      {org && <Seo imageCover={org.image_url} title={org.name} content={org.description} />}
       <HeadTitle title={org?.name ? org.name : "Đang tải..."} />
       {IS_MB && org ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
       {org && (

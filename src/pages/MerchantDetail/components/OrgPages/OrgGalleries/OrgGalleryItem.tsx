@@ -1,10 +1,9 @@
+import { FullImage } from 'components/Layout';
 import React, { useState } from 'react';
-import FullImage from '../../../../../features/OpenFullImage';
 
 function OrgGalleryItem(props: any) {
     const { image_url } = props;
     const [open, setOpen] = useState(false);
-    console.log(image_url)
     return (
         <>
             <div onClick={() => setOpen(true)} className="org-image-items__box">
@@ -13,7 +12,7 @@ function OrgGalleryItem(props: any) {
             <FullImage
                 open={open}
                 setOpen={setOpen}
-                image_url={image_url}
+                src={[image_url]}
             />
         </>
     );

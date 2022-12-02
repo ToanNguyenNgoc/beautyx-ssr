@@ -12,6 +12,7 @@ import { fetchAsyncVideoByUrl, ITrendCommentChild } from 'redux/trend_detail';
 import { formatRouterLinkService } from 'utils/formatRouterLink/formatRouter';
 import { ITrendComment } from 'redux/trend_detail'
 import style from './trend-detail.module.css'
+import Skeleton from 'react-loading-skeleton';
 
 function TrendsDetail() {
     const params = useParams()
@@ -47,7 +48,7 @@ function TrendsDetail() {
             <div className={style.container} >
                 <div className={style.left}>
                     <div className={style.video_container}>
-                        <video className={style.video_blur} src={trend.media_url}></video>
+                        <video className={style.video_blur} src={`${trend.media_url}#t=0.001`}></video>
                         <div className={style.video_wrapper}>
                             <video
                                 className={style.video}
@@ -56,7 +57,7 @@ function TrendsDetail() {
                                 webkit-playsinline="webkit-playsinline"
                                 playsInline={true}
                             >
-                                <source src={trend.media_url} />
+                                <source type='video/mp4' src={`${trend.media_url}#t=0.001`} />
                             </video>
                         </div>
                     </div>
@@ -139,7 +140,12 @@ function TrendsDetail() {
                             </div>
                         </div>
                     </div>
-                    <TrendsDetailComment comments={comments} />
+                    {
+                        trend?.trend_url && _id !== params.id ?
+                            <LoadComment />
+                            :
+                            <TrendsDetailComment comments={comments} />
+                    }
                 </div>
             </div>
             :
@@ -162,7 +168,7 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
             >
                 <ul className={style.comment_list}>
                     {
-                        comments.map((item: ITrendComment, index: number) => (
+                        comments?.map((item: ITrendComment, index: number) => (
                             <li key={index} className={style.comment_list_item}>
                                 <CommentItem comment={item} />
                             </li>
@@ -170,15 +176,13 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
                     }
                 </ul>
             </div>
-            <div className={style.comment_input}>
+            {/* <div className={style.comment_input}>
 
-            </div>
+            </div> */}
         </>
     )
 }
 const CommentItem = ({ comment }: { comment: ITrendComment }) => {
-    const { USER } = useSelector((state: IStore) => state.USER)
-    console.log(USER)
     return (
         <div className={style.comment_item_cnt}>
             <div className={style.comment_item_par}>
@@ -228,5 +232,23 @@ const CommentItem = ({ comment }: { comment: ITrendComment }) => {
                 </div>
             </div>
         </div>
+    )
+}
+const LoadComment = () => {
+    return (
+        <ul className={style.detail_comment_list}>
+            {
+                [1, 2, 3, 4].map(i => (
+                    <li key={i} className={style.load_item}>
+                        <div className={style.load_item_left}>
+                            <Skeleton width={'100%'} height={'100%'} style={{borderRadius:"100%"}} />
+                        </div>
+                        <div className={style.load_item_right}>
+                            <Skeleton width={'100%'} height={'100%'} />
+                        </div>
+                    </li>
+                ))
+            }
+        </ul>
     )
 }

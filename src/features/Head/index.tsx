@@ -34,6 +34,8 @@ import { onResetFilter } from "redux/filter-result";
 import Slider from "react-slick";
 import { useDeviceMobile } from "hooks";
 import HeadTitle from "features/HeadTitle";
+import { searchKeyRecommend } from 'pages/HomePage/data'
+import { postHistorySearch } from "user-behavior";
 
 interface IProps {
     changeStyle?: boolean;
@@ -131,6 +133,7 @@ function Head(props: IProps) {
             });
             onCloseSearchTimeOut();
             dispatch(onResetFilter());
+            if (USER) postHistorySearch(key.key_debounce, 'KEYWORD')
         }
     };
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -597,13 +600,6 @@ const HeadMenu = (props: HeadMenuProps) => {
     );
 };
 const SearchRecommend = () => {
-    const keywords = [
-        "Gội đầu",
-        "Trị mụn y khoa",
-        "Xăm chân mày",
-        "Triệt lông",
-        "Chăm sóc da",
-    ];
     const [key, setKey] = useState("Gội đầu");
     const history = useHistory();
     const settings = {
@@ -618,7 +614,7 @@ const SearchRecommend = () => {
         autoplaySpeed: 2600,
         speed: 650,
         afterChange: function (index: number) {
-            setKey(keywords[index]);
+            setKey(searchKeyRecommend[index]);
         },
     };
     const onResult = () => {
@@ -631,7 +627,7 @@ const SearchRecommend = () => {
         <div className={style.re_container}>
             <div className={style.slider_wrapper}></div>
             <Slider {...settings}>
-                {keywords.map((item) => (
+                {searchKeyRecommend.map((item) => (
                     <span key={item} className={style.re_container_text}>
                         {item}
                     </span>

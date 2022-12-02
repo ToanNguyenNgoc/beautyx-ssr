@@ -20,3 +20,5 @@ export * from "./PlashScreen"
 export * from './ButtonFavorite'
 export * from './BeautyxCare'
 export * from './ShareSocial'
+export * from './Seo'
+export * from './OpenFullImage'

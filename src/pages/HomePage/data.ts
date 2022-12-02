@@ -115,3 +115,6 @@ export const whyNots = [
         image_url: homeWhy4,
     },
 ];
+export const searchKeyRecommend = [
+    'Gội đầu', 'Cắt tóc', 'Nặn mụn', 'Xăm chân mày', 'Triệt lông', 'Sơn gel', 'Chăm sóc da'
+]

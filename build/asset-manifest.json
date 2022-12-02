@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.7b85e46f.css",
-    "main.js": "/static/js/main.a25a4085.js",
+    "main.css": "/static/css/main.f69188ce.css",
+    "main.js": "/static/js/main.a97563fb.js",
     "static/js/483.3c77b5e7.chunk.js": "/static/js/483.3c77b5e7.chunk.js",
     "reactPlayerYouTube.js": "/static/js/reactPlayerYouTube.1e3b8183.chunk.js",
     "reactPlayerSoundCloud.js": "/static/js/reactPlayerSoundCloud.4cd9b040.chunk.js",
@@ -131,9 +131,9 @@
     "static/media/mocaGrap.svg": "/static/media/mocaGrap.45ad0ac020d094f23901f0296fc59b13.svg",
     "static/media/settingLineBlack.svg": "/static/media/settingLineBlack.a686726989502ada5d4d72a950c4e8dd.svg",
     "static/media/cateSpa.svg": "/static/media/cateSpa.f8abe748f44a0bb25848e76ff23ecfed.svg",
+    "index.html": "/index.html",
     "static/media/no-apply.svg": "/static/media/no-apply.ca8b8015da300a3099c766eef690dd68.svg",
     "static/media/star.svg": "/static/media/star.ccc60dcee7a95ad5ff091609da004a9a.svg",
-    "index.html": "/index.html",
     "static/media/barberOrange.svg": "/static/media/barberOrange.06eb2386342b333dd81e47ab07ca0684.svg",
     "static/media/settingsSliders.svg": "/static/media/settingsSliders.8aa6119068e372cf5e3e69d4a8a11243.svg",
     "static/media/settingsSlidersPurple.svg": "/static/media/settingsSlidersPurple.c7c70003dee87a605c4b810f09e16929.svg",
@@ -193,6 +193,7 @@
     "static/media/lipstickOrange.svg": "/static/media/lipstickOrange.f2c630b431336e07e440fbbc2567e4c5.svg",
     "static/media/user.svg": "/static/media/user.e1a353c89743d56e5e5f89e2c8b8b4f7.svg",
     "static/media/slick.ttf": "/static/media/slick.c94f7671dcc99dce43e2.ttf",
+    "static/media/downLoadWhite.svg": "/static/media/downLoadWhite.2d7e6da4d07c2605deb23ab932314308.svg",
     "static/media/calendarWhite.svg": "/static/media/calendarWhite.ff590ad58e5e9c25bb0d4535f8e9888c.svg",
     "static/media/cartPurpleBold.svg": "/static/media/cartPurpleBold.5d92eecb102ada9b5450f0e0b38004e2.svg",
     "static/media/cartWhiteBold.svg": "/static/media/cartWhiteBold.0395b1f39cc827f56bec08a928498e51.svg",
@@ -247,6 +248,7 @@
     "static/media/email-purple.svg": "/static/media/email-purple.7fb6fd0eba9ed7b549d432e80a11b58b.svg",
     "static/media/arrowSmallUpWhite.svg": "/static/media/arrowSmallUpWhite.f894f9678a6804afbb90be0bc8157b32.svg",
     "static/media/email-white.svg": "/static/media/email-white.38039b81eb03beff5daf0f5b59b6cd8d.svg",
+    "static/media/trendGreen.svg": "/static/media/trendGreen.7b75538d5060ed99501b27477302655e.svg",
     "static/media/chat_alt_fill.svg": "/static/media/chat_alt_fill.37c96270ed86f845cf0e2e89beeebac6.svg",
     "static/media/home-white.svg": "/static/media/home-white.3b03d367844ff05c62570aa4e7ee75da.svg",
     "static/media/shoppingCartSimple.svg": "/static/media/shoppingCartSimple.46382f25ef23cb401387b4fb4b4cc32a.svg",
@@ -368,8 +370,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-    "main.7b85e46f.css.map": "/static/css/main.7b85e46f.css.map",
-    "main.a25a4085.js.map": "/static/js/main.a25a4085.js.map",
+    "main.f69188ce.css.map": "/static/css/main.f69188ce.css.map",
+    "main.a97563fb.js.map": "/static/js/main.a97563fb.js.map",
     "483.3c77b5e7.chunk.js.map": "/static/js/483.3c77b5e7.chunk.js.map",
     "reactPlayerYouTube.1e3b8183.chunk.js.map": "/static/js/reactPlayerYouTube.1e3b8183.chunk.js.map",
     "reactPlayerSoundCloud.4cd9b040.chunk.js.map": "/static/js/reactPlayerSoundCloud.4cd9b040.chunk.js.map",
@@ -387,7 +389,7 @@
     "787.476e4605.chunk.js.map": "/static/js/787.476e4605.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7b85e46f.css",
-    "static/js/main.a25a4085.js"
+    "static/css/main.f69188ce.css",
+    "static/js/main.a97563fb.js"
   ]
 }

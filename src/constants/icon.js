@@ -230,6 +230,8 @@ import chevronLeftWhite from 'assets/icon/chevronLeftWhite.svg'
 import clockAppGray from 'assets/icon/clockAppGray.svg'
 import scanQrBtn from 'assets/icon/scanQrBtn.svg'
 import phoneWhiteBold from 'assets/icon/phoneWhiteBold.svg'
+import trendGreen from 'assets/icon/trendGreen.svg'
+import downLoadWhite from 'assets/icon/downLoadWhite.svg'
 
 const icon = {
     noApply,
@@ -441,6 +443,7 @@ const icon = {
     chevronLeftWhite,
     clockAppGray,
     scanQrBtn,
-    phoneWhiteBold
+    phoneWhiteBold,
+    trendGreen, downLoadWhite
 };
 export default icon;

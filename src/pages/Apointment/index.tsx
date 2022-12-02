@@ -283,7 +283,7 @@ const AppointmentCardItem = ({ item }: { item: AppointmentTime }) => {
         <ul className={style.app_item_services}>
           {
             item.services?.map(service => (
-              <li className={style.app_item_service_name}>{service.service_name}</li>
+              <li key={service.id} className={style.app_item_service_name}>{service.service_name}</li>
             ))
           }
         </ul>

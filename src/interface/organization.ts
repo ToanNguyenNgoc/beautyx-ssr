@@ -29,7 +29,7 @@ export interface IOrganization {
     image_url: string;
     branches: IBranch[];
     opening_time: any;
-    description: string | null;
+    description: string;
     favorites_count: number;
     is_favorite: boolean;
     favorites: IFavorite[];

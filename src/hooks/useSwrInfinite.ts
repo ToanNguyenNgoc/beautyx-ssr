@@ -18,10 +18,12 @@ export function useSwrInfinite(
         }
     );
     let resData: any[] = [];
+    let originData:any[]=[]
     let totalItem = 1;
     if (data) {
         totalItem = data[0]?.data?.context?.total ?? data[0]?.data?.total;
-        resData = Array.isArray(data) ? data?.map((i: any) => (i?.data?.context?.data ?? i?.data?.data?.hits)).flat() : []
+        resData = Array.isArray(data) ? data?.map((i: any) => (i?.data?.context?.data ?? i?.data?.data?.hits)).flat() : [];
+        originData = data
     }
     const onLoadMore = () => {
         setSize(size + 1)
@@ -31,6 +33,7 @@ export function useSwrInfinite(
         totalItem,
         isValidating,
         onLoadMore,
+        originData,
         mutate
     }
 }

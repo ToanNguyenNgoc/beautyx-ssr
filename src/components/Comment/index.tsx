@@ -9,7 +9,7 @@ import { paramsComment } from 'params-query';
 import { postMedia, useDeviceMobile, useSwrInfinite } from 'hooks';
 import { useHistory } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
-import { Input, XButton } from 'components/Layout';
+import { FullImage, Input, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 
 interface CommentProps {
@@ -192,6 +192,7 @@ interface CommentParItemProps {
 
 export const CommentParItem = (props: CommentParItemProps) => {
     const { comment, org_id, USER_PAR_NAME } = props;
+    const [openImg, setOpenImg] = useState(false)
     const IS_MB = useDeviceMobile();
     const { USER } = useSelector((state: IStore) => state.USER)
     let body_par = ""
@@ -279,15 +280,37 @@ export const CommentParItem = (props: CommentParItemProps) => {
                 </div>
                 {
                     media_url?.length > 0 &&
-                    <div className={style.media_url_list}>
-                        {
-                            media_url.map((url: string, index: number) => (
-                                <div key={index} className={style.media_url_list_item}>
-                                    <img  src={url} alt="" />
+                    <>
+                        <div onClick={() => setOpenImg(true)} className={style.media_url_list}>
+                            {
+                                media_url.map((url: string, index: number) => (
+                                    <div key={index} className={style.media_url_list_item}>
+                                        <img src={url} alt="" />
+                                    </div>
+                                ))
+                            }
+                        </div>
+                        <FullImage
+                            content={
+                                <div className={style.img_content} >
+                                    <div className={style.cmt_item_par_user}>
+                                        <div className={style.par_user_avt}>
+                                            <img className={style.par_user_avt_icon} src={comment.user?.avatar ?? icon.userCircle} alt="" />
+                                        </div>
+                                        <div className={style.par_user_name}>
+                                            {comment.user?.fullname}
+                                        </div>
+                                    </div>
+                                    <div className={style.cmt_item_par_body}>
+                                        <div className={style.cmt_text}>
+                                            {body_par}
+                                        </div>
+                                    </div>
                                 </div>
-                            ))
-                        }
-                    </div>
+                            }
+                            open={openImg} setOpen={setOpenImg} src={media_url}
+                        />
+                    </>
                 }
                 <span className={style.cmt_time_late}>
                     {moment(comment.created_at).locale("vi").fromNow()}
@@ -316,8 +339,8 @@ export const CommentParItem = (props: CommentParItemProps) => {
                                         <div className={style.cmt_reply_user}>
                                             <div className={style.par_user_avt}>
                                                 <img
-                                                 src={child.user?.avatar ?? icon?.userCircle}
-                                                alt="" className={style.par_user_avt_icon} 
+                                                    src={child.user?.avatar ?? icon?.userCircle}
+                                                    alt="" className={style.par_user_avt_icon}
                                                 />
                                             </div>
                                         </div>
