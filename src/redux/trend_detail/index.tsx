@@ -51,7 +51,7 @@ const initialState: ITrendItem = {
 }
 
 export const fetchAsyncVideoByUrl: any = createAsyncThunk(
-    'TREND_DETAIL/createAsyncThunk',
+    'TREND_DETAIL/fetchAsyncVideoByUrl',
     async (values: any) => {
         const res = await axios.get(API_TIKTOK.getVideoByUrl, {
             params: { 'video_url': values.video_url }
@@ -59,7 +59,7 @@ export const fetchAsyncVideoByUrl: any = createAsyncThunk(
         const resComment = await axios.get(API_TIKTOK.getCommentsByUrl, {
             params: { 'video_url': values.video_url }
         })
-        const comments = await resComment.data?.context.data
+        const comments = await resComment.data?.context.data ?? []
         const statistics = await res?.data?.tiktok?.aweme_detail?.statistics
         const payload = {
             _id: values._id,
@@ -97,7 +97,7 @@ const TrendDetailSlice = createSlice({
                 comments: payload.comments
             }
         },
-        [fetchAsyncVideoByUrl.pending]: (state) => {
+        [fetchAsyncVideoByUrl.rejected]: (state) => {
             return { ...state, status: 'FAIL' }
         },
     }

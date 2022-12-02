@@ -47,15 +47,19 @@ function HomeCateResult() {
     const history = useHistory();
     const id = params?.id
     const type = page_url === "danh-sach-dich-vu" ? "SERVICE" : "PRODUCT"
+    const paramCate = {
+        ...paramsProductsCate,
+        'filter[group]':type
+    }
     const query = params?.sort ?? ""
     const userLocation = params?.location ?? ''
-    const { response, isValidating } = useSwr(`/tags/${id}`, id, paramsProductsCate)
+    const { response, isValidating } = useSwr(`/tags/${id}`, id, paramCate)
     const tag: ITag = response
-    const tagParent: ITag = useSwr(`/tags/${tag?.parent_id}`, tag?.parent_id, paramsProductsCate).response
+    const tagParent: ITag = useSwr(`/tags/${tag?.parent_id}`, tag?.parent_id, paramCate).response
     const tagParParent: ITag = useSwr(
         `/tags/${tagParent?.parent_id}`,
         tagParent?.parent_id,
-        paramsProductsCate).response
+        paramCate).response
     const newParams = {
         ...paramsProducts,
         "filter[location]": userLocation,

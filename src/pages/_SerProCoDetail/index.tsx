@@ -155,7 +155,7 @@ function SerProCoDetail() {
                                                 <div className={style.media_item_video}>
                                                     <video
                                                         className={style.media_item_bg}
-                                                        src={DETAIL.video_url}>
+                                                        src={`${DETAIL.video_url}#t=0.001`}>
                                                     </video>
                                                     <video
                                                         className={style.video_container}
@@ -164,7 +164,7 @@ function SerProCoDetail() {
                                                         webkit-playsinline="webkit-playsinline"
                                                         playsInline={true}
                                                     >
-                                                        <source src={DETAIL.video_url} />
+                                                        <source type="video/mp4" src={`${DETAIL.video_url}#t=0.001`} />
                                                     </video>
                                                 </div>
                                             }
