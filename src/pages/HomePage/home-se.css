@@ -293,6 +293,7 @@
     height: 100%;
     object-fit: cover;
     transition: all 0.36s ease-in-out;
+    filter: brightness(80%);
 }
 
 .home-province .home-province_item:nth-child(1) {
@@ -357,9 +358,9 @@
 
 @media only screen and (max-width: 767px) {
     .homepage{
-        height: calc(100vh - 80px);
-        overflow-y: scroll;
-        /* padding-bottom: 64px; */
+        height: max-content;
+        /* overflow-y: scroll; */
+        padding-bottom: 100px;
     }
     .home-promo-ser .ser-list {
         grid-template-columns: repeat(2, 1fr);
@@ -538,7 +539,7 @@
     }
 
     .home-province_list {
-        margin-top: 0px;
+        margin-top: 56px;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 16px;

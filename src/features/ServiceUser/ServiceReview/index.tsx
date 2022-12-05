@@ -6,7 +6,6 @@ import { identity, pickBy } from "lodash";
 import { onErrorImg } from "utils";
 import { useHistory } from "react-router-dom";
 import icon from "constants/icon";
-import { clearPrevState, postAsyncMediaComment } from "redux/commentSlice";
 import { postAsyncComment } from "redux/org_services/serviceSlice";
 import { STATUS } from "redux/status";
 import HeadMobile from "features/HeadMobile";
@@ -70,7 +69,6 @@ function ServiceReview(props: any) {
         let formData = new FormData();
         formData.append("file", media);
         try {
-            await dispatch(postAsyncMediaComment(media));
             setComment({
                 ...comment,
                 image_url: COMMENTS.image_url,
@@ -83,7 +81,6 @@ function ServiceReview(props: any) {
     // handle remove media
     const onRemoveImgTemp = () => {
         setComment({ ...comment, image_url: null });
-        dispatch(clearPrevState());
     };
 
     // handle post comment
@@ -104,7 +101,6 @@ function ServiceReview(props: any) {
             );
             if (res?.meta?.requestStatus === "fulfilled") {
                 setOpen(false);
-                dispatch(clearPrevState());
                 setComment({
                     ...comment,
                     text: "",

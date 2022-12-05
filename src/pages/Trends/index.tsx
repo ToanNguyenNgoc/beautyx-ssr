@@ -10,6 +10,7 @@ import moment from "moment";
 import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
 import { XButton } from "components/Layout";
+import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 
 function Trends() {
     const { response } = useFetch(
@@ -84,6 +85,9 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
             videoRef.current?.pause()
         }
     }, [playVideo]);
+    const onOrgDetail = ()=>{
+        history.push(formatRouterLinkOrg(item.organization_id))
+    }
     return (
         <div
             // to={{ pathname: `/video/${item._id}` }}
@@ -102,7 +106,10 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     />
                 }
             </div>
-            <div className={style.trend_item_head}>
+            <div 
+                onClick={onOrgDetail}
+                className={style.trend_item_head}
+            >
                 <div className={style.trend_item_head_org}>
                     <img src={item.organization_image} alt="" />
                 </div>

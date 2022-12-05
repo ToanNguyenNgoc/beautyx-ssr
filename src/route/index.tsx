@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import AuthRoute from "./AuthRoute";
 import {
     BrowserRouter as Router,
@@ -7,44 +7,73 @@ import {
     BrowserRouter,
     Route,
 } from "react-router-dom";
-import MerchantDetail from "../pages/MerchantDetail";
-import Partner from "../pages/Partner";
-import Cart from "../features/Cart/index";
-import Account from "../pages/Account";
-import SignPage from "../pages/SignPage/index";
 import CartPaymentStatus from "../features/CartPaymentStatus";
-import ServicesUser from "../features/ServiceUser";
-import SearchResults from "../pages/SearchResults/index";
-import HomeListProvince from "../features/HomeResults/HomeListProvince";
-import DealBanner from 'pages/DealBanner'
-import Policy from "../pages/Policy";
-import SellerCenter from "../pages/SellerCenter";
-import Otp from "../features/Otp";
-import ResetPassword from "../pages/ResetPassword";
-import DiscountDetail from 'pages/_DiscountDetail'
-import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
-import HomeMap from "../features/HomeMap";
-import HomeCateResult from "../pages/HomeCateResult";
-import CategoryTree from "../features/CategoryTree";
-import Booking from "../features/Booking";
-import Calendar from "../features/Calendar";
-import BuyNow from "../features/BuyNow";
-import Carts from "../pages/Carts";
-import AssistantBtn from "../components/AssistantBtn";
-import ProductsByCate from "../features/CategoryTree/ProductsByCate";
 import PageNotFound from "../components/PageNotFound";
-import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
 import ExtraFlatForm from "rootComponents/extraFlatForm";
-import LadingPage from "pages/LandingPage";
-import OtpMbPage from "pages/OtpMbPage";
+import AssistantBtn from "../components/AssistantBtn";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
-import Trends from "pages/Trends";
-import Community from "pages/Community";
-import VoucherPage from "pages/VoucherPage";
-import TrendsDetail from "pages/TrendsDetail";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
+import MerchantDetail from "pages/MerchantDetail";
+// import MerchantDetail from "../pages/MerchantDetail";
+// import Account from "../pages/Account";
+// import SignPage from "../pages/SignPage/index";
+// import ServicesUser from "../features/ServiceUser";
+// import SearchResults from "../pages/SearchResults/index";
+// import HomeListProvince from "../features/HomeResults/HomeListProvince";
+// import DealBanner from 'pages/DealBanner'
+// import Policy from "../pages/Policy";
+// import SellerCenter from "../pages/SellerCenter";
+// import Otp from "../features/Otp";
+// import ResetPassword from "../pages/ResetPassword";
+// import DiscountDetail from 'pages/_DiscountDetail'
+// import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
+// import HomeMap from "../features/HomeMap";
+// import HomeCateResult from "../pages/HomeCateResult";
+// import CategoryTree from "../features/CategoryTree";
+// import Booking from "../features/Booking";
+// import Calendar from "../features/Calendar";
+// import BuyNow from "../features/BuyNow";
+// import Carts from "../pages/Carts";
+// import ProductsByCate from "../features/CategoryTree/ProductsByCate";
+// import LandingPage from "pages/LandingPage";
+// import OtpMbPage from "pages/OtpMbPage";
+// import Trends from "pages/Trends";
+// import Community from "pages/Community";
+// import VoucherPage from "pages/VoucherPage";
+// import TrendsDetail from "pages/TrendsDetail";
+import { analytics, logEvent } from "../firebase";
+import {  LoadProgress } from "components/LoadingSketion";
+import LoadDetail from "components/LoadingSketion/LoadDetail";
+//update import lazy
+const Account = lazy(() => import('pages/Account'))
+const SignPage = lazy(() => import('pages/SignPage'))
+const ServicesUser = lazy(() => import('features/ServiceUser'))
+const HomeMap = lazy(() => import('features/HomeMap'))
+const Partner = lazy(() => import("../pages/Partner"))
+const SearchResults = lazy(() => import("../pages/SearchResults/index"))
+const DiscountDetail = lazy(() => import('pages/_DiscountDetail'))
+const HomeListProvince = lazy(() => import("../features/HomeResults/HomeListProvince"))
+const DealBanner = lazy(() => import('pages/DealBanner'))
+const Policy = lazy(() => import('pages/Policy'))
+const SellerCenter = lazy(() => import('pages/SellerCenter'))
+const Otp = lazy(() => import('features/Otp'))
+const ResetPassword = lazy(() => import('pages/ResetPassword'))
+const HomeDiscountList = lazy(() => import('features/HomeResults/HomeDiscountList'))
+const HomeCateResult = lazy(() => import('pages/HomeCateResult'))
+const CategoryTree = lazy(() => import('features/CategoryTree'))
+const Booking = lazy(() => import('features/Booking'))
+const Calendar = lazy(() => import('features/Calendar'))
+const BuyNow = lazy(() => import('features/BuyNow'))
+const Carts = lazy(() => import('pages/Carts'))
+const ProductsByCate = lazy(() => import('features/CategoryTree/ProductsByCate'))
+const LandingPage = lazy(() => import('pages/LandingPage'))
+const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
+const Trends = lazy(() => import('pages/Trends'))
+const Community = lazy(() => import('pages/Community'))
+const VoucherPage = lazy(() => import('pages/Community'))
+const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
 
 function RouterConfig() {
     const routes = [
@@ -130,8 +159,8 @@ function RouterConfig() {
             component: <SearchResults />,
         },
         {
-            path: "/cart",
-            component: <Cart />,
+            path: "/tim-kiem/:tab",
+            component: <SearchResults />,
         },
         {
             path: "/san-pham/",
@@ -180,6 +209,7 @@ function RouterConfig() {
         {
             path: "/chi-tiet-giam-gia/:name",
             component: <DiscountDetail />,
+            load:<LoadDetail/>
         },
         {
             path: "/giam-gia",
@@ -195,7 +225,7 @@ function RouterConfig() {
         },
         {
             path: "/landingpage/:name",
-            component: <LadingPage />,
+            component: <LandingPage />,
         },
         {
             path: "/san-pham",
@@ -280,13 +310,17 @@ function RouterConfig() {
                     <Redirect exact from="/" to="homepage" />
                     {routes.map((item, index: number) => (
                         <Route key={index} path={item.path}>
-                            {item.component}
+                            <Suspense fallback={item.load ?? <LoadProgress/>}>
+                                {item.component}
+                            </Suspense>
                         </Route>
                     ))}
                     <AuthRoute>
                         {routesPrivate.map((item, index: number) => (
                             <Route key={index} path={item.path}>
-                                {item.component}
+                                <Suspense fallback={<LoadProgress />}>
+                                    {item.component}
+                                </Suspense>
                             </Route>
                         ))}
                     </AuthRoute>

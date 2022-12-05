@@ -250,22 +250,6 @@ function Search(props: SearchProps) {
                     KEY_WORD === "" &&
                     <div>
                         <SearchHistory onCloseSearch={onCloseSearch} />
-                        {/* <div className={style.section_recommend}>
-                            <span className={style.section_title}>Gợi ý tìm kiếm</span>
-                            <ul className={style.list_key}>
-                                {keysRecommend.map((item: any, index: number) => (
-                                    <li key={index} className={style.list_key_item}>
-                                        <Link
-                                            className={style.key_item}
-                                            to={{ pathname: `/ket-qua-tim-kiem/dich-vu/?keyword=${item._id}` }}
-                                        >
-                                            <img src={icon.searchGray} alt="" />
-                                            <span>{item._id}</span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div> */}
                         <div 
                             onClick={onCloseSearch}
                             className={style.section_keyword_trend}

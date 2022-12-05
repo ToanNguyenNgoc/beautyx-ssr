@@ -82,6 +82,7 @@ export function FilterLocation(props: FilterLocationProps) {
     const chooseProAndOpenDis = (pro: IProvince) => {
         setProvince(pro)
         setOpen({ ...open, oDistrict: true })
+        if (pro.province_code !== province?.province_code) setDistrict(null)
     }
     const chooseDisAndClose = (dis: IDistrict) => {
         setDistrict(dis)

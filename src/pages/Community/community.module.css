@@ -1,11 +1,101 @@
 .container {
-    margin-top: -100px;
-    width: 100vw;
-    height: calc(100vh + 100px);
-    overflow-y: scroll;
+    padding: 12px;
+    background-color: var(--bg-white);
 }
 
-.container_frame {
-    width: 100%;
-    height: calc(100vh + 100px);
+.header_tab {
+    padding: 12px 0px;
+    border-bottom: solid 1px var(--bg-color);
+}
+
+.header_tab_item {
+    font-weight: 600;
+    color: #8C8C8C;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 0px 32px;
+    transition: var(--trans);
+}
+
+.header_tab_item_act {
+    color: var(--text-black);
+    font-weight: 600;
+}
+
+/* community */
+.com_container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 8px;
+}
+
+.com_container_left,
+.com_container_right {
+    width: calc((100% - 760px)/2);
+}
+
+
+.com_container_left {
+    /* background-color: #EAE9F5; */
+    padding: 12px;
+    height: max-content;
+    max-height: 100vh;
+    overflow-y: scroll;
+    border-right: solid 1px var(--bg-color);
+}
+
+.com_container_left_title {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.group_cate_list li {
+    margin-top: 10px;
+}
+
+.group_cate_list_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 8px;
+    border-radius: 16px;
+    transition: var(--trans);
+}
+.group_cate_list_item:hover{
+    transition: var(--trans);
+    box-shadow: var(--box-shadow);
+}
+
+.group_item_icon {
+    width: 50px;
+    height: 50px;
+    background-color: var(--bg-white);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.group_item_info {
+    width: calc(100% - 58px);
+}
+
+.group_item_info_name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    color: var(--purple);
+}
+
+.group_item_info_count {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+}
+.com_container_center {
+    width: 760px;
+    height: calc(100vh);
+    background-color: antiquewhite;
+    overflow-y: scroll;
 }

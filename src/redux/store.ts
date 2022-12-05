@@ -17,9 +17,7 @@ import blogReducer from "./blog/blogSlice";
 import cateReducer from "./CateTree/cateTreeSlice";
 import comboReducer from "./org_combos/comboSlice";
 import appReducer from "./appointment/appSlice";
-import commentReducer from "./commentSlice";
 import orderReducer from "./order/orderSlice";
-import homePageReducer from "./home/homePageSlice";
 import chatOrgReducer from "./chat/chatOrgSlice";
 import tagsReducer from "./Tags/tagsSlice";
 import orgMapReducer from "./org/orgMapSlice";
@@ -48,9 +46,7 @@ const rootReducer = {
     CATE_TREE: cateReducer,
     COMBO: comboReducer,
     APP: appReducer,
-    COMMENT_MEDIA: commentReducer,
     ORDER: orderReducer,
-    HOME_PAGE: homePageReducer,
     CHAT_ORG: chatOrgReducer,
     ORGS_MAP: orgMapReducer,
     NOTI: notiReducer,

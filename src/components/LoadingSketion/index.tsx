@@ -3,6 +3,7 @@ import './style.css'
 import Skeleton from 'react-loading-skeleton'
 import { useDeviceMobile } from 'hooks';
 export * from "./LoadGrid"
+export * from "./LoadProgress"
 
 
 const arr = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];

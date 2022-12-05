@@ -73,10 +73,10 @@
 }
 
 .head_btn_partner {
-    margin-right: 12px;
-    background-color: transparent;
-    border: solid 1px var(--green);
-    color: var(--purple);
+    margin-right: 12px !important;
+    background-color: transparent !important;
+    border: solid 1px var(--green) !important;
+    color: var(--purple) !important;
 }
 
 .head_sign_btn {
@@ -359,7 +359,7 @@
 }
 
 .head_back_btn {
-    display: none;
+    display: none !important;
 }
 
 @media only screen and (max-width: 1023px) {
@@ -411,7 +411,7 @@
     }
 
     .head_btn_partner {
-        display: none;
+        display: none !important;
     }
 
     .head_top_right_btn {
@@ -455,11 +455,14 @@
     }
 
     .head_back_btn {
-        display: block;
-        background-color: var(--bg-white);
-        padding: 0px;
-        height: 35px;
-        width: 44px;
+        display: block !important;
+        background-color: var(--bg-white) !important;
+        padding: 0px !important;
+        height: 35px !important;
+        width: 44px !important;
+    }
+    .head_back_btn_change{
+        background-color: transparent !important;
     }
 
     /* change style */

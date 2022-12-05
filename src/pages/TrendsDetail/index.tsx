@@ -1,5 +1,5 @@
 import API_3RD from 'api/3rd-api';
-import { XButton } from 'components/Layout';
+import {  XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { useFetch } from 'hooks';
 import IStore from 'interface/IStore';
@@ -7,27 +7,21 @@ import moment from 'moment';
 import { ITrend } from 'pages/Trends/trend.interface';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import { fetchAsyncVideoByUrl, ITrendCommentChild } from 'redux/trend_detail';
-import { formatRouterLinkService } from 'utils/formatRouterLink/formatRouter';
+import { formatRouterLinkOrg, formatRouterLinkService } from 'utils/formatRouterLink/formatRouter';
 import { ITrendComment } from 'redux/trend_detail'
 import style from './trend-detail.module.css'
 import Skeleton from 'react-loading-skeleton';
 
 function TrendsDetail() {
     const params = useParams()
+    const history = useHistory()
     const { response } = useFetch(
         params.id,
         `${API_3RD.API_NODE}/trends/${params.id}?include=services`
     )
     const trend: ITrend = response?.context
-
-    // const videoTiktok = useFetch(
-    //     trend?.trend_url,
-    //     API_TIKTOK.getVideoByUrl,
-    //     {'video_url':trend?.trend_url}
-    // ).response
-    // console.log(videoTiktok)
     const { _id, video, comments } = useSelector((state: IStore) => state.TREND_DETAIL)
     const dispatch = useDispatch()
     const getVideoByUrl = async () => {
@@ -42,10 +36,17 @@ function TrendsDetail() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trend?.trend_url])
+    const onOrgDetail = () => history.push(formatRouterLinkOrg(trend?.organization_id))
 
     return (
         trend ?
             <div className={style.container} >
+                <XButton
+                    onClick={() => history.goBack()}
+                    className={style.back_btn}
+                    icon={icon.backWhite}
+                    iconSize={24}
+                />
                 <div className={style.left}>
                     <div className={style.video_container}>
                         <video className={style.video_blur} src={`${trend.media_url}#t=0.001`}></video>
@@ -65,7 +66,7 @@ function TrendsDetail() {
                 <div className={style.right}>
                     <div className={style.right_top}>
                         <div className={style.right_top_org}>
-                            <div className={style.org_detail}>
+                            <div onClick={onOrgDetail} className={style.org_detail}>
                                 <div className={style.org_detail_img}>
                                     <img src={trend.organization_image} alt="" />
                                 </div>
@@ -241,7 +242,7 @@ const LoadComment = () => {
                 [1, 2, 3, 4].map(i => (
                     <li key={i} className={style.load_item}>
                         <div className={style.load_item_left}>
-                            <Skeleton width={'100%'} height={'100%'} style={{borderRadius:"100%"}} />
+                            <Skeleton width={'100%'} height={'100%'} style={{ borderRadius: "100%" }} />
                         </div>
                         <div className={style.load_item_right}>
                             <Skeleton width={'100%'} height={'100%'} />

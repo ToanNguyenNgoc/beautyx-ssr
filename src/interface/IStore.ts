@@ -5,13 +5,13 @@ import { IORG_SPECIALS } from '../redux/org_specials/orgSpecialSlice';
 import { IORG_DISCOUNTS } from '../redux/org_discounts/orgDiscountsSlice';
 import { IPRODUCT } from '../redux/org_products/productSlice';
 import { ISERVICE } from '../redux/org_services/serviceSlice';
-import { ICOMMENT_MEDIA } from '../redux/commentSlice';
 import { IORDER } from "../redux/order/orderSlice"
 import { IUSER } from "redux/USER/userSlice"
 import { INotification } from 'redux/notifications'
 import { IFilterResult } from 'redux/filter-result'
 import { ITrendItem } from 'redux/trend_detail'
 import { ISearch } from 'redux/search_history';
+
 
 
 export default interface IStore {
@@ -22,11 +22,10 @@ export default interface IStore {
     ORG_DISCOUNTS: IORG_DISCOUNTS,
     PRODUCT: IPRODUCT,
     SERVICE: ISERVICE,
-    COMMENT_MEDIA: ICOMMENT_MEDIA,
     ORDER: IORDER,
     USER: IUSER,
     NOTI: INotification,
     FILTER_RESULT: IFilterResult,
     TREND_DETAIL: ITrendItem,
-    SEARCH_HIS: ISearch
+    SEARCH_HIS: ISearch,
 }

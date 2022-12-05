@@ -250,42 +250,42 @@
     width: calc(100% - 840px);
     height: 100%;
     padding-left: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 24px;
 }
-
-.load-home-banner__right .top {
-    width: 100%;
-    height: calc(50% - 8px);
-    background-color: #CFEAFF;
-}
-
-.load-home-banner__right .bot {
-    width: 100%;
-    height: calc(50% - 8px);
-}
-
-.load-home-banner__right .bot .item {
-    width: calc(50% - 8px);
-    height: 100%;
-    background-color: #CFEAFF;
+.load-home-banner__right-item{
+    border-radius: 20px;
+    overflow: hidden;
 }
 
 .load-home-tag {
     width: 100%;
-
 }
 
 .load-home-tag .tag-list {
-    display: flex;
-    align-items: center;
+    display: grid !important;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 16px;
 }
 
 .load-home-tag .tag-list .item {
-    width: calc(100% / 8);
-    height: 128px;
-    padding: 8px 16px;
+    height: 82px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.item_load_img{
+    width: 55px;
+    height: 55px;
+    background-color: var(--bg-color);
+    border-radius: 20px;
+}
+.item_load_text{
+    width: 100%;
+    height: 18px;
+    background-color: var(--bg-color);
 }
 
 /* load map orgs */
@@ -366,6 +366,8 @@
     height: 56px;
     margin-top: 4px;
 }
+/* load progress */
+
 
 @media only screen and (max-width: 1023px) {
     .result-orgs-loading-cnt__item {

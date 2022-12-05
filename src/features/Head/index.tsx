@@ -654,14 +654,12 @@ const BackContainer = ({ changeStyle, iconBack }: { changeStyle?: boolean, iconB
     if (homePath.includes(pathname)) show = false;
     return show ? (
         <XButton
-            style={
-                changeStyle
-                    ? {
-                        backgroundColor: "transparent",
-                    }
-                    : {}
+            className={
+                changeStyle ?
+                    clst([style.head_back_btn, style.head_back_btn_change])
+                    :
+                    style.head_back_btn
             }
-            className={style.head_back_btn}
             icon={iconBack ?? icon.chevronLeft}
             iconSize={28}
             onClick={() => history.goBack()}
