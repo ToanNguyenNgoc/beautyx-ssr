@@ -1,17 +1,20 @@
 import { Container } from "@mui/material";
-import React, { useContext } from "react";
-//import icon from '../../../constants/icon';
-import { AppContext } from "../../../context/AppProvider";
-import { IProvince } from "../../../interface/provinces";
-import Head from "../../Head";
-import HeadTitle from "../../HeadTitle";
-import scrollTop from "../../../utils/scrollTop";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { formatRoundOrgCount } from "../../../utils/format";
 import { onResetFilter } from "redux/filter-result";
+import { AppContext } from "context/AppProvider";
+import { IProvince } from "interface";
+import { formatRoundOrgCount, scrollTop } from "utils";
+import Head from "features/Head";
+import style from './list-province.module.css'
+import { useDeviceMobile, useSearchKeyword } from "hooks";
+import { Input, XButton } from "components/Layout";
+import icon from "constants/icon";
 
-function HomeListProvince(props: any) {
+function HomeListProvince() {
+    const IS_MB = useDeviceMobile()
+    const [value, setValue] = useState('')
     const dispatch = useDispatch()
     const { t } = useContext(AppContext);
     const HOME = useSelector((state: any) => state.HOME);
@@ -25,16 +28,33 @@ function HomeListProvince(props: any) {
         dispatch(onResetFilter())
         scrollTop();
     };
+    const provinces = useSearchKeyword(value, provinces_org)
+    const list = value === '' ? provinces_org : provinces
     return (
         <>
-            <Head />
-            <HeadTitle title={t("home_2.places_you_are_interested_in")} />
+            {
+                !IS_MB ? <Head title={t("home_2.places_you_are_interested_in")} />
+                    :
+                    <div className={style.head}>
+                        <XButton
+                            onClick={() => history.goBack()}
+                            icon={icon.chevronLeft}
+                            iconSize={28}
+                        />
+                        <Input
+                            classNamePar={style.head_input}
+                            className={style.head_input_child}
+                            icon={icon.searchPurple}
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                            placeholder="Tìm kiếm tỉnh thành...."
+                        />
+                    </div>
+            }
             <div className="home-province">
                 <Container>
-                    <div className="flex-row-sp home-se-promo__header">
-                    </div>
                     <div className="home-province_list">
-                        {provinces_org?.map(
+                        {list?.map(
                             (item: IProvince, index: number) => (
                                 <div
                                     onClick={() => gotoResult(item)}

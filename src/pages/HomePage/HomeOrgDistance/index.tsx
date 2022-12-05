@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import HomeTitle from '../Components/HomeTitle';
 import { ParamOrg } from 'params-query/param.interface';
@@ -26,13 +25,13 @@ function HomeOrgDistance() {
     const IS_MB = useDeviceMobile()
     useEffect(() => {
         dispatch(onResetFilterOrg())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const params: ParamOrg = {
         ...ORG_PR,
         "limit": 8,
         "filter[is_momo_ecommerce_enable]": true,
         "filter[location]": LOCATION,
-        "sort": "-priority"
     }
     const { responseArray, isValidating } = useSwr(API_ROUTE.ORGS, true, params)
 

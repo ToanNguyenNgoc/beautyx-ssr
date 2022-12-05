@@ -86,7 +86,7 @@ function FormOtp(props: any) {
         }),
         onSubmit: (values) => {
             const params = {
-                telephone: data.telephone,
+                telephone: `${data.telephone}`,
                 code: values.otp,
                 new_password: values.new_password,
                 verification_id: data.verification_id
@@ -127,7 +127,7 @@ function FormOtp(props: any) {
                         name="otp"
                         value={formikTelephone.values.otp}
                         onChange={formikTelephone.handleChange}
-                        type="text"
+                        type="number" pattern="[0-9]*" inputMode="numeric"
                         style={{ textAlign: 'center' }}
                         className="for-pass-cnt__phone-ip"
                         placeholder={t("form.verification_code")}

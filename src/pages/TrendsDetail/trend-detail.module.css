@@ -1,3 +1,12 @@
+.back_btn{
+    position: fixed;
+    z-index: 11;
+    top: 6px;
+    left: 6px;
+    padding: 4px;
+    border-radius: 100%;
+    background-color: transparent;
+}
 .container {
     display: flex;
     justify-content: space-between;

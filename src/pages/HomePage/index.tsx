@@ -4,12 +4,9 @@ import React, { useEffect, useRef } from "react";
 import HomeOrgDistance from "./HomeOrgDistance";
 import HomeRecomment from "./HomeRecomment";
 import { useSelector } from "react-redux";
-
-// ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 import HomeWatched from "./HomeWatched";
-// import ExtraFlatForm from "rootComponents/extraFlatForm";
 import Head from "features/Head";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
@@ -26,6 +23,9 @@ import HomeWhyNot from "./HomeWhyNot";
 import HomeProvince2 from "./HomeProvince2";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
+import HomeTrends from "./HomeTrends";
+
+
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
     const banner_status = useSelector((state: any) => state.HOME.status);
@@ -50,39 +50,41 @@ export default function HomePage() {
         }
     }
     return (
-        <div onScroll={onScrollHome} className="homepage">
-            {/* <ExtraFlatForm /> */}
-            <Head changeStyle={IS_MB} />
-            <div className="home_container_par">
+        <>
+            <div onScroll={onScrollHome} className="homepage">
+                <Head changeStyle={IS_MB} />
+                <div className="home_container_par">
+                    <Container>
+                        <HomeCate />
+                        {
+                            banner_status !== STATUS.SUCCESS ?
+                                <>
+                                    {IS_MB ? <PlashScreen /> : <LoadHomeBanner />}
+                                </>
+                                :
+                                <>
+                                    <HomeBanner2 refBanner={refBanner} />
+                                    {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
+                                </>
+                        }
+                    </Container>
+                </div>
+                <HomeDiscount />
                 <Container>
-                    <HomeCate />
-                    {
-                        banner_status !== STATUS.SUCCESS ?
-                            <>
-                                {IS_MB ? <PlashScreen /> : <LoadHomeBanner />}
-                            </>
-                            :
-                            <>
-                                <HomeBanner2 refBanner={refBanner} />
-                                {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
-                            </>
-                    }
+                    <HomeOrgDistance />
+                    <HomeTopic />
+                    <HomeProducts />
+                    <HomeDownApp />
+                    <HomeWhyNot />
+                    <HomeRecomment />
+                    <HomeWatched />
+                    <HomeProvince2 />,
+                    <HomeTrends />,
+                    <HomePartners />
                 </Container>
+                <Bottom />
+                <OpenApp type="none" />
             </div>
-            <HomeDiscount />
-            <Container>
-                <HomeOrgDistance />
-                <HomeTopic />
-                <HomeProducts />
-                <HomeDownApp />
-                <HomeWhyNot />
-                <HomeRecomment />
-                <HomeWatched />
-                <HomeProvince2 />
-                <HomePartners />
-            </Container>
-            <Bottom />
-            <OpenApp type="none" />
-        </div>
+        </>
     );
 }
