@@ -11,7 +11,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { AppContext } from "../../context/AppProvider";
 import { ApointmentTab } from "pages/Apointment";
-import { Bottom } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 
 function Calendar() {
@@ -75,7 +74,6 @@ function Calendar() {
                     </TabContext>
                 </div>
             </div>
-            <Bottom />
         </>
     );
 }

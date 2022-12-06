@@ -9,10 +9,23 @@ import { AppContext } from "context/AppProvider";
 import { ICON } from "constants/icon2";
 import IStore from "interface/IStore";
 
+const paths = [
+    "/TIKI",
+    "/MOMO",
+    "/TIKI/",
+    "/MOMO/",
+    "/MBBANK",
+    "/",
+    "/homepage/",
+    "/homepage",
+    "/tai-khoan",
+    "/lich-hen",
+    "/-danh-muc"
+];
+
 export function Bottom() {
     const { t } = useContext(AppContext);
     const location = useLocation();
-    const pathname = location.pathname;
     const { USER } = useSelector((state: IStore) => state.USER)
     const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const Btns = [
@@ -78,45 +91,51 @@ export function Bottom() {
             search: `${item.params}`
         });
     };
+    const pathname = location.pathname;
+    let show = false;
+    if (paths.includes(pathname)) show = true;
     return (
-        <div className="bt">
-            <div className="flex-row-sp bt-cnt">
-                {Btns.map((item) => (
-                    <div
-                        key={item.id}
-                        onClick={() => chooseBtn(item)}
-                        className="flex-column bt-cnt__item"
-                    >
-                        <img
-                            src={
-                                item.path === pathname
-                                    ? item.iconAct
-                                    : item.icon
-                            }
-                            alt=""
-                        />
-                        {
-                            item.badge > 0 &&
-                            <span className="bt-cnt__item-badge">
-                                {/* {item.badge} */}
-                            </span>
-                        }
-                        <span
-                            style={
-                                item.path === pathname
-                                    ? {
-                                        color: "var(--purple)",
-                                        fontWeight: "700",
-                                    }
-                                    : {}
-                            }
-                            className="bt-cnt__item-title"
+        show ?
+            <div className="bt">
+                <div className="flex-row-sp bt-cnt">
+                    {Btns.map((item) => (
+                        <div
+                            key={item.id}
+                            onClick={() => chooseBtn(item)}
+                            className="flex-column bt-cnt__item"
                         >
-                            {item.title}
-                        </span>
-                    </div>
-                ))}
+                            <img
+                                src={
+                                    item.path === pathname
+                                        ? item.iconAct
+                                        : item.icon
+                                }
+                                alt=""
+                            />
+                            {
+                                item.badge > 0 &&
+                                <span className="bt-cnt__item-badge">
+                                    {/* {item.badge} */}
+                                </span>
+                            }
+                            <span
+                                style={
+                                    item.path === pathname
+                                        ? {
+                                            color: "var(--purple)",
+                                            fontWeight: "700",
+                                        }
+                                        : {}
+                                }
+                                className="bt-cnt__item-title"
+                            >
+                                {item.title}
+                            </span>
+                        </div>
+                    ))}
+                </div>
             </div>
-        </div>
+            :
+            <></>
     );
 }

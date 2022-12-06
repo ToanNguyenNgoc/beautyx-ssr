@@ -16,7 +16,7 @@ import icon from "constants/icon";
 import { postMedia, useDeviceMobile } from "hooks";
 import { updateAsyncUser } from 'redux/USER/userSlice'
 import { ICON } from "constants/icon2";
-import { XButton, Bottom } from "components/Layout";
+import { XButton } from "components/Layout";
 import Favorites from "./components/Favorites";
 import Address from "./components/UserAddress";
 import { onClearApps } from "redux/appointment/appSlice";
@@ -213,7 +213,6 @@ function Account() {
                     </div>
                 </div>
             </Container>
-            {IS_MB && location.pathname === '/tai-khoan' && <Bottom />}
             <Guide open={guide} setOpen={setGuide} />
         </>
     );

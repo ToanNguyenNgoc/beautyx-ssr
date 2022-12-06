@@ -38,7 +38,6 @@ function HomeCategory(props: any) {
                     PRODUCTS={PRODUCTS}
                 />
             </div>
-            <Bottom />
         </>
     );
 }

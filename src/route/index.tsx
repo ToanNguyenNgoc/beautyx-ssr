@@ -16,64 +16,66 @@ import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
 import MerchantDetail from "pages/MerchantDetail";
-// import MerchantDetail from "../pages/MerchantDetail";
-// import Account from "../pages/Account";
-// import SignPage from "../pages/SignPage/index";
-// import ServicesUser from "../features/ServiceUser";
-// import SearchResults from "../pages/SearchResults/index";
-// import HomeListProvince from "../features/HomeResults/HomeListProvince";
-// import DealBanner from 'pages/DealBanner'
-// import Policy from "../pages/Policy";
-// import SellerCenter from "../pages/SellerCenter";
-// import Otp from "../features/Otp";
-// import ResetPassword from "../pages/ResetPassword";
-// import DiscountDetail from 'pages/_DiscountDetail'
-// import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
-// import HomeMap from "../features/HomeMap";
-// import HomeCateResult from "../pages/HomeCateResult";
-// import CategoryTree from "../features/CategoryTree";
-// import Booking from "../features/Booking";
-// import Calendar from "../features/Calendar";
-// import BuyNow from "../features/BuyNow";
-// import Carts from "../pages/Carts";
-// import ProductsByCate from "../features/CategoryTree/ProductsByCate";
-// import LandingPage from "pages/LandingPage";
-// import OtpMbPage from "pages/OtpMbPage";
-// import Trends from "pages/Trends";
-// import Community from "pages/Community";
-// import VoucherPage from "pages/VoucherPage";
-// import TrendsDetail from "pages/TrendsDetail";
+
 import { analytics, logEvent } from "../firebase";
 import {  LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
+import Otp from "features/Otp";
+import ResetPassword from "pages/ResetPassword";
+import SearchResults from "pages/SearchResults";
+import Policy from "pages/Policy";
+import HomeListProvince from "features/HomeResults/HomeListProvince";
+import Partner from "pages/Partner";
+import SellerCenter from "pages/SellerCenter";
+import DealBanner from "pages/DealBanner";
+import DiscountDetail from "pages/_DiscountDetail";
+import HomeDiscountList from "features/HomeResults/HomeDiscountList";
+import CategoryTree from "features/CategoryTree";
+import Booking from "features/Booking";
+import LandingPage from "pages/LandingPage";
+import ProductsByCate from "features/CategoryTree/ProductsByCate";
+import HomeMap from "features/HomeMap";
+import HomeCateResult from "pages/HomeCateResult";
+import Trends from "pages/Trends";
+import TrendsDetail from "pages/TrendsDetail";
+import Community from "pages/Community";
+import ServicesUser from "features/ServiceUser";
+import Account from "pages/Account";
+import Calendar from "features/Calendar";
+import BuyNow from "features/BuyNow";
+import Carts from "pages/Carts";
+import OtpMbPage from "pages/OtpMbPage";
+import VoucherPage from "pages/VoucherPage";
+import SignPage from "pages/SignPage";
+import { Bottom } from "components/Layout";
 //update import lazy
-const Account = lazy(() => import('pages/Account'))
-const SignPage = lazy(() => import('pages/SignPage'))
-const ServicesUser = lazy(() => import('features/ServiceUser'))
-const HomeMap = lazy(() => import('features/HomeMap'))
-const Partner = lazy(() => import("../pages/Partner"))
-const SearchResults = lazy(() => import("../pages/SearchResults/index"))
-const DiscountDetail = lazy(() => import('pages/_DiscountDetail'))
-const HomeListProvince = lazy(() => import("../features/HomeResults/HomeListProvince"))
-const DealBanner = lazy(() => import('pages/DealBanner'))
-const Policy = lazy(() => import('pages/Policy'))
-const SellerCenter = lazy(() => import('pages/SellerCenter'))
-const Otp = lazy(() => import('features/Otp'))
-const ResetPassword = lazy(() => import('pages/ResetPassword'))
-const HomeDiscountList = lazy(() => import('features/HomeResults/HomeDiscountList'))
-const HomeCateResult = lazy(() => import('pages/HomeCateResult'))
-const CategoryTree = lazy(() => import('features/CategoryTree'))
-const Booking = lazy(() => import('features/Booking'))
-const Calendar = lazy(() => import('features/Calendar'))
-const BuyNow = lazy(() => import('features/BuyNow'))
-const Carts = lazy(() => import('pages/Carts'))
-const ProductsByCate = lazy(() => import('features/CategoryTree/ProductsByCate'))
-const LandingPage = lazy(() => import('pages/LandingPage'))
-const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
-const Trends = lazy(() => import('pages/Trends'))
-const Community = lazy(() => import('pages/Community'))
-const VoucherPage = lazy(() => import('pages/Community'))
-const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
+// const Account = lazy(() => import('pages/Account'))
+// const SignPage = lazy(() => import('pages/SignPage'))
+// const ServicesUser = lazy(() => import('features/ServiceUser'))
+// const HomeMap = lazy(() => import('features/HomeMap'))
+// const Partner = lazy(() => import("../pages/Partner"))
+// const SearchResults = lazy(() => import("../pages/SearchResults/index"))
+// const DiscountDetail = lazy(() => import('pages/_DiscountDetail'))
+// const HomeListProvince = lazy(() => import("../features/HomeResults/HomeListProvince"))
+// const DealBanner = lazy(() => import('pages/DealBanner'))
+// const Policy = lazy(() => import('pages/Policy'))
+// const SellerCenter = lazy(() => import('pages/SellerCenter'))
+// const Otp = lazy(() => import('features/Otp'))
+// const ResetPassword = lazy(() => import('pages/ResetPassword'))
+// const HomeDiscountList = lazy(() => import('features/HomeResults/HomeDiscountList'))
+// const HomeCateResult = lazy(() => import('pages/HomeCateResult'))
+// const CategoryTree = lazy(() => import('features/CategoryTree'))
+// const Booking = lazy(() => import('features/Booking'))
+// const Calendar = lazy(() => import('features/Calendar'))
+// const BuyNow = lazy(() => import('features/BuyNow'))
+// const Carts = lazy(() => import('pages/Carts'))
+// const ProductsByCate = lazy(() => import('features/CategoryTree/ProductsByCate'))
+// const LandingPage = lazy(() => import('pages/LandingPage'))
+// const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
+// const Trends = lazy(() => import('pages/Trends'))
+// const Community = lazy(() => import('pages/Community'))
+// const VoucherPage = lazy(() => import('pages/Community'))
+// const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
 
 function RouterConfig() {
     const routes = [
@@ -310,17 +312,17 @@ function RouterConfig() {
                     <Redirect exact from="/" to="homepage" />
                     {routes.map((item, index: number) => (
                         <Route key={index} path={item.path}>
-                            <Suspense fallback={item.load ?? <LoadProgress/>}>
+                            {/* <Suspense fallback={item.load ?? <LoadProgress/>}> */}
                                 {item.component}
-                            </Suspense>
+                            {/* </Suspense> */}
                         </Route>
                     ))}
                     <AuthRoute>
                         {routesPrivate.map((item, index: number) => (
                             <Route key={index} path={item.path}>
-                                <Suspense fallback={<LoadProgress />}>
+                                {/* <Suspense fallback={<LoadProgress />}> */}
                                     {item.component}
-                                </Suspense>
+                                {/* </Suspense> */}
                             </Route>
                         ))}
                     </AuthRoute>
@@ -329,6 +331,7 @@ function RouterConfig() {
                 <ExtraFlatForm />
                 <AssistantBtn />
                 <Footer />
+                <Bottom/>
             </Router>
         </BrowserRouter>
     );
