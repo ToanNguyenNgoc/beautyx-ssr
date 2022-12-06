@@ -1,5 +1,5 @@
 import API_3RD from 'api/3rd-api';
-import {  XButton } from 'components/Layout';
+import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { useFetch } from 'hooks';
 import IStore from 'interface/IStore';
@@ -19,10 +19,11 @@ function TrendsDetail() {
     const history = useHistory()
     const { response } = useFetch(
         params.id,
-        `${API_3RD.API_NODE}/trends/${params.id}?include=services`
+        `${API_3RD.API_NODE}/trends/${params.id}`,
+        { 'include': 'services|tiktok' }
     )
     const trend: ITrend = response?.context
-    const { _id, video, comments } = useSelector((state: IStore) => state.TREND_DETAIL)
+    const { _id, comments } = useSelector((state: IStore) => state.TREND_DETAIL)
     const dispatch = useDispatch()
     const getVideoByUrl = async () => {
         dispatch(fetchAsyncVideoByUrl({
@@ -113,7 +114,7 @@ function TrendsDetail() {
                                     className={style.interactive_icon_btn}
                                     icon={icon.eyeBoldBlack}
                                 />
-                                <span className={style.interactive_item_text}>{video.view_count}</span>
+                                <span className={style.interactive_item_text}>{trend?.tiktok?.play_count}</span>
                             </div>
                             <div className={style.interactive_item}>
                                 <XButton
@@ -121,7 +122,7 @@ function TrendsDetail() {
                                     className={style.interactive_icon_btn}
                                     icon={icon.heartBoldBlack}
                                 />
-                                <span className={style.interactive_item_text}>{video.favorite_count}</span>
+                                <span className={style.interactive_item_text}>{trend?.tiktok?.digg_count}</span>
                             </div>
                             <div className={style.interactive_item}>
                                 <XButton
@@ -129,7 +130,7 @@ function TrendsDetail() {
                                     className={style.interactive_icon_btn}
                                     icon={icon.commentBoldBlack}
                                 />
-                                <span className={style.interactive_item_text}>{video.comment_count}</span>
+                                <span className={style.interactive_item_text}>{trend?.tiktok?.comment_count}</span>
                             </div>
                             <div className={style.interactive_item}>
                                 <XButton
@@ -137,7 +138,7 @@ function TrendsDetail() {
                                     className={style.interactive_icon_btn}
                                     icon={icon.shareBoldBlack}
                                 />
-                                <span className={style.interactive_item_text}>{video.share_count}</span>
+                                <span className={style.interactive_item_text}>{trend?.tiktok?.share_count}</span>
                             </div>
                         </div>
                     </div>

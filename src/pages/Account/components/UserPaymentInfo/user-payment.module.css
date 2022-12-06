@@ -37,10 +37,10 @@
 }
 
 .user_edit_btn {
-    padding: 6px;
-    margin-top: -4px;
-    width: 26px;
-    height: 26px;
+    padding: 6px !important;
+    margin-top: -4px !important;
+    width: 26px !important;
+    height: 26px !important;
 }
 
 @media only screen and (max-width: 1023px) {

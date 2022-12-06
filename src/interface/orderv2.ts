@@ -1,6 +1,7 @@
 import { Service } from "./service";
 import { Product } from "./product";
 import { IOrganization } from "./organization";
+import { IDiscountPar } from "./discount";
 
 export interface ITems {
     id: number;
@@ -9,13 +10,14 @@ export interface ITems {
     quantity: number;
     productable_type: string;
     productable_id: number;
-    productable: Service | Product;
+    productable: Service | Product | any;
     created_at: string;
     updated_at: string;
     origin_id: null | number;
     services_count: number;
     discount_value: number;
     discount_id: null | number;
+    discount:IDiscountPar
 }
 export interface IOrderOrigin {
     id: number;
@@ -96,5 +98,6 @@ export interface IOrderV2 {
         deleted_at: null;
         items: ITems[];
     };
+    items: ITems[]
     origin?: IOrderOrigin;
 }

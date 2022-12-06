@@ -12,9 +12,13 @@ import { useSwrInfinite } from 'utils'
 import API_ROUTE from "api/_api";
 import { EmptyRes } from "components/Layout";
 import Skeleton from "react-loading-skeleton";
+import { Masonry } from "@mui/lab";
+import { useDeviceMobile } from "hooks";
+import style from '../order.module.css'
 
 function TabOrderPaid() {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext)
+    const IS_MB = useDeviceMobile()
     const { USER } = useSelector((state: IStore) => state.USER)
     const param: ParamOrder = {
         ...paramOrder,
@@ -25,14 +29,17 @@ function TabOrderPaid() {
     const orders: IOrderV2[] = resData ?? []
 
     return (
-        <div>
+        <div className={style.order_container} >
             {totalItem === 0 && <EmptyRes title='Bạn chưa có đơn hàng nào' />}
             {orders.length === 0 && isValidating && <OrderSkelton />}
-            <ul className="order-list__cnt">
+            <Masonry
+                columns={IS_MB ? 1 : 2}
+                spacing={IS_MB ? 0 : 1}
+            >
                 {orders.map((order: IOrderV2, index: number) => (
                     <OrderItem key={index} order={order} />
                 ))}
-            </ul>
+            </Masonry>
             <div className="order-list__bottom">
                 {orders.length < totalItem && (
                     <XButton

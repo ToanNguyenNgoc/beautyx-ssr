@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext } from "react";
-import "./order.css";
-import { AppContext } from "../../context/AppProvider";
 import TabOrderCancel from "./components/TabOrderCancel";
 import TabOrderPaid from "./components/TabOrderPaid";
 import { Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import {
   onSetTab
-} from "../../redux/order/orderSlice";
+} from "redux/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { HeadTitle } from "pages/Account";
+import { AppContext } from "context/AppProvider";
+import "./order.css";
 
 function Orders() {
   const { t } = useContext(AppContext);

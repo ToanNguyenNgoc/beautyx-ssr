@@ -3,7 +3,6 @@ import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
 import Head from "features/Head/index";
-import Orders from "features/Orders/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useEffect, useState } from "react";
 import { fetchAsyncDiscountsUser, logoutUser } from "redux/USER/userSlice";
@@ -27,6 +26,7 @@ import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import Guide from "./components/Guide";
 import { handleCallingPhone } from "utils/customChat";
 import ChangePassword from "./components/ChangePassword";
+import Orders from "./components/Orders";
 
 const routes = [
     {
@@ -34,8 +34,8 @@ const routes = [
         component: <Information />,
     },
     {
-        path:'/tai-khoan/doi-mat-khau',
-        component:<ChangePassword/>
+        path: '/tai-khoan/doi-mat-khau',
+        component: <ChangePassword />
     },
     {
         path: "/tai-khoan/lich-su-mua",
