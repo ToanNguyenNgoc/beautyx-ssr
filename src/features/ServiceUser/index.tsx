@@ -11,7 +11,7 @@ import { IServiceUser } from "interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { XButton } from "components/Layout";
 import { useDeviceMobile } from "hooks";
-import { OrderSkelton } from 'features/Orders/components/TabOrderPaid'
+import { OrderSkelton } from "pages/Account/components/Orders/components/TabOrderPaid";
 
 function ServicesUser() {
     const dispatch = useDispatch();

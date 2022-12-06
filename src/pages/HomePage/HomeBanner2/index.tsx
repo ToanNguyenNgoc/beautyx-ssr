@@ -114,12 +114,12 @@ function HomeBanner2({ refBanner }: { refBanner: any }) {
     const onFeatureClick = (func: string) => {
         switch (func) {
             case "COM":
-                // return setMessage({
-                //     open: true,
-                //     content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
-                //     icon: icon.communityPurple
-                // });
-                return history.push('/cong-dong')
+                return setMessage({
+                    open: true,
+                    content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
+                    icon: icon.communityPurple
+                });
+                // return history.push('/cong-dong')
             case "REW":
                 return setMessage({
                     open: true,

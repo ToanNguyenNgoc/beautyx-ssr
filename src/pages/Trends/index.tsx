@@ -15,7 +15,8 @@ import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 function Trends() {
     const { response } = useFetch(
         true,
-        `${API_3RD.API_NODE}/trends?include=services`
+        `${API_3RD.API_NODE}/trends`,
+        { 'include': 'services|tiktok' }
     );
 
     const trends: ITrend[] = response?.context?.data ?? [];
@@ -85,7 +86,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
             videoRef.current?.pause()
         }
     }, [playVideo]);
-    const onOrgDetail = ()=>{
+    const onOrgDetail = () => {
         history.push(formatRouterLinkOrg(item.organization_id))
     }
     return (
@@ -106,7 +107,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     />
                 }
             </div>
-            <div 
+            <div
                 onClick={onOrgDetail}
                 className={style.trend_item_head}
             >
@@ -131,11 +132,15 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                 <div onClick={onDetail} className={style.trend_item_bot_ex}>
                     <div className={style.item_ex}>
                         <img className={style.item_ex_icon} src={icon.heartBoldBlack} alt="" />
-                        <span className={style.item_ex_text}></span>
+                        <span className={style.item_ex_text}>{item.tiktok?.digg_count}</span>
                     </div>
                     <div className={style.item_ex}>
                         <img className={style.item_ex_icon} src={icon.commentBoldBlack} alt="" />
-                        <span className={style.item_ex_text}></span>
+                        <span className={style.item_ex_text}>{item.tiktok?.comment_count}</span>
+                    </div>
+                    <div className={style.item_ex}>
+                        <img className={style.item_ex_icon} src={icon.shareBoldBlack} alt="" />
+                        <span className={style.item_ex_text}>{item.tiktok?.share_count}</span>
                     </div>
                 </div>
                 <p className={style.trend_item_desc}>

@@ -3,7 +3,6 @@ import { partnerStyle } from "./style";
 import Head from "../../features/Head";
 import Information from "./components/Information";
 import FormPartner from "./components/FormPartner";
-import HeadTitle from "../../features/HeadTitle";
 import { AppContext } from "../../context/AppProvider";
 
 export default function Partner() {
@@ -11,8 +10,7 @@ export default function Partner() {
     const { t } = useContext(AppContext);
     return (
         <div>
-            <HeadTitle title={t("Header.1")} />
-            <Head />
+            <Head title={t("Header.1")} />
             <section className={parner.partner}>
                 <div className={parner.container}>
                     <div className={parner.content}>
