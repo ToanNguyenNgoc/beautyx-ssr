@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Head from 'features/Head';
 import React, { useEffect } from 'react';
 import { deals } from 'pages/HomePage/data'
 import style from './deal-banner.module.css'
@@ -14,7 +13,7 @@ import { IServicePromo } from 'interface';
 import { BackTopButton, SerProItem } from 'components/Layout';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadGrid } from 'components/LoadingSketion';
-import icon from 'constants/icon';
+import HeadMobile from 'features/HeadMobile';
 
 function DealBanner() {
     const { _id } = useParams()
@@ -41,7 +40,7 @@ function DealBanner() {
     const onMore = () => { if (resData.length < totalItem) onLoadMore() }
     return (
         <>
-            <Head iconBack={icon.chevronLeftWhite} title={deal?.title ?? ''} changeStyle={IS_MB} />
+            <HeadMobile  title={deal?.title ?? ''} />
             <Container>
                 <div className={style.container}>
                     <div className={style.deal_banner_cnt}>

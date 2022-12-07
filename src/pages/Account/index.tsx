@@ -2,7 +2,6 @@
 import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
-import Head from "features/Head/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useEffect, useState } from "react";
 import { fetchAsyncDiscountsUser, logoutUser } from "redux/USER/userSlice";
@@ -105,7 +104,6 @@ function Account() {
 
     return (
         <>
-            {!IS_MB && <Head />}
             <Container>
                 <div className={style.container}>
                     <div

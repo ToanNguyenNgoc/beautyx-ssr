@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useContext } from "react";
-import HeadTitle from "../HeadTitle";
-import Head from "../Head";
 import { Container, Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import "./style.css";
@@ -11,11 +9,9 @@ import { useHistory, useLocation } from "react-router-dom";
 import { extraParamsUrl } from "../../utils/extraParamsUrl";
 import { AppContext } from "../../context/AppProvider";
 import { ApointmentTab } from "pages/Apointment";
-import { useDeviceMobile } from "hooks";
 
 function Calendar() {
     const { t } = useContext(AppContext);
-    const IS_MB = useDeviceMobile();
     const history = useHistory();
     const location: any = useLocation();
     const params: any = extraParamsUrl();
@@ -38,8 +34,6 @@ function Calendar() {
     };
     return (
         <>
-            <HeadTitle title="Lịch hẹn" />
-            {!IS_MB && <Head />}
             <div className="cal-cnt">
                 <div className="cal-cnt__tab-cnt">
                     <TabContext value={valueTab}>

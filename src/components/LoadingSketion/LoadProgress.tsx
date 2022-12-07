@@ -29,7 +29,7 @@ export function LoadProgress() {
                     left: 0
                 }}
                 sx={{ width: '100%' }}>
-                <LinearProgress color="error" variant="determinate" value={progress} />
+                <LinearProgress color="success" variant="determinate" value={progress} />
             </Box>
             <div style={{
                 width: '100vw',

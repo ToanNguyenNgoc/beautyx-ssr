@@ -9,6 +9,7 @@ export interface ParamOrg {
     "filter[max_price]"?: number | string,
     "filter[province_code]"?: number | string,
     "filter[district_code]"?: number | string,
+    "filter[is_demo]"?:boolean | string,
     "sort"?: string,
     "include"?: string
 }

@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 import HomeWatched from "./HomeWatched";
-import Head from "features/Head";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
@@ -52,7 +51,6 @@ export default function HomePage() {
     return (
         <>
             <div onScroll={onScrollHome} className="homepage">
-                <Head changeStyle={IS_MB} />
                 <div className="home_container_par">
                     <Container>
                         <HomeCate />
@@ -79,7 +77,7 @@ export default function HomePage() {
                     <HomeRecomment />
                     <HomeWatched />
                     <HomeProvince2 />
-                    {!IS_MB && <HomeTrends />}
+                    {/* {!IS_MB && <HomeTrends />} */}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />

@@ -14,12 +14,13 @@ import { ITrendComment } from 'redux/trend_detail'
 import style from './trend-detail.module.css'
 import Skeleton from 'react-loading-skeleton';
 
-function TrendsDetail() {
+function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
     const params = useParams()
+    const trend_id = id ?? params?.id
     const history = useHistory()
     const { response } = useFetch(
-        params.id,
-        `${API_3RD.API_NODE}/trends/${params.id}`,
+        trend_id,
+        `${API_3RD.API_NODE}/trends/${trend_id}`,
         { 'include': 'services|tiktok' }
     )
     const trend: ITrend = response?.context
@@ -28,22 +29,29 @@ function TrendsDetail() {
     const getVideoByUrl = async () => {
         dispatch(fetchAsyncVideoByUrl({
             video_url: trend?.trend_url,
-            _id: params.id
+            _id: trend_id
         }))
     }
     useEffect(() => {
-        if (trend?.trend_url && _id !== params.id) {
+        if (trend?.trend_url && _id !== trend_id) {
             getVideoByUrl()
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [trend?.trend_url])
     const onOrgDetail = () => history.push(formatRouterLinkOrg(trend?.organization_id))
+    const onBack = () => {
+        if (onClose) {
+            onClose()
+        } else {
+            history.goBack()
+        }
+    }
 
     return (
         trend ?
             <div className={style.container} >
                 <XButton
-                    onClick={() => history.goBack()}
+                    onClick={onBack}
                     className={style.back_btn}
                     icon={icon.backWhite}
                     iconSize={24}

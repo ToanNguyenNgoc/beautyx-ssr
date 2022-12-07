@@ -67,6 +67,7 @@ function TabProduct({ keyword }: { keyword: string }) {
                         onChange={onChangeFilterLocation}
                         province_code={PRODUCT_PR["filter[province_code]"]}
                         district_code={PRODUCT_PR["filter[district_code]"]}
+                        showApplyBtn={IS_MB}
                     />
                 </div>
                 <div className={style.filter_left}>

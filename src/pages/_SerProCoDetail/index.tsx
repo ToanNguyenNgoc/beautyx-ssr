@@ -3,7 +3,6 @@ import { useRouteMatch, useHistory, Link, useLocation } from 'react-router-dom';
 import { useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
 import React, { useEffect, useRef, useState } from 'react';
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
-import Head from 'features/Head';
 import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { IDiscountPar, IOrganization } from 'interface';
@@ -138,7 +137,7 @@ function SerProCoDetail() {
     return (
         response && org ?
             <>
-                {IS_MB ? <HeadOrg onBackFunc={() => history.goBack()} org={org} /> : <Head title={DETAIL.name} />}
+                {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>

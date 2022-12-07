@@ -19,7 +19,6 @@ import { AppContext } from "context/AppProvider";
 import LoadOrg from "components/LoadingSketion/LoadOrg";
 import PageNotFound from "components/PageNotFound";
 import HeadTitle from "features/HeadTitle";
-import Head from "features/Head";
 import "./style.css";
 import { usePostAnalytics } from "./Functions";
 import {
@@ -85,7 +84,7 @@ function MerchantDetail() {
       {error && <PageNotFound />}
       {org && <Seo imageCover={org.image_url} title={org.name} content={org.description} />}
       <HeadTitle title={org?.name ? org.name : "Đang tải..."} />
-      {IS_MB && org ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
+      {IS_MB && org && <HeadOrg org={org} isShowSearch={true} />}
       {org && (
         <>
           <OrgDetail

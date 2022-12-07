@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import icon from "../../constants/icon";
-import Head from "../../features/Head";
 import HeadMobile from "../../features/HeadMobile";
 import HeadTitle from "../../features/HeadTitle";
 import { Container, Dialog } from "@mui/material";
@@ -126,7 +125,7 @@ function Carts() {
     return (
         <>
             <HeadTitle title="Giỏ hàng" />
-            {IS_MB ? (
+            {IS_MB && (
                 <HeadMobile
                     title="Giỏ hàng"
                     element={
@@ -136,8 +135,6 @@ function Carts() {
                         />
                     }
                 />
-            ) : (
-                <Head />
             )}
             {cartList?.length === 0 || !cartList ? (
                 <EmptyRes title='Không có Dịch vụ/Sản phẩm trong giỏ hàng !' />

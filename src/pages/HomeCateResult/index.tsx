@@ -8,7 +8,6 @@ import { useSwr, useSwrInfinite } from 'hooks';
 import { ITag } from 'interface';
 import { paramsProducts, paramsProductsCate } from 'params-query';
 import { formatParamsString, formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
-import Head from 'features/Head';
 import icon from 'constants/icon';
 import { LoadGrid } from 'components/LoadingSketion';
 import style from "./home-cate.module.css"
@@ -141,7 +140,6 @@ function HomeCateResult() {
 
     return (
         <>
-            <Head />
             <Container>
                 <div className={style.container}>
                     <div className={style.head}>

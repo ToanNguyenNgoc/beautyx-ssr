@@ -81,6 +81,7 @@ function TabOrg({ keyword }: { keyword: string }) {
                         onChange={onFilterLocation}
                         province_code={ORG_PR["filter[province_code]"]}
                         district_code={ORG_PR["filter[district_code]"]}
+                        showApplyBtn={IS_MB}
                     />
                 </div>
                 <div className={style.filter_left}>

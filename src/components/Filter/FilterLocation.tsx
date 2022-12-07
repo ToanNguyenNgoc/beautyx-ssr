@@ -22,7 +22,8 @@ interface FilterLocationProps {
     onChange?: (e: EventLocation) => void,
     province_code?: number | string,
     district_code?: number | string,
-    title?: string
+    title?: string,
+    showApplyBtn?: boolean
 }
 
 const useSearchProvinces = (keyword: string, list: any[]) => {
@@ -44,7 +45,7 @@ const useSearchProvinces = (keyword: string, list: any[]) => {
 export function FilterLocation(props: FilterLocationProps) {
     const location = AUTH_LOCATION()
     const IS_MB = useDeviceMobile()
-    const { onChange, province_code, district_code, title } = props
+    const { onChange, province_code, district_code, title, showApplyBtn } = props
     const [open, setOpen] = useState({
         oProvince: false,
         oDistrict: false
@@ -188,6 +189,19 @@ export function FilterLocation(props: FilterLocationProps) {
                         </ul>
                     </div>
                 </div>
+                {
+                    showApplyBtn &&
+                    <div className={style.province_bottom}>
+                        <XButton
+                            className={style.province_btn_apply}
+                            title='Áp dụng'
+                            onClick={() => {
+                                handleChange(province === "cur" ? location : "");
+                                setOpen({ oDistrict: false, oProvince: false })
+                            }}
+                        />
+                    </div>
+                }
             </Drawer>
             <Drawer
                 open={open.oDistrict}
