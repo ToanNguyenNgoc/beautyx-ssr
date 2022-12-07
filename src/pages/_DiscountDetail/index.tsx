@@ -1,5 +1,4 @@
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
-import Head from 'features/Head';
 import { useDeviceMobile, useFavorite } from 'hooks';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
@@ -71,7 +70,7 @@ function DiscountDetail() {
     return (
         (detail && org && discount) ?
             <>
-                {IS_MB ? <HeadOrg onBackFunc={() => history.goBack()} org={org} /> : <Head title={DETAIL.name} />}
+                {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>

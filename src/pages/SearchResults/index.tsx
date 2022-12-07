@@ -3,8 +3,6 @@ import React, { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { extraParamsUrl } from 'utils'
 import { ICON } from "constants/icon2";
-
-import Head from "features/Head";
 import { Container } from "@mui/material";
 import { BackTopButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
@@ -48,9 +46,6 @@ function SearchResults() {
     if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
     return (
         <>
-            <div className={style.head_wrapper}>
-                <Head />
-            </div>
             <Container>
                 <div className={style.container}>
                     <div className={style.left_cnt}>

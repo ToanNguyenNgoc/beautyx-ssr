@@ -235,6 +235,12 @@
     .price_list_cnt{
         display: flex;
     }
+    .province_bottom{
+        padding: 0px 12px 18px 12px;
+    }
+    .province_btn_apply{
+        width: 100%;
+    }
 
     /* tag */
     .tags_list {

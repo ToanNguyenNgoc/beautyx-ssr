@@ -38,7 +38,6 @@ import { searchKeyRecommend } from 'pages/HomePage/data'
 import { postHistorySearch } from "user-behavior";
 
 interface IProps {
-    changeStyle?: boolean;
     title?: string,
     iconBack?: string
 }
@@ -53,19 +52,51 @@ const homePath = [
     "/homepage",
 ];
 
+const pathHeader = [
+    "/TIKI",
+    "/MOMO",
+    "/TIKI/",
+    "/MOMO/",
+    "/MBBANK",
+    "/",
+    "/homepage/",
+    "/homepage",
+    "/ket-qua-tim-kiem/dich-vu",
+    "/ket-qua-tim-kiem/san-pham",
+    "/ket-qua-tim-kiem/cua-hang",
+    "/xu-huong"
+]
+const notPathHeader = [
+    '/sign-in',
+    '/doi-mat-khau',
+    '/trang-thai-don-hang/'
+]
+
+
 function Head(props: IProps) {
-    const { changeStyle, title, iconBack } = props;
+    const { title, iconBack } = props;
+    const location: any = useLocation();
+    const IS_MB = useDeviceMobile()
+    const pathname = location.pathname;
+    let showRecommendKey = false;
+    if (homePath.includes(pathname)) showRecommendKey = true;
+    let changeStyle = false
+    let showHeader = false
+    if (!IS_MB) showHeader = true
+    if (IS_MB && pathHeader.includes(pathname)) showHeader = true
+    if (notPathHeader.includes(pathname)) showHeader = false
+    if (IS_MB && homePath.includes(pathname)) changeStyle = true
+
+
     const { t, orderService, appointment } = useContext(AppContext);
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
     const { USER } = useSelector((state: IStore) => state.USER);
     // const USER = { id: 1, fullname: '', avatar: '' }
-    const IS_MB = useDeviceMobile();
     const refMenu = useRef<HTMLDivElement>();
     const refNoti = useRef<HTMLDivElement>();
     const refSearch = useRef<any>();
     const dispatch = useDispatch();
-    const location = useLocation();
 
     const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
     useEffect(() => {
@@ -163,140 +194,204 @@ function Head(props: IProps) {
         window.addEventListener("scroll", scroll);
         return () => window.removeEventListener("scroll", scroll);
     }, [scroll]);
-    const pathname = location.pathname;
-    let showRecommendKey = false;
-    if (homePath.includes(pathname)) showRecommendKey = true;
     return (
-        <div
-            id="header"
-            className={
-                changeStyle
-                    ? clst([style.container, style.container_ch])
-                    : style.container
-            }
-        >
-            <HeadTitle title={title} />
-            <Container>
-                <div className={style.head_wrapper}>
-                    <div className={style.head_top}>
-                        <div className={style.head_top_left}>
-                            <Link to={{ pathname: "/" }}>
-                                <img
-                                    className={style.head_top_left_img}
-                                    src={img.beautyxSlogan}
-                                    alt=""
-                                />
-                            </Link>
-                            <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
-                            <button
-                                className={style.head_top_left_search}
-                                onFocus={() => onToggleSearch("show")}
-                                onClick={() => {
-                                    onToggleSearch("show");
-                                    IS_MB && setOpenSearch(true)
-                                }}
-                                onBlur={() => onToggleSearch("hide")}
-                            >
-                                <img
-                                    onClick={onResult}
-                                    className={style.head_search_icon}
-                                    alt=""
-                                    src={icon.searchPurple}
-                                />
-                                <input
-                                    onChange={onChange}
-                                    className={style.head_search_input}
-                                    type="text"
-                                    placeholder="Bạn muốn tìm kiếm gì..."
-                                    disabled={IS_MB}
-                                    value={IS_MB ? keywordUrl : key.key}
-                                    onKeyDown={handleKeyDown}
-                                />
-                                {IS_MB && showRecommendKey && (
-                                    <SearchRecommend />
-                                )}
-                                {
-                                    !IS_MB &&
-                                    <div
-                                        ref={refSearch}
-                                        className={style.head_search}
+        showHeader ?
+            <>
+                <div
+                    id="header"
+                    className={
+                        changeStyle
+                            ? clst([style.container, style.container_ch])
+                            : style.container
+                    }
+                >
+                    <HeadTitle title={title} />
+                    <Container>
+                        <div className={style.head_wrapper}>
+                            <div className={style.head_top}>
+                                <div className={style.head_top_left}>
+                                    <Link to={{ pathname: "/" }}>
+                                        <img
+                                            className={style.head_top_left_img}
+                                            src={img.beautyxSlogan}
+                                            alt=""
+                                        />
+                                    </Link>
+                                    <BackContainer iconBack={iconBack} changeStyle={changeStyle} />
+                                    <button
+                                        className={style.head_top_left_search}
+                                        onFocus={() => onToggleSearch("show")}
+                                        onClick={() => {
+                                            onToggleSearch("show");
+                                            IS_MB && setOpenSearch(true)
+                                        }}
+                                        onBlur={() => onToggleSearch("hide")}
+                                    >
+                                        <img
+                                            onClick={onResult}
+                                            className={style.head_search_icon}
+                                            alt=""
+                                            src={icon.searchPurple}
+                                        />
+                                        <input
+                                            onChange={onChange}
+                                            className={style.head_search_input}
+                                            type="text"
+                                            placeholder="Bạn muốn tìm kiếm gì..."
+                                            disabled={IS_MB}
+                                            value={IS_MB ? keywordUrl : key.key}
+                                            onKeyDown={handleKeyDown}
+                                        />
+                                        {IS_MB && showRecommendKey && (
+                                            <SearchRecommend />
+                                        )}
+                                        {
+                                            !IS_MB &&
+                                            <div
+                                                ref={refSearch}
+                                                className={style.head_search}
+                                            >
+                                                <Search
+                                                    onCloseSearchTimeOut={
+                                                        onCloseSearchTimeOut
+                                                    }
+                                                    key_work={key.key}
+                                                    key_work_debounce={key.key_debounce}
+                                                />
+                                            </div>
+                                        }
+                                    </button>
+                                    <Dialog
+                                        open={openSearch}
+                                        fullScreen={true}
                                     >
                                         <Search
                                             onCloseSearchTimeOut={
                                                 onCloseSearchTimeOut
                                             }
+                                            onCloseSearchDialog={() => setOpenSearch(!openSearch)}
                                             key_work={key.key}
                                             key_work_debounce={key.key_debounce}
                                         />
-                                    </div>
-                                }
-                            </button>
-                            <Dialog
-                                open={openSearch}
-                                fullScreen={true}
-                            >
-                                <Search
-                                    onCloseSearchTimeOut={
-                                        onCloseSearchTimeOut
-                                    }
-                                    onCloseSearchDialog={() => setOpenSearch(!openSearch)}
-                                    key_work={key.key}
-                                    key_work_debounce={key.key_debounce}
-                                />
-                            </Dialog>
-                        </div>
-                        {/* <div className={style.head_top_center}>
+                                    </Dialog>
+                                </div>
+                                {/* <div className={style.head_top_center}>
                         </div> */}
-                        <div className={style.head_top_right}>
-                            <XButton
-                                className={style.head_btn_partner}
-                                title={t("Header.1")}
-                                onClick={() => history.push("/partner")}
-                            />
-                            {USER ? (
-                                <>
-                                    <Link
-                                        to={{
-                                            pathname:
-                                                "/tai-khoan/thong-tin-ca-nhan",
-                                        }}
-                                        className={style.head_top_right_user}
-                                    >
-                                        <img
-                                            className={style.head_user_avatar}
-                                            src={USER?.avatar}
-                                            alt=""
-                                        />
-                                        <span className={style.head_user_name}>
-                                            {USER?.fullname}
-                                        </span>
-                                    </Link>
+                                <div className={style.head_top_right}>
+                                    <XButton
+                                        className={style.head_btn_partner}
+                                        title={t("Header.1")}
+                                        onClick={() => history.push("/partner")}
+                                    />
+                                    {USER ? (
+                                        <>
+                                            <Link
+                                                to={{
+                                                    pathname:
+                                                        "/tai-khoan/thong-tin-ca-nhan",
+                                                }}
+                                                className={style.head_top_right_user}
+                                            >
+                                                <img
+                                                    className={style.head_user_avatar}
+                                                    src={USER?.avatar}
+                                                    alt=""
+                                                />
+                                                <span className={style.head_user_name}>
+                                                    {USER?.fullname}
+                                                </span>
+                                            </Link>
+                                            {!IS_MB && (
+                                                <button
+                                                    onClick={onNavigateAppointment}
+                                                    className={style.head_top_right_btn}
+                                                >
+                                                    {appointment_today.length > 0 && (
+                                                        <span
+                                                            className={
+                                                                style.head_top_right_badge
+                                                            }
+                                                        >
+                                                            {appointment_today.length}
+                                                        </span>
+                                                    )}
+                                                    <img
+                                                        src={ICON.calendarAct}
+                                                        alt=""
+                                                    />
+                                                </button>
+                                            )}
+                                            <button
+                                                onClick={(e) => {
+                                                    onToggleNoti("show");
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                }}
+                                                className={
+                                                    changeStyle
+                                                        ? clst([
+                                                            style.head_top_right_btn,
+                                                            style.head_top_right_btn_ch,
+                                                        ])
+                                                        : style.head_top_right_btn
+                                                }
+                                            >
+                                                <HeadNotification
+                                                    refNoti={refNoti}
+                                                    appointment_today={
+                                                        appointment_today
+                                                    }
+                                                    order_app={order_app}
+                                                />
+                                                {notiCount > 0 && (
+                                                    <span
+                                                        className={
+                                                            style.head_top_right_badge
+                                                        }
+                                                    >
+                                                        {notiCount}
+                                                    </span>
+                                                )}
+                                                <img
+                                                    src={
+                                                        changeStyle
+                                                            ? icon.bellWhite
+                                                            : icon.Bell
+                                                    }
+                                                    alt=""
+                                                />
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <div className={style.head_top_right_auth}>
+                                            <XButton
+                                                className={style.head_sign_btn}
+                                                title={t("Home.Sign_up")}
+                                                onClick={() =>
+                                                    history.push("/sign-up?2")
+                                                }
+                                            />
+                                            <XButton
+                                                onClick={() =>
+                                                    history.push("/sign-in?1")
+                                                }
+                                                className={style.head_sign_btn}
+                                                title={t("Home.Sign_in")}
+                                            />
+                                        </div>
+                                    )}
                                     {!IS_MB && (
                                         <button
-                                            onClick={onNavigateAppointment}
+                                            onFocus={() => onToggleMenu("show")}
+                                            onBlur={() => onToggleMenu("hide")}
                                             className={style.head_top_right_btn}
                                         >
-                                            {appointment_today.length > 0 && (
-                                                <span
-                                                    className={
-                                                        style.head_top_right_badge
-                                                    }
-                                                >
-                                                    {appointment_today.length}
-                                                </span>
-                                            )}
-                                            <img
-                                                src={ICON.calendarAct}
-                                                alt=""
-                                            />
+                                            <img src={icon.Menu} alt="" />
+                                            <HeadMenu refMenu={refMenu} />
                                         </button>
                                     )}
                                     <button
-                                        onClick={(e) => {
-                                            onToggleNoti("show");
-                                            e.preventDefault();
-                                            e.stopPropagation();
-                                        }}
+                                        onClick={() => history.push("/gio-hang")}
                                         className={
                                             changeStyle
                                                 ? clst([
@@ -306,98 +401,33 @@ function Head(props: IProps) {
                                                 : style.head_top_right_btn
                                         }
                                     >
-                                        <HeadNotification
-                                            refNoti={refNoti}
-                                            appointment_today={
-                                                appointment_today
-                                            }
-                                            order_app={order_app}
-                                        />
-                                        {notiCount > 0 && (
+                                        {cartQuantity > 0 && (
                                             <span
-                                                className={
-                                                    style.head_top_right_badge
-                                                }
+                                                className={style.head_top_right_badge}
                                             >
-                                                {notiCount}
+                                                {cartQuantity >= 9
+                                                    ? "9+"
+                                                    : cartQuantity}
                                             </span>
                                         )}
                                         <img
                                             src={
                                                 changeStyle
-                                                    ? icon.bellWhite
-                                                    : icon.Bell
+                                                    ? icon.cartWhiteBold
+                                                    : icon.cartPurpleBold
                                             }
                                             alt=""
                                         />
                                     </button>
-                                </>
-                            ) : (
-                                <div className={style.head_top_right_auth}>
-                                    <XButton
-                                        className={style.head_sign_btn}
-                                        title={t("Home.Sign_up")}
-                                        onClick={() =>
-                                            history.push("/sign-up?2")
-                                        }
-                                    />
-                                    <XButton
-                                        onClick={() =>
-                                            history.push("/sign-in?1")
-                                        }
-                                        className={style.head_sign_btn}
-                                        title={t("Home.Sign_in")}
-                                    />
                                 </div>
-                            )}
-                            {!IS_MB && (
-                                <button
-                                    onFocus={() => onToggleMenu("show")}
-                                    onBlur={() => onToggleMenu("hide")}
-                                    className={style.head_top_right_btn}
-                                >
-                                    <img src={icon.Menu} alt="" />
-                                    <HeadMenu refMenu={refMenu} />
-                                </button>
-                            )}
-                            <button
-                                onClick={() => history.push("/gio-hang")}
-                                className={
-                                    changeStyle
-                                        ? clst([
-                                            style.head_top_right_btn,
-                                            style.head_top_right_btn_ch,
-                                        ])
-                                        : style.head_top_right_btn
-                                }
-                            >
-                                {cartQuantity > 0 && (
-                                    <span
-                                        className={style.head_top_right_badge}
-                                    >
-                                        {cartQuantity >= 9
-                                            ? "9+"
-                                            : cartQuantity}
-                                    </span>
-                                )}
-                                <img
-                                    src={
-                                        changeStyle
-                                            ? icon.cartWhiteBold
-                                            : icon.cartPurpleBold
-                                    }
-                                    alt=""
-                                />
-                            </button>
-                        </div>
-                    </div>
-                    <div className={style.head_bot}>
-                        {/* <XButton
+                            </div>
+                            <div className={style.head_bot}>
+                                {/* <XButton
                             className={style.head_bot_btn}
                             title={t("Header.1")}
                             onClick={() => history.push("/partner")}
                         /> */}
-                        {/* <div
+                                {/* <div
                             onClick={() =>
                                 window.open("https://beautyx.vn/blog", "_blank")
                             }
@@ -405,10 +435,13 @@ function Head(props: IProps) {
                         >
                             Tin tức
                         </div> */}
-                    </div>
+                            </div>
+                        </div>
+                    </Container>
                 </div>
-            </Container>
-        </div>
+            </>
+            :
+            <></>
     );
 }
 

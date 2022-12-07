@@ -5,7 +5,6 @@ import PageNotFound from 'components/PageNotFound';
 import { IBanner } from 'interface/banner'
 import style from './landing.module.css'
 import { Container } from '@mui/material';
-import Head from 'features/Head';
 import Skeleton from 'react-loading-skeleton';
 import { TypeLandingPage, TypeSearchResult } from "./components"
 import { useHistory } from 'react-router-dom';
@@ -27,7 +26,7 @@ function LadingPage() {
     return (
         <>
             <>
-                {IS_MB ? <HeadMobile title={banner?.name ?? ""} /> : <Head />}
+                {IS_MB && <HeadMobile title={banner?.name ?? ""} />}
                 <div className={style.container}>
                     <Container>
                         <div className={style.banner_container}>

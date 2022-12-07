@@ -3,7 +3,6 @@ import { policies } from '../../data/policies';
 import { extraParamsUrl } from '../../utils/extraParamsUrl';
 // import parser from 'html-react-parser';
 import './policy.css';
-import Head from '../../features/Head';
 import { Container } from '@mui/material'
 import { useDeviceMobile } from 'hooks';
 import HeadMobile from 'features/HeadMobile';
@@ -16,7 +15,7 @@ function Policy() {
     const dataRender = policies.find((item: any) => item.id == id)
     return (
         <>
-            {IS_MB ? <HeadMobile title={dataRender?.title ?? ''} /> : <Head />}
+            {IS_MB && <HeadMobile title={dataRender?.title ?? ''} />}
             {
                 id && dataRender &&
                 <Container>

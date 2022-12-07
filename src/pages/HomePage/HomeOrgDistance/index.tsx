@@ -25,11 +25,11 @@ function HomeOrgDistance() {
     const IS_MB = useDeviceMobile()
     useEffect(() => {
         dispatch(onResetFilterOrg())
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const params: ParamOrg = {
         ...ORG_PR,
-        "limit": 8,
+        "limit": 4,
         "filter[is_momo_ecommerce_enable]": true,
         "filter[location]": LOCATION,
     }
@@ -83,7 +83,7 @@ function HomeOrgDistance() {
             {
                 responseArray?.length === 0 &&
                 isValidating &&
-                (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={8} />)
+                (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={4} />)
             }
             <div className={style.org_list_cnt}>
                 <ul className={style.org_list}>

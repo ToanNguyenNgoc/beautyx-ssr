@@ -10,7 +10,6 @@ import style from "./banner-mobile.module.css";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import { useHistory } from "react-router-dom";
 import { Dialog } from "@mui/material";
-import ReactPlayer from "react-player";
 import { PopupMessage } from "components/Notification";
 import { useDeviceMobile } from "hooks";
 // import bannerInit from 'assets/image/bannerInit.png'
@@ -203,7 +202,7 @@ const PopupBanner = (props: PopupBannerProps) => {
             onClick={() => setPopup({ open: false, banner: null })}
         >
             <div className={style.popup_container}>
-                {popup.banner?.type === "VIDEO" && (
+                {/* {popup.banner?.type === "VIDEO" && (
                     <div className={style.video_container}>
                         <ReactPlayer
                             controls
@@ -212,7 +211,7 @@ const PopupBanner = (props: PopupBannerProps) => {
                             url={`${popup.banner?.url}`}
                         />
                     </div>
-                )}
+                )} */}
                 {popup.banner?.type === "HTML" && (
                     <div className={style.html_container}>
                         <div

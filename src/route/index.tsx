@@ -23,22 +23,22 @@ import LoadDetail from "components/LoadingSketion/LoadDetail";
 import Otp from "features/Otp";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
-import Policy from "pages/Policy";
+// import Policy from "pages/Policy";
 import HomeListProvince from "features/HomeResults/HomeListProvince";
-import Partner from "pages/Partner";
-import SellerCenter from "pages/SellerCenter";
+// import Partner from "pages/Partner";
+// import SellerCenter from "pages/SellerCenter";
 import DealBanner from "pages/DealBanner";
 import DiscountDetail from "pages/_DiscountDetail";
 import HomeDiscountList from "features/HomeResults/HomeDiscountList";
 import CategoryTree from "features/CategoryTree";
 import Booking from "features/Booking";
-import LandingPage from "pages/LandingPage";
+// import LandingPage from "pages/LandingPage";
 import ProductsByCate from "features/CategoryTree/ProductsByCate";
 import HomeMap from "features/HomeMap";
 import HomeCateResult from "pages/HomeCateResult";
-import Trends from "pages/Trends";
-import TrendsDetail from "pages/TrendsDetail";
-import Community from "pages/Community";
+// import Trends from "pages/Trends";
+// import TrendsDetail from "pages/TrendsDetail";
+// import Community from "pages/Community";
 import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
 import Calendar from "features/Calendar";
@@ -48,18 +48,19 @@ import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
 import { Bottom } from "components/Layout";
+import Head from "features/Head";
 //update import lazy
 // const Account = lazy(() => import('pages/Account'))
 // const SignPage = lazy(() => import('pages/SignPage'))
 // const ServicesUser = lazy(() => import('features/ServiceUser'))
 // const HomeMap = lazy(() => import('features/HomeMap'))
-// const Partner = lazy(() => import("../pages/Partner"))
+const Partner = lazy(() => import("../pages/Partner"))
 // const SearchResults = lazy(() => import("../pages/SearchResults/index"))
 // const DiscountDetail = lazy(() => import('pages/_DiscountDetail'))
 // const HomeListProvince = lazy(() => import("../features/HomeResults/HomeListProvince"))
 // const DealBanner = lazy(() => import('pages/DealBanner'))
-// const Policy = lazy(() => import('pages/Policy'))
-// const SellerCenter = lazy(() => import('pages/SellerCenter'))
+const Policy = lazy(() => import('pages/Policy'))
+const SellerCenter = lazy(() => import('pages/SellerCenter'))
 // const Otp = lazy(() => import('features/Otp'))
 // const ResetPassword = lazy(() => import('pages/ResetPassword'))
 // const HomeDiscountList = lazy(() => import('features/HomeResults/HomeDiscountList'))
@@ -70,12 +71,12 @@ import { Bottom } from "components/Layout";
 // const BuyNow = lazy(() => import('features/BuyNow'))
 // const Carts = lazy(() => import('pages/Carts'))
 // const ProductsByCate = lazy(() => import('features/CategoryTree/ProductsByCate'))
-// const LandingPage = lazy(() => import('pages/LandingPage'))
+const LandingPage = lazy(() => import('pages/LandingPage'))
 // const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
-// const Trends = lazy(() => import('pages/Trends'))
-// const Community = lazy(() => import('pages/Community'))
+const Trends = lazy(() => import('pages/Trends'))
+const Community = lazy(() => import('pages/Community'))
 // const VoucherPage = lazy(() => import('pages/Community'))
-// const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
+const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
 
 function RouterConfig() {
     const routes = [
@@ -308,13 +309,14 @@ function RouterConfig() {
     return (
         <BrowserRouter>
             <Router>
+                <Head/>
                 <Switch>
                     <Redirect exact from="/" to="homepage" />
                     {routes.map((item, index: number) => (
                         <Route key={index} path={item.path}>
-                            {/* <Suspense fallback={item.load ?? <LoadProgress/>}> */}
+                            <Suspense fallback={item.load ?? <LoadProgress/>}>
                                 {item.component}
-                            {/* </Suspense> */}
+                            </Suspense>
                         </Route>
                     ))}
                     <AuthRoute>

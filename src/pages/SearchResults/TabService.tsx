@@ -65,6 +65,7 @@ function TabService({ keyword }: { keyword: string }) {
                         onChange={onChangeFilterLocation}
                         province_code={SERVICE_PR["filter[province_code]"]}
                         district_code={SERVICE_PR["filter[district_code]"]}
+                        showApplyBtn={IS_MB}
                     />
                 </div>
                 <div className={style.filter_left}>
