@@ -2,7 +2,7 @@ import { identity, pickBy } from 'lodash';
 import { useSWRInfinite } from 'swr'
 
 export function useFetchInfinite(
-    condition: boolean,
+    condition: any,
     API_URL: string,
     query?: any
 ) {
