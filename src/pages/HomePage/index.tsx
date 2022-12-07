@@ -10,7 +10,7 @@ import HomeWatched from "./HomeWatched";
 import Head from "features/Head";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
-import {  OpenApp, PlashScreen } from "components/Layout";
+import { OpenApp, PlashScreen } from "components/Layout";
 import { useDeviceMobile, useElementOnScreen } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
@@ -78,8 +78,8 @@ export default function HomePage() {
                     <HomeWhyNot />
                     <HomeRecomment />
                     <HomeWatched />
-                    <HomeProvince2 />,
-                    <HomeTrends />,
+                    <HomeProvince2 />
+                    {!IS_MB && <HomeTrends />}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />
