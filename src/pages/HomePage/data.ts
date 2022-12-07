@@ -45,7 +45,7 @@ export const deals: Ideals[] = [
     },
     {
         id: 2,
-        title: "Deal chăm sóc da làm đẹp Giảm 50%",
+        title: "Làm đẹp Giảm 50%",
         min_price: null,
         img: dealHot.dealhot1,
         percent: 50,
