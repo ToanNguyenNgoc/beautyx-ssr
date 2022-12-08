@@ -23,7 +23,6 @@ import tagsReducer from "./Tags/tagsSlice";
 import orgMapReducer from "./org/orgMapSlice";
 import notiReducer from "./notifications"
 import filterResultReduce from "./filter-result";
-import TrendDetailReducer from './trend_detail';
 import searchHistoryReducer from './search_history'
 
 const rootReducer = {
@@ -51,7 +50,6 @@ const rootReducer = {
     ORGS_MAP: orgMapReducer,
     NOTI: notiReducer,
     FILTER_RESULT: filterResultReduce,
-    TREND_DETAIL: TrendDetailReducer,
     SEARCH_HIS: searchHistoryReducer
 };
 const store = configureStore({

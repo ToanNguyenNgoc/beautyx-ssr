@@ -114,7 +114,8 @@
     font-weight: 600;
     color: var(--purple);
 }
-.left_bot{
+
+.left_bot {
     display: none;
 }
 
@@ -138,6 +139,23 @@
     .btn_cnt {
         width: fit-content;
         position: relative;
+    }
+
+    .btn_cnt_count {
+        position: absolute;
+        position: absolute;
+        z-index: 2;
+        background-color: var(--red-cl);
+        font-size: 15px;
+        line-height: 22px;
+        font-weight: 600;
+        color: var(--bg-white);
+        height: 22px;
+        width: 22px;
+        text-align: center;
+        border-radius: 100%;
+        top: -8px;
+        right: -10px;
     }
 
     .icon_btn {
@@ -264,15 +282,18 @@
     .link_item {
         padding: 0px;
     }
-    .link_item:hover{
+
+    .link_item:hover {
         background-color: var(--bg-white);
     }
-    .left_bot{
+
+    .left_bot {
         display: block;
         padding: 0px 12px;
         background-color: var(--bg-white);
     }
-    .left_bot button{
+
+    .left_bot button {
         margin-bottom: 8px;
         background-color: var(--bg-color);
         color: var(--text-black);

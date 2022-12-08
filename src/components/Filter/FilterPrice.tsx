@@ -4,7 +4,8 @@ import { XButton } from 'components/Layout'
 import style from "./style.module.css"
 
 interface FilterPriceProps {
-    onChangePrice?: (e: any) => void
+    onChangePrice?: (e: any) => void,
+    onCloseDrawer?: () => void
     min_price?: any,
     max_price?: any
 }
@@ -21,7 +22,7 @@ export const pricesList: PriceList[] = [
 ]
 
 export function FilterPrice(props: FilterPriceProps) {
-    const { onChangePrice, min_price, max_price } = props;
+    const { onChangePrice, min_price, max_price, onCloseDrawer } = props;
     const [value, setValue] = useState({
         min_price: min_price ?? "",
         max_price: max_price ?? ""
@@ -39,11 +40,12 @@ export function FilterPrice(props: FilterPriceProps) {
             parseInt(value.max_price) > parseInt(value.min_price) || (value.min_price === "" && value.max_price === "")) {
             if (onChangePrice) onChangePrice(value)
         }
+        if (onCloseDrawer) onCloseDrawer()
     }
-    const onChoosePrice = (item:PriceList)=>{
+    const onChoosePrice = (item: PriceList) => {
         setValue({
-            max_price:item.max_price,
-            min_price:item.min_price
+            max_price: item.max_price,
+            min_price: item.min_price
         })
     }
     return (
@@ -65,7 +67,7 @@ export function FilterPrice(props: FilterPriceProps) {
                         Vui lòng điền khoảng giá phù hợp
                     </div>
                 }
-                <ul className={style.price_list_cnt}>
+                {/* <ul className={style.price_list_cnt}>
                     {
                         pricesList.map((item:PriceList)=>(
                             <li 
@@ -83,7 +85,7 @@ export function FilterPrice(props: FilterPriceProps) {
                             </li>
                         ))
                     }
-                </ul>
+                </ul> */}
                 <XButton
                     className={style.price_btn}
                     title='Áp dụng'

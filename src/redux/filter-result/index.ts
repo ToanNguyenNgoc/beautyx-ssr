@@ -10,6 +10,7 @@ export interface IFilterResult {
 const initialState: IFilterResult = {
     prev_param: "",
     SERVICE_PR: {
+        "filter[keyword]":'',
         "filter[location]": "",
         "filter[province_code]": "",
         "filter[district_code]": "",

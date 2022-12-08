@@ -26,6 +26,7 @@ import Guide from "./components/Guide";
 import { handleCallingPhone } from "utils/customChat";
 import ChangePassword from "./components/ChangePassword";
 import Orders from "./components/Orders";
+import { getTotal } from "redux/cartSlice";
 
 const routes = [
     {
@@ -219,6 +220,12 @@ export default Account;
 
 export const HeadAccount = () => {
     const history = useHistory()
+    const { USER } = useSelector((state: IStore) => state.USER)
+    const dispatch = useDispatch()
+    const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
+    useEffect(() => {
+        dispatch(getTotal(USER?.id));
+    }, [cartList]);
     return (
         <div className={style.header_container}>
             <div className={style.btn_cnt}>
@@ -234,6 +241,12 @@ export const HeadAccount = () => {
                     className={style.icon_btn}
                     icon={icon.cartLineBlack}
                 />
+                {
+                    cartQuantity > 0 &&
+                    <span className={style.btn_cnt_count}>
+                        {cartList > 9 ? '9+' : cartQuantity}
+                    </span>
+                }
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import { Drawer } from '@mui/material';
-import { EventLocation, FilterLocation, FilterPrice, FilterSort } from 'components/Filter';
+import { EventLocation, FilterLocation, FilterPrice, FilterSort, FilterTagsSerPro } from 'components/Filter';
 import { EmptyRes, XButton } from 'components/Layout';
 import { LoadGrid } from 'components/LoadingSketion';
 import icon from 'constants/icon';
@@ -26,7 +26,7 @@ function TabServiceGroup({ keyword }: { keyword: string }) {
     const { SERVICE_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
     const PARAMS_SERVICES: ParamService = {
         ...paramsServices,
-        "filter[keyword]": keyword,
+        "filter[keyword]": SERVICE_PR['filter[keyword]'] === '' ? keyword : SERVICE_PR['filter[keyword]'],
         "filter[location]": SERVICE_PR["filter[location]"],
         "filter[min_price]": SERVICE_PR["filter[min_price]"],
         "filter[max_price]": SERVICE_PR["filter[max_price]"],
@@ -65,6 +65,12 @@ function TabServiceGroup({ keyword }: { keyword: string }) {
             "sort": query
         }))
     }
+    const onChangeTag = (value: string) => {
+        dispatch(onChangeFilterService({
+            ...PARAMS_SERVICES,
+            'filter[keyword]': value
+        }))
+    }
     return (
         <>
             <div className={style.filter_container}>
@@ -85,6 +91,12 @@ function TabServiceGroup({ keyword }: { keyword: string }) {
                     />
                     <Drawer open={openFilter} onClose={() => setOpenFilter(false)} anchor="bottom" >
                         <div className={style.filter_cnt_mt}>
+                            <FilterTagsSerPro
+                                originKey={keyword}
+                                value={SERVICE_PR['filter[keyword]']}
+                                type='SERVICE'
+                                onChange={onChangeTag}
+                            />
                             <FilterSort
                                 type="SERVICE"
                                 onChange={onChangeSort}
@@ -94,6 +106,7 @@ function TabServiceGroup({ keyword }: { keyword: string }) {
                                 onChangePrice={onChangePrice}
                                 min_price={SERVICE_PR["filter[min_price]"]}
                                 max_price={SERVICE_PR["filter[max_price]"]}
+                                onCloseDrawer={()=>setOpenFilter(false)}
                             />
                         </div>
                     </Drawer>

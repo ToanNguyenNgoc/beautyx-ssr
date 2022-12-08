@@ -7,7 +7,6 @@ import { useDeviceMobile, useSwrInfinite } from 'hooks';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import HeadTitle from 'features/HeadTitle';
 import HeadMobile from 'features/HeadMobile';
-import Head from 'features/Head';
 import DiscountItem from 'features/HomeDiscounts/DiscountItem';
 import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -18,21 +17,23 @@ function HomeDiscountList() {
         "append": "user_available_purchase_count",
         "filter[platform]": "MOMO",
         // "filter[location]": LOCATION ?? "",
-        "limit": "18",
+        "limit": "30",
         "sort": "-priority|-created_at|discount_value"
     }
     const IS_MB = useDeviceMobile();
     const { resData, totalItem, onLoadMore } = useSwrInfinite(true, "/discounts", paramsDiscounts)
     const discounts: IDiscountPar[] = resData
     const onViewMore = () => {
-        onLoadMore()
+        if (discounts?.length < totalItem) {
+            onLoadMore()
+        }
     }
     return (
         <>
             <HeadTitle
                 title="Giá tốt, Ưu đãi khủng"
             />
-            {IS_MB ? <HeadMobile title='Khuyến mãi HOT' /> : <Head />}
+            {IS_MB && <HeadMobile title='Khuyến mãi HOT' />}
             <Container>
                 <div className="discount-list-cnt">
                     <InfiniteScroll

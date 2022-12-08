@@ -1,43 +1,33 @@
 import API_3RD from 'api/3rd-api';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import { useFetch } from 'hooks';
-import IStore from 'interface/IStore';
+import { useFetch, useFetchInfinite } from 'hooks';
 import moment from 'moment';
 import { ITrend } from 'pages/Trends/trend.interface';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import { fetchAsyncVideoByUrl, ITrendCommentChild } from 'redux/trend_detail';
 import { formatRouterLinkOrg, formatRouterLinkService } from 'utils/formatRouterLink/formatRouter';
-import { ITrendComment } from 'redux/trend_detail'
 import style from './trend-detail.module.css'
 import Skeleton from 'react-loading-skeleton';
+import { ITrendComment, ITrendCommentChild } from './interface';
 
 function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
     const params = useParams()
     const trend_id = id ?? params?.id
     const history = useHistory()
-    const { response } = useFetch(
+    const trend: ITrend = useFetch(
         trend_id,
         `${API_3RD.API_NODE}/trends/${trend_id}`,
         { 'include': 'services|tiktok' }
+    ).response?.context
+
+    const { resData, totalItem, isValidating } = useFetchInfinite(
+        trend_id,
+        `${API_3RD.API_NODE}/tiktok/getCommentsByUrl`,
+        { 'filter[trend]': trend_id }
     )
-    const trend: ITrend = response?.context
-    const { _id, comments } = useSelector((state: IStore) => state.TREND_DETAIL)
-    const dispatch = useDispatch()
-    const getVideoByUrl = async () => {
-        dispatch(fetchAsyncVideoByUrl({
-            video_url: trend?.trend_url,
-            _id: trend_id
-        }))
-    }
-    useEffect(() => {
-        if (trend?.trend_url && _id !== trend_id) {
-            getVideoByUrl()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [trend?.trend_url])
+    const comments = resData ?? []
+
     const onOrgDetail = () => history.push(formatRouterLinkOrg(trend?.organization_id))
     const onBack = () => {
         if (onClose) {
@@ -150,12 +140,8 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
                             </div>
                         </div>
                     </div>
-                    {
-                        trend?.trend_url && _id !== params.id ?
-                            <LoadComment />
-                            :
-                            <TrendsDetailComment comments={comments} />
-                    }
+                    {totalItem === 1 && isValidating && <LoadComment />}
+                    {resData && <TrendsDetailComment comments={comments} />}
                 </div>
             </div>
             :

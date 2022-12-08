@@ -18,22 +18,27 @@ function HomeCate2() {
         {
             title: "Spa",
             icon: icon.cateSpa,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=spa`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=spa`,
         },
         {
             title: "Nail",
             icon: icon.cateNail,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=nail`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=nail`,
         },
         {
             title: "Salon",
             icon: icon.cateSalon,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=salon`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=salon`,
         },
         {
-            title: "Clinic",
+            title: "Nha khoa",
             icon: icon.cateClinic,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=clinic`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=Nha khoa`,
+        },
+        {
+            title: "Thẩm mỹ viện",
+            icon: icon.cateSpa,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=Thẩm mỹ viện`,
         },
     ];
     const onCateClick = (cate: any) => {

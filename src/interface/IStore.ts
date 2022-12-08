@@ -9,7 +9,6 @@ import { IORDER } from "../redux/order/orderSlice"
 import { IUSER } from "redux/USER/userSlice"
 import { INotification } from 'redux/notifications'
 import { IFilterResult } from 'redux/filter-result'
-import { ITrendItem } from 'redux/trend_detail'
 import { ISearch } from 'redux/search_history';
 
 
@@ -26,6 +25,5 @@ export default interface IStore {
     USER: IUSER,
     NOTI: INotification,
     FILTER_RESULT: IFilterResult,
-    TREND_DETAIL: ITrendItem,
     SEARCH_HIS: ISearch,
 }

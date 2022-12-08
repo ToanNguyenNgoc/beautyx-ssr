@@ -50,7 +50,7 @@ function HomeWatched(props: HomeWatchedProps) {
 
 export default HomeWatched;
 
-const CardItemCommon = ({ detail }: { detail: SerProCommonWatched }) => {
+export const CardItemCommon = ({ detail }: { detail: SerProCommonWatched }) => {
     const { t } = useContext(AppContext);
     const special_price = formatSalePriceService(detail.special_price, detail.special_price_momo)
     const discount_percent = 100 - Math.round(special_price / detail.price * 100)

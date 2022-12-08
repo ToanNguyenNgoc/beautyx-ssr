@@ -35,7 +35,9 @@
     }
 
     .item_cnt {
+        /* width: 84px; */
         width: 84px;
+        /* width: max-content; */
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -59,7 +61,7 @@
     .item_title {
         display: block;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 11px;
         line-height: 22px;
         margin-top: 4px;
     }
