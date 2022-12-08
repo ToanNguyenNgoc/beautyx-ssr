@@ -28,7 +28,7 @@ export default function VoucherPage() {
     const PLAT_FORM = EXTRA_FLAT_FORM();
     const newParams = {
         ...paramsDiscounts,
-        limit: 18,
+        limit: 30,
         sort: PLAT_FORM === "TIKI" ? "-priority" : "",
     };
     const { resData, totalItem, onLoadMore } = useSwrInfinite(

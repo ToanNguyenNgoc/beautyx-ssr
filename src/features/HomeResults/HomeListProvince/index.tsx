@@ -6,7 +6,6 @@ import { onResetFilter } from "redux/filter-result";
 import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
-import Head from "features/Head";
 import style from './list-province.module.css'
 import { useDeviceMobile, useSearchKeyword } from "hooks";
 import { Input, XButton } from "components/Layout";
@@ -32,25 +31,21 @@ function HomeListProvince() {
     const list = value === '' ? provinces_org : provinces
     return (
         <>
-            {
-                !IS_MB ? <Head title={t("home_2.places_you_are_interested_in")} />
-                    :
-                    <div className={style.head}>
-                        <XButton
-                            onClick={() => history.goBack()}
-                            icon={icon.chevronLeft}
-                            iconSize={28}
-                        />
-                        <Input
-                            classNamePar={style.head_input}
-                            className={style.head_input_child}
-                            icon={icon.searchPurple}
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
-                            placeholder="Tìm kiếm tỉnh thành...."
-                        />
-                    </div>
-            }
+            <div className={style.head}>
+                <XButton
+                    onClick={() => history.goBack()}
+                    icon={icon.chevronLeft}
+                    iconSize={28}
+                />
+                <Input
+                    classNamePar={style.head_input}
+                    className={style.head_input_child}
+                    icon={icon.searchPurple}
+                    value={value}
+                    onChange={(e) => setValue(e.target.value)}
+                    placeholder="Tìm kiếm tỉnh thành...."
+                />
+            </div>
             <div className="home-province">
                 <Container>
                     <div className="home-province_list">

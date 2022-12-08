@@ -188,6 +188,10 @@
     position: relative;
 }
 
+.tag_item_cnt_img {
+    display: none;
+}
+
 .tag_check {
     width: 18px;
     height: 18px;
@@ -232,13 +236,16 @@
     .province_name {
         width: calc(100% - 26px);
     }
-    .price_list_cnt{
+
+    .price_list_cnt {
         display: flex;
     }
-    .province_bottom{
+
+    .province_bottom {
         padding: 0px 12px 18px 12px;
     }
-    .province_btn_apply{
+
+    .province_btn_apply {
         width: 100%;
     }
 
@@ -256,20 +263,172 @@
         background-color: var(--bg-color);
         border-radius: 4px;
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px;
         transition: var(--trans);
+        border: solid 1px var(--bg-color);
+    }
+
+    .tag_item_cnt_img {
+        display: block;
+        position: relative;
+        width: 44px;
+        height: 44px;
+        border-radius: 4px;
+        background-color: var(--bg-color);
+    }
+
+    .tag_item_cnt_img img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        border-radius: 4px;
+        object-fit: cover;
     }
 
     .tag_check {
-        display: none;
+        right: 1px;
+        left: unset;
+        border: none;
+    }
+
+    .tag_check span {
+        position: absolute;
+        z-index: 3;
+        width: 22px;
+        height: 22px;
+        background-color: var(--purple);
+        top: -7px;
+        border-radius: 0px 4px 0px 0px;
+        clip-path: polygon(100% 0, 0 0, 100% 100%);
+    }
+
+    .tag_check span img {
+        width: 9px;
+        margin: 4px 0px 0px 12px;
     }
 
     .tag_item_cnt_act {
-        background-color: var(--purple);
+        background-color: transparent;
+        border: solid 1px var(--purple);
         transition: var(--trans);
     }
 
     .tag_name_act {
         color: var(--bg-white);
     }
+
+    .tag_name {
+        width: calc(100% - 50px);
+    }
+
+    /* filter tag service */
+    .tag_ser_container {
+        background-color: var(--grey_2);
+        padding: 6px;
+        border-radius: 8px;
+    }
+
+    .tag_ser_title {
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 600;
+    }
+
+    .tag_ser_list {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    .tag_ser_item {
+        width: calc(50% - 6px);
+        /* width: 100%; */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 4px 0px;
+        background-color: var(--bg-color);
+        border-radius: 6px;
+        position: relative;
+    }
+
+    .tag_ser_item_select {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        border-radius: 6px;
+        border: solid 1px var(--purple);
+        z-index: 3;
+    }
+
+    .tag_ser_item_select::after {
+        position: absolute;
+        content: '';
+        width: 22px;
+        top: -1px;
+        right: 0;
+        height: 22px;
+        background-color: var(--purple);
+        border-radius: 0px 6px 0px 0px;
+        clip-path: polygon(100% 0, 0 0, 100% 100%);
+    }
+
+    .tag_ser_item_select img {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 9px;
+        z-index: 4;
+    }
+
+    .tag_ser_item_child {
+        position: absolute;
+        width: calc(200% + 12px);
+        z-index: 2;
+        margin-left: calc(-100% - 12px);
+        left: 0;
+        top: 50px;
+        background-color: var(--bg-color);
+        padding: 6px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        border-radius: 6px;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .item_child_show {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .tag_ser_item_img {
+        width: 44px;
+        height: 44px;
+        position: relative;
+        background-color: var(--bg-color);
+        border-radius: 6px;
+    }
+
+    .tag_ser_item_img img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        z-index: 1;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .tag_ser_item_text {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-black);
+        width: calc(100% - 50px);
+        text-transform: capitalize;
+    }
+
+    /* end filter tag service */
 }

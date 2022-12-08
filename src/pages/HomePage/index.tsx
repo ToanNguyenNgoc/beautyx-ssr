@@ -6,7 +6,6 @@ import HomeRecomment from "./HomeRecomment";
 import { useSelector } from "react-redux";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
-import HomeWatched from "./HomeWatched";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
@@ -22,7 +21,6 @@ import HomeWhyNot from "./HomeWhyNot";
 import HomeProvince2 from "./HomeProvince2";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
-import HomeTrends from "./HomeTrends";
 
 
 export default function HomePage() {
@@ -75,9 +73,7 @@ export default function HomePage() {
                     <HomeDownApp />
                     <HomeWhyNot />
                     <HomeRecomment />
-                    <HomeWatched />
                     <HomeProvince2 />
-                    {/* {!IS_MB && <HomeTrends />} */}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />

@@ -1,5 +1,6 @@
 import { identity, pickBy } from 'lodash';
 import { useSWRInfinite } from 'swr'
+import { AUTH_HEADER } from 'utils/authHeader';
 
 export function useFetchInfinite(
     condition: any,
@@ -13,7 +14,7 @@ export function useFetchInfinite(
     if (query) {
         paramsURL = `&${new URLSearchParams(pickBy(query, identity)).toString()}`
     }
-    const fetcher = (url: string) => condition && fetch(url).then((res) => res.json());
+    const fetcher = (url: string) => condition && fetch(url, AUTH_HEADER()).then((res) => res.json());
     const { data, error, mutate, isValidating, setSize, size } = useSWRInfinite(
         (index) =>
             `${API_URL}?page=${index + 1}${paramsURL}`,

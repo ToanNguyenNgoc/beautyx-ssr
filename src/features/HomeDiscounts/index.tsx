@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@mui/material";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
-import {useSwrInfinite} from "hooks";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
 import DiscountItem from "./DiscountItem";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
@@ -16,12 +16,13 @@ import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 function HomeDiscount() {
     const { t, geo } = useContext(AppContext);
+    const IS_MB = useDeviceMobile()
     const PLAT_FORM = EXTRA_FLAT_FORM();
     const LOCATION = AUTH_LOCATION();
     const newParams = {
         ...paramsDiscounts,
         page: 1,
-        limit:5,
+        limit: IS_MB ? 10 : 5,
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
