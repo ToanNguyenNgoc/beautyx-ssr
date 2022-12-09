@@ -9,33 +9,25 @@ import React, {
 } from "react";
 import img from "constants/img";
 import icon from "constants/icon";
-import { ICON } from "constants/icon2";
 import style from "./head.module.css";
 import { Container, Dialog } from "@mui/material";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import IStore from "interface/IStore";
 import { AppContext } from "context/AppProvider";
-import languages from "data/languages";
-import i18next from "i18next";
-import { logoutUser } from "redux/USER/userSlice";
-import { onClearApps } from "redux/appointment/appSlice";
-import { onSetStatusServicesUser } from "redux/order/orderSlice";
-import { AppointmentNoti } from "interface/appointment";
-import dayjs from "dayjs";
-import { getTotal } from "redux/cartSlice";
 import Search from "features/Search";
 import { debounce } from "lodash";
 import { clst, extraParamsUrl } from "utils";
-import { IServiceUser } from "interface/servicesUser";
 import { XButton } from "components/Layout";
-import { onSetViewedNoti } from "redux/notifications";
 import { onResetFilter } from "redux/filter-result";
 import Slider from "react-slick";
 import { useDeviceMobile } from "hooks";
 import HeadTitle from "features/HeadTitle";
 import { searchKeyRecommend } from 'pages/HomePage/data'
 import { postHistorySearch } from "user-behavior";
+import HeadCart from "./HeadCart";
+import HeadMenu from "./HeadMenu";
+import HeadNoti from "./HeadNoti";
 
 interface IProps {
     title?: string,
@@ -88,40 +80,12 @@ function Head(props: IProps) {
     if (IS_MB && homePath.includes(pathname)) changeStyle = true
 
 
-    const { t, orderService, appointment } = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
     const { USER } = useSelector((state: IStore) => state.USER);
-    // const USER = { id: 1, fullname: '', avatar: '' }
-    const refMenu = useRef<HTMLDivElement>();
-    const refNoti = useRef<HTMLDivElement>();
     const refSearch = useRef<any>();
     const dispatch = useDispatch();
-
-    const { cartList, cartQuantity } = useSelector((state: any) => state.carts);
-    useEffect(() => {
-        dispatch(getTotal(USER?.id));
-    }, [dispatch, cartList, USER]);
-
-    const onToggleMenu = (dis: "show" | "hide") => {
-        if (dis === "show")
-            return refMenu?.current?.classList.add(style.head_menu_show);
-        if (dis === "hide")
-            return refMenu?.current?.classList.remove(style.head_menu_show);
-    };
-    const onToggleNoti = (dis: "show" | "hide") => {
-        if (IS_MB) {
-            return refNoti?.current?.classList.toggle(style.head_menu_show);
-        } else {
-            if (dis === "show")
-                return refNoti?.current?.classList.add(style.head_menu_show);
-            if (dis === "hide")
-                return refNoti?.current?.classList.remove(style.head_menu_show);
-        }
-    };
-    window.onclick = () => {
-        return refNoti?.current?.classList.remove(style.head_menu_show);
-    }
     //
     const [openSearch, setOpenSearch] = useState(false)
     const onToggleSearch = (dis: "show" | "hide") => {
@@ -136,17 +100,6 @@ function Head(props: IProps) {
         }, 100);
     };
     //
-    // const { appsNoti } = useSelector((state: IStore) => state.NOTI);
-    const appointment_today = appointment?.filter(
-        (a: AppointmentNoti) =>
-            dayjs(a.time_start).format("YYYY-MM-DD") ===
-            dayjs().format("YYYY-MM-DD")
-    );
-    const order_app = orderService.filter(
-        (a: IServiceUser) => a.appointments.length === 0
-    );
-    const notiCount = appointment_today.concat(order_app).length;
-
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const onSetDebounceKeyword = useCallback(
         debounce((text) => setKey({ key: text, key_debounce: text }), 600),
@@ -171,12 +124,6 @@ function Head(props: IProps) {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             onResult();
         }
-    };
-    const onNavigateAppointment = () => {
-        appointment_today?.map((item: AppointmentNoti) => {
-            return dispatch(onSetViewedNoti(item.id));
-        });
-        history.push("/lich-hen?tab=1");
     };
     //
     const paramUrl: any = extraParamsUrl();
@@ -275,8 +222,6 @@ function Head(props: IProps) {
                                         />
                                     </Dialog>
                                 </div>
-                                {/* <div className={style.head_top_center}>
-                        </div> */}
                                 <div className={style.head_top_right}>
                                     <XButton
                                         className={style.head_btn_partner}
@@ -301,66 +246,7 @@ function Head(props: IProps) {
                                                     {USER?.fullname}
                                                 </span>
                                             </Link>
-                                            {!IS_MB && (
-                                                <button
-                                                    onClick={onNavigateAppointment}
-                                                    className={style.head_top_right_btn}
-                                                >
-                                                    {appointment_today.length > 0 && (
-                                                        <span
-                                                            className={
-                                                                style.head_top_right_badge
-                                                            }
-                                                        >
-                                                            {appointment_today.length}
-                                                        </span>
-                                                    )}
-                                                    <img
-                                                        src={ICON.calendarAct}
-                                                        alt=""
-                                                    />
-                                                </button>
-                                            )}
-                                            <button
-                                                onClick={(e) => {
-                                                    onToggleNoti("show");
-                                                    e.preventDefault();
-                                                    e.stopPropagation();
-                                                }}
-                                                className={
-                                                    changeStyle
-                                                        ? clst([
-                                                            style.head_top_right_btn,
-                                                            style.head_top_right_btn_ch,
-                                                        ])
-                                                        : style.head_top_right_btn
-                                                }
-                                            >
-                                                <HeadNotification
-                                                    refNoti={refNoti}
-                                                    appointment_today={
-                                                        appointment_today
-                                                    }
-                                                    order_app={order_app}
-                                                />
-                                                {notiCount > 0 && (
-                                                    <span
-                                                        className={
-                                                            style.head_top_right_badge
-                                                        }
-                                                    >
-                                                        {notiCount}
-                                                    </span>
-                                                )}
-                                                <img
-                                                    src={
-                                                        changeStyle
-                                                            ? icon.bellWhite
-                                                            : icon.Bell
-                                                    }
-                                                    alt=""
-                                                />
-                                            </button>
+                                            <HeadNoti />
                                         </>
                                     ) : (
                                         <div className={style.head_top_right_auth}>
@@ -381,60 +267,13 @@ function Head(props: IProps) {
                                         </div>
                                     )}
                                     {!IS_MB && (
-                                        <button
-                                            onFocus={() => onToggleMenu("show")}
-                                            onBlur={() => onToggleMenu("hide")}
-                                            className={style.head_top_right_btn}
-                                        >
-                                            <img src={icon.Menu} alt="" />
-                                            <HeadMenu refMenu={refMenu} />
-                                        </button>
+                                        <HeadMenu />
                                     )}
-                                    <button
-                                        onClick={() => history.push("/gio-hang")}
-                                        className={
-                                            changeStyle
-                                                ? clst([
-                                                    style.head_top_right_btn,
-                                                    style.head_top_right_btn_ch,
-                                                ])
-                                                : style.head_top_right_btn
-                                        }
-                                    >
-                                        {cartQuantity > 0 && (
-                                            <span
-                                                className={style.head_top_right_badge}
-                                            >
-                                                {cartQuantity >= 9
-                                                    ? "9+"
-                                                    : cartQuantity}
-                                            </span>
-                                        )}
-                                        <img
-                                            src={
-                                                changeStyle
-                                                    ? icon.cartWhiteBold
-                                                    : icon.cartPurpleBold
-                                            }
-                                            alt=""
-                                        />
-                                    </button>
+                                    <HeadCart />
                                 </div>
                             </div>
                             <div className={style.head_bot}>
-                                {/* <XButton
-                            className={style.head_bot_btn}
-                            title={t("Header.1")}
-                            onClick={() => history.push("/partner")}
-                        /> */}
-                                {/* <div
-                            onClick={() =>
-                                window.open("https://beautyx.vn/blog", "_blank")
-                            }
-                            className={style.head_bot_link}
-                        >
-                            Tin tức
-                        </div> */}
+
                             </div>
                         </div>
                     </Container>
@@ -447,191 +286,10 @@ function Head(props: IProps) {
 
 export default Head;
 
-interface HeadNotificationProps {
-    appointment_today: AppointmentNoti[];
-    order_app: IServiceUser[];
-    refNoti: any;
-}
 
-const HeadNotification = (props: HeadNotificationProps) => {
-    const dispatch = useDispatch();
-    const { refNoti, appointment_today, order_app } = props;
-    const { USER } = useSelector((state: IStore) => state.USER);
-    const history = useHistory();
-    const noti = appointment_today.length + order_app.length;
-    const notiList = [
-        {
-            id: 1,
-            count: appointment_today.length,
-            title: `${USER?.fullname} ơi ! Hôm nay bạn có ${appointment_today.length} lịch hẹn ! Xem ngay nhé !`,
-            url: "/lich-hen?tab=1",
-            icon: ICON.calendarAct,
-            type: "APP",
-        },
-        {
-            id: 2,
-            count: order_app.length,
-            title: `${USER?.fullname} ơi ! Hôm nay bạn có ${order_app.length} thẻ dịch vụ chưa đặt hẹn ! Xem ngay nhé !`,
-            url: "/lich-hen?tab=2",
-            icon: icon.servicesPurpleBold,
-            type: "SER",
-        },
-    ];
-    const onViewedNoti = (type: string) => {
-        if (type === "APP") {
-            appointment_today?.map((item: AppointmentNoti) => {
-                return dispatch(onSetViewedNoti(item.id));
-            });
-        }
-    };
-    return (
-        <div
-            onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-            }}
-            ref={refNoti} className={style.head_noti}
-        >
-            <div className={style.head_menu_title}>Thông báo</div>
-            {!USER && (
-                <div className={style.head_required_sign}>
-                    Đăng nhập để xem thông báo
-                </div>
-            )}
-            {noti === 0 ? (
-                <div className={style.head_required_sign}>
-                    Không có thông báo
-                </div>
-            ) : (
-                <ul className={style.noti_list}>
-                    {notiList
-                        .filter((i) => i.count > 0)
-                        .map((item) => (
-                            <li
-                                onClick={() => onViewedNoti(item.type)}
-                                key={item.id}
-                            >
-                                <div
-                                    onClick={() => history.push(item.url)}
-                                    className={style.noti_list_link}
-                                >
-                                    <img src={item.icon} alt="" />
-                                    <span>{item.title}</span>
-                                </div>
-                            </li>
-                        ))}
-                </ul>
-            )}
-        </div>
-    );
-};
 
-interface HeadMenuProps {
-    refMenu: any;
-}
 
-const HeadMenu = (props: HeadMenuProps) => {
-    const history = useHistory();
-    const { t, language, setLanguage, setSign } = useContext(AppContext);
-    const { USER } = useSelector((state: IStore) => state.USER);
-    const dispatch = useDispatch();
-    const listMenu = [
-        {
-            id: 1,
-            icon: icon.User,
-            text: t("Header.my_acc"),
-            url: "/tai-khoan/thong-tin-ca-nhan",
-        },
-        {
-            id: 2,
-            icon: icon.Clock_purple,
-            text: "Order history",
-            url: "/tai-khoan/lich-su-mua",
-        },
-        {
-            id: 3,
-            icon: icon.bag,
-            text: t("Header.appointment"),
-            url: "/lich-hen?tab=1",
-        },
-        {
-            id: 4,
-            icon: icon.bag,
-            text: t("app.my_services"),
-            url: "/lich-hen?tab=2",
-        },
-    ];
-    const handleChangeLang = (code: string) => {
-        setLanguage(code);
-        i18next.changeLanguage(code);
-    };
-    const handleSignOut = () => {
-        setSign(false);
-        dispatch(logoutUser());
-        dispatch(onClearApps());
-        dispatch(onSetStatusServicesUser());
-        localStorage.removeItem("_WEB_TK");
-        window.sessionStorage.removeItem("_WEB_TK");
-    };
 
-    return (
-        <div ref={props.refMenu} className={style.head_menu}>
-            <div className={style.head_menu_title}>Menu</div>
-            <ul className={style.menu_list}>
-                {USER &&
-                    listMenu.map((item) => (
-                        <li
-                            onClick={() => history.push(item.url)}
-                            key={item.id}
-                            className={style.menu_list_item}
-                        >
-                            <div className={style.menu_item}>
-                                <img src={item.icon} alt="" />
-                                <span className={style.menu_item_text}>
-                                    {item.text}
-                                </span>
-                            </div>
-                        </li>
-                    ))}
-                <li className={style.menu_list_item}>
-                    <div className={style.menu_list_item_left}>
-                        <img src={icon.languagePurple} alt="" />
-                        <span className={style.menu_item_text}>Ngôn ngữ</span>
-                    </div>
-                    <div className={style.switch_lang}>
-                        {languages.map((lang) => (
-                            <div
-                                style={
-                                    language === lang.code
-                                        ? {
-                                            backgroundColor: "var(--purple)",
-                                            color: "var(--bg-white)",
-                                        }
-                                        : {}
-                                }
-                                onClick={() => handleChangeLang(lang.code)}
-                                className={style.switch_lang_item}
-                                key={lang.code}
-                            >
-                                {lang.code}
-                            </div>
-                        ))}
-                    </div>
-                </li>
-            </ul>
-            {USER && (
-                <div className={style.menu_bottom}>
-                    <div
-                        onClick={handleSignOut}
-                        className={style.menu_bottom_btn}
-                    >
-                        {t("Header.sign_out")}
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
 const SearchRecommend = () => {
     const [key, setKey] = useState("Gội đầu");
     const history = useHistory();

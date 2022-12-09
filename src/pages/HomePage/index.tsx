@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import HomeOrgDistance from "./HomeOrgDistance";
-import HomeRecomment from "./HomeRecomment";
 import { useSelector } from "react-redux";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "features/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
-import { useDeviceMobile, useElementOnScreen } from "hooks";
+import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
 import HomeTags2 from "./HomeTags2";
@@ -21,6 +20,7 @@ import HomeWhyNot from "./HomeWhyNot";
 import HomeProvince2 from "./HomeProvince2";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
+import HomeRecommend from "./HomeRecommend";
 
 
 export default function HomePage() {
@@ -29,26 +29,10 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
-    const refBanner = useRef<HTMLDivElement>(null)
-    const options = {
-        root: null,
-        rootMargin: "-10px",
-        threshold: 0.3,
-    }
-    const isVisible = useElementOnScreen(options, refBanner)
-    const header = document.getElementById("header");
-    const onScrollHome = () => {
-        if (header) {
-            if (!isVisible) {
-                header.style.backgroundColor = 'var(--purple)'
-            } else {
-                header.style.backgroundColor = 'transparent'
-            }
-        }
-    }
+    
     return (
         <>
-            <div onScroll={onScrollHome} className="homepage">
+            <div className="homepage">
                 <div className="home_container_par">
                     <Container>
                         <HomeCate />
@@ -59,7 +43,7 @@ export default function HomePage() {
                                 </>
                                 :
                                 <>
-                                    <HomeBanner2 refBanner={refBanner} />
+                                    <HomeBanner2/>
                                     {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
                                 </>
                         }
@@ -72,7 +56,7 @@ export default function HomePage() {
                     <HomeProducts />
                     <HomeDownApp />
                     <HomeWhyNot />
-                    <HomeRecomment />
+                    <HomeRecommend />
                     <HomeProvince2 />
                     <HomePartners />
                 </Container>
