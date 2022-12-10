@@ -1,10 +1,4 @@
 {
-    "Thanks": {
-        "1": "Cảm ơn"
-    },
-    "Why": {
-        "1": "Vì đã xem video"
-    },
     "Header": {
         "1": "Trở thành đối tác",
         "seller_center": "Kênh người bán",
@@ -20,11 +14,14 @@
         "appointment_notice": "Thông báo lịch hẹn",
         "hello": "Xin chào",
         "today_you_have": "Hôm nay bạn có",
-        "appointment": "lịch hẹn",
+        "appointment": "Lịch hẹn",
         "see_it_now": "Xem ngay nhé",
         "see_calendar": "Xem lịch hẹn",
         "not_noti": "Bạn không có thông báo nào!",
-        "language": "Ngôn ngữ"
+        "language": "Ngôn ngữ",
+        "Service pack purchased":"Gói dịch vụ đã mua",
+        "Following":"Đang theo dõi",
+        "Delivery address":"Địa chỉ giao hàng"
     },
     "Bottom": {
         "appointment": "Lịch hẹn",
@@ -104,7 +101,20 @@
         "location": "Địa điểm",
         "trending": "Xu hướng",
         "cate": "Danh mục",
-        "scan_qr": "Quét mã QR"
+        "scan_qr": "Quét mã QR",
+        "community":"Cộng đồng",
+        "coupon_code":"Mã giảm giá",
+        "linked_directory":"Danh mục nối bật",
+        "near_you":"Gần bạn",
+        "Vietnamese_women_totally_beautiful":"Phụ nữ Việt - Đẹp toàn diện",
+        "beauty_products":"Sản phẩm làm đẹp",
+        "why_choose":"Vì sao nên chọn BeautyX ?",
+        "viewed":"Đã xem",
+        "become":"Trở thành",
+        "a_beautyX_partner":"đối tác BeautyX",
+        "discover":"Khám phá",
+        "choose_a_location":"Chọn vị trí",
+        "search_area":"Tìm kiếm khu vực"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
@@ -345,7 +355,10 @@
         "all": "Tất cả",
         "date_created": "Ngày tạo",
         "history": "Lịch sử",
-        "set_default_address": "Đặt làm địa chỉ mặc định"
+        "set_default_address": "Đặt làm địa chỉ mặc định",
+        "add new":"Thêm mới",
+        "canceled":"Đã hủy",
+        "code":"Mã"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",
@@ -356,7 +369,13 @@
         "view_org": "Xem doanh nghiệp",
         "watch_info": "Xem thông tin",
         "book": "Đặt lịch",
-        "appo_detail": "Chi tiết lịch hẹn"
+        "appo_detail": "Chi tiết lịch hẹn",
+        "Service has expired":"Dịch vụ đã hết hạn",
+        "Service used":"Dịch vụ đã sử dụng",
+        "Review":"Đánh giá",
+        "Expired":"Hết hạn",
+        "Unlimited":"Không giới hạn",
+        "Used":"Đã sử dụng"
     },
     "my_ser": {
         "business": "Doanh nghiệp",
@@ -406,17 +425,19 @@
         "top_selling_services": "Top Dịch Vụ Bán Chạy",
         "top_selling_products": "Top Sản Phẩm Bạn Chạy",
         "favorite_places": "Địa điểm được yêu thích",
-        "suggestions_for_you": "Gợi ý dành cho bạn"
+        "suggestions_for_you": "Gợi ý dành cho bạn",
+        "price":"Giá",
+        "Choose a price range":"Chọn khoảng giá"
     },
     "se": {
         "search_results_for_keyword": "Kết quả tìm kiếm cho từ khóa",
         "filters": "Bộ lọc tìm kiếm",
         "price_range": "Khoảng giá",
-        "form": "từ",
+        "from": "từ",
         "to": "đến",
         "invalid": "Không hợp lệ",
         "apply": "Áp dụng khoảng giá",
-        "search_title": "Bạn muốn tìm gì ?",
+        "search_title": "Bạn muốn tìm kiếm gì ?",
         "recent_search": "Tìm kếm gần đây",
         "search_recommend": "Gợi ý tìm kiếm",
         "view_the_results_for": "Xem kết quả cho",
@@ -427,7 +448,9 @@
         "instructions_terms": "Hướng dẫn & Điều khoản",
         "guide": "Hướng dẫn sử dụng",
         "edit": "Chỉnh sửa",
-        "distance": "Cách bạn"
+        "distance": "Cách bạn",
+        "Please enter the appropriate price range":"Vui lòng điền khoảng giá phù hợp",
+        "Apply":"Áp dụng"
     },
     "Contact": {
         "success": "Đã nhận thông tin"

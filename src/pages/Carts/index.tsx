@@ -137,7 +137,7 @@ function Carts() {
                 />
             )}
             {cartList?.length === 0 || !cartList ? (
-                <EmptyRes title='Không có Dịch vụ/Sản phẩm trong giỏ hàng !' />
+                <EmptyRes title='Không có Dịch vụ/Sản phẩm trong giỏ hàng !' isRecommend={true} />
             ) : (
                 <>
                     <Container>

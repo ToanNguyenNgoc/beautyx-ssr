@@ -20,11 +20,14 @@
         "appointment_notice": "Appointment notice",
         "hello": "Hello",
         "today_you_have": "Today you have",
-        "appointment": "appointment",
+        "appointment": "Appointment",
         "see_it_now": "See it now",
         "see_calendar": "See the appointment",
         "not_noti": "You don't have any notifications",
-        "language": "language"
+        "language": "Language",
+        "Service pack purchased":"Service pack purchased",
+        "Following":"Following",
+        "Delivery address":"Delivery address"
     },
     "Bottom": {
         "appointment": "Appointment",
@@ -100,11 +103,24 @@
         "favorite_list": "Favorite beauty spots",
         "pr_ser_purchased": "Products/Services purchased",
         "sale_for_me": "Special offer just for you",
-        "appointment": "My appointments",
+        "appointment": "Appointments",
         "location": "Location",
         "trending": "Trends",
         "cate": "Categories",
-        "scan_qr": "Scan QR"
+        "scan_qr": "Scan QR",
+        "community":"Community",
+        "coupon_code":"Coupon code",
+        "linked_directory":"Linked directory",
+        "near_you":"Near you",
+        "Vietnamese_women_totally_beautiful":"Vietnamese women - Totally beautiful",
+        "beauty_products":"Beauty products",
+        "why_choose":"Why choose BeautyX ?",
+        "viewed":"Viewed",
+        "become":"Become",
+        "a_beautyX_partner":"a BeautyX partner",
+        "discover":"Discover",
+        "choose_a_location":"Choose a location",
+        "search_area":"Search area"
     },
     "Search_result": {
         "text_result": "search results",
@@ -335,12 +351,17 @@
         "update_acc": "Fully update personal information to make the account better security",
         "dob": "Date of birth",
         "sex": "Sex",
+        "pain":"Paid",
         "order_address": "Orders address",
         "add_other_address": "Add other address",
         "default": "Default",
         "change_pass": "Change the password",
         "save": "Save",
-        "set_default_address": "Set default address"
+        "all": "All",
+        "set_default_address": "Set default address",
+        "add new":"Create new",
+        "canceled":"Cancelled",
+        "code":"Code"
     },
     "order": {
         "order_his": "Orders history",
@@ -351,7 +372,13 @@
         "view_org": "View business",
         "watch_info": "Watch information",
         "book": "Book",
-        "appo_detail": "Appointment details"
+        "appo_detail": "Appointment details",
+        "Service has expired":"Service has expired",
+        "Service used":"Service used",
+        "Review":"Review",
+        "Expired":"Expired",
+        "Unlimited":"Unlimited",
+        "Used":"Used"
     },
     "my_ser": {
         "business": "Business",
@@ -401,7 +428,9 @@
         "top_selling_services": "Top Selling Services",
         "top_selling_products":"Top Selling Products",
         "favorite_places": "Favorite places",
-        "suggestions_for_you": "Suggestions for you"
+        "suggestions_for_you": "Suggestions for you",
+        "price":"Price",
+        "Choose a price range":"Choose a price range"
     },
     "se": {
         "search_results_for_keyword": "Search results for keyword",
@@ -423,7 +452,9 @@
         "instructions_terms": "Instructions & Terms",
         "distance": "Distance",
         "guide": "Guides",
-        "edit": "Edit"
+        "edit": "Edit",
+        "Please enter the appropriate price range":"Please enter the appropriate price range",
+        "Apply":"Apply"
     },
     "Contact": {
         "success": "submit success"

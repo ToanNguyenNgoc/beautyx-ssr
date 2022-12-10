@@ -1,7 +1,8 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
+import { AppContext } from 'context/AppProvider';
 import { ITag } from 'interface';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
@@ -30,6 +31,7 @@ const PrevButton = (props: any) => {
 }
 
 function HomeTags2() {
+    const {t} = useContext(AppContext)
     const [slide, setSlide] = useState(0)
     const settings = {
         dots: false,
@@ -58,7 +60,7 @@ function HomeTags2() {
     return (
         <div className={style.container}>
             <HomeTitle
-                title={'Danh mục nối bật'}
+                title={t('Home.linked_directory')}
             />
             <div className={style.cate_list_cnt}>
                 <Slider {...settings} >

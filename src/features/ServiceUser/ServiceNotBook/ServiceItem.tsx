@@ -64,7 +64,7 @@ function ServiceItem(props: IProps) {
             className="treatment-ser-item__out"
             style={{ marginRight: "4px" }}
           >
-            Dịch vụ đã sử dụng | Đánh giá
+            {t('order.Service used')} | {t('order.Review')}
           </span>
         }
         {/* {
@@ -83,7 +83,7 @@ function ServiceItem(props: IProps) {
             style={{ backgroundColor: "var(--red-cl)", color: "var(--white)" }}
             className="treatment-ser-item__out"
           >
-            Dịch vụ đã hết hạn
+            {t('order.Service has expired')}
           </span>
         }
         <div
@@ -123,16 +123,16 @@ function ServiceItem(props: IProps) {
               {
                 service.time_expired &&
                 <div className="quantity-text__time-ex">
-                  Hết hạn | {formatDate(service.time_expired)}
+                  {t('order.Expired')} | {formatDate(service.time_expired)}
                 </div>
               }
               <div className="flex-row quantity">
                 <div className="quantity-text">
                   {
                     service.unlimited === true ?
-                      <span>Không giới hạn</span>
+                      <span>{t('order.Unlimited')}</span>
                       :
-                      <span>Đã sử dụng {service.times - service.remain_time}/{service.times}</span>
+                      <span>{t('order.Used')} {service.times - service.remain_time}/{service.times}</span>
                   }
                 </div>
               </div>

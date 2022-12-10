@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import HomeTitle from '../Components/HomeTitle';
 import { ParamOrg } from 'params-query/param.interface';
 import { formatDistance, onErrorImg } from 'utils';
@@ -15,9 +15,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onChangeFilterOrg, onResetFilter, onResetFilterOrg } from 'redux/filter-result';
 import IStore from 'interface/IStore';
 import Skeleton from 'react-loading-skeleton';
-import { useDeviceMobile, useSwr } from 'hooks';
+import { useDeviceMobile, useSwrCache } from 'hooks';
+import { AppContext } from 'context/AppProvider';
 
 function HomeOrgDistance() {
+    const { t } = useContext(AppContext)
     const dispatch = useDispatch()
     const { tags } = useSelector((state: any) => state.HOME)
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -33,7 +35,7 @@ function HomeOrgDistance() {
         "filter[is_momo_ecommerce_enable]": true,
         "filter[location]": LOCATION,
     }
-    const { responseArray, isValidating } = useSwr(API_ROUTE.ORGS, true, params)
+    const { responseArray, isValidating } = useSwrCache(API_ROUTE.ORGS, true, params)
 
     const onViewMore = () => {
         dispatch(onResetFilter())
@@ -56,7 +58,7 @@ function HomeOrgDistance() {
             <HomeTitle
                 onClick={onViewMore}
                 url={`/ket-qua-tim-kiem/cua-hang`}
-                title={'Gần bạn'} seemore="Xem tất cả >"
+                title={t('Home.near_you')} seemore={t('detail_item.see_more') + '>'}
             />
             <div className={style.org_filter_cnt}>
                 {tags.length === 0 && <TagSkelton />}
@@ -101,7 +103,7 @@ function HomeOrgDistance() {
 export default HomeOrgDistance;
 
 const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
-    const { responseArray } = useSwr(API_ROUTE.GALLERIES_ORG_ID(org?.id), (org?.id))
+    const { responseArray } = useSwrCache(API_ROUTE.GALLERIES_ORG_ID(org?.id), (org?.id))
     const galleries: IOrgMobaGalleries[] = responseArray
     return (
         <Link

@@ -477,12 +477,9 @@
         width: 100%;
         background-color: transparent;
         z-index: 101;
-        transition: all .6s;
     }
 
     .container_ch_white {
-        transition: all .6s;
-        background-color: #7161bac9;
         backdrop-filter: blur(10px);
         box-shadow: var(--box-shadow);
     }

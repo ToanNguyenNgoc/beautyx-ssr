@@ -160,7 +160,7 @@ function UserAddressForm(props: any) {
     }
     return (
         <>
-            <HeadTitle title='Thêm mới địa chỉ' />
+            <HeadTitle title={t('acc.add new')} />
             <div
                 className='us_address-cnt'
             >

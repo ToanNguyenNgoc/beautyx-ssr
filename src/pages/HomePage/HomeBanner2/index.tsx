@@ -1,7 +1,7 @@
 import { XButton } from "components/Layout";
 import icon from "constants/icon";
 import { IBanner } from "interface";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
 import { clst, slugify } from "utils";
@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { Dialog } from "@mui/material";
 import { PopupMessage } from "components/Notification";
 import { useDeviceMobile } from "hooks";
+import { AppContext } from "context/AppProvider";
 // import bannerInit from 'assets/image/bannerInit.png'
 
 interface PopupProps {
@@ -42,15 +43,16 @@ const NextButton = (props: any) => {
     );
 };
 
-const features = [
-    // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },
-    { title: "Cộng đồng", icon: icon.communityPurple, func: "COM" },
-    { title: "Lịch hẹn", icon: icon.calendarGreen, func: "CAL" },
-    { title: "Mã giảm giá", icon: icon.ticketRed, func: "DIS" },
-    { title: "Rewards", icon: icon.rewardOrange, func: "REW" },
-];
 
-function HomeBanner2({ refBanner }: { refBanner: any }) {
+function HomeBanner2() {
+    const {t} = useContext(AppContext)
+    const features = [
+        // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },
+        { title: t('Home.community'), icon: icon.communityPurple, func: "COM" },
+        { title: t('Home.appointment'), icon: icon.calendarGreen, func: "CAL" },
+        { title: t('Home.coupon_code'), icon: icon.ticketRed, func: "DIS" },
+        { title: "Rewards", icon: icon.rewardOrange, func: "REW" },
+    ];
     const { banners } = useSelector((state: any) => state.HOME);
     const [popup, setPopup] = useState<PopupProps>({
         open: false,
@@ -118,7 +120,7 @@ function HomeBanner2({ refBanner }: { refBanner: any }) {
                     content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
                     icon: icon.communityPurple
                 });
-                // return history.push('/cong-dong')
+            // return history.push('/cong-dong')
             case "REW":
                 return setMessage({
                     open: true,
@@ -137,7 +139,7 @@ function HomeBanner2({ refBanner }: { refBanner: any }) {
     };
 
     return (
-        <div ref={refBanner} className={style.container}>
+        <div className={style.container}>
             <div className={style.banner_container}>
                 <Slider {...settings}>
                     {banners.map((item: IBanner, index: number) => (

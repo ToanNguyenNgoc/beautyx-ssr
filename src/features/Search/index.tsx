@@ -143,6 +143,7 @@ function Search(props: SearchProps) {
                     <Link
                         onClick={() => {
                             onCloseSearch();
+                            dispatch(onResetFilter())
                             USER && postHistorySearch(KEY_WORD_DE, 'KEYWORD')
                         }}
                         to={{

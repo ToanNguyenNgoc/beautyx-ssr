@@ -1,6 +1,7 @@
+import { AppContext } from 'context/AppProvider';
 import { cateChild1 } from 'data/category';
 import { useDeviceMobile } from 'hooks';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { fetchOrgsByTag, onChooseCate, onChooseTab, onSetFirstCateProducts } from 'redux/CateTree/cateTreeSlice';
@@ -10,6 +11,7 @@ import { productsSection, IProductsSection } from '../data'
 import style from './style.module.css'
 
 function HomeProducts() {
+    const {t} = useContext(AppContext)
     const IS_MB = useDeviceMobile()
     const history = useHistory()
     const dispatch = useDispatch()
@@ -64,7 +66,7 @@ function HomeProducts() {
     }
     return (
         <div className={style.container}>
-            <HomeTitle title='Sản phẩm làm đẹp' />
+            <HomeTitle title={t('Home.beauty_products')} />
             <div className={style.content}>
                 <ul className={style.product_list}>
                     {

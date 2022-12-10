@@ -17,7 +17,7 @@ export default function HomeProvince2() {
             <div className={style.province_title_wrap}>
                 <HomeTitle
                     onClick={scrollTop}
-                    title={"Địa điểm"}
+                    title={t('Home.location')}
                     url={"/dia-diem-quan-tam"}
                     seemore={t("trending.watch_all") + " > "}
                 />

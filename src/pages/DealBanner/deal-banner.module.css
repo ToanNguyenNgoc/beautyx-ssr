@@ -1,3 +1,23 @@
+.head{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: transparent;
+    z-index: 11;
+    transition: all .5s;
+}
+.head_show{
+    background-color: var(--purple);
+    transition: all .5s;
+}
+.head button{
+    padding: 0px;
+    width: 38px;
+    height: 38px;
+    background-color: transparent;
+}
 .container {
     margin-top: 24px;
     background-color: var(--bg-white);
@@ -35,7 +55,7 @@
 
     .deal_banner_cnt {
         background-color: #7265b9;
-        padding-bottom: calc(50% - 10px);
+        padding-bottom: 33%;
         position: relative;
     }
 
@@ -43,7 +63,7 @@
         position: absolute;
         z-index: 1;
         width: 100%;
-        height: calc(100% - 60px);
+        height: 100%;
         bottom: 0;
         object-fit: cover;
     }

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import API_3RD from "api/3rd-api";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDeviceMobile, useElementOnScreen, useFetch } from "hooks";
 import { ITrend } from "./trend.interface";
 import { Container } from "@mui/system";
@@ -8,9 +8,9 @@ import style from "./trends.module.css";
 import moment from "moment";
 import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
-import { XButton } from "components/Layout";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import TrendDetailDia from "./TrendDetailDia";
+import ReactPlayer from "react-player/lazy";
 
 function Trends() {
     const { response } = useFetch(
@@ -20,7 +20,6 @@ function Trends() {
     );
 
     const trends: ITrend[] = response?.context?.data ?? [];
-    const [playVideo, setPlayVideo] = useState(0)
     return (
         <>
             <Container>
@@ -31,9 +30,6 @@ function Trends() {
                                 <li key={index} className={style.trend_list_video_thumb}>
                                     <VideoItemThumb
                                         item={item}
-                                        playVideo={playVideo}
-                                        setPlayVideo={setPlayVideo}
-                                        index={index}
                                     />
                                 </li>
                             ))
@@ -48,13 +44,11 @@ function Trends() {
 export default Trends;
 
 interface VideoItemThumbProps {
-    item: ITrend, playVideo: number,
-    setPlayVideo: (playVideo: number) => void,
-    index: number
+    item: ITrend
 }
 
 const VideoItemThumb = (props: VideoItemThumbProps) => {
-    const { item, index, playVideo, setPlayVideo } = props;
+    const { item } = props;
     const history = useHistory()
     const videoRef = useRef<HTMLVideoElement>(null)
     const itemRef = useRef<HTMLDivElement>(null)
@@ -68,10 +62,6 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
             history.push(`/video/${item._id}`)
         }
     }
-    const onToggleVideo = () => {
-        if (IS_MB && index === playVideo) return setPlayVideo(-1)
-        setPlayVideo(index)
-    }
 
     const options = {
         root: null,
@@ -79,39 +69,16 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
         threshold: 0.3,
     };
     const isVisible = useElementOnScreen(options, itemRef);
-    useEffect(() => {
-        if (isVisible) {
-            setPlayVideo(index)
-        }
-    }, [isVisible])
-    useEffect(() => {
-        if (playVideo === index) {
-            videoRef.current?.play()
-        } else {
-            videoRef.current?.pause()
-        }
-    }, [playVideo]);
     const onOrgDetail = () => {
         history.push(formatRouterLinkOrg(item.organization_id))
     }
     return (
         <>
             <div
-                // to={{ pathname: `/video/${item._id}` }}
-                onMouseEnter={!IS_MB ? () => onToggleVideo() : () => { }}
                 onClick={!IS_MB ? () => onDetail() : () => { }}
                 className={style.video_item_cnt}
             >
-                <div
-                    ref={itemRef} className={style.trend_item_center}
-                >
-                    {
-                        playVideo !== index &&
-                        <XButton
-                            icon={icon.playCircle}
-                            iconSize={42}
-                        />
-                    }
+                <div ref={itemRef} className={style.trend_item_center} >
                 </div>
                 <div
                     onClick={onOrgDetail}
@@ -126,15 +93,16 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     </div>
                 </div>
                 <div className={style.trend_item_body}>
-                    <video
-                        onClick={IS_MB ? () => onToggleVideo() : () => { }}
-                        ref={videoRef}
+                    <ReactPlayer
                         className={style.trend_item_video_thumb}
-                        webkit-playsinline="webkit-playsinline"
-                        playsInline={true}
-                    >
-                        <source type="video/mp4" src={`${item.media_url}#t=0.001`} />
-                    </video>
+                        url={`${item.media_url}#t=0.001`}
+                        width={'100%'}
+                        height={'100%'}
+                        playing={isVisible}
+                        muted={true}
+                        playsinline={true}
+                        controls
+                    />
                 </div>
                 <div className={style.trend_item_bot}>
                     <div onClick={onDetail} className={style.trend_item_bot_ex}>

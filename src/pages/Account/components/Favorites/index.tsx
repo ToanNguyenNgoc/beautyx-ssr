@@ -1,7 +1,7 @@
 import API_ROUTE from 'api/_api';
 import IStore from 'interface/IStore';
 import { HeadTitle } from 'pages/Account';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Favorite } from 'interface'
 import { useSelector } from 'react-redux';
 import { useSwrInfinite, onErrorImg } from 'utils'
@@ -11,8 +11,10 @@ import { Link } from 'react-router-dom';
 import icon from 'constants/icon';
 import { XButton } from 'components/Layout';
 import Skeleton from 'react-loading-skeleton';
+import { AppContext } from 'context/AppProvider';
 
 function Favorites() {
+    const {t} = useContext(AppContext)
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
         'user_id': USER?.id,
@@ -23,7 +25,7 @@ function Favorites() {
     const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite(USER?.id, `${API_ROUTE.FAVORITES}`, params)
     return (
         <>
-            <HeadTitle title='Đang theo dõi' />
+            <HeadTitle title={t('Header.Following')} />
             <div className={style.container}>
                 <ul className={style.favorite_list}>
                     {
@@ -41,7 +43,7 @@ function Favorites() {
                         <XButton
                             onClick={onLoadMore}
                             loading={isValidating}
-                            title='Xem thêm'
+                            title={t('Mer_de.view_more')}
                         />
                     </div>
                 }
