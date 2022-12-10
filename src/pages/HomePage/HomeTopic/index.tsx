@@ -1,7 +1,8 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
+import { AppContext } from 'context/AppProvider';
 import { useDeviceMobile } from 'hooks';
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { clst, scrollTop, slugify } from 'utils';
@@ -41,6 +42,7 @@ const settingsSlideBot = {
 };
 
 function HomeTopic() {
+    const {t} = useContext(AppContext)
     const IS_MB = useDeviceMobile();
     const settingsSlideTop = {
         dots: false,
@@ -70,7 +72,7 @@ function HomeTopic() {
             <div className={style.topic_title}>
                 <div className={style.title}>
                     <img src={icon.flash} className={style.title_icon} alt="" />
-                    <HomeTitle title="Phụ nữ Việt - Đẹp toàn diện" />
+                    <HomeTitle title={t('Home.Vietnamese_women_totally_beautiful')} />
                 </div>
             </div>
             <div className={style.body}>

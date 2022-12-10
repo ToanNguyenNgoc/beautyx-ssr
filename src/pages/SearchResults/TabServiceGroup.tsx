@@ -36,7 +36,7 @@ function TabServiceGroup({ keyword }: { keyword: string }) {
         services,
         totalService,
         onLoadMoreService,
-        servicesGroupByOrg
+        servicesGroupByOrg,
     } = useServicesGroup(PARAMS_SERVICES, true)
     const onViewMore = () => {
         if (services.length >= 30 && services.length < totalService) {

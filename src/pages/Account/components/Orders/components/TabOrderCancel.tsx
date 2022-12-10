@@ -12,11 +12,18 @@ import { useSwrInfinite } from 'utils';
 import OrderItem from './OrderItem';
 import { OrderSkelton } from './TabOrderPaid';
 import style from '../order.module.css'
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 
 
 function TabOrderCancel() {
+    const PLAT_FORM = EXTRA_FLAT_FORM()
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, paramOrder)
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, {
+        ...paramOrder, 
+        // "include": "items|organization|branch|user|paymentMethod|deliveryAddress",
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM,
+        // "filter[platform]":"BEAUTYX MOBILE"
+    })
     const orders: IOrderV2[] = resData ?? []
     const IS_MB = useDeviceMobile()
     return (

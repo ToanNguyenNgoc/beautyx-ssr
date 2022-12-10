@@ -1,4 +1,5 @@
-import React from 'react';
+import { AppContext } from 'context/AppProvider';
+import React, { useContext } from 'react';
 import style from './style.module.css'
 
 interface FilterSortProps {
@@ -12,14 +13,15 @@ interface ISort {
 
 export function FilterSort(props: FilterSortProps) {
     const { type, onChange, value } = props
+    const {t} = useContext(AppContext)
     const paramSortService: ISort[] = [
-        { query: '-discount_percent', title: 'Khuyến mại HOT' },
+        { query: '-discount_percent', title: t('home_2.hot_promotion') },
         { query: 'price', title: 'Giá tăng dần' },
         { query: '-price', title: 'Giá giảm dần' },
         { query: '-org_priority', title: 'Độ ưu tiên' },
     ]
     const paramSortProduct: ISort[] = [
-        { query: '-discount_percent', title: 'Khuyến mại HOT' },
+        { query: '-discount_percent', title: t('home_2.hot_promotion') },
         { query: 'retail_price', title: 'Giá tăng dần' },
         { query: '-retail_price', title: 'Giá giảm dần' },
         { query: '-org_priority', title: 'Độ ưu tiên' },

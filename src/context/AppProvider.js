@@ -11,10 +11,11 @@ import { paramsProductsCate } from "../params-query";
 import axios from "axios";
 import API_3RD from "api/3rd-api";
 import {
-    paramAppointment, 
+    paramAppointment,
     paramOrderService
 } from "../params-query";
 import { useSwr, useFetch } from "hooks"
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -92,8 +93,15 @@ export default function AppProvider({ children }) {
 
     const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
     //get services, appointment user
-    const appointment = useSwr("/appointments", USER, paramAppointment).responseArray
-    const orderService = useSwr("/orders", USER, paramOrderService).responseArray
+    const PLAT_FORM = EXTRA_FLAT_FORM()
+    const appointment = useSwr("/appointments", USER, {
+        ...paramAppointment
+    }).responseArray
+    const orderService = useSwr("/orders", USER, {
+        ...paramOrderService,
+        // 'include': 'items|organization',
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM
+    }).responseArray
 
     const value = {
         t,

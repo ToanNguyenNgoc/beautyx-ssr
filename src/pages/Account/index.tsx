@@ -3,19 +3,19 @@ import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { fetchAsyncDiscountsUser, logoutUser } from "redux/USER/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { STATUS } from "redux/status";
 import style from './account.module.css'
 import { Container } from "@mui/system";
 import IStore from "interface/IStore";
-import { onErrorImg } from 'utils'
+import { clst, onErrorImg } from 'utils'
 import icon from "constants/icon";
 import { postMedia, useDeviceMobile } from "hooks";
 import { updateAsyncUser } from 'redux/USER/userSlice'
 import { ICON } from "constants/icon2";
-import { XButton } from "components/Layout";
+import { FullImage, XButton } from "components/Layout";
 import Favorites from "./components/Favorites";
 import Address from "./components/UserAddress";
 import { onClearApps } from "redux/appointment/appSlice";
@@ -27,6 +27,9 @@ import { handleCallingPhone } from "utils/customChat";
 import ChangePassword from "./components/ChangePassword";
 import Orders from "./components/Orders";
 import { getTotal } from "redux/cartSlice";
+import languages from "data/languages";
+import { AppContext } from "context/AppProvider";
+import i18next from "i18next";
 
 const routes = [
     {
@@ -55,6 +58,7 @@ const routes = [
     }
 ];
 function Account() {
+    const {t} = useContext(AppContext)
     const RouterPage = (
         props: { pageComponent: JSX.Element } & RouteComponentProps
     ) => props.pageComponent;
@@ -80,12 +84,12 @@ function Account() {
         }))
     }
     const links = [
-        { link: '/tai-khoan/thong-tin-ca-nhan', title: 'Tài khoản của tôi', hide: IS_MB, icon: ICON.userAct },
-        { link: '/tai-khoan/lich-su-mua', title: 'Lịch sử đơn hàng', hide: false, icon: icon.boxAcc },
-        { link: '/lich-hen?tab=1', title: 'Lịch hẹn', hide: false, icon: ICON.calendarAct },
-        { link: '/lich-hen?tab=2', title: 'Gói dịch vụ đã mua', hide: false, icon: icon.boxAcc },
-        { link: '/tai-khoan/theo-doi', title: 'Đang theo dõi', hide: false, icon: icon.heartAcc },
-        { link: '/tai-khoan/dia-chi-giao-hang', title: 'Địa chỉ giao hàng', hide: false, icon: icon.markerAcc }
+        { link: '/tai-khoan/thong-tin-ca-nhan', title: t('Header.my_acc'), hide: IS_MB, icon: ICON.userAct },
+        { link: '/tai-khoan/lich-su-mua', title: t('Header.my_order'), hide: false, icon: icon.boxAcc },
+        { link: '/lich-hen?tab=1', title: t('Header.appointment'), hide: false, icon: ICON.calendarAct },
+        { link: '/lich-hen?tab=2', title: t('Header.Service pack purchased'), hide: false, icon: icon.boxAcc },
+        { link: '/tai-khoan/theo-doi', title: t('Header.Following'), hide: false, icon: icon.heartAcc },
+        { link: '/tai-khoan/dia-chi-giao-hang', title: t('Header.Delivery address'), hide: false, icon: icon.markerAcc }
     ]
     const onNavigate = (link: string) => {
         history.push(link)
@@ -102,9 +106,14 @@ function Account() {
     }
     const PLATFORM = EXTRA_FLAT_FORM()
     const [guide, setGuide] = useState(false)
+    const [openImg, setOpenImg] = useState(false)
+    const onOpenAvatar = () => IS_MB && setOpenImg(true)
 
     return (
         <>
+            <FullImage
+                open={openImg} setOpen={setOpenImg} src={[USER?.avatar]}
+            />
             <Container>
                 <div className={style.container}>
                     <div
@@ -117,6 +126,7 @@ function Account() {
                         <div className={style.left_cnt_head}>
                             <div className={style.user_avatar_cnt}>
                                 <img
+                                    onClick={onOpenAvatar}
                                     className={style.user_avatar}
                                     src={USER?.avatar} alt=""
                                     onError={(e) => onErrorImg(e)}
@@ -173,16 +183,19 @@ function Account() {
                                             onClick={handleSignOut}
                                         >
                                             <img src={icon.signOut} className={style.link_item_icon} alt="" />
-                                            Đăng xuất
+                                            {t('Header.sign_out')}
                                         </div>
                                     </li>
                                 }
+                                <li className={style.link_list_item}>
+                                    <SwitchLanguage />
+                                </li>
                             </ul>
                             <div className={style.left_bot}>
                                 <XButton
                                     iconSize={14}
                                     icon={icon.book}
-                                    title="Hướng dẫn sử dụng"
+                                    title={t('se.guide')}
                                     onClick={() => setGuide(true)}
                                 />
                                 <XButton
@@ -217,6 +230,42 @@ function Account() {
     );
 }
 export default Account;
+
+const SwitchLanguage = () => {
+    const { t,language, setLanguage } = useContext(AppContext);
+    const handleChangeLang = (code: string) => {
+        setLanguage(code);
+        i18next.changeLanguage(code);
+    };
+    return (
+        <div className={clst([style.link_item, style.link_item_lang])}>
+            <div className={style.link_item_lang_left}>
+                <img src={icon.languagePurple} className={style.link_item_icon} alt="" />
+                {t('Header.language')}
+            </div>
+            <div className={style.link_item_lang_right}>
+                <div
+                    style={language === 'en' ? {
+                        marginLeft: '30px'
+                    } : {}}
+                    className={style.switch_btn}
+                >
+                    {language}
+                </div>
+                {
+                    languages.map(lang => (
+                        <div
+                            onClick={() => handleChangeLang(lang.code)}
+                            key={lang.code} className={style.link_item_lang_item}
+                        >
+                            {lang.code}
+                        </div>
+                    ))
+                }
+            </div>
+        </div>
+    )
+}
 
 export const HeadAccount = () => {
     const history = useHistory()

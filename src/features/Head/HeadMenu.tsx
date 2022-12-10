@@ -52,7 +52,7 @@ const HeadMenuBox = (props: HeadMenuProps) => {
         {
             id: 2,
             icon: icon.Clock_purple,
-            text: "Order history",
+            text:t('Header.my_order'),
             url: "/tai-khoan/lich-su-mua",
         },
         {
@@ -103,7 +103,7 @@ const HeadMenuBox = (props: HeadMenuProps) => {
                 <li className={style.menu_list_item}>
                     <div className={style.menu_list_item_left}>
                         <img src={icon.languagePurple} alt="" />
-                        <span className={style.menu_item_text}>Ngôn ngữ</span>
+                        <span className={style.menu_item_text}>{t('Header.language')}</span>
                     </div>
                     <div className={style.switch_lang}>
                         {languages.map((lang) => (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { HeadTitle } from 'pages/Account';
 import style from './info.module.css'
 import { useFormik } from 'formik';
@@ -18,12 +18,15 @@ import validateForm from 'utils/validateForm'
 import icon from 'constants/icon';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
+import { AppContext } from 'context/AppProvider';
+import { t } from 'i18next';
 
 function Information() {
+  const {t} = useContext(AppContext)
   const { USER } = useSelector((state: IStore) => state.USER)
   return (
     <>
-      <HeadTitle title='Thông tin tài khoản' />
+      <HeadTitle title={t('Header.my_acc')} />
       <div className={style.container}>
         {USER && <Form USER={USER} />}
       </div>
@@ -38,6 +41,7 @@ interface IValues {
 }
 
 const Form = ({ USER }: { USER: User }) => {
+  const {t} = useContext(AppContext)
   const dispatch = useDispatch()
   const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
   const PLAT_FORM = EXTRA_FLAT_FORM()
@@ -119,13 +123,13 @@ const Form = ({ USER }: { USER: User }) => {
         onSubmit={formik.handleSubmit}
       >
         <div className={style.form_row}>
-          <span className={style.form_row_labe}>Họ và tên</span>
+          <span className={style.form_row_labe}>{t('pm.full_name')}</span>
           <Input
             autoFocus={true}
             value={formik.values.fullname}
             name='fullname'
             onChange={formik.handleChange}
-            placeholder='Họ và tên...'
+            placeholder={t('pm.full_name')}
           />
           {formik.errors.fullname && formik.touched.fullname && (
             <p
@@ -152,7 +156,7 @@ const Form = ({ USER }: { USER: User }) => {
           )}
         </div>
         <div className={style.form_row}>
-          <span className={style.form_row_labe}>Số điện thoại</span>
+          <span className={style.form_row_labe}>{t('pm.phone_number')}</span>
           <Input
             value={USER.telephone}
             disable={true}
@@ -163,21 +167,21 @@ const Form = ({ USER }: { USER: User }) => {
             PLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
             <XButton
               className={style.form_bot_btn}
-              title='Đổi mật khẩu'
+              title={t('form.reset_password')}
               // onClick={() => history.push('/tai-khoan/doi-mat-khau')}
               onClick={onNavigateChangePass}
               type='button'
             />
           }
           <XButton
-            title='Lưu thay đổi'
+            title={t('acc.save')}
             type='submit'
             loading={noti.load}
           />
         </div>
       </form>
       <PopupNotification
-        title='Thông báo'
+        title={'Thông báo'}
         content={noti.message}
         open={noti.openAlert}
         setOpen={onCloseNoti}

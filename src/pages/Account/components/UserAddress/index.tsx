@@ -57,11 +57,11 @@ function Address() {
                         onClick={gotoAddNewAddress}
                         iconSize={14}
                         className='add_address_btn'
-                        title={IS_MB ? '' : 'Thêm mới'}
+                        title={IS_MB ? '' : t('acc.add new')}
                         icon={icon.plusPurple}
                     />
                 }
-                title='Địa chỉ giao hàng'
+                title={t('acc.order_address')}
             />
             {
                 address?.map((item: IUserAddress, index: number) => (

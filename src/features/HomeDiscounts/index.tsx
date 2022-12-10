@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@mui/material";
 import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
-import { useDeviceMobile, useSwrInfinite } from "hooks";
+import { useDeviceMobile, useSwrCache } from "hooks";
 import DiscountItem from "./DiscountItem";
 import { useHistory } from "react-router-dom";
 import scrollTop from "../../utils/scrollTop";
@@ -15,7 +15,7 @@ import "./style.css";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 function HomeDiscount() {
-    const { t, geo } = useContext(AppContext);
+    const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile()
     const PLAT_FORM = EXTRA_FLAT_FORM();
     const LOCATION = AUTH_LOCATION();
@@ -26,17 +26,13 @@ function HomeDiscount() {
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
-    const { resData, isValidating } = useSwrInfinite(true, "/discounts", newParams)
-    const discounts = resData
+    const { responseArray, isValidating } = useSwrCache('/discounts', true, newParams)
+    const discounts = responseArray
     const history = useHistory();
     const onViewMore = () => {
         history.push("/giam-gia");
         scrollTop();
     };
-    let currentLocation
-    if (geo) {
-        currentLocation = `${geo.context[1]?.text_vi},${geo.context[2]?.text_vi},${geo.context[3]?.text_vi}`
-    }
     return (
         <div className="home-discounts">
             <Container>
@@ -46,30 +42,18 @@ function HomeDiscount() {
                         {t("trending.watch_all")} {">"}
                     </span>
                 </div>
-                {/* {
-                    geo &&
-                    <div className="home-discounts__location">
-                        <div className="ring-container">
-                            <div className="ringring"></div>
-                            <div className="circle"></div>
-                        </div>
-                        <span className="text">
-                            {currentLocation}
-                        </span>
-                    </div>
-                } */}
                 <div className="home-discounts__list-wrap">
-                    {(isValidating && resData.length === 0) && <LoadGrid item_count={5} grid={5} />}
+                    {(isValidating && responseArray.length === 0) && <LoadGrid item_count={5} grid={5} />}
                     <ul className="home-discounts__list">
                         {discounts
-                            .filter((i: IDiscountPar) =>
+                            ?.filter((i: IDiscountPar) =>
                             (i.items.length > 0 && (
                                 i.discount_type === DISCOUNT_TYPE.PRODUCT.key ||
                                 i.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key
                             ))
                             )
-                            .slice(0, 12)
-                            .map((discount: IDiscountPar, index: number) => (
+                            ?.slice(0, 12)
+                            ?.map((discount: IDiscountPar, index: number) => (
                                 <div key={index}>
                                     {discount.items.map(
                                         (item: IITEMS_DISCOUNT, i: number) => (

@@ -15,15 +15,19 @@ import Skeleton from "react-loading-skeleton";
 import { Masonry } from "@mui/lab";
 import { useDeviceMobile } from "hooks";
 import style from '../order.module.css'
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 function TabOrderPaid() {
     const { t } = useContext(AppContext)
+    const PLAT_FORM = EXTRA_FLAT_FORM()
     const IS_MB = useDeviceMobile()
     const { USER } = useSelector((state: IStore) => state.USER)
     const param: ParamOrder = {
         ...paramOrder,
         "filter[status]": 'PAID',
-        "append": "qr_link|origin"
+        "append": "qr_link|origin",
+        // "include": "items|organization|branch|user|paymentMethod|deliveryAddress",
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, param)
     const orders: IOrderV2[] = resData ?? []

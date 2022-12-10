@@ -30,7 +30,7 @@ export default function HomeRecommend() {
 
     const servicesNameOrders = unique(servicesOrders.map((s: IServicePromo) => s.service_name))
     const tabs = [
-        { id: 1, title: 'Tất cả', show: true }
+        { id: 1, title: t('cart.all'), show: true }
     ]
     const tabsKeyword = servicesNameOrders.slice(1, servicesNameOrders.length).map((name: string, index: number) => {
         return {
@@ -49,7 +49,7 @@ export default function HomeRecommend() {
                     {
                         tabs
                             .concat(tabsKeyword)
-                            .concat([{ id: 2, title: 'Đã xem', show: USER }])
+                            .concat([{ id: 2, title: t('Home.viewed'), show: USER }])
                             .filter(i => i.show).map(i => (
                                 <li
                                     style={i.id === tab.id ? { border: 'solid 1px var(--text-black)' } : {}}
@@ -69,6 +69,7 @@ export default function HomeRecommend() {
     );
 }
 const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[] }) => {
+    const {t} = useContext(AppContext)
     const LOCATION = AUTH_LOCATION()
     const params = {
         ...paramsServices,
@@ -99,7 +100,7 @@ const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[]
                 <div className={style.tab_bottom}>
                     <XButton
                         className={style.tab_bottom_btn}
-                        title="Xem thêm"
+                        title={t('Mer_de.view_more')}
                         onClick={onLoadMoreService}
                         loading={isLoadSer}
                     />
@@ -110,6 +111,7 @@ const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[]
 }
 
 const TabRecommendKey = ({ tab }: any) => {
+    const {t} = useContext(AppContext)
     const LOCATION = AUTH_LOCATION()
     const params = {
         ...paramsServices,
@@ -140,7 +142,7 @@ const TabRecommendKey = ({ tab }: any) => {
                 <div className={style.tab_bottom}>
                     <XButton
                         className={style.tab_bottom_btn}
-                        title="Xem thêm"
+                        title={t('Mer_de.view_more')}
                         onClick={onLoadMoreService}
                         loading={isLoadSer}
                     />

@@ -44,9 +44,9 @@ export function FullImage(props: FullImageProps) {
                 <div className={style.slide_img}>
                     <Slider {...settings}>
                         {
-                            src?.map(item => (
+                            src?.map((item, index:number) => (
                                 <div
-                                    key={item} className={style.container_img}
+                                    key={index} className={style.container_img}
                                 >
                                     <img
                                         style={{ height: `${window.innerHeight}px` }}

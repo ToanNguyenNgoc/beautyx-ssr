@@ -36,8 +36,8 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
             dayjs(a.time_start).format("YYYY-MM-DD") ===
             dayjs().format("YYYY-MM-DD")
     );
-    const order_app = orderService.filter(
-        (a: IServiceUser) => a.appointments.length === 0
+    const order_app = orderService?.filter(
+        (a: IServiceUser) => a?.appointments?.length === 0
     );
     const notiCount = appointment_today.concat(order_app).length;
     return (
@@ -84,6 +84,7 @@ interface HeadNotificationProps {
 
 const HeadNotification = (props: HeadNotificationProps) => {
     const dispatch = useDispatch();
+    const {t} = useContext(AppContext)
     const { refNoti, appointment_today, order_app } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const history = useHistory();
@@ -121,7 +122,7 @@ const HeadNotification = (props: HeadNotificationProps) => {
             }}
             ref={refNoti} className={style.head_noti}
         >
-            <div className={style.head_menu_title}>Thông báo</div>
+            <div className={style.head_menu_title}>{t('Header.noti')}</div>
             {!USER && (
                 <div className={style.head_required_sign}>
                     Đăng nhập để xem thông báo
@@ -129,7 +130,7 @@ const HeadNotification = (props: HeadNotificationProps) => {
             )}
             {noti === 0 ? (
                 <div className={style.head_required_sign}>
-                    Không có thông báo
+                   {t('Header.not_noti')}
                 </div>
             ) : (
                 <ul className={style.noti_list}>

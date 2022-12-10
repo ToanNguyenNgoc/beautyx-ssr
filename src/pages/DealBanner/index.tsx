@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { deals } from 'pages/HomePage/data'
 import style from './deal-banner.module.css'
 import { useParams, useHistory } from 'react-router-dom';
-import { useDeviceMobile, useSwrInfinite } from 'hooks'
+import { useDeviceMobile, useElementOnScreen, useSwrInfinite } from 'hooks'
 import { slugify } from 'utils';
 import { Container } from '@mui/system';
 import { paramsServices } from 'params-query';
 import { ParamService } from 'params-query/param.interface';
 import API_ROUTE from 'api/_api';
 import { IServicePromo } from 'interface';
-import { BackTopButton, SerProItem } from 'components/Layout';
+import { BackTopButton, SerProItem, XButton } from 'components/Layout';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadGrid } from 'components/LoadingSketion';
-import HeadMobile from 'features/HeadMobile';
+import icon from 'constants/icon';
 
 function DealBanner() {
     const { _id } = useParams()
@@ -38,12 +38,36 @@ function DealBanner() {
         param
     )
     const onMore = () => { if (resData.length < totalItem) onLoadMore() }
+    const refHead = useRef<HTMLDivElement>(null)
+    const bannerRef = useRef<HTMLDivElement>(null)
+    const options = {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.3,
+    };
+    const isVisible = useElementOnScreen(options, bannerRef);
+    window.addEventListener("scroll", () => {
+        if (isVisible) {
+            refHead.current?.classList.remove(style.head_show)
+        } else {
+            refHead.current?.classList.add(style.head_show)
+        }
+    });
     return (
         <>
-            <HeadMobile  title={deal?.title ?? ''} />
+            {
+                IS_MB &&
+                <div ref={refHead} className={style.head}>
+                    <XButton
+                        onClick={() => history.goBack()}
+                        icon={icon.chevronLeftWhite}
+                        iconSize={28}
+                    />
+                </div>
+            }
             <Container>
                 <div className={style.container}>
-                    <div className={style.deal_banner_cnt}>
+                    <div ref={bannerRef} className={style.deal_banner_cnt}>
                         <img src={deal?.banner} className={style.deal_banner} alt="" />
                     </div>
                     <InfiniteScroll
@@ -67,7 +91,7 @@ function DealBanner() {
                     </InfiniteScroll>
                 </div>
             </Container>
-            <BackTopButton/>
+            <BackTopButton />
         </>
     );
 }

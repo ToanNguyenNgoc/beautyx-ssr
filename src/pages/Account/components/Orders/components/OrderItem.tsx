@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { IOrderV2 } from "interface";
 import icon from "constants/icon";
 import { onErrorImg } from "utils";
@@ -9,6 +9,7 @@ import style from '../order.module.css'
 import dayjs from "dayjs";
 import { XButton } from "components/Layout";
 import { useDeviceMobile } from "hooks";
+import { AppContext } from "context/AppProvider";
 
 interface IProp {
     order: IOrderV2;
@@ -16,6 +17,7 @@ interface IProp {
 
 function OrderItem(props: IProp) {
     const IS_MB = useDeviceMobile()
+    const {t} = useContext(AppContext)
     const [openQr, setOpenQr] = useState(false);
     const { order } = props;
     const countItem = order.items_count;
@@ -28,7 +30,7 @@ function OrderItem(props: IProp) {
                         style={{ color: "var(--red-cl)" }}
                         className={style.status}
                     >
-                        Đã hủy
+                        {t('acc.canceled')}
                     </div>
                 );
             case "CANCELED_BY_USER":
@@ -37,7 +39,7 @@ function OrderItem(props: IProp) {
                         style={{ color: "var(--red-cl)" }}
                         className={style.status}
                     >
-                        Đã hủy
+                        {t('acc.canceled')}
                     </div>
                 );
             case "REFUND":
@@ -46,7 +48,7 @@ function OrderItem(props: IProp) {
                         style={{ color: "var(--red-cl)" }}
                         className={style.status}
                     >
-                        Đã hủy
+                        {t('acc.canceled')}
                     </div>
                 );
             case "PENDING":
@@ -55,7 +57,7 @@ function OrderItem(props: IProp) {
                         style={{ color: "var(--red-cl)" }}
                         className={style.status}
                     >
-                        Đã hủy
+                        {t('acc.canceled')}
                     </div>
                 );
             case "PAID":
@@ -65,7 +67,7 @@ function OrderItem(props: IProp) {
                             style={{ color: "var(--green)" }}
                             className={style.status}
                         >
-                            Đã thanh toán
+                            {t('acc.pain')}
                         </div>
                     </>
                 );
@@ -79,7 +81,7 @@ function OrderItem(props: IProp) {
             <div className={style.container}>
                 <div className={style.head_create}>
                     <div className={style.head_create_left}>
-                        Mã
+                        {t('acc.code')}
                         <h4>
                             #{order?.payment_gateway?.transaction_uuid}-
                             {order?.origin_id}
@@ -136,7 +138,7 @@ function OrderItem(props: IProp) {
                     }
                 </ul>
                 <div className={style.amount}>
-                    <span className={style.amount_title}>Tổng cộng:</span>
+                    <span className={style.amount_title}>{t('pr.total')}:</span>
                     <div className={style.amount_number}>
                         {order?.amount !== order?.payment_gateway?.amount ?
                             <>
@@ -158,7 +160,7 @@ function OrderItem(props: IProp) {
                     <XButton
                         onClick={() => setOpen(true)}
                         className={style.bottom_detail_btn}
-                        title="Chi tiết"
+                        title={t('app.details')}
                         icon={icon.arrownRightWhite}
                         iconSize={10}
                     />

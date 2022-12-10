@@ -29,8 +29,8 @@ function Orders() {
               <TabList
                 onChange={onChangeTab}
               >
-                <Tab label="Đã thanh toán" value="PAID" />
-                <Tab label="Tất cả" value="CANCEL" />
+                <Tab label={t('acc.pain')} value="PAID" />
+                <Tab label={t('acc.all')} value="CANCEL" />
               </TabList>
               <TabPanel value="PAID" >
                 <TabOrderPaid />

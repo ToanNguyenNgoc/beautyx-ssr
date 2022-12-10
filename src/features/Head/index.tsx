@@ -2,7 +2,6 @@
 import React, {
     useCallback,
     useContext,
-    useEffect,
     useRef,
     useState,
     KeyboardEvent,
@@ -56,6 +55,9 @@ const pathHeader = [
     "/ket-qua-tim-kiem/dich-vu",
     "/ket-qua-tim-kiem/san-pham",
     "/ket-qua-tim-kiem/cua-hang",
+    "/ket-qua-tim-kiem/dich-vu/",
+    "/ket-qua-tim-kiem/san-pham/",
+    "/ket-qua-tim-kiem/cua-hang/",
     "/xu-huong"
 ]
 const notPathHeader = [
@@ -129,18 +131,13 @@ function Head(props: IProps) {
     const paramUrl: any = extraParamsUrl();
     const keywordUrl = paramUrl?.keyword ?? "";
     //handle scroll
-    const scroll = () => {
+    window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
         const header = document.getElementById("header");
-        const windowPosition = scrolled > 60;
         if (header && changeStyle) {
-            header.classList.toggle(style.container_ch_white, windowPosition);
+            header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
         }
-    };
-    useEffect(() => {
-        window.addEventListener("scroll", scroll);
-        return () => window.removeEventListener("scroll", scroll);
-    }, [scroll]);
+    })
     return (
         showHeader ?
             <>
@@ -184,7 +181,7 @@ function Head(props: IProps) {
                                             onChange={onChange}
                                             className={style.head_search_input}
                                             type="text"
-                                            placeholder="Bạn muốn tìm kiếm gì..."
+                                            placeholder={t('se.search_title')}
                                             disabled={IS_MB}
                                             value={IS_MB ? keywordUrl : key.key}
                                             onKeyDown={handleKeyDown}
@@ -246,7 +243,7 @@ function Head(props: IProps) {
                                                     {USER?.fullname}
                                                 </span>
                                             </Link>
-                                            <HeadNoti />
+                                            <HeadNoti changeStyle={changeStyle} />
                                         </>
                                     ) : (
                                         <div className={style.head_top_right_auth}>
@@ -269,7 +266,7 @@ function Head(props: IProps) {
                                     {!IS_MB && (
                                         <HeadMenu />
                                     )}
-                                    <HeadCart />
+                                    <HeadCart changeStyle={changeStyle} />
                                 </div>
                             </div>
                             <div className={style.head_bot}>

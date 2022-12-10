@@ -17,7 +17,7 @@ function Calendar() {
     const params: any = extraParamsUrl();
     const tabList = [
         { value: "1", title: t("Bottom.appointment") },
-        { value: "2", title: t("Đặt lịch") },
+        { value: "2", title: t("order.book") },
         { value: "3", title: t("my_ser.booking_his") },
     ];
     const [valueTab, setValueTab] = useState(params?.tab || "1");

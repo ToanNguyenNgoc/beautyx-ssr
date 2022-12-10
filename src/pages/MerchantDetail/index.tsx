@@ -77,7 +77,6 @@ function MerchantDetail() {
   }
   usePostAnalytics(org)
 
-
   return (
     <div className="mb-cnt">
       {!org && isValidating && <LoadOrg />}
