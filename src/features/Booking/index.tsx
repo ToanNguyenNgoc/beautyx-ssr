@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
-import Head from "../Head";
 import "./style.css";
 import onErrorImg from "../../utils/errorImg";
 import ServiceBookItem from "./components/ServiceItem";
@@ -341,7 +340,7 @@ function Booking() {
                     }
                 />
                 <HeadTitle title="Đặt hẹn" />
-                {IS_MB ? <HeadMobile title="Đặt hẹn" /> : <Head />}
+                {IS_MB && <HeadMobile title="Đặt hẹn" />}
                 <div className="booking-wrap">
                     <div className="booking-cnt">
                         <div className="booking-cnt__left">

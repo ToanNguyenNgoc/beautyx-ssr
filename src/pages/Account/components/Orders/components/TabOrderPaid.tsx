@@ -25,9 +25,8 @@ function TabOrderPaid() {
     const param: ParamOrder = {
         ...paramOrder,
         "filter[status]": 'PAID',
-        "append": "qr_link|origin",
-        // "include": "items|organization|branch|user|paymentMethod|deliveryAddress",
-        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM
+        "include": "items|organization|branch|user|paymentMethod|deliveryAddress",
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM,
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, param)
     const orders: IOrderV2[] = resData ?? []

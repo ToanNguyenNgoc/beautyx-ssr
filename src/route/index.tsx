@@ -7,7 +7,7 @@ import {
     BrowserRouter,
     Route,
 } from "react-router-dom";
-import CartPaymentStatus from "../features/CartPaymentStatus";
+import CartPaymentStatus from "../pages/CartPaymentStatus";
 import PageNotFound from "../components/PageNotFound";
 import HomePage from "pages/HomePage";
 import ExtraFlatForm from "rootComponents/extraFlatForm";

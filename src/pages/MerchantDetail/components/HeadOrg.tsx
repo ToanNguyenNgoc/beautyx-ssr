@@ -18,23 +18,22 @@ interface IProps {
 }
 
 // onload event
-window.addEventListener("scroll", function () {
-    const scrolled = window.scrollY;
-    const de_header = document.querySelector(".mb-head-org-cnt");
-    const windowPosition = scrolled > 80;
-    if (de_header) {
-        de_header.classList.toggle("mb-head-act", windowPosition);
-    }
-});
 
 function HeadOrg(props: IProps) {
+    window.addEventListener("scroll", function () {
+        const scrolled = window.scrollY;
+        const de_header = document.getElementById("org_head");
+        if (de_header) {
+            de_header.style.backgroundColor = `rgb(255 255 255 / ${scrolled}%)`
+        }
+    });
     const { org, isShowSearch, onBackFunc } = props;
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
-    const {onToggleFavorite, favoriteSt} = useFavorite({
-        org_id:org?.id,
-        type:'ORG',
-        count:org.favorites_count,
+    const { onToggleFavorite, favoriteSt } = useFavorite({
+        org_id: org?.id,
+        type: 'ORG',
+        count: org.favorites_count,
         favorite: org.is_favorite
     })
     const history = useHistory();
@@ -94,7 +93,7 @@ function HeadOrg(props: IProps) {
 
     return (
         <>
-            <div ref={orgHeadRef} className='flex-row-sp mb-head-org-cnt' >
+            <div id='org_head' ref={orgHeadRef} className='flex-row-sp mb-head-org-cnt' >
                 <div className="mb-head-org-cnt__left">
                     <button
                         className='mb-head-org-cnt__button'

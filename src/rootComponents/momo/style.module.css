@@ -1,6 +1,9 @@
 .container {
     margin-top: 26px;
 }
+.navigate_app_btn{
+    padding: 4px 10px;
+}
 
 .head {
     padding: 12px;
