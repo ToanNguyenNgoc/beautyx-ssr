@@ -104,7 +104,7 @@ function PaymentStatus() {
                     </div>
                 }
                 {
-                    data &&
+                    !data &&
                     <div className={style.navigate_cnt}>
                         <div className={style.navigate_cnt_body}>
                             Xem các dịch vụ đã mua và đặt hẹn
