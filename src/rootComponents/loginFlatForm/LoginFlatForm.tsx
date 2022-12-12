@@ -150,7 +150,7 @@ function LoginFlatForm(props: any) {
                     //     onLoginFlatFormMomo();
                     // }
                     onLoginFlatFormMomo();
-                    if (params.requestId) {
+                    if (params?.requestId) {
                         history.replace(`/thanh-toan-momo/${params.requestId}`)
                     }
                     break;
