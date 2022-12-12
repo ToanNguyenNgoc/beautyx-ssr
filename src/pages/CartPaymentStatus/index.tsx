@@ -8,7 +8,6 @@ import paymentGatewayApi from "../../api/paymentGatewayApi";
 import { useDispatch, useSelector } from "react-redux";
 import PaymentQr from "./components/PaymentQr";
 import PaymentInfo from "./components/PaymentInfo";
-import PaymentConfirm from "./components/PaymentConfirm";
 import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
 import apointmentApi from "../../api/apointmentApi";
 import HeadMobile from "../../features/HeadMobile";
@@ -17,36 +16,38 @@ import { useHistory } from "react-router-dom";
 import { clearByCheck } from "../../redux/cartSlice";
 import { onClearOrder } from "../../redux/order/orderSlice";
 import { ICart } from "../../interface/cart";
-
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
 import { formatProductList } from "../../utils/tracking";
 import {
     onAddServicesNoBookCount,
-    onSetStatusServicesUser,
 } from "../../redux/order/orderSlice";
 import ModalLoad from "../../components/ModalLoad";
 import { XButton } from "components/Layout";
 import { useCountDown } from "hooks";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+
+import style from './payment.module.css'
 // end
 const timerRender = [0];
 const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];
+
+const initOpen = {
+    content: "",
+    open: false,
+    children: <></>
+}
 
 function CartPaymentStatus() {
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const sec = useCountDown(600);
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0]);
-    const [openConf, setOpenConf] = useState(false);
+    // const [openConf, setOpenConf] = useState(false);
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
-    const [open, setOpen] = useState({
-        content: "",
-        open: false,
-        children: <></>
-    });
+    const [open, setOpen] = useState(initOpen);
 
     const carts = useSelector((state: any) => state.carts);
     const list = carts.cartList.filter((item: any) => item.isConfirm === true);
@@ -109,7 +110,6 @@ function CartPaymentStatus() {
     const handleAfterOrder = () => {
         dispatch(clearByCheck());
         dispatch(onAddServicesNoBookCount());
-        dispatch(onSetStatusServicesUser());
     };
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
@@ -181,7 +181,23 @@ function CartPaymentStatus() {
         timerRender[0] = -1;
     };
     const handleCancelOrder = () => {
-        setOpenConf(true);
+        setOpen({
+            content: 'Bạn có muốn hủy thanh toán đơn hàng không ?',
+            open: true,
+            children: <>
+                <XButton
+                    title="Hủy đơn hàng"
+                    onClick={()=>{
+                        handleCancelPayment();
+                        setOpen(initOpen)
+                    }}
+                />
+                <XButton
+                    title="Không"
+                    onClick={() => setOpen(initOpen)}
+                />
+            </>
+        });
     };
     useEffect(() => {
         if (sec === 0) {
@@ -237,14 +253,13 @@ function CartPaymentStatus() {
                 title="Thanh toán"
             />
             <Container>
-                <div className="pm-st-cnt">
+                <div className={style.container}>
                     <PaymentQr
                         res={res}
                         sec={sec}
                         orderStatus={orderStatus}
-                    //pay_url={pay_url}
                     />
-                    <div className="pm-st-cnt__body">
+                    <div className={style.container_right}>
                         <PaymentInfo
                             action={action}
                             listPayment={listPayment}
@@ -255,11 +270,11 @@ function CartPaymentStatus() {
                     </div>
                 </div>
             </Container>
-            <PaymentConfirm
+            {/* <PaymentConfirm
                 open={openConf}
                 setOpen={setOpenConf}
                 handleCancelPayment={handleCancelPayment}
-            />
+            /> */}
             <PopupNotification
                 title="Thông báo"
                 content={open.content}

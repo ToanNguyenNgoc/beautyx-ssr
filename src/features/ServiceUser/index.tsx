@@ -1,48 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Container } from "@mui/material";
 import "./mySer.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Masonry } from "@mui/lab";
 import { AppContext } from "context/AppProvider";
-import { STATUS } from "redux/status";
-import { fetchAsyncOrderServices } from "redux/order/orderSlice";
 import { IServiceUser } from "interface/servicesUser";
 import TreatmentCardItem from "./ServiceNotBook/TreatmentCardItem";
 import { XButton } from "components/Layout";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
 import { OrderSkelton } from "pages/Account/components/Orders/components/TabOrderPaid";
+import { ParamOrder } from "params-query/param.interface";
+import { paramOrder } from "params-query";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import IStore from "interface/IStore";
+import API_ROUTE from "api/_api";
 
 function ServicesUser() {
-    const dispatch = useDispatch();
+    const PLAT_FORM = EXTRA_FLAT_FORM()
+    const { USER } = useSelector((state: IStore) => state.USER)
     const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile();
-    const { services, status, totalItem, page } = useSelector((state: any) => state.ORDER.ORDER_SERVICES);
-
-    const callServicesUser = () => {
-        if (status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncOrderServices({
-                page: 1
-            }))
-        }
-    };
-    useEffect(() => {
-        callServicesUser();
-    }, []);
-    const onViewMore = () => {
-        dispatch(
-            fetchAsyncOrderServices({
-                page: page + 1,
-            })
-        );
-    };
-    let loading = false;
-    if (status === STATUS.LOADING) {
-        loading = true;
+    const params: ParamOrder = {
+        ...paramOrder,
+        "filter[status]": 'PAID',
+        'include': 'items|appointments|organization',
+        "filter[withServicesSold]": true,
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM,
+        "limit": 6
     }
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
+        USER,
+        `${API_ROUTE.ORDERS}`,
+        params
+    )
     return (
         <>
-            {page === 0 && status !== STATUS.SUCCESS && <OrderSkelton />}
+            {(resData?.length === 0 && isValidating) && <OrderSkelton />}
             <Container>
                 <div className="flex-row-sp my-ser">
                     <div className="my-ser__right">
@@ -52,7 +46,7 @@ function ServicesUser() {
                                     columns={IS_MB ? 1 : 2}
                                     spacing={IS_MB ? 1 : 3}
                                 >
-                                    {services.map(
+                                    {resData?.map(
                                         (item: IServiceUser, index: number) => (
                                             <TreatmentCardItem
                                                 key={index}
@@ -61,15 +55,15 @@ function ServicesUser() {
                                         )
                                     )}
                                 </Masonry>
-                                {services.length >= 15 &&
-                                    services.length < totalItem && (
+                                {resData?.length >= 6 &&
+                                    resData?.length < totalItem && (
                                         <div className="my-ser-bot">
                                             <XButton
                                                 title={`${t(
                                                     "trending.watch_all"
                                                 )}`}
-                                                onClick={onViewMore}
-                                                loading={loading}
+                                                onClick={onLoadMore}
+                                                loading={isValidating}
                                             />
                                         </div>
                                     )}

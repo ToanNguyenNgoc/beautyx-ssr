@@ -135,7 +135,7 @@ function Head(props: IProps) {
     window.addEventListener('scroll', () => {
         const header = document.getElementById("header");
         const scrolled = window.scrollY;
-        if (header && changeStyle) {
+        if (header && changeStyle && IS_MB) {
             header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
         }
     })

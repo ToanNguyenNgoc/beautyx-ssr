@@ -1,24 +1,19 @@
 import React from 'react';
-import { CircularProgress } from '@mui/material';
-import formatPrice from '../../../utils/formatPrice';
 import { useHistory } from 'react-router-dom';
-import UserPaymentInfo from '../../Account/components/UserPaymentInfo';
+import { useSelector } from 'react-redux';
+import { EXTRA_PAYMENT } from 'rootComponents/extraPayment';
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import doPostMakePaymentMessageTiki from 'rootComponents/tiki/doPostMessageTiki';
+import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
+import doPostMakePaymentMessageMB from 'rootComponents/mb/doPostMessageMBbank';
+import UserPaymentInfo from 'pages/Account/components/UserPaymentInfo';
+import { onErrorImg } from 'utils';
+import formatPrice from 'utils/formatPrice';
 import '../cart-status.css'
-import { useDispatch, useSelector } from 'react-redux';
-import { FLAT_FORM_TYPE } from '../../../rootComponents/flatForm';
-import { EXTRA_FLAT_FORM } from '../../../api/extraFlatForm';
-import { EXTRA_PAYMENT } from '../../../rootComponents/extraPayment';
-import doPostMakePaymentMessageTiki from '../../../rootComponents/tiki/doPostMessageTiki';
-import { doPostMakePaymentMessageMB } from '../../../rootComponents/mb/doPostMessageMBbank';
-import { onSetStatusApp } from '../../../redux/appointment/appSlice';
-import { onSetStatusServicesUser } from '../../../redux/order/orderSlice';
-// import useGetMessage from '../../../rootComponents/mb/useListenResponseMessage';
-import onErrorImg from '../../../utils/errorImg';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
     const { data, handleCancelOrder, action, listPayment, setLoading } = props;
-    const dispatch = useDispatch();
     const { organization } = data.res;
     const { cartList } = useSelector((state: any) => state.carts);
     const orderItems = listPayment ? listPayment : cartList.filter(
@@ -55,16 +50,12 @@ function PaymentInfo(props: any) {
     }
     //func appointment
     const gotoAppointment = () => {
-        dispatch(onSetStatusApp())
         history.push('/lich-hen?tab=1')
     }
     const gotoServiceUser = () => {
-        dispatch(onSetStatusServicesUser())
         history.push('/lich-hen?tab=2')
     }
     const goBackHome = () => {
-        dispatch(onSetStatusApp())
-        dispatch(onSetStatusServicesUser())
         history.push('/home')
     }
     // const response =FLAT_FORM_TYPE.MB?useGetMessage():{'flatForm': FLAT_FORM};
@@ -76,19 +67,6 @@ function PaymentInfo(props: any) {
         switch (data.orderStatus) {
             case "PENDING":
                 return <div className='flex-column pm-pending-cnt'>
-                    <span className="st-title">
-                        Đang chờ thanh toán
-                    </span>
-                    <div className="st-process">
-                        <CircularProgress />
-                    </div>
-                    <div className="st-time-out">
-                        <span>Đơn hàng sẽ hết hạn sau : </span>
-                        <span>
-                            {`0${Math.floor(data.sec / 60)}`.slice(-2)}:
-                            {`0${data.sec - Math.floor(data.sec / 60) * 60}`.slice(-2)}
-                        </span>
-                    </div>
                     <button
                         className="st-pm-info__bt"
                         onClick={handleCancelOrder}
@@ -159,8 +137,7 @@ function PaymentInfo(props: any) {
     }
     return (
         <>
-            <div className="pm-status-user">
-                <span className="title">Thông tin đơn hàng</span>
+            <div className={"pm-status-user"}>
                 <UserPaymentInfo disableEdit={true} />
                 <div className="pm-status-user__detail">
                     <div className="flex-row org">

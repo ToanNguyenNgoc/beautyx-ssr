@@ -103,18 +103,21 @@ function PaymentStatus() {
                         </p>
                     </div>
                 }
-                <div className={style.navigate_cnt}>
-                    <div className={style.navigate_cnt_body}>
-                        Xem các dịch vụ đã mua và đặt hẹn
-                        <span
-                            onClick={() => {
-                                history.push('/lich-hen?tab=2');
-                                onClearAppointment()
-                            }}
-                            className={style.navigate_cnt_btn}
-                        >Tại đây</span>
+                {
+                    data &&
+                    <div className={style.navigate_cnt}>
+                        <div className={style.navigate_cnt_body}>
+                            Xem các dịch vụ đã mua và đặt hẹn
+                            <span
+                                onClick={() => {
+                                    history.push('/lich-hen?tab=2');
+                                    onClearAppointment()
+                                }}
+                                className={style.navigate_cnt_btn}
+                            >Tại đây</span>
+                        </div>
                     </div>
-                </div>
+                }
                 <div className={style.bottom}>
                     <XButton
                         onClick={() => {

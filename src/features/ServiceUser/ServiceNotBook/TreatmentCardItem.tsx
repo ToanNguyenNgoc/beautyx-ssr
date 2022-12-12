@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
-import { IServiceUser, IUser_Items } from "../../../interface/servicesUser";
+import { IServiceUser, IUser_Items } from "interface/servicesUser";
 import ServiceSoldItem from "./ServiceSoldItem";
-import { formatDate, formatTime } from "../../../utils/format";
+import { formatDate, formatTime } from "utils/format";
 import { useSelector } from "react-redux";
-import icon from "../../../constants/icon";
+import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
-import { AppContext } from "../../../context/AppProvider";
+import { AppContext } from "context/AppProvider";
 
 interface IProps {
     card_items: IServiceUser,
@@ -40,9 +40,9 @@ function TreatmentCardItem(props: IProps) {
             className='treat-card-item'
         // style={enableCart === true ? { opacity: 0.6 } : {}}
         >
-            {card_items.appointments?.length === 0 && (
+            {/* {card_items.appointments?.length === 0 && (
                 <div className="treat-card-item__dot"></div>
-            )}
+            )} */}
             <div
                 style={
                     order_id === card_items?.id && servicesBook.length > 0

@@ -39,9 +39,15 @@ import { AppContext } from "context/AppProvider";
 
 // end
 const date = dayjs();
+const initOpenNoti = {
+    content: "",
+    open: false,
+    children: <></>,
+    load: false
+}
 function Booking() {
     const dispatch = useDispatch();
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const [finalAmount, setFinalAmount] = useState(0)
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const { org, status } = useSelector((state: any) => state.ORG);
@@ -51,11 +57,7 @@ function Booking() {
         title: "",
         open: false,
     });
-    const [openNoti, setOpenNoti] = useState({
-        content: "",
-        open: false,
-        children: <></>
-    });
+    const [openNoti, setOpenNoti] = useState(initOpenNoti);
     const [openVouchers, setOpenVouchers] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
@@ -164,6 +166,7 @@ function Booking() {
     };
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
+        setOpenNoti({ ...initOpenNoti, load: true })
         try {
             //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
@@ -182,6 +185,7 @@ function Booking() {
                     search: transaction_uuid,
                     state: { state_payment, actionAfter, listPayment },
                 });
+                setOpenNoti({ ...initOpenNoti, load: false })
             } else {
                 setOpenNoti({
                     open: true,
@@ -195,7 +199,8 @@ function Booking() {
                             title="Về trang chủ"
                             onClick={() => history.push("/home")}
                         />
-                    </>
+                    </>,
+                    load: false
                 });
             }
             //setLoading(false);
@@ -213,7 +218,8 @@ function Booking() {
                         title="Về trang chủ"
                         onClick={() => history.push("/home")}
                     />
-                </>
+                </>,
+                load: false
             });
         }
     }
@@ -223,6 +229,7 @@ function Booking() {
         history.push("/lich-hen?tab=1");
     };
     const handlePostApps = async () => {
+        setOpenNoti({ ...initOpenNoti, load: true })
         try {
             await apointmentApi.postAppointment(action, org?.id);
             dispatch(onRefreshServicesNoBookCount());
@@ -235,7 +242,8 @@ function Booking() {
                         title="Xem lịch hẹn"
                         onClick={gotoAppointment}
                     />
-                </>
+                </>,
+                load: false
             });
         } catch (error) {
             console.log(error);
@@ -251,7 +259,8 @@ function Booking() {
                         title="Về trang chủ"
                         onClick={() => history.push("/home")}
                     />
-                </>
+                </>,
+                load: false
             });
         }
     };
@@ -274,6 +283,7 @@ function Booking() {
                 if (location.state.TYPE === "BOOK_NOW") {
                     if (finalAmount < 1000) {
                         return setOpenNoti({
+                            ...initOpenNoti,
                             open: true,
                             content: `Đơn hàng tối thiểu là 1.000đ`,
                             children: <></>
@@ -293,6 +303,7 @@ function Booking() {
                     }
                     else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
                         setOpenNoti({
+                            ...initOpenNoti,
                             open: true,
                             content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
                             children: <>
@@ -351,7 +362,7 @@ function Booking() {
                         </div>
                         <div className="booking-cnt__right">
                             {IS_MB && <UserPaymentInfo
-                                title={TYPE_PAGE === 'BOOK_NOW' ? t('pm.payment_info'): t('pm.payment_booking')}
+                                title={TYPE_PAGE === 'BOOK_NOW' ? t('pm.payment_info') : t('pm.payment_booking')}
                                 onSetAddressDefault={setAddress}
                             />}
                             <br />
@@ -583,7 +594,7 @@ function Booking() {
                                             ? "Thanh toán và đặt hẹn ngay"
                                             : "Đặt hẹn ngay"
                                     }
-                                    loading={false}
+                                    loading={openNoti.load}
                                     onClick={handleBooking}
                                 />
                             </div>

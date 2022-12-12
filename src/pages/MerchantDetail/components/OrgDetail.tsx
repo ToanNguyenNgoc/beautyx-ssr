@@ -9,6 +9,7 @@ import { AppContext } from "context/AppProvider";
 import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import { useFavorite } from "hooks";
+import img from "constants/img";
 
 interface IProps {
     org: IOrganization;
@@ -29,12 +30,12 @@ function OrgDetail(props: IProps) {
     const [open, setOpen] = useState(false);
     const [openPopupMap, setOpenPopupMap] = useState(false);
     const orgTimes = extraOrgTimeWork(org?.opening_time);
-    const orgTimeToday = orgTimes.find(i => i.todayAct)
+    const orgTimeToday = orgTimes?.find(i => i.todayAct)
     const refListTimeWorks = useRef<HTMLUListElement>(null);
     const onOpenTime = () => {
         refListTimeWorks.current?.classList.add("org-time-work__list-active");
     };
-    const onCloseTime = () =>  refListTimeWorks.current?.classList.remove("org-time-work__list-active");
+    const onCloseTime = () => refListTimeWorks.current?.classList.remove("org-time-work__list-active");
     window.onclick = () => onCloseTime()
     const settings = {
         dots: true,
@@ -86,14 +87,14 @@ function OrgDetail(props: IProps) {
                                             <div className="back-drop">
                                                 <img
                                                     style={{ width: "100%" }}
-                                                    src={org?.image_url}
+                                                    src={org?.image_url ?? img.imgDefault}
                                                     alt=""
                                                     className="back-drop__img"
                                                     onError={(e) => onErrorImg(e)}
                                                 />
                                                 <div className="banner-item__cnt">
                                                     <img
-                                                        src={org?.image_url}
+                                                        src={org?.image_url ?? img.imgDefault}
                                                         alt=""
                                                         className="banner-item__img"
                                                     />
@@ -111,13 +112,13 @@ function OrgDetail(props: IProps) {
                                     <div className="org-detail__banner-de__item">
                                         <div className="back-drop">
                                             <img
-                                                src={item?.image_url}
+                                                src={item?.image_url ?? img.imgDefault}
                                                 alt=""
                                                 className="back-drop__img"
                                             />
                                             <div className="banner-item__cnt">
                                                 <img
-                                                    src={item?.image_url}
+                                                    src={item?.image_url ?? img.imgDefault}
                                                     alt=""
                                                     className="banner-item__img"
                                                 />
@@ -135,7 +136,7 @@ function OrgDetail(props: IProps) {
                                     <div className="flexX-gap-8">
                                         <div className="org-avatar">
                                             <img
-                                                src={org?.image_url}
+                                                src={org?.image_url ?? img.imgDefault}
                                                 onError={(e) => onErrorImg(e)}
                                                 alt=""
                                             />

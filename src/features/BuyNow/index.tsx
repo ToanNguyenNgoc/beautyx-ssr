@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {  useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import Head from '../Head';
 import HeadMobile from '../HeadMobile';
 import HeadTitle from '../HeadTitle';
 import { Container } from '@mui/material'
@@ -136,7 +135,7 @@ function BuyNow() {
     return (
         <>
             <HeadTitle title="Chi tiết thanh toán" />
-            {IS_MB ? <HeadMobile title='Chi tiết thanh toán' /> : <Head />}
+            {IS_MB && <HeadMobile title='Chi tiết thanh toán' />}
             <Container>
                 <div className="service-detail buy-now-cnt">
                     <div className="flex-row-sp buy-now__user">
