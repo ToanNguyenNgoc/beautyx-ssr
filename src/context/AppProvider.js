@@ -99,7 +99,7 @@ export default function AppProvider({ children }) {
     }).responseArray
     const orderService = useSwr("/orders", USER, {
         ...paramOrderService,
-        // 'include': 'items|organization',
+        "limit":10,
         "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM
     }).responseArray
 

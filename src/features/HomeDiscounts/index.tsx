@@ -4,13 +4,13 @@ import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
 import { useDeviceMobile, useSwr } from "hooks";
 import DiscountItem from "./DiscountItem";
 import { useHistory } from "react-router-dom";
-import scrollTop from "../../utils/scrollTop";
+import scrollTop from "utils/scrollTop";
 import { useContext } from "react";
-import { AppContext } from "../../context/AppProvider";
-import { LoadGrid } from "../../components/LoadingSketion"
-import { DISCOUNT_TYPE } from "../../utils/formatRouterLink/fileType";
-import { AUTH_LOCATION } from "../../api/authLocation";
-import { paramsDiscounts } from "../../params-query"
+import { AppContext } from "context/AppProvider";
+import { LoadGrid } from "components/LoadingSketion"
+import { DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
+import { AUTH_LOCATION } from "api/authLocation";
+import { paramsDiscounts } from "params-query"
 import "./style.css";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 

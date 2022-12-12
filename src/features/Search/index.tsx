@@ -264,7 +264,10 @@ function Search(props: SearchProps) {
                                     keysRecommend.map((i:any, index:number) => (
                                         <li key={index} className={style.keyword_trend_item}>
                                             <Link
-                                                to={{ pathname: `/ket-qua-tim-kiem/dich-vu/?keyword=${i._id}` }}
+                                                to={{ 
+                                                    pathname: `/ket-qua-tim-kiem/dich-vu/`,
+                                                    search:`keyword=${i._id}`
+                                                }}
                                                 className={style.keyword_trend_link}
                                             >
                                                 {i._id}

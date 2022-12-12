@@ -47,7 +47,7 @@ export interface ParamOrder {
     "limit": string | number,
     "filter[platform]": string,
     "filter[status]": string,
-    "filter[withServicesSold]": boolean,
+    "filter[withServicesSold]": boolean|any,
     "filter[productable]": boolean| any,
     "include": string,
     "sort": string,

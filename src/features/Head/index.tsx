@@ -131,10 +131,11 @@ function Head(props: IProps) {
     const paramUrl: any = extraParamsUrl();
     const keywordUrl = paramUrl?.keyword ?? "";
     //handle scroll
+    const refHeader = useRef<HTMLDivElement>(null)
     window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
         const header = document.getElementById("header");
-        if (header && changeStyle) {
+        const scrolled = window.scrollY;
+        if (header && changeStyle && IS_MB) {
             header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
         }
     })
@@ -142,6 +143,7 @@ function Head(props: IProps) {
         showHeader ?
             <>
                 <div
+                    ref={refHeader}
                     id="header"
                     className={
                         changeStyle

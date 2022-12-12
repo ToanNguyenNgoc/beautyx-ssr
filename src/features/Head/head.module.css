@@ -367,6 +367,9 @@
 }
 
 @media only screen and (max-width: 1023px) {
+    .container{
+        background-color: transparent;
+    }
     .head_wrapper {
         padding: 8px 12px;
     }

@@ -184,8 +184,8 @@ export function OrgInformation(props: IProps) {
                                 {branch?.full_address}
                             </li>
                             {org?.branches
-                                .filter((i: any) => i?.id !== branch?.id)
-                                .map((item: any, index: number) => (
+                                ?.filter((i: any) => i?.id !== branch?.id)
+                                ?.map((item: any, index: number) => (
                                     <li
                                         onClick={() =>
                                             handleSetBranch(item, index)
@@ -200,30 +200,33 @@ export function OrgInformation(props: IProps) {
                     </div>
                 </div>
             )}
-            <div className="org-information__branches">
-                <div className="title">{t("Mer_de.business_hours")}</div>
-                <ul className="org-time-list">
-                    {orgTimes.map((item: any, index: number) => (
-                        <li
-                            style={
-                                index + 2 === today
-                                    ? { color: "var(--text-black)" }
-                                    : {}
-                            }
-                            key={index}
-                            className="flex-row org-time-list__item"
-                        >
-                            <span className="org-time-list__left">
-                                {item.day_week}
-                            </span>
-                            <div className="org-time-list__right">
-                                {item?.from_time_opening} -{" "}
-                                {item?.to_time_opening}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            {
+                org.opening_time &&
+                <div className="org-information__branches">
+                    <div className="title">{t("Mer_de.business_hours")}</div>
+                    <ul className="org-time-list">
+                        {orgTimes.map((item: any, index: number) => (
+                            <li
+                                style={
+                                    index + 2 === today
+                                        ? { color: "var(--text-black)" }
+                                        : {}
+                                }
+                                key={index}
+                                className="flex-row org-time-list__item"
+                            >
+                                <span className="org-time-list__left">
+                                    {item.day_week}
+                                </span>
+                                <div className="org-time-list__right">
+                                    {item?.from_time_opening} -{" "}
+                                    {item?.to_time_opening}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            }
             <div className="org-information__branches">
                 <div className="title">{t("Mer_de.about")}</div>
                 <div className="org-information__about">
