@@ -1003,11 +1003,12 @@
     }
 
     .map .map-list__mobile {
-        width: 100%;
-        z-index: 2;
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
+        z-index: 10;
+        width: 100%;
+        height: 170px;
     }
 
     .map .map-item__mobile {

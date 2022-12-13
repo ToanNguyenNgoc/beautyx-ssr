@@ -266,17 +266,20 @@ export const CommentParItem = (props: CommentParItemProps) => {
                         Cực hài lòng
                     </span>
                 </div> */}
-                {/* <div className={style.par_body_check}>
-                    <ImageComponent
-                        src={icon.checkFlowGreen} alt="" layout="fixed"
-                        type="ICON" width={14} height={14}
-                    />
-                    <span className={style.par_body_check_text}>
-                        Đã mua hàng
-                    </span>
-                </div> */}
+                {
+                    body_par.includes('USED') &&
+                    <div className={style.par_body_check}>
+                        <img
+                            src={icon.checkFlowGreen} alt=""
+                            width={14} height={14}
+                        />
+                        <span className={style.par_body_check_text}>
+                            Đã mua hàng
+                        </span>
+                    </div>
+                }
                 <div className={style.cmt_text}>
-                    {body_par}
+                    {body_par.replace('USED','')}
                 </div>
                 {
                     media_url?.length > 0 &&
@@ -303,7 +306,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                                     </div>
                                     <div className={style.cmt_item_par_body}>
                                         <div className={style.cmt_text}>
-                                            {body_par}
+                                            {body_par.replace('USED','')}
                                         </div>
                                     </div>
                                 </div>

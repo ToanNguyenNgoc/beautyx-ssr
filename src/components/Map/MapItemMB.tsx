@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import icon from "../../constants/icon";
 import img from "../../constants/img";
 import { IOrganization } from "../../interface/organization";
 import onErrorImg from "../../utils/errorImg";
-import { formatDistance } from "../../utils/format";
+// import { formatDistance } from "../../utils/format";
 import MapOrgItemDetailMb from "./MapOrgItemDetailMb";
 import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 
@@ -19,7 +19,7 @@ export default function MapTagsItemMB(props: IProps) {
     const org: IOrganization = useSelector((state: any) => state.ORG.org);
     const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const history = useHistory();
+    // const history = useHistory();
     const gotoDetail = () => {
         // setOpen({...open,open:true})
         setOpen(true)
@@ -30,13 +30,12 @@ export default function MapTagsItemMB(props: IProps) {
         //     state: item,
         // });
     };
-    const onRouteDirection = (e: any) => {
-        // dispatch(fetchAsyncOrg(item.subdomain));
-        e.stopPropagation()
-        if (handleDirection) {
-            handleDirection()
-        }
-    }
+    // const onRouteDirection = (e: any) => {
+    //     e.stopPropagation()
+    //     if (handleDirection) {
+    //         handleDirection()
+    //     }
+    // }
     return (
         <>
             <MapOrgItemDetailMb

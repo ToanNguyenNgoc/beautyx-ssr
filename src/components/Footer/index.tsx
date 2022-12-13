@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import "./footer.css";
 import { Container } from "@mui/material";
 import { useHistory } from "react-router-dom";
-import slugify from "../../utils/formatUrlString";
-import scrollTop from "../../utils/scrollTop";
-import img, { paymentMethod, social } from "../../constants/img";
-import icon from "../../constants/icon";
-import { AppContext } from "../../context/AppProvider";
+import slugify from "utils/formatUrlString";
+import scrollTop from "utils/scrollTop";
+import img, { paymentMethod, social } from "constants/img";
+import icon from "constants/icon";
+import { AppContext } from "context/AppProvider";
 
 function Footer() {
     const url_map = `https://goo.gl/maps/dnGMKnfdeB91xCj7A`;
@@ -252,6 +252,16 @@ function Footer() {
                 break;
         }
     };
+    // const paramsArr = useGetParamUrl();
+    // const params = {
+    //     org: parseInt(paramsArr[1]),
+    //     id: parseInt(paramsArr[0])
+    // }
+    // const linl = `https://beautyx.page.link/?link=https://beautyx.page.link/myspa?service%3D${params.id}%26merchant%3D${params.org}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`
+    // const [link, setLink] = useState('')
+    // useEffect(()=>{
+    //     setLink(`https://beautyx.page.link/?link=https://beautyx.page.link/myspa?service%3D${params.id}%26merchant%3D${params.org}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`)
+    // },[params.id, params.org])
     return (
         <div className="footer">
             <Container>

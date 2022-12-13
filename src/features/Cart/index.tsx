@@ -1,5 +1,5 @@
 import { Container } from '@mui/system';
-import Head from 'features/Head';
+import Head from 'components/Head';
 import HeadMobile from 'features/HeadMobile';
 import { useDeviceMobile } from 'hooks';
 import React from 'react';

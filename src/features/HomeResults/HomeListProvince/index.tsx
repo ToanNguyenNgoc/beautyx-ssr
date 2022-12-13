@@ -7,12 +7,11 @@ import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import style from './list-province.module.css'
-import { useDeviceMobile, useSearchKeyword } from "hooks";
+import {  useSearchKeyword } from "hooks";
 import { Input, XButton } from "components/Layout";
 import icon from "constants/icon";
 
 function HomeListProvince() {
-    const IS_MB = useDeviceMobile()
     const [value, setValue] = useState('')
     const dispatch = useDispatch()
     const { t } = useContext(AppContext);

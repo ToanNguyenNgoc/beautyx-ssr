@@ -1,12 +1,11 @@
 import React from "react";
 import ProductItem from "./ProductItem";
-import { ORDER_SHIP_STATUS, IORDER_SHIP_STATUS } from '../../../../utils/formatRouterLink/fileType'
+import { ORDER_SHIP_STATUS, IORDER_SHIP_STATUS } from 'utils/formatRouterLink/fileType'
 
 function ProductsTab(props: any) {
-  const { products, tab_id, org, open } = props;
+  const { products, tab_id, org } = props;
   const origin_id = 0;
   const stepOrigin = ORDER_SHIP_STATUS.find(i => i.id === origin_id) || ORDER_SHIP_STATUS[0];
-  // console.log(stepOrigin);
   return (
     <div
       className="order-list-item__wrap"
@@ -41,9 +40,6 @@ function ProductsTab(props: any) {
                             <span className="ship-status-item__title">
                               {i.title}
                             </span>
-                            {/* <span className="ship-status-item__time">
-                              4 th07 20:30
-                            </span> */}
                           </div>
                         </li>
                       ))
@@ -61,7 +57,7 @@ function ProductsTab(props: any) {
       </div>
       <ul className="order-item-list">
         {products?.map((item: any, index: number) => (
-          <ProductItem open={open} key={index} productItem={item} org={org} />
+          <ProductItem key={index} quantity={item.quantity} product={item.productable} org={org} />
         ))}
       </ul>
     </div>

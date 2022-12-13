@@ -96,6 +96,24 @@
     margin-left: calc(-25%);
     margin-top: 152px;
 }
+/* // */
+.bottom{
+    position: fixed;
+    bottom: 24px;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    display: flex;
+   justify-content: center;
+}
+.bottom_btn{
+    color: var(--purple);
+    background-color: var(--bg-white);
+    box-shadow: var(--box-shadow);
+}
+.bottom_btn:hover{
+    opacity: 1;
+}
 
 
 @media only screen and (max-width: 1023px) {
@@ -357,5 +375,8 @@
         line-height: 16px;
         margin-left: 4px;
         text-decoration: line-through;
+    }
+    .bottom{
+        display: none;
     }
 }

@@ -9,7 +9,6 @@ import { getTotal } from 'redux/cartSlice';
 import { IOrganization } from 'interface';
 import { fetchAsyncByKeyword } from 'redux/org/orgSlice';
 import icon from 'constants/icon';
-import { useFavorite } from 'hooks';
 
 interface IProps {
     org: IOrganization,
@@ -30,12 +29,6 @@ function HeadOrg(props: IProps) {
     const { org, isShowSearch, onBackFunc } = props;
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
-    const { onToggleFavorite, favoriteSt } = useFavorite({
-        org_id: org?.id,
-        type: 'ORG',
-        count: org.favorites_count,
-        favorite: org.is_favorite
-    })
     const history = useHistory();
     const orgHeadRef = useRef<any>();
     const orgSearchBtn = useRef<any>();
@@ -139,17 +132,6 @@ function HeadOrg(props: IProps) {
                             <img src={icon.ShoppingCartSimple} alt="" />
                         </div>
                     </button>
-                    {
-                        isShowSearch &&
-                        <button
-                            className='mb-head-org-cnt__button'
-                            onClick={onToggleFavorite}
-                        >
-                            <div className="icon-btn">
-                                <img src={favoriteSt?.is_favorite ? icon.heart : icon.unHeart} alt="" />
-                            </div>
-                        </button>
-                    }
                 </div>
             </div>
             {

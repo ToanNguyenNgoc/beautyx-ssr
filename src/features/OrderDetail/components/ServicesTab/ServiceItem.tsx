@@ -1,23 +1,17 @@
 import React, { useContext, useState } from "react";
-import ButtonCus from "../../../../components/ButtonCus";
-import formatPrice from "../../../../utils/formatPrice";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart, onClearPrevCartItem } from "../../../../redux/cartSlice";
-import { fetchAsyncServiceDetail } from "../../../../redux/org_services/serviceSlice";
-import slugify from "../../../../utils/formatUrlString";
-import { AppContext } from "../../../../context/AppProvider";
-import onErrorImg from "../../../../utils/errorImg";
-import { formatAddCart } from "../../../../utils/cart/formatAddCart";
-
-// ==== api tracking ====
-import tracking from "../../../../api/trackApi";
-// end
-// google tag event
-import { GoogleTagPush, GoogleTagEvents } from "../../../../utils/dataLayer";
-import { AlertSnack } from "components/Layout";
+import { addCart, onClearPrevCartItem } from "redux/cartSlice";
+import { AppContext } from "context/AppProvider";
+import { formatAddCart } from "utils/cart/formatAddCart";
+import tracking from "api/trackApi";
+import { GoogleTagPush, GoogleTagEvents } from "utils/dataLayer";
+import { AlertSnack, XButton } from "components/Layout";
 import { formatRouterLinkService } from "utils/formatRouterLink/formatRouter";
-// end
+import { onErrorImg, slugify } from "utils";
+import formatPrice from "utils/formatPrice";
+import serviceApi from "api/serviceApi";
+
 function ServiceItem(props: any) {
     const { t } = useContext(AppContext);
     const { serviceItem, org, itemsDiscountOrg } = props;
@@ -48,25 +42,30 @@ function ServiceItem(props: any) {
     const cartValues = formatAddCart(
         service,
         org,
-        2,
+        (IS_DISCOUNT?.discount ? 'DISCOUNT':'SERVICE'),
         1,
         serviceItem.base_price,
         IS_DISCOUNT?.discount,
         true
     );
-    const handleAddCart = async () => {
-        //check exits discount or service detail in merchant
-        //check org and services on commerce
-        const res = await dispatch(
-            fetchAsyncServiceDetail({
-                org_id: org.id,
-                ser_id: service.id,
+    const getServiceDetail = async ()=>{
+        let resService
+        try {
+            const res = await serviceApi.getDetailById({
+                org_id: service.org.id, ser_id: service.id
             })
-        );
-        if (res?.meta?.requestStatus === "fulfilled" || IS_DISCOUNT) {
+            resService = res?.data.context
+        } catch (error) {
+            console.log(error)
+        }
+        return resService
+    }
+    const handleAddCart = async () => {
+        const resService = await getServiceDetail()
+        if (resService || IS_DISCOUNT) {
             //check org and services on commerce
             if (
-                res?.payload?.service?.is_momo_ecommerce_enable &&
+                resService?.is_momo_ecommerce_enable &&
                 org?.is_momo_ecommerce_enable
             ) {
                 dispatch(onClearPrevCartItem());
@@ -94,13 +93,6 @@ function ServiceItem(props: any) {
         GoogleTagPush(GoogleTagEvents.PRODUCT_CLICK);
         if (IS_DISCOUNT) {
             const type = onCheckType();
-            // history.push({
-            //     pathname: `/chi-tiet-giam-gia/${slugify(
-            //         IS_DISCOUNT.productable.service_name ||
-            //         IS_DISCOUNT.productable.product_name
-            //     )}`,
-            //     search: `type=${type}&org_id=${org?.id}&dis_id=${IS_DISCOUNT?.discount_id}&item_id=${IS_DISCOUNT.productable_id}`,
-            // });
             history.push({
                 pathname: `/chi-tiet-giam-gia/${type}_${org.id}_${IS_DISCOUNT.discount_id}_${IS_DISCOUNT.productable_id}_${slugify(
                     IS_DISCOUNT.productable.service_name ||
@@ -109,8 +101,6 @@ function ServiceItem(props: any) {
             });
         } else {
             history.push({
-                // pathname: `/dich-vu/${slugify(service?.service_name)}`,
-                // search: `id=${service.id}?org=${org?.id}`,
                 pathname: formatRouterLinkService(service.id, org.id, service.service_name)
             });
         }
@@ -172,13 +162,13 @@ function ServiceItem(props: any) {
                             </span>
                         )}
                         <div className="flex-row item-button">
-                            <ButtonCus
+                            <XButton
                                 onClick={handleDetailService}
-                                text={t("order.watch_info")}
+                                title={t("order.watch_info")}
                             />
-                            <ButtonCus
+                            <XButton
                                 onClick={handleAddCart}
-                                text="Re-Order"
+                                title="Re-Order"
                             />
                         </div>
                     </div>

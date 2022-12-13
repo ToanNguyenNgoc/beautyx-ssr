@@ -17,6 +17,7 @@ import IStore from 'interface/IStore';
 import Skeleton from 'react-loading-skeleton';
 import { useDeviceMobile, useSwrCache } from 'hooks';
 import { AppContext } from 'context/AppProvider';
+import img from 'constants/img';
 
 function HomeOrgDistance() {
     const { t } = useContext(AppContext)
@@ -119,7 +120,7 @@ const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
                         />
                         :
                         <img
-                            className={style.org_avatar} src={org.image_url} alt=""
+                            className={style.org_avatar} src={org.image_url ?? img.imgDefault} alt=""
                             onError={(e) => onErrorImg(e)}
                         />
                 }
@@ -136,7 +137,7 @@ const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
                 }
                 <div className={style.org_name_cnt}>
                     <div className={style.org_de_avt}>
-                        <img src={org.image_url} onError={(e) => onErrorImg(e)} alt="" />
+                        <img src={org.image_url ?? img.imgDefault} onError={(e) => onErrorImg(e)} alt="" />
                     </div>
                     <span className={style.org_de_name}>{org.name}</span>
                 </div>

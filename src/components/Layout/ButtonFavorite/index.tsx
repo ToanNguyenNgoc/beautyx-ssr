@@ -4,7 +4,6 @@ import IStore from 'interface/IStore';
 import { AppContext } from 'context/AppProvider';
 import favorites from 'api/favorite';
 import { useSwr } from 'hooks';
-import style from './button-favorite.module.css'
 import { useHistory } from 'react-router-dom';
 
 interface ButtonFavoriteProps {

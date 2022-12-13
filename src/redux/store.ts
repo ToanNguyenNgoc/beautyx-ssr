@@ -6,16 +6,11 @@ import servicesBookReducer from "./servicesBookSlice";
 import userAddressReducer from "./USER/userAddressSlice";
 import orgReducer from "./org/orgSlice";
 import orgCommentsReducer from "./org/orgCommentsSlice";
-import orgSpecialReducer from "./org_specials/orgSpecialSlice";
-import combosReducer from "./org_combos/orgCombosSlice";
 import orgDiscountsReducer from "./org_discounts/orgDiscountsSlice";
-import serviceReducer from "./org_services/serviceSlice";
-import productReducer from "./org_products/productSlice";
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import paymentsReducer from "./payments/paymentSlice";
 import blogReducer from "./blog/blogSlice";
 import cateReducer from "./CateTree/cateTreeSlice";
-import comboReducer from "./org_combos/comboSlice";
 import appReducer from "./appointment/appSlice";
 import orderReducer from "./order/orderSlice";
 import chatOrgReducer from "./chat/chatOrgSlice";
@@ -34,16 +29,11 @@ const rootReducer = {
     SERVICES_BOOK: servicesBookReducer,
     USER: userReducer,
     ORG: orgReducer,
-    SERVICE: serviceReducer,
-    PRODUCT: productReducer,
-    ORG_COMBOS: combosReducer,
-    ORG_SPECIALS: orgSpecialReducer,
     ORG_DISCOUNTS: orgDiscountsReducer,
     ADDRESS: userAddressReducer,
     PAYMENT: paymentsReducer,
     BLOG: blogReducer,
     CATE_TREE: cateReducer,
-    COMBO: comboReducer,
     APP: appReducer,
     ORDER: orderReducer,
     CHAT_ORG: chatOrgReducer,

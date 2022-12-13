@@ -1,4 +1,3 @@
-import icon from "constants/icon";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 import React from "react";
 import { useHistory } from "react-router-dom";

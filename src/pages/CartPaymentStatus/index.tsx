@@ -1,31 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef, useMemo } from "react";
-import HeadTitle from "../../features/HeadTitle";
+import HeadTitle from "features/HeadTitle";
 import "./cart-status.css";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import paymentGatewayApi from "../../api/paymentGatewayApi";
+import paymentGatewayApi from "api/paymentGatewayApi";
 import { useDispatch, useSelector } from "react-redux";
 import PaymentQr from "./components/PaymentQr";
 import PaymentInfo from "./components/PaymentInfo";
-import useGetMessageTiki from "../../rootComponents/useGetMessageTiki";
-import apointmentApi from "../../api/apointmentApi";
-import HeadMobile from "../../features/HeadMobile";
+import useGetMessageTiki from "rootComponents/useGetMessageTiki";
+import apointmentApi from "api/apointmentApi";
+import HeadMobile from "features/HeadMobile";
 import { PopupNotification } from "components/Notification";
 import { useHistory } from "react-router-dom";
-import { clearByCheck } from "../../redux/cartSlice";
-import { onClearOrder } from "../../redux/order/orderSlice";
-import { ICart } from "../../interface/cart";
+import { clearByCheck } from "redux/cartSlice";
+import { onClearOrder } from "redux/order/orderSlice";
+import { ICart } from "interface/cart";
 // ==== api tracking ====
-import tracking from "../../api/trackApi";
-import { formatProductList } from "../../utils/tracking";
-import {
-    onAddServicesNoBookCount,
-} from "../../redux/order/orderSlice";
-import ModalLoad from "../../components/ModalLoad";
+import tracking from "api/trackApi";
+import { formatProductList } from "utils/tracking";
+import ModalLoad from "components/ModalLoad";
 import { XButton } from "components/Layout";
 import { useCountDown } from "hooks";
-import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 import style from './payment.module.css'
 // end
@@ -39,7 +35,6 @@ const initOpen = {
 }
 
 function CartPaymentStatus() {
-    const PLAT_FORM = EXTRA_FLAT_FORM()
     const sec = useCountDown(600);
     const dispatch = useDispatch();
     const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0]);
@@ -94,23 +89,6 @@ function CartPaymentStatus() {
             console.log(error);
         }
     };
-    //save appointment info after payment payment=MOMO
-    const handleSaveApp = () => {
-        const params = {
-            order_id: action.order_id,
-            service_ids: action.service_ids,
-            branch_id: action.branch,
-            time_start: action.time_start,
-            note: action.note,
-            org_id: action.org_id
-        };
-        localStorage.setItem('APP_INFO', JSON.stringify(params))
-    }
-    //
-    const handleAfterOrder = () => {
-        dispatch(clearByCheck());
-        dispatch(onAddServicesNoBookCount());
-    };
     const handleGetPaymentStatus = async (_status: boolean) => {
         try {
             const res_status = await paymentGatewayApi.getStatus({
@@ -121,14 +99,9 @@ function CartPaymentStatus() {
             switch (status) {
                 case "PAID":
                     if (action) {
-                        if (PLAT_FORM === 'MOMO') {
-                            handleSaveApp()
-                        } else {
-                            handlePostApp()
-                        }
-                    } else {
-                        handleAfterOrder();
+                        handlePostApp()
                     }
+                    dispatch(clearByCheck());
                     dispatch(onClearOrder());
                     setOrderStatus(status);
                     timerRender[0] = -1;
@@ -187,7 +160,7 @@ function CartPaymentStatus() {
             children: <>
                 <XButton
                     title="Hủy đơn hàng"
-                    onClick={()=>{
+                    onClick={() => {
                         handleCancelPayment();
                         setOpen(initOpen)
                     }}

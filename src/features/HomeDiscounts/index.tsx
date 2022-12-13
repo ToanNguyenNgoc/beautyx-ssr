@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "@mui/material";
-import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
-import { useDeviceMobile, useSwrCache } from "hooks";
+import { IDiscountPar, IITEMS_DISCOUNT } from "../../interface/discount";
+import { useDeviceMobile, useSwr } from "hooks";
 import DiscountItem from "./DiscountItem";
 import { useHistory } from "react-router-dom";
 import scrollTop from "utils/scrollTop";
@@ -22,11 +22,11 @@ function HomeDiscount() {
     const newParams = {
         ...paramsDiscounts,
         page: 1,
-        limit: IS_MB ? 10 : 5,
+        limit: 10,
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
-    const { responseArray, isValidating } = useSwrCache('/discounts', true, newParams)
+    const { responseArray, isValidating } = useSwr('/discounts', true, newParams)
     const discounts = responseArray
     const history = useHistory();
     const onViewMore = () => {
@@ -52,7 +52,7 @@ function HomeDiscount() {
                                 i.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key
                             ))
                             )
-                            ?.slice(0, 12)
+                            ?.slice(0, !IS_MB ? 5 : 10)
                             ?.map((discount: IDiscountPar, index: number) => (
                                 <div key={index}>
                                     {discount.items.map(

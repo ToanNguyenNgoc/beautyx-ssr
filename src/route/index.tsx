@@ -16,11 +16,10 @@ import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
 import MerchantDetail from "pages/MerchantDetail";
-
 import { analytics, logEvent } from "../firebase";
 import {  LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
-import Otp from "features/Otp";
+// import Otp from "features/Otp";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 // import Policy from "pages/Policy";
@@ -44,11 +43,11 @@ import Account from "pages/Account";
 import Calendar from "features/Calendar";
 import BuyNow from "features/BuyNow";
 import Carts from "pages/Carts";
-import OtpMbPage from "pages/OtpMbPage";
+// import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
 import { Bottom } from "components/Layout";
-import Head from "features/Head";
+import Head from "components/Head";
 //update import lazy
 // const Account = lazy(() => import('pages/Account'))
 // const SignPage = lazy(() => import('pages/SignPage'))
@@ -61,7 +60,7 @@ const Partner = lazy(() => import("../pages/Partner"))
 // const DealBanner = lazy(() => import('pages/DealBanner'))
 const Policy = lazy(() => import('pages/Policy'))
 const SellerCenter = lazy(() => import('pages/SellerCenter'))
-// const Otp = lazy(() => import('features/Otp'))
+const Otp = lazy(() => import('features/Otp'))
 // const ResetPassword = lazy(() => import('pages/ResetPassword'))
 // const HomeDiscountList = lazy(() => import('features/HomeResults/HomeDiscountList'))
 // const HomeCateResult = lazy(() => import('pages/HomeCateResult'))
@@ -72,7 +71,7 @@ const SellerCenter = lazy(() => import('pages/SellerCenter'))
 // const Carts = lazy(() => import('pages/Carts'))
 // const ProductsByCate = lazy(() => import('features/CategoryTree/ProductsByCate'))
 const LandingPage = lazy(() => import('pages/LandingPage'))
-// const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
+const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
 const Trends = lazy(() => import('pages/Trends'))
 const Community = lazy(() => import('pages/Community'))
 // const VoucherPage = lazy(() => import('pages/Community'))

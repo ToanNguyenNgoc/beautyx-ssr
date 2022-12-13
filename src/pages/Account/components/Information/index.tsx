@@ -19,7 +19,6 @@ import icon from 'constants/icon';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
 import { AppContext } from 'context/AppProvider';
-import { t } from 'i18next';
 
 function Information() {
   const {t} = useContext(AppContext)
