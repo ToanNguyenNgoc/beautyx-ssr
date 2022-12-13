@@ -22,7 +22,7 @@ function HomeDiscount() {
     const newParams = {
         ...paramsDiscounts,
         page: 1,
-        limit: IS_MB ? 10 : 5,
+        limit: 10,
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
@@ -52,7 +52,7 @@ function HomeDiscount() {
                                 i.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key
                             ))
                             )
-                            ?.slice(0, 12)
+                            ?.slice(0, !IS_MB ? 5 : 10)
                             ?.map((discount: IDiscountPar, index: number) => (
                                 <div key={index}>
                                     {discount.items.map(

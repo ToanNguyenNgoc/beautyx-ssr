@@ -3,30 +3,30 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import "./style.css";
-import onErrorImg from "../../utils/errorImg";
+import onErrorImg from "utils/errorImg";
 import ServiceBookItem from "./components/ServiceItem";
 import { useHistory, useLocation } from "react-router-dom";
-import { addServiceBookNow, clearAllServices } from "../../redux/servicesBookSlice";
-import icon from "../../constants/icon";
+import { addServiceBookNow, clearAllServices } from "redux/servicesBookSlice";
+import icon from "constants/icon";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
-import order from "../../api/orderApi";
+import order from "api/orderApi";
 import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import PaymentMethodCpn from "../PaymentMethod/index";
-import { formatDatePost } from "../../utils/formatDate";
+import { formatDatePost } from "utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import BookingNowBill from "./components/BookingNowBill";
-import { formatAddCart } from "../../utils/cart/formatAddCart";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
-import { STATUS } from "../../redux/status";
-import apointmentApi from "../../api/apointmentApi";
-import { onSetStatusApp } from "../../redux/appointment/appSlice";
-import { onRefreshServicesNoBookCount } from "../../redux/order/orderSlice";
+import { formatAddCart } from "utils/cart/formatAddCart";
+import { fetchAsyncOrg } from "redux/org/orgSlice";
+import { STATUS } from "redux/status";
+import apointmentApi from "api/apointmentApi";
+import { onSetStatusApp } from "redux/appointment/appSlice";
+import { onRefreshServicesNoBookCount } from "redux/order/orderSlice";
 import { Container } from "@mui/material";
-import { PopUpVoucherOrg } from "../../pages/Carts/components/CartGroupItem";
+import { PopUpVoucherOrg } from "pages/Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
 import { onClearApplyVoucher } from "redux/cartSlice";
 import { IDiscountPar } from "interface/discount";
@@ -186,6 +186,7 @@ function Booking() {
                     state: { state_payment, actionAfter, listPayment },
                 });
                 setOpenNoti({ ...initOpenNoti, load: false })
+                if (FLAT_FORM === 'MOMO') localStorage.setItem('APP_INFO', JSON.stringify(actionAfter))
             } else {
                 setOpenNoti({
                     open: true,

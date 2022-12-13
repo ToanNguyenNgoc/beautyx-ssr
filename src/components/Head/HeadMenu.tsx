@@ -19,14 +19,23 @@ function HeadMenu() {
         if (dis === "hide")
             return refMenu?.current?.classList.remove(style.head_menu_show);
     };
+    window.onclick = () => onToggleMenu('hide')
+    const onCloseTimeout = () => {
+        setTimeout(() => { onToggleMenu('hide') }, 100)
+    }
     return (
         <button
-            onFocus={() => onToggleMenu("show")}
-            onBlur={() => onToggleMenu("hide")}
+            // onFocus={() => onToggleMenu("show")}
+            // onBlur={() => onToggleMenu("hide")}
+            onClick={(e) => {
+                onToggleMenu('show')
+                e.preventDefault();
+                e.stopPropagation();
+            }}
             className={style.head_top_right_btn}
         >
             <img src={icon.Menu} alt="" />
-            <HeadMenuBox refMenu={refMenu} />
+            <HeadMenuBox refMenu={refMenu} onCloseTimeout={onCloseTimeout} />
         </button>
     );
 }
@@ -35,9 +44,11 @@ export default HeadMenu;
 
 interface HeadMenuProps {
     refMenu: any;
+    onCloseTimeout: () => void
 }
 
 const HeadMenuBox = (props: HeadMenuProps) => {
+    const { refMenu, onCloseTimeout } = props;
     const history = useHistory();
     const { t, language, setLanguage, setSign } = useContext(AppContext);
     const { USER } = useSelector((state: IStore) => state.USER);
@@ -52,7 +63,7 @@ const HeadMenuBox = (props: HeadMenuProps) => {
         {
             id: 2,
             icon: icon.Clock_purple,
-            text:t('Header.my_order'),
+            text: t('Header.my_order'),
             url: "/tai-khoan/lich-su-mua",
         },
         {
@@ -82,13 +93,22 @@ const HeadMenuBox = (props: HeadMenuProps) => {
     };
 
     return (
-        <div ref={props.refMenu} className={style.head_menu}>
+        <div
+            onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            }}
+            ref={refMenu} className={style.head_menu}
+        >
             <div className={style.head_menu_title}>Menu</div>
             <ul className={style.menu_list}>
                 {USER &&
                     listMenu.map((item) => (
                         <li
-                            onClick={() => history.push(item.url)}
+                            onClick={() => {
+                                history.push(item.url);
+                                onCloseTimeout()
+                            }}
                             key={item.id}
                             className={style.menu_list_item}
                         >

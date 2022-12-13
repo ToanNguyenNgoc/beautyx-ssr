@@ -16,7 +16,6 @@ import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
 import MerchantDetail from "pages/MerchantDetail";
-
 import { analytics, logEvent } from "../firebase";
 import {  LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
@@ -48,7 +47,7 @@ import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
 import { Bottom } from "components/Layout";
-import Head from "features/Head";
+import Head from "components/Head";
 //update import lazy
 // const Account = lazy(() => import('pages/Account'))
 // const SignPage = lazy(() => import('pages/SignPage'))

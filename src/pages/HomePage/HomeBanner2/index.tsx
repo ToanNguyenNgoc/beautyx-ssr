@@ -63,14 +63,14 @@ function HomeBanner2() {
     const settings = {
         dots: true,
         arrows: !IS_MB,
-        speed: 900,
+        speed: 1200,
         slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <NextButton />,
         prevArrow: <PrevButton />,
         swipe: true,
-        // autoplay: true,
-        autoplaySpeed: 2900,
+        autoplay: IS_MB,
+        autoplaySpeed: 3500,
         appendDots: (dots: any) => (
             <div className="banner-dot">
                 <ul>{dots}</ul>

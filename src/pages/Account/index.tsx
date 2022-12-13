@@ -30,6 +30,7 @@ import { getTotal } from "redux/cartSlice";
 import languages from "data/languages";
 import { AppContext } from "context/AppProvider";
 import i18next from "i18next";
+import { PopupMessage } from "components/Notification";
 
 const routes = [
     {
@@ -107,6 +108,7 @@ function Account() {
     const PLATFORM = EXTRA_FLAT_FORM()
     const [guide, setGuide] = useState(false)
     const [openImg, setOpenImg] = useState(false)
+    const [openP, setOpenP] = useState(false)
     const onOpenAvatar = () => IS_MB && setOpenImg(true)
 
     return (
@@ -192,12 +194,22 @@ function Account() {
                                 </li>
                             </ul>
                             <div className={style.left_bot}>
-                                <XButton
-                                    iconSize={14}
-                                    icon={icon.book}
-                                    title={t('se.guide')}
-                                    onClick={() => setGuide(true)}
-                                />
+                                <div className={style.left_bot_head}>
+                                    <XButton
+                                        iconSize={14}
+                                        icon={icon.book}
+                                        title={t('se.guide')}
+                                        onClick={() => setGuide(true)}
+                                    />
+                                    <XButton
+                                        onClick={()=>setOpenP(true)}
+                                        className={style.left_bot_head_btn}
+                                    />
+                                    <PopupMessage
+                                        open={openP} onClose={()=>setOpenP(false)}
+                                        content={EXTRA_FLAT_FORM()}
+                                    />
+                                </div>
                                 <XButton
                                     iconSize={14}
                                     icon={icon.phonePurple}

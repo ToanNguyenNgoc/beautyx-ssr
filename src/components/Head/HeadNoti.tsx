@@ -27,9 +27,7 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
                 return refNoti?.current?.classList.remove(style.head_menu_show);
         }
     };
-    window.onclick = () => {
-        return refNoti?.current?.classList.remove(style.head_menu_show);
-    }
+    // window.onclick = () => onToggleNoti('hide')
     //
     const appointment_today = appointment?.filter(
         (a: AppointmentNoti) =>
@@ -42,11 +40,8 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     const notiCount = appointment_today.concat(order_app).length;
     return (
         <button
-            onClick={(e) => {
-                onToggleNoti("show");
-                e.preventDefault();
-                e.stopPropagation();
-            }}
+            onFocus={()=>onToggleNoti('show')}
+            onBlur={()=>onToggleNoti('hide')}
             className={
                 changeStyle
                     ? clst([
@@ -138,7 +133,9 @@ const HeadNotification = (props: HeadNotificationProps) => {
                         .filter((i) => i.count > 0)
                         .map((item) => (
                             <li
-                                onClick={() => onViewedNoti(item.type)}
+                                onClick={() => {
+                                    onViewedNoti(item.type);
+                                }}
                                 key={item.id}
                             >
                                 <div

@@ -87,7 +87,7 @@ export const paramOrder: ParamOrder = {
     "filter[productable]": true,
     "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
     "sort": "-created_at",
-    "append": ""
+    "append": "qr_link"
 }
 export const paramDiscounts = {
     "filter[platform]": "MOMO",

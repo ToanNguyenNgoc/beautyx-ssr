@@ -16,8 +16,10 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { IOrganization } from 'interface';
 import { LoadGrid } from 'components/LoadingSketion';
 import style from './search-result.module.css'
+import { useHistory } from 'react-router-dom';
 
 function TabOrg({ keyword }: { keyword: string }) {
+    const history = useHistory()
     const params: any = extraParamsUrl()
     const [openFilter, setOpenFilter] = useState(false)
     const { tags } = useSelector((state: any) => state.HOME)
@@ -159,6 +161,16 @@ function TabOrg({ keyword }: { keyword: string }) {
                         </div>
                     </>}
                 </InfiniteScroll>
+            </div>
+            <div className={style.bottom}>
+                <XButton
+                    icon={icon.pinMapGreen}
+                    title='Bản đồ'
+                    className={style.bottom_btn}
+                    onClick={() => history.push({
+                        pathname:'/ban-do'
+                    })}
+                />
             </div>
         </>
     );

@@ -1,25 +1,34 @@
 import React, { useState } from "react";
 import { Alert, Dialog, Snackbar } from "@mui/material";
 import "./style.css";
-import { useDispatch, useSelector } from "react-redux";
-import { identity, pickBy } from "lodash";
+import { useSelector } from "react-redux";
+import { pick } from "lodash";
 import { onErrorImg } from "utils";
-import { useHistory } from "react-router-dom";
 import icon from "constants/icon";
-import { postAsyncComment } from "redux/org_services/serviceSlice";
-import { STATUS } from "redux/status";
 import HeadMobile from "features/HeadMobile";
 import { XButton } from "components/Layout";
-import { useDeviceMobile } from "hooks";
+import { postMedia, useDeviceMobile } from "hooks";
+import commentsApi from "api/commentsApi";
+import { useNoti } from "interface/useNoti";
+
+interface InitComment {
+    body: string,
+    image_url: any,
+    media_ids: number[],
+    rate: number,
+}
+
+const initComment: InitComment = {
+    body: "",
+    image_url: null,
+    media_ids: [],
+    rate: 0,
+}
 
 function ServiceReview(props: any) {
     const { open, setOpen, service, org } = props;
     const IS_MB = useDeviceMobile();
-    const dispatch = useDispatch();
-    const history = useHistory();
     const { USER } = useSelector((state: any) => state.USER);
-    const { status_cmt } = useSelector((state: any) => state.SERVICE.COMMENTS);
-    const COMMENTS = useSelector((state: any) => state.COMMENT);
     const rateStars = [
         { id: 1, icon: icon.star, iconActive: icon.starLine, title: "Rất tệ" },
         { id: 2, icon: icon.star, iconActive: icon.starLine, title: "Tệ" },
@@ -32,17 +41,12 @@ function ServiceReview(props: any) {
         { id: 4, icon: icon.star, iconActive: icon.starLine, title: "Tốt" },
         { id: 5, icon: icon.star, iconActive: icon.starLine, title: "Rất tốt" },
     ];
-    const [comment, setComment] = useState({
-        text: "",
-        image_url: null,
-        star: 0,
-        used: true
-    })
-    const [alert, setAlert] = useState(false)
+    const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
+    const [comment, setComment] = useState(initComment)
     const onRateStar = (id: number) => {
         setComment({
             ...comment,
-            star: id,
+            rate: id,
         });
     };
 
@@ -50,87 +54,40 @@ function ServiceReview(props: any) {
     const handleOnchangeText = (e: any) => {
         setComment({
             ...comment,
-            text: e.target.value,
+            body: e.target.value,
         });
     };
 
     // handle onchange post media
-    const handleOnchangeMedia = (e: any) => {
-        const media = e.target.files[0];
-        if (comment.used === true && media) {
-            handlePostMedia(media);
-        } else {
-            history.push("/sign-in?1");
-        }
+    const handleOnchangeMedia = async (e: any) => {
+        const { original_url, model_id } = await postMedia(e)
+        setComment({ ...comment, image_url: original_url, media_ids: [model_id].filter(Boolean) })
     };
-
-    // handle post media
-    const handlePostMedia = async (media: any) => {
-        let formData = new FormData();
-        formData.append("file", media);
-        try {
-            setComment({
-                ...comment,
-                image_url: COMMENTS.image_url,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
     // handle remove media
     const onRemoveImgTemp = () => {
-        setComment({ ...comment, image_url: null });
+        setComment({ ...comment, image_url: null, media_ids: [] });
     };
 
     // handle post comment
     const onSubmitComment = async () => {
-        const valuesStr = {
-            type: "SERVICE",
-            id: service?.id,
-            org_id: org?.id,
-            body: JSON.stringify({
-                ...comment,
-                image_url: COMMENTS.image_url,
-            }),
-        };
-        const values = pickBy(valuesStr, identity);
-        if (USER && comment.text.length > 0) {
-            const res = await dispatch(
-                postAsyncComment({ values, user: USER.USER })
-            );
-            if (res?.meta?.requestStatus === "fulfilled") {
-                setOpen(false);
-                setComment({
-                    ...comment,
-                    text: "",
-                    image_url: null,
-                    star: 0,
-                    used: true,
-                });
-            }
+        firstLoad()
+        try {
+            await commentsApi.postComment2({
+                ...pick(comment, 'media_ids', 'rate'),
+                "body": `${comment.body} USED`,
+                "commentable_id": service.id,
+                "commentable_type": 'SERVICE',
+                "organization_id": org.id,
+            })
+            resultLoad(`Cảm ơn ${USER?.fullname} đã đánh giá dịch vụ`)
+            setComment(initComment)
+        } catch (error) {
+            console.log(error)
+            resultLoad('Có lỗi xảy ra. Vui lòng thử lại')
         }
     };
-
-    let loading = false;
-    if (status_cmt === STATUS.LOADING) {
-        loading = true;
-    }
     return (
         <>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center'
-                }}
-                open={alert}
-                autoHideDuration={4000}
-                onClose={() => setAlert(false)}
-            >
-                <Alert onClose={() => setAlert(false)} severity="success" sx={{ width: '100%' }}>
-                    Cảm ơn {USER?.fullname} đã đánh giá dịch vụ
-                </Alert>
-            </Snackbar>
             <Dialog
                 fullScreen={IS_MB}
                 open={open}
@@ -195,7 +152,7 @@ function ServiceReview(props: any) {
                                     >
                                         <img
                                             src={
-                                                item.id <= comment.star
+                                                item.id <= comment.rate
                                                     ? item.icon
                                                     : item.iconActive
                                             }
@@ -212,7 +169,7 @@ function ServiceReview(props: any) {
                         <div className="review-service__text">
                             <textarea
                                 placeholder="Vui lòng để lại đánh giá của bạn ..."
-                                value={comment.text}
+                                value={comment.body}
                                 onChange={(e) => handleOnchangeText(e)}
                                 rows={4}
                                 className="review-service__ip"
@@ -236,13 +193,13 @@ function ServiceReview(props: any) {
                                 </div>
                             </div>
                         </div>
-                        {COMMENTS && COMMENTS.image_url && (
+                        {comment.image_url && (
                             <div
                                 style={{ marginTop: "24px" }}
                                 className="evaluate-input__upload"
                             >
                                 <img
-                                    src={COMMENTS.image_url}
+                                    src={comment.image_url}
                                     className="evaluate-upload__img"
                                     alt=""
                                 />
@@ -258,11 +215,24 @@ function ServiceReview(props: any) {
                     <div className="review-service__btn">
                         <XButton
                             title="Gửi đánh giá"
-                            loading={loading}
+                            loading={noti.load}
                             onClick={onSubmitComment}
                         />
                     </div>
                 </div>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'center'
+                    }}
+                    open={noti.openAlert}
+                    autoHideDuration={4000}
+                    onClose={onCloseNoti}
+                >
+                    <Alert onClose={onCloseNoti} severity="success" sx={{ width: '100%' }}>
+                        Cảm ơn {USER?.fullname} đã đánh giá dịch vụ
+                    </Alert>
+                </Snackbar>
             </Dialog>
         </>
     );

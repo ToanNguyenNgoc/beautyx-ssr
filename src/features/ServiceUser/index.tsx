@@ -24,10 +24,10 @@ function ServicesUser() {
     const params: ParamOrder = {
         ...paramOrder,
         "filter[status]": 'PAID',
-        'include': 'items|appointments|organization',
+        'include': 'items|organization|appointments',
         "filter[withServicesSold]": true,
         "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM,
-        "limit": 6
+        "limit": 8
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
         USER,

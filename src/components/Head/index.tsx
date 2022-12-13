@@ -63,7 +63,8 @@ const pathHeader = [
 const notPathHeader = [
     '/sign-in',
     '/doi-mat-khau',
-    '/trang-thai-don-hang/'
+    '/trang-thai-don-hang/',
+    '/ban-do'
 ]
 
 
