@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { fetProductsByCateChild } from '../../../redux/CateTree/cateTreeSlice';
+import { fetProductsByCateChild } from '../../../redux/cate-tree/cateTreeSlice';
 import onErrorImg from '../../../utils/errorImg';
 import formatNumber from '../../../utils/formatPrice';
 

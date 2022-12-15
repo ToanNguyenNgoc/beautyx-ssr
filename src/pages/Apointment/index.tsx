@@ -4,10 +4,8 @@ import dayjs from 'dayjs';
 import { paramAppointment } from "params-query"
 import icon from 'constants/icon';
 import { Appointment, AppointmentTime, NewAppointments } from 'interface/appointment';
-import { useDeviceMobile, useSwrInfinite } from 'hooks';
+import { useAppointment, useDeviceMobile } from 'hooks';
 import { onErrorImg, unique } from 'utils'
-import { useSelector } from 'react-redux';
-import IStore from 'interface/IStore';
 import { formatTime } from 'utils/format';
 import { DatePicker, XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
@@ -25,7 +23,6 @@ const getDaysInWeek = (dayObj: any) => {
 };
 
 export function ApointmentTab() {
-  const { USER } = useSelector((state: IStore) => state.USER)
   const [params, setParams] = useState(paramAppointment)
   const [datePick, setDatePick] = useState(dayjs().format("YYYY-MM-DD"))
   const [daysWeek, setDayWeeks] = useState(getDaysInWeek(dayjs()))
@@ -41,7 +38,7 @@ export function ApointmentTab() {
       "filter[time_start]": month
     })
   }
-  const data: Appointment[] = useSwrInfinite(USER, "/appointments", params).resData
+  const data: Appointment[] = useAppointment(params['filter[time_start]'])?.appointment
   const dataTime: AppointmentTime[] = data.map(i => {
     return {
       ...i,

@@ -1,6 +1,6 @@
 import axiosClient from "./axios";
-import { AUTH_HEADER, AUTH_HEADER_2 } from "../utils/authHeader";
 import { identity, pickBy } from "lodash";
+import { AUTH_HEADER } from "./authHeader";
 
 class Auth {
   login = (values: any) => {
@@ -15,10 +15,11 @@ class Auth {
     const url = `/auth/register`;
     return axiosClient.post(url, params);
   };
-  getUserProfile = async () => {
+  getUserProfile = () => {
     const url = `/users/profile`;
     if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-      return axiosClient.get(url, await AUTH_HEADER());
+      return axiosClient.get(url, AUTH_HEADER());
+      // return axiosClient.get(url);
     }
   };
   forgotPassword = (values: any) => {
@@ -35,7 +36,7 @@ class Auth {
     return axiosClient.post(url, {
       'refresh_token': token,
       'platform': 'BEAUTYX'
-    })
+    },AUTH_HEADER())
   }
 
 }

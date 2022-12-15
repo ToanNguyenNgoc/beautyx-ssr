@@ -19,6 +19,8 @@
 
 /* load skelton */
 .order-load__cnt {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
 
@@ -147,5 +149,6 @@
   .order_load_cnt {
     width: 100% !important;
   }
+  
 
 }

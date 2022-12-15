@@ -4,21 +4,19 @@ import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useContext, useEffect, useState } from "react";
-import { fetchAsyncDiscountsUser, logoutUser } from "redux/USER/userSlice";
+import {  logoutUser } from "redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { STATUS } from "redux/status";
 import style from './account.module.css'
 import { Container } from "@mui/system";
 import IStore from "interface/IStore";
 import { clst, onErrorImg } from 'utils'
 import icon from "constants/icon";
 import { postMedia, useDeviceMobile } from "hooks";
-import { updateAsyncUser } from 'redux/USER/userSlice'
+import { updateAsyncUser } from 'redux/user/userSlice'
 import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
 import Favorites from "./components/Favorites";
 import Address from "./components/UserAddress";
-import { onClearApps } from "redux/appointment/appSlice";
 import { onSetStatusServicesUser } from "redux/order/orderSlice";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
@@ -64,16 +62,6 @@ function Account() {
         props: { pageComponent: JSX.Element } & RouteComponentProps
     ) => props.pageComponent;
     const dispatch = useDispatch();
-    const { DISCOUNTS_USER } = useSelector((state: any) => state.USER);
-    const { status_discount } = DISCOUNTS_USER;
-    const callDiscountsUser = () => {
-        if (status_discount !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncDiscountsUser({ page: 1 }));
-        }
-    };
-    useEffect(() => {
-        callDiscountsUser();
-    }, []);
     const history = useHistory()
     const location = useLocation()
     const IS_MB = useDeviceMobile();
@@ -99,7 +87,6 @@ function Account() {
     if (location.pathname !== "/tai-khoan") ACC_SHOW = "right"
     const handleSignOut = () => {
         dispatch(logoutUser());
-        dispatch(onClearApps());
         dispatch(onSetStatusServicesUser())
         history.push("/homepage")
         localStorage.removeItem('_WEB_TK')

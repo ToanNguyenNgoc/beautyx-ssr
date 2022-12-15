@@ -1,6 +1,6 @@
 import axiosClient from "./axios";
-import { AUTH_HEADER, AUTH_HEADER_PARAM_DELE } from "../utils/authHeader";
 import { pickBy, identity } from 'lodash';
+import { AUTH_HEADER, AUTH_HEADER_PARAM_DELE } from "./authHeader";
 
 interface IPostFavoriteItem {
     org_id: number,

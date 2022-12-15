@@ -1,7 +1,7 @@
 import axiosClient from './axios';
-import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from '../utils/authHeader';
 import { EXTRA_FLAT_FORM } from './extraFlatForm';
 import { pickBy, identity } from 'lodash'
+import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from './authHeader';
 
 class Order {
       getOrder = (page: number) => {

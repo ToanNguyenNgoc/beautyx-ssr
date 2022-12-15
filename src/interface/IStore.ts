@@ -1,9 +1,8 @@
 import { IOrgSlice } from '../redux/org/orgSlice';
-import { IORG_COMMENTS } from '../redux/org/orgCommentsSlice';
 import { IORGS_MAP } from '../redux/org/orgMapSlice';
 import { IORG_DISCOUNTS } from '../redux/org_discounts/orgDiscountsSlice';
 import { IORDER } from "../redux/order/orderSlice"
-import { IUSER } from "redux/USER/userSlice"
+import { IUSER } from "redux/user/userSlice"
 import { INotification } from 'redux/notifications'
 import { IFilterResult } from 'redux/filter-result'
 import { ISearch } from 'redux/search_history';
@@ -12,7 +11,6 @@ import { ISearch } from 'redux/search_history';
 
 export default interface IStore {
     ORG: IOrgSlice,
-    ORG_COMMENTS: IORG_COMMENTS,
     ORGS_MAP: IORGS_MAP,
     ORG_DISCOUNTS: IORG_DISCOUNTS,
     ORDER: IORDER,

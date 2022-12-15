@@ -1,34 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { XButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
-import IStore from "interface/IStore";
 import { IOrderV2 } from "interface/orderv2";
 import React, { useContext } from "react";
-import { useSelector } from "react-redux";
 import OrderItem from "./OrderItem";
-import { paramOrder } from 'params-query'
-import { ParamOrder } from "params-query/param.interface";
-import { useSwrInfinite } from 'utils'
-import API_ROUTE from "api/_api";
 import { EmptyRes } from "components/Layout";
 import Skeleton from "react-loading-skeleton";
 import { Masonry } from "@mui/lab";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useOrderService } from "hooks";
 import style from '../order.module.css'
-import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 function TabOrderPaid() {
     const { t } = useContext(AppContext)
-    const PLAT_FORM = EXTRA_FLAT_FORM()
     const IS_MB = useDeviceMobile()
-    const { USER } = useSelector((state: IStore) => state.USER)
-    const param: ParamOrder = {
-        ...paramOrder,
-        "filter[status]": 'PAID',
-        "include": "items|organization|branch|user|paymentMethod|deliveryAddress",
-        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM,
-    }
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, param)
+    const { resData, totalItem, onLoadMore, isValidating } = useOrderService()
     const orders: IOrderV2[] = resData ?? []
 
     return (

@@ -4,7 +4,7 @@ import { useDeviceMobile } from 'hooks';
 import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchOrgsByTag, onChooseCate, onChooseTab, onSetFirstCateProducts } from 'redux/CateTree/cateTreeSlice';
+import { fetchOrgsByTag, onChooseCate, onChooseTab, onSetFirstCateProducts } from 'redux/cate-tree/cateTreeSlice';
 import {  scrollTop } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import { productsSection, IProductsSection } from '../data'

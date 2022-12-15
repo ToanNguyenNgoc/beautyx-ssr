@@ -1,7 +1,7 @@
 import axiosClient from "./axios";
 import { pickBy, identity } from "lodash";
-import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 import { AUTH_LOCATION } from './authLocation';
+import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class ProductApi {
     getByOrgId = (values: any) => {

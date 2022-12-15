@@ -152,6 +152,7 @@ function HomeBanner2() {
                                 className={style.banner_img}
                                 src={item.imageURL}
                                 // src={bannerInit}
+                                // src="https://res.cloudinary.com/dhrgif3tc/image/upload/v1671013455/1_6_vmgnvu.jpg"
                                 alt=""
                             />
                         </div>

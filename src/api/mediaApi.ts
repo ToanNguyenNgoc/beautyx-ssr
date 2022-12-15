@@ -1,5 +1,5 @@
+import { AUTH_HEADER } from "./authHeader";
 import axiosClient from "./axios";
-import { AUTH_HEADER } from "../utils/authHeader";
 
 class Media {
     postMedia = (formData: any) => {

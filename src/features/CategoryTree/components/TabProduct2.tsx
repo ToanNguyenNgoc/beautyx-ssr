@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { onSetFirstCateProducts } from "../../../redux/CateTree/cateTreeSlice";
+import { onSetFirstCateProducts } from "../../../redux/cate-tree/cateTreeSlice";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import axiosClient from "./axios";
-import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from "../utils/authHeader";
 import { identity, pickBy } from 'lodash'
+import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class ApointmentApi {
   sendApointment = (props: any) => {

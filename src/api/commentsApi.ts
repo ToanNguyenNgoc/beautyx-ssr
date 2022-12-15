@@ -1,6 +1,6 @@
 import axiosClient from "./axios";
-import { AUTH_HEADER } from "../utils/authHeader";
 import { identity, pickBy } from "lodash";
+import { AUTH_HEADER } from "./authHeader";
 
 class Comments {
     //get comments org

@@ -41,6 +41,7 @@ const homePath = [
     "/",
     "/homepage/",
     "/homepage",
+    "/home"
 ];
 
 const pathHeader = [

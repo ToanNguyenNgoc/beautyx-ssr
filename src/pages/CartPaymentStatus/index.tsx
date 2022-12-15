@@ -14,7 +14,6 @@ import HeadMobile from "features/HeadMobile";
 import { PopupNotification } from "components/Notification";
 import { useHistory } from "react-router-dom";
 import { clearByCheck } from "redux/cartSlice";
-import { onClearOrder } from "redux/order/orderSlice";
 import { ICart } from "interface/cart";
 // ==== api tracking ====
 import tracking from "api/trackApi";
@@ -102,7 +101,6 @@ function CartPaymentStatus() {
                         handlePostApp()
                     }
                     dispatch(clearByCheck());
-                    dispatch(onClearOrder());
                     setOrderStatus(status);
                     timerRender[0] = -1;
                     break;
@@ -113,13 +111,11 @@ function CartPaymentStatus() {
                 case "CANCELED_BY_USER":
                     setOrderStatus(status);
                     timerRender[0] = -1;
-                    dispatch(onClearOrder());
                     setLoading(false)
                     break;
                 case "CANCELED":
                     setOrderStatus(status);
                     timerRender[0] = -1;
-                    dispatch(onClearOrder());
                     setLoading(false)
                     break;
                 default:

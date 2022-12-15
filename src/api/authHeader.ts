@@ -1,3 +1,19 @@
+import dayjs from "dayjs"
+
+export const handleValidToken = () => {
+    let refresh = false
+    const token_ex_at = sessionStorage.getItem('_WEB_TK_EX') ?? localStorage.getItem('_WEB_TK_EX')
+    // const token_ex_at = '2022-12-10 20:42:23'
+    const token_refresh = sessionStorage.getItem('_WEB_TK_RE') ?? localStorage.getItem('_WEB_TK_RE')
+    const expDate = dayjs(token_ex_at).format('YYYYMMDD')
+    const expTime = dayjs(token_ex_at).format('HHmmss')
+    const expNum = parseInt(`${expDate}${expTime}`)
+    const nowNum = parseInt(`${dayjs().format('YYYYMMDDHHmmss')}`)
+    if (nowNum >= expNum && token_ex_at && token_refresh) {
+        refresh = true
+    }
+    return refresh
+}
 
 export const AUTH_HEADER = () => {
     const session = window.sessionStorage.getItem("_WEB_TK");

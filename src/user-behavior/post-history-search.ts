@@ -1,7 +1,7 @@
 import API_3RD from "api/3rd-api"
+import { AUTH_HEADER } from "api/authHeader"
 import axios from "axios"
 import { identity, pickBy } from "lodash"
-import { AUTH_HEADER } from "utils/authHeader"
 
 export async function postHistorySearch(
     text: string,

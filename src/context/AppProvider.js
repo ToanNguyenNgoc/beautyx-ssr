@@ -2,26 +2,19 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dateNow from "../utils/dateExp";
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAsyncUser } from '../redux/USER/userSlice';
-import { fetchAsyncHome } from '../redux/home/homeSlice';
-import { getPosition } from "../api/authLocation";
-// import { fetchOrgsMapFilter } from "../redux/org/orgMapSlice";
-import { paramsProductsCate } from "../params-query";
+import { useDispatch } from 'react-redux';
+import { fetchAsyncUser } from 'redux/user/userSlice';
+import { fetchAsyncHome } from 'redux/home/homeSlice';
+import { getPosition } from "api/authLocation";
+import { paramsProductsCate } from "params-query";
 import axios from "axios";
 import API_3RD from "api/3rd-api";
-import {
-    paramAppointment,
-    paramOrderService
-} from "../params-query";
-import { useSwr, useFetch } from "hooks"
-import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import { useSwr, useFetch, useAppointment, useOrderService } from "hooks"
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
     const [geo, setGeo] = useState();
-    const { USER } = useSelector(state => state.USER)
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const [language, setLanguage] = useState(
@@ -93,15 +86,8 @@ export default function AppProvider({ children }) {
 
     const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
     //get services, appointment user
-    const PLAT_FORM = EXTRA_FLAT_FORM()
-    const appointment = useSwr("/appointments", USER, {
-        ...paramAppointment
-    }).responseArray
-    const orderService = useSwr("/orders", USER, {
-        ...paramOrderService,
-        "limit":8,
-        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM
-    }).responseArray
+    const { appointment } = useAppointment()
+    const { orderService } = useOrderService()
 
     const value = {
         t,
@@ -113,8 +99,6 @@ export default function AppProvider({ children }) {
         serviceCate,
         appointment,
         orderService,
-
-        // currentPay, setCurrentPay
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }

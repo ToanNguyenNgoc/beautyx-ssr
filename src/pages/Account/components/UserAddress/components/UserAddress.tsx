@@ -4,7 +4,7 @@ import '../user_address.css';
 import UserAddressForm from './UserAddressForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUS } from '../../../../../redux/status'
-import { fetchAsyncUserAddress } from '../../../../../redux/USER/userAddressSlice';
+import { fetchAsyncUserAddress } from '../../../../../redux/user/userAddressSlice';
 
 
 function UserAddress(props: any) {

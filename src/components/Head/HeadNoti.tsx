@@ -40,6 +40,7 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     const notiCount = appointment_today.concat(order_app).length;
     return (
         <button
+            onClick={()=>onToggleNoti('show')}
             onFocus={()=>onToggleNoti('show')}
             onBlur={()=>onToggleNoti('hide')}
             className={

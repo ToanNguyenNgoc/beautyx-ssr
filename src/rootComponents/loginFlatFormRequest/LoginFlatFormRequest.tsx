@@ -2,7 +2,6 @@
 import React, { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
 import "./style.css";
 import icon from "../../constants/icon";
 import {XButton} from 'components/Layout'
@@ -10,8 +9,7 @@ import { FLAT_FORM_TYPE } from "../flatForm";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 // SLICE
 
-import { fetchAsyncUser } from "../../redux/USER/userSlice";
-import { fetchAsyncApps } from "../../redux/appointment/appSlice";
+import { fetchAsyncUser } from "../../redux/user/userSlice";
 import { EXTRA_REDUCER_STATUS } from "../../redux/status";
 
 // ==== END
@@ -110,10 +108,7 @@ function LoginFlatFormRequest(props: any) {
     };
     // ==== utils custom
     async function fetchAsyncUserAndinitApp() {
-        const res_user = await dispatch(fetchAsyncUser());
-        if (res_user.payload) {
-            dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")));
-        }
+        await dispatch(fetchAsyncUser());
         if (setClose) return setClose(false);
         if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
             history.push("/home");

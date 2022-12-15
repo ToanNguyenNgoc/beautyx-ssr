@@ -8,7 +8,7 @@ import {
     fetchServiceByCateChild,
     onChooseTab,
     onSetFirstCateProducts,
-} from "../../../redux/CateTree/cateTreeSlice";
+} from "../../../redux/cate-tree/cateTreeSlice";
 import TabService from "./TabService";
 //import TabProduct from './TabProduct';
 import TabProduct2 from "./TabProduct2";

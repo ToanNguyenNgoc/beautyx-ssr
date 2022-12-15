@@ -5,14 +5,11 @@ import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
 import { BackButton, Input, XButton } from 'components/Layout'
 import style from '../sign-page.module.css'
 import { AppContext } from "context/AppProvider";
 import authentication from "api/authApi";
-import { fetchAsyncUser } from "redux/USER/userSlice";
-import { fetchAsyncApps } from "redux/appointment/appSlice";
-import { fetchAsyncOrderServices } from "redux/order/orderSlice";
+import { fetchAsyncUser } from "redux/user/userSlice";
 import { PopupNotification } from 'components/Notification';
 import { useNoti } from 'hooks'
 import icon from "constants/icon";
@@ -41,10 +38,9 @@ function SignIn(props: any) {
             }
             const res = await dispatch(fetchAsyncUser());
             if (res?.payload) {
-                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
-                dispatch(fetchAsyncOrderServices({ page: 1 }))
+                // dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+                history.goBack()
             }
-            history.goBack()
         } catch (error) {
             const err = error as AxiosError;
             switch (err.response?.status) {

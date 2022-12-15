@@ -12,7 +12,7 @@ import { useNoti } from 'hooks'
 import { PopupNotification } from 'components/Notification'
 import authentication from 'api/authApi';
 import { AxiosError } from 'axios';
-import { putUser, updateAsyncUser } from 'redux/USER/userSlice'
+import { putUser, updateAsyncUser } from 'redux/user/userSlice'
 import { postMedia } from 'hooks'
 import validateForm from 'utils/validateForm'
 import icon from 'constants/icon';

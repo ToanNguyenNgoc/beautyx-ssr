@@ -4,12 +4,12 @@ import { category } from "../../../data/category";
 import {
     onChooseCate,
     fetchOrgsByTag,
-} from "../../../redux/CateTree/cateTreeSlice";
+} from "../../../redux/cate-tree/cateTreeSlice";
 import { cateChild1 } from "../../../data/category";
 import {
     fetchServiceByCateChild,
     onSetFirstCateProducts,
-} from "../../../redux/CateTree/cateTreeSlice";
+} from "../../../redux/cate-tree/cateTreeSlice";
 
 // ==== api tracking ====
  import tracking from "../../../api/trackApi";

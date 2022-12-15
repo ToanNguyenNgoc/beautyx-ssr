@@ -4,7 +4,7 @@ import HeadMobile from "../../HeadMobile";
 import {
     fetProductsByCateChild,
     onClearProducts,
-} from "../../../redux/CateTree/cateTreeSlice";
+} from "../../../redux/cate-tree/cateTreeSlice";
 import { STATUS } from "../../../redux/status";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";

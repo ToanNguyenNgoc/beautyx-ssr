@@ -56,7 +56,7 @@ function PaymentInfo(props: any) {
         history.push('/lich-hen?tab=2')
     }
     const goBackHome = () => {
-        history.push('/home')
+        history.push('/homepage')
     }
     // const response =FLAT_FORM_TYPE.MB?useGetMessage():{'flatForm': FLAT_FORM};
 

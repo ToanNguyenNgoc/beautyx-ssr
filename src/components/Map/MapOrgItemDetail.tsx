@@ -1,25 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useContext, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import icon from "../../constants/icon";
-import { ICON } from "../../constants/icon2";
-import { AppContext } from "../../context/AppProvider";
+import icon from "constants/icon";
+import { AppContext } from "context/AppProvider";
 import { extraOrgTimeWork } from "../../pages/MerchantDetail/Functions/extraOrg";
-import {
-    fetchOrgGalleries,
-    onDeleteFavoriteOrg,
-    onFavoriteOrg,
-} from "../../redux/org/orgSlice";
-import onErrorImg from "../../utils/errorImg";
-import MapGalleries from "./MapGalleries";
-import MapSpecial from "./MapSpecial";
-import {paramsGalleries} from 'params-query'
-import {useSwrInfinite} from 'utils'
+import { paramsGalleries } from 'params-query'
+import { useSwrInfinite } from 'utils'
 import API_ROUTE from "api/_api";
-import {IOrgMobaGalleries} from 'interface'
+import { IOrganization, IOrgMobaGalleries, Product, Service } from 'interface'
+import { useDeviceMobile, useFavorite, useSwr } from "hooks";
+import { AUTH_LOCATION } from "api/authLocation";
+import img from "constants/img";
+import { FullImage, SerProItem, XButton } from "components/Layout";
+import { useProductsSpecial, useServicesSpecial } from "pages/MerchantDetail/Functions";
+import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
+import style from './map.module.css'
 
 interface IProps {
-    org: any;
+    org: IOrganization;
     openDetail: any;
     setOpenDetail: any;
     handleDirection?: () => void;
@@ -27,306 +24,226 @@ interface IProps {
 
 export default function MapOrgItemDetail(props: IProps) {
     const { org, setOpenDetail, openDetail } = props;
-    const { t } = useContext(AppContext);
+    const IS_MB = useDeviceMobile()
     const history = useHistory();
-    const { USER } = useSelector((state: any) => state.USER);
-    const dispatch = useDispatch();
-    const refDetail: any = useRef();
-    const refHead: any = useRef();
-    const refListTimeWorks = useRef<any>();
-    const [open, setOpen] = useState(false);
-    // galleries
-    const { resData, totalItem } = useSwrInfinite(
-        (open && org?.id),
+    const { t } = useContext(AppContext);
+    const refDetail = useRef<HTMLDivElement>(null)
+    const refListTime = useRef<HTMLDivElement>(null)
+    const refIconTime = useRef<HTMLImageElement>(null)
+    const onToggleTime = () => {
+        refListTime.current?.classList.toggle(style.org_time_word_body_act)
+        refIconTime.current?.classList.toggle(style.time_icon_ch)
+    }
+
+    const LOCATION = AUTH_LOCATION()
+    const orgResponse: IOrganization = useSwr(
+        `${API_ROUTE.ORG(org?.id)}`,
+        (org),
+        { 'filter[location]': LOCATION }
+    ).response
+    const galleries: IOrgMobaGalleries[] = useSwrInfinite(
+        (org?.id),
         API_ROUTE.GALLERIES_ORG_ID(org?.id),
-        paramsGalleries)
-    const galleries:IOrgMobaGalleries [] = resData
-    // close galleries
-    // time open ORG
-    const now = new Date();
-    const today = now.getDay() + 1;
-    const orgTimes = org && extraOrgTimeWork(org?.opening_time);
-    const time_works_today = orgTimes?.find(
-        (item: any, index: number) => index + 2 === today
-    );
-    // close time open ORG
+        paramsGalleries).resData ?? []
 
-    const handleOpenSelector = () => {
-        refListTimeWorks.current.classList.toggle("org-time-work__list-active");
-    };
+    const images_url = galleries.map((img: IOrgMobaGalleries) => {
+        const imgChild = img?.images?.map((child: any) => child.image_url)
+        return [img.image_url].concat(imgChild)
+    }).flat().filter(Boolean)
 
-    const handleGotoOrg = () => {
-        history.push({
-            pathname: `/cua-hang/${org.subdomain}`,
-            state: org,
-        });
-    };
-
-    const handleFolower = async () => {
-        if (USER) {
-            if (org.is_favorite === false) {
-                await dispatch(onFavoriteOrg(org));
-            } else {
-                await dispatch(onDeleteFavoriteOrg(org));
-            }
+    const { favoriteSt, onToggleFavorite } = useFavorite({
+        org_id: org.id,
+        type: 'ORG',
+        count: orgResponse?.favorites_count,
+        favorite: orgResponse?.is_favorite
+    })
+    const orgTimes = extraOrgTimeWork(org.opening_time)
+    const onClose = () => {
+        if (!IS_MB) return setOpenDetail({ ...openDetail, open: false })
+        setOpenDetail(false)
+    }
+    const onOrgDetail = () => {
+        if (IS_MB) {
+            history.push(formatRouterLinkOrg(org.subdomain))
         } else {
-            history.push("/sign-in");
+            window.open(formatRouterLinkOrg(org.subdomain), '_blank', 'noopener,noreferrer');
         }
-    };
-
-    const handleScrollActive = () => {
-        if (refDetail && refDetail?.current) {
-            refDetail?.current.addEventListener(
-                "scroll",
-                function () {
-                    const scrolled = refDetail?.current.scrollTop;
-                    if (refHead?.current) {
-                        refHead?.current.classList.toggle(
-                            "head-active",
-                            scrolled > 80
-                        );
-                    }
-                },
-                false
-            );
-        }
-    };
-
-    useEffect(() => {
-        handleScrollActive();
-        org?.subdomain && dispatch(fetchOrgGalleries(org?.subdomain));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [org?.subdomain]);
+    }
 
     return (
         <>
-            <div ref={refDetail} className="dialog-map__detail">
-                {/* header */}
-                <div ref={refHead} className="content-head">
-                    <span className="content-head__name">{org?.name}</span>
-                    <img
-                        className="cursor-pointer"
-                        onClick={() => {
-                            openDetail.open ?
-                                setOpenDetail({
-                                    ...openDetail,
-                                    open: false,
-                                    check: false,
-                                })
-                                :
-                                setOpenDetail(false)
-                        }
-                        }
-                        src={icon.x}
-                        alt=""
+            <div className={style.org_detail_cnt}>
+                <div className={style.org_detail_head}>
+                    <XButton
+                        onClick={onClose}
+                        className={style.org_detail_head_btn}
+                        icon={icon.closeBlack}
+                        iconSize={20}
                     />
                 </div>
-                {/* close header */}
-
-                {/* content */}
-                <div className="dialog-map__content">
-                    {/* image */}
-                    <div
-                        onClick={() =>
-                            totalItem > 0 && setOpen(true)
-                        }
-                        className="content-img"
-                    >
+                <div className={style.org_detail}>
+                    <div ref={refDetail} className={style.org_detail_banners}>
+                        <div className={style.org_banner_linear}></div>
                         <img
-                            onError={(e) => onErrorImg(e)}
-                            src={
-                                galleries[0]?.image_url
-                                    ? galleries[0]?.image_url
-                                    : org?.image_url
-                            }
-                            alt=""
+                            className={style.org_banner_img}
+                            src={images_url[0] ?? org?.image_url ?? img.imgDefault} alt=""
                         />
-                        {totalItem > 0 && (
-                            <div className="content-seemore__img">
-                                <img src={ICON.photoLibraryWhite} alt="" />
-                                <span>{totalItem} ảnh</span>
+                        {
+                            images_url?.length > 0 &&
+                            <div className={style.org_banner_count}>
+                                {images_url?.length} {t('Mer_de.galleries')}
                             </div>
-                        )}
+                        }
                     </div>
-                    {/* close image */}
-
-                    {/* info  */}
-                    <div className="content-info">
-                        <span className="content-info__name">{org?.name}</span>
-                        <div className="map-item__evaluate">
-                            <div className="evaluate-item">
-                                <img src={icon.star} alt="" />
-                                <p>5</p>
-                            </div>
-                            <div className="evaluate-item">
-                                <img src={icon.cartCheckPurple} alt="" />
-                                <p>10</p>
-                            </div>
-                            <div className="evaluate-item">
-                                <img src={icon.heart} alt="" />
-                                <p>{org?.favorites_count}</p>
-                            </div>
+                    <div className={style.org_detail_card}>
+                        <div className={style.org_detail_avatar}>
+                            <img src={org?.image_url ?? img.imgDefault} alt="" />
                         </div>
-                        <div className="content-info__wrapbtn">
-                            {/* <div className="flex-column content-info__btn">
-                                <button
-                                    onClick={() => {
-                                        if (handleDirection) {
-                                            handleDirection();
-                                        }
-                                    }}
-                                >
-                                    <img src={icon.directionRed} alt="" />
-                                </button>
-                                <span>Đường đi</span>
-                            </div> */}
-                            <div className="flex-column content-info__btn">
-                                <button onClick={handleFolower}>
-                                    <img
-                                        src={
-                                            org?.is_favorite
-                                                ? icon.heart
-                                                : icon.unHeart
-                                        }
-                                        alt=""
+                        <div className={style.org_detail_info}>
+                            <p className={style.org_name}>{org.name}</p>
+                            <p className={style.org_address}>{org.full_address}</p>
+                            <div className={style.org_exc}>
+                                <div className={style.org_exc_left}>
+                                    <XButton
+                                        onClick={onOrgDetail}
+                                        className={style.org_exc_left_btn}
+                                        title={t('app.details')}
                                     />
-                                </button>
-                                <span>
-                                    {org?.is_favorite
-                                        ? "Đã thích"
-                                        : "Yêu thích"}
-                                </span>
-                            </div>
-                            <div className="flex-column content-info__btn">
-                                <button onClick={handleGotoOrg}>
-                                    <img src={icon.archiveRed} alt="" />
-                                </button>
-                                <span>Xem spa</span>
-                            </div>
-                            {/* <div className="flex-column content-info__btn">
-                                <button>
-                                    <img src={icon.directionRed} alt="" />
-                                </button>
-                                <span>Chia sẻ</span>
-                            </div> */}
-                        </div>
-                    </div>
-                    {/* close info  */}
-
-                    {/* list info  */}
-                    <div className="content-info__list">
-                        <div className="content-info__item">
-                            <div className="item-icon">
-                                <img src={icon.pinMap} alt="" />
-                            </div>
-                            <span className="item-text">
-                                {org?.full_address}
-                            </span>
-                        </div>
-                        <div className="content-info__item">
-                            <div className="item-icon">
-                                <img src={icon.time} alt="" />
-                            </div>
-                            <div className="item-text flex-row">
-                                <div>
-                                    {time_works_today?.status && (
-                                        <>
-                                            {time_works_today?.status ===
-                                                "on" ? (
-                                                <p
-                                                    style={{
-                                                        color: "var(--green)",
-                                                    }}
-                                                >{`${t(
-                                                    "detail_item.open"
-                                                )}`}</p>
-                                            ) : (
-                                                <p
-                                                    style={{
-                                                        color: "var(--red_2)",
-                                                    }}
-                                                >{`${t(
-                                                    "detail_item.close"
-                                                )}`}</p>
-                                            )}
-                                        </>
-                                    )}
-                                </div>
-                                <div className="org-time-work__right">
-                                    <div
-                                        onClick={() => handleOpenSelector()}
-                                        className="flex-row-sp org-time-work__right-list"
-                                    >
-                                        {time_works_today?.from_time_opening} -{" "}
-                                        {time_works_today?.to_time_opening}
-                                        <img
-                                            src={icon.arrowDownPurple}
-                                            alt=""
-                                        />
+                                    <div className={style.org_exc_item}>
+                                        <img src={icon.heartBoldRed} alt="" />
+                                        <span>{favoriteSt.favorite_count}</span>
                                     </div>
-                                    {/* selector time_works_today */}
-                                    <ul
-                                        ref={refListTimeWorks}
-                                        className="org-time-work__list"
-                                    >
-                                        {orgTimes?.map(
-                                            (item: any, index: number) => (
-                                                <li
-                                                    style={
-                                                        index + 2 === today
-                                                            ? {
-                                                                color: "var(--purple)",
-                                                            }
-                                                            : {}
-                                                    }
-                                                    key={index}
-                                                    className="flex-row org-time-list__item"
-                                                >
-                                                    <span className="org-time-list__left">
-                                                        {item.day_week}
-                                                    </span>
-                                                    <div className="org-time-list__right">
-                                                        {
-                                                            item?.from_time_opening
-                                                        }{" "}
-                                                        -{" "}
-                                                        {item?.to_time_opening}
-                                                    </div>
-                                                </li>
-                                            )
-                                        )}
-                                    </ul>
                                 </div>
+                                <XButton
+                                    onClick={onToggleFavorite}
+                                    className={style.org_exc_right}
+                                    icon={favoriteSt?.is_favorite ? icon.heart : icon.unHeart}
+                                    iconSize={16}
+                                />
                             </div>
-                        </div>
-                        <div className="content-info__item">
-                            <div className="item-icon">
-                                <img src={icon.Check} alt="" />
-                            </div>
-                            <span className="item-text">Đã xác minh</span>
                         </div>
                     </div>
-                    {/* close info */}
-
-                    {/* galleries */}
-                    <MapGalleries
-                        GALLERIES={galleries}
-                        open={open}
-                        setOpen={setOpen}
-                    />
-                    {/* close galleries */}
-
-                    {/* discount */}
-                    {
-                        org?.is_momo_ecommerce_enable && <MapSpecial />
-                    }
-                    {/* close discount */}
-
-                    {/* rating */}
-                    {/* close rating */}
+                    <div className={style.org_time_word}>
+                        <div
+                            onClick={onToggleTime}
+                            className={style.org_time_word_head}
+                        >
+                            <p className={style.org_section_title}>{t('pr.open_time')}</p>
+                            <img ref={refIconTime}
+                                src={icon.chevronRightBlack} className={style.org_time_word_head_icon} alt=""
+                            />
+                        </div>
+                        <div ref={refListTime} className={style.org_time_word_body}>
+                            <ul className={style.org_list_time}>
+                                {
+                                    orgTimes.map((time: any, index: number) => (
+                                        <li
+                                            style={time.todayAct ? {
+                                                color: 'var(--green)'
+                                            } : {}}
+                                            key={index} className={style.org_list_time_item}
+                                        >
+                                            <span className={style.time_day}>{time.day_week}</span>
+                                            {
+                                                time.status === 'on' ?
+                                                    <div className={style.time_word}>
+                                                        {t('se.from')} <h4 style={{ marginRight: '16px' }} >{time.from_time_opening}</h4> {t('se.to')} <h4>{time.to_time_opening}</h4>
+                                                    </div>
+                                                    :
+                                                    <div className={style.time_word}>----</div>
+                                            }
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
+                        {images_url?.length > 0 && <OrgImage images_url={images_url} />}
+                        <OrgSpecial org={org} />
+                    </div>
                 </div>
-                {/* close content */}
             </div>
         </>
     );
+}
+
+const OrgImage = ({ images_url }: { images_url: string[] }) => {
+    const { t } = useContext(AppContext)
+    return (
+        <>
+            <p className={style.org_section_title}>{t('Mer_de.galleries')}</p>
+            <div className={style.org_galleries}>
+                <ul className={style.org_galleries_list}>
+                    {
+                        images_url.map((image_url: string) => (
+                            <li key={image_url} className={style.org_gallery_item}>
+                                <OrgImageItem image_url={image_url} />
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
+        </>
+    )
+}
+const OrgImageItem = ({ image_url }: { image_url: string }) => {
+    const [open, setOpen] = useState(false)
+    return (
+        <>
+            <img onClick={() => setOpen(true)} src={image_url} className={style.org_gallery_item_img} alt="" />
+            <FullImage
+                open={open} setOpen={setOpen} src={[image_url]}
+            />
+        </>
+    )
+}
+const OrgSpecial = ({ org }: { org: IOrganization }) => {
+    const { t } = useContext(AppContext)
+    const { services_special } = useServicesSpecial(org)
+    const { products_special } = useProductsSpecial(org)
+    return (
+        <>
+            {
+                services_special?.length > 0 &&
+                <div className={style.org_special_cnt}>
+                    <p className={style.org_section_title}>{t('Mer_de.services')}</p>
+                    <div className={style.org_special_par}>
+                        <ul className={style.org_special_list}>
+                            {
+                                services_special?.map((item: Service, index: number) => (
+                                    <li key={index} className={style.org_special_item}>
+                                        <SerProItem
+                                            item={item}
+                                            org={org}
+                                            type='SERVICE'
+                                        />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+            {
+                products_special?.length > 0 &&
+                <div className={style.org_special_cnt}>
+                    <p className={style.org_section_title}>{t('Mer_de.products')}</p>
+                    <div className={style.org_special_par}>
+                        <ul className={style.org_special_list}>
+                            {
+                                products_special?.map((item: Product, index: number) => (
+                                    <li key={index} className={style.org_special_item}>
+                                        <SerProItem
+                                            item={item}
+                                            org={org}
+                                            type='PRODUCT'
+                                        />
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </div>
+                </div>
+            }
+        </>
+    )
 }

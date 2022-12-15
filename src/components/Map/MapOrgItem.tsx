@@ -50,25 +50,7 @@ export default function MapTagsOrgItem(props: IProps) {
                         <img src={icon.cartCheckPurple} alt="" />
                         <p>10</p>
                     </div>
-                    <div className="evaluate-item">
-                        <img src={icon.heart} alt="" />
-                        <p>
-                            {item?.favorites?.length
-                                ? item?.favorites?.length
-                                : "0"}
-                        </p>
-                    </div>
                 </div>
-                {/* {item.distance && (
-                    <div className="flex-row map-item__distance">
-                        <img
-                            className="map-item__distance-icon"
-                            src={icon.pinMapRed}
-                            alt=""
-                        />
-                        {formatDistance(item.distance)}
-                    </div>
-                )} */}
             </div>
         </div>
     );

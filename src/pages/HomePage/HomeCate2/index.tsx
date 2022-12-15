@@ -3,7 +3,7 @@ import icon from "constants/icon";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { onChooseTab } from "redux/CateTree/cateTreeSlice";
+import { onChooseTab } from "redux/cate-tree/cateTreeSlice";
 import { onResetFilter } from "redux/filter-result";
 import { useDeviceMobile } from "hooks";
 import HomeLocation from "../HomeLocation";

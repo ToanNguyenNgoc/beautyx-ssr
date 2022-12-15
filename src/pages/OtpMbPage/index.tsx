@@ -11,7 +11,7 @@ import { PopupNotification } from 'components/Notification';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { auth } from 'api/authApi'
-import { putUser } from 'redux/USER/userSlice';
+import { putUser } from 'redux/user/userSlice';
 import { AxiosError } from 'axios';
 import { useHistory } from 'react-router-dom';
 

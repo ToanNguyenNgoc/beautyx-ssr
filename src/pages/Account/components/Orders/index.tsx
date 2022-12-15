@@ -4,13 +4,11 @@ import TabOrderCancel from "./components/TabOrderCancel";
 import TabOrderPaid from "./components/TabOrderPaid";
 import { Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import {
-  onSetTab
-} from "redux/order/orderSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { HeadTitle } from "pages/Account";
 import { AppContext } from "context/AppProvider";
 import "./order.css";
+import { onSetTab } from "redux/order/orderSlice";
 
 function Orders() {
   const { t } = useContext(AppContext);

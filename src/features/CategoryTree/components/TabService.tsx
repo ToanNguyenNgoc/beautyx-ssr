@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import onErrorImg from "../../../utils/errorImg";
 import formatNumber from "../../../utils/formatPrice";
-import { fetchServiceByCateChild } from "../../../redux/CateTree/cateTreeSlice";
+import { fetchServiceByCateChild } from "../../../redux/cate-tree/cateTreeSlice";
 import { formatRouterLinkService } from "utils/formatRouterLink/formatRouter"
 import { STATUS } from "../../../redux/status";
 import { useEffect } from "react";

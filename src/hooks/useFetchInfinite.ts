@@ -1,6 +1,6 @@
+import { AUTH_HEADER } from 'api/authHeader';
 import { identity, pickBy } from 'lodash';
 import { useSWRInfinite } from 'swr'
-import { AUTH_HEADER } from 'utils/authHeader';
 
 export function useFetchInfinite(
     condition: any,

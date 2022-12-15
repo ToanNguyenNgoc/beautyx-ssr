@@ -7,9 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { AppContext } from 'context/AppProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { logoutUser } from 'redux/USER/userSlice';
-import { onClearApps } from 'redux/appointment/appSlice';
-import { onSetStatusServicesUser } from 'redux/order/orderSlice';
+import { logoutUser } from 'redux/user/userSlice';
 
 function HeadMenu() {
     const refMenu = useRef<HTMLDivElement>();
@@ -86,8 +84,6 @@ const HeadMenuBox = (props: HeadMenuProps) => {
     const handleSignOut = () => {
         setSign(false);
         dispatch(logoutUser());
-        dispatch(onClearApps());
-        dispatch(onSetStatusServicesUser());
         localStorage.removeItem("_WEB_TK");
         window.sessionStorage.removeItem("_WEB_TK");
     };

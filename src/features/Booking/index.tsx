@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,8 +24,6 @@ import { formatAddCart } from "utils/cart/formatAddCart";
 import { fetchAsyncOrg } from "redux/org/orgSlice";
 import { STATUS } from "redux/status";
 import apointmentApi from "api/apointmentApi";
-import { onSetStatusApp } from "redux/appointment/appSlice";
-import { onRefreshServicesNoBookCount } from "redux/order/orderSlice";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "pages/Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
@@ -226,14 +225,12 @@ function Booking() {
     }
     //func appointment
     const gotoAppointment = () => {
-        dispatch(onSetStatusApp());
         history.push("/lich-hen?tab=1");
     };
     const handlePostApps = async () => {
         setOpenNoti({ ...initOpenNoti, load: true })
         try {
             await apointmentApi.postAppointment(action, org?.id);
-            dispatch(onRefreshServicesNoBookCount());
             dispatch(clearAllServices())
             setOpenNoti({
                 open: true,

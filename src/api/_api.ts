@@ -19,7 +19,8 @@ const API_ROUTE = {
     FAVORITES: '/favorites',
     TAGS: '/tags',
     TAGS_ID: (id: number | string) => `/tags/${id}`,
-    ADDRESSES: '/useraddresses'
+    ADDRESSES: '/useraddresses',
+    APPOINTMENTS:'/appointments'
 }
 
 export default API_ROUTE

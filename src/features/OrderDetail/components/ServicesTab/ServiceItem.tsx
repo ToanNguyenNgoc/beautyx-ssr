@@ -52,7 +52,7 @@ function ServiceItem(props: any) {
         let resService
         try {
             const res = await serviceApi.getDetailById({
-                org_id: service.org.id, ser_id: service.id
+                org_id: org.id, ser_id: service.id
             })
             resService = res?.data.context
         } catch (error) {

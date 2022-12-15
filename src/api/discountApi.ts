@@ -1,7 +1,7 @@
 import axiosClient from "./axios";
-import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 import { AUTH_LOCATION } from "./authLocation";
 import { identity, pickBy } from "lodash";
+import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 
 class Discounts {

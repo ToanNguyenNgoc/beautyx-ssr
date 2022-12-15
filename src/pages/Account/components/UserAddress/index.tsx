@@ -8,7 +8,7 @@ import {
     fetchAsyncUserAddress,
     removeAsyncUserAddress,
     updateAsyncAddress,
-} from 'redux/USER/userAddressSlice';
+} from 'redux/user/userAddressSlice';
 import { STATUS } from 'redux/status';
 import ModalLoad from 'components/ModalLoad';
 import IStore from 'interface/IStore';
