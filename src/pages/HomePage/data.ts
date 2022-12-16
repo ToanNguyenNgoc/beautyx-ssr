@@ -22,9 +22,11 @@ export interface Ideals {
     title: string,
     min_price?: number | null,
     max_price?: number | null,
+    keyword?: string
     img: string,
     banner: string,
-    percent?: number
+    percent?: number,
+    special_price?:boolean
 }
 export interface IProductsSection {
     id: number,
@@ -37,27 +39,32 @@ export interface IProductsSection {
 export const deals: Ideals[] = [
     {
         id: 1,
-        title: "Deal hot từ 50-100k",
-        min_price: 50000,
-        max_price: 100000,
+        title: "Tóc mượt mà Tết thả ga",
+        // min_price: 50000,
+        // max_price: 100000,
+        keyword: 'Gội đầu',
         img: dealHot.dealhot,
-        banner: deal0
+        banner: deal0,
+        special_price:true
     },
     {
         id: 2,
-        title: "Làm đẹp Giảm 50%",
+        title: "Nail xinh đón Tết",
         min_price: null,
+        keyword: 'Nail',
         img: dealHot.dealhot1,
-        percent: 50,
-        banner: deal1
+        // percent: 50,
+        banner: deal1,
+        special_price:false
     },
     {
         id: 3,
-        title: "Dịch vụ xâm lấn Giảm 30%",
+        title: "Nhận quà Giáng sinh Rinh Deal làm đẹp",
         min_price: null,
         img: dealHot.dealhot2,
-        percent: 30,
-        banner: deal2
+        // percent: 30,
+        banner: deal2,
+        special_price:true
     },
 ];
 export const topics = [

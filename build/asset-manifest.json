@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.1d4544f2.css",
-    "main.js": "/static/js/main.7aac8619.js",
+    "main.css": "/static/css/main.a8e703bb.css",
+    "main.js": "/static/js/main.5472aeff.js",
     "static/js/898.34f4c56d.chunk.js": "/static/js/898.34f4c56d.chunk.js",
     "static/css/106.177ef549.chunk.css": "/static/css/106.177ef549.chunk.css",
     "static/js/106.d35dbcde.chunk.js": "/static/js/106.d35dbcde.chunk.js",
@@ -36,13 +36,16 @@
     "static/js/540.4e2eec3d.chunk.js": "/static/js/540.4e2eec3d.chunk.js",
     "static/media/bannerBlur.png": "/static/media/bannerBlur.d5f2487a0e1c8e590a1f.png",
     "static/media/thumb_2.png": "/static/media/thumb_2.9e7a569d8a01cd55ba4c.png",
+    "static/media/deal2.jpg": "/static/media/deal2.31dd45a3ffa071178bb7.jpg",
     "static/media/schedule.png": "/static/media/schedule.f2b5fee34e5d51ca6987.png",
     "static/media/plashScreen.png": "/static/media/plashScreen.0223891823ff6924da02.png",
+    "static/media/deal0.jpg": "/static/media/deal0.4d02ae48ffe8ccf4819b.jpg",
     "static/media/thumb.png": "/static/media/thumb.08cd9dcb5c168444185c.png",
     "static/media/group_265.png": "/static/media/group_265.83cccd7250c46da07951.png",
     "static/media/jyg7xHRmXiU.png": "/static/media/jyg7xHRmXiU.852943ec88a4f494a854.png",
     "static/media/bath.png": "/static/media/bath.2c5172347994d011ae3a.png",
     "static/media/sellerCenterImg.jpeg": "/static/media/sellerCenterImg.07651976ca5fb51c3c02.jpeg",
+    "static/media/deal1.jpg": "/static/media/deal1.63dc69eed10ef4dc9299.jpg",
     "static/media/banner.png": "/static/media/banner.bf63306a8769cebd159a.png",
     "static/media/homeSt1.png": "/static/media/homeSt1.a5abc39b5bdb36431411.png",
     "static/media/flatform2.png": "/static/media/flatform2.4948e61ab278aaed36e2.png",
@@ -75,14 +78,12 @@
     "static/media/clinic.svg": "/static/media/clinic.ff8ffb46ad819307284c0e3964b4cff9.svg",
     "static/media/Nunito-Light.woff": "/static/media/Nunito-Light.768d10645f5a17c35ecf.woff",
     "static/media/Nunito-ExtraLight.woff": "/static/media/Nunito-ExtraLight.8135a3b916a00374b606.woff",
-    "static/media/deal2.jpg": "/static/media/deal2.c30c871e90be01db3179.jpg",
     "static/media/homeWhy4.svg": "/static/media/homeWhy4.2770ccee45ab3fcb6c4f7111ada74aa0.svg",
     "static/media/step_2.png": "/static/media/step_2.33dc5b57f14e00dd4a18.png",
     "static/media/product3.png": "/static/media/product3.397d565a52d8b7272497.png",
     "static/media/step_3.png": "/static/media/step_3.e342c472ea88660d7c5d.png",
     "static/media/Nunito-BlackItalic.woff2": "/static/media/Nunito-BlackItalic.d1ee9574a5b494dd3f5e.woff2",
     "static/media/Nunito-ExtraBoldItalic.woff2": "/static/media/Nunito-ExtraBoldItalic.646d903714d5b28f297b.woff2",
-    "static/media/deal0.jpg": "/static/media/deal0.306980475ed0b2e6e088.jpg",
     "static/media/Nunito-SemiBoldItalic.woff2": "/static/media/Nunito-SemiBoldItalic.1f3686818312abb9df63.woff2",
     "static/media/Nunito-Italic.woff2": "/static/media/Nunito-Italic.e938efc07c9e3e65fcb4.woff2",
     "static/media/Nunito-BoldItalic.woff2": "/static/media/Nunito-BoldItalic.598a8a81718484309740.woff2",
@@ -101,7 +102,6 @@
     "static/media/dealhot2.png": "/static/media/dealhot2.511d00b4f29291d8e9b5.png",
     "static/media/Nunito-ExtraLight.woff2": "/static/media/Nunito-ExtraLight.1a0cd706bffc1122b20f.woff2",
     "static/media/thumbApp.png": "/static/media/thumbApp.28d141ce7cac3c774864.png",
-    "static/media/deal1.jpg": "/static/media/deal1.812db0f75f56cdd3f1ba.jpg",
     "static/media/logo.svg": "/static/media/logo.b32860d766a4cdffbc6b34be944ffa76.svg",
     "static/media/step_4.png": "/static/media/step_4.62871a4cd3baa6e3dadb.png",
     "static/media/dealhot.png": "/static/media/dealhot.58012a1984a1a9077ed7.png",
@@ -392,8 +392,8 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
-    "main.1d4544f2.css.map": "/static/css/main.1d4544f2.css.map",
-    "main.7aac8619.js.map": "/static/js/main.7aac8619.js.map",
+    "main.a8e703bb.css.map": "/static/css/main.a8e703bb.css.map",
+    "main.5472aeff.js.map": "/static/js/main.5472aeff.js.map",
     "898.34f4c56d.chunk.js.map": "/static/js/898.34f4c56d.chunk.js.map",
     "106.177ef549.chunk.css.map": "/static/css/106.177ef549.chunk.css.map",
     "106.d35dbcde.chunk.js.map": "/static/js/106.d35dbcde.chunk.js.map",
@@ -428,7 +428,7 @@
     "540.4e2eec3d.chunk.js.map": "/static/js/540.4e2eec3d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1d4544f2.css",
-    "static/js/main.7aac8619.js"
+    "static/css/main.a8e703bb.css",
+    "static/js/main.5472aeff.js"
   ]
 }
