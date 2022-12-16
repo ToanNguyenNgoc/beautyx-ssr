@@ -14,11 +14,13 @@ import { BackTopButton, SerProItem, XButton } from 'components/Layout';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadGrid } from 'components/LoadingSketion';
 import icon from 'constants/icon';
+import { AUTH_LOCATION } from 'api/authLocation';
 
 function DealBanner() {
     const { _id } = useParams()
     const history = useHistory()
     const IS_MB = useDeviceMobile()
+    const LOCATION = AUTH_LOCATION()
     const deal = deals.find(i => _id === slugify(i.title))
     useEffect(() => {
         if (!deal) history.replace('/error')
@@ -26,11 +28,13 @@ function DealBanner() {
     const param: ParamService = {
         ...paramsServices,
         'limit': 18,
-        'filter[special_price]': true,
+        'filter[special_price]': deal?.special_price ?? '',
+        'filter[keyword]': deal?.keyword ?? '',
         'filter[is_momo_ecommerce_enable]': true,
         'filter[discount_percent]': deal?.percent ?? '',
         'filter[min_price]': deal?.min_price ?? '',
-        'filter[max_price]': deal?.max_price ?? ''
+        'filter[max_price]': deal?.max_price ?? '',
+        'filter[location]': LOCATION
     }
     const { resData, totalItem, onLoadMore } = useSwrInfinite(
         deal,
