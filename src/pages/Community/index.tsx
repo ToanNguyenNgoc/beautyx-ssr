@@ -1,4 +1,6 @@
 import { Container } from '@mui/system';
+import HeadMobile from 'features/HeadMobile';
+import { useDeviceMobile } from 'hooks';
 import React from 'react';
 import { NavLink, Redirect, RouteComponentProps, Switch, useLocation } from 'react-router-dom';
 import style from './community.module.css'
@@ -22,25 +24,29 @@ function Community() {
     ]
     const location = useLocation()
     const path = location.pathname?.split('/')[2]
+    const IS_MB = useDeviceMobile()
     return (
         <>
+            {IS_MB && <HeadMobile title='Cộng đồng' />}
             <div className={style.container}>
                 <div className={style.header_tab}>
                     <Container>
-                        <NavLink
-                            activeClassName={path === 'trang-chu' ? style.header_tab_item_act : ''}
-                            className={style.header_tab_item}
-                            to={{ pathname: '/cong-dong/trang-chu' }}
-                        >
-                            Cộng đồng
-                        </NavLink>
-                        <NavLink
-                            activeClassName={path === 'nhom' ? style.header_tab_item_act : ''}
-                            className={style.header_tab_item}
-                            to={{ pathname: '/cong-dong/nhom' }}
-                        >
-                            Nhóm của tôi
-                        </NavLink>
+                        <div className={style.head_tab_cnt}>
+                            <NavLink
+                                activeClassName={path === 'trang-chu' ? style.header_tab_item_act : ''}
+                                className={style.header_tab_item}
+                                to={{ pathname: '/cong-dong/trang-chu' }}
+                            >
+                                Cộng đồng
+                            </NavLink>
+                            <NavLink
+                                activeClassName={path === 'nhom' ? style.header_tab_item_act : ''}
+                                className={style.header_tab_item}
+                                to={{ pathname: '/cong-dong/nhom' }}
+                            >
+                                Nhóm của tôi
+                            </NavLink>
+                        </div>
                     </Container>
                 </div>
                 <Switch>

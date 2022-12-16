@@ -4,7 +4,7 @@
 }
 
 .header_tab {
-    padding: 12px 0px;
+    padding-bottom: 6px;
     border-bottom: solid 1px var(--bg-color);
 }
 
@@ -23,6 +23,14 @@
 }
 
 /* community */
+.section_title {
+    margin-bottom: 12px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--purple);
+}
+
 .com_container {
     display: flex;
     justify-content: space-between;
@@ -32,11 +40,11 @@
 .com_container_left,
 .com_container_right {
     width: calc((100% - 760px)/2);
+    max-width: 300px;
 }
 
 
 .com_container_left {
-    /* background-color: #EAE9F5; */
     padding: 12px;
     height: max-content;
     max-height: 100vh;
@@ -62,7 +70,8 @@
     border-radius: 16px;
     transition: var(--trans);
 }
-.group_cate_list_item:hover{
+
+.group_cate_list_item:hover {
     transition: var(--trans);
     box-shadow: var(--box-shadow);
 }
@@ -93,9 +102,166 @@
     font-size: 14px;
     line-height: 16px;
 }
+
 .com_container_center {
     width: 760px;
     height: calc(100vh);
-    background-color: antiquewhite;
+    background-color: #FAFAFA;
     overflow-y: scroll;
+}
+
+.center_group_recommend {
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.group_recommend_list {
+    width: max-content;
+    display: flex;
+    padding-bottom: 6px;
+}
+
+.group_recommend_li {
+    width: 164px;
+    margin-right: 10px;
+}
+
+/* card group item */
+.group_card_item {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.group_cover {
+    width: 100%;
+    position: relative;
+    padding-bottom: 70%;
+    border-radius: 10px 10px 0px 0px;
+    background-color: var(--bg-color);
+}
+
+.group_cover_img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 10px 10px 0px 0px;
+    object-fit: cover;
+}
+
+.group_detail {
+    padding: 6px;
+    background-color: var(--bg-white);
+    border-radius: 0px 0px 10px 10px;
+}
+
+.group_detail_name {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    height: 32px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.group_detail_member {
+    margin-top: 8px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.group_detail_member>div>div {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 14px !important;
+}
+
+/* end card group item */
+
+
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        margin-top: 44px;
+        padding: 0px;
+    }
+    .header_tab{
+        padding: 0px;
+    }
+    .head_tab_cnt{
+        display: flex;
+    }
+    .header_tab_item{
+        width: 50%;
+        display: block;
+        line-height: 48px;
+        text-align: center;
+        transition: var(--trans);
+    }
+    .header_tab_item_act{
+        background: #F5F5F5;
+        transition: var(--trans);
+    }
+
+    /* tab community */
+    .com_container {
+        flex-direction: column;
+    }
+
+    .com_container_left {
+        width: 100%;
+        max-width: unset;
+        background-color: #EAE9F5;
+    }
+
+    .group_cate_list {
+        padding: 20px;
+        background-color: var(--bg-white);
+        margin-top: 8px;
+        border-radius: 12px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 10px;
+    }
+
+    .group_cate_list li {
+        margin-top: 0px;
+    }
+
+    .com_container_center {
+        width: 100%;
+        padding: 20px 0px;
+        height: max-content;
+        overflow: unset;
+    }
+
+    .center_group_recommend {
+        padding: 0px 12px;
+    }
+
+    .center_post_cnt {
+        margin-top: 20px;
+    }
+
+    .center_post_head {
+        padding: 14px 12px;
+        background-color: #FAFAFA;
+        position: sticky;
+        top: 42px;
+        left: 0;
+        width: 100%;
+        z-index: 10;
+    }
+
+    .com_container_right {
+        display: none;
+    }
 }

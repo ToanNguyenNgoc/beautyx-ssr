@@ -17,7 +17,7 @@ import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
 import MerchantDetail from "pages/MerchantDetail";
 import { analytics, logEvent } from "../firebase";
-import {  LoadProgress } from "components/LoadingSketion";
+import { LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
 // import Otp from "features/Otp";
 import ResetPassword from "pages/ResetPassword";
@@ -43,6 +43,7 @@ import Account from "pages/Account";
 import Calendar from "features/Calendar";
 import BuyNow from "features/BuyNow";
 import Carts from "pages/Carts";
+import Rewards from "pages/Rewards";
 // import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
@@ -52,6 +53,11 @@ import { useSelector } from "react-redux";
 import IStore from "interface/IStore";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import RefreshToken from 'features/RefreshToken'
+
+//community page
+const PostDetail  = lazy(() => import('pages/Community/pages/PostDetail'))
+const GroupDetail =  lazy(() => import('pages/Community/pages/GroupDetail'))
+
 //update import lazy
 // const Account = lazy(() => import('pages/Account'))
 // const SignPage = lazy(() => import('pages/SignPage'))
@@ -215,7 +221,7 @@ function RouterConfig() {
         {
             path: "/chi-tiet-giam-gia/:name",
             component: <DiscountDetail />,
-            load:<LoadDetail/>
+            load: <LoadDetail />
         },
         {
             path: "/giam-gia",
@@ -262,6 +268,14 @@ function RouterConfig() {
             component: <Community />,
         },
         {
+            path:'/bai-viet/:id',
+            component:<PostDetail/>
+        },
+        {
+            path:'/nhom/:id',
+            component:<GroupDetail/>
+        },
+        {
             path: "/error",
             component: <PageNotFound />,
         },
@@ -303,24 +317,29 @@ function RouterConfig() {
             path: "/ma-giam-gia",
             component: <VoucherPage />,
         },
+        {
+            path: "/coins",
+            component: <Rewards />
+        }
     ];
     logEvent(analytics, "page_view", {
         page_title: document.title,
         page_path: window.location.pathname,
         page_location: window.location.href,
     });
-    const {refresh} = useSelector((state:IStore) => state.USER)
-    const PLAT_FORM:string = EXTRA_FLAT_FORM()
+    const { refresh } = useSelector((state: IStore) => state.USER)
+    const PLAT_FORM: string = EXTRA_FLAT_FORM()
+    // const refresh = true
     return (
         <BrowserRouter>
             <Router>
-                <Head/>
-                {(refresh && PLAT_FORM==='BEAUTYX') && <RefreshToken/>}
+                <Head />
+                {(refresh && PLAT_FORM === 'BEAUTYX') && <RefreshToken />}
                 <Switch>
                     <Redirect exact from="/" to="homepage" />
                     {routes.map((item, index: number) => (
                         <Route key={index} path={item.path}>
-                            <Suspense fallback={item.load ?? <LoadProgress/>}>
+                            <Suspense fallback={item.load ?? <LoadProgress />}>
                                 {item.component}
                             </Suspense>
                         </Route>
@@ -329,7 +348,7 @@ function RouterConfig() {
                         {routesPrivate.map((item, index: number) => (
                             <Route key={index} path={item.path}>
                                 {/* <Suspense fallback={<LoadProgress />}> */}
-                                    {item.component}
+                                {item.component}
                                 {/* </Suspense> */}
                             </Route>
                         ))}
@@ -339,7 +358,7 @@ function RouterConfig() {
                 <ExtraFlatForm />
                 <AssistantBtn />
                 <Footer />
-                <Bottom/>
+                <Bottom />
             </Router>
         </BrowserRouter>
     );

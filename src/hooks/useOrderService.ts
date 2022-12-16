@@ -15,7 +15,7 @@ export function useOrderService() {
         'include': 'items|organization|appointments',
         "filter[withServicesSold]": true,
         "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM,
-        "limit": 8
+        "limit": 14
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
         USER,

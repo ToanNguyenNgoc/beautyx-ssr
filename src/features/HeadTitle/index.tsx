@@ -11,7 +11,7 @@ function HeadTitle(props: IProps) {
       const IS_MB = useDeviceMobile();
       const { title } = props;
       const FLAT_FORM = EXTRA_FLAT_FORM();
-
+     
       let t: string = "BeautyX";
       if (IS_MB) {
             document.title = t

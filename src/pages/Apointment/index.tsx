@@ -14,7 +14,7 @@ import style from "./app.module.css";
 import AppDetail from './AppDetail';
 import { PopupNotification } from 'components/Notification';
 
-const getDaysInWeek = (dayObj: any) => {
+export const getDaysInWeek = (dayObj: any) => {
   const days: any = [];
   [1, 2, 3, 4, 5, 6, 7].map((i, index) =>
     days.push(dayjs(dayObj.day(index)).format("YYYY-MM-DD"))

@@ -26,7 +26,7 @@ function BookingNowBill(props: BookingNowBillProps) {
     let { total } = services?.reduce(
         (cartTotal: any, cartItem: any) => {
             const { quantity, service } = cartItem;
-            const priceBuy = service.special_price > 0 ? service.special_price : service.price
+            const priceBuy = service.SPECIAL_PRICE > 0 ? service.SPECIAL_PRICE : service.price
             const itemTotal = priceBuy * quantity;
             cartTotal.total += itemTotal;
             return cartTotal;
