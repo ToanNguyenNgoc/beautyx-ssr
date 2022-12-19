@@ -423,7 +423,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                                 cursor: "no-drop"
                             } : {}}
                             className="vc_body_input_btn"
-                            title="Áp dụng"
+                            title="Xác nhận"
                             loading={noti.load}
                             onClick={getDiscountDetail}
                         />
