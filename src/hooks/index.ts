@@ -1,6 +1,7 @@
 export * from './useAuth'
 export * from './useElementOnScreen'
 export * from './postMedia'
+export * from './postMediaMulti'
 export * from "./useCountDown"
 export * from "./useDeviceMobile"
 export * from "./useFetch"
@@ -17,3 +18,4 @@ export * from "./useFetchInfinite"
 export * from "./useSwrCache"
 export * from "./useAppointment"
 export * from "./useOrderService"
+export * from "./useProductCate"

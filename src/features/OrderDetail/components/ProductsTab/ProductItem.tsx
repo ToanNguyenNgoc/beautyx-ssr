@@ -5,7 +5,7 @@ import { formatRouterLinkProduct } from 'utils/formatRouterLink/formatRouter'
 import { AppContext } from "context/AppProvider";
 import { onErrorImg, scrollTop } from "utils";
 import { formatAddCart } from "utils/cart/formatAddCart";
-import { addCart, onClearPrevCartItem } from "redux/cartSlice";
+import { addCart, onClearPrevCartItem } from "redux/cart";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
 import { XButton } from "components/Layout";
 import { IOrganization, Product } from "interface";

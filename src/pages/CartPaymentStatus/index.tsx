@@ -13,7 +13,7 @@ import apointmentApi from "api/apointmentApi";
 import HeadMobile from "features/HeadMobile";
 import { PopupNotification } from "components/Notification";
 import { useHistory } from "react-router-dom";
-import { clearByCheck } from "redux/cartSlice";
+import { clearByCheck } from "redux/cart";
 import { ICart } from "interface/cart";
 // ==== api tracking ====
 import tracking from "api/trackApi";

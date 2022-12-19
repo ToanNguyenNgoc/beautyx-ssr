@@ -3,7 +3,7 @@ import { Combo } from "../../../../interface/combo";
 import formatPrice from "../../../../utils/formatPrice";
 import ButtonCus from "../../../../components/ButtonCus";
 import comboApi from "../../../../api/comboApi";
-import { addCart } from "../../../../redux/cartSlice";
+import { addCart } from "../../../../redux/cart";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppContext } from "../../../../context/AppProvider";

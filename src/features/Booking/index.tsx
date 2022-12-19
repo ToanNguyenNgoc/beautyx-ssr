@@ -27,7 +27,7 @@ import apointmentApi from "api/apointmentApi";
 import { Container } from "@mui/material";
 import { PopUpVoucherOrg } from "pages/Carts/components/CartGroupItem";
 import SectionTitle from "../SectionTitle";
-import { onClearApplyVoucher } from "redux/cartSlice";
+import { onClearApplyVoucher } from "redux/cart";
 import { IDiscountPar } from "interface/discount";
 import { AlertSnack, XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";

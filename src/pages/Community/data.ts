@@ -27,6 +27,7 @@ export interface IPost {
     content: string,
     medias: string[],
     favorite_count: number,
+    isFavorite:boolean,
     created_at: string,
     comment_count: number
 }
@@ -57,6 +58,7 @@ export const posts: IPost[] = [
         medias: [postMedia1, postMedia2],
         favorite_count: 10,
         created_at: "2023-01-30 15:46:51",
+        isFavorite:false,
         comment_count: 10
     },
     {
@@ -71,6 +73,7 @@ export const posts: IPost[] = [
         medias: [postMedia1, postMedia2, postMedia1, postMedia2, postMedia1, postMedia2, postMedia1, postMedia2],
         favorite_count: 99,
         created_at: "2022-11-30 15:46:51",
+        isFavorite:false,
         comment_count: 99
     },
     {
@@ -85,6 +88,7 @@ export const posts: IPost[] = [
         medias: [postMedia1],
         favorite_count: 999,
         created_at: "2022-11-30 15:46:51",
+        isFavorite:false,
         comment_count: 999
     },
 ]

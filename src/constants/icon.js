@@ -235,6 +235,9 @@ import downLoadWhite from 'assets/icon/downLoadWhite.svg'
 import thumbUpPurple from 'assets/icon/thumbUpPurple.svg'
 import thumbUp from 'assets/icon/thumbUp.svg'
 import chatSquare from 'assets/icon/chatSquare.svg'
+import createAtGray from 'assets/icon/createAtGray.svg'
+import postGray from 'assets/icon/postGray.svg'
+import userGray from 'assets/icon/userGray.svg'
 
 const icon = {
     noApply,
@@ -448,6 +451,7 @@ const icon = {
     scanQrBtn,
     phoneWhiteBold,
     trendGreen, downLoadWhite,
-    thumbUp, thumbUpPurple, chatSquare
+    thumbUp, thumbUpPurple, chatSquare,
+    createAtGray, postGray, userGray
 };
 export default icon;

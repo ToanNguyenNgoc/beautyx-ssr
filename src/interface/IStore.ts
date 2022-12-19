@@ -6,6 +6,8 @@ import { IUSER } from "redux/user/userSlice"
 import { INotification } from 'redux/notifications'
 import { IFilterResult } from 'redux/filter-result'
 import { ISearch } from 'redux/search_history';
+//---
+import { ICommunity } from 'redux/community'
 
 
 
@@ -18,4 +20,5 @@ export default interface IStore {
     NOTI: INotification,
     FILTER_RESULT: IFilterResult,
     SEARCH_HIS: ISearch,
+    COMMUNITY: ICommunity
 }

@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import OrgSearch from './OrgPages/OrgSearch/OrgSearch';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from 'lodash';
-import { getTotal } from 'redux/cartSlice';
+import { getTotal } from 'redux/cart';
 import { IOrganization } from 'interface';
 import { fetchAsyncByKeyword } from 'redux/org/orgSlice';
 import icon from 'constants/icon';

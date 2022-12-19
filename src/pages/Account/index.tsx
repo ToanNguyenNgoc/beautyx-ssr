@@ -24,7 +24,7 @@ import Guide from "./components/Guide";
 import { handleCallingPhone } from "utils/customChat";
 import ChangePassword from "./components/ChangePassword";
 import Orders from "./components/Orders";
-import { getTotal } from "redux/cartSlice";
+import { getTotal } from "redux/cart";
 import languages from "data/languages";
 import { AppContext } from "context/AppProvider";
 import i18next from "i18next";

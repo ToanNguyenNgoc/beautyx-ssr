@@ -19,11 +19,12 @@ import { onErrorImg } from "utils";
 import { useDeviceMobile } from 'hooks';
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
-import { onClearApplyVoucher } from "redux/cartSlice";
+import { onClearApplyVoucher } from "redux/cart";
 import { AlertSnack, XButton } from "components/Layout";
 import img from "constants/img";
 import moment from "moment";
 import discountApi from "api/discountApi";
+import { useNoti } from "interface/useNoti";
 
 export interface OpenVcProp {
     open: boolean,
@@ -367,20 +368,23 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const [text, setText] = useState("");
     const [response, setResponse] = useState<IDiscountPar | any>()
-    const [error, setError] = useState(false)
+    const {firstLoad, resultLoad, noti} = useNoti()
     const onInputChange = (e: any) => {
         if (text.length <= 25) {
             setText(e.target.value)
-            setError(false)
+            resultLoad('')
+            setResponse(null)
         }
     }
     const getDiscountDetail = async () => {
+        firstLoad()
         try {
             const res = await discountApi.getById({ id: text })
             setResponse(res.data.context)
+            resultLoad('')
         } catch (error) {
             console.log(error)
-            setError(true)
+            resultLoad(`Mã giảm giá ${text} không hợp lệ ! Bạn vui lòng kiểm tra lại mã nhé`)
         }
     }
     const voucher: IDiscountPar = { ...response, coupon_code: text }
@@ -420,7 +424,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                             } : {}}
                             className="vc_body_input_btn"
                             title="Áp dụng"
-                            loading={false}
+                            loading={noti.load}
                             onClick={getDiscountDetail}
                         />
                         {
@@ -438,9 +442,9 @@ export const InputVoucher = (props: InputVoucherProps) => {
                         }
                     </div>
                     {
-                        error &&
+                        noti.message !== '' &&
                         <div className="vc_cart_none">
-                            Mã giảm giá {text} không hợp lệ ! Bạn vui lòng kiểm tra lại mã nhé
+                           {noti.message}
                         </div>
                     }
                     {

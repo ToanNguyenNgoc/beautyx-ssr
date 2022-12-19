@@ -5,11 +5,13 @@ import { XButton } from 'components/Layout';
 import HeadMobile from 'features/HeadMobile';
 import HeadTitle from 'features/HeadTitle';
 import { useDeviceMobile } from 'hooks';
+import IStore from 'interface/IStore';
 import imgC from 'pages/Community/assets';
 import { PostCard, PostInput } from 'pages/Community/components';
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { groups, IGroup, IPost, posts } from '../../data'
+import { groups, IGroup, IPost } from '../../data'
 import style from './group-detail.module.css'
 import GroupInfo from './GroupInfo';
 
@@ -23,6 +25,7 @@ function GroupDetail() {
     useEffect(() => {
         if (!id || !group) history.replace('/error')
     }, [])
+    const {posts} = useSelector((state:IStore) => state.COMMUNITY)
     const postList = posts.filter((i: IPost) => i.group.id === parseInt(id))
 
     window.addEventListener('scroll', () => {
@@ -80,7 +83,7 @@ function GroupDetail() {
                         <div className={style.body_left}>
                             <div className={style.group_post_inp}>
                                 <p className={style.title}>Tạo bài viết</p>
-                                <PostInput />
+                                {group && <PostInput group={group} />}
                             </div>
                             <div className={style.group_posts}>
                                 <p className={style.title}>Bài viết ({postList?.length})</p>
@@ -112,6 +115,7 @@ function GroupDetail() {
                     open={open}
                     setOpen={setOpen}
                     group={group}
+                    postListCount={postList?.length}
                 />
             }
         </>

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cartReducer from "./cartSlice";
+import cartReducer from "./cart";
 import homeReducer from "./home/homeSlice";
 import userReducer from "./user/userSlice";
 import servicesBookReducer from "./servicesBookSlice";
@@ -14,6 +14,8 @@ import orgMapReducer from "./org/orgMapSlice";
 import notiReducer from "./notifications"
 import filterResultReduce from "./filter-result";
 import searchHistoryReducer from './search_history'
+//----
+import communityReducer from './community'
 
 const rootReducer = {
     carts: cartReducer,
@@ -30,7 +32,8 @@ const rootReducer = {
     ORGS_MAP: orgMapReducer,
     NOTI: notiReducer,
     FILTER_RESULT: filterResultReduce,
-    SEARCH_HIS: searchHistoryReducer
+    SEARCH_HIS: searchHistoryReducer,
+    COMMUNITY: communityReducer
 };
 const store = configureStore({
     reducer: rootReducer,

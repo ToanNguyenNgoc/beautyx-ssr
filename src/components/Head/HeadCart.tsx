@@ -3,7 +3,7 @@ import IStore from 'interface/IStore';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getTotal } from 'redux/cartSlice';
+import { getTotal } from 'redux/cart';
 import { clst } from 'utils';
 import style from './head.module.css'
 

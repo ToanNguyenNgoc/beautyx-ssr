@@ -64,7 +64,7 @@ export const EX_DISCOUNT_TYPE = (discount: IDiscountPar) => {
     const value = EX_DISCOUNT_UNIT(discount)
     switch (discount_type) {
         case DISCOUNT_TYPE.FINAL_PRICE.key:
-            return text = DISCOUNT_TYPE.FINAL_PRICE.text;
+            return text = `${DISCOUNT_TYPE.FINAL_PRICE.text} ${formatPrice(discount?.discount_value)}đ`;
         case DISCOUNT_TYPE.SUB_TOTAL.key:
             return text = `Giảm ${value} trên tổng đơn ${discount.maximum_discount_value ?
                 `(tối đa ${formatPrice(discount.maximum_discount_value)})` : ''

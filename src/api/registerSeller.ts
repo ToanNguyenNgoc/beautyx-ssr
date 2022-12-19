@@ -7,7 +7,11 @@ const axiosClientSeller = axios.create({
         // Accept: "application/json",
         "Content-Type": "multipart/form-data",
     },
-    paramsSerializer: (params) => queryString.stringify(params),
+    paramsSerializer: {
+        encode: (param: string): any => { },
+        serialize: (params) => queryString.stringify(params),
+        indexes: false
+    },
 });
 axiosClientSeller.interceptors.request.use(async (config) => {
     return config;
@@ -24,9 +28,9 @@ axios.interceptors.response.use(
     }
 );
 class Register {
-    post = (params:any) => {
-          const url = `/Frontend/register_momo`;
-          return axiosClientSeller.post(url, params)
+    post = (params: any) => {
+        const url = `/Frontend/register_momo`;
+        return axiosClientSeller.post(url, params)
     }
 }
 const registerSeller = new Register();

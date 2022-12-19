@@ -1,12 +1,15 @@
 import React from 'react';
-import { groupCates, groups, posts } from './data'
+import { groupCates, groups } from './data'
 import style from './community.module.css'
 import { Link } from 'react-router-dom';
 import { Avatar, AvatarGroup } from '@mui/material';
 import imgC from './assets'
 import { PostCard } from './components';
+import { useSelector } from 'react-redux';
+import IStore from 'interface/IStore';
 
 function TabCommunity() {
+    const { posts } = useSelector((state: IStore) => state.COMMUNITY)
     return (
         <>
             <div className={style.com_container}>

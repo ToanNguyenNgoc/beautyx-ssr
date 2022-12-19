@@ -9,7 +9,7 @@ import { Container, Dialog } from "@mui/material";
 import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
-import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "../../redux/cartSlice";
+import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "../../redux/cart";
 import CartPaymentMethod from "./components/CartPaymentMethod";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";

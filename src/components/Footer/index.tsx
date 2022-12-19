@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./footer.css";
 import { Container } from "@mui/material";
-import { useHistory } from "react-router-dom";
 import slugify from "utils/formatUrlString";
 import scrollTop from "utils/scrollTop";
 import img, { paymentMethod, social } from "constants/img";
@@ -217,7 +216,6 @@ function Footer() {
             url: "https://ti.ki/beautyx12 ",
         },
     ];
-    const history = useHistory();
     const gotoPolicy = (item: any) => {
         scrollTop();
         switch (item.type) {
@@ -226,10 +224,15 @@ function Footer() {
             case "EMAIL":
                 return window.open(`mailto:${item.url}`);
             case "URL":
-                return history.push({
-                    pathname: `/chinh-sach/${slugify(item.title)}?id=${item.id}`,
-                    state: item,
-                });
+                // return history.push({
+                //     pathname: `/chinh-sach/${slugify(item.title)}?id=${item.id}`,
+                //     state: item,
+                // });
+                return window.open(
+                    `/chinh-sach/${slugify(item.title)}?id=${item.id}`,
+                    "_blank",
+                    "noopener,noreferrer"
+                );
             case "SOCIAL":
                 return window.open(
                     `${item.url}`,

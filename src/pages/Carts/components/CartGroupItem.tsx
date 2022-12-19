@@ -1,18 +1,18 @@
 /* eslint-disable no-useless-concat */
 import { Checkbox, Dialog } from "@mui/material";
 import React, { useState } from "react";
-import icon from "../../../constants/icon";
+import icon from "constants/icon";
 import {
     checkConfirm,
     onApplyVoucherSubTotal,
     onCancelApplyVoucher,
     onClearApplyVoucher,
     onClearPrevCartItem,
-} from "../../../redux/cartSlice";
+} from "redux/cart";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
-import { IDiscountPar, IITEMS_DISCOUNT } from "../../../interface/discount";
-import { IOrganization } from "../../../interface/organization";
+import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
+import { IOrganization } from "interface/organization";
 import {useDeviceMobile} from "hooks";
 import {
     EX_CHECK_DATE,
@@ -21,14 +21,14 @@ import {
     IS_VOUCHER,
     EX_CHECK_VALID_TIME,
     EX_CHECK_INCLUDE_ORG
-} from "../../../utils/cart/checkConditionVoucher";
-import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
-import onErrorImg from "../../../utils/errorImg";
-import img from "../../../constants/img";
-import formatPrice from "../../../utils/formatPrice";
+} from "utils/cart/checkConditionVoucher";
+import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
+import onErrorImg from "utils/errorImg";
+import img from "constants/img";
+import formatPrice from "utils/formatPrice";
 import moment from "moment";
-import { cartReducer, discountReducerItem } from "../../../utils/cart/cartReducer";
-import { Transition, TransitionUp } from "../../../utils/transition";
+import { cartReducer, discountReducerItem } from "utils/cart/cartReducer";
+import { Transition, TransitionUp } from "utils/transition";
 import { XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 
@@ -204,7 +204,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const voucher: IDiscountPar = {
         ...props.voucher,
     };
-    const { timeCondition, displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
+    const {timeCondition,  displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
     const [noti, setNoti] = useState(false);
 
     const { productsInDis, servicesInDis } = discountReducerItem(
@@ -220,6 +220,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const active = VOUCHER_APPLY?.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
+    // const dateCondition  = true
     const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products_id, services_id);
     const orgCondition = EX_CHECK_INCLUDE_ORG(voucher, org.id)
 
@@ -254,6 +255,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     ) {
         applyCondition = true;
     }
+
     const outDiscounts = props.outDiscounts?.filter(Boolean)
     const handleApplyVoucher = () => {
         if (outDiscounts && outDiscounts.length > 0) return setNoti(true)

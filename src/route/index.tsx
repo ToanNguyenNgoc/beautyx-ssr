@@ -43,7 +43,6 @@ import Account from "pages/Account";
 import Calendar from "features/Calendar";
 import BuyNow from "features/BuyNow";
 import Carts from "pages/Carts";
-import Rewards from "pages/Rewards";
 // import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
@@ -86,6 +85,7 @@ const Trends = lazy(() => import('pages/Trends'))
 const Community = lazy(() => import('pages/Community'))
 // const VoucherPage = lazy(() => import('pages/Community'))
 const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
+const Rewards = lazy(() => import('pages/Rewards'))
 
 function RouterConfig() {
     const routes = [

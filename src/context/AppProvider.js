@@ -6,10 +6,9 @@ import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { getPosition } from "api/authLocation";
-import { paramsProductsCate } from "params-query";
 import axios from "axios";
 import API_3RD from "api/3rd-api";
-import { useSwr, useFetch, useAppointment, useOrderService } from "hooks"
+import {  useFetch, useAppointment, useOrderService, useProductCate } from "hooks"
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -40,25 +39,6 @@ export default function AppProvider({ children }) {
         }
         callUserProfile()
     }, [sign, dispatch]);
-    useEffect(() => {
-        dispatch(fetchAsyncHome())
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    //----------------------------------------------------------
-    //get location plat form
-    // const { mountNth } = useSelector((state) => state.ORGS_MAP.orgsMap);
-    // const callDisAndOrgsByLocation = () => {
-    //     if (mountNth !== 2) {
-    //         dispatch(fetchOrgsMapFilter({
-    //             page: 1,
-    //             sort: "distance",
-    //             path_url: "/ban-do",
-    //             mountNth: 2
-    //         }))
-    //     }
-
-    // }
     const getLocationPlatFormBeauty = async () => {
         try {
             const res = await getPosition();
@@ -77,13 +57,14 @@ export default function AppProvider({ children }) {
     }
     useEffect(() => {
         getLocationPlatFormBeauty()
+        dispatch(fetchAsyncHome())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     //handle product cate, service cate
-    const productCatePage1 = useSwr("/tags", true, { page: 1, ...paramsProductsCate }).responseArray;
-    const productCatePage2 = useSwr("/tags", true, { page: 2, ...paramsProductsCate }).responseArray;
-    const productCatePage3 = useSwr("/tags", true, { page: 3, ...paramsProductsCate }).responseArray;
-    const productCate = productCatePage1.concat(productCatePage2).concat(productCatePage3)
-
+    
+    
+    // const productCate = []
+    const productCate = useProductCate()
     const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
     //get services, appointment user
     const { appointment } = useAppointment()

@@ -5,14 +5,19 @@ import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import dayjs from 'dayjs';
 import HeadTitle from 'features/HeadTitle';
+import IStore from 'interface/IStore';
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import { IPost, posts } from '../../data'
+import { onFavorite } from 'redux/community';
+import { IPost } from '../../data'
 import style from './post-detail.module.css'
 
 function PostDetail() {
     const { id } = useParams() as any
     const history = useHistory()
+    const dispatch = useDispatch()
+    const { posts } = useSelector((state: IStore) => state.COMMUNITY)
     const post = posts.find((i: IPost) => i.id === parseInt(id))
     useEffect(() => {
         if (!id || !post) history.replace('/error')
@@ -65,8 +70,9 @@ function PostDetail() {
                     <div className={style.interactive}>
                         <div className={style.interactive_item}>
                             <XButton
+                                onClick={() => dispatch(onFavorite({ id: post?.id, isFavorite: !post?.isFavorite }))}
                                 iconSize={28}
-                                icon={icon.thumbUp}
+                                icon={post?.isFavorite ? icon.thumbUpPurple : icon.thumbUp}
                             />
                             <span>{post?.favorite_count}</span>
                         </div>

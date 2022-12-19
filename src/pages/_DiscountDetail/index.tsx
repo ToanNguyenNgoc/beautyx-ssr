@@ -19,7 +19,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import IStore from 'interface/IStore';
 import { PopupMessage } from 'components/Notification';
 import { formatAddCart } from 'utils/cart/formatAddCart';
-import { addCart } from 'redux/cartSlice';
+import { addCart } from 'redux/cart';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
 import { clearAllServices } from 'redux/servicesBookSlice';

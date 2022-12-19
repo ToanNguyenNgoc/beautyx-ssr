@@ -9,7 +9,7 @@ import {
     ascItem,
     onClearPrevCartItem,
     onClearApplyVoucher,
-} from "../../../redux/cartSlice";
+} from "../../../redux/cart";
 import { useDispatch } from "react-redux";
 import icon from "../../../constants/icon";
 import formatPrice from "../../../utils/formatPrice";

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addCart, onClearPrevCartItem } from "redux/cartSlice";
+import { addCart, onClearPrevCartItem } from "redux/cart";
 import { AppContext } from "context/AppProvider";
 import { formatAddCart } from "utils/cart/formatAddCart";
 import tracking from "api/trackApi";
