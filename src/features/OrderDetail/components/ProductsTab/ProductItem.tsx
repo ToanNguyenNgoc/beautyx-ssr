@@ -61,7 +61,7 @@ function ProductItem(props: ProductItemProps) {
     dispatch(onClearPrevCartItem())
     dispatch(addCart({
       ...cartValues,
-      cart_id: parseInt(`${USER.id}${cartValues.cart_id}`),
+      cart_id: cartValues.cart_id,
       user_id: USER?.id
     }))
     history.push('/gio-hang')

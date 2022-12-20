@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { identity, pickBy } from "lodash";
 import { PopupNotification } from "components/Notification";
-// ==== api tracking ====
 import tracking from "api/trackApi";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 import { cartReducer, discountReducerItem } from "utils/cart/cartReducer";
@@ -16,7 +15,7 @@ import { AppContext } from "context/AppProvider";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
 import { onErrorImg } from "utils";
-import { useDeviceMobile } from 'hooks';
+import { useDeviceMobile, useVoucherCalCart } from 'hooks';
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cart";
@@ -36,7 +35,7 @@ function CartBottom(props: any) {
     const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
-    const { cartQuantityCheck } = useSelector((state: any) => state.carts);
+    const { vouchersCal } = useVoucherCalCart(VOUCHER_APPLY)
     const [load, setLoad] = useState(false);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     // const [otpCode, setOtpCode] = useState(false);
@@ -69,9 +68,7 @@ function CartBottom(props: any) {
     const {
         products, cart_confirm,
         combos_id, services_id, products_id
-    } = cartReducer(
-        DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
-    );
+    } = cartReducer(DATA_CART.cartList.filter((i: any) => i.isConfirm === true));
 
     const coupon_code_arr = listCouponCode.length > 0 ? listCouponCode : []
 
@@ -192,31 +189,7 @@ function CartBottom(props: any) {
     };
 
 
-    const vouchersCal = VOUCHER_APPLY?.map((i: IDiscountPar) => {
-        let discountValue = i.discount_value;
-        if (i.discount_unit === 'PERCENT' && i.discount_type === 'SUB_TOTAL') {
-            let cal = 0
-            const calTotal = cartAmount * i.discount_value / 100
-            if (!i.maximum_discount_value || calTotal < i.maximum_discount_value) {
-                cal = calTotal
-            }
-            if (i.maximum_discount_value && calTotal > i.maximum_discount_value) {
-                cal = i.maximum_discount_value
-            }
-            discountValue = cal
-        }
-        if (i.discount_type === "PRODUCT" && i.items_count === 0 && i.discount_unit === "PRICE") {
-            discountValue = cartQuantityCheck * i.discount_value
-        }
-        if (i.discount_type === "FINAL_PRICE" && i.items_count > 0) {
-            discountValue = i.items[0]?.productable?.price - i.discount_value
-        }
-        return {
-            ...i,
-            discount_value: (i.discount_unit === "PERCENT" || i.discount_type === "PRODUCT" || i.discount_type === "FINAL_PRICE") ?
-                discountValue : i.discount_value
-        }
-    })
+
 
     let discountVoucherTotal = 0
     if (VOUCHER_APPLY.length > 0) {
@@ -368,7 +341,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const [text, setText] = useState("");
     const [response, setResponse] = useState<IDiscountPar | any>()
-    const {firstLoad, resultLoad, noti} = useNoti()
+    const { firstLoad, resultLoad, noti } = useNoti()
     const onInputChange = (e: any) => {
         if (text.length <= 25) {
             setText(e.target.value)
@@ -444,7 +417,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                     {
                         noti.message !== '' &&
                         <div className="vc_cart_none">
-                           {noti.message}
+                            {noti.message}
                         </div>
                     }
                     {

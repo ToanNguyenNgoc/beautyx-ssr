@@ -61,10 +61,13 @@ function BookingNowBill(props: BookingNowBillProps) {
         }
     })
     const totalVouchers = vouchers_calc.length > 0 &&
-        vouchers_calc.map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre)
+        vouchers_calc
+            .map((item: IDiscountPar) => item.discount_value)
+            .reduce((cur: number, pre: number) => cur + pre)
     const vouchers_sub_total: IDiscountPar[] = VOUCHER_APPLY
         .filter((i: IDiscountPar) => i.discount_type === "SUB_TOTAL")
-    const vouchers_sub_total_price = vouchers_sub_total.filter((item: IDiscountPar) => item.discount_unit === "PRICE")
+    const vouchers_sub_total_price = vouchers_sub_total
+        .filter((item: IDiscountPar) => item.discount_unit === "PRICE")
     const subTotalVouchers = vouchers_sub_total_price.length > 0 ?
         vouchers_sub_total_price
             .map((item: IDiscountPar) => item.discount_value).reduce((cur: number, pre: number) => cur + pre) : 0
