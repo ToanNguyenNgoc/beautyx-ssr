@@ -15,7 +15,7 @@ export function BeautyxCare() {
                 </div>
             </div>
             <p className={style.body}>
-                Hoàn tiền 100% nếu khách hàng đến không sử dụng dịch vụ tại cơ sở.
+                Hoàn tiền 100% nếu khách hàng đến không sử dụng được dịch vụ tại cơ sở.
             </p>
             <Link 
                 onClick={scrollTop}
