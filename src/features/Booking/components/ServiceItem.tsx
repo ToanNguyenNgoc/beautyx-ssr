@@ -1,6 +1,8 @@
-import React from 'react';
-import { Service } from '../../../interface/service';
-import { IOrganization } from '../../../interface/organization';
+import { AppContext } from 'context/AppProvider';
+import { IOrganization, Service } from 'interface';
+import React, { useContext } from 'react';
+import { onErrorImg } from 'utils';
+import style from '../booking.module.css'
 
 interface IProps {
     service: {
@@ -11,16 +13,22 @@ interface IProps {
 }
 
 function ServiceBookItem(props: IProps) {
+    const {t} = useContext(AppContext)
     const { service, org } = props;
     return (
-        <div className='flex-row book__service-item'>
-            <img src={service?.service?.image ? `${service?.service?.image_url}` : `${org?.image_url}`}
-                alt=""
-                className="book__service-item__img"
-            />
-            <div className="book__service-item__de">
-                <p className="name">{service?.service?.service_name}</p>
-                <p className="quantity">Số lượng : {service.quantity}</p>
+        <div className={style.service_item}>
+            <div className={style.right_org_img}>
+                <img src={service?.service?.image_url ?? org?.image_url}
+                    onError={(e) => onErrorImg(e)} alt=""
+                />
+            </div>
+            <div className={style.service_right}>
+                <p className={style.service_name}>
+                    {service?.service?.service_name}
+                </p>
+                <p className={style.service_quantity}>
+                    {t('pr.quantity')}:{service?.quantity}
+                </p>
             </div>
         </div>
     );

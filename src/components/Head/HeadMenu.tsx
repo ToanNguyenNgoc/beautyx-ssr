@@ -17,19 +17,13 @@ function HeadMenu() {
         if (dis === "hide")
             return refMenu?.current?.classList.remove(style.head_menu_show);
     };
-    window.onclick = () => onToggleMenu('hide')
     const onCloseTimeout = () => {
         setTimeout(() => { onToggleMenu('hide') }, 100)
     }
     return (
         <button
-            // onFocus={() => onToggleMenu("show")}
-            // onBlur={() => onToggleMenu("hide")}
-            onClick={(e) => {
-                onToggleMenu('show')
-                e.preventDefault();
-                e.stopPropagation();
-            }}
+            onFocus={() => onToggleMenu("show")}
+            onBlur={() => onToggleMenu("hide")}
             className={style.head_top_right_btn}
         >
             <img src={icon.Menu} alt="" />

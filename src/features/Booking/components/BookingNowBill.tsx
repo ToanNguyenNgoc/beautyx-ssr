@@ -1,5 +1,5 @@
 import icon from 'constants/icon';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from 'utils/formatPrice';
 import { DISCOUNT_TYPE } from 'utils/formatRouterLink/fileType';
@@ -7,6 +7,9 @@ import { InputVoucher } from 'pages/Carts/components/CartBottom';
 import { IOrganization } from 'interface/organization';
 import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
+import style from '../booking.module.css'
+import { XButton } from 'components/Layout';
+import { AppContext } from 'context/AppProvider';
 
 interface BookingNowBillProps {
     org: IOrganization,
@@ -15,6 +18,7 @@ interface BookingNowBillProps {
 
 function BookingNowBill(props: BookingNowBillProps) {
     const { setFinalAmount } = props
+    const {t} = useContext(AppContext)
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
     const location: any = useLocation();
@@ -98,33 +102,27 @@ function BookingNowBill(props: BookingNowBillProps) {
 
     return (
         <>
-            {
-                location.state?.TYPE === "BOOK_NOW" &&
-                <div className="flex-row re-cart-bottom__total-discount">
-                    <button
-                        onClick={() => setOpenVc({ ...openVc, open: true })}
-                        className="open_voucher_btn"
-                    >
-                        Nhập mã khuyến mại
-                        <img src={icon.cardDiscountOrange} alt="" />
-                    </button>
-                </div>
-            }
-            <div className="flex-row-sp booking-cnt__bot-bill">
-                <div className="booking_calc_item">
-                    <span className="booking_calc_item_left">Tổng tiền</span>
-                    <span className="booking_calc_item_right">{formatPrice(total)}đ</span>
+            <div className={style.open_voucher}>
+                <XButton
+                    className={style.open_voucher_btn}
+                    onClick={() => setOpenVc({ ...openVc, open: true })}
+                    title={t('pm.enter_coupon_code')}
+                    iconSize={16}
+                    icon={icon.cardDiscountOrange}
+                />
+            </div>
+            <div className={style.booking_cnt_bot_bill}>
+                <div className={style.booking_calc_item}>
+                    <span className={style.booking_calc_item_left}>{t('cart.total_payment')}</span>
+                    <span className={style.booking_calc_item_right}>{formatPrice(total)}đ</span>
                 </div>
                 {
-                    // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
-                    // VOUCHER_APPLY.length === 0 &&
-                    //-------------------------------------------------------------------
                     discounts.map((item: number) => (
-                        <div key={item} className="booking_calc_item">
-                            <span className="booking_calc_item_left">Giảm giá</span>
+                        <div key={item} className={style.booking_calc_item}>
+                            <span className={style.booking_calc_item_left}>{t('pm.sale')}</span>
                             <span
                                 style={{ color: "var(--text-orange)" }}
-                                className="booking_calc_item_right">
+                                className={style.booking_calc_item_right}>
                                 -{formatPrice(item)}đ
                             </span>
                         </div>
@@ -132,11 +130,11 @@ function BookingNowBill(props: BookingNowBillProps) {
                 }
                 {
                     vouchers_sub_total.map((item: IDiscountPar, index: number) => (
-                        <div key={index} className="booking_calc_item">
-                            <span className="booking_calc_item_left">{item.title}</span>
+                        <div key={index} className={style.booking_calc_item}>
+                            <span className={style.booking_calc_item_left}>{item.title}</span>
                             <span
                                 style={{ color: "var(--text-orange)" }}
-                                className="booking_calc_item_right">
+                                className={style.booking_calc_item_right}>
                                 {
                                     item.discount_unit === "PRICE" && ` -${formatPrice(item.discount_value)}đ`
                                 }
@@ -147,9 +145,9 @@ function BookingNowBill(props: BookingNowBillProps) {
                         </div>
                     ))
                 }
-                <div className="booking_calc_item">
-                    <span className="booking_calc_item_left">Thanh toán</span>
-                    <span style={{ fontWeight: "700" }} className="booking_calc_item_right">
+                <div className={style.booking_calc_item}>
+                    <span className={style.booking_calc_item_left}>{t('pm.pay')}</span>
+                    <span style={{ fontWeight: "700" }} className={style.booking_calc_item_right}>
                         {formatPrice(TOTAL_PAYMENT - totalDiscountPercent)}đ
                     </span>
                 </div>

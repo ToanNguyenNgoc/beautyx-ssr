@@ -3,8 +3,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
-import "./style.css";
-import onErrorImg from "utils/errorImg";
 import ServiceBookItem from "./components/ServiceItem";
 import { useHistory, useLocation } from "react-router-dom";
 import { addServiceBookNow, clearAllServices } from "redux/servicesBookSlice";
@@ -21,20 +19,21 @@ import { formatDatePost } from "utils/formatDate";
 import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "utils/cart/formatAddCart";
-import { fetchAsyncOrg } from "redux/org/orgSlice";
-import { STATUS } from "redux/status";
 import apointmentApi from "api/apointmentApi";
 import { Container } from "@mui/material";
-import { PopUpVoucherOrg } from "pages/Carts/components/CartGroupItem";
-import SectionTitle from "../SectionTitle";
 import { onClearApplyVoucher } from "redux/cart";
 import { IDiscountPar } from "interface/discount";
-import { AlertSnack, XButton } from "components/Layout";
+import { XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useSwr } from "hooks";
 import { AppContext } from "context/AppProvider";
+import style from './booking.module.css'
+import img from "constants/img";
+import { IBranch, IOrganization } from "interface";
+import API_ROUTE from "api/_api";
+import BookingMap from "./components/BookingMap";
 
 // end
 const date = dayjs();
@@ -49,35 +48,39 @@ function Booking() {
     const { t } = useContext(AppContext)
     const [finalAmount, setFinalAmount] = useState(0)
     const { SERVICES_BOOK } = useSelector((state: any) => state);
-    const { org, status } = useSelector((state: any) => state.ORG);
+
     const IS_MB = useDeviceMobile();
     const FLAT_FORM = EXTRA_FLAT_FORM();
-    const [openAlertSnack, setOpenAlertSnack] = useState({
-        title: "",
-        open: false,
-    });
     const [openNoti, setOpenNoti] = useState(initOpenNoti);
-    const [openVouchers, setOpenVouchers] = useState(false);
     const { USER } = useSelector((state: any) => state.USER);
     const { payments_method } = useSelector(
         (state: any) => state.PAYMENT.PAYMENT
     );
-    const branchRef = useRef<any>();
     const history = useHistory();
     const location: any = useLocation();
     const TYPE_PAGE = location.state?.TYPE
+    // handle UI
+    const refBranch = useRef<HTMLDivElement>(null)
+    const refIconRight = useRef<HTMLImageElement>(null)
+    const openBranch = () => {
+        refBranch?.current?.classList.add(style.branch_show);
+        refIconRight?.current?.classList.add(style.right_icon_ch)
+    }
+    const closeBranch = () => {
+        refBranch.current?.classList.remove(style.branch_show);
+        refIconRight.current?.classList.remove(style.right_icon_ch)
+    }
+    window.onclick = () => closeBranch()
     //api discount apply for book now
     //-------------------------------
+    const org: IOrganization = useSwr(
+        `${API_ROUTE.ORG(location?.state?.org?.id)}`,
+        location?.state?.org?.id
+    )?.response
 
-    const callOrgDetail = () => {
-        if (location.state.org.id !== org?.id || status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncOrg(location.state.org.id));
-        }
-    };
     useEffect(() => {
         dispatch(onClearApplyVoucher())
         if (location.state) {
-            callOrgDetail();
             const action = {
                 org: location.state.org,
                 services: location.state.services,
@@ -88,7 +91,6 @@ function Booking() {
         }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
-    const branches = org?.branches?.concat(org);
     const [open, setOpen] = useState(false);
     const [chooseE_wall, setChooseE_wall] = useState<any>();
     const [bookTime, setBookTime] = useState({
@@ -103,16 +105,13 @@ function Booking() {
             quantity: item.quantity,
         };
     });
-    const [seatAmount, SetSeatAmount] = useState(1);
-    const onDropBranchList = () => {
-        branchRef?.current?.classList?.toggle("drop-show-branches");
-    };
+    // const [seatAmount, SetSeatAmount] = useState(1);
     const onChooseBranch = (item: any) => {
-        onDropBranchList();
         setBookTime({
             ...bookTime,
-            branch_id: item.subdomain ? null : item.id,
+            branch_id: item?.id
         });
+        closeBranch()
     };
     const listCouponCode = servicesBook
         ?.map((item: any) => item?.service)
@@ -157,7 +156,8 @@ function Booking() {
 
     const dayBook = formatDatePost(bookTime.date);
     const action = {
-        note: "[ Số lượng người: " + seatAmount + " ] " + bookTime.note,
+        // note: "[ Số lượng người: " + seatAmount + " ] " + bookTime.note,
+        note: bookTime.note,
         time_start: `${dayBook} ${bookTime.time}:00`,
         branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
@@ -189,14 +189,14 @@ function Booking() {
             } else {
                 setOpenNoti({
                     open: true,
-                    content: "Tạo đơn hàng thất bại",
+                    content: t('my_ser.create_order_fail'),
                     children: <>
                         <XButton
-                            title="Đã hiểu"
+                            title={t('my_ser.ok')}
                             onClick={() => setOpenNoti({ ...openNoti, open: false })}
                         />
                         <XButton
-                            title="Về trang chủ"
+                            title={t('pm.goto_home')}
                             onClick={() => history.push("/home")}
                         />
                     </>,
@@ -208,14 +208,14 @@ function Booking() {
             console.log(err);
             setOpenNoti({
                 open: true,
-                content: "Tạo đơn hàng thất bại",
+                content: t('my_ser.create_order_fail'),
                 children: <>
                     <XButton
                         title="Đã hiểu"
                         onClick={() => setOpenNoti({ ...openNoti, open: false })}
                     />
                     <XButton
-                        title="Về trang chủ"
+                        title={t('pm.goto_home')}
                         onClick={() => history.push("/home")}
                     />
                 </>,
@@ -234,10 +234,10 @@ function Booking() {
             dispatch(clearAllServices())
             setOpenNoti({
                 open: true,
-                content: "Đặt hẹn thành công",
+                content: t('my_ser.bk_success'),
                 children: <>
                     <XButton
-                        title="Xem lịch hẹn"
+                        title={t('Header.see_calendar')}
                         onClick={gotoAppointment}
                     />
                 </>,
@@ -247,14 +247,14 @@ function Booking() {
             console.log(error);
             setOpenNoti({
                 open: true,
-                content: "Có lỗi xảy ra trong quá trình đặt hẹn",
+                content: t('my_ser.bk_fail_title'),
                 children: <>
                     <XButton
-                        title="Đã hiểu"
+                        title={t('my_ser.ok')}
                         onClick={() => setOpenNoti({ ...openNoti, open: false })}
                     />
                     <XButton
-                        title="Về trang chủ"
+                        title={t('Header.see_calendar')}
                         onClick={() => history.push("/home")}
                     />
                 </>,
@@ -262,358 +262,214 @@ function Booking() {
             });
         }
     };
-    const handleSeatsAmount = (props: any) => {
-        switch (props) {
-            case "asc":
-                SetSeatAmount(seatAmount + 1);
-                break;
-            case "desc":
-                SetSeatAmount(seatAmount - 1);
-                break;
-            default:
-                break;
-        }
-    };
-
     const handleBooking = () => {
-        if (USER) {
-            if (bookTime.time) {
-                if (location.state.TYPE === "BOOK_NOW") {
-                    if (finalAmount < 1000) {
-                        return setOpenNoti({
-                            ...initOpenNoti,
-                            open: true,
-                            content: `Đơn hàng tối thiểu là 1.000đ`,
-                            children: <></>
-                        });
-                    }
-                    if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
-
-                        handlePostOrder();
-                        // if (chooseE_wall) return 
-                        // else {
-                        //     setOpenAlertSnack({
-                        //         ...openAlertSnack,
-                        //         open: true,
-                        //         title: "Bạn Chưa chọn phương thức thanh toán!",
-                        //     });
-                        // }
-                    }
-                    else if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
-                        setOpenNoti({
-                            ...initOpenNoti,
-                            open: true,
-                            content: `Cập nhập số điện thoại để tiếp tục thanh toán!`,
-                            children: <>
-                                <XButton
-                                    title="Cập nhập"
-                                    onClick={() => history.push('/otp-form')}
-                                />
-                                <XButton
-                                    title="Để sau"
-                                    onClick={() => setOpenNoti({ ...openNoti, open: false })}
-                                />
-                            </>
-                        });
-                    } else {
-                        return handlePostOrder();
-                    }
-                } else {
-                    handlePostApps();
-                }
-            } else {
-                //pop up choose time request
-                setOpenAlertSnack({
-                    ...openAlertSnack,
-                    open: true,
-                    title: "Bạn cần chọn Thời Gian cho buổi hẹn!",
-                });
-            }
-        } else {
-            history.push("/sign-in?1");
-        }
+        if (!USER) return history.push('/sign-in?1')
+        if (!bookTime.time)
+            return setOpenNoti({
+                ...initOpenNoti,
+                open: true,
+                content: t('my_ser.pl_select_date'),
+                children: <></>
+            });
+        if (location.state.TYPE === "BOOK_NOW" && finalAmount < 1000)
+            return setOpenNoti({
+                ...initOpenNoti,
+                open: true,
+                content: t('my_ser.minimum_order_is_1_000_VND'),
+                children: <></>
+            });
+        if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone))
+            return setOpenNoti({
+                ...initOpenNoti,
+                open: true,
+                content: t('my_ser.enter_update_phone'),
+                children: <>
+                    <XButton
+                        title={t('my_ser.update')}
+                        onClick={() => history.push('/otp-form')}
+                    />
+                    <XButton
+                        title={t('pm.later')}
+                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
+                    />
+                </>
+            });
+        if (location.state.TYPE === "BOOK_NOW") return handlePostOrder();
+        handlePostApps();
     };
-    const [address, setAddress] = useState<any>();
     return (
         <>
+            <HeadTitle title={t('Header.booking')} />
+            {IS_MB && <HeadMobile title={t('Header.booking')} />}
             <Container>
-                <AlertSnack
-                    title={openAlertSnack.title}
-                    open={openAlertSnack.open}
-                    status="FAIL"
-                    onClose={() =>
-                        setOpenAlertSnack({
-                            ...openAlertSnack,
-                            open: false,
-                        })
-                    }
-                />
-                <HeadTitle title="Đặt hẹn" />
-                {IS_MB && <HeadMobile title="Đặt hẹn" />}
-                <div className="booking-wrap">
-                    <div className="booking-cnt">
-                        <div className="booking-cnt__left">
-                            {IS_MB === false && org && (
-                                <></>
-                            )}
-
+                <div className={style.container}>
+                    {
+                        !IS_MB &&
+                        <div className={style.left}>
+                            <div className={style.left_cnt}>
+                                {org && <BookingMap org={org} />}
+                            </div>
                         </div>
-                        <div className="booking-cnt__right">
-                            {IS_MB && <UserPaymentInfo
+                    }
+                    <div className={style.right}>
+                        <div className={style.section_user}>
+                            <UserPaymentInfo
+                                disableAddress
                                 title={TYPE_PAGE === 'BOOK_NOW' ? t('pm.payment_info') : t('pm.payment_booking')}
-                                onSetAddressDefault={setAddress}
-                            />}
-                            <br />
-                            <div className="booking-cnt__right-org">
-                                <img
-                                    src={org?.image_url}
-                                    onError={(e) => onErrorImg(e)}
-                                    alt=""
-                                    className="org-avt"
-                                />
-                                <div className="book-org-detail">
-                                    <p className="org-name">{org?.name}</p>
-                                    <p className="org-address">
-                                        {org?.full_address}
-                                    </p>
+                            />
+                        </div>
+                        <div className={style.section_org}>
+                            <div className={style.right_org}>
+                                <div className={style.right_org_img}>
+                                    <img src={org?.image_url ?? img.imgDefault} alt="" />
                                 </div>
+                                <span className={style.right_org_name}>{org?.name}</span>
                             </div>
-                            {
-                                location.state?.vouchers?.length > 0 &&
-                                <>
-                                    <button
-                                        onClick={() => setOpenVouchers(true)}
-                                        className="flex-row booking-cnt__right-voucher"
-                                    >
-                                        Mã khuyếm mãi
-                                        <img src={icon.cardDiscountOrange} alt="" />
-                                    </button>
-                                    <PopUpVoucherOrg
-                                        org={org}
-                                        open={openVouchers}
-                                        setOpen={setOpenVouchers}
-                                        vouchers={location.state.vouchers}
+                            <div className={style.right_branches}>
+                                <div
+                                    onClick={(e) => { e.preventDefault(); e.stopPropagation(); openBranch() }}
+                                    className={style.right_branch_default}
+                                >
+                                    <img src={icon.pinMapGreen} alt="" className={style.map_icon} />
+                                    <span className={style.branch_default_address}>
+                                        {
+                                            org?.branches?.find((i: IBranch) => i.id === bookTime.branch_id)?.full_address ??
+                                            org?.full_address
+                                        }
+                                    </span>
+                                    <img ref={refIconRight}
+                                        src={icon.chevronRightBlack}
+                                        className={style.right_icon} alt=""
                                     />
-                                </>
-                            }
-                            <div className="booking-cnt__right-services">
-                                <ul className="booking-service-list">
-                                    {servicesBook.map(
-                                        (item: any, index: number) => (
-                                            <li key={index}>
-                                                <ServiceBookItem
-                                                    org={org}
-                                                    service={item}
-                                                />
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-                            </div>
-                            <div className="booking-cnt__right-branches">
-                                <span className="book-section-title">
-                                    Địa điểm
-                                </span>
-                                <div className="branch-drop">
-                                    <div
-                                        onClick={onDropBranchList}
-                                        className="flex-row-sp branch-choose"
-                                    >
-                                        <span className="flex-row">
-                                            <img
-                                                style={{ marginRight: "4px" }}
-                                                src={icon.mapPinRed}
-                                                alt=""
-                                            />
-                                            {bookTime.branch_id
-                                                ? 'Chi nhánh: ' + org?.branches?.find(
-                                                    (i: any) =>
-                                                        i.id ===
-                                                        bookTime.branch_id
-                                                )?.full_address
-                                                : 'Trụ sở: ' + org?.full_address}
-                                        </span>
-                                        {org?.branches?.length > 0 && (
-                                            <img
-                                                src={icon.arrowDownPurple}
-                                                alt=""
-                                            />
-                                        )}
-                                    </div>
-                                    {org?.branches?.length > 0 && (
-                                        <ul
-                                            ref={branchRef}
-                                            className="branch-list"
-                                        >
-                                            {branches?.map(
-                                                (item: any, index: number) => (
-                                                    <li
-                                                        onClick={() =>
-                                                            onChooseBranch(item)
-                                                        }
-                                                        style={
-                                                            bookTime.branch_id ===
-                                                                item.id
-                                                                ? {
-                                                                    color: "var(--text-black)",
-                                                                }
-                                                                : {}
-                                                        }
-                                                        key={index}
-                                                    >
-                                                        {(index + 1 == branches.length) ? 'Trụ sở: ' : 'Chi nhánh: '}
-                                                        {item?.full_address}
-                                                    </li>
-                                                )
-                                            )}
-                                        </ul>
-                                    )}
+                                </div>
+                                <div
+                                    onClick={(e) => { e.preventDefault(); e.stopPropagation() }}
+                                    ref={refBranch} className={style.right_org_list_branch}
+                                >
+                                    <ul className={style.branch_list}>
+                                        <li onClick={() => onChooseBranch(null)} className={style.branch_item}>
+                                            <div className={style.branch_item_check}>
+                                                {!bookTime.branch_id && <span></span>}
+                                            </div>
+                                            <div className={style.branch_item_name}>
+                                                <span>{t('pm.org')}:</span>
+                                                {org?.full_address}
+                                            </div>
+                                        </li>
+                                        {
+                                            org?.branches?.map((item: IBranch, index: number) => (
+                                                <li onClick={() => onChooseBranch(item)}
+                                                    key={index} className={style.branch_item}
+                                                >
+                                                    <div className={style.branch_item_check}>
+                                                        {item.id === bookTime.branch_id && <span></span>}
+                                                    </div>
+                                                    <div className={style.branch_item_name}>
+                                                        <span>{t('Mer_de.branch')}:</span>
+                                                        {item.full_address}
+                                                    </div>
+                                                </li>
+                                            ))
+                                        }
+                                    </ul>
                                 </div>
                             </div>
-                            <div className="flex-row-sp booking-cnt__right-time">
-                                <div className="book-time">
-                                    <span className="book-section-title">
-                                        Thời gian
-                                    </span>
-                                    {bookTime.time && bookTime.time ? (
-                                        <span>
-                                            {bookTime.date} {bookTime.time}
-                                        </span>
-                                    ) : (
-                                        <span
-                                            style={{ color: "var(--red-cl)" }}
-                                        >
-                                            Vui lòng chọn thời gian
-                                        </span>
-                                    )}
-                                </div>
-                                <XButton
-                                    title="Chọn"
-                                    onClick={() => setOpen(true)}
-                                    loading={false}
-                                />
-                            </div>
-                            <div className="flex-row-sp booking-cnt__right-time">
-                                <div className="book-seats-amount">
-                                    <span className="book-section-title">
-                                        Số người sử dụng dịch vụ
-                                    </span>
-                                    <div className="seats_amount-cnt">
-                                        <button
-                                            className="desc"
-                                            disabled={
-                                                seatAmount === 1 ? true : false
-                                            }
-                                            onClick={() =>
-                                                handleSeatsAmount("desc")
-                                            }
-                                        >
-                                            {"-"}
-                                        </button>
-                                        <div className="book-section-title amount">
-                                            {seatAmount}
-                                        </div>
-                                        <button
-                                            className="asc"
-                                            disabled={
-                                                (seatAmount >= 10 ||
-                                                    seatAmount >=
-                                                    services[0]?.quantity ||
-                                                    services[0]?.quantity === 1)
-                                                    ? true
-                                                    : false
-                                            }
-                                            onClick={() =>
-                                                handleSeatsAmount("asc")
-                                            }
-                                        >
-                                            {"+"}
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="booking-cnt__right-time">
-                                <span className="book-section-title">
-                                    Ghi chú
-                                </span>
-                                <br />
-                                <textarea
-                                    onChange={(e) =>
-                                        setBookTime({
-                                            ...bookTime,
-                                            note: e.target.value,
-                                        })
+                        </div>
+                        <div className={style.section_services}>
+                            <ul className={style.service_list}>
+                                {servicesBook.map(
+                                    (item: any, index: number) => (
+                                        <li key={index}>
+                                            <ServiceBookItem org={org} service={item} />
+                                        </li>
+                                    )
+                                )}
+                            </ul>
+                        </div>
+                        <div className={style.section_time}>
+                            <div className={style.section_time_left}>
+                                <img src={icon.clockAppGray} alt="" />
+                                <div className={style.section_time_text}>
+                                    {
+                                        (bookTime.date && bookTime.time) ?
+                                            `${bookTime.date} ${bookTime.time}` : t('my_ser.pl_select_date')
                                     }
-                                    name=""
-                                    id=""
-                                    cols={30}
-                                    rows={5}
-                                ></textarea>
+                                </div>
                             </div>
-                            <div
-                                style={
-                                    FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX &&
-                                        location.state.TYPE === "BOOK_NOW"
-                                        ? { display: "block" }
-                                        : { display: "none" }
+                            <XButton
+                                className={style.section_time_btn}
+                                icon={icon.chevronRightBlack}
+                                iconSize={16}
+                                title={t('my_ser.time_select')}
+                                onClick={() => setOpen(true)}
+                            />
+                        </div>
+                        <div className={style.section_note}>
+                            <textarea
+                                className={style.note_textarea}
+                                onChange={(e) =>
+                                    setBookTime({ ...bookTime, note: e.target.value })
                                 }
-                            >
+                                placeholder={t('my_ser.note_1')}
+                            />
+                        </div>
+                        {
+                            TYPE_PAGE === 'BOOK_NOW' &&
+                            <div className={style.section_payment}>
                                 {
                                     FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX
                                         ?
                                         <>
-                                            <SectionTitle title={'Phương thức thanh toán'} />
-                                            <span style={{
-                                                backgroundColor: "var(--pink-momo)",
-                                                marginLeft: "12px",
-                                                marginBottom: "12px",
-                                                padding: "0px 8px",
-                                                borderRadius: "6px",
-                                                color: "var(--white)"
-                                            }}>
+                                            <p className={style.section_payment_title}>
+                                                {t('footer.payment_method')}
+                                            </p>
+                                            <div className={style.section_payment_mt}>
                                                 MOMO
-                                            </span>
-                                            <br />
+                                            </div>
                                         </>
                                         :
-                                        <PaymentMethodCpn
-                                            e={chooseE_wall}
-                                            onPaymentMethodChange={setChooseE_wall}
-                                        />
+                                        <div style={{ display: 'none' }} >
+                                            <PaymentMethodCpn
+                                                e={chooseE_wall}
+                                                onPaymentMethodChange={setChooseE_wall}
+                                            />
+                                        </div>
                                 }
                             </div>
-                            <div className="booking-cnt__bot">
-                                {location.state.TYPE === "BOOK_NOW" && (
-                                    <BookingNowBill org={org} setFinalAmount={setFinalAmount} />
-                                )}
-                                <XButton
-                                    title={
-                                        location.state?.TYPE === "BOOK_NOW"
-                                            ? "Thanh toán và đặt hẹn ngay"
-                                            : "Đặt hẹn ngay"
-                                    }
-                                    loading={openNoti.load}
-                                    onClick={handleBooking}
-                                />
-                            </div>
+                        }
+                        <div className={style.section_bill}>
+                            {
+                                TYPE_PAGE === 'BOOK_NOW' &&
+                                <BookingNowBill org={org} setFinalAmount={setFinalAmount} />
+                            }
+                            <XButton
+                                className={style.post_btn}
+                                title={
+                                    TYPE_PAGE === "BOOK_NOW"
+                                        ? t('my_ser.pay_and_book')
+                                        : t('Home.Order_step_4')
+                                }
+                                loading={openNoti.load}
+                                onClick={handleBooking}
+                            />
                         </div>
                     </div>
                 </div>
-                <BookingTime
-                    bookTime={bookTime}
-                    setBookTime={setBookTime}
-                    open={open}
-                    setOpen={setOpen}
-                    org={org}
-                />
-                <PopupNotification
-                    title="Thông báo"
-                    content={openNoti.content}
-                    open={openNoti.open}
-                    children={openNoti.children}
-                    setOpen={() => setOpenNoti({ ...openNoti, open: false })}
-                />
             </Container>
+            <BookingTime
+                bookTime={bookTime}
+                setBookTime={setBookTime}
+                open={open}
+                setOpen={setOpen}
+                org={org}
+            />
+            <PopupNotification
+                title={t('Header.noti')}
+                content={openNoti.content}
+                open={openNoti.open}
+                children={openNoti.children}
+                setOpen={() => setOpenNoti({ ...openNoti, open: false })}
+            />
         </>
     );
 }
