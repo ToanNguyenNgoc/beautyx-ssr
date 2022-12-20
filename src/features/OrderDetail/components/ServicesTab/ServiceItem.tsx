@@ -43,7 +43,7 @@ function ServiceItem(props: any) {
         service,
         org,
         (IS_DISCOUNT?.discount ? 'DISCOUNT':'SERVICE'),
-        1,
+        'SERVICE',
         serviceItem.base_price,
         IS_DISCOUNT?.discount,
         true
@@ -71,7 +71,7 @@ function ServiceItem(props: any) {
                 dispatch(onClearPrevCartItem());
                 dispatch(addCart({
                     ...cartValues,
-                    cart_id: parseInt(`${USER.id}${cartValues.cart_id}`),
+                    cart_id: cartValues.cart_id,
                     user_id: USER?.id
                 }));
                 history.push("/gio-hang");

@@ -3,9 +3,9 @@ import { IITEMS_DISCOUNT } from "../../interface/discount";
 
 export const cartReducer = (carts: any[]) => {
     const cart_confirm = carts.filter((item: ICart) => item.isConfirm === true)
-    const products = cart_confirm.filter((item: any) => item.is_type === 1);
-    const services = cart_confirm.filter((item: any) => item.is_type === 2);
-    const combos = cart_confirm.filter((item: any) => item.is_type === 3);
+    const products = cart_confirm.filter((item: any) => item.is_type === 'PRODUCT');
+    const services = cart_confirm.filter((item: any) => item.is_type === 'SERVICE');
+    const combos = cart_confirm.filter((item: any) => item.is_type === 'COMBO');
 
     const products_id = products.map((item: any) => {
         return { id: item.id, quantity: item.quantity }

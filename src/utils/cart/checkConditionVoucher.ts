@@ -51,7 +51,6 @@ export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
     } else if (voucher.valid_from < dayNow && voucher.valid_util > dayNow) {
         dateCondition = true
     }
-    console.log(voucher.valid_from, dayNow, voucher.valid_util)
     return dateCondition
 }
 export const EX_CHECK_VALID_TIME = (voucher: IDiscountPar) => {
