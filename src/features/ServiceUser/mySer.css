@@ -132,13 +132,14 @@
 }
 
 .treat-card-item {
-    box-shadow: 0 6px 15px #dcd8ee;
-    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
     padding: 12px;
     background-color: var(--bgWhite);
     position: relative;
 }
-.treat-card-item__dot{
+
+.treat-card-item__dot {
     width: 10px;
     height: 10px;
     background-color: var(--red-cl);
@@ -210,7 +211,7 @@
     display: flex;
     flex-direction: row;
     padding: 8px 0px;
-    border-bottom: 1px solid var(--bgGray);
+    border-bottom: 1px solid var(--bg-color);
     cursor: pointer;
 }
 
@@ -725,6 +726,24 @@
     color: var(--orange);
 }
 
+.treatment_card_item_bot {
+    margin-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+    height: 0px;
+    overflow-y: hidden;
+    transition: var(--trans);
+}
+
+.treatment_card_item_bot_btn {
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: var(--text-black);
+    background-color: #ABD373;
+}
+
 /* res-tablet */
 /* Tablet */
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
@@ -871,10 +890,13 @@
 
     .treat-card-item {
         padding: 12px;
-        box-shadow: none;
-        border: solid 1px var(--grey);
-        border-radius: 6px;
+        box-shadow: var(--box-shadow);
+        background-color: var(--bgWhite);
+        border-radius: 0px;
         margin-bottom: 12px;
+        width: 100vw !important;
+        margin-left: -12px !important;
+        margin-bottom: 10px !important;
     }
 
     .treat-card-item__head .org-name {
@@ -1113,6 +1135,9 @@
     .my-ser-bot button {
         background-color: var(--white);
         color: var(--purple);
+    }
+    .treatment_card_item_bot_btn{
+        width: 100%;
     }
 }
 

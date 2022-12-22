@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { EXTRA_PAYMENT } from 'rootComponents/extraPayment';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import doPostMakePaymentMessageTiki from 'rootComponents/tiki/doPostMessageTiki';
@@ -9,17 +8,19 @@ import doPostMakePaymentMessageMB from 'rootComponents/mb/doPostMessageMBbank';
 import UserPaymentInfo from 'pages/Account/components/UserPaymentInfo';
 import { onErrorImg } from 'utils';
 import formatPrice from 'utils/formatPrice';
-import '../cart-status.css'
+import style from '../payment.module.css'
+import img from 'constants/img';
+import { useDeviceMobile } from 'hooks';
+import { ICart } from 'interface';
+import { XButton } from 'components/Layout';
 
 function PaymentInfo(props: any) {
     const history = useHistory();
-    const { data, handleCancelOrder, action, listPayment, setLoading } = props;
-    const { organization } = data.res;
-    const { cartList } = useSelector((state: any) => state.carts);
-    const orderItems = listPayment ? listPayment : cartList.filter(
-        (item: any) =>
-            (item.isConfirm === true && item.org_id === organization?.id)
-    );
+    const IS_MB = useDeviceMobile()
+    const { data, handleCancelOrder, action, orderItems } = props;
+    const organization = data.res?.organization;
+    const [items,] = useState(orderItems)
+    const [servicesOrder,] = useState(items?.filter((i: ICart) => i.is_type === 'SERVICE'))
     const EX_PAYMENT = EXTRA_PAYMENT(data.res);
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const deepLink = EX_PAYMENT?.deepLink;
@@ -29,7 +30,6 @@ function PaymentInfo(props: any) {
             TYPE: "ORDER",
             params: EXTRA_PAYMENT_ID
         })
-        setLoading(true)
     }
     const openDeepLinkPayment = () => {
         if (FLAT_FORM) {
@@ -39,7 +39,6 @@ function PaymentInfo(props: any) {
                 case FLAT_FORM_TYPE.TIKI:
                     return openPaymentPlatformTiki()
                 case FLAT_FORM_TYPE.MB:
-                    // return
                     return doPostMakePaymentMessageMB(EX_PAYMENT?.EXTRA_PAYMENT_DATA)
                 default:
                     const newWindow = window.open(`${deepLink}`, '_blank', 'noopener,noreferrer');
@@ -58,174 +57,190 @@ function PaymentInfo(props: any) {
     const goBackHome = () => {
         history.push('/homepage')
     }
-    // const response =FLAT_FORM_TYPE.MB?useGetMessage():{'flatForm': FLAT_FORM};
-
-    // useMemo(() => {
-    // alert(JSON.stringify(response))
-    // }, [response])
     const onCheckStatus = () => {
         switch (data.orderStatus) {
             case "PENDING":
-                return <div className='flex-column pm-pending-cnt'>
-                    <button
-                        className="st-pm-info__bt"
+                return <>
+                    <XButton
                         onClick={handleCancelOrder}
-                    >
-                        Hủy thanh toán
-                    </button>
-                </div>
+                        title='Hủy thanh toán'
+                        className={style.section_status_btn}
+                        style={{ backgroundColor: 'var(--pink-momo)' }}
+                    />
+                </>
             case "PAID":
-                return <div className="st-time__success">
-                    <span className='st-time__success-title'>
+                return <>
+                    <p style={{ color: "var(--green)" }} className={style.section_status_title}>
                         {action ? 'Thanh toán và đặt hẹn thành công' : 'Thanh toán thành công'}
-                    </span>
+                    </p>
                     {
                         action ?
-                            <div className="flex-row-sp control">
-                                <button
+                            <div className={style.section_status_btn_cnt}>
+                                <XButton
+                                    style={{ width: 'calc(50% - 6px)' }}
+                                    className={style.section_status_btn}
+                                    title='Xem lịch hẹn'
                                     onClick={gotoAppointment}
-                                >
-                                    Xem lịch hẹn
-                                </button>
-                                <button
+                                />
+                                <XButton
+                                    style={{ width: 'calc(50% - 6px)' }}
+                                    className={style.section_status_btn}
+                                    title='Về trang chủ'
                                     onClick={goBackHome}
-                                >
-                                    Về trang chủ
-                                </button>
+                                />
                             </div>
                             :
-                            <div className="flex-row-sp control">
-                                {
-                                    (data.services.length > 0 && !listPayment) &&
-                                    <button
+                            servicesOrder?.length > 0 ?
+                                <div className={style.section_status_btn_cnt}>
+                                    <XButton
+                                        style={{ width: 'calc(50% - 6px)' }}
+                                        className={style.section_status_btn}
+                                        title='Đặt hẹn ngay'
                                         onClick={gotoServiceUser}
-                                    >
-                                        Đặt hẹn ngay
-                                    </button>
-                                }
-                                <button
+                                    />
+                                    <XButton
+                                        style={{ width: 'calc(50% - 6px)' }}
+                                        className={style.section_status_btn}
+                                        title='Về trang chủ'
+                                        onClick={goBackHome}
+                                    />
+                                </div>
+                                :
+                                <XButton
                                     onClick={goBackHome}
-                                >
-                                    Về trang chủ
-                                </button>
-                            </div>
+                                    title='Về trang chủ'
+                                    className={style.section_status_btn}
+                                />
                     }
-                </div>
+                </>
             case "CANCELED":
-                return <div className='flex-column st-cancel__cnt' >
-                    <span>Đã hủy thanh toán</span>
-                    <button
+                return <>
+                    <p className={style.section_status_title}>
+                        Đã hủy thanh toán
+                    </p>
+                    <XButton
                         onClick={goBackHome}
-                        className='st-pm-info__btn'
-                    >
-                        Về trang chủ
-                    </button>
-                </div>
+                        title='Về trang chủ'
+                        className={style.section_status_btn}
+                    />
+                </>
             case "CANCELED_BY_USER":
-                return <div className='flex-column st-cancel__cnt' >
-                    <span>Đã hủy thanh toán</span>
-                    <button
+                return <>
+                    <p className={style.section_status_title}>
+                        Đã hủy thanh toán
+                    </p>
+                    <XButton
                         onClick={goBackHome}
-                        className='st-pm-info__btn'
-                    >
-                        Về trang chủ
-                    </button>
-                </div>
+                        title='Về trang chủ'
+                        className={style.section_status_btn}
+                    />
+                </>
             default:
                 break
         }
     }
     return (
         <>
-            <div className={"pm-status-user"}>
-                <UserPaymentInfo disableEdit={true} />
-                <div className="pm-status-user__detail">
-                    <div className="flex-row org">
-                        <img src={organization?.image_url} onError={(e) => onErrorImg(e)} alt="" />
-                        <span>{organization?.name}</span>
-                    </div>
-                    <div className="pm-status-user__list">
-                        <ul>
-                            {
-                                orderItems.map((item: any, index: number) => (
-                                    <li
-                                        className='pm-order-item'
-                                        key={index}
-                                    >
-                                        <img className='pm-order-item__img' src={item.cart_item.image_url ?? ""} onError={(e) => onErrorImg(e)} alt="" />
-                                        <div className="pm-order-item__de">
-                                            <span className="pm-order-item__name">
-                                                {item.name}
-                                            </span>
-                                            <div className="flex-row-sp pm-order-item__price">
-                                                <div className="flex-row price">
-                                                    {
-                                                        item.discount ?
-                                                            <>
-                                                                <span>
-                                                                    {
-                                                                        item.quantity === 1
+            <UserPaymentInfo disableEdit disableAddress />
+            <div className={style.section_org}>
+                <div className={style.org_img}>
+                    <img src={organization?.image_url ?? img.imgDefault} onError={(e) => onErrorImg(e)} alt="" />
+                </div>
+                <div className={style.org_right}>
+                    <p className={style.org_name}>{organization?.name}</p>
+                    <p className={style.org_address}>{organization?.full_address}</p>
+                </div>
+            </div>
+            <ul className={style.order_list}>
+                {
+                    items.map((item: ICart, index: number) => (
+                        <li key={index} className={style.order_list_item}>
+                            <div className={style.order_item}>
+                                <div className={style.org_img}>
+                                    <img
+                                        src={item.cart_item?.image_url ?? organization?.image_url ?? img.imgDefault}
+                                        onError={(e) => onErrorImg(e)}
+                                        alt=""
+                                    />
+                                </div>
+                                <div className={style.org_right}>
+                                    <p className={style.org_name}>{item.name}</p>
+                                    <div className={style.order_item_price}>
+                                        <div className={style.price}>
+                                            {
+                                                (item.discount && item.price_discount) ?
+                                                    <>
+                                                        <span style={{ color: "var(--text-orange)" }} >
+                                                            {
+                                                                item.quantity === 1 ? formatPrice(item.price_discount) :
+                                                                    (
+                                                                        item.discount.discount_type === "FINAL_PRICE"
                                                                             ?
-                                                                            formatPrice(item.price_discount)
+                                                                            formatPrice(item.price_discount * item.quantity)
                                                                             :
-                                                                            (
-                                                                                item.discount.discount_type === "FINAL_PRICE"
-                                                                                    ?
-                                                                                    formatPrice(item.price_discount * item.quantity)
-                                                                                    :
-                                                                                    formatPrice((item.price * (item.quantity - 1)) + item.price_discount)
-                                                                            )
-                                                                    }đ
-                                                                </span>
-                                                                <span style={{ textDecoration: "line-through", marginLeft: "5px", fontSize: "smaller" }}>{formatPrice(item.price * item.quantity)}đ</span>
-                                                            </>
-                                                            :
-                                                            <span>{" "}{formatPrice(item.price)}</span>
-                                                    }
-                                                </div>
-                                                <span className="quantity">x{item.quantity}</span>
-                                            </div>
+                                                                            formatPrice((item.price * (item.quantity - 1)) + item.price_discount)
+                                                                    )
+                                                            }đ
+                                                        </span>
+                                                        <span>{formatPrice(item.price * item.quantity)}đ</span>
+                                                    </>
+                                                    :
+                                                    <span>{" "}{formatPrice(item.price)}</span>
+                                            }
                                         </div>
-                                    </li>
-                                ))
-                            }
-                        </ul>
+                                        <div className={style.quantity}>
+                                            x{item.quantity}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    ))
+                }
+            </ul>
+            <div className={style.section_guide}>
+                <span>Bạn cần đặt hẹn sau khi thanh toán thành công nhé! Cửa hàng sẽ liên hệ với bạn sớm nhất có thể</span>
+            </div>
+            <div className={style.section_bottom}>
+                <div className={style.bottom_bill}>
+                    <div className={style.bottom_bill_row}>
+                        <span className={style.row_label}>Tổng tiền</span>
+                        <span className={style.row_value}>{formatPrice(data.res?.amount)}đ</span>
                     </div>
-                    <div className="guide_line">
-                        <span>Bạn cần đặt hẹn sau khi thanh toán thành công nhé! Cửa hàng sẽ liên hệ với bạn sớm nhất có thể</span>
+                    {data.res?.discount_value > 0 &&
+                        <div className={style.bottom_bill_row}>
+                            <span className={style.row_label}>Giảm giá</span>
+                            <span className={style.row_value}>-{formatPrice(data.res?.discount_value)}đ</span>
+                        </div>
+                    }
+                </div>
+                <div className={style.bottom_pay}>
+                    <div className={style.bottom_pay_left}>
+                        <span className={style.bottom_pay_left_label}>Tổng thanh toán</span>
+                        <span className={style.bottom_pay_left_value}>
+                            {formatPrice(data.res?.payment_gateway?.amount)}
+                        </span>
                     </div>
                     {
-                        data.orderStatus === "PENDING" &&
-                        <div className="pm-status-user__total">
-                            <div className="flex-row-sp total">
-                                <div className="total__left">
-                                    <span style={{ color: "var(--text-hover)" }} >Tổng tiền</span>
-                                    <span style={{ color: "var(--text-hover)" }} >Giảm giá</span>
-                                </div>
-                                <div className="total__right">
-                                    <span>{formatPrice(data.res.amount)}đ</span>
-                                    <span>-{formatPrice(data.res.discount_value)}</span>
-                                </div>
-                            </div>
-                            <div className="flex-row-sp payment">
-                                <span className="payment-title">Tổng thanh toán</span>
-                                <div className="flex-row right">
-                                    <span style={{ color: "var(--orange)" }} className="right-amount-total">
-                                        {formatPrice(data.res.payment_gateway.amount)}
-                                    </span>
-                                    <button
-                                        onClick={openDeepLinkPayment}
-                                        className="pm-status-user__total-btn"
-                                    >
-                                        Thanh toán
-                                    </button>
-                                </div>
-                            </div>
+                        IS_MB && data.orderStatus === 'PENDING' &&
+                        <div className={style.bottom_pay_right}>
+                            <XButton
+                                title='Thanh toán'
+                                onClick={openDeepLinkPayment}
+                                className={style.bottom_pay_right_btn}
+                            />
                         </div>
                     }
                 </div>
             </div>
-            {onCheckStatus()}
+            {
+                data.orderStatus !== 'PENDING' &&
+                <div className={style.section_status_modal}>
+                    <div className={style.section_status}>
+                        {onCheckStatus()}
+                    </div>
+                </div>
+            }
         </>
     );
 }

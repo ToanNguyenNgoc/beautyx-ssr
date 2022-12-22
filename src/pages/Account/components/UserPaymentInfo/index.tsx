@@ -13,12 +13,13 @@ import { IUserAddress } from 'interface';
 interface IProps {
     onSetAddressDefault?: (address?: any) => void;
     disableEdit?: boolean;
-    title?: string
+    disableAddress?: boolean
+    title?: string,
 }
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext);
-    const { onSetAddressDefault, disableEdit, title } = props;
+    const { onSetAddressDefault, disableEdit, title, disableAddress } = props;
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
     const { response } = useSwr(API_ROUTE.ADDRESSES, USER)
@@ -56,23 +57,26 @@ function UserPaymentInfo(props: IProps) {
                         <span className={style.user_row_detail_text}>{USER?.telephone}</span>
                     </div>
                 </div>
-                <div className={style.user_row}>
-                    <div className={style.user_row_label}>{t("pm.address")}</div>
-                    <div className={style.user_row_detail}>
-                        <span className={style.user_row_detail_text}>
-                            {addressDefault?.address}
-                        </span>
-                        {
-                            !disableEdit &&
-                            <XButton
-                                className={style.user_edit_btn}
-                                icon={icon.editWhite}
-                                iconSize={14}
-                                onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')}
-                            />
-                        }
+                {
+                    !disableAddress &&
+                    <div className={style.user_row}>
+                        <div className={style.user_row_label}>{t("pm.address")}</div>
+                        <div className={style.user_row_detail}>
+                            <span className={style.user_row_detail_text}>
+                                {addressDefault?.address}
+                            </span>
+                            {
+                                !disableEdit &&
+                                <XButton
+                                    className={style.user_edit_btn}
+                                    icon={icon.editWhite}
+                                    iconSize={14}
+                                    onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')}
+                                />
+                            }
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     );

@@ -40,7 +40,7 @@ import { DISCOUNT_TYPE } from "../../../utils/formatRouterLink/fileType";
 import { analytics, logEvent } from "../../../firebase";
 import { PopupNotification } from "components/Notification";
 import { XButton } from "components/Layout";
-import 'features/Cart/cart.css'
+import '../cart.css'
 // end
 interface IProps {
     inPayment?: boolean;

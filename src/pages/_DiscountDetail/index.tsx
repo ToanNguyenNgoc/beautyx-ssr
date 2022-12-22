@@ -22,7 +22,7 @@ import { formatAddCart } from 'utils/cart/formatAddCart';
 import { addCart } from 'redux/cart';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
-import { clearAllServices } from 'redux/servicesBookSlice';
+import { clearAllServices } from 'redux/booking';
 
 function DiscountDetail() {
     const IS_MB = useDeviceMobile()
@@ -291,25 +291,10 @@ const DetailQuantity = (props: DetailQuantityProps) => {
     const { USER } = useSelector((state: IStore) => state.USER)
     const history = useHistory()
     const onDescQuantity = () => quantity > 1 && setQuantity(quantity - 1)
-    const checkType = () => {
-        let typeNumber
-        switch (detail.type) {
-            case 'SERVICE':
-                typeNumber = 2
-                break;
-            case 'PRODUCT':
-                typeNumber = 1
-                break;
-            default:
-                break;
-        }
-        return typeNumber
-    }
-    const is_type = checkType()
     const values = formatAddCart(
         detail,
         org,
-        is_type,
+        detail.type,
         quantity,
         detail.PRICE,
         discount.user_available_purchase_count > 0 ? discount : null
@@ -318,7 +303,6 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         if (!USER) return history.push('/sign-in?1')
         dispatch(addCart({
             ...values,
-            cart_id: parseInt(`${USER.id}${values.cart_id}`),
             user_id: USER.id
         }));
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);

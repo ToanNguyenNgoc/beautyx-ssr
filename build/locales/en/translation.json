@@ -27,7 +27,8 @@
         "language": "Language",
         "Service pack purchased":"Service pack purchased",
         "Following":"Following",
-        "Delivery address":"Delivery address"
+        "Delivery address":"Delivery address",
+        "booking":"Booking"
     },
     "Bottom": {
         "appointment": "Appointment",
@@ -259,7 +260,9 @@
         "code_orders": "Code orders",
         "see_details": "See details",
         "product_service": "Product/service",
-        "service_list": "Service list"
+        "service_list": "Service list",
+        "org":"Organization",
+        "enter_coupon_code":"Enter coupon code"
     },
     "url": {
         "home": "home",
@@ -408,7 +411,15 @@
         "bk_fail_title": "An error occurred during the booking process",
         "code_err": "Code error",
         "booking": "Booking",
-        "booking_his": "History"
+        "booking_his": "History",
+        "note_1":"Note: Number of people, information to be noted by the Enterprise, etc.",
+        "pay_and_book":"Payment & Book now",
+        "confirm_time":"Confirm time",
+        "create_order_fail":"Create order failed",
+        "ok":"Ok",
+        "minimum_order_is_1_000_VND":"Minimum order is 1,000 VND",
+        "enter_update_phone":"Enter your phone number to continue paying!",
+        "update":"Update"
     },
     "home_2": {
         "categories": "Categories",

@@ -17,4 +17,5 @@ export interface IBranch {
   telephone: string;
   ward: string | null;
   ward_code: string | null;
+  distance?:number
 }

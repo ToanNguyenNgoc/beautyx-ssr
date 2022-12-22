@@ -8,7 +8,7 @@ import { IOrderV2 } from 'interface/orderv2';
 import { paramOrder } from 'params-query';
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { useSwrInfinite } from 'utils';
+import { useSwrInfinite } from 'hooks';
 import OrderItem from './OrderItem';
 import { OrderSkelton } from './TabOrderPaid';
 import style from '../order.module.css'

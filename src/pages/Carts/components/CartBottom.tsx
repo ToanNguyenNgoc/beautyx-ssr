@@ -4,10 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { identity, pickBy } from "lodash";
 import { PopupNotification } from "components/Notification";
-// ==== api tracking ====
 import tracking from "api/trackApi";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
-import { cartReducer, discountReducerItem } from "utils/cart/cartReducer";
+import { discountReducerItem } from "utils/cart/cartReducer";
 import formatProductList from "utils/tracking";
 import order from "api/orderApi";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
@@ -16,11 +15,11 @@ import { AppContext } from "context/AppProvider";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
 import { onErrorImg } from "utils";
-import { useDeviceMobile } from 'hooks';
+import { useCartReducer, useDeviceMobile, useVoucherCalCart } from 'hooks';
 import { VoucherOrgItem } from "./CartGroupItem";
 import { IOrganization } from "interface/organization";
 import { onClearApplyVoucher } from "redux/cart";
-import { AlertSnack, XButton } from "components/Layout";
+import {  XButton } from "components/Layout";
 import img from "constants/img";
 import moment from "moment";
 import discountApi from "api/discountApi";
@@ -36,20 +35,15 @@ function CartBottom(props: any) {
     const cartAmount = DATA_CART.cartAmount;
     const { t } = useContext(AppContext);
     const VOUCHER_APPLY: IDiscountPar[] = useSelector((state: any) => state.carts.VOUCHER_APPLY);
-    const { cartQuantityCheck } = useSelector((state: any) => state.carts);
+    const { vouchersCal } = useVoucherCalCart(VOUCHER_APPLY)
     const [load, setLoad] = useState(false);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
-    // const [otpCode, setOtpCode] = useState(false);
     const [openVc, setOpenVc] = useState<OpenVcProp>({
         open: false,
         voucher: ""
     })
     //* [END]  OTP  update telephone number
     //* [ Throw exception noti ]
-    const [openAlertSnack, setOpenAlertSnack] = useState({
-        title: "",
-        open: false,
-    });
     const [openNoti, setOpenNoti] = useState({
         content: "",
         open: false,
@@ -69,9 +63,7 @@ function CartBottom(props: any) {
     const {
         products, cart_confirm,
         combos_id, services_id, products_id
-    } = cartReducer(
-        DATA_CART.cartList.filter((i: any) => i.isConfirm === true)
-    );
+    } = useCartReducer()
 
     const coupon_code_arr = listCouponCode.length > 0 ? listCouponCode : []
 
@@ -148,11 +140,7 @@ function CartBottom(props: any) {
     const handleSubmitOrder = () => {
         if (USER && DATA_PMT.org && pramsOrder.payment_method_id) {
             if (!DATA_PMT.address && products.length > 0) {
-                return setOpenAlertSnack({
-                    ...openAlertSnack,
-                    open: true,
-                    title: "Chưa có địa chỉ giao hàng !",
-                });
+                return setOpenNoti({...openNoti,content:'Chưa có địa chỉ giao hàng !'})
             }
             if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
                 // else if (checkPhoneValid(USER?.telephone)) {
@@ -183,40 +171,12 @@ function CartBottom(props: any) {
                 handlePostOrder();
             }
         } else if (!pramsOrder.payment_method_id) {
-            setOpenAlertSnack({
-                ...openAlertSnack,
-                open: true,
-                title: "Bạn Chưa chọn phương thức thanh toán!",
-            });
+            setOpenNoti({...openNoti,content:'Bạn Chưa chọn phương thức thanh toán!'})
         }
     };
 
 
-    const vouchersCal = VOUCHER_APPLY?.map((i: IDiscountPar) => {
-        let discountValue = i.discount_value;
-        if (i.discount_unit === 'PERCENT' && i.discount_type === 'SUB_TOTAL') {
-            let cal = 0
-            const calTotal = cartAmount * i.discount_value / 100
-            if (!i.maximum_discount_value || calTotal < i.maximum_discount_value) {
-                cal = calTotal
-            }
-            if (i.maximum_discount_value && calTotal > i.maximum_discount_value) {
-                cal = i.maximum_discount_value
-            }
-            discountValue = cal
-        }
-        if (i.discount_type === "PRODUCT" && i.items_count === 0 && i.discount_unit === "PRICE") {
-            discountValue = cartQuantityCheck * i.discount_value
-        }
-        if (i.discount_type === "FINAL_PRICE" && i.items_count > 0) {
-            discountValue = i.items[0]?.productable?.price - i.discount_value
-        }
-        return {
-            ...i,
-            discount_value: (i.discount_unit === "PERCENT" || i.discount_type === "PRODUCT" || i.discount_type === "FINAL_PRICE") ?
-                discountValue : i.discount_value
-        }
-    })
+
 
     let discountVoucherTotal = 0
     if (VOUCHER_APPLY.length > 0) {
@@ -224,9 +184,6 @@ function CartBottom(props: any) {
             ?.map((i: IDiscountPar) => i.discount_value)
             ?.reduce((pre: number, cur: number) => pre + cur)
     }
-    // [FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
-    // const discountAmount = VOUCHER_APPLY.length === 0 ? DATA_CART.cartAmountDiscount : 0
-    //-------------------------------------------------------------------
     const outDiscounts = cart_confirm?.map((item: any) => item.discount)
     const FINAL_AMOUNT = DATA_CART.cartAmount -
         DATA_CART.cartAmountDiscount -
@@ -241,21 +198,10 @@ function CartBottom(props: any) {
                 cart_confirm={cart_confirm}
                 organization={DATA_PMT.org}
                 cartAmount={cartAmount}
-                services_id={services_id?.map(i => i.id)}
-                products_id={products_id?.map(i => i.id)}
+                services_id={services_id?.map((i:any) => i.id)}
+                products_id={products_id?.map((i:any) => i.id)}
             />
             <div className="re-cart-bottom">
-                <AlertSnack
-                    title={openAlertSnack.title}
-                    open={openAlertSnack.open}
-                    status="FAIL"
-                    onClose={() =>
-                        setOpenAlertSnack({
-                            ...openAlertSnack,
-                            open: false,
-                        })
-                    }
-                />
                 <Container>
                     <div className="re-cart-bottom__cnt">
                         <div className="re-cart-bottom__total">
@@ -339,6 +285,7 @@ function CartBottom(props: any) {
                     </div>
                 </Container>
                 <PopupNotification
+                    title="Thông báo"
                     setOpen={() => setOpenNoti({ ...openNoti, open: false })}
                     open={openNoti.open}
                     children={openNoti.children}
@@ -368,7 +315,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const [text, setText] = useState("");
     const [response, setResponse] = useState<IDiscountPar | any>()
-    const {firstLoad, resultLoad, noti} = useNoti()
+    const { firstLoad, resultLoad, noti } = useNoti()
     const onInputChange = (e: any) => {
         if (text.length <= 25) {
             setText(e.target.value)
@@ -444,7 +391,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                     {
                         noti.message !== '' &&
                         <div className="vc_cart_none">
-                           {noti.message}
+                            {noti.message}
                         </div>
                     }
                     {

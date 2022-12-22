@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { addCart } from 'redux/cart';
 import { PopupMessage } from 'components/Notification';
-import { clearAllServices } from 'redux/servicesBookSlice';
+import { clearAllServices } from 'redux/booking';
 import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
 import { paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import Comment from 'components/Comment';
@@ -548,31 +548,12 @@ const DetailQuantity = (
     const { USER } = useSelector((state: IStore) => state.USER)
     const history = useHistory()
     const onDescQuantity = () => quantity > 1 && setQuantity(quantity - 1)
-    const checkType = () => {
-        let typeNumber
-        switch (detail.type) {
-            case 'COMBO':
-                typeNumber = 3
-                break;
-            case 'SERVICE':
-                typeNumber = 2
-                break;
-            case 'PRODUCT':
-                typeNumber = 1
-                break;
-            default:
-                break;
-        }
-        return typeNumber
-    }
     const handleAddCart = () => {
         const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
-        const is_type = checkType()
-        const values = formatAddCart(detail, org, is_type, quantity, sale_price);
+        const values = formatAddCart(detail, org, detail.type, quantity, sale_price);
         if (USER) {
             const valuesCart = {
                 ...values,
-                cart_id: parseInt(`${USER.id}${values.cart_id}`),
                 user_id: USER.id
             }
             dispatch(addCart(valuesCart))

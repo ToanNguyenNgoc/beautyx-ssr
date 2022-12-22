@@ -21,7 +21,8 @@
         "language": "Ngôn ngữ",
         "Service pack purchased":"Gói dịch vụ đã mua",
         "Following":"Đang theo dõi",
-        "Delivery address":"Địa chỉ giao hàng"
+        "Delivery address":"Địa chỉ giao hàng",
+        "booking":"Đặt hẹn"
     },
     "Bottom": {
         "appointment": "Lịch hẹn",
@@ -253,7 +254,9 @@
         "code_orders": "Mã đơn hàng",
         "see_details": "Xem chi tiết",
         "product_service": "sản phẩm/dịch vụ",
-        "service_list": "Danh sách dịch vụ"
+        "service_list": "Danh sách dịch vụ",
+        "org":"Trụ sở",
+        "enter_coupon_code":"Nhập mã khuyến mại"
     },
     "url": {
         "home": "Trang-chu",
@@ -405,7 +408,15 @@
         "bk_fail_title": "Có lỗi xảy ra trong quá trình đặt hẹn",
         "code_err": "Mã lỗi",
         "booking": "Đặt lịch",
-        "booking_his": "Lịch sử"
+        "booking_his": "Lịch sử",
+        "note_1":"Ghi chú: Số lượng người, thông tin cần Doanh nghiệp lưu ý, v.v..",
+        "pay_and_book":"Thanh toán và đặt hẹn ngay",
+        "confirm_time":"Xác nhận thời gian",
+        "create_order_fail":"Tạo đơn hàng thất bại",
+        "ok":"Đã hiểu",
+        "minimum_order_is_1_000_VND":"Đơn hàng tối thiểu là 1.000đ",
+        "enter_update_phone":"Cập nhập số điện thoại để tiếp tục thanh toán!",
+        "update":"Cập nhập"
     },
     "home_2": {
         "categories": "Danh mục",

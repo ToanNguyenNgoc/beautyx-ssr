@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { AppContext } from "../../../../context/AppProvider";
 import scrollTop from "../../../../utils/scrollTop";
-// import slugify from "../../../../utils/formatUrlString";
 
 function ComboItem(props: any) {
   const { t } = useContext(AppContext);
@@ -16,15 +15,14 @@ function ComboItem(props: any) {
   const [combo, setCombo] = useState<Combo>();
   const history = useHistory();
   const dispatch = useDispatch();
-  const is_type = 3;
   const values = {
     id: combo?.id,
     org_id: org.id,
     org_name: org.name,
-    cart_id: parseInt(`${is_type}${org.id}${combo?.id}`), //is_type + org_id + id
+    cart_id: `${org.id}'COMBO'${combo?.id}`, //is_type + org_id + id
     name: combo?.name,
     quantity: 1,
-    is_type: is_type,
+    is_type: 'COMBO',
     isConfirm: true,
     price: combo?.price,
   };
