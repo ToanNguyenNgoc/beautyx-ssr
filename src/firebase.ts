@@ -12,13 +12,6 @@ const firebaseConfig = {
     messagingSenderId: "91288679971",
     appId: "1:91288679971:web:7b301c6698c90469396396",
     measurementId: "G-SVW84J67ZJ"
-
-    // apiKey: "AIzaSyC0lNEJAh95Dp4JpYDv7L8kXUZ8502dmSk",
-    // authDomain: "beautyx-spa.firebaseapp.com",
-    // projectId: "beautyx-spa",
-    // storageBucket: "beautyx-spa.appspot.com",
-    // messagingSenderId: "1018381055842",
-    // appId: "1:1018381055842:web:bad18434f365fb4afe9e3b"
 };
 const app = initializeApp(firebaseConfig)
 const analytics = getAnalytics(app);

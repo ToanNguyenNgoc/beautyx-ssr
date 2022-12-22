@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { IServiceSold, IUser_Service, IServiceUser } from '../../../interface/servicesUser';
 import ServiceItem from './ServiceItem';
 import { useDispatch } from 'react-redux';
-import { addService, clearAllServices } from '../../../redux/servicesBookSlice';
+import { addService, clearAllServices } from '../../../redux/booking';
 import { IOrganization } from '../../../interface/organization';
 import { useSelector } from 'react-redux'
 

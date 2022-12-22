@@ -1,14 +1,12 @@
 import { Checkbox } from "@mui/material";
 import React, { useCallback, useContext, useState } from "react";
-import { AppContext } from "../../../context/AppProvider";
-//import formatPrice from "../../../utils/formatPrice";
-import { IUser_Service, IServiceSold } from "../../../interface/servicesUser";
-import onErrorImg from "../../../utils/errorImg";
 import { useSelector } from "react-redux";
-import { formatDate, checkTimeExpired } from "../../../utils/format";
-import { IOrganization } from "../../../interface/organization";
 import ServiceReview from "../ServiceReview";
-//import { Appointment } from '../../../interface/appointment'
+import dayjs from "dayjs";
+import { IServiceSold, IUser_Service } from "interface/servicesUser";
+import { IOrganization } from "interface";
+import { AppContext } from "context/AppProvider";
+import { checkTimeExpired, onErrorImg } from "utils";
 
 interface IProps {
   service: IUser_Service;
@@ -29,12 +27,6 @@ function ServiceItem(props: IProps) {
   } = props;
   const [open, setOpen] = useState(false);
   const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
-  //const { appointments } = useSelector((state: any) => state.APP.APPS);
-
-  //const APPOINT_BY_ORDER_ID: Appointment = appointments.find((val: Appointment) => val.order_id === order_id);
-  //const services_appointment = APPOINT_BY_ORDER_ID?.services;
-
-  //const service_item_app = services_appointment?.filter((i: any) => i.id === service.id);
 
 
   const servicesBook = servicesBookSlice.servicesBook;
@@ -67,16 +59,6 @@ function ServiceItem(props: IProps) {
             {t('order.Service used')} | {t('order.Review')}
           </span>
         }
-        {/* {
-          (service_item_app?.length > 0 && service.remain_time > 0) &&
-          <span
-            onClick={onOpenServiceReview}
-            className="treatment-ser-item__out"
-            style={{ marginRight: "4px" }}
-          >
-            Đang thực hiện
-          </span>
-        } */}
         {
           (dateExpired && service.remain_time > 0) &&
           <span
@@ -87,9 +69,6 @@ function ServiceItem(props: IProps) {
           </span>
         }
         <div
-          // style={
-          //   service.remain_time === 0 || dateExpired ? { opacity: 0.6 } : {}
-          // }
           className="treatment-ser-item"
           onClick={handleAddService}
         >
@@ -100,7 +79,7 @@ function ServiceItem(props: IProps) {
               "&.Mui-checked": {
                 color: "#7161BA",
               },
-              marginLeft: '-10px'
+              marginLeft: '-16px'
             }}
             checked={servicesBook_id.includes(parseInt(`${order_id}${service.id}`))}
           />
@@ -122,8 +101,13 @@ function ServiceItem(props: IProps) {
             <div className="flex-row-sp">
               {
                 service.time_expired &&
-                <div className="quantity-text__time-ex">
-                  {t('order.Expired')} | {formatDate(service.time_expired)}
+                <div 
+                  style={!dateExpired?{
+                    backgroundColor:'var(--bg-white)'
+                  }:{}}
+                  className="quantity-text__time-ex"
+                >
+                  {t('order.Expired')} | {dayjs(service.time_expired).format('DD/MM/YYYY')}
                 </div>
               }
               <div className="flex-row quantity">
@@ -136,10 +120,6 @@ function ServiceItem(props: IProps) {
                   }
                 </div>
               </div>
-              {/* {
-              service?.time_expired?.slice(0, 5) > 0 &&
-              <span className="date-time_expired">HSD:{formatDate(service?.time_expired)}</span>
-            } */}
             </div>
           </div>
         </div>

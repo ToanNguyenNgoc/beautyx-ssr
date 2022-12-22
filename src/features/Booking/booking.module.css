@@ -17,6 +17,7 @@
 
 .right {
     width: calc(33.33% - 6px);
+    height: fit-content;
     background-color: var(--bg-white);
     padding: 6px;
     border-radius: 6px;
@@ -367,6 +368,85 @@
 
 .book_time_bot_btn {
     border-radius: 6px;
+}
+.marker_icon{
+    transform: scale(0.8);
+}
+.org_maker{
+    padding: 2px;
+    border-radius: 4px;
+    background-color: var(--bg-white);
+    position: relative;
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+}
+.org_maker::after{
+    content: '';
+    position: absolute;
+    background-color: var(--bg-white);
+    width: 14px;
+    height: 14px;
+    clip-path: polygon(100% 0, 0 0, 51% 65%);
+    margin-left: calc(50% - 7px);
+}
+.org_maker_head{
+    display: flex;
+    align-items: center;
+}
+.org_maker_head_img{
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    position: relative;
+}
+.org_maker_head_img img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    border-radius: 4px;
+}
+.org_maker_head_de{
+    margin-left: 4px;
+}
+.org_maker_head_name{
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 500;
+    max-width: 182px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: var(--text-black);
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+.org_maker_dis{
+    display: flex;
+    align-items: center;
+}
+.org_maker_dis span{
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+    background-color: var(--red_2);
+}
+.org_maker_dis h4{
+    margin-left: 4px;
+}
+.org_maker_address{
+    width: 150px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: var(--text-black);
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
 }
 
 @media only screen and (max-width: 1023px) {

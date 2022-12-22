@@ -1,21 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import TabOrderCancel from "./components/TabOrderCancel";
 import TabOrderPaid from "./components/TabOrderPaid";
 import { Tab } from "@mui/material";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
-import { useDispatch, useSelector } from "react-redux";
 import { HeadTitle } from "pages/Account";
 import { AppContext } from "context/AppProvider";
 import "./order.css";
-import { onSetTab } from "redux/order/orderSlice";
 
 function Orders() {
   const { t } = useContext(AppContext);
-  const { tab } = useSelector((state: any) => state.ORDER);
-  const dispatch = useDispatch();
+  const [tab, setTab] = useState('PAID')
   const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
-    dispatch(onSetTab(newValue))
+    setTab(newValue)
   }
   return (
     <>

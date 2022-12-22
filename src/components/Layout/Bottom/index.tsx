@@ -24,10 +24,9 @@ const paths = [
 ];
 
 export function Bottom() {
-    const { t } = useContext(AppContext);
+    const { t,appointment_today,order_app } = useContext(AppContext);
     const location = useLocation();
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { ORDER_SERVICES_NOT_BOOK_COUNT } = useSelector((state: any) => state.ORDER);
     const Btns = [
         {
             id: 1,
@@ -80,7 +79,7 @@ export function Bottom() {
             iconAct: USER?.avatar ?? ICON.userAct,
             path: "/tai-khoan",
             params: "",
-            badge: ORDER_SERVICES_NOT_BOOK_COUNT
+            badge: appointment_today?.concat(order_app)?.length
         },
     ];
     const history = useHistory();

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import HeadTitle from "../HeadTitle";
 import ServiceBookItem from "./components/ServiceItem";
 import { useHistory, useLocation } from "react-router-dom";
-import { addServiceBookNow, clearAllServices } from "redux/servicesBookSlice";
+import { addServiceBookNow, clearAllServices } from "redux/booking";
 import icon from "constants/icon";
 import BookingTime from "./components/BookingTime";
 import dayjs from "dayjs";
@@ -34,6 +34,7 @@ import img from "constants/img";
 import { IBranch, IOrganization } from "interface";
 import API_ROUTE from "api/_api";
 import BookingMap from "./components/BookingMap";
+import { AUTH_LOCATION } from "api/authLocation";
 
 // end
 const date = dayjs();
@@ -48,7 +49,7 @@ function Booking() {
     const { t } = useContext(AppContext)
     const [finalAmount, setFinalAmount] = useState(0)
     const { SERVICES_BOOK } = useSelector((state: any) => state);
-
+    const LOCATION = AUTH_LOCATION()
     const IS_MB = useDeviceMobile();
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const [openNoti, setOpenNoti] = useState(initOpenNoti);
@@ -62,6 +63,7 @@ function Booking() {
     // handle UI
     const refBranch = useRef<HTMLDivElement>(null)
     const refIconRight = useRef<HTMLImageElement>(null)
+    const mapRef = useRef<any>(null)
     const openBranch = () => {
         refBranch?.current?.classList.add(style.branch_show);
         refIconRight?.current?.classList.add(style.right_icon_ch)
@@ -75,7 +77,8 @@ function Booking() {
     //-------------------------------
     const org: IOrganization = useSwr(
         `${API_ROUTE.ORG(location?.state?.org?.id)}`,
-        location?.state?.org?.id
+        location?.state?.org?.id,
+        { 'filter[location]': LOCATION }
     )?.response
 
     useEffect(() => {
@@ -112,6 +115,9 @@ function Booking() {
             branch_id: item?.id
         });
         closeBranch()
+        mapRef?.current?.flyTo({
+            center: [item?.longitude ?? org.longitude, item?.latitude ?? org?.latitude],
+        });
     };
     const listCouponCode = servicesBook
         ?.map((item: any) => item?.service)
@@ -138,7 +144,7 @@ function Booking() {
         branch_id: bookTime.branch_id,
     };
     const listPayment = location.state?.services?.map((item: any) => {
-        const is_type = 2;
+        const is_type = 'SERVICE';
         const sale_price =
             item.service?.special_price > 0
                 ? item.service?.special_price
@@ -300,14 +306,20 @@ function Booking() {
     return (
         <>
             <HeadTitle title={t('Header.booking')} />
-            {IS_MB && <HeadMobile title={t('Header.booking')} />}
+            {IS_MB && <HeadMobile
+                onBack={() => {
+                    dispatch(clearAllServices());
+                    history.goBack();
+                }}
+                title={t('Header.booking')}
+            />}
             <Container>
                 <div className={style.container}>
                     {
                         !IS_MB &&
                         <div className={style.left}>
                             <div className={style.left_cnt}>
-                                {org && <BookingMap org={org} />}
+                                {org && <BookingMap mapRef={mapRef} onChooseBranch={onChooseBranch} org={org} />}
                             </div>
                         </div>
                     }

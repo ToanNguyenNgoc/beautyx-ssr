@@ -1,7 +1,8 @@
 import { IServicePromo } from "interface"
 import { ParamOrg, ParamProduct, ParamService } from "params-query/param.interface"
-import { unique, useSwrInfinite } from "utils"
+import { unique } from "utils"
 import { pick } from 'lodash'
+import { useSwrInfinite } from "hooks"
 
 export const useOrgs = (paramOrg: ParamOrg, condition: boolean) => {
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(condition, "/organizations", paramOrg)

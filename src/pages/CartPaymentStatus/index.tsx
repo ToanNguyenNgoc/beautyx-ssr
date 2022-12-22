@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import HeadTitle from "features/HeadTitle";
-import "./cart-status.css";
 import { Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import paymentGatewayApi from "api/paymentGatewayApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import PaymentQr from "./components/PaymentQr";
 import PaymentInfo from "./components/PaymentInfo";
 import useGetMessageTiki from "rootComponents/useGetMessageTiki";
@@ -18,14 +16,10 @@ import { ICart } from "interface/cart";
 // ==== api tracking ====
 import tracking from "api/trackApi";
 import { formatProductList } from "utils/tracking";
-import ModalLoad from "components/ModalLoad";
 import { XButton } from "components/Layout";
-import { useCountDown } from "hooks";
+import { useCartReducer, useCountDown, useSwr } from "hooks";
 
 import style from './payment.module.css'
-// end
-const timerRender = [0];
-const ORDER_STATUS = ["PENDING", "PAID", "CANCELED_BY_USER"];
 
 const initOpen = {
     content: "",
@@ -33,27 +27,46 @@ const initOpen = {
     children: <></>
 }
 
+
+interface StatusOrderProps {
+    cancel: boolean,
+    time_refresh: any
+}
+
 function CartPaymentStatus() {
     const sec = useCountDown(600);
     const dispatch = useDispatch();
-    const [orderStatus, setOrderStatus] = useState(ORDER_STATUS[0]);
-    // const [openConf, setOpenConf] = useState(false);
-    const [loading, setLoading] = useState(false);
     const history = useHistory();
-
     const [open, setOpen] = useState(initOpen);
-
-    const carts = useSelector((state: any) => state.carts);
-    const list = carts.cartList.filter((item: any) => item.isConfirm === true);
-    const services = list.filter((item: any) => item.is_type === 2);
+    const { services, products, combos } = useCartReducer()
     const location: any = useLocation();
     const res: any = location?.state?.state_payment;
-    const intervalRef = useRef<any>();
     const transaction_uuid = res?.payment_gateway?.transaction_uuid;
     const action = location?.state?.actionAfter;
+    const orderItems = location.state?.listPayment ?? services?.concat(products)?.concat(combos)
+
+    const [statusOrder, setStatusOrder] = useState<StatusOrderProps>({
+        cancel: false,
+        time_refresh: 1000
+    })
+    const { response } = useSwr(
+        `/paymentgateways/${transaction_uuid}/status`,
+        transaction_uuid,
+        { cancel: statusOrder.cancel },
+        statusOrder.time_refresh
+    )
+    const orderStatus = response?.status ?? 'PENDING'
+
+    const handleCancelCallStatus = () => {
+        setStatusOrder({
+            cancel: true,
+            time_refresh: false
+        })
+    }
+
     //[CASE]: when apply voucher payment_gateway_amount !== display_price
     const onCloseNoti = () => setOpen({ ...open, open: false })
-    useEffect(() => {
+    const handleNotiApplyFail = () => {
         if (res?.payment_gateway?.amount !== res?.FINAL_AMOUNT && res?.discounts?.length > 0) {
             setOpen({
                 content: "Áp dụng mã thất bại. Bạn có muốn tiếp tục thanh toán",
@@ -70,7 +83,7 @@ function CartPaymentStatus() {
                 </>
             })
         }
-    }, [])
+    }
     //-------------------------------------------------------------------
     //listPayment from page buy now product, booking now
     const listPayment: ICart[] = location.state?.listPayment;
@@ -88,67 +101,26 @@ function CartPaymentStatus() {
             console.log(error);
         }
     };
-    const handleGetPaymentStatus = async (_status: boolean) => {
-        try {
-            const res_status = await paymentGatewayApi.getStatus({
-                paymentId: transaction_uuid,
-                status: _status,
-            });
-            const status = res_status.data.context.status;
-            switch (status) {
-                case "PAID":
-                    if (action) {
-                        handlePostApp()
-                    }
-                    dispatch(clearByCheck());
-                    setOrderStatus(status);
-                    timerRender[0] = -1;
-                    break;
-                case "PENDING":
-                    setOrderStatus(status);
-                    setLoading(false)
-                    break;
-                case "CANCELED_BY_USER":
-                    setOrderStatus(status);
-                    timerRender[0] = -1;
-                    setLoading(false)
-                    break;
-                case "CANCELED":
-                    setOrderStatus(status);
-                    timerRender[0] = -1;
-                    setLoading(false)
-                    break;
-                default:
-                    break;
-            }
-        } catch (error) {
-            console.log(error);
-            handleCancelPayment()
-        }
-    };
-    const setInter = () => {
-        timerRender[0] = 200;
-        intervalRef.current = setInterval(() => {
-            if (timerRender[0] > 0) {
-                timerRender[0] -= 1;
-                handleGetPaymentStatus(false);
-            } else {
-                return clearInterval(intervalRef.current);
-            }
-        }, 1000);
-    };
     useEffect(() => {
-        if (transaction_uuid) {
-            setInter();
-            if (listPayment) {
-                tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id, formatProductList(listPayment), res.amount)
-            }
+        if (response && response?.status !== "PENDING") {
+            setStatusOrder({
+                ...statusOrder,
+                time_refresh: false
+            })
+        }
+        if (response?.status === "PAID") {
+            dispatch(clearByCheck())
+            if (action) handlePostApp()
+        }
+    }, [response?.status])
+    useCancelByTime(sec, handleCancelCallStatus)
+
+    useEffect(() => {
+        handleNotiApplyFail()
+        if (listPayment && transaction_uuid) {
+            tracking.CONFIRM_SCREEN_LOAD(listPayment[0].org_id, formatProductList(listPayment), res.amount)
         }
     }, []);
-    const handleCancelPayment = () => {
-        handleGetPaymentStatus(true);
-        timerRender[0] = -1;
-    };
     const handleCancelOrder = () => {
         setOpen({
             content: 'Bạn có muốn hủy thanh toán đơn hàng không ?',
@@ -157,7 +129,7 @@ function CartPaymentStatus() {
                 <XButton
                     title="Hủy đơn hàng"
                     onClick={() => {
-                        handleCancelPayment();
+                        handleCancelCallStatus();
                         setOpen(initOpen)
                     }}
                 />
@@ -168,11 +140,7 @@ function CartPaymentStatus() {
             </>
         });
     };
-    useEffect(() => {
-        if (sec === 0) {
-            handleCancelPayment();
-        }
-    }, [sec]);
+
     //cancel payment TIKI
     const onGoBackCart = () => {
         const payment_url = location?.pathname;
@@ -181,11 +149,10 @@ function CartPaymentStatus() {
             state: { payment_url },
         });
     };
-    const response = useGetMessageTiki();
+    const responseTiki = useGetMessageTiki();
     useMemo(() => {
-        if (response?.requestId && response?.result.status === "fail") {
-            setLoading(false)
-            handleCancelPayment();
+        if (responseTiki?.requestId && responseTiki?.result.status === "fail") {
+            handleCancelCallStatus();
             let title = `Thanh toán thất bại \n Bạn có muốn tiếp tục thanh toán không ?`;
             if (action) {
                 title = `Thanh toán và đặt hẹn thất bại`;
@@ -205,11 +172,10 @@ function CartPaymentStatus() {
                 </>
             });
         }
-    }, [response]);
-    const dataCartInfo = { res, orderStatus, sec, services };
+    }, [responseTiki]);
+    const dataCartInfo = { res, orderStatus, services };
     return (
         <>
-            {loading && <ModalLoad />}
             <HeadTitle
                 title={
                     orderStatus === "PAID"
@@ -218,7 +184,7 @@ function CartPaymentStatus() {
                 }
             />
             <HeadMobile
-                handleCancelPayment={handleCancelPayment}
+                handleCancelPayment={handleCancelCallStatus}
                 title="Thanh toán"
             />
             <Container>
@@ -231,19 +197,13 @@ function CartPaymentStatus() {
                     <div className={style.container_right}>
                         <PaymentInfo
                             action={action}
-                            listPayment={listPayment}
                             data={dataCartInfo}
+                            orderItems={orderItems}
                             handleCancelOrder={handleCancelOrder}
-                            setLoading={setLoading}
                         />
                     </div>
                 </div>
             </Container>
-            {/* <PaymentConfirm
-                open={openConf}
-                setOpen={setOpenConf}
-                handleCancelPayment={handleCancelPayment}
-            /> */}
             <PopupNotification
                 title="Thông báo"
                 content={open.content}
@@ -255,3 +215,9 @@ function CartPaymentStatus() {
 }
 
 export default CartPaymentStatus;
+
+const useCancelByTime = (sec: number, onCancel: () => void) => {
+    useEffect(() => {
+        if (sec === 0) onCancel()
+    }, [sec])
+}

@@ -29,8 +29,7 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
-    // const path = window.location.href
-    // console.log(path)
+   
     
     return (
         <>

@@ -2,30 +2,25 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
-import icon from "../../constants/icon";
-import HeadMobile from "../../features/HeadMobile";
-import HeadTitle from "../../features/HeadTitle";
 import { Container, Dialog } from "@mui/material";
-import UserPaymentInfo from "../Account/components/UserPaymentInfo";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
-import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "../../redux/cart";
 import CartPaymentMethod from "./components/CartPaymentMethod";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-import { FLAT_FORM_TYPE } from "../../rootComponents/flatForm";
-import PaymentMethodCpn from "../../features/PaymentMethod";
-import { extraPaymentMethodId } from "../../features/PaymentMethod/extraPaymentMethodId";
-import { Transition } from "../../utils/transition";
-
-// ==== api tracking ====
-import { IOrganization } from "../../interface/organization";
-import { IBranch } from "../../interface/branch";
-import onErrorImg from "../../utils/errorImg";
 import { useDeviceMobile } from "hooks";
-import { fetchAsyncOrgDiscounts } from "../../redux/org_discounts/orgDiscountsSlice";
-import { IS_VOUCHER } from "../../utils/cart/checkConditionVoucher";
 import { EmptyRes } from "components/Layout";
-// end
+import { onErrorImg, Transition, unique } from "utils";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import { fetchAsyncOrgDiscounts } from "redux/org_discounts/orgDiscountsSlice";
+import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "redux/cart";
+import { IS_VOUCHER } from "utils/cart/checkConditionVoucher";
+import HeadTitle from "features/HeadTitle";
+import { extraPaymentMethodId } from "features/PaymentMethod/extraPaymentMethodId";
+import HeadMobile from "features/HeadMobile";
+import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
+import PaymentMethodCpn from "features/PaymentMethod";
+import icon from "constants/icon";
+import { IBranch, IOrganization } from "interface";
 
 const initialMomoForBeautyx = {
     created_at: "2022-01-07T10:00:07.000000Z",
@@ -92,15 +87,6 @@ function Carts() {
     const DATA_CART = { cartList, cartAmountDiscount, cartAmount };
     const orgs_id = cartList.map((item: any) => item.org_id);
     const IS_MB = useDeviceMobile();
-    function unique(arr: any) {
-        var newArr = [];
-        for (var i = 0; i < arr.length; i++) {
-            if (newArr.indexOf(arr[i]) === -1) {
-                newArr.push(arr[i]);
-            }
-        }
-        return newArr;
-    }
     const orgs = unique(orgs_id);
     const cartListGroupOrg = orgs.map((item) => {
         const cartItemByOrg = cartList.filter((i: any) => item === i.org_id);

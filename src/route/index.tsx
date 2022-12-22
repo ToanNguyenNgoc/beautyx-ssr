@@ -40,7 +40,7 @@ import HomeCateResult from "pages/HomeCateResult";
 // import Community from "pages/Community";
 import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
-import Calendar from "features/Calendar";
+import Calendar from "pages/Calendar";
 import BuyNow from "features/BuyNow";
 import Carts from "pages/Carts";
 // import OtpMbPage from "pages/OtpMbPage";

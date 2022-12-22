@@ -2,7 +2,6 @@ import React from "react";
 import style from "./style.module.css";
 import { useDeviceMobile, useSwrInfinite } from "hooks";
 import HeadMobile from "features/HeadMobile";
-import Head from "components/Head";
 import { Container } from "@mui/material";
 import { XButton } from "components/Layout";
 import { paramsDiscounts } from "params-query";
@@ -54,7 +53,7 @@ export default function VoucherPage() {
 
     return (
         <div>
-            {IS_MB ? <HeadMobile title="Voucher" /> : <Head />}
+            {IS_MB && <HeadMobile title="Voucher" />}
             <Container>
                 <div className={style.voucher_page}>
                     <InfiniteScroll

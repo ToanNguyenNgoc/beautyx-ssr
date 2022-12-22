@@ -13,7 +13,7 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 import { IOrganization } from "interface/organization";
-import {useDeviceMobile} from "hooks";
+import { useCartReducer, useDeviceMobile } from "hooks";
 import {
     EX_CHECK_DATE,
     EX_CHECK_INCLUDE_ITEMS,
@@ -27,7 +27,7 @@ import onErrorImg from "utils/errorImg";
 import img from "constants/img";
 import formatPrice from "utils/formatPrice";
 import moment from "moment";
-import { cartReducer, discountReducerItem } from "utils/cart/cartReducer";
+import { discountReducerItem } from "utils/cart/cartReducer";
 import { Transition, TransitionUp } from "utils/transition";
 import { XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
@@ -149,8 +149,8 @@ interface IPopUpVoucherOrg {
 export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
     const IS_MB = useDeviceMobile();
     const { open, setOpen, org, vouchers } = props
-    const { cartAmount, cartList } = useSelector((state: any) => state.carts)
-    const { services_id, products_id } = cartReducer(cartList)
+    const { cartAmount } = useSelector((state: any) => state.carts)
+    const { services_id, products_id } = useCartReducer()
     return (
         <Dialog
             TransitionComponent={IS_MB ? Transition : TransitionUp}
@@ -176,8 +176,8 @@ export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
                         {vouchers?.map((item: IDiscountPar, index: number) => (
                             <li key={index} className="item">
                                 <VoucherOrgItem
-                                    services_id={services_id?.map(i => i.id)}
-                                    products_id={products_id?.map(i => i.id)}
+                                    services_id={services_id?.map((i: any) => i.id)}
+                                    products_id={products_id?.map((i: any) => i.id)}
                                     cartAmount={cartAmount}
                                     showApplyBtn={true} org={org}
                                     voucher={item}
@@ -204,7 +204,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const voucher: IDiscountPar = {
         ...props.voucher,
     };
-    const {timeCondition,  displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
+    const { timeCondition, displayFrom, displayTo } = EX_CHECK_VALID_TIME(voucher)
     const [noti, setNoti] = useState(false);
 
     const { productsInDis, servicesInDis } = discountReducerItem(

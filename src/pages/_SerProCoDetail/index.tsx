@@ -20,7 +20,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
 import { addCart } from 'redux/cart';
 import { PopupMessage } from 'components/Notification';
-import { clearAllServices } from 'redux/servicesBookSlice';
+import { clearAllServices } from 'redux/booking';
 import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
 import { paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import Comment from 'components/Comment';

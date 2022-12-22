@@ -1,10 +1,10 @@
 import { ICart, IDiscountPar } from "interface";
 import { useSelector } from "react-redux";
-import { cartReducer } from "utils/cart/cartReducer";
+import { useCartReducer } from "./useCartReducer";
 
 export function useVoucherCalCart(VOUCHER_APPLY: IDiscountPar[]) {
-    const { cartQuantityCheck, cartAmount, cartList } = useSelector((state: any) => state.carts);
-    const { services } = cartReducer(cartList)
+    const { cartQuantityCheck, cartAmount } = useSelector((state: any) => state.carts);
+    const { services } = useCartReducer()
     const vouchersCal = VOUCHER_APPLY?.map((i: IDiscountPar) => {
         let discountValue = i.discount_value;
         if (i.discount_unit === 'PERCENT' && i.discount_type === 'SUB_TOTAL') {

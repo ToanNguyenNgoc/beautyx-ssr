@@ -1,4 +1,5 @@
 import dayjs from "dayjs"
+import { AppointmentNoti } from "interface/appointment"
 import IStore from "interface/IStore"
 import { paramAppointment } from "params-query"
 import { useSelector } from "react-redux"
@@ -10,5 +11,12 @@ export function useAppointment(time_start?: string) {
         ...paramAppointment,
         "filter[time_start]": time_start ? time_start : dayjs().format("YYYY-MM"),
     }).responseArray ?? []
-    return { appointment }
+
+    const appointment_today = appointment?.filter(
+        (a: AppointmentNoti) =>
+            dayjs(a.time_start).format("YYYY-MM-DD") ===
+            dayjs().format("YYYY-MM-DD")
+    );
+
+    return { appointment, appointment_today }
 }

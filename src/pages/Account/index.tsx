@@ -4,7 +4,7 @@ import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useContext, useEffect, useState } from "react";
-import {  logoutUser } from "redux/user/userSlice";
+import { logoutUser } from "redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import style from './account.module.css'
 import { Container } from "@mui/system";
@@ -17,7 +17,6 @@ import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
 import Favorites from "./components/Favorites";
 import Address from "./components/UserAddress";
-import { onSetStatusServicesUser } from "redux/order/orderSlice";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
 import Guide from "./components/Guide";
@@ -57,7 +56,7 @@ const routes = [
     }
 ];
 function Account() {
-    const {t} = useContext(AppContext)
+    const { t, appointment_today } = useContext(AppContext)
     const RouterPage = (
         props: { pageComponent: JSX.Element } & RouteComponentProps
     ) => props.pageComponent;
@@ -73,12 +72,36 @@ function Account() {
         }))
     }
     const links = [
-        { link: '/tai-khoan/thong-tin-ca-nhan', title: t('Header.my_acc'), hide: IS_MB, icon: ICON.userAct },
-        { link: '/tai-khoan/lich-su-mua', title: t('Header.my_order'), hide: false, icon: icon.boxAcc },
-        { link: '/lich-hen?tab=1', title: t('Header.appointment'), hide: false, icon: ICON.calendarAct },
-        { link: '/lich-hen?tab=2', title: t('Header.Service pack purchased'), hide: false, icon: icon.boxAcc },
-        { link: '/tai-khoan/theo-doi', title: t('Header.Following'), hide: false, icon: icon.heartAcc },
-        { link: '/tai-khoan/dia-chi-giao-hang', title: t('Header.Delivery address'), hide: false, icon: icon.markerAcc }
+        {
+            link: '/tai-khoan/thong-tin-ca-nhan',
+            title: t('Header.my_acc'), hide: IS_MB, icon: ICON.userAct,
+            notiCount: 0, content: ''
+        },
+        {
+            link: '/tai-khoan/lich-su-mua',
+            title: t('Header.my_order'), hide: false, icon: icon.boxAcc,
+            notiCount: 0, content: ''
+        },
+        {
+            link: '/lich-hen?tab=1',
+            title: t('Header.appointment'), hide: false, icon: ICON.calendarAct,
+            notiCount: appointment_today?.length, content: t('Header.appointment')
+        },
+        {
+            link: '/lich-hen?tab=2',
+            title: t('Header.Service pack purchased'), hide: false, icon: icon.boxAcc,
+            notiCount: 0, content: ''
+        },
+        {
+            link: '/tai-khoan/theo-doi',
+            title: t('Header.Following'), hide: false, icon: icon.heartAcc,
+            notiCount: 0, content: ''
+        },
+        {
+            link: '/tai-khoan/dia-chi-giao-hang',
+            title: t('Header.Delivery address'), hide: false, icon: icon.markerAcc,
+            notiCount: 0, content: ''
+        }
     ]
     const onNavigate = (link: string) => {
         history.push(link)
@@ -87,7 +110,6 @@ function Account() {
     if (location.pathname !== "/tai-khoan") ACC_SHOW = "right"
     const handleSignOut = () => {
         dispatch(logoutUser());
-        dispatch(onSetStatusServicesUser())
         history.push("/homepage")
         localStorage.removeItem('_WEB_TK')
         window.sessionStorage.removeItem('_WEB_TK')
@@ -150,16 +172,26 @@ function Account() {
                                     links
                                         .filter(item => item.hide === false)
                                         .map(item => (
-                                            <li key={item.link} className={style.link_list_item}>
+                                            <li
+                                                onClick={() => onNavigate(item.link)}
+                                                key={item.link} className={style.link_list_item}
+                                            >
                                                 <div
                                                     style={location.pathname === item.link ? {
                                                         backgroundColor: 'var(--bg-color)'
                                                     } : {}}
                                                     className={style.link_item}
-                                                    onClick={() => onNavigate(item.link)}
                                                 >
-                                                    <img src={item.icon} className={style.link_item_icon} alt="" />
-                                                    {item.title}
+                                                    <div className={style.link_item_left}>
+                                                        <img src={item.icon} className={style.link_item_icon} alt="" />
+                                                        {item.title}
+                                                    </div>
+                                                    {
+                                                        item.notiCount > 0 &&
+                                                        <div className={style.link_list_item_count}>
+                                                            ({item.notiCount} {item.content})
+                                                        </div>
+                                                    }
                                                 </div>
                                             </li>
                                         ))
@@ -171,8 +203,10 @@ function Account() {
                                             className={style.link_item}
                                             onClick={handleSignOut}
                                         >
-                                            <img src={icon.signOut} className={style.link_item_icon} alt="" />
-                                            {t('Header.sign_out')}
+                                            <div className={style.link_item_left}>
+                                                <img src={icon.signOut} className={style.link_item_icon} alt="" />
+                                                {t('Header.sign_out')}
+                                            </div>
                                         </div>
                                     </li>
                                 }
@@ -189,11 +223,11 @@ function Account() {
                                         onClick={() => setGuide(true)}
                                     />
                                     <XButton
-                                        onClick={()=>setOpenP(true)}
+                                        onClick={() => setOpenP(true)}
                                         className={style.left_bot_head_btn}
                                     />
                                     <PopupMessage
-                                        open={openP} onClose={()=>setOpenP(false)}
+                                        open={openP} onClose={() => setOpenP(false)}
                                         content={EXTRA_FLAT_FORM()}
                                     />
                                 </div>
@@ -231,7 +265,7 @@ function Account() {
 export default Account;
 
 const SwitchLanguage = () => {
-    const { t,language, setLanguage } = useContext(AppContext);
+    const { t, language, setLanguage } = useContext(AppContext);
     const handleChangeLang = (code: string) => {
         setLanguage(code);
         i18next.changeLanguage(code);

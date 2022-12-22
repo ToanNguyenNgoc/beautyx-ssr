@@ -22,7 +22,7 @@ import { formatAddCart } from 'utils/cart/formatAddCart';
 import { addCart } from 'redux/cart';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
-import { clearAllServices } from 'redux/servicesBookSlice';
+import { clearAllServices } from 'redux/booking';
 
 function DiscountDetail() {
     const IS_MB = useDeviceMobile()
