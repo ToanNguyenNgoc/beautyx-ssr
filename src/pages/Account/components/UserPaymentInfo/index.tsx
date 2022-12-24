@@ -26,9 +26,11 @@ function UserPaymentInfo(props: IProps) {
     const addresses: IUserAddress[] = response ?? []
     const addressDefault = addresses.find(i => i.is_default === true)
     useEffect(() => {
-        if (addressDefault && onSetAddressDefault) {
+        let mount = true
+        if (addressDefault && onSetAddressDefault && mount) {
             onSetAddressDefault(addressDefault)
         }
+        return () => {mount = false}
     }, [addresses])
     return (
         <div className={style.container}>

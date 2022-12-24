@@ -9,7 +9,6 @@ import {
   useParams,
   Redirect
 } from "react-router-dom";
-import "../../assets/styles/main.css";
 import HeadOrg from "./components/HeadOrg";
 import OrgDetail from "./components/OrgDetail";
 import { OpenApp, Seo } from 'components/Layout'
@@ -25,7 +24,7 @@ import {
   OrgProducts, OrgServices, OrgCombos,
   OrgInformation, OrgDealHot, OrgGalleries
 } from "./components/OrgPages";
-import API_ROUTE from "api/_api";
+import { useGalleriesQuery } from "redux-toolkit-query/hook-home";
 
 
 function MerchantDetail() {
@@ -36,14 +35,10 @@ function MerchantDetail() {
   const { subdomain } = params
 
   const { response, error, isValidating } = useSwr(`/organizations/${subdomain}`, subdomain)
-  const { responseArray } = useSwr(
-    API_ROUTE.GALLERIES_ORG_ID(subdomain),
-    subdomain,
-    { "include": "images|videos" }
-  )
-  const galleries: IOrgMobaGalleries[] = responseArray ?? []
 
   const org: IOrganization = response
+  const { data } = useGalleriesQuery(subdomain)
+  const galleries: IOrgMobaGalleries[] = data ?? []
 
   let tabs = [
     {
@@ -115,7 +110,7 @@ function MerchantDetail() {
           </div>
           <Container>
             <div className="org_tab_cnt">
-              <ChildPage org={org} galleries={galleries} />
+              {org?.id && <ChildPage org={org} galleries={galleries} />}
             </div>
           </Container>
         </>

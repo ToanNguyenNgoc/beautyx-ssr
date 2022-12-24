@@ -12,8 +12,12 @@ import cateReducer from "./cate-tree/cateTreeSlice";
 import orgMapReducer from "./org/orgMapSlice";
 import filterResultReduce from "./filter-result";
 import searchHistoryReducer from './search_history'
-//----
 import communityReducer from './community'
+// react toolkit query
+import { homeApi } from "redux-toolkit-query/hook-home";
+import { serProComDetailApi } from "redux-toolkit-query/hook-detail";
+import { searchApi } from "redux-toolkit-query/hook-search-history";
+import { orgPageApi } from 'redux-toolkit-query/hook-org'
 
 const rootReducer = {
     carts: cartReducer,
@@ -29,9 +33,25 @@ const rootReducer = {
     ORGS_MAP: orgMapReducer,
     FILTER_RESULT: filterResultReduce,
     SEARCH_HIS: searchHistoryReducer,
-    COMMUNITY: communityReducer
+    COMMUNITY: communityReducer,
+
+    [homeApi.reducerPath]: homeApi.reducer,
+    [serProComDetailApi.reducerPath]: serProComDetailApi.reducer,
+    [searchApi.reducerPath]: searchApi.reducer,
+    [orgPageApi.reducerPath]: orgPageApi.reducer
 };
+
 const store = configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .concat(
+                [
+                    homeApi.middleware,
+                    serProComDetailApi.middleware,
+                    searchApi.middleware,
+                    orgPageApi.middleware
+                ]
+            )
 });
 export default store;

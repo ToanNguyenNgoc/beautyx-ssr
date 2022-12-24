@@ -30,6 +30,7 @@ import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import { analytics, logEvent } from '../../firebase';
 import HomeWatched from 'pages/HomePage/HomeWatched';
 import style from './detail.module.css'
+import { useGetByOrgIdCateIdQuery } from 'redux-toolkit-query/hook-detail';
 
 interface RouteType {
     path: string,
@@ -266,7 +267,10 @@ function SerProCoDetail() {
                                 <DetailOrgCard org={org} />
                             </div>
                         }
-                        <DetailRecommend detail={DETAIL} org={org} />
+                        {
+                            DETAIL?.category && org &&
+                            <DetailRecommend detail={DETAIL} org={org} />
+                        }
                         <div className={style.comment_cnt}>
                             <Comment
                                 org_id={org?.id}
@@ -643,30 +647,26 @@ const DetailQuantity = (
     )
 }
 export const DetailRecommend = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
-    let API: any = {
-        API_URL: `${API_ROUTE.ORG_SERVICES(org?.id)}`,
-        query: {
-            ...paramsServicesOrg,
-            'limit': '12',
-            'filter[service_group_id]': detail.category?.id
-        }
+    const paramsSer = {
+        ...paramsServicesOrg,
+        'limit': '12',
+        'filter[service_group_id]': detail.category?.id
     }
-    if (detail.type === 'PRODUCT') {
-        API = {
-            API_URL: `${API_ROUTE.ORG_PRODUCTS(org?.id)}`,
-            query: {
-                ...paramsProductsOrg,
-                'limit': '12',
-                'filter[product_category_id]': detail.category?.id
-            }
-        }
+    const paramsPro = {
+        ...paramsProductsOrg,
+        'limit': '12',
+        'filter[product_category_id]': detail.category?.id
     }
-    const { responseArray } = useSwr(API.API_URL, (detail?.category?.id && org?.id), API.query)
+    const { data } = useGetByOrgIdCateIdQuery({
+        org_id: org.id,
+        type: detail.type,
+        params: detail.type === 'PRODUCT' ? paramsPro : paramsSer
+    })
     return (
         <div className={style.recommend}>
             <div className={style.recommend_section}>
                 {
-                    responseArray?.length > 0 &&
+                    data?.length > 0 &&
                     <div>
                         <p
                             style={{ color: 'var(--text-black)' }}
@@ -677,7 +677,7 @@ export const DetailRecommend = ({ detail, org }: { detail: DetailProp, org: IOrg
                         <div className={style.list_recommend_cnt}>
                             <ul className={style.list_recommend}>
                                 {
-                                    responseArray?.map((item: any, index: number) => (
+                                    data?.map((item: any, index: number) => (
                                         <li key={index} style={style.list_recommend_item} >
                                             <SerProItem
                                                 type={detail.type === 'PRODUCT' ? 'PRODUCT' : 'SERVICE'}

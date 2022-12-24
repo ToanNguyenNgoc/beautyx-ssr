@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-concat */
-import { Checkbox, Dialog } from "@mui/material";
+import { Checkbox } from "@mui/material";
 import React, { useState } from "react";
 import icon from "constants/icon";
 import {
@@ -13,12 +13,10 @@ import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface/discount";
 import { IOrganization } from "interface/organization";
-import { useCartReducer, useDeviceMobile } from "hooks";
 import {
     EX_CHECK_DATE,
     EX_CHECK_INCLUDE_ITEMS,
     EX_CHECK_SUB_TOTAL,
-    IS_VOUCHER,
     EX_CHECK_VALID_TIME,
     EX_CHECK_INCLUDE_ORG
 } from "utils/cart/checkConditionVoucher";
@@ -28,16 +26,11 @@ import img from "constants/img";
 import formatPrice from "utils/formatPrice";
 import moment from "moment";
 import { discountReducerItem } from "utils/cart/cartReducer";
-import { Transition, TransitionUp } from "utils/transition";
 import { XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 
 function CartGroupItem(props: any) {
     const { item, org, cartList, setOpenBranch, openBranch } = props;
-    const itemOrgId = item.org_id;
-    const [open, setOpen] = useState(false);
-    const { VOUCHER_CART } = useSelector((state: any) => state.carts);
-    const vouchers = IS_VOUCHER(VOUCHER_CART.vouchers)
     const cartListOrg = cartList.filter((i: any) => i.org_id === org?.id);
     const cartListCheck = cartList.filter((i: any) => i.isConfirm === true);
     let isCheck = false;
@@ -61,7 +54,7 @@ function CartGroupItem(props: any) {
         }
     };
     const servicesCartListCheckByOrg = cartListCheck?.filter(
-        (i: any) => i.is_type === 2
+        (i: any) => i.is_type === 'SERVICE'
     );
 
     return (
@@ -103,24 +96,6 @@ function CartGroupItem(props: any) {
                     ? `Chi nhánh : ${openBranch.branch?.name} - ${openBranch?.branch?.full_address}`
                     : `${item?.items[0]?.org?.full_address}`}
             </div>
-            {vouchers.length > 0 &&
-                VOUCHER_CART.org_id === itemOrgId && (
-                    <div className="cart-item-voucher">
-                        <span
-                            onClick={() => setOpen(true)}
-                            className="flex-row title"
-                        >
-                            Mã khuyến mại
-                            <img src={icon.cardDiscountOrange} alt="" />
-                        </span>
-                        <PopUpVoucherOrg
-                            org={org}
-                            open={open}
-                            setOpen={setOpen}
-                            vouchers={vouchers}
-                        />
-                    </div>
-                )}
             <ul className="re-cart-item-group__body">
                 {item.items.map((cart: any, i: number) => (
                     <li key={i}>
@@ -139,57 +114,7 @@ function CartGroupItem(props: any) {
 
 export default CartGroupItem;
 
-interface IPopUpVoucherOrg {
-    org: IOrganization;
-    open: boolean;
-    setOpen: (open: boolean) => void;
-    vouchers: IDiscountPar[];
-}
 
-export const PopUpVoucherOrg = (props: IPopUpVoucherOrg) => {
-    const IS_MB = useDeviceMobile();
-    const { open, setOpen, org, vouchers } = props
-    const { cartAmount } = useSelector((state: any) => state.carts)
-    const { services_id, products_id } = useCartReducer()
-    return (
-        <Dialog
-            TransitionComponent={IS_MB ? Transition : TransitionUp}
-            fullScreen={IS_MB ? true : false}
-            open={open}
-            onClose={() => setOpen(false)}
-        >
-            <div className="cart-item-pop-voucher">
-                <div className="flex-row-sp">
-                    <span className="title">{org?.name} khuyến mại</span>
-                    <img
-                        className="cursor-pointer"
-                        onClick={() => setOpen(false)}
-                        src={icon.closeCircle}
-                        alt=""
-                    />
-                </div>
-                <div className="cart-vouchers-list">
-                    <span className="cart-vouchers-list__title">
-                        Danh sách mã ưu đãi
-                    </span>
-                    <ul className="list">
-                        {vouchers?.map((item: IDiscountPar, index: number) => (
-                            <li key={index} className="item">
-                                <VoucherOrgItem
-                                    services_id={services_id?.map((i: any) => i.id)}
-                                    products_id={products_id?.map((i: any) => i.id)}
-                                    cartAmount={cartAmount}
-                                    showApplyBtn={true} org={org}
-                                    voucher={item}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
-        </Dialog>
-    );
-};
 interface IVoucherOrgItem {
     org: IOrganization,
     voucher: IDiscountPar,
@@ -220,7 +145,6 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const active = VOUCHER_APPLY?.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
-    // const dateCondition  = true
     const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products_id, services_id);
     const orgCondition = EX_CHECK_INCLUDE_ORG(voucher, org.id)
 

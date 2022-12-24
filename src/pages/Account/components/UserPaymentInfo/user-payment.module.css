@@ -27,13 +27,14 @@
 
 .user_row_label,
 .user_row_detail_text {
-    font-size: 16px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 16px;
     font-weight: 500;
 }
 
 .user_row_detail_text {
     font-weight: 700;
+    max-width: 224px;
 }
 
 .user_edit_btn {

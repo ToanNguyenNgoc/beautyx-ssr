@@ -8,7 +8,7 @@ import { GoogleTagPush, GoogleTagEvents } from "utils/dataLayer";
 import { analytics, logEvent } from "../../firebase"
 // end
 
-interface IInitialState {
+export interface CartType {
     org: any,
     cartList: any[],
     cartQuantity: number,
@@ -25,7 +25,7 @@ interface IInitialState {
 
 const storageName = "web-booking-cart";
 const storage = JSON.parse(`${localStorage.getItem(storageName)}`);
-const initialState: IInitialState = {
+const initialState: CartType = {
     org: null,
     cartList: localStorage.getItem(storageName) ? storage : [],
     cartQuantity: 0,

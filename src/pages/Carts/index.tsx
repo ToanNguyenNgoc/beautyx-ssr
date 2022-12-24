@@ -10,9 +10,7 @@ import { useDeviceMobile } from "hooks";
 import { EmptyRes } from "components/Layout";
 import { onErrorImg, Transition, unique } from "utils";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import { fetchAsyncOrgDiscounts } from "redux/org_discounts/orgDiscountsSlice";
-import { addVoucherByOrg, clearByCheck, getTotal, onClearApplyVoucher } from "redux/cart";
-import { IS_VOUCHER } from "utils/cart/checkConditionVoucher";
+import {  clearByCheck, getTotal } from "redux/cart";
 import HeadTitle from "features/HeadTitle";
 import { extraPaymentMethodId } from "features/PaymentMethod/extraPaymentMethodId";
 import HeadMobile from "features/HeadMobile";
@@ -42,26 +40,7 @@ function Carts() {
     const cartList = cartListAll.filter((i: any) => i?.user_id === USER?.id)
 
 
-    const org = cartList.filter((item: any) => item.isConfirm === true)[0]?.org;
-
-    const callDiscountByOrg = async () => {
-        const values = { org_id: org.id }
-        const res = await dispatch(fetchAsyncOrgDiscounts(values))
-        const { discounts } = res.payload;
-        if (discounts.length > 0) {
-            dispatch(addVoucherByOrg({
-                org: org,
-                vouchers: IS_VOUCHER(discounts)
-            }))
-        }
-    }
-    useEffect(() => {
-        dispatch(onClearApplyVoucher())
-        if (org) {
-            callDiscountByOrg()
-        }
-    }, [org])
-
+    const org = cartList.filter((item: any) => item.isConfirm === true)[0]?.org
     const cartConfirm = cartList.filter((item: any) => item.isConfirm === true);
 
     const handleClearByCheck = () => {

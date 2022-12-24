@@ -15,22 +15,24 @@ export const handleValidToken = () => {
     return refresh
 }
 
-export const AUTH_HEADER = () => {
+export const AUTH_HEADER = (contentType?: 'application/json' | 'multipart/form-data') => {
     const session = window.sessionStorage.getItem("_WEB_TK");
     const local = localStorage.getItem("_WEB_TK")
     return {
         headers: {
-            Authorization: `Bearer ${session ? session : local}`,
+            "Authorization": `Bearer ${session ? session : local}`,
+            "Content-Type": contentType ? contentType : 'application/json'
         },
     }
 }
+export const token = localStorage.getItem("_WEB_TK") ?? window.sessionStorage.getItem("_WEB_TK");
 export const AUTH_HEADER_PARAM_GET = (params: any) => {
     const session = window.sessionStorage.getItem("_WEB_TK");
     const local = localStorage.getItem("_WEB_TK")
     return {
         params,
         headers: {
-            Authorization: `Bearer ${session ? session : local}`,
+            "Authorization": `Bearer ${session ? session : local}`,
         },
     }
 }
@@ -39,7 +41,7 @@ export const AUTH_HEADER_PARAM_DELE = (values: any) => {
     const local = localStorage.getItem("_WEB_TK")
     return {
         headers: {
-            Authorization: `Bearer ${session ? session : local}`,
+            "Authorization": `Bearer ${session ? session : local}`,
         },
         data: values,
     }
@@ -49,7 +51,7 @@ export const AUTH_HEADER_PARAM_PUT = (values: any) => {
     const local = localStorage.getItem("_WEB_TK")
     return {
         headers: {
-            Authorization: `Bearer ${session ? session : local}`,
+            "Authorization": `Bearer ${session ? session : local}`,
         },
         data: values,
     }

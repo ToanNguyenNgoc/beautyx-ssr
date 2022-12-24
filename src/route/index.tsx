@@ -43,6 +43,7 @@ import Account from "pages/Account";
 import Calendar from "pages/Calendar";
 import BuyNow from "features/BuyNow";
 import Carts from "pages/Carts";
+import Cart from "pages/Cart";
 // import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
@@ -308,6 +309,10 @@ function RouterConfig() {
         {
             path: "/gio-hang",
             component: <Carts />,
+        },
+        {
+            path:"/cart",
+            component:<Cart/>
         },
         {
             path: "/otp-form",

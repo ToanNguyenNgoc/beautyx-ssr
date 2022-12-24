@@ -42,7 +42,7 @@ interface HeadMenuProps {
 const HeadMenuBox = (props: HeadMenuProps) => {
     const { refMenu, onCloseTimeout } = props;
     const history = useHistory();
-    const { t, language, setLanguage, setSign } = useContext(AppContext);
+    const { t, language, setLanguage } = useContext(AppContext);
     const { USER } = useSelector((state: IStore) => state.USER);
     const dispatch = useDispatch();
     const listMenu = [
@@ -76,7 +76,6 @@ const HeadMenuBox = (props: HeadMenuProps) => {
         i18next.changeLanguage(code);
     };
     const handleSignOut = () => {
-        setSign(false);
         dispatch(logoutUser());
         localStorage.removeItem("_WEB_TK");
         window.sessionStorage.removeItem("_WEB_TK");

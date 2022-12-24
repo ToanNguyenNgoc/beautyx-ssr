@@ -72,6 +72,7 @@ const PostFormCnt = (props: PostFormCntProps) => {
     const refText = useRef<HTMLTextAreaElement>(null)
     const dispatch = useDispatch()
     const onChangeMedia = async (e: any) => {
+        // console.log(e)
         const tempMedia: any[] = []
         for (var i = 0; i < e.target.files.length; i++) {
             const tempMediaItem = {

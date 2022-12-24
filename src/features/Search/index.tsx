@@ -17,10 +17,9 @@ import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter"
 import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
 import { onResetFilter } from "redux/filter-result"
-import { searchKeyRecommend } from "pages/HomePage/data"
 import SearchHistory from "./SearchHistory"
 import IStore from "interface/IStore"
-import { postHistorySearch } from "user-behavior"
+import { usePostSearchHisMutation } from "redux-toolkit-query/hook-search-history"
 
 interface SearchProps {
     key_work?: string,
@@ -95,13 +94,22 @@ function Search(props: SearchProps) {
             })
             onCloseSearchTimeOut && onCloseSearchTimeOut()
             onCloseSearchDialog && onCloseSearchDialog()
-            if (USER) postHistorySearch(KEY_WORD_DE, 'KEYWORD')
+            if (USER) { postHistorySearch(KEY_WORD_DE, 'KEYWORD') }
         }
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             onResult()
         }
+    }
+    const [addSearch] = usePostSearchHisMutation()
+    const postHistorySearch = (KEY_WORD_DE: string, type: any, organization_id?: any, productable_id?: any) => {
+        addSearch({
+            text: KEY_WORD_DE,
+            type: type,
+            organization_id: organization_id,
+            productable_id: productable_id
+        })
     }
     return (
         <div
@@ -248,10 +256,10 @@ function Search(props: SearchProps) {
                     </div>
                 }
                 {
-                    KEY_WORD === "" &&
+                    (USER && KEY_WORD === "") &&
                     <div>
                         <SearchHistory onCloseSearch={onCloseSearch} />
-                        <div 
+                        <div
                             onClick={onCloseSearch}
                             className={style.section_keyword_trend}
                         >
@@ -261,12 +269,12 @@ function Search(props: SearchProps) {
                             </div>
                             <ul className={style.keyword_trend_list}>
                                 {
-                                    keysRecommend.map((i:any, index:number) => (
+                                    keysRecommend.map((i: any, index: number) => (
                                         <li key={index} className={style.keyword_trend_item}>
                                             <Link
-                                                to={{ 
+                                                to={{
                                                     pathname: `/ket-qua-tim-kiem/dich-vu/`,
-                                                    search:`keyword=${i._id}`
+                                                    search: `keyword=${i._id}`
                                                 }}
                                                 className={style.keyword_trend_link}
                                             >

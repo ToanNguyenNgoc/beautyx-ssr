@@ -3,7 +3,6 @@ import HomeTitle from '../Components/HomeTitle';
 import { ParamOrg } from 'params-query/param.interface';
 import { formatDistance, onErrorImg } from 'utils';
 import style from './home-distance.style.module.css';
-import API_ROUTE from 'api/_api';
 import { IOrganization, IOrgMobaGalleries, ITag } from 'interface';
 import { Link } from 'react-router-dom';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
@@ -15,9 +14,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onChangeFilterOrg, onResetFilter, onResetFilterOrg } from 'redux/filter-result';
 import IStore from 'interface/IStore';
 import Skeleton from 'react-loading-skeleton';
-import { useDeviceMobile, useSwrCache } from 'hooks';
+import { useDeviceMobile } from 'hooks';
 import { AppContext } from 'context/AppProvider';
 import img from 'constants/img';
+import {
+    useGalleriesQuery,
+    useOrgsDistanceQuery
+} from 'redux-toolkit-query/hook-home';
 
 function HomeOrgDistance() {
     const { t } = useContext(AppContext)
@@ -35,8 +38,10 @@ function HomeOrgDistance() {
         "limit": 4,
         "filter[is_momo_ecommerce_enable]": true,
         "filter[location]": LOCATION,
+        "sort":""
     }
-    const { responseArray, isValidating } = useSwrCache(API_ROUTE.ORGS, true, params)
+    const { data, isLoading } = useOrgsDistanceQuery(params)
+    const orgs: IOrganization[] = data ?? []
 
     const onViewMore = () => {
         dispatch(onResetFilter())
@@ -84,13 +89,12 @@ function HomeOrgDistance() {
                 </ul>
             </div>
             {
-                responseArray?.length === 0 &&
-                isValidating &&
+                isLoading &&
                 (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={4} />)
             }
             <div className={style.org_list_cnt}>
                 <ul className={style.org_list}>
-                    {responseArray?.map((item: IOrganization) => (
+                    {orgs.map((item: IOrganization) => (
                         <li key={item.id} className={style.org_list_item}>
                             <OrgDistanceItem org={item} />
                         </li>
@@ -104,8 +108,8 @@ function HomeOrgDistance() {
 export default HomeOrgDistance;
 
 const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
-    const { responseArray } = useSwrCache(API_ROUTE.GALLERIES_ORG_ID(org?.id), (org?.id))
-    const galleries: IOrgMobaGalleries[] = responseArray
+    const { data } = useGalleriesQuery(org.subdomain)
+    const galleries: IOrgMobaGalleries[] = data ?? []
     return (
         <Link
             className={style.org_card_item}

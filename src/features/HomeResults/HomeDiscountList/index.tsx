@@ -1,13 +1,13 @@
 import React from 'react';
 import { Container } from '@mui/material';
-import '../../HomeDiscounts/style.css'
+import 'pages/HomeDiscounts/style.css'
 import './style.css';
 // import { AUTH_LOCATION } from 'api/authLocation';
 import { useDeviceMobile, useSwrInfinite } from 'hooks';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import HeadTitle from 'features/HeadTitle';
 import HeadMobile from 'features/HeadMobile';
-import DiscountItem from 'features/HomeDiscounts/DiscountItem';
+import DiscountItem from 'pages/HomeDiscounts/DiscountItem';
 import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
@@ -16,10 +16,9 @@ function HomeDiscountList() {
     const paramsDiscounts = {
         "append": "user_available_purchase_count",
         "filter[platform]": "MOMO",
-        // "filter[location]": LOCATION ?? "",
         "limit": "30",
         "sort": "-priority|-created_at|discount_value"
-    }
+    } 
     const IS_MB = useDeviceMobile();
     const { resData, totalItem, onLoadMore } = useSwrInfinite(true, "/discounts", paramsDiscounts)
     const discounts: IDiscountPar[] = resData
@@ -64,16 +63,6 @@ function HomeDiscountList() {
                         </ul>
                         {discounts.length < totalItem && <LoadGrid item_count={IS_MB ? 6 : 12} />}
                     </InfiniteScroll>
-                    {/* <div className="discount-list-cnt__bot">
-                        {
-                            discounts.length < totalItem &&
-                            <XButton
-                                title='Xem thêm ưu đãi'
-                                loading={false}
-                                onClick={onViewMore}
-                            />
-                        }
-                    </div> */}
                 </div>
             </Container>
         </>
