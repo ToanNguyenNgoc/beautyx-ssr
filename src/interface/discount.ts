@@ -39,7 +39,7 @@ export interface IITEMS_DISCOUNT {
         is_momo_ecommerce_enable: true,
         is_moba_ecommerce_enable: boolean,
         image_url: string,
-        retail_price:number
+        retail_price: number
     },
     discount: IDiscountChild,
     organization: IOrganization
@@ -84,7 +84,7 @@ export interface IDiscountPar {
     coupon_code: string,
     discount_value: number,
     discount_unit: string,
-    distance_organization?:number,
+    distance_organization?: number,
     discount_type: string,
     valid_from: string,
     valid_util: string,
@@ -103,4 +103,7 @@ export interface IDiscountPar {
     user_available_purchase_count: number | any,
     organizations: IOrganization[],
     items: IITEMS_DISCOUNT[]
+}
+export interface IDiscountCalc extends IDiscountPar {
+    discount_value_calc: number
 }

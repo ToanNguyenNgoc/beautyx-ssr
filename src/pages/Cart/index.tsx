@@ -1,6 +1,7 @@
 
 import { Container } from '@mui/system';
 import { XButton } from 'components/Layout';
+import PaymentMethod from 'components/PaymentMethod';
 import icon from 'constants/icon';
 import HeadMobile from 'features/HeadMobile';
 import HeadTitle from 'features/HeadTitle';
@@ -10,13 +11,13 @@ import IStore from 'interface/IStore';
 import UserPaymentInfo from 'pages/Account/components/UserPaymentInfo';
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { unique } from 'utils';
+import { clst, unique } from 'utils';
 import style from './cart.module.css'
 import { CartCalc, CartOrgItem } from './components';
 
 interface ItemType { id: number, quantity: number }
 
-interface PostOrderType {
+export interface PostOrderType {
     products?: ItemType[],
     services?: ItemType[],
     prepay_cards?: ItemType[],
@@ -40,22 +41,13 @@ function Cart() {
             cartItemsOrg: cartItemsOrg
         }
     })
-    const { cart_confirm, products_id, services_id, combos_id } = useCartReducer()
+    const { cart_confirm} = useCartReducer()
     const orgChoose = cart_confirm[0]?.org
 
     const [order, setOrder] = useState<PostOrderType>({
         user_address_id: null,
         branch_id: null
     })
-    const handlePostOrder = () => {
-        const params: PostOrderType = {
-            ...order,
-            services: services_id,
-            products: products_id,
-            treatment_combo: combos_id
-        }
-        console.log(params)
-    }
 
 
     return (
@@ -99,9 +91,19 @@ function Cart() {
                                     setOrder({ ...order, user_address_id: address?.id })}
                             />
                         </div>
-                        <CartCalc
-                            handlePostOrder={handlePostOrder}
-                        />
+                        <div className={style.right_section}>
+                            <PaymentMethod
+                                onSetPaymentMethod={(method) =>
+                                    setOrder({ ...order, payment_method_id: method.id })
+                                }
+                            />
+                        </div>
+                        <div className={clst([style.right_section, style.bottom])}>
+                            <CartCalc
+                                orgChoose={orgChoose}
+                                order={order}
+                            />
+                        </div>
                     </div>
                 </div>
             </Container>
