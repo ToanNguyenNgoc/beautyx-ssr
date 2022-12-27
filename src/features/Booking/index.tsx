@@ -82,16 +82,20 @@ function Booking() {
     )?.response
 
     useEffect(() => {
-        dispatch(onClearApplyVoucher())
-        if (location.state) {
-            const action = {
-                org: location.state.org,
-                services: location.state.services,
-            };
-            dispatch(addServiceBookNow(action));
-        } else {
-            history.push("/home");
+        let mount = true
+        if (mount) {
+            dispatch(onClearApplyVoucher())
+            if (location.state) {
+                const action = {
+                    org: location.state.org,
+                    services: location.state.services,
+                };
+                dispatch(addServiceBookNow(action));
+            } else {
+                history.push("/home");
+            }
         }
+        return () => { mount = false }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
     const [open, setOpen] = useState(false);

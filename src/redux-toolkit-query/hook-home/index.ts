@@ -16,7 +16,10 @@ export const homeApi = createApi({
     }),
     endpoints: builder => ({
         galleries: builder.query({
-            query: (org_id: number | string) => API_ROUTE.GALLERIES_ORG_ID(org_id),
+            query: (org_id: number | string) => ({
+                url:API_ROUTE.GALLERIES_ORG_ID(org_id),
+                params:{'include':'images|videos'}
+            }),
             keepUnusedDataFor: 60 * 60, // default 60 seconds
             transformResponse: (response: ResponseType) => response?.context?.data ?? []
         }),

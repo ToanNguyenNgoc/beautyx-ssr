@@ -20,7 +20,7 @@ import {
     EX_CHECK_VALID_TIME,
     EX_CHECK_INCLUDE_ORG
 } from "utils/cart/checkConditionVoucher";
-import { DISCOUNT_TYPE, EX_DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
+import { EX_DISCOUNT_TYPE } from "utils/formatRouterLink/fileType";
 import onErrorImg from "utils/errorImg";
 import img from "constants/img";
 import formatPrice from "utils/formatPrice";
@@ -135,6 +135,7 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const { productsInDis, servicesInDis } = discountReducerItem(
         voucher?.items?.filter((i: IITEMS_DISCOUNT) => i.organization_id === org?.id)
     )
+
     const productName = productsInDis?.map((i: IITEMS_DISCOUNT) => i.productable?.product_name);
     const serviceName = servicesInDis?.map((i: IITEMS_DISCOUNT) => i.productable?.service_name);
     const displayName = serviceName.concat(productName).filter(Boolean)
@@ -145,40 +146,41 @@ export const VoucherOrgItem = (props: IVoucherOrgItem) => {
     const active = VOUCHER_APPLY?.map((i: IDiscountPar) => i.id).includes(voucher.id)
     const subTotalCondition = EX_CHECK_SUB_TOTAL(cartAmount, voucher);
     const dateCondition = EX_CHECK_DATE(voucher);
-    const itemsCondition = EX_CHECK_INCLUDE_ITEMS(voucher, products_id, services_id);
+    const { itemConditionService } = EX_CHECK_INCLUDE_ITEMS(voucher, products_id, services_id);
     const orgCondition = EX_CHECK_INCLUDE_ORG(voucher, org.id)
 
     let applyCondition = false;
     if (
-        voucher.discount_type === DISCOUNT_TYPE.SUB_TOTAL.key &&
+        voucher.discount_type === 'SUB_TOTAL' &&
         subTotalCondition &&
         dateCondition &&
-        itemsCondition &&
+        itemConditionService &&
         timeCondition &&
         orgCondition
     ) {
         applyCondition = true;
     }
     if (
-        voucher.discount_type === DISCOUNT_TYPE.PRODUCT.key &&
+        voucher.discount_type === 'PRODUCT' &&
         subTotalCondition &&
         dateCondition &&
-        itemsCondition &&
+        itemConditionService &&
         timeCondition &&
         orgCondition
     ) {
         applyCondition = true
     }
     if (
-        voucher.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key &&
+        voucher.discount_type === 'FINAL_PRICE' &&
         subTotalCondition &&
         dateCondition &&
-        itemsCondition &&
+        itemConditionService &&
         timeCondition &&
         orgCondition
     ) {
         applyCondition = true;
     }
+
 
     const outDiscounts = props.outDiscounts?.filter(Boolean)
     const handleApplyVoucher = () => {

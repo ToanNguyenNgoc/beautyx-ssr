@@ -26,6 +26,7 @@ export const CartInputVoucher = (props: InputVoucherProps) => {
     const dispatch = useDispatch();
     const IS_MB = useDeviceMobile();
     const { open, setOpen, cart_confirm, organization, cartAmount, services_id, products_id, outDiscounts } = props;
+    // const { VOUCHER_APPLY } = useSelector((state: IStore) => state.carts)
     const [text, setText] = useState("");
     const [response, setResponse] = useState<IDiscountPar | any>()
     const { firstLoad, resultLoad, noti } = useNoti()
@@ -140,6 +141,16 @@ export const CartInputVoucher = (props: InputVoucherProps) => {
                                     services_id={services_id}
                                     products_id={products_id}
                                 />
+                                {/* <VoucherItem
+                                    outDiscounts={outDiscounts}
+                                    voucher={voucher}
+                                    org={organization}
+                                    showApplyBtn={true}
+                                    totalAmount={cartAmount}
+                                    services_id={services_id}
+                                    products_id={products_id}
+                                    VOUCHER_APPLY={VOUCHER_APPLY}
+                                /> */}
                             </li>
                         }
                     </ul>

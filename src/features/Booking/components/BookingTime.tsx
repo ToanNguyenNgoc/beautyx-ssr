@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Dialog } from "@mui/material";
 import { useDeviceMobile } from "hooks";
 import style from '../booking.module.css'
-import { XButton } from "components/Layout";
+import {  XButton } from "components/Layout";
 import { Transition } from "utils";
 import HeadMobile from "features/HeadMobile";
 import TimePicker from "components/TimePicker";
@@ -32,13 +32,14 @@ function BookingTime(props: any) {
             <div className={style.book_time_cnt}>
                 <div className={style.book_time_top}>
                     <div className={style.book_time_top_left}>
-                        <DatePicker onChange={(e) => onChangeDatePicker(e)} />
+                        <DatePicker disablePrev onChange={(e) => onChangeDatePicker(e)} />
                     </div>
                     <div className={style.book_time_top_right}>
                         <TimePicker
                             bookTime={bookTime}
                             org={org}
                             onChange={(e) => onChangeTimePicker(e)}
+                            disablePrev
                         />
                     </div>
                 </div>
