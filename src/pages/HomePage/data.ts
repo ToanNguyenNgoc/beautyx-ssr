@@ -1,4 +1,3 @@
-import { dealHot } from "constants/img";
 import topic1 from "assets/image/topic1.png";
 import topic2 from "assets/image/topic2.png";
 import topic3 from "assets/image/topic3.png";
@@ -43,7 +42,7 @@ export const deals: Ideals[] = [
         // min_price: 50000,
         // max_price: 100000,
         keyword: 'Gội đầu',
-        img: dealHot.dealhot,
+        img: '',
         banner: deal0,
         special_price:true
     },
@@ -52,7 +51,7 @@ export const deals: Ideals[] = [
         title: "Nail xinh đón Tết",
         min_price: null,
         keyword: 'Nail',
-        img: dealHot.dealhot1,
+        img: '',
         // percent: 50,
         banner: deal1,
         special_price:false
@@ -61,7 +60,7 @@ export const deals: Ideals[] = [
         id: 3,
         title: "Nhận quà Giáng sinh Rinh Deal làm đẹp",
         min_price: null,
-        img: dealHot.dealhot2,
+        img: '',
         // percent: 30,
         banner: deal2,
         special_price:true

@@ -4,7 +4,7 @@ import { HeadTitle } from 'pages/Account';
 import React, { useContext, useRef } from 'react';
 import { Favorite } from 'interface'
 import { useSelector } from 'react-redux';
-import { useSwrInfinite, onErrorImg } from 'utils'
+import { onErrorImg } from 'utils'
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter'
 import style from './favorite.module.css'
 import { Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ import icon from 'constants/icon';
 import { XButton } from 'components/Layout';
 import Skeleton from 'react-loading-skeleton';
 import { AppContext } from 'context/AppProvider';
+import { useSwrInfinite } from 'hooks';
 
 function Favorites() {
     const {t} = useContext(AppContext)

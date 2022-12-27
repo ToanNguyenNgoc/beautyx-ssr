@@ -4,10 +4,9 @@ import icon from "constants/icon";
 import { AppContext } from "context/AppProvider";
 import { extraOrgTimeWork } from "../../pages/MerchantDetail/Functions/extraOrg";
 import { paramsGalleries } from 'params-query'
-import { useSwrInfinite } from 'utils'
 import API_ROUTE from "api/_api";
 import { IOrganization, IOrgMobaGalleries, Product, Service } from 'interface'
-import { useDeviceMobile, useFavorite, useSwr } from "hooks";
+import { useDeviceMobile, useFavorite, useSwr, useSwrInfinite } from "hooks";
 import { AUTH_LOCATION } from "api/authLocation";
 import img from "constants/img";
 import { FullImage, SerProItem, XButton } from "components/Layout";

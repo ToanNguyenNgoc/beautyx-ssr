@@ -115,19 +115,19 @@ function HomeBanner2() {
     const onFeatureClick = (func: string) => {
         switch (func) {
             case "COM":
-                // return setMessage({
-                //     open: true,
-                //     content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
-                //     icon: icon.communityPurple
-                // });
-                return history.push('/cong-dong')
+                return setMessage({
+                    open: true,
+                    content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
+                    icon: icon.communityPurple
+                });
+                // return history.push('/cong-dong')
             case "REW":
-                // return setMessage({
-                //     open: true,
-                //     content: 'Tính năng "Rewards" đang trong giai đoạn phát triển.',
-                //     icon: icon.rewardOrange
-                // });
-                return history.push('/coins')
+                return setMessage({
+                    open: true,
+                    content: 'Tính năng "Rewards" đang trong giai đoạn phát triển.',
+                    icon: icon.rewardOrange
+                });
+                // return history.push('/coins')
             case "CAL":
                 return history.push("/lich-hen?tab=1");
             case "MAP":

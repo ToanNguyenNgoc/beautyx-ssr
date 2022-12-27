@@ -1,6 +1,5 @@
 import API_ROUTE from 'api/_api';
 import icon from 'constants/icon';
-// import { AppContext } from 'context/AppProvider';
 import { useSwr } from 'hooks';
 import { ITag } from 'interface';
 import { paramsProductsCate } from 'params-query';
@@ -17,16 +16,12 @@ interface FilterTagsSerProProps {
 
 export function FilterTagsSerPro(props: FilterTagsSerProProps) {
     const { originKey, type, value, onChange } = props
-    // const {serviceCate, productCate} = useContext(AppContext);
-    // const listCate = type ==='SERVICE' ? serviceCate : productCate
     const result: ITag = useFindTagByName(originKey)
     const paramTag = {
         ...paramsProductsCate,
         'filter[group]': type
     }
     const tagDetail: ITag = useSwr(API_ROUTE.TAGS_ID(result?.id), result, paramTag).response
-    // const tagsChild = listCate?.filter((i:ITag) => i.parent_id === tagDetail?.id)
-
     const onChangeTagPar = (tagName: string) => {
         if (onChange) onChange(tagName)
     }
@@ -80,23 +75,9 @@ interface TagSerItemProps {
 
 const TagSerItem = (props: TagSerItemProps) => {
     const { child, value, onChangeTagPar } = props;
-    // const refChild = useRef<HTMLDivElement>(null)
-    // const onOpenCateChild = () => {
-    //     refChild.current?.classList.add(style.item_child_show)
-    // }
-    // const onCloseCateChild = () => {
-    //     console.log('xxx')
-    //     refChild.current?.classList.remove(style.item_child_show)
-    // }
-    // window.onclick = () => onOpenCateChild()
 
     return (
         <li
-            // onClick={(e) => {
-            //     onOpenCateChild();
-            //     e.preventDefault();
-            //     e.stopPropagation();
-            // }}
             onClick={() => onChangeTagPar(child.name)}
             className={style.tag_ser_item}
         >
@@ -112,8 +93,6 @@ const TagSerItem = (props: TagSerItemProps) => {
             <span className={style.tag_ser_item_text}>{child.name}</span>
             {
                 <div
-                    // onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
-                    // ref={refChild}
                     className={style.tag_ser_item_child}
                 >
                     <ul className={style.tag_ser_item_child_list}>

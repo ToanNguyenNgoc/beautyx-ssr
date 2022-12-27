@@ -10,7 +10,7 @@ export interface IFilterResult {
 const initialState: IFilterResult = {
     prev_param: "",
     SERVICE_PR: {
-        "filter[keyword]":'',
+        "filter[keyword]": '',
         "filter[location]": "",
         "filter[province_code]": "",
         "filter[district_code]": "",
@@ -34,7 +34,8 @@ const initialState: IFilterResult = {
         "filter[district_code]": "",
         "filter[min_price]": "",
         "filter[max_price]": "",
-        "sort": ""
+        "sort": "",
+        "include": "favorites_count|favorites"
     }
 }
 const FilterResultSlice = createSlice({

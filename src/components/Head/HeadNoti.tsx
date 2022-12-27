@@ -1,21 +1,19 @@
 import icon from 'constants/icon';
 import { ICON } from 'constants/icon2';
 import { AppContext } from 'context/AppProvider';
-import dayjs from 'dayjs';
 import { useDeviceMobile } from 'hooks';
 import { AppointmentNoti } from 'interface/appointment';
 import IStore from 'interface/IStore';
 import { IServiceUser } from 'interface/servicesUser';
 import React, { useContext, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { onSetViewedNoti } from 'redux/notifications';
 import { clst } from 'utils';
 import style from './head.module.css'
 
 function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     const refNoti = useRef<HTMLDivElement>();
-    const { orderService, appointment } = useContext(AppContext);
+    const { appointment_today, order_app } = useContext(AppContext);
     const IS_MB = useDeviceMobile()
     const onToggleNoti = (dis: "show" | "hide") => {
         if (IS_MB) {
@@ -29,20 +27,12 @@ function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     };
     // window.onclick = () => onToggleNoti('hide')
     //
-    const appointment_today = appointment?.filter(
-        (a: AppointmentNoti) =>
-            dayjs(a.time_start).format("YYYY-MM-DD") ===
-            dayjs().format("YYYY-MM-DD")
-    );
-    const order_app = orderService?.filter(
-        (a: IServiceUser) => a?.appointments?.length === 0
-    );
     const notiCount = appointment_today.concat(order_app).length;
     return (
         <button
-            onClick={()=>onToggleNoti('show')}
-            onFocus={()=>onToggleNoti('show')}
-            onBlur={()=>onToggleNoti('hide')}
+            onClick={() => onToggleNoti('show')}
+            onFocus={() => onToggleNoti('show')}
+            onBlur={() => onToggleNoti('hide')}
             className={
                 changeStyle
                     ? clst([
@@ -79,8 +69,7 @@ interface HeadNotificationProps {
 }
 
 const HeadNotification = (props: HeadNotificationProps) => {
-    const dispatch = useDispatch();
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { refNoti, appointment_today, order_app } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const history = useHistory();
@@ -103,13 +92,6 @@ const HeadNotification = (props: HeadNotificationProps) => {
             type: "SER",
         },
     ];
-    const onViewedNoti = (type: string) => {
-        if (type === "APP") {
-            appointment_today?.map((item: AppointmentNoti) => {
-                return dispatch(onSetViewedNoti(item.id));
-            });
-        }
-    };
     return (
         <div
             onClick={(e) => {
@@ -126,19 +108,14 @@ const HeadNotification = (props: HeadNotificationProps) => {
             )}
             {noti === 0 ? (
                 <div className={style.head_required_sign}>
-                   {t('Header.not_noti')}
+                    {t('Header.not_noti')}
                 </div>
             ) : (
                 <ul className={style.noti_list}>
                     {notiList
                         .filter((i) => i.count > 0)
                         .map((item) => (
-                            <li
-                                onClick={() => {
-                                    onViewedNoti(item.type);
-                                }}
-                                key={item.id}
-                            >
+                            <li key={item.id}>
                                 <div
                                     onClick={() => history.push(item.url)}
                                     className={style.noti_list_link}

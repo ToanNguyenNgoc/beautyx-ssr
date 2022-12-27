@@ -1,15 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import API_3RD from 'api/3rd-api';
-import { useFetchInfinite } from 'hooks';
 import IStore from 'interface/IStore';
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
-    formatRouterLinkOrg, formatRouterLinkProduct, formatRouterLinkService
+    formatRouterLinkOrg,
+    formatRouterLinkProduct,
+    formatRouterLinkService
 } from 'utils/formatRouterLink/formatRouter';
-import { onSetSearch, onDeleteAll } from 'redux/search_history'
 import style from './search.module.css'
+import {
+    useGetSearchQuery,
+    useDeleteAllMutation
+} from 'redux-toolkit-query/hook-search-history';
 
 export interface ISeachHistory {
     _id: string,
@@ -31,23 +34,16 @@ interface SearchHistoryProps {
 function SearchHistory(props: SearchHistoryProps) {
     const { onCloseSearch } = props;
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { searches } = useSelector((state: IStore) => state.SEARCH_HIS)
-    const dispatch = useDispatch()
-    const { resData, isValidating } = useFetchInfinite(
-        USER?.id,
-        `${API_3RD.API_NODE}/search_history/users/${USER?.id}`,
-        { limit: 8 }
-    )
-    useEffect(() => {
-        dispatch(onSetSearch(resData))
-    }, [isValidating])
-    const histories = searches?.filter((i: ISeachHistory) => i.type !== 'KEYWORD')
-    const historiesKeyword = searches?.filter((i: ISeachHistory) => i.type === "KEYWORD")
+    const { data } = useGetSearchQuery(USER?.id)
+    const histories: ISeachHistory[] = data ?? []
+    const historiesOther = histories?.filter((i: ISeachHistory) => i.type !== 'KEYWORD')
+    const historiesKeyword = histories?.filter((i: ISeachHistory) => i.type === "KEYWORD")
+    const [deleteAll] = useDeleteAllMutation()
     const onDeleteAllClick = () => {
-        dispatch(onDeleteAll())
+        deleteAll('')
     }
     return (
-        searches.length > 0 ?
+        histories.length > 0 ?
             <div className={style.his_container}>
                 <div className={style.his_container_head}>
                     <span className={style.his_container_title}>Tìm kiếm gần đây</span>
@@ -55,7 +51,7 @@ function SearchHistory(props: SearchHistoryProps) {
                 </div>
                 <ul className={style.list_history}>
                     {
-                        histories.map(((i, index: number) => (
+                        historiesOther.map(((i, index: number) => (
                             <li
                                 onClick={onCloseSearch}
                                 key={index} className={style.list_history_item}

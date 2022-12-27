@@ -33,3 +33,8 @@ export interface ICart {
       quantity: number,
       final_price: any
 }
+export interface ICartGroupOrg {
+      org_id: number,
+      org: IOrganization,
+      cartItemsOrg: ICart[]
+}

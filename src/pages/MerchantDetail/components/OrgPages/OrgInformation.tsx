@@ -1,20 +1,18 @@
 import React, { useContext, useRef, useState } from "react";
-import { IOrganization } from "../../../../interface/organization";
 import Slider from "react-slick";
-import onErrorImg from "../../../../utils/errorImg";
-import icon from "../../../../constants/icon";
-import { extraOrgTimeWork } from "../../Functions/extraOrg";
-import { AppContext } from "../../../../context/AppProvider";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
 import { OrgMapQuick } from "components/Layout";
 import Comment from 'components/Comment'
+import { IOrganization } from "interface";
+import { AppContext } from "context/AppProvider";
+import { extraOrgTimeWork } from "pages/MerchantDetail/Functions/extraOrg";
+import { onErrorImg } from "utils";
+import icon from "constants/icon";
 
 interface IProps {
     org: IOrganization;
     refMap?: any;
 }
-const day = new Date();
-const today = day.getDay() + 1;
 
 export function OrgInformation(props: IProps) {
     const { org, refMap } = props;
@@ -207,11 +205,8 @@ export function OrgInformation(props: IProps) {
                     <ul className="org-time-list">
                         {orgTimes.map((item: any, index: number) => (
                             <li
-                                style={
-                                    index + 2 === today
-                                        ? { color: "var(--text-black)" }
-                                        : {}
-                                }
+                                style={item.todayAct
+                                    ? { color: "var(--text-black)" } : {}}
                                 key={index}
                                 className="flex-row org-time-list__item"
                             >
@@ -238,27 +233,6 @@ export function OrgInformation(props: IProps) {
                     }
                 </div>
             </div>
-            {/* <div className="org-information__branches">
-                <div className="title">{t("Mer_de.utilities")}</div>
-                <ul className="org-information-utils">
-                    <li className="flex-row utils-item">
-                        <img src={icon.carBlack} alt="" className="icon" />
-                        <span>{t("detail_item.parking")}</span>
-                    </li>
-                    <li className="flex-row utils-item">
-                        <img src={icon.wifiBlack} alt="" className="icon" />
-                        <span>Wifi</span>
-                    </li>
-                    <li className="flex-row utils-item">
-                        <img
-                            src={icon.creditCardBlack}
-                            alt=""
-                            className="icon"
-                        />
-                        <span>{t("detail_item.accept_card_payment")}</span>
-                    </li>
-                </ul>
-            </div> */}
             <OrgItemMap
                 open={openOrgMap}
                 setOpen={setOpenOrgMap}

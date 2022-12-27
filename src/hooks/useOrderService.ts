@@ -1,6 +1,7 @@
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm"
 import API_ROUTE from "api/_api"
 import IStore from "interface/IStore"
+import { IServiceUser } from "interface/servicesUser"
 import { paramOrder } from "params-query"
 import { ParamOrder } from "params-query/param.interface"
 import { useSelector } from "react-redux"
@@ -22,6 +23,9 @@ export function useOrderService() {
         `${API_ROUTE.ORDERS}`,
         params
     )
+    const order_app = resData?.filter(
+        (a: IServiceUser) => a?.appointments?.length === 0
+    );
     const orderService = resData ?? []
-    return { resData, orderService, totalItem, onLoadMore, isValidating }
+    return { resData, orderService, totalItem, onLoadMore, isValidating, order_app }
 }

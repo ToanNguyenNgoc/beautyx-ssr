@@ -1,12 +1,9 @@
+import icon from 'constants/icon';
+import { Combo, IOrganization } from 'interface';
 import React from 'react';
-import icon from '../../../../constants/icon';
-import formatPrice from '../../../../utils/formatPrice';
-import onErrorImg from '../../../../utils/errorImg';
-import { Combo } from '../../../../interface/combo';
-import { IOrganization } from '../../../../interface/organization';
 import { Link } from 'react-router-dom'
-import slugify from '../../../../utils/formatUrlString';
-import scrollTop from '../../../../utils/scrollTop';
+import { onErrorImg, scrollTop, slugify } from 'utils';
+import formatPrice from 'utils/formatPrice';
 import { analytics, logEvent } from '../../../../firebase';
 
 interface IProps {

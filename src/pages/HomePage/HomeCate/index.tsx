@@ -1,17 +1,14 @@
 /* eslint-disable dot-location */
 import React, { useContext, useRef, useState } from 'react';
-import { AppContext } from '../../../context/AppProvider';
-import { ITag, ITagParent } from "../../../interface/tags";
+import { AppContext } from 'context/AppProvider';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-    formatRouterCateResult,
-} from '../../../utils/formatRouterLink/formatRouter';
 import { Masonry } from "@mui/lab"
 import style from "./home-cate.module.css"
 import { clst } from 'utils';
-import API_ROUTE from 'api/_api';
-import { useSwr } from 'hooks';
+import { useServiceCatesChildQuery } from 'redux-toolkit-query/hook-home';
+import { ITag, ITagParent } from 'interface';
+import { formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
 
 function HomeCate() {
     const { tags } = useSelector((state: any) => state.HOME)
@@ -237,14 +234,15 @@ const TagItemService = ({ tag }: { tag: ITag }) => {
     )
 }
 const TagItemServiceChild = ({ parent }: { parent: ITag }) => {
-    const { response } = useSwr(API_ROUTE.TAGS_ID(parent?.id), parent.id)
+    const { data } = useServiceCatesChildQuery(parent?.id)
+    const tagParent: any = data
     return (
         <div className={style.tag_service_child_list}>
             {
-                response &&
+                data &&
                 <Masonry columns={3} spacing={3} >
                     {
-                        response?.children?.map((i: ITag, index: number) => (
+                        tagParent?.children?.map((i: ITag, index: number) => (
                             <div key={index} className={style.child_list_cnt}>
                                 <Link
                                     to={{ pathname: formatRouterCateResult(i.id, i.name, "SERVICE") }}

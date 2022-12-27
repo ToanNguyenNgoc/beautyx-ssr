@@ -3,9 +3,9 @@ import { IServiceUser, IUser_Items } from "interface/servicesUser";
 import ServiceSoldItem from "./ServiceSoldItem";
 import { formatDate, formatTime } from "utils/format";
 import { useSelector } from "react-redux";
-import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "context/AppProvider";
+import { XButton } from "components/Layout";
 
 interface IProps {
     card_items: IServiceUser,
@@ -34,27 +34,8 @@ function TreatmentCardItem(props: IProps) {
             });
         }
     };
-
     return (
-        <div
-            className='treat-card-item'
-        // style={enableCart === true ? { opacity: 0.6 } : {}}
-        >
-            {/* {card_items.appointments?.length === 0 && (
-                <div className="treat-card-item__dot"></div>
-            )} */}
-            <div
-                style={
-                    order_id === card_items?.id && servicesBook.length > 0
-                        ? { height: "24px" }
-                        : {}
-                }
-                className="flex-row treat-card-item__book"
-                onClick={handleNextStep}
-            >
-                {t("detail_item.booking_now")}
-                <img src={icon.calendarWhite} alt="" />
-            </div>
+        <div className='treat-card-item'>
             <div className="treat-card-item__head">
                 <span className="org-name">{org?.name}</span>
                 <div className="head_detail">
@@ -93,6 +74,18 @@ function TreatmentCardItem(props: IProps) {
                     service_sold={items.services_sold}
                 />
             ))}
+                <div 
+                    style={
+                        order_id === card_items?.id && servicesBook.length > 0 ?
+                        {height:'32px'}:{}
+                    }
+                    className='treatment_card_item_bot'>
+                    <XButton
+                        onClick={handleNextStep}
+                        title={t("detail_item.booking_now")}
+                        className='treatment_card_item_bot_btn'
+                    />
+                </div>
         </div>
     );
 }

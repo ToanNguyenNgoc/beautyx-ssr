@@ -3,13 +3,13 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import formatPrice from 'utils/formatPrice';
 import { DISCOUNT_TYPE } from 'utils/formatRouterLink/fileType';
-import { InputVoucher } from 'pages/Carts/components/CartBottom';
 import { IOrganization } from 'interface/organization';
 import { useSelector } from 'react-redux';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import style from '../booking.module.css'
 import { XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
+import { CartInputVoucher } from 'pages/Carts/components/CartInputVoucher';
 
 interface BookingNowBillProps {
     org: IOrganization,
@@ -18,7 +18,7 @@ interface BookingNowBillProps {
 
 function BookingNowBill(props: BookingNowBillProps) {
     const { setFinalAmount } = props
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
     const location: any = useLocation();
@@ -155,7 +155,7 @@ function BookingNowBill(props: BookingNowBillProps) {
                     </span>
                 </div>
             </div>
-            <InputVoucher
+            <CartInputVoucher
                 outDiscounts={outDiscounts}
                 open={openVc}
                 setOpen={setOpenVc}

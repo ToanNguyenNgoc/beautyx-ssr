@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import orgApi from "../../api/organizationApi";
-import galleriesApi from "../../api/moboGalleriesApi";
 import serviceApi from "../../api/serviceApi";
 import favorites from "../../api/favorite";
 import productsApi from "../../api/productApi";
@@ -31,21 +30,6 @@ export const fetchAsyncOrg: any = createAsyncThunk(
         try {
             const res = await orgApi.getOrgById(sub_domain);
             const payload = res.data.context;
-            return payload;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-);
-export const fetchOrgGalleries: any = createAsyncThunk(
-    "ORG/fetchOrgGalleries",
-    async (org_id: any) => {
-        try {
-            const res = await galleriesApi.getByOrgId(org_id);
-            const payload = {
-                org_id: org_id,
-                galleries: res.data.context.data,
-            };
             return payload;
         } catch (error) {
             console.log(error);

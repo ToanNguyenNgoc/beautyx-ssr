@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import tracking from "../../api/trackApi";
 import { STATUS } from "../../redux/status";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
-import HomeDiscount from "features/HomeDiscounts";
+import HomeDiscount from "pages/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
@@ -29,8 +29,7 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
-    // const path = window.location.href
-    // console.log(path)
+   
     
     return (
         <>

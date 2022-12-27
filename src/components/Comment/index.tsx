@@ -134,7 +134,7 @@ function Comment(props: CommentProps) {
                         {
                             tempCmt.media_url.length > 0 &&
                             tempCmt.media_url.map((img_url: string) => (
-                                <div className={style.input_img_temp_item}>
+                                <div key={img_url} className={style.input_img_temp_item}>
                                     <XButton
                                         className={style.remove_img_btn}
                                         icon={icon.closeCircle}
@@ -267,7 +267,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                     </span>
                 </div> */}
                 {
-                    body_par.includes('USED') &&
+                    body_par?.includes('USED') &&
                     <div className={style.par_body_check}>
                         <img
                             src={icon.checkFlowGreen} alt=""
@@ -279,7 +279,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                     </div>
                 }
                 <div className={style.cmt_text}>
-                    {body_par.replace('USED','')}
+                    {body_par?.replace('USED','')}
                 </div>
                 {
                     media_url?.length > 0 &&

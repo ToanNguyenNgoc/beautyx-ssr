@@ -1,11 +1,10 @@
 import { IOrgSlice } from '../redux/org/orgSlice';
 import { IORGS_MAP } from '../redux/org/orgMapSlice';
 import { IORG_DISCOUNTS } from '../redux/org_discounts/orgDiscountsSlice';
-import { IORDER } from "../redux/order/orderSlice"
 import { IUSER } from "redux/user/userSlice"
-import { INotification } from 'redux/notifications'
 import { IFilterResult } from 'redux/filter-result'
 import { ISearch } from 'redux/search_history';
+import { CartType } from 'redux/cart'
 //---
 import { ICommunity } from 'redux/community'
 
@@ -15,10 +14,9 @@ export default interface IStore {
     ORG: IOrgSlice,
     ORGS_MAP: IORGS_MAP,
     ORG_DISCOUNTS: IORG_DISCOUNTS,
-    ORDER: IORDER,
     USER: IUSER,
-    NOTI: INotification,
     FILTER_RESULT: IFilterResult,
     SEARCH_HIS: ISearch,
-    COMMUNITY: ICommunity
+    COMMUNITY: ICommunity,
+    carts: CartType
 }
