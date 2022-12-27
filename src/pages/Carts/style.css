@@ -523,7 +523,7 @@
 }
 
 .vc_body_input input {
-    width: calc(100% - 106px);
+    width: calc(100% - 120px);
     font-size: 16px;
     line-height: 20px;
     font-weight: 500;
@@ -546,7 +546,7 @@
     border-radius: 100%;
     padding: 4px;
     top: 5px;
-    right: 112px;
+    right: 125px;
 }
 
 .vc_cart_none {
@@ -838,44 +838,7 @@
     }
 
     /* popup input voucher container */
-    .vc_container {
-        width: 100%;
-        border-radius: 6px;
-        padding: 12px 10px 72px 10px;
-    }
-
-    .vc_body_input {
-        height: 36px;
-    }
-
-    .vc_body_input input {
-        width: calc(100% - 92px);
-        margin-bottom: 20px;
-        height: 36px;
-    }
-
-    .vc_body_input_del {
-        right: 98px;
-        top: 8.5px;
-        padding: 2px !important;
-    }
-
-    .vc_body_input button {
-        padding: 8px;
-    }
-    .vc_bot{
-        position: fixed;
-        bottom: 0px;
-        left: 0px;
-        background-color: var(--bgWhite);
-        width: 100%;
-        z-index: 2;
-        padding: 12px;
-        box-shadow: var(--box-shadow);
-    }
-    .vc_bot button {
-        width: 100%;
-    }
+    
 
     /* end popup input voucher container */
 }

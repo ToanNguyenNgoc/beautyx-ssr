@@ -10,8 +10,8 @@ import { IDiscountPar } from 'interface/discount';
 import style from '../booking.module.css'
 import { XButton } from 'components/Layout';
 import { AppContext } from 'context/AppProvider';
-import { CartInputVoucher } from 'pages/Carts/components/CartInputVoucher';
 import { useVoucher } from 'hooks';
+import { InputVoucher } from 'features/InputVoucher';
 
 interface BookingNowBillProps {
     org: IOrganization,
@@ -24,10 +24,7 @@ function BookingNowBill(props: BookingNowBillProps) {
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
     const location: any = useLocation();
-    const [openVc, setOpenVc] = useState<any>({
-        open: false,
-        voucher: ""
-    })
+    const [openVc, setOpenVc] = useState(false)
     const services = location.state?.services ?? [];
     const services_id = services?.map((item: any) => item.service.id) ?? []
     const outDiscounts = services.map((item: any) => item?.service?.discount).filter(Boolean)
@@ -74,7 +71,7 @@ function BookingNowBill(props: BookingNowBillProps) {
             <div className={style.open_voucher}>
                 <XButton
                     className={style.open_voucher_btn}
-                    onClick={() => setOpenVc({ ...openVc, open: true })}
+                    onClick={() => setOpenVc(true)}
                     title={t('pm.enter_coupon_code')}
                     iconSize={16}
                     icon={icon.cardDiscountOrange}
@@ -104,11 +101,10 @@ function BookingNowBill(props: BookingNowBillProps) {
                     </span>
                 </div>
             </div>
-            <CartInputVoucher
+            <InputVoucher
                 outDiscounts={outDiscounts}
                 open={openVc}
                 setOpen={setOpenVc}
-                cart_confirm={services_id}
                 services_id={services_id}
                 products_id={[]}
                 organization={org}

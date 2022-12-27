@@ -12,7 +12,7 @@ export function useAppointment(time_start?: string) {
     const appointment = useSwr("/appointments", USER, {
         ...paramAppointment,
         "filter[time_start]": time_start ? time_start : dayjs().format("YYYY-MM"),
-        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM
     }).responseArray ?? []
 
     const appointment_today = appointment?.filter(

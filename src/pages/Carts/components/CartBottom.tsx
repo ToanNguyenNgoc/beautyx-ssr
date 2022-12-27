@@ -14,8 +14,8 @@ import { checkPhoneValid } from "utils/phoneUpdate";
 import icon from "constants/icon";
 import { useCartReducer, useVoucherCalCart } from 'hooks';
 import { XButton } from "components/Layout";
-import { CartInputVoucher } from "./CartInputVoucher";
 import { useSelector } from "react-redux";
+import { InputVoucher } from "features/InputVoucher";
 
 export interface OpenVcProp {
     open: boolean,
@@ -30,10 +30,7 @@ function CartBottom(props: any) {
     const { vouchersCal } = useVoucherCalCart(VOUCHER_APPLY)
     const [load, setLoad] = useState(false);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
-    const [openVc, setOpenVc] = useState<OpenVcProp>({
-        open: false,
-        voucher: ""
-    })
+    const [openVc, setOpenVc] = useState(false)
     //* [END]  OTP  update telephone number
     //* [ Throw exception noti ]
     const [openNoti, setOpenNoti] = useState({
@@ -62,13 +59,11 @@ function CartBottom(props: any) {
     const pramsOrder = {
         user_address_id: DATA_PMT.address?.id,
         branch_id: DATA_PMT.branch?.id,
-        payment_method_id: DATA_PMT.payment_method_id
-            ? DATA_PMT.payment_method_id
-            : DATA_PMT.pmtMethod?.id,
+        payment_method_id: DATA_PMT.payment_method_id,
         products: products_id,
         services: services_id,
         treatment_combo: combos_id,
-        coupon_code: coupon_code_arr.concat([openVc.voucher]).filter(Boolean)
+        coupon_code: coupon_code_arr.filter(Boolean)
     };
 
 
@@ -176,18 +171,17 @@ function CartBottom(props: any) {
             ?.map((i: IDiscountPar) => i.discount_value)
             ?.reduce((pre: number, cur: number) => pre + cur)
     }
-    const outDiscounts = cart_confirm?.map((item: any) => item.discount)
+    const outDiscounts = cart_confirm?.map((item: any) => item.discount)?.filter(Boolean)
     const FINAL_AMOUNT = DATA_CART.cartAmount -
         DATA_CART.cartAmountDiscount -
         discountVoucherTotal
 
     return (
         <>
-            <CartInputVoucher
+            <InputVoucher
                 outDiscounts={outDiscounts}
                 open={openVc}
                 setOpen={setOpenVc}
-                cart_confirm={cart_confirm}
                 organization={DATA_PMT.org}
                 cartAmount={cartAmount}
                 services_id={services_id?.map((i: any) => i.id)}
@@ -199,7 +193,7 @@ function CartBottom(props: any) {
                         <div className="re-cart-bottom__total">
                             <div className="flex-row re-cart-bottom__total-discount">
                                 <button
-                                    onClick={() => setOpenVc({ ...openVc, open: true })}
+                                    onClick={() => setOpenVc(false)}
                                     className="open_voucher_btn"
                                 >
                                     Nhập mã khuyến mại
@@ -207,15 +201,6 @@ function CartBottom(props: any) {
                                 </button>
                             </div>
                             <div className="re-cart-bottom__cal">
-                                {
-                                    openVc.voucher !== "" &&
-                                    <div className="flex-row-sp re-cart-bottom__cal-item">
-                                        <span>Mã khuyến mại</span>
-                                        <span>
-                                            {openVc.voucher}
-                                        </span>
-                                    </div>
-                                }
                                 <div className="flex-row-sp re-cart-bottom__cal-item">
                                     <span>{`${t("pm.total_money")}`}</span>
                                     <span>

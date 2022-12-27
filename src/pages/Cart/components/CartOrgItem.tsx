@@ -2,10 +2,10 @@ import { Checkbox } from '@mui/material';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import img from 'constants/img';
-import { ICart, ICartGroupOrg, IOrganization } from 'interface';
-import React from 'react';
+import { IBranch, ICart, ICartGroupOrg, IOrganization } from 'interface';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { ascItem, descItem, onClearApplyVoucher, onClearPrevCartItem, checkConfirm } from 'redux/cart';
+import { ascItem, descItem, onClearApplyVoucher, onClearPrevCartItem, checkConfirm, removeItem } from 'redux/cart';
 import { clst } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import style from '../cart.module.css'
@@ -13,7 +13,9 @@ import style from '../cart.module.css'
 interface CartItemProps {
     itemOrg: ICartGroupOrg,
     orgChoose?: IOrganization,
-    cart_confirm: ICartGroupOrg[]
+    cart_confirm: ICartGroupOrg[],
+    branch_id: number | undefined | null,
+    onChangeBranch: (id: number | null) => void
 }
 const checkedSt = {
     color: "#7161BA",
@@ -28,7 +30,10 @@ const checkedStItem = {
 }
 
 export function CartOrgItem(props: CartItemProps) {
-    const { itemOrg, orgChoose, cart_confirm } = props
+    const { itemOrg, orgChoose, cart_confirm, onChangeBranch, branch_id } = props
+    const refBranch = useRef<HTMLDivElement>(null)
+    const openBranch = () => refBranch.current?.classList.toggle(style.branch_show)
+    const onClearBranch = () => onChangeBranch(null)
     let isCheck = false;
     if (
         orgChoose?.id === itemOrg.org_id &&
@@ -40,6 +45,7 @@ export function CartOrgItem(props: CartItemProps) {
     const onChooseCartItemOrg = () => {
         dispatch(onClearPrevCartItem());
         dispatch(onClearApplyVoucher());
+        onClearBranch()
         if (isCheck === false) {
             for (var itemCart of itemOrg.cartItemsOrg) {
                 dispatch(checkConfirm({ ...itemCart, isConfirm: true }));
@@ -65,14 +71,55 @@ export function CartOrgItem(props: CartItemProps) {
                     </div>
                     {
                         itemOrg.org?.branches?.length > 0 && orgChoose?.id === itemOrg.org_id &&
-                        <XButton
-                            title='Chọn chi nhánh'
-                            className={style.org_branch_btn}
-                        />
+                        <div className={style.branch_cnt}>
+                            <XButton
+                                title={!branch_id ? 'Chọn chi nhánh' : 'Thay đổi'}
+                                className={style.org_branch_btn}
+                                onClick={openBranch}
+                            />
+                            <div ref={refBranch} className={style.branch}>
+                                <ul className={style.branch_list}>
+                                    <li onClick={() => {
+                                        onClearBranch();
+                                        openBranch()
+                                    }} className={style.branch_item}>
+                                        <span className={style.branch_check}>
+                                            {!branch_id && <span></span>}
+                                        </span>
+                                        <div className={style.branch_item_de}>
+                                            <span className={style.branch_name}>
+                                                <span>Trụ sở :</span>
+                                                {itemOrg?.org?.full_address}
+                                            </span>
+                                        </div>
+                                    </li>
+                                    {
+                                        itemOrg.org?.branches?.map((item: IBranch) => (
+                                            <li onClick={() => {
+                                                onChangeBranch(item.id);
+                                                openBranch()
+                                            }} key={item.id} className={style.branch_item}>
+                                                <span className={style.branch_check}>
+                                                    {item.id === branch_id && <span></span>}
+                                                </span>
+                                                <div className={style.branch_item_de}>
+                                                    <span className={style.branch_name}>
+                                                        <span>Chi nhánh:</span>
+                                                        {item.full_address}
+                                                    </span>
+                                                </div>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        </div>
                     }
                 </div>
                 <p className={style.group_org_detail_address}>
-                    {itemOrg.org?.full_address}
+                    {
+                        itemOrg.org?.branches?.find(i => i.id === branch_id)?.full_address ?? itemOrg.org?.full_address
+                    }
                 </p>
             </div>
             {
@@ -82,6 +129,7 @@ export function CartOrgItem(props: CartItemProps) {
                         item={item}
                         itemOrg={itemOrg}
                         orgChoose={orgChoose}
+                        onClearBranch={onClearBranch}
                     />
                 ))
             }
@@ -90,8 +138,8 @@ export function CartOrgItem(props: CartItemProps) {
 }
 
 const CartItem = (
-    { item, itemOrg, orgChoose }:
-        { item: ICart, itemOrg: ICartGroupOrg, orgChoose?: IOrganization }
+    { item, itemOrg, orgChoose, onClearBranch }:
+        { item: ICart, itemOrg: ICartGroupOrg, orgChoose?: IOrganization, onClearBranch: () => void }
 ) => {
     const dispatch = useDispatch()
     const onTriggerQuantity = (btn: 'asc' | 'desc') => {
@@ -119,13 +167,9 @@ const CartItem = (
             dispatch(action);
         }
         //clear branch choose
-        // if (item.org_id !== org?.id) {
-        //     setOpenBranch({
-        //         ...openBranch,
-        //         branch: null,
-        //         org: item.org,
-        //     });
-        // }
+        if (item.org_id !== orgChoose?.id) {
+            onClearBranch()
+        }
     };
 
     let totalAmount = item.price * item.quantity
@@ -140,10 +184,10 @@ const CartItem = (
         <div className={style.cart_item}>
             {
                 item.discount &&
-                <div 
+                <div
                     style={item.org_id === orgChoose?.id ? {
-                        opacity:'1'
-                    }:{}}
+                        opacity: '1'
+                    } : {}}
                     className={style.discount_badge}
                 >
                     <span>{item.discount?.coupon_code}</span>
@@ -187,6 +231,7 @@ const CartItem = (
                     <XButton
                         icon={icon.trash}
                         className={clst([style.left_head_ctl_item_btn, style.remove_item_btn])}
+                        onClick={() => dispatch(removeItem(item))}
                     />
                 </div>
             </div>

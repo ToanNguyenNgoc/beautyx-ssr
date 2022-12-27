@@ -37,7 +37,6 @@ export const EX_VOUCHER_TITLE_DISCOUNT = (discount:IDiscountPar)=>{
     return displayTitle
 }
 export const EX_APPLY_DATE = (discount: IDiscountPar) => {
-    console.log(discount)
     let validDate = false;
     if (!discount.valid_from && !discount.valid_util) {
         validDate = true

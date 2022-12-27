@@ -1,34 +1,40 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import { useCartReducer, useVoucher } from 'hooks';
+import { useCartReducer, useNoti, useVoucher } from 'hooks';
 import { IDiscountPar, IOrganization } from 'interface';
 import IStore from 'interface/IStore';
-import { CartInputVoucher } from 'pages/Carts/components/CartInputVoucher';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTotal } from 'redux/cart';
 import { PostOrderType } from '../index'
 import formatPrice from 'utils/formatPrice';
 import style from '../cart.module.css'
+import { InputVoucher } from 'features/InputVoucher';
+import { useHistory } from 'react-router-dom';
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { checkPhoneValid } from 'utils';
+import { PopupNotification } from 'components/Notification';
+import { orderApi } from 'api/orderApi';
 
 interface CartCalcType {
     order: PostOrderType,
     orgChoose: IOrganization
 }
-export interface OpenVcType {
-    open: boolean,
-    voucher: string
+
+const popupInit = {
+    content: '', open: false, child: <></>
 }
 
 export function CartCalc(props: CartCalcType) {
     const { order, orgChoose } = props
-    const [openVc, setOpenVc] = useState<OpenVcType>({
-        open: false,
-        voucher: ""
-    })
+    const PLAT_FORM = EXTRA_FLAT_FORM()
+    const [openVc, setOpenVc] = useState(false)
+    const {firstLoad, resultLoad, noti} = useNoti()
+    const history = useHistory()
+    const [popup, setPopup] = useState(popupInit)
     const { USER } = useSelector((state: IStore) => state.USER)
     const { cartAmount, cartAmountDiscount, VOUCHER_APPLY, cartList } = useSelector((state: IStore) => state.carts)
-    const { cart_confirm, services_id, products_id, combos_id, outDiscounts } = useCartReducer()
+    const {  services_id, products_id, combos_id, outDiscounts } = useCartReducer()
     let finalAmount = cartAmount - cartAmountDiscount
 
     const { vouchersFinal, totalVoucherValue } = useVoucher(finalAmount, VOUCHER_APPLY, services_id)
@@ -45,7 +51,7 @@ export function CartCalc(props: CartCalcType) {
         .concat(vouchersFinal.map(i => i.coupon_code))
         .filter(Boolean)
 
-    const onPostOrder = () => {
+    const onPostOrder = async () => {
         const param: PostOrderType = {
             ...order,
             products: products_id,
@@ -53,7 +59,44 @@ export function CartCalc(props: CartCalcType) {
             services: services_id,
             coupon_code: listCouponCode
         }
-        console.log(param)
+        if (finalAmount - totalVoucherValue < 1000) {
+            return setPopup({ ...popupInit, open: true, content: 'Giá trị đơn hàng tối thiểu 1.000đ' })
+        }
+        if (products_id?.length > 0 && !order.user_address_id) {
+            return setPopup({
+                content: 'Vui lòng thêm địa chỉ giao hàng!',
+                open: true,
+                child: <XButton title='Thêm mới' onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')} />
+            })
+        }
+        if (!order.payment_method_id) {
+            return setPopup({ ...popupInit, open: true, content: 'Vui lòng chọn phương thức thanh toán' })
+        }
+        if (PLAT_FORM === 'MBBANK' && !checkPhoneValid(USER?.telephone)) {
+            return setPopup({
+                content: 'Vui lòng thêm số điện thoại để tiếp tục thanh toán!',
+                open: true,
+                child: <XButton title='Thêm mới' onClick={() => history.push('/otp-form')} />
+            })
+        }
+        firstLoad()
+        try {
+            const res = await orderApi.postOrder(orgChoose.id, param)
+            resultLoad('')
+            const state_payment = await { ...res.data.context, FINAL_AMOUNT: finalAmount - totalVoucherValue };
+            if (state_payment.status !== 'PENDING') {
+                return setPopup({ ...popupInit, open: true, content: 'Tạo đơn hàng thất bại!' })
+            }
+            history.push({
+                pathname: `/trang-thai-don-hang/`,
+                search: state_payment.payment_gateway.transaction_uuid,
+                state: { state_payment },
+            });
+        } catch (error) {
+            resultLoad('')
+            return setPopup({ ...popupInit, open: true, content: 'Tạo đơn hàng thất bại!' })
+        }
+
     }
 
 
@@ -62,7 +105,7 @@ export function CartCalc(props: CartCalcType) {
             <XButton
                 title='Nhập mã khuyến mại'
                 icon={icon.cardDiscountOrange}
-                onClick={() => setOpenVc({ open: true, voucher: '' })}
+                onClick={() => setOpenVc(true)}
                 iconSize={14}
                 className={style.open_voucher_bnt}
             />
@@ -98,9 +141,10 @@ export function CartCalc(props: CartCalcType) {
                     className={style.checkout_out_amount_btn}
                     title='Đặt hàng'
                     onClick={onPostOrder}
+                    loading={noti.load}
                 />
             </div>
-            <CartInputVoucher
+            <InputVoucher
                 open={openVc}
                 setOpen={setOpenVc}
                 services_id={services_id.map(i => i.id)}
@@ -108,7 +152,13 @@ export function CartCalc(props: CartCalcType) {
                 outDiscounts={outDiscounts ?? []}
                 organization={orgChoose}
                 cartAmount={cartAmount - cartAmountDiscount}
-                cart_confirm={cart_confirm}
+            />
+            <PopupNotification
+                open={popup.open}
+                setOpen={() => setPopup(popupInit)}
+                title='Thông báo'
+                content={popup.content}
+                children={popup.child}
             />
         </>
     );

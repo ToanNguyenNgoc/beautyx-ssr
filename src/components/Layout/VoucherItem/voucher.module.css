@@ -24,8 +24,9 @@
 }
 
 .org_img {
-    width: 54px;
-    height: 54px;
+    width: 86px;
+    height: 86px;
+    margin-right: 8px;
     background-color: var(--bg-color);
     border-radius: 6px;
     position: relative;

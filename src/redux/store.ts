@@ -7,7 +7,6 @@ import userAddressReducer from "./user/userAddressSlice";
 import orgReducer from "./org/orgSlice";
 import orgDiscountsReducer from "./org_discounts/orgDiscountsSlice";
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
-import paymentsReducer from "./payments/paymentSlice";
 import cateReducer from "./cate-tree/cateTreeSlice";
 import orgMapReducer from "./org/orgMapSlice";
 import filterResultReduce from "./filter-result";
@@ -28,7 +27,6 @@ const rootReducer = {
     ORG: orgReducer,
     ORG_DISCOUNTS: orgDiscountsReducer,
     ADDRESS: userAddressReducer,
-    PAYMENT: paymentsReducer,
     CATE_TREE: cateReducer,
     ORGS_MAP: orgMapReducer,
     FILTER_RESULT: filterResultReduce,

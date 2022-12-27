@@ -21,7 +21,7 @@ function TabOrderCancel() {
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, {
         ...paramOrder, 
         "include": "items|organization|branch|user|paymentMethod|deliveryAddress",
-        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE' : PLAT_FORM,
+        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
     })
     const orders: IOrderV2[] = resData ?? []
     const IS_MB = useDeviceMobile()

@@ -5,28 +5,18 @@ import "./style.css";
 import { Container, Dialog } from "@mui/material";
 import CartGroupItem from "./components/CartGroupItem";
 import CartBottom from "./components/CartBottom";
-import CartPaymentMethod from "./components/CartPaymentMethod";
 import { useDeviceMobile } from "hooks";
 import { EmptyRes } from "components/Layout";
 import { onErrorImg, Transition, unique } from "utils";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import {  clearByCheck, getTotal } from "redux/cart";
+import { clearByCheck, getTotal } from "redux/cart";
 import HeadTitle from "features/HeadTitle";
-import { extraPaymentMethodId } from "features/PaymentMethod/extraPaymentMethodId";
 import HeadMobile from "features/HeadMobile";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
-import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
-import PaymentMethodCpn from "features/PaymentMethod";
 import icon from "constants/icon";
 import { IBranch, IOrganization } from "interface";
+import PaymentMethod from "components/PaymentMethod";
 
-const initialMomoForBeautyx = {
-    created_at: "2022-01-07T10:00:07.000000Z",
-    id: 1,
-    is_changeable: false,
-    name_key: "MOMO",
-    updated_at: "2022-01-07T10:00:07.000000Z"
-}
 
 function Carts() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
@@ -54,8 +44,7 @@ function Carts() {
         dispatch(getTotal(USER?.id));
     }, [dispatch, cartList, USER, VOUCHER_APPLY]);
 
-    const [open, setOpen] = useState(false);
-    const [pmtMethod, setPmtMethod] = useState<any>(initialMomoForBeautyx);
+    const [pmtMethodId, setPmtMethodId] = useState<null | number>();
     const [address, setAddress] = useState<any>();
     const [openBranch, setOpenBranch] = useState({
         open: false,
@@ -78,15 +67,7 @@ function Carts() {
 
     const branch: any = openBranch.branch;
 
-    const { payments_method } = useSelector(
-        (state: any) => state.PAYMENT.PAYMENT
-    );
-    const payment_method_id = extraPaymentMethodId(
-        payments_method,
-        setPmtMethod
-    );
-    const DATA_PMT = { pmtMethod, address, payment_method_id, org, branch };
-    // console.log(cartListGroupOrg,cartList,cartListAll);
+    const DATA_PMT = { pmtMethodId, address, payment_method_id: pmtMethodId, org, branch };
     return (
         <>
             <HeadTitle title="Giỏ hàng" />
@@ -112,28 +93,11 @@ function Carts() {
                                     onSetAddressDefault={setAddress}
                                 />
                             </div>
-                            {FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX && (
-                                <div
-                                    onClick={() => setOpen(true)}
-                                    className="re-cart-cnt__pmt"
-                                >
-                                    <span>Phương thức thanh toán</span>
-                                    <br />
-                                    <span
-                                        style={{
-                                            backgroundColor: "var(--pink-momo)",
-                                            marginLeft: "12px",
-                                            padding: "0px 8px",
-                                            borderRadius: "6px",
-                                            color: "var(--white)"
-                                        }}
-                                    >
-                                        {pmtMethod
-                                            ? pmtMethod?.name_key
-                                            : "Vui lòng chọn phương thức thanh toán"}
-                                    </span>
-                                </div>
-                            )}
+                            <div className="re-cart-cnt__head" style={FLAT_FORM !== 'BEAUTYX' ? { display: 'none' } : {}} >
+                                <PaymentMethod
+                                    onSetPaymentMethod={(method) => setPmtMethodId(method.id)}
+                                />
+                            </div>
                             <div className="re-cart-cnt__body">
                                 <ul className="re-cart-cnt__body-list">
                                     {cartListGroupOrg.map(
@@ -158,18 +122,6 @@ function Carts() {
                             </div>
                         </div>
                     </Container>
-                    <CartPaymentMethod
-                        open={open}
-                        setOpen={setOpen}
-                        pmtMethod={pmtMethod}
-                        setPmtMethod={setPmtMethod}
-                    />
-                    <div style={{ display: "none" }}>
-                        <PaymentMethodCpn
-                            e={pmtMethod}
-                            onPaymentMethodChange={setPmtMethod}
-                        />
-                    </div>
                     <CartBottom DATA_CART={DATA_CART} DATA_PMT={DATA_PMT} />
                     <BranchListOrgPay
                         org={org}

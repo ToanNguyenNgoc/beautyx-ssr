@@ -10,7 +10,8 @@ import { ICart, ICartGroupOrg } from 'interface';
 import IStore from 'interface/IStore';
 import UserPaymentInfo from 'pages/Account/components/UserPaymentInfo';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearByCheck } from 'redux/cart';
 import { clst, unique } from 'utils';
 import style from './cart.module.css'
 import { CartCalc, CartOrgItem } from './components';
@@ -31,6 +32,7 @@ export interface PostOrderType {
 
 function Cart() {
     const IS_MB = useDeviceMobile()
+    const dispatch = useDispatch()
     const { cartList } = useSelector((state: IStore) => state.carts)
     const orgs_id = unique(cartList?.map((i: ICart) => i.org_id))
     const cartGroupOrg: ICartGroupOrg[] = orgs_id?.map(org_id => {
@@ -41,19 +43,31 @@ function Cart() {
             cartItemsOrg: cartItemsOrg
         }
     })
-    const { cart_confirm} = useCartReducer()
+    const { cart_confirm } = useCartReducer()
     const orgChoose = cart_confirm[0]?.org
 
     const [order, setOrder] = useState<PostOrderType>({
         user_address_id: null,
         branch_id: null
     })
+    const removeItemByCheck = () => {
+        dispatch(clearByCheck())
+    }
 
 
     return (
         <>
             <HeadTitle title='Giỏ hàng' />
-            {IS_MB && <HeadMobile title='Giỏ hàng' />}
+            {IS_MB && <HeadMobile
+                title='Giỏ hàng'
+                element={
+                    <XButton
+                        title={`Xóa (${cart_confirm.length})`}
+                        className={style.left_head_ctl_item_btn}
+                        onClick={removeItemByCheck}
+                    />
+                }
+            />}
             <Container>
                 <div className={style.container}>
                     <div className={style.left}>
@@ -67,6 +81,7 @@ function Cart() {
                                     <XButton
                                         icon={icon.trash}
                                         className={style.left_head_ctl_item_btn}
+                                        onClick={removeItemByCheck}
                                     />
                                 </span>
                             </div>
@@ -79,6 +94,8 @@ function Cart() {
                                         key={itemOrg.org_id}
                                         itemOrg={itemOrg}
                                         cart_confirm={cart_confirm}
+                                        branch_id={order.branch_id}
+                                        onChangeBranch={(id:null | number)=> setOrder({...order, branch_id:id})}
                                     />
                                 ))
                             }
