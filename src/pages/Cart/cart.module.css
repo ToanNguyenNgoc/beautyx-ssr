@@ -432,6 +432,10 @@
         padding-bottom: 300px;
     }
 
+    .group_org_detail_name {
+        justify-content: space-between;
+    }
+
     .org_name {
         font-weight: 700;
         font-size: 16px;
@@ -440,9 +444,22 @@
         color: var(--text-black);
     }
 
+    .org_branch_btn {
+        color: var(--purple);
+        background-color: transparent;
+        margin: 0px;
+        font-size: 12px;
+    }
+
     .group_org_detail_address {
         font-size: 12px;
         margin-top: 4px 0px;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        word-break: break-word;
     }
 
     .cart_item {
@@ -477,7 +494,7 @@
         z-index: 61;
         background-color: var(--bg-white);
         margin-bottom: 0px;
-        padding: 8px 12px;
+        padding: 8px 12px 20px 12px;
         border-radius: 6px 6px 0px 0px;
         box-shadow: var(--box-shadow);
     }

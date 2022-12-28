@@ -11,8 +11,11 @@ import { useHistory } from "react-router-dom";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import TrendDetailDia from "./TrendDetailDia";
 import ReactPlayer from "react-player/lazy";
+import HeadMobile from "features/HeadMobile";
 
 function Trends() {
+    const history = useHistory()
+    const IS_MB = useDeviceMobile()
     const { response } = useFetch(
         true,
         `${API_3RD.API_NODE}/trends`,
@@ -22,6 +25,7 @@ function Trends() {
     const trends: ITrend[] = response?.context?.data ?? [];
     return (
         <>
+            {IS_MB && <HeadMobile onBackFunc={() => history.push('/homepage')} title="Xu hướng" />}
             <Container>
                 <div className={style.container_large}>
                     <ul className={style.trend_list}>
@@ -98,7 +102,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                         url={`${item.media_url}#t=0.001`}
                         width={'100%'}
                         height={'100%'}
-                        playing={isVisible}
+                        playing={isVisible && IS_MB}
                         muted={true}
                         playsinline={true}
                         controls

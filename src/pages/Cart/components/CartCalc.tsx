@@ -15,6 +15,9 @@ import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 import { checkPhoneValid } from 'utils';
 import { PopupNotification } from 'components/Notification';
 import { orderApi } from 'api/orderApi';
+import tracking from 'api/trackApi';
+import formatProductList from 'utils/tracking';
+import { PLF_TYPE } from 'constants/plat-form';
 
 interface CartCalcType {
     order: PostOrderType,
@@ -34,7 +37,7 @@ export function CartCalc(props: CartCalcType) {
     const [popup, setPopup] = useState(popupInit)
     const { USER } = useSelector((state: IStore) => state.USER)
     const { cartAmount, cartAmountDiscount, VOUCHER_APPLY, cartList } = useSelector((state: IStore) => state.carts)
-    const {  services_id, products_id, combos_id, outDiscounts } = useCartReducer()
+    const {  services_id, products_id, combos_id, outDiscounts, products } = useCartReducer()
     let finalAmount = cartAmount - cartAmountDiscount
 
     const { vouchersFinal, totalVoucherValue } = useVoucher(finalAmount, VOUCHER_APPLY, services_id)
@@ -72,7 +75,7 @@ export function CartCalc(props: CartCalcType) {
         if (!order.payment_method_id) {
             return setPopup({ ...popupInit, open: true, content: 'Vui lòng chọn phương thức thanh toán' })
         }
-        if (PLAT_FORM === 'MBBANK' && !checkPhoneValid(USER?.telephone)) {
+        if (PLAT_FORM === PLF_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
             return setPopup({
                 content: 'Vui lòng thêm số điện thoại để tiếp tục thanh toán!',
                 open: true,
@@ -80,6 +83,7 @@ export function CartCalc(props: CartCalcType) {
             })
         }
         firstLoad()
+        tracking.PAY_CONFIRM_CLICK(orgChoose.id, formatProductList(products))
         try {
             const res = await orderApi.postOrder(orgChoose.id, param)
             resultLoad('')

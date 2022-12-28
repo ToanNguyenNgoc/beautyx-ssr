@@ -1,8 +1,8 @@
-import { FLAT_FORM_TYPE } from "../rootComponents/flatForm";
 import { callApiFromTiki } from "../rootComponents/tiki/doPostMessageTiki";
 import { openUrlIn_Mb } from "../rootComponents/mb/doPostMessageMBbank";
 import openUrlIn_Tiki from "../rootComponents/tiki/test";
 import { MOMO } from "../api/_momoImport";
+import { PLF_TYPE } from "constants/plat-form";
 // export const handleSubiz = () => {
 //     let $: any = window;
 //     let su_widget = document.querySelector(
@@ -23,7 +23,7 @@ export const handleChat = () => {
     const FLAT_FORM = sessionStorage.getItem("FLAT_FORM");
     const deepLinkMessenger = "https://m.me/beautyxdatlichlamdep/";
     switch (FLAT_FORM) {
-        case FLAT_FORM_TYPE.TIKI:
+        case PLF_TYPE.TIKI:
             // callApiFromTiki("openNativeAppStore", {
             //     googlePlayId: "com.facebook.orca",
             //     appleStoreId: "454638411",
@@ -32,11 +32,11 @@ export const handleChat = () => {
             openUrlIn_Tiki(deepLinkMessenger);
             // window.open(deepLinkMessenger, "_blank");
             break;
-        case FLAT_FORM_TYPE.MOMO:
+        case PLF_TYPE.MOMO:
             MOMO.openURL(deepLinkMessenger);
             // alert(deepLinkMessenger)
             break;
-        case FLAT_FORM_TYPE.MB:
+        case PLF_TYPE.MB:
             const $: any = window;
             $["ReactNativeWebView"].postMessage(
                 JSON.stringify({
@@ -57,7 +57,7 @@ export const handleCallingPhone = () => {
     const FLAT_FORM = sessionStorage.getItem("FLAT_FORM");
     const phoneNumber = "tel:02899959938";
     switch (FLAT_FORM) {
-        case FLAT_FORM_TYPE.TIKI:
+        case PLF_TYPE.TIKI:
             // callApiFromTiki("openNativeAppStore", {
             //     googlePlayId: "com.facebook.orca",
             //     appleStoreId: "454638411",
@@ -67,11 +67,11 @@ export const handleCallingPhone = () => {
             })
             window.open(phoneNumber, "_blank");
             break;
-        case FLAT_FORM_TYPE.MOMO:
+        case PLF_TYPE.MOMO:
             MOMO.openURL(phoneNumber);
             // alert(phoneNumber)
             break;
-        case FLAT_FORM_TYPE.MB:
+        case PLF_TYPE.MB:
             openUrlIn_Mb("messenger", phoneNumber);
             const $: any = window;
             $["ReactNativeWebView"].postMessage(

@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Combo } from "../../../../interface/combo";
-import formatPrice from "../../../../utils/formatPrice";
-import ButtonCus from "../../../../components/ButtonCus";
-import comboApi from "../../../../api/comboApi";
-import { addCart } from "../../../../redux/cart";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { AppContext } from "../../../../context/AppProvider";
-import scrollTop from "../../../../utils/scrollTop";
+import { AppContext } from "context/AppProvider";
+import { Combo } from "interface";
+import { scrollTop } from "utils";
+import { addCart } from "redux/cart";
+import comboApi from "api/comboApi";
+import formatPrice from "utils/formatPrice";
+import { XButton } from "components/Layout";
 
 function ComboItem(props: any) {
   const { t } = useContext(AppContext);
@@ -76,22 +76,18 @@ function ComboItem(props: any) {
           <div className="flex-row-sp item-bottom">
             <span className="price">{formatPrice(combo?.price)} đ</span>
             <div className="flex-row item-button">
-              <ButtonCus
-                // onClick={handleDetailCombo}
-                text={t("order.watch_info")}
-                padding="4px 8px"
-                color="var(--purple)"
-                backColor="var(--bgGray)"
-                borderRadius="12px"
-                margin="0px 16px 0px 0px"
+              <XButton
+                title={t("order.watch_info")}
               />
-              <ButtonCus
+              <XButton
                 onClick={handleAddCart}
-                text="Re-Order"
-                padding="4px 8px"
-                color="var(--bgWhite)"
-                backColor="var(--purple)"
-                borderRadius="12px"
+                title="Re-Order"
+                style={{
+                  padding: "4px 8px",
+                  color: "var(--bgWhite)",
+                  backColor: "var(--purple)",
+                  borderRadius: "12px",
+                }}
               />
             </div>
           </div>

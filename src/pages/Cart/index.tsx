@@ -1,8 +1,10 @@
 
 import { Container } from '@mui/system';
-import { XButton } from 'components/Layout';
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { EmptyRes, XButton } from 'components/Layout';
 import PaymentMethod from 'components/PaymentMethod';
 import icon from 'constants/icon';
+import { PLF_TYPE } from 'constants/plat-form';
 import HeadMobile from 'features/HeadMobile';
 import HeadTitle from 'features/HeadTitle';
 import { useCartReducer, useDeviceMobile } from 'hooks';
@@ -32,6 +34,7 @@ export interface PostOrderType {
 
 function Cart() {
     const IS_MB = useDeviceMobile()
+    const platForm = EXTRA_FLAT_FORM()
     const dispatch = useDispatch()
     const { cartList } = useSelector((state: IStore) => state.carts)
     const orgs_id = unique(cartList?.map((i: ICart) => i.org_id))
@@ -68,62 +71,72 @@ function Cart() {
                     />
                 }
             />}
-            <Container>
-                <div className={style.container}>
-                    <div className={style.left}>
-                        <div className={style.left_head}>
-                            <div className={style.left_head_label}>Dịch vụ/Sản phẩm</div>
-                            <div className={style.left_head_ctl}>
-                                <span className={style.left_head_ctl_item}>Đơn giá</span>
-                                <span className={style.left_head_ctl_item}>Số lượng</span>
-                                <span className={style.left_head_ctl_item}>
-                                    Thành tiền
-                                    <XButton
-                                        icon={icon.trash}
-                                        className={style.left_head_ctl_item_btn}
-                                        onClick={removeItemByCheck}
+            {
+                cartList?.length === 0 ?
+                    <EmptyRes title='Không có Dịch vụ/Sản phẩm trong giỏ hàng !' isRecommend={true} />
+                    :
+                    <Container>
+                        <div className={style.container}>
+                            <div className={style.left}>
+                                <div className={style.left_head}>
+                                    <div className={style.left_head_label}>Dịch vụ/Sản phẩm</div>
+                                    <div className={style.left_head_ctl}>
+                                        <span className={style.left_head_ctl_item}>Đơn giá</span>
+                                        <span className={style.left_head_ctl_item}>Số lượng</span>
+                                        <span className={style.left_head_ctl_item}>
+                                            Thành tiền
+                                            <XButton
+                                                icon={icon.trash}
+                                                className={style.left_head_ctl_item_btn}
+                                                onClick={removeItemByCheck}
+                                            />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className={style.left_table}>
+                                    {
+                                        cartGroupOrg?.map(itemOrg => (
+                                            <CartOrgItem
+                                                orgChoose={orgChoose}
+                                                key={itemOrg.org_id}
+                                                itemOrg={itemOrg}
+                                                cart_confirm={cart_confirm}
+                                                branch_id={order.branch_id}
+                                                onChangeBranch={(id: null | number) => setOrder({ ...order, branch_id: id })}
+                                            />
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                            <div className={style.right}>
+                                <div className={style.right_section}>
+                                    <UserPaymentInfo
+                                        onSetAddressDefault={(address) =>
+                                            setOrder({ ...order, user_address_id: address?.id })}
                                     />
-                                </span>
+                                </div>
+                                <div
+                                    style={platForm === PLF_TYPE.BEAUTYX ? {} : {
+                                        display: 'none'
+                                    }}
+                                    className={style.right_section}
+                                >
+                                    <PaymentMethod
+                                        onSetPaymentMethod={(method) =>
+                                            setOrder({ ...order, payment_method_id: method.id })
+                                        }
+                                    />
+                                </div>
+                                <div className={clst([style.right_section, style.bottom])}>
+                                    <CartCalc
+                                        orgChoose={orgChoose}
+                                        order={order}
+                                    />
+                                </div>
                             </div>
                         </div>
-                        <div className={style.left_table}>
-                            {
-                                cartGroupOrg?.map(itemOrg => (
-                                    <CartOrgItem
-                                        orgChoose={orgChoose}
-                                        key={itemOrg.org_id}
-                                        itemOrg={itemOrg}
-                                        cart_confirm={cart_confirm}
-                                        branch_id={order.branch_id}
-                                        onChangeBranch={(id:null | number)=> setOrder({...order, branch_id:id})}
-                                    />
-                                ))
-                            }
-                        </div>
-                    </div>
-                    <div className={style.right}>
-                        <div className={style.right_section}>
-                            <UserPaymentInfo
-                                onSetAddressDefault={(address) =>
-                                    setOrder({ ...order, user_address_id: address?.id })}
-                            />
-                        </div>
-                        <div className={style.right_section}>
-                            <PaymentMethod
-                                onSetPaymentMethod={(method) =>
-                                    setOrder({ ...order, payment_method_id: method.id })
-                                }
-                            />
-                        </div>
-                        <div className={clst([style.right_section, style.bottom])}>
-                            <CartCalc
-                                orgChoose={orgChoose}
-                                order={order}
-                            />
-                        </div>
-                    </div>
-                </div>
-            </Container>
+                    </Container>
+            }
         </>
     );
 }

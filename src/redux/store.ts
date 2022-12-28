@@ -5,7 +5,6 @@ import userReducer from "./user/userSlice";
 import servicesBookReducer from "./booking";
 import userAddressReducer from "./user/userAddressSlice";
 import orgReducer from "./org/orgSlice";
-import orgDiscountsReducer from "./org_discounts/orgDiscountsSlice";
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import cateReducer from "./cate-tree/cateTreeSlice";
 import orgMapReducer from "./org/orgMapSlice";
@@ -25,7 +24,6 @@ const rootReducer = {
     SERVICES_BOOK: servicesBookReducer,
     USER: userReducer,
     ORG: orgReducer,
-    ORG_DISCOUNTS: orgDiscountsReducer,
     ADDRESS: userAddressReducer,
     CATE_TREE: cateReducer,
     ORGS_MAP: orgMapReducer,

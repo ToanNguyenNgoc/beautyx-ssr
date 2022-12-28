@@ -1,20 +1,17 @@
 import React, { useContext, useState } from "react";
 import "./orderDetail.css";
-import ButtonCus from "../../components/ButtonCus";
-import formatPrice from "../../utils/formatPrice";
 import TabOrder from "./components/TabOrder";
 import { Dialog, Slide } from "@mui/material";
 import icon from "../../constants/icon";
 import { TransitionProps } from "@mui/material/transitions";
-//import slugify from "../../utils/formatUrlString";
 import { useHistory } from "react-router-dom";
-import { AppContext } from "../../context/AppProvider";
-import scrollTop from "../../utils/scrollTop";
-import onErrorImg from "../../utils/errorImg";
-import formatDate from "../../utils/formatDate";
-import { IOrderV2 } from '../../interface/orderv2';
 import HeadMobile from "../HeadMobile";
 import { useDeviceMobile } from "hooks";
+import { AppContext } from "context/AppProvider";
+import { IOrderV2 } from "interface";
+import { formatDate, onErrorImg, scrollTop } from "utils";
+import formatPrice from "utils/formatPrice";
+import { XButton } from "components/Layout";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -88,14 +85,16 @@ function OrderDetail(props: any) {
           <div className="order-de__org-cnt">
             <span className="name">{org?.name}</span>
             <span className="address">{org?.full_address}</span>
-            <ButtonCus
+            <XButton
               onClick={handleDetailMerchant}
-              text={t("order.view_org")}
-              backColor="var(--purple)"
-              padding="6px 8px"
-              color="var(--bgWhite)"
-              borderRadius="14px"
-              width="fit-content"
+              title={t("order.view_org")}
+              style={{
+                backColor: "var(--purple)",
+                padding: "6px 8px",
+                color: "var(--bgWhite)",
+                borderRadius: "14px",
+                width: "fit-content",
+              }}
             />
           </div>
         </div>

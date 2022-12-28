@@ -19,32 +19,18 @@ import MerchantDetail from "pages/MerchantDetail";
 import { analytics, logEvent } from "../firebase";
 import { LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
-// import Otp from "features/Otp";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
-// import Policy from "pages/Policy";
-import HomeListProvince from "features/HomeResults/HomeListProvince";
-// import Partner from "pages/Partner";
-// import SellerCenter from "pages/SellerCenter";
 import DealBanner from "pages/DealBanner";
 import DiscountDetail from "pages/_DiscountDetail";
 import HomeDiscountList from "features/HomeResults/HomeDiscountList";
 import CategoryTree from "features/CategoryTree";
-import Booking from "features/Booking";
-// import LandingPage from "pages/LandingPage";
 import ProductsByCate from "features/CategoryTree/ProductsByCate";
-import HomeMap from "features/HomeMap";
 import HomeCateResult from "pages/HomeCateResult";
-// import Trends from "pages/Trends";
-// import TrendsDetail from "pages/TrendsDetail";
-// import Community from "pages/Community";
 import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
 import Calendar from "pages/Calendar";
-import BuyNow from "features/BuyNow";
-import Carts from "pages/Carts";
 import Cart from "pages/Cart";
-// import OtpMbPage from "pages/OtpMbPage";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
 import { Bottom } from "components/Layout";
@@ -55,36 +41,22 @@ import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import RefreshToken from 'features/RefreshToken'
 
 //community page
-const PostDetail  = lazy(() => import('pages/Community/pages/PostDetail'))
-const GroupDetail =  lazy(() => import('pages/Community/pages/GroupDetail'))
+const PostDetail = lazy(() => import('pages/Community/pages/PostDetail'))
+const GroupDetail = lazy(() => import('pages/Community/pages/GroupDetail'))
 
 //update import lazy
-// const Account = lazy(() => import('pages/Account'))
-// const SignPage = lazy(() => import('pages/SignPage'))
-// const ServicesUser = lazy(() => import('features/ServiceUser'))
-// const HomeMap = lazy(() => import('features/HomeMap'))
+const BuyNow = lazy(() => import('features/BuyNow'))
+const Booking = lazy(() => import('features/Booking'))
+const HomeListProvince = lazy(() => import('features/HomeResults/HomeListProvince'))
+const HomeMap = lazy(() => import('features/HomeMap'))
 const Partner = lazy(() => import("../pages/Partner"))
-// const SearchResults = lazy(() => import("../pages/SearchResults/index"))
-// const DiscountDetail = lazy(() => import('pages/_DiscountDetail'))
-// const HomeListProvince = lazy(() => import("../features/HomeResults/HomeListProvince"))
-// const DealBanner = lazy(() => import('pages/DealBanner'))
 const Policy = lazy(() => import('pages/Policy'))
 const SellerCenter = lazy(() => import('pages/SellerCenter'))
 const Otp = lazy(() => import('features/Otp'))
-// const ResetPassword = lazy(() => import('pages/ResetPassword'))
-// const HomeDiscountList = lazy(() => import('features/HomeResults/HomeDiscountList'))
-// const HomeCateResult = lazy(() => import('pages/HomeCateResult'))
-// const CategoryTree = lazy(() => import('features/CategoryTree'))
-// const Booking = lazy(() => import('features/Booking'))
-// const Calendar = lazy(() => import('features/Calendar'))
-// const BuyNow = lazy(() => import('features/BuyNow'))
-// const Carts = lazy(() => import('pages/Carts'))
-// const ProductsByCate = lazy(() => import('features/CategoryTree/ProductsByCate'))
 const LandingPage = lazy(() => import('pages/LandingPage'))
 const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
 const Trends = lazy(() => import('pages/Trends'))
 const Community = lazy(() => import('pages/Community'))
-// const VoucherPage = lazy(() => import('pages/Community'))
 const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
 const Rewards = lazy(() => import('pages/Rewards'))
 
@@ -269,12 +241,12 @@ function RouterConfig() {
             component: <Community />,
         },
         {
-            path:'/bai-viet/:id',
-            component:<PostDetail/>
+            path: '/bai-viet/:id',
+            component: <PostDetail />
         },
         {
-            path:'/nhom/:id',
-            component:<GroupDetail/>
+            path: '/nhom/:id',
+            component: <GroupDetail />
         },
         {
             path: "/error",
@@ -308,11 +280,7 @@ function RouterConfig() {
         },
         {
             path: "/gio-hang",
-            component: <Carts />,
-        },
-        {
-            path:"/cart",
-            component:<Cart/>
+            component: <Cart />,
         },
         {
             path: "/otp-form",
@@ -352,9 +320,7 @@ function RouterConfig() {
                     <AuthRoute>
                         {routesPrivate.map((item, index: number) => (
                             <Route key={index} path={item.path}>
-                                {/* <Suspense fallback={<LoadProgress />}> */}
                                 {item.component}
-                                {/* </Suspense> */}
                             </Route>
                         ))}
                     </AuthRoute>

@@ -6,7 +6,7 @@
 @media only screen and (max-width: 767px) {
   .bt {
     display: block;
-    padding: 13px 8px 24px 8px;
+    padding: 12px 8px 20px 8px;
     background-color: hsla(0,0%,100%,.75);
     backdrop-filter: blur(9px);
     position: fixed;

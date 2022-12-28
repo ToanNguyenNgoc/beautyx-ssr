@@ -59,7 +59,6 @@ const pathHeader = [
     "/ket-qua-tim-kiem/dich-vu/",
     "/ket-qua-tim-kiem/san-pham/",
     "/ket-qua-tim-kiem/cua-hang/",
-    "/xu-huong"
 ]
 const notPathHeader = [
     '/sign-in',

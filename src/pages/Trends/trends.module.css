@@ -94,6 +94,7 @@
         margin: 0px;
         padding: 12px 0px;
         background-color: var(--bg-color);
+        margin-top: 44px;
     }
 
     .video_item_cnt {

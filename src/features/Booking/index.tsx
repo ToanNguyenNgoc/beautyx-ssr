@@ -34,6 +34,7 @@ import API_ROUTE from "api/_api";
 import BookingMap from "./components/BookingMap";
 import { AUTH_LOCATION } from "api/authLocation";
 import PaymentMethod from "components/PaymentMethod";
+import { PLF_TYPE } from "constants/plat-form";
 
 // end
 const date = dayjs();
@@ -128,14 +129,12 @@ function Booking() {
     //
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code)).filter(Boolean)
-    //[FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     const params_string = {
         products: [],
         services: services,
         treatment_combo: [],
         payment_method_id: paymentMethodId,
         coupon_code: coupon_codes.length > 0 ? coupon_codes : [],
-        // coupon_code: VOUCHER_APPLY.length > 0 ? VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code).filter(Boolean) : listCouponCode,
         description: "",
         branch_id: bookTime.branch_id,
     };
@@ -424,7 +423,7 @@ function Booking() {
                         {
                             TYPE_PAGE === 'BOOK_NOW' &&
                             <div
-                                style={FLAT_FORM !== 'BEAUTYX' ? { display: 'none' } : {}}
+                                style={FLAT_FORM !== PLF_TYPE.BEAUTYX ? { display: 'none' } : {}}
                                 className={style.section_payment}
                             >
                                 <PaymentMethod
