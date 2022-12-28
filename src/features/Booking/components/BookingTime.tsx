@@ -39,6 +39,7 @@ function BookingTime(props: any) {
                             bookTime={bookTime}
                             org={org}
                             onChange={(e) => onChangeTimePicker(e)}
+                            disablePrev
                         />
                     </div>
                 </div>
