@@ -27,7 +27,7 @@
     border-radius: 10px;
     z-index: 10;
     width: 100%;
-    transform: translateY(-17%);
+    transform: translateY(-16%);
     object-fit: cover;
 }
 
@@ -148,7 +148,7 @@
         border-radius: 0px;
         /* height: 240px; */
         object-fit: cover;
-        transform: translateY(-11%);
+        transform: translateY(-9%);
     }
     .banner_item_cnt{
         height: 240px;
