@@ -3,7 +3,7 @@ import icon from 'constants/icon';
 import { useCartReducer, useNoti, useVoucher } from 'hooks';
 import { IDiscountPar, IOrganization } from 'interface';
 import IStore from 'interface/IStore';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTotal } from 'redux/cart';
 import { PostOrderType } from '../index'
@@ -18,6 +18,7 @@ import { orderApi } from 'api/orderApi';
 import tracking from 'api/trackApi';
 import formatProductList from 'utils/tracking';
 import { PLF_TYPE } from 'constants/plat-form';
+import { AppContext } from 'context/AppProvider';
 
 interface CartCalcType {
     order: PostOrderType,
@@ -29,6 +30,7 @@ const popupInit = {
 }
 
 export function CartCalc(props: CartCalcType) {
+    const {t} = useContext(AppContext)
     const { order, orgChoose } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const [openVc, setOpenVc] = useState(false)
@@ -107,7 +109,7 @@ export function CartCalc(props: CartCalcType) {
     return (
         <>
             <XButton
-                title='Nhập mã khuyến mại'
+                title={t('pm.enter_coupon_code')}
                 icon={icon.cardDiscountOrange}
                 onClick={() => setOpenVc(true)}
                 iconSize={14}
@@ -115,13 +117,13 @@ export function CartCalc(props: CartCalcType) {
             />
             <div className={style.calc_body}>
                 <div className={style.calc_body_row}>
-                    <span className={style.calc_body_row_label}>Tạm tính</span>
+                    <span className={style.calc_body_row_label}>{t('pm.temporary')}</span>
                     <span className={style.calc_body_row_price}>{formatPrice(cartAmount)}đ</span>
                 </div>
                 {
                     cartAmountDiscount &&
                     <div className={style.calc_body_row}>
-                        <span className={style.calc_body_row_label}>Giảm giá</span>
+                        <span className={style.calc_body_row_label}>{t('detail_item.discount')}</span>
                         <span className={style.calc_body_row_price}>-{formatPrice(cartAmountDiscount)}đ</span>
                     </div>
                 }
@@ -136,14 +138,14 @@ export function CartCalc(props: CartCalcType) {
             </div>
             <div className={style.checkout_out}>
                 <div className={style.checkout_out_amount}>
-                    <span className={style.checkout_out_amount_label}>Tổng tiền</span>
+                    <span className={style.checkout_out_amount_label}>{t('pm.total_payment')}</span>
                     <span className={style.checkout_out_amount_price}>
                         {formatPrice(finalAmount - totalVoucherValue)}đ
                     </span>
                 </div>
                 <XButton
                     className={style.checkout_out_amount_btn}
-                    title='Đặt hàng'
+                    title={t('cart.checkout')}
                     onClick={onPostOrder}
                     loading={noti.load}
                 />

@@ -40,14 +40,18 @@ function BookingNowBill(props: BookingNowBillProps) {
             total: 0
         }
     );
+
+
     const discounts = services
         .map((item: any) => (
             item.service?.discount?.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
-                total - (item.service.discount?.discount_value * item.quantity)
+                item.service.discount?.discount_value * item.quantity
                 :
-                item.service.discount?.discount_value
+                item.service.discount?.discount_value + (item.service.PRICE * item.quantity - 1)
         ))
         .filter(Boolean);
+
+
     const totalDiscounts = discounts.length > 0 && discounts.reduce((cur: any, pre: any) => cur + pre);
     const items = services.map((i: any) => {
         return {
@@ -82,6 +86,17 @@ function BookingNowBill(props: BookingNowBillProps) {
                     <span className={style.booking_calc_item_left}>{t('cart.total_payment')}</span>
                     <span className={style.booking_calc_item_right}>{formatPrice(total)}đ</span>
                 </div>
+                {
+                    discounts?.length > 0 &&
+                    discounts?.map((item: number, index: number) => (
+                        <div key={index} className={style.booking_calc_item}>
+                            <span className={style.booking_calc_item_left}>{t('pm.discounts')}</span>
+                            <span className={style.booking_calc_item_right}>
+                                -{formatPrice(item)}đ
+                            </span>
+                        </div>
+                    ))
+                }
                 {
                     vouchersFinal.map((item: IDiscountPar, index: number) => (
                         <div key={index} className={style.booking_calc_item}>

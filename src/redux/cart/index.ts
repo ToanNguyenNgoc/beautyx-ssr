@@ -194,12 +194,14 @@ const cart = createSlice({
         },
         clearAllCart: (state) => {
             state.cartList = [];
+            state.VOUCHER_APPLY = []
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },
         onClearApplyVoucher: (state) => {
             state.VOUCHER_APPLY = []
         },
         clearByCheck: (state) => {
+            state.VOUCHER_APPLY = []
             const cartConfirm = state.cartList.filter(
                 (val: any) => val.isConfirm === true
             );

@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouteMatch, useHistory, Link, useLocation } from 'react-router-dom';
 import { useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
@@ -31,6 +31,7 @@ import { analytics, logEvent } from '../../firebase';
 import HomeWatched from 'pages/HomePage/HomeWatched';
 import style from './detail.module.css'
 import { useGetByOrgIdCateIdQuery } from 'redux-toolkit-query/hook-detail';
+import { AppContext } from 'context/AppProvider';
 
 interface RouteType {
     path: string,
@@ -60,6 +61,7 @@ const routeType: RouteType[] = [
 ]
 
 function SerProCoDetail() {
+    const {t} = useContext(AppContext)
     const match = useRouteMatch()
     const paramsOld: any = extraParamsUrl();
     const history = useHistory()
@@ -191,7 +193,7 @@ function SerProCoDetail() {
                                         {
                                             DETAIL.category &&
                                             <div className={style.detail_cate}>
-                                                Loại: <span onClick={onNavigateCateList}>{DETAIL.category?.name}</span>
+                                                {t('pr.category')}: <span onClick={onNavigateCateList}>{DETAIL.category?.name}</span>
                                             </div>
                                         }
                                         <span className={style.detail_name}>{DETAIL.name}</span>
@@ -239,7 +241,7 @@ function SerProCoDetail() {
                                                     DETAIL.bought_count &&
                                                     <div className={style.detail_rate_item}>
                                                         <span className={style.detail_rate_item_count}>
-                                                            {DETAIL.bought_count} đã bán
+                                                            {DETAIL.bought_count} {t('detail_item.sold')}
                                                         </span>
                                                     </div>
                                                 }
@@ -253,7 +255,9 @@ function SerProCoDetail() {
                                             {
                                                 onCommerce ? <DetailQuantity discounts={discounts} org={org} detail={DETAIL} />
                                                     :
-                                                    <p className={style.detail_dis}>Sản phẩm/ Dịch vụ này chưa được bán Online</p>
+                                                    <p className={style.detail_dis}>
+                                                        {t('pr.This product/service is not sold online yet')}
+                                                    </p>
                                             }
                                         </>
                                     }
@@ -299,6 +303,7 @@ function SerProCoDetail() {
 export default SerProCoDetail
 
 export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
+    const {t} = useContext(AppContext)
     const { favoriteSt, onToggleFavorite } = useFavorite({
         org_id: org?.id,
         type: 'ORG',
@@ -332,14 +337,14 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
                     className={style.detail_org_right_btn}
                     to={{ pathname: formatRouterLinkOrg(org?.subdomain) }}
                 >
-                    Chi tiết
+                    {t('app.details')}
                 </Link>
                 <XButton
                     style={favoriteSt.is_favorite ? {
                         backgroundColor: 'var(--red-cl)',
                         color: 'var(--bg-white)'
                     } : {}}
-                    title={favoriteSt.is_favorite ? 'Đã thích' : 'Yêu thích'}
+                    title={favoriteSt.is_favorite ? t('pr.liked') : t('pr.like')}
                     className={clst([style.detail_org_right_btn, style.detail_org_link])}
                     onClick={onToggleFavorite}
                 />
@@ -348,6 +353,7 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
     )
 }
 export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
+    const {t} = useContext(AppContext)
     const [more, setMore] = useState(false)
     const [contentHeight, setContentHeight] = useState(10)
     const refContent = useRef<HTMLDivElement>(null)
@@ -371,7 +377,7 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
     return (
         <div className={style.container_desc}>
             <p className={style.container_desc_title}>
-                Mô tả chi tiết
+                {t('detail_item.desc')}
             </p>
             <div
                 style={more ? { height: 'max-content', maxHeight: 'unset' } : {}}
@@ -383,7 +389,7 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
                     }}
                     ref={refContent}
                 >
-                    {detail.description === "" ? "Đang cập nhật..." : detail.description}
+                    {detail.description === "" ? t('detail_item.updating')+'...' : detail.description}
                 </div>
                 {contentHeight > 100 && !more && <div className={style.gradient}></div>}
             </div>
@@ -392,7 +398,7 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
                 <XButton
                     onClick={() => setMore(!more)}
                     className={style.view_more_btn}
-                    title={more ? 'Thu gọn' : 'Xem thêm'}
+                    title={more ? t('Mer_de.hide') : t('detail_item.see_more')}
                 />
             }
             {
@@ -425,7 +431,7 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
                 </div>
             }
             <div className={style.policy}>
-                (*) Thời hạn sử dụng: 1 tháng kể từ ngày mua hàng thành công
+                (*) {t('detail_item.shelf_life')}
             </div>
             <div className={style.guide_container}>
                 <div
@@ -433,14 +439,14 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
                     className={style.guide_container_head}
                 >
                     <p className={style.container_desc_title}>
-                        Mô tả chi tiết
+                        {t('detail_item.detailed_description')}
                     </p>
                     <img ref={refIconGuide} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
                 </div>
                 <ul ref={refGuide} className={style.guide_list}>
-                    <li>Bước 1: Lựa chọn và thanh toán sản phẩm/dịch vụ</li>
-                    <li>Bước 2: Đặt hẹn ngay khi thanh toán hoặc đặt hẹn sau tại mục "Đặt hẹn"</li>
-                    <li>Bước 3: Đến cơ sở, xuất trình đơn hàng đã thanh toán thành công</li>
+                    <li>{t('detail_item.step_1')}</li>
+                    <li>{t('detail_item.step_2')}</li>
+                    <li>{t('detail_item.step_3')}</li>
                 </ul>
             </div>
             <div className={style.guide_container}>
@@ -449,24 +455,21 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
                     className={style.guide_container_head}
                 >
                     <p className={style.container_desc_title}>
-                        Điều khoản/Chính sách
+                        {t('se.instructions_terms')}
                     </p>
                     <img ref={refIconPolicy} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
                 </div>
                 <ul ref={refPolicy} className={style.policy_list}>
                     <li>
-                        <p className={style.policy_list_title}>Xác nhận</p>
+                        <p className={style.policy_list_title}>{t('contact_form.confirm')}</p>
                         <p className={style.policy_list_content}>
-                            Xác nhận ngay tức thời qua thông báo khi bạn mua dịch vụ/đặt hẹn thành công.
-                            Sau đó, Spa/ Salon/ TMV sẽ liên hệ xác nhận với bạn một lần nữa để đảm bảo thời gian đặt lịch hẹn.
-                            Nếu bạn không nhận được tin
-                            nhắn/ cuộc gọi nào, hãy liên hệ với chúng tôi qua hotline 0289 9959 938.
+                            {t('detail_item.confirm_desc')}{"  "}0289 9959 938
                         </p>
                     </li>
                     <li>
-                        <p className={style.policy_list_title}>Chính sách hủy</p>
+                        <p className={style.policy_list_title}>{t('detail_item.cancellation_policy')}</p>
                         <p className={style.policy_list_content}>
-                            Không hoàn, huỷ hay thay đổi sau khi đã mua dịch vụ
+                            {t('detail_item.policy_desc')}
                         </p>
                     </li>
                 </ul>
@@ -483,6 +486,7 @@ const DetailBottom = (
             PERCENT: number, onCommerce: boolean
         }
 ) => {
+    const {t} = useContext(AppContext)
     const [dra, setDra] = useState({
         open: false, type: ''
     })
@@ -492,16 +496,18 @@ const DetailBottom = (
                 onCommerce ?
                     <>
                         <XButton
-                            title={detail.type === 'SERVICE' ? 'Đặt hẹn ngay' : 'Mua ngay'}
+                            title={detail.type === 'SERVICE' ? t('detail_item.booking_now') : t('cart.payment_now')}
                             onClick={() => setDra({ open: true, type: 'NOW' })}
                         />
                         <XButton
-                            title='Thêm vào giỏ hàng'
+                            title={t('pr.add_to_cart')}
                             onClick={() => setDra({ open: true, type: 'ADD_CART' })}
                         />
                     </>
                     :
-                    <p className={style.detail_dis}>Sản phẩm/ Dịch vụ này chưa được bán Online</p>
+                    <p className={style.detail_dis}>
+                        {t('pr.This product/service is not sold online yet')}
+                    </p>
             }
             <Drawer anchor='bottom' open={dra.open} onClose={() => setDra({ open: false, type: '' })} >
                 <div className={style.bottom_wrapper}>
@@ -545,6 +551,7 @@ const DetailQuantity = (
     { detail, org, discounts, draType, onClose }:
         { detail: DetailProp, org: IOrganization, discounts: IDiscountPar[], draType?: string, onClose?: () => void }
 ) => {
+    const {t} = useContext(AppContext)
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
     const vouchers = IS_VOUCHER(discounts);
@@ -595,7 +602,7 @@ const DetailQuantity = (
     return (
         <div className={style.detail_cart}>
             <div className={style.detail_quantity}>
-                <span className={style.detail_quantity_title}>Số lượng</span>
+                <span className={style.detail_quantity_title}>{t('detail_item.quantity')}</span>
                 <div className={style.detail_quantity_calc}>
                     <XButton
                         title='-'
@@ -614,7 +621,7 @@ const DetailQuantity = (
                 {detail.type === 'SERVICE' &&
                     <XButton
                         style={draType === "NOW" ? { display: 'flex' } : {}}
-                        title='Đặt hẹn ngay'
+                        title={t('detail_item.booking_now')}
                         className={style.add_cart_btn}
                         onClick={onBookingNow}
                     />
@@ -622,7 +629,7 @@ const DetailQuantity = (
                 {(detail.type === 'PRODUCT' || detail.type === 'COMBO') &&
                     <XButton
                         style={draType === "NOW" ? { display: 'flex' } : {}}
-                        title='Mua ngay'
+                        title={t('detail_item.payment_now')}
                         className={style.add_cart_btn}
                         onClick={onBuyNow}
                     />
@@ -631,7 +638,7 @@ const DetailQuantity = (
                     style={draType === "ADD_CART" ? { display: 'flex' } : {}}
                     icon={icon.cartWhiteBold}
                     iconSize={15}
-                    title='Thêm vào giỏ hàng'
+                    title={t('detail_item.add_cart')}
                     className={style.add_cart_btn}
                     onClick={handleAddCart}
                 />

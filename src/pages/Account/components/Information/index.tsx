@@ -69,8 +69,8 @@ const Form = ({ USER }: { USER: User }) => {
         fullname: values.fullname,
         email: USER.email !== values.email ? values.email : ''
       })
-      dispatch(putUser({ ...USER, ...values }))
       resultLoad('Lưu thông tin thành công')
+      dispatch(putUser({ ...USER, ...values }))
     } catch (error) {
       const err = error as AxiosError;
       switch (err.response?.status) {
@@ -86,14 +86,12 @@ const Form = ({ USER }: { USER: User }) => {
   }
   const onChangeAvatar = async (e: any) => {
     const { model_id } = await postMedia(e)
-    await dispatch(updateAsyncUser({
-      media_id: model_id
-    }))
+    await dispatch(updateAsyncUser({model_id}))
   }
   const onNavigateChangePass = () => {
-    // window.location.reload()
     window.location.assign('/tai-khoan/doi-mat-khau')
   }
+  // console.log(noti)
 
   return (
     <div className={style.form_cnt}>
@@ -167,7 +165,6 @@ const Form = ({ USER }: { USER: User }) => {
             <XButton
               className={style.form_bot_btn}
               title={t('form.reset_password')}
-              // onClick={() => history.push('/tai-khoan/doi-mat-khau')}
               onClick={onNavigateChangePass}
               type='button'
             />

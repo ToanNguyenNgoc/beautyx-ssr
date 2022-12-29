@@ -1,19 +1,18 @@
 import React, { useRef, useState } from 'react';
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
-import moment from 'moment';
 import { useSelector } from 'react-redux';
 import style from "./comment.module.css"
 import IStore from 'interface/IStore';
 import { IComment, ICommentChild } from 'interface';
 import { paramsComment } from 'params-query';
-import { postMedia, useDeviceMobile, useSwrInfinite } from 'hooks';
+import { postMedia, useCheckUserBought, useDeviceMobile, useSwrInfinite } from 'hooks';
 import { useHistory } from 'react-router-dom';
 import commentsApi from 'api/commentsApi';
 import { FullImage, Input, XButton } from 'components/Layout';
 import icon from 'constants/icon';
+import { formatDateFromNow } from 'utils';
 
 interface CommentProps {
-    // commentable_type: "SERVICE" | "PRODUCT" | "ORGANIZATION",
     commentable_type: any
     commentable_id: number,
     org_id: number
@@ -32,6 +31,7 @@ const tempCmtInit: TempCmt = {
 function Comment(props: CommentProps) {
     const { commentable_type, commentable_id, org_id } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
+    const { bought } = useCheckUserBought({ commentable_type, commentable_id, org_id })
     const history = useHistory()
     const [tempCmt, setTempCmt] = useState<TempCmt>(tempCmtInit)
     const [cmtArr, setCmtArr] = useState<IComment[]>([])
@@ -51,7 +51,7 @@ function Comment(props: CommentProps) {
         setTempCmt({ ...tempCmt, body: e.target.value })
     }
     const paramPost = {
-        "body": tempCmt.body,
+        "body": `${tempCmt.body} ${bought ? `‭` : ''}`,
         "commentable_id": commentable_id,
         "commentable_type": commentable_type,
         "organization_id": org_id,
@@ -89,8 +89,6 @@ function Comment(props: CommentProps) {
     const onViewMoreCmt = () => {
         onLoadMore()
     }
-
-
     return (
         <div ref={cntRef} className={style.container}>
             <h2 className={style.title}>
@@ -187,7 +185,7 @@ export default Comment;
 interface CommentParItemProps {
     comment: IComment,
     org_id: number,
-    USER_PAR_NAME: string
+    USER_PAR_NAME: string,
 }
 
 export const CommentParItem = (props: CommentParItemProps) => {
@@ -226,7 +224,6 @@ export const CommentParItem = (props: CommentParItemProps) => {
         setCmtArr([newCmt, ...cmtArr])
         setTempCmt(tempCmtInit)
     }
-
 
     return (
         <div className={style.cmt_item_par_cnt}>
@@ -267,7 +264,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                     </span>
                 </div> */}
                 {
-                    body_par?.includes('USED') &&
+                    body_par?.includes('‭') &&
                     <div className={style.par_body_check}>
                         <img
                             src={icon.checkFlowGreen} alt=""
@@ -279,7 +276,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                     </div>
                 }
                 <div className={style.cmt_text}>
-                    {body_par?.replace('USED','')}
+                    {body_par}
                 </div>
                 {
                     media_url?.length > 0 &&
@@ -306,7 +303,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                                     </div>
                                     <div className={style.cmt_item_par_body}>
                                         <div className={style.cmt_text}>
-                                            {body_par.replace('USED','')}
+                                            {body_par.replace('USED', '')}
                                         </div>
                                     </div>
                                 </div>
@@ -316,7 +313,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                     </>
                 }
                 <span className={style.cmt_time_late}>
-                    {moment(comment.created_at).locale("vi").fromNow()}
+                    {formatDateFromNow(comment.created_at)}
                 </span>
                 <div className={style.cmt_reply_cnt}>
                     <Accordion
@@ -354,7 +351,7 @@ export const CommentParItem = (props: CommentParItemProps) => {
                                             <span className={style.cmt_text}>
                                                 {child.body}
                                                 <p className={style.cmt_time_late}>
-                                                    {moment(child?.created_at).locale("vi").fromNow()}
+                                                    {formatDateFromNow(child?.created_at || '')}
                                                 </p>
                                             </span>
                                         </div>

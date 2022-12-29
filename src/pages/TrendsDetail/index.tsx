@@ -2,7 +2,6 @@ import API_3RD from 'api/3rd-api';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { useFetch, useFetchInfinite } from 'hooks';
-import moment from 'moment';
 import { ITrend } from 'pages/Trends/trend.interface';
 import React from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
@@ -10,6 +9,7 @@ import { formatRouterLinkOrg, formatRouterLinkService } from 'utils/formatRouter
 import style from './trend-detail.module.css'
 import Skeleton from 'react-loading-skeleton';
 import { ITrendComment, ITrendCommentChild } from './interface';
+import { formatDateFromNow } from 'utils';
 
 function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
     const params = useParams()
@@ -72,7 +72,7 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
                                 <div className={style.org_detail_right}>
                                     <p className={style.org_detail_name}>{trend.organization_name}</p>
                                     <p className={style.time_late}>
-                                        {moment(trend.createdAt).locale("vi").fromNow()}
+                                        {formatDateFromNow(trend.createdAt)}
                                     </p>
                                 </div>
                             </div>
@@ -191,12 +191,12 @@ const CommentItem = ({ comment }: { comment: ITrendComment }) => {
                             <span className={style.comment_user_name} >{comment.user?.fullname}</span>
                             {comment.body}
                         </p>
-                        <div className={style.comment_bot}>
+                        {/* <div className={style.comment_bot}>
                             <span className={style.comment_bot_create}>
                                 {moment('2022-10-11 11:22:00').locale("vi").fromNow()}
                             </span>
                             <span className={style.comment_bot_reply}>Reply</span>
-                        </div>
+                        </div> */}
                     </div>
                     <ul className={style.comment_item_child}>
                         {
@@ -214,11 +214,11 @@ const CommentItem = ({ comment }: { comment: ITrendComment }) => {
                                                 <span className={style.comment_user_name} >{child.user?.fullname}</span>
                                                 {child.body}
                                             </p>
-                                            <div className={style.comment_bot}>
+                                            {/* <div className={style.comment_bot}>
                                                 <span className={style.comment_bot_create}>
                                                     {moment('2022-10-11 11:22:00').locale("vi").fromNow()}
                                                 </span>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                 </li>

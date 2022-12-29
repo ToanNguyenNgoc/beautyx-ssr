@@ -25,7 +25,7 @@ class Comments {
             commentable_type: "ORGANIZATION",
             commentable_id: values.org_id,
             organization_id: values.org_id,
-            body: values.body !== "" ? values.body : '‭',
+            body: values.body,
             media_ids: values.media_ids,
             rate: values.rate
         };
@@ -53,7 +53,7 @@ class Comments {
             commentable_type: values.type,
             commentable_id: values.id,
             organization_id: values.org_id,
-            body:  values.body !== "" ? values.body : '‭',
+            body:  values.body,
             media_ids: values.media_ids,
             rate: values.rate
         };
@@ -63,7 +63,7 @@ class Comments {
         const url = `/comments`;
         const params = {
             ...values,
-            body:  values.body !== "" ? values.body : '‭',
+            body:  values.body,
         }
         return axiosClient.post(url, pickBy(params, identity), AUTH_HEADER());
     }

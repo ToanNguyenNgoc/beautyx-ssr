@@ -2,8 +2,9 @@ import { Checkbox } from '@mui/material';
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import img from 'constants/img';
+import { AppContext } from 'context/AppProvider';
 import { IBranch, ICart, ICartGroupOrg, IOrganization } from 'interface';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { ascItem, descItem, onClearApplyVoucher, onClearPrevCartItem, checkConfirm, removeItem } from 'redux/cart';
 import { clst } from 'utils';
@@ -30,6 +31,7 @@ const checkedStItem = {
 }
 
 export function CartOrgItem(props: CartItemProps) {
+    const {t} = useContext(AppContext)
     const { itemOrg, orgChoose, cart_confirm, onChangeBranch, branch_id } = props
     const refBranch = useRef<HTMLDivElement>(null)
     const openBranch = () => refBranch.current?.classList.toggle(style.branch_show)
@@ -73,7 +75,7 @@ export function CartOrgItem(props: CartItemProps) {
                         itemOrg.org?.branches?.length > 0 && orgChoose?.id === itemOrg.org_id &&
                         <div className={style.branch_cnt}>
                             <XButton
-                                title={!branch_id ? 'Chọn chi nhánh' : 'Thay đổi'}
+                                title={!branch_id ? t('my_ser.choose_branch') : t('se.edit')}
                                 className={style.org_branch_btn}
                                 onClick={openBranch}
                             />
@@ -88,7 +90,7 @@ export function CartOrgItem(props: CartItemProps) {
                                         </span>
                                         <div className={style.branch_item_de}>
                                             <span className={style.branch_name}>
-                                                <span>Trụ sở :</span>
+                                                <span>{t('pm.org')} :</span>
                                                 {itemOrg?.org?.full_address}
                                             </span>
                                         </div>
@@ -104,7 +106,7 @@ export function CartOrgItem(props: CartItemProps) {
                                                 </span>
                                                 <div className={style.branch_item_de}>
                                                     <span className={style.branch_name}>
-                                                        <span>Chi nhánh:</span>
+                                                        <span>{t('Mer_de.branch')}:</span>
                                                         {item.full_address}
                                                     </span>
                                                 </div>
@@ -149,6 +151,7 @@ const CartItem = (
         if (btn === 'desc' && item.quantity > 1) {
             dispatch(descItem(item))
         }
+        dispatch(onClearApplyVoucher())
     }
     const handleConfirm = () => {
         dispatch(onClearApplyVoucher())

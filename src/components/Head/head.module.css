@@ -126,6 +126,7 @@
     border-radius: 100%;
     top: -8px;
     right: -10px;
+    border: solid 1px var(--bg-white);
 }
 
 .head_top_right_user {

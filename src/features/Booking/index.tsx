@@ -14,7 +14,6 @@ import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
-import { formatDatePost } from "utils/formatDate";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "utils/cart/formatAddCart";
 import apointmentApi from "api/apointmentApi";
@@ -98,7 +97,7 @@ function Booking() {
     const [open, setOpen] = useState(false);
     const [paymentMethodId, setPaymentMethodId] = useState<any>();
     const [bookTime, setBookTime] = useState({
-        date: date.format("DD-MM-YYYY"),
+        date: date.format("YYYY-MM-DD"),
         time: null,
         note: "",
         branch_id: null,
@@ -155,11 +154,10 @@ function Booking() {
         return values;
     });
 
-    const dayBook = formatDatePost(bookTime.date);
     const action = {
         // note: "[ Số lượng người: " + seatAmount + " ] " + bookTime.note,
         note: bookTime.note,
-        time_start: `${dayBook} ${bookTime.time}:00`,
+        time_start: `${bookTime.date} ${bookTime.time}:00`,
         branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
         service_ids: services?.map((item: any) => item?.id),

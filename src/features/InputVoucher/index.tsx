@@ -2,10 +2,11 @@ import { Dialog } from "@mui/material";
 import discountApi from "api/discountApi";
 import { VoucherItem, XButton } from "components/Layout";
 import icon from "constants/icon";
+import { AppContext } from "context/AppProvider";
 import { useDeviceMobile, useNoti } from "hooks";
 import { IDiscountPar, IOrganization } from "interface";
 import IStore from "interface/IStore";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import style from './ip-vc.module.css'
 
@@ -20,6 +21,7 @@ interface InputVoucherProps {
 }
 
 export const InputVoucher = (props: InputVoucherProps) => {
+    const {t} = useContext(AppContext)
     const IS_MB = useDeviceMobile();
     const { open, setOpen, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const { VOUCHER_APPLY } = useSelector((state: IStore) => state.carts)
@@ -60,7 +62,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
             <div className={style.vc_container}>
                 <div className={style.vc_header}>
                     <span className={style.vc_header_title}>
-                        Beautyx khuyến mại
+                        Beautyx {t('pm.promotion')}
                     </span>
                     {
                         IS_MB &&
@@ -83,7 +85,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
                                 cursor: "no-drop"
                             } : {}}
                             className={style.vc_body_input_btn}
-                            title="Xác nhận"
+                            title={t('contact_form.confirm')}
                             loading={noti.load}
                             onClick={getDiscountDetail}
                         />

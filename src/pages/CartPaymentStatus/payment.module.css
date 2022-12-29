@@ -330,7 +330,7 @@
         width: 100%;
         z-index: 61;
         border-radius: 6px 6px 0px 0px;
-        padding:8px 12px 20px 12px;
+        padding: 8px 12px 20px 12px;
         box-shadow: var(--box-shadow);
         background-color: var(--bg-white);
     }
@@ -354,19 +354,26 @@
         padding: 8px 12px !important;
         background-color: var(--text-orange) !important;
     }
-    .section_status_modal{
+
+    .bottom_pay_left_label,
+    .bottom_pay_left_value {
+        line-height: 24px;
+    }
+
+    .section_status_modal {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100vh;
-        background-color:#00000099;
+        background-color: #00000099;
         z-index: 101;
         display: flex;
         align-items: center;
         justify-content: center;
     }
-    .section_status{
+
+    .section_status {
         background-color: var(--bg-white);
         padding: 12px;
         width: calc(100% - 24px);

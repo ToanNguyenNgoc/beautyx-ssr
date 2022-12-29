@@ -5,13 +5,14 @@ import { EmptyRes, XButton } from 'components/Layout';
 import PaymentMethod from 'components/PaymentMethod';
 import icon from 'constants/icon';
 import { PLF_TYPE } from 'constants/plat-form';
+import { AppContext } from 'context/AppProvider';
 import HeadMobile from 'features/HeadMobile';
 import HeadTitle from 'features/HeadTitle';
 import { useCartReducer, useDeviceMobile } from 'hooks';
 import { ICart, ICartGroupOrg } from 'interface';
 import IStore from 'interface/IStore';
 import UserPaymentInfo from 'pages/Account/components/UserPaymentInfo';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearByCheck } from 'redux/cart';
 import { clst, unique } from 'utils';
@@ -33,6 +34,7 @@ export interface PostOrderType {
 }
 
 function Cart() {
+    const {t} = useContext(AppContext)
     const IS_MB = useDeviceMobile()
     const platForm = EXTRA_FLAT_FORM()
     const dispatch = useDispatch()
@@ -79,12 +81,12 @@ function Cart() {
                         <div className={style.container}>
                             <div className={style.left}>
                                 <div className={style.left_head}>
-                                    <div className={style.left_head_label}>Dịch vụ/Sản phẩm</div>
+                                    <div className={style.left_head_label}>{t('pm.product_service')}</div>
                                     <div className={style.left_head_ctl}>
-                                        <span className={style.left_head_ctl_item}>Đơn giá</span>
-                                        <span className={style.left_head_ctl_item}>Số lượng</span>
+                                        <span className={style.left_head_ctl_item}>{t('cart.unit_price')}</span>
+                                        <span className={style.left_head_ctl_item}>{t('pr.quantity')}</span>
                                         <span className={style.left_head_ctl_item}>
-                                            Thành tiền
+                                            {t('cart.into_money')}
                                             <XButton
                                                 icon={icon.trash}
                                                 className={style.left_head_ctl_item_btn}

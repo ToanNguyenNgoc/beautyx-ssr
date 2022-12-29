@@ -1,10 +1,16 @@
 //2021-12-24 08:43:39
 import dayjs from "dayjs";
+import locale from 'dayjs/locale/vi'
+import relativeTime from 'dayjs/plugin/relativeTime'
 
 export const formatDate = (dateParams: any) => {
     const dateArr = dateParams?.split(' ');
     const date = dateArr[0]?.split('-')?.reverse().join('/')
     return date
+}
+export const formatDateFromNow = (date:string)=>{
+    dayjs.extend(relativeTime)
+    return dayjs(date).locale(locale.name).fromNow()
 }
 export const formatDateRevArr = (dateParams: any) => {
     const dateArr = dateParams?.split(' ');

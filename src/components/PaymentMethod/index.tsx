@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useGetPaymentMethodQuery } from 'redux-toolkit-query/hook-home';
 import { IPaymentMethod } from 'interface'
 import style from './pm.module.css'
@@ -7,12 +7,14 @@ import icon from 'constants/icon';
 import { Drawer } from '@mui/material';
 import { useDeviceMobile } from 'hooks';
 import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { AppContext } from 'context/AppProvider';
 
 interface PaymentMethodType {
     onSetPaymentMethod?: (method_id: IPaymentMethod) => void
 }
 
 function PaymentMethod(props: PaymentMethodType) {
+    const {t} = useContext(AppContext)
     const { onSetPaymentMethod } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const IS_MB = useDeviceMobile()
@@ -36,7 +38,7 @@ function PaymentMethod(props: PaymentMethodType) {
 
     return (
         <>
-            <p className={style.title}>Phương thức thanh toán</p>
+            <p className={style.title}>{t('pm.payment_method')}</p>
             <div className={style.container}>
                 <div
                     onClick={() => setOpen(true)}
@@ -47,7 +49,7 @@ function PaymentMethod(props: PaymentMethodType) {
                 </div>
                 <Drawer open={open} onClose={() => setOpen(false)} anchor={IS_MB ? "bottom" : "right"} >
                     <div className={style.drawer_cnt}>
-                        <p className={style.title}>Phương thức thanh toán</p>
+                        <p className={style.title}>{t('pm.payment_method')}</p>
                         <div className={style.drawer}>
                             <ul className={style.list_method}>
                                 {

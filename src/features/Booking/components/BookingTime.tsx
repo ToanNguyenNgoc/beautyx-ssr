@@ -2,19 +2,19 @@ import React, { useContext } from "react";
 import { Dialog } from "@mui/material";
 import { useDeviceMobile } from "hooks";
 import style from '../booking.module.css'
-import {  XButton } from "components/Layout";
+import { DatePicker, XButton } from "components/Layout";
 import { Transition } from "utils";
 import HeadMobile from "features/HeadMobile";
 import TimePicker from "components/TimePicker";
-import DatePicker from "components/DatePicker";
+// import DatePicker from "components/DatePicker";
 import { AppContext } from "context/AppProvider";
 
 function BookingTime(props: any) {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { open, setOpen, bookTime, setBookTime, org } = props;
     const IS_MB = useDeviceMobile();
     const onChangeDatePicker = (e: any) => {
-        setBookTime({ ...bookTime, date: e });
+        setBookTime({ ...bookTime, date: e, time: null });
     };
     const onChangeTimePicker = (time: string) => {
         setBookTime({ ...bookTime, time: time });
@@ -48,6 +48,9 @@ function BookingTime(props: any) {
                         className={style.book_time_bot_btn}
                         title={t('my_ser.confirm_time')}
                         onClick={() => setOpen(false)}
+                        style={
+                            (bookTime.date && bookTime.time) ? {opacity:1}:{opacity:0.4}
+                        }
                     />
                 </div>
             </div>

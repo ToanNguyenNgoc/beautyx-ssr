@@ -318,7 +318,8 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         const TYPE = "BOOK_NOW";
         const service = {
             ...detail,
-            discount: discount.user_available_purchase_count > 0 ? discount : null
+            SPECIAL_PRICE:0,
+            discount: values.discount
         };
         const services = [{ service, quantity: quantity }];
         tracking.ADD_CART_CLICK(values.org_id, values.id, values.price, values.quantity)

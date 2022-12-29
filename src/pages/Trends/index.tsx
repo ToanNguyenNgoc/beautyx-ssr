@@ -5,13 +5,16 @@ import { useDeviceMobile, useElementOnScreen, useFetch } from "hooks";
 import { ITrend } from "./trend.interface";
 import { Container } from "@mui/system";
 import style from "./trends.module.css";
-import moment from "moment";
+import dayjs from "dayjs";
+import locate from 'dayjs/locale/vi'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import TrendDetailDia from "./TrendDetailDia";
 import ReactPlayer from "react-player/lazy";
 import HeadMobile from "features/HeadMobile";
+dayjs.extend(relativeTime)
 
 function Trends() {
     const history = useHistory()
@@ -93,7 +96,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     </div>
                     <div className={style.trend_item_head_name}>
                         <p className={style.org_name}>{item.organization_name}</p>
-                        <p className={style.create_at}>{moment(item.createdAt).fromNow()}</p>
+                        <p className={style.create_at}>{dayjs(item.createdAt).locale(locate.name).fromNow()}</p>
                     </div>
                 </div>
                 <div className={style.trend_item_body}>

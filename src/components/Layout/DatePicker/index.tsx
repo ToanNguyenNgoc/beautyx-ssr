@@ -26,12 +26,14 @@ export function DatePicker(props: DatePickerProps) {
         disablePrev
     } = props;
 
+    const [dayObj, setDayObj] = useState(dayjs());
     const checkDisableDayPrev = (day: string) => {
         let disable = false
         const month = dayObj.locale("vi").format("MM")
+        const year = dayObj.format('YYYY')
         if (!disablePrev) disable = false
         if (disablePrev &&
-            parseInt(`${month}${day}`) < parseInt(`${todayObj.format("MM")}${todayObj.format("DD")}`)) {
+            parseInt(`${year}${month}${day}`) < parseInt(`${todayObj.format('YYYY')}${todayObj.format("MM")}${todayObj.format("DD")}`)) {
             disable = true
         }
         return disable
@@ -47,7 +49,6 @@ export function DatePicker(props: DatePickerProps) {
         `${t("Home.fr")}`,
         `${t("Home.sa")}`,
     ];
-    const [dayObj, setDayObj] = useState(dayjs());
     let thisYear = dayObj.year();
     let thisMonth = dayObj.month();
     let daysInMonth = dayObj.daysInMonth();

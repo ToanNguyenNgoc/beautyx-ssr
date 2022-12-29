@@ -9,7 +9,9 @@
     transition: all .5s;
 }
 .head_show{
-    background-color: var(--purple);
+    /* background-color: var(--purple); */
+    background-color: var(--red-2);
+    backdrop-filter: blur(10px);
     transition: all .5s;
 }
 .head button{

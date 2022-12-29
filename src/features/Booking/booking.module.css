@@ -457,7 +457,7 @@
 
     .right {
         width: 100%;
-        padding: 66px 12px 150px 12px;
+        padding: 66px 12px 250px 12px;
         box-shadow: none;
     }
 
@@ -499,7 +499,7 @@
         bottom: 0;
         right: 0;
         width: 100%;
-        padding: 12px;
+        padding: 8px 12px 20px 12px;
         border-radius: 6px 6px 0px 0px;
         background-color: var(--bg-white);
         z-index: 60;
