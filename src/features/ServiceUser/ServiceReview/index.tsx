@@ -74,7 +74,7 @@ function ServiceReview(props: any) {
         try {
             await commentsApi.postComment2({
                 ...pick(comment, 'media_ids', 'rate'),
-                "body": `${comment.body} USED`,
+                "body": `${comment.body} ‭`,
                 "commentable_id": service.id,
                 "commentable_type": 'SERVICE',
                 "organization_id": org.id,

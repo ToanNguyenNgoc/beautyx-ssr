@@ -5,14 +5,20 @@ import { useDeviceMobile, useElementOnScreen, useFetch } from "hooks";
 import { ITrend } from "./trend.interface";
 import { Container } from "@mui/system";
 import style from "./trends.module.css";
-import moment from "moment";
+import dayjs from "dayjs";
+import locate from 'dayjs/locale/vi'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import TrendDetailDia from "./TrendDetailDia";
 import ReactPlayer from "react-player/lazy";
+import HeadMobile from "features/HeadMobile";
+dayjs.extend(relativeTime)
 
 function Trends() {
+    const history = useHistory()
+    const IS_MB = useDeviceMobile()
     const { response } = useFetch(
         true,
         `${API_3RD.API_NODE}/trends`,
@@ -22,6 +28,7 @@ function Trends() {
     const trends: ITrend[] = response?.context?.data ?? [];
     return (
         <>
+            {IS_MB && <HeadMobile onBackFunc={() => history.push('/homepage')} title="Xu hướng" />}
             <Container>
                 <div className={style.container_large}>
                     <ul className={style.trend_list}>
@@ -89,7 +96,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     </div>
                     <div className={style.trend_item_head_name}>
                         <p className={style.org_name}>{item.organization_name}</p>
-                        <p className={style.create_at}>{moment(item.createdAt).fromNow()}</p>
+                        <p className={style.create_at}>{dayjs(item.createdAt).locale(locate.name).fromNow()}</p>
                     </div>
                 </div>
                 <div className={style.trend_item_body}>
@@ -98,7 +105,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                         url={`${item.media_url}#t=0.001`}
                         width={'100%'}
                         height={'100%'}
-                        playing={isVisible}
+                        playing={isVisible && IS_MB}
                         muted={true}
                         playsinline={true}
                         controls

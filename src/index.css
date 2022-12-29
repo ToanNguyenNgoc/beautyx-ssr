@@ -102,7 +102,7 @@ body>iframe {
   width: -webkit-fill-available !important;
 } */
 
-.css-18lrjg1-MuiCircularProgress-root {
+.MuiCircularProgress-root {
     color: var(--purple) !important;
 }
 

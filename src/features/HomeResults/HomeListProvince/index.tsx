@@ -7,12 +7,13 @@ import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import style from './list-province.module.css'
-import {  useSearchKeyword } from "hooks";
+import {  useDeviceMobile, useSearchKeyword } from "hooks";
 import { Input, XButton } from "components/Layout";
 import icon from "constants/icon";
 
 function HomeListProvince() {
     const [value, setValue] = useState('')
+    const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
     const { t } = useContext(AppContext);
     const HOME = useSelector((state: any) => state.HOME);
@@ -30,21 +31,24 @@ function HomeListProvince() {
     const list = value === '' ? provinces_org : provinces
     return (
         <>
+           {
+            IS_MB &&
             <div className={style.head}>
-                <XButton
-                    onClick={() => history.goBack()}
-                    icon={icon.chevronLeft}
-                    iconSize={28}
-                />
-                <Input
-                    classNamePar={style.head_input}
-                    className={style.head_input_child}
-                    icon={icon.searchPurple}
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    placeholder="Tìm kiếm tỉnh thành...."
-                />
-            </div>
+            <XButton
+                onClick={() => history.goBack()}
+                icon={icon.chevronLeft}
+                iconSize={28}
+            />
+            <Input
+                classNamePar={style.head_input}
+                className={style.head_input_child}
+                icon={icon.searchPurple}
+                value={value}
+                onChange={(e) => setValue(e.target.value)}
+                placeholder="Tìm kiếm tỉnh thành...."
+            />
+        </div>
+           }
             <div className="home-province">
                 <Container>
                     <div className="home-province_list">

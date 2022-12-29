@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { clst, scrollTop, slugify } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
-import { deals, topics } from '../data'
+import {
+    deals,
+    // topics 
+} from '../data'
 import style from './style.module.css'
 
 const Next = (props: any) => {
@@ -29,20 +32,20 @@ const Prev = (props: any) => {
     );
 };
 
-const settingsSlideBot = {
-    dots: false,
-    infinite: true,
-    arrows: true,
-    speed: 800,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    swipe: true,
-    nextArrow: <Next />,
-    prevArrow: <Prev />,
-};
+// const settingsSlideBot = {
+//     dots: false,
+//     infinite: true,
+//     arrows: true,
+//     speed: 800,
+//     slidesToShow: 2,
+//     slidesToScroll: 1,
+//     swipe: true,
+//     nextArrow: <Next />,
+//     prevArrow: <Prev />,
+// };
 
 function HomeTopic() {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const IS_MB = useDeviceMobile();
     const settingsSlideTop = {
         dots: false,
@@ -115,23 +118,23 @@ function HomeTopic() {
 
 export default HomeTopic;
 
-const TopicItem = (props: any) => {
-    const { item } = props;
-    return (
-        <div className={style.topic_item}>
-            <img src={item.image_url} className={style.topic_item_img} alt="" />
-            <div className={style.topic_item_desc}>
-                <div>
-                    <p className={style.topic_item_desc_title}>{item.title}</p>
-                    {/* <p className={style.topic_item_desc_content}>
-        {item.content}
-    </p> */}
-                </div>
-                {/* <XButton
-                    className={style.topic_item_btn}
-                    title="Xem chi tiết"
-                /> */}
-            </div>
-        </div>
-    );
-};
+// const TopicItem = (props: any) => {
+//     const { item } = props;
+//     return (
+//         <div className={style.topic_item}>
+//             <img src={item.image_url} className={style.topic_item_img} alt="" />
+//             <div className={style.topic_item_desc}>
+//                 <div>
+//                     <p className={style.topic_item_desc_title}>{item.title}</p>
+//                     <p className={style.topic_item_desc_content}>
+//                         {item.content}
+//                     </p>
+//                 </div>
+//                 <XButton
+//                     className={style.topic_item_btn}
+//                     title="Xem chi tiết"
+//                 />
+//             </div>
+//         </div>
+//     );
+// };

@@ -12,7 +12,7 @@ class ProductApi {
             "filter[keyword]": values.keyword,
             "filter[special]": values.special,
             "filter[product_category_id]": values.cate_id,
-            "filter[is_momo_ecommerce_enable]": values.isEnable,
+            "filter[is_momo_ecommerce_enable]": values.isEnable ?? true,
             "include": "favorites_count|category",
             "append": "is_favorite|rating",
         };

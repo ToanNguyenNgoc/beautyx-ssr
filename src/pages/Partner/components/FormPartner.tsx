@@ -1,19 +1,18 @@
 import React, { useContext, useState } from "react";
 import { partnerStyle } from "../style";
-import ButtonCus from "../../../components/ButtonCus";
 import Checkbox from "@mui/material/Checkbox";
-import icon from "../../../constants/icon";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { AppContext } from "../../../context/AppProvider";
 import axios from "axios";
 import {
     GoogleReCaptchaProvider,
     GoogleReCaptcha,
 } from "react-google-recaptcha-v3";
-// import registerSeller from "../../../api/registerSeller";
 import { useNoti } from "hooks";
 import { PopupNotification } from "components/Notification";
+import { AppContext } from "context/AppProvider";
+import icon from "constants/icon";
+import { XButton } from "components/Layout";
 
 
 export default function FormPartner() {
@@ -315,15 +314,9 @@ export default function FormPartner() {
                         )}
                     <GoogleReCaptcha onVerify={verifyRecaptchaCallback} />
                     <div className={parner.btnWrap}>
-                        <ButtonCus
-                            text={t("Home.Sign_up_now")}
-                            fontSize="14px"
-                            lineHeight="20px"
-                            color="#ffffff"
-                            border="solid 1px var(--purple)"
-                            borderRadius="26px"
-                            backColor="var(--purple"
-                            onClick={formikPartner.handleSubmit}
+                        <XButton
+                            type='submit'
+                            title={t("Home.Sign_up_now")}
                         />
                     </div>
                 </form>

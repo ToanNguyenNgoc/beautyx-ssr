@@ -5,14 +5,12 @@ import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { getPosition } from "api/authLocation";
-import axios from "axios";
-import API_3RD from "api/3rd-api";
 import { useFetch, useAppointment, useOrderService, useProductCate } from "hooks"
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
-    const [geo, setGeo] = useState();
+    // const [geo, setGeo] = useState();
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const token = localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')
@@ -28,9 +26,9 @@ export default function AppProvider({ children }) {
                 long: res.coords.longitude
             }
             sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location));
-            const api_url = API_3RD.API_MAP_BOX(user_location.lat, user_location.long)
-            const resAddress = await axios.get(api_url);
-            setGeo(resAddress?.features[0]);
+            // const api_url = API_3RD.API_MAP_BOX(user_location.lat, user_location.long)
+            // const resAddress = await axios.get(api_url);
+            // setGeo(resAddress?.features[0]);
         } catch (error) {
             console.log(error)
         }
@@ -51,7 +49,7 @@ export default function AppProvider({ children }) {
         t,
         language,
         setLanguage,
-        geo,
+        // geo,
         productCate,
         serviceCate,
         appointment,

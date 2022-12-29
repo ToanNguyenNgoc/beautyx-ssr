@@ -199,7 +199,10 @@
         "expiration_date": "Expiration date",
         "unlimited": "Unlimited",
         "map": "Map",
-        "no_result": "No results found for"
+        "no_result": "No results found for",
+        "This product/service is not sold online yet":"This product/service is not sold online yet",
+        "liked":"Liked",
+        "like":"Like"
     },
     "cart": {
         "into_money": "Into money",
@@ -222,7 +225,8 @@
         "payment_now": "Payment now",
         "must_sign_in": "Please sign in before paying",
         "limit_item_discount": "The service price has changed because you choose more than the quantity to which the code is applied",
-        "order": "Order"
+        "order": "Order",
+        "checkout":"Checkout"
     },
     "pm": {
         "payment": "PAYMENT",
@@ -262,7 +266,9 @@
         "product_service": "Product/service",
         "service_list": "Service list",
         "org":"Organization",
-        "enter_coupon_code":"Enter coupon code"
+        "enter_coupon_code":"Enter coupon code",
+        "promotion":"promotion",
+        "temporary":"Temporary"
     },
     "url": {
         "home": "home",
@@ -419,7 +425,8 @@
         "ok":"Ok",
         "minimum_order_is_1_000_VND":"Minimum order is 1,000 VND",
         "enter_update_phone":"Enter your phone number to continue paying!",
-        "update":"Update"
+        "update":"Update",
+        "choose_branch":"Select branch"
     },
     "home_2": {
         "categories": "Categories",
@@ -545,7 +552,9 @@
         "used": "Used",
         "total": "Total",
         "not_sale": "This product has not been activated for online sales",
-        "see_more": "See more"
+        "see_more": "See more",
+        "shelf_life":"Shelf life: 1 month from the date of successful purchase",
+        "detailed_description":"Detailed description"
     },
     "footer": {
         "customer_support": "Customer support",

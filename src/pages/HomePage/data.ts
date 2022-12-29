@@ -58,9 +58,10 @@ export const deals: Ideals[] = [
     },
     {
         id: 3,
-        title: "Nhận quà Giáng sinh Rinh Deal làm đẹp",
+        title: "Da mịn màng rạng ngời đón Tết",
         min_price: null,
         img: '',
+        keyword:'Chăm sóc da',
         // percent: 30,
         banner: deal2,
         special_price:true

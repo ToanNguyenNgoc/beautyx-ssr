@@ -14,9 +14,6 @@ import { pickBy, identity } from "lodash";
 import HeadMobile from "../HeadMobile";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
-import PaymentMethodCpn from "../PaymentMethod/index";
-import { formatDatePost } from "utils/formatDate";
-import { extraPaymentMethodId } from "../PaymentMethod/extraPaymentMethodId";
 import BookingNowBill from "./components/BookingNowBill";
 import { formatAddCart } from "utils/cart/formatAddCart";
 import apointmentApi from "api/apointmentApi";
@@ -35,6 +32,8 @@ import { IBranch, IOrganization } from "interface";
 import API_ROUTE from "api/_api";
 import BookingMap from "./components/BookingMap";
 import { AUTH_LOCATION } from "api/authLocation";
+import PaymentMethod from "components/PaymentMethod";
+import { PLF_TYPE } from "constants/plat-form";
 
 // end
 const date = dayjs();
@@ -54,9 +53,6 @@ function Booking() {
     const FLAT_FORM = EXTRA_FLAT_FORM();
     const [openNoti, setOpenNoti] = useState(initOpenNoti);
     const { USER } = useSelector((state: any) => state.USER);
-    const { payments_method } = useSelector(
-        (state: any) => state.PAYMENT.PAYMENT
-    );
     const history = useHistory();
     const location: any = useLocation();
     const TYPE_PAGE = location.state?.TYPE
@@ -82,22 +78,26 @@ function Booking() {
     )?.response
 
     useEffect(() => {
-        dispatch(onClearApplyVoucher())
-        if (location.state) {
-            const action = {
-                org: location.state.org,
-                services: location.state.services,
-            };
-            dispatch(addServiceBookNow(action));
-        } else {
-            history.push("/home");
+        let mount = true
+        if (mount) {
+            dispatch(onClearApplyVoucher())
+            if (location.state) {
+                const action = {
+                    org: location.state.org,
+                    services: location.state.services,
+                };
+                dispatch(addServiceBookNow(action));
+            } else {
+                history.push("/home");
+            }
         }
+        return () => { mount = false }
     }, [location.state]);
     const { servicesBook } = SERVICES_BOOK;
     const [open, setOpen] = useState(false);
-    const [chooseE_wall, setChooseE_wall] = useState<any>();
+    const [paymentMethodId, setPaymentMethodId] = useState<any>();
     const [bookTime, setBookTime] = useState({
-        date: date.format("DD-MM-YYYY"),
+        date: date.format("YYYY-MM-DD"),
         time: null,
         note: "",
         branch_id: null,
@@ -126,20 +126,14 @@ function Booking() {
         ?.filter(Boolean);
 
     //
-    const payment_method_id = extraPaymentMethodId(
-        payments_method,
-        chooseE_wall
-    );
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const coupon_codes = listCouponCode.concat(VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code)).filter(Boolean)
-    //[FIX]: Temple fix apply multi coupon code follow MYSPA Manager----
     const params_string = {
         products: [],
         services: services,
         treatment_combo: [],
-        payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
+        payment_method_id: paymentMethodId,
         coupon_code: coupon_codes.length > 0 ? coupon_codes : [],
-        // coupon_code: VOUCHER_APPLY.length > 0 ? VOUCHER_APPLY.map((i: IDiscountPar) => i.coupon_code).filter(Boolean) : listCouponCode,
         description: "",
         branch_id: bookTime.branch_id,
     };
@@ -160,11 +154,10 @@ function Booking() {
         return values;
     });
 
-    const dayBook = formatDatePost(bookTime.date);
     const action = {
         // note: "[ Số lượng người: " + seatAmount + " ] " + bookTime.note,
         note: bookTime.note,
-        time_start: `${dayBook} ${bookTime.time}:00`,
+        time_start: `${bookTime.date} ${bookTime.time}:00`,
         branch_id: bookTime.branch_id,
         order_id: location.state.order_id,
         service_ids: services?.map((item: any) => item?.id),
@@ -427,26 +420,13 @@ function Booking() {
                         </div>
                         {
                             TYPE_PAGE === 'BOOK_NOW' &&
-                            <div className={style.section_payment}>
-                                {
-                                    FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX
-                                        ?
-                                        <>
-                                            <p className={style.section_payment_title}>
-                                                {t('footer.payment_method')}
-                                            </p>
-                                            <div className={style.section_payment_mt}>
-                                                MOMO
-                                            </div>
-                                        </>
-                                        :
-                                        <div style={{ display: 'none' }} >
-                                            <PaymentMethodCpn
-                                                e={chooseE_wall}
-                                                onPaymentMethodChange={setChooseE_wall}
-                                            />
-                                        </div>
-                                }
+                            <div
+                                style={FLAT_FORM !== PLF_TYPE.BEAUTYX ? { display: 'none' } : {}}
+                                className={style.section_payment}
+                            >
+                                <PaymentMethod
+                                    onSetPaymentMethod={(method) => setPaymentMethodId(method.id)}
+                                />
                             </div>
                         }
                         <div className={style.section_bill}>

@@ -17,8 +17,8 @@
 .date_btn_month {
     border: none;
     outline: none;
-    width: 25px;
-    height: 25px;
+    width: 36px;
+    height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .date_btn_month:first-child {
-    margin-right: 8px;
+    margin-right: 12px;
 }
 
 .date_month_text {

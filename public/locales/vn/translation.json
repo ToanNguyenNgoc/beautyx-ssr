@@ -193,7 +193,10 @@
         "expiration_date": "Ngày hết hạn",
         "unlimited": "Không giới hạn",
         "map": "Bản đồ",
-        "no_result": "Không tìm tháy kết quả cho"
+        "no_result": "Không tìm tháy kết quả cho",
+        "This product/service is not sold online yet":"Sản phẩm/ Dịch vụ này chưa được bán Online",
+        "liked":"Đã thích",
+        "like":"Thích"
     },
     "cart": {
         "into_money": "Thành tiền",
@@ -216,7 +219,8 @@
         "payment_now": "Mua ngay",
         "must_sign_in": "Vui lòng đăng nhập trước khi thanh toán",
         "limit_item_discount": "Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được áp dụng mã",
-        "order": "Đơn hàng"
+        "order": "Đơn hàng",
+        "checkout":"Đặt hàng"
     },
     "pm": {
         "payment": "THANH TOÁN",
@@ -253,10 +257,12 @@
         "cancelled": "Đã hủy",
         "code_orders": "Mã đơn hàng",
         "see_details": "Xem chi tiết",
-        "product_service": "sản phẩm/dịch vụ",
+        "product_service": "Sản phẩm/dịch vụ",
         "service_list": "Danh sách dịch vụ",
         "org":"Trụ sở",
-        "enter_coupon_code":"Nhập mã khuyến mại"
+        "enter_coupon_code":"Nhập mã khuyến mại",
+        "promotion":"khuyến mại",
+        "temporary":"Tạm tính"
     },
     "url": {
         "home": "Trang-chu",
@@ -416,7 +422,8 @@
         "ok":"Đã hiểu",
         "minimum_order_is_1_000_VND":"Đơn hàng tối thiểu là 1.000đ",
         "enter_update_phone":"Cập nhập số điện thoại để tiếp tục thanh toán!",
-        "update":"Cập nhập"
+        "update":"Cập nhập",
+        "choose_branch":"Chọn chi nhánh"
     },
     "home_2": {
         "categories": "Danh mục",
@@ -456,7 +463,7 @@
         "try": "Hãy thử tìm kiếm",
         "off_service": "Dịch vụ này chưa được kích hoạt bán hàng Online",
         "booking_now": "Đặt hẹn ngay",
-        "instructions_terms": "Hướng dẫn & Điều khoản",
+        "instructions_terms": "Điều khoản/Chính sách",
         "guide": "Hướng dẫn sử dụng",
         "edit": "Chỉnh sửa",
         "distance": "Cách bạn",
@@ -519,7 +526,7 @@
         "step_3": "Bước 3: Đến cơ sở, xuất trình đơn hàng đã thanh toán thành công",
         "expiry_date": "(*) Thời hạn sử dụng: Sử dụng dịch vụ đã mua trong 1 tháng kể từ ngày mua thành công",
         "confirm": "Xác nhận",
-        "confirm_desc": "Xác nhận ngay tức thời qua thông báo khi bạn mua dịch vụ/đặt hẹn thành công. Sau đó, Spa/ Salon/ TMV sẽ liên hệ xác nhận với bạn một lần nữa để đảm bảo thời gian đặt lịch hẹn. Nếu bạn không nhận được tin nhắn/ cuộc gọi nào, hãy liên hệ với chúng tôi qua hotline 034 3131 003.",
+        "confirm_desc": "Xác nhận ngay tức thời qua thông báo khi bạn mua dịch vụ/đặt hẹn thành công. Sau đó, Spa/ Salon/ TMV sẽ liên hệ xác nhận với bạn một lần nữa để đảm bảo thời gian đặt lịch hẹn. Nếu bạn không nhận được tin nhắn/ cuộc gọi nào, hãy liên hệ với chúng tôi qua hotline",
         "cancellation_policy": "Chính sách hủy",
         "policy_desc": "Không hoàn, huỷ hay thay đổi sau khi đã mua dịch vụ",
         "similar_service": "Dịch vụ tương tự",
@@ -541,7 +548,9 @@
         "used": "Đã sử dụng",
         "total": "Tổng",
         "not_sale": "Sản phẩm này chưa được kích hoạt bán hàng Online",
-        "see_more": "Xem thêm"
+        "see_more": "Xem thêm",
+        "shelf_life":"Thời hạn sử dụng: 1 tháng kể từ ngày mua hàng thành công",
+        "detailed_description":"Mô tả chi tiết"
     },
     "footer": {
         "customer_support": "Hỗ trợ khách hàng",

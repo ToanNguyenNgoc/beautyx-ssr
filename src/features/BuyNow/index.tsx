@@ -1,25 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import HeadMobile from '../HeadMobile';
 import HeadTitle from '../HeadTitle';
 import { Container } from '@mui/material'
 import './style.css';
 import './serviceDetail.css';
-import { useSelector } from 'react-redux';
 import UserPaymentInfo from '../../pages/Account/components/UserPaymentInfo';
 import ProductItem from './ProductItem';
 import formatPrice from '../../utils/formatPrice';
-import PaymentMethodCpn from '../PaymentMethod';
 import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm';
-import { extraPaymentMethodId } from '../PaymentMethod/extraPaymentMethodId';
 import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
 import { pickBy, identity } from 'lodash'
 import order from '../../api/orderApi';
 import { IUserAddress } from '../../interface/userAddress'
 import { formatAddCart } from '../../utils/cart/formatAddCart';
 import { DISCOUNT_TYPE } from '../../utils/formatRouterLink/fileType';
-import SectionTitle from '../SectionTitle';
 
 // ==== api tracking ====
 import tracking from "../../api/trackApi";
@@ -27,16 +23,13 @@ import { formatProductList } from "../../utils/tracking";
 import { XButton } from 'components/Layout';
 import { useDeviceMobile } from 'hooks';
 import { DetailOrgCard } from 'pages/_SerProCoDetail';
+import PaymentMethod from 'components/PaymentMethod';
 // end
 function BuyNow() {
     const IS_MB = useDeviceMobile();
     const location: any = useLocation();
     const history = useHistory();
     const FLAT_FORM = EXTRA_FLAT_FORM();
-    const { payments_method } = useSelector(
-        (state: any) => state.PAYMENT.PAYMENT
-    );
-    const [chooseE_wall, setChooseE_wall] = useState();
     const [address, setAddress] = useState<IUserAddress>();
     const { org, products } = location.state;
     let { total } = products?.reduce(
@@ -55,10 +48,7 @@ function BuyNow() {
         }
     );
 
-    const payment_method_id = extraPaymentMethodId(
-        payments_method,
-        chooseE_wall
-    );
+    const [methodId, setMethodId] = useState<null | number>()
     const productsPost = products.map((item: any) => {
         return {
             id: item.product.id,
@@ -84,7 +74,7 @@ function BuyNow() {
         products: productsPost,
         services: [],
         treatment_combo: [],
-        payment_method_id: FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ? 1 : payment_method_id,
+        payment_method_id: methodId,
         coupon_code: [],
         description: "",
         user_address_id: address?.id
@@ -124,7 +114,7 @@ function BuyNow() {
         if (address) {
             if (FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX) {
                 // if (chooseE_wall) {
-                    handlePostOrder()
+                handlePostOrder()
                 // }
             } else {
                 handlePostOrder()
@@ -171,29 +161,13 @@ function BuyNow() {
                                 : { display: "none" }
                         }
                     >
-                        {
-                            FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX
-                                ?
-                                <>
-                                    <SectionTitle title={'Phương thức thanh toán'} />
-                                    <span style={{
-                                        backgroundColor: "var(--pink-momo)",
-                                        marginLeft: "12px",
-                                        marginBottom: "12px",
-                                        padding: "0px 8px",
-                                        borderRadius: "6px",
-                                        color: "var(--white)"
-                                    }}>
-                                        MOMO
-                                    </span>
-                                    <br/>
-                                </>
-                                :
-                                <PaymentMethodCpn
-                                    e={chooseE_wall}
-                                    onPaymentMethodChange={setChooseE_wall}
-                                />
-                        }
+                        <div
+                            style={FLAT_FORM !== 'BEAUTYX' ? { display: 'none' } : {}}
+                        >
+                            <PaymentMethod
+                                onSetPaymentMethod={(method) => setMethodId(method.id)}
+                            />
+                        </div>
                     </div>
                     <div className="buy-now__total-cnt">
                         <div className="buy-now__total">

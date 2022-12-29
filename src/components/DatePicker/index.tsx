@@ -6,7 +6,6 @@ import Calendar from "./components/Calendar";
 import "./datePicker.css";
 import "../../assets/styles/main.css"
 
-
 interface IProp {
     onChange: (e: string) => void;
     disablePrev?: boolean;

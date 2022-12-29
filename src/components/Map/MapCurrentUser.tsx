@@ -12,13 +12,6 @@ interface IProps {
 function MapCurrentUser(props: IProps) {
     const { getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const dispatch = useDispatch()
-    // const { coords, isGeolocationAvailable, isGeolocationEnabled} =
-    //     useGeolocated({
-    //         positionOptions: {
-    //             enableHighAccuracy: false,
-    //         },
-    //         userDecisionTimeout: 5000,
-    //     });
     const { handleBackCurrentUser } = props;
     const onClickGetCurrent = async () => {
         handleBackCurrentUser()
