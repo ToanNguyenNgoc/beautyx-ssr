@@ -1,14 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import orgApi from "../../api/organizationApi";
-import serviceApi from "../../api/serviceApi";
-import favorites from "../../api/favorite";
-import productsApi from "../../api/productApi";
+import orgApi from "api/organizationApi";
+import serviceApi from "api/serviceApi";
+import productsApi from "api/productApi";
 import { STATUS } from "../status";
 import { orgInit } from "../initials";
-import { IOrganization } from '../../interface/organization'
-// google tag event
-import { Service } from '../../interface/service';
-import { Product } from '../../interface/product';
+import { IOrganization, Service, Product } from 'interface'
 // end
 export interface IOrgSlice {
     org: IOrganization,
@@ -34,22 +30,6 @@ export const fetchAsyncOrg: any = createAsyncThunk(
         } catch (error) {
             console.log(error);
         }
-    }
-);
-export const onFavoriteOrg: any = createAsyncThunk(
-    "ORG/onFavoriteOrg",
-    async (org: any) => {
-        await favorites.postFavorite(org?.id);
-        const payload = org.favorites_count + 1;
-        return payload;
-    }
-);
-export const onDeleteFavoriteOrg: any = createAsyncThunk(
-    "ORG/onDeleteFavoriteOrg",
-    async (org: any) => {
-        await favorites.deleteFavorite(org?.id);
-        const payload = org.favorites_count - 1;
-        return payload;
     }
 );
 export const fetchAsyncByKeyword: any = createAsyncThunk(
@@ -97,58 +77,22 @@ const orgSlice = createSlice({
             };
         },
     },
-    extraReducers: {
-        [fetchAsyncOrg.pending]: (state) => {
+    extraReducers(builder) {
+        builder.addCase(fetchAsyncOrg.pending, (state) => {
             return { ...state, status: STATUS.LOADING };
-        },
-        [fetchAsyncOrg.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchAsyncOrg.fulfilled, (state, { payload }) => {
             return {
                 ...state,
                 org: payload,
                 status: STATUS.SUCCESS,
             };
-        },
-        [fetchAsyncOrg.rejected]: (state) => {
+        })
+        builder.addCase(fetchAsyncOrg.rejected, (state) => {
             return { ...state, status: STATUS.FAIL };
-        },
-        // favorites org
-        [onFavoriteOrg.pending]: (state) => {
-            return state;
-        },
-        [onFavoriteOrg.fulfilled]: (state, { payload }) => {
-            return {
-                ...state,
-                org: {
-                    ...state.org,
-                    is_favorite: true,
-                    favorites_count: payload,
-                },
-            };
-        },
-        [onFavoriteOrg.rejected]: (state, { payload }) => {
-            console.log(payload);
-            return state;
-        },
-        //remove favorite org
-        [onDeleteFavoriteOrg.pending]: (state) => {
-            return state;
-        },
-        [onDeleteFavoriteOrg.fulfilled]: (state, { payload }) => {
-            console.log(payload);
-            return {
-                ...state,
-                org: {
-                    ...state.org,
-                    is_favorite: false,
-                    favorites_count: payload,
-                },
-            };
-        },
-        [onDeleteFavoriteOrg.rejected]: (state) => {
-            return state;
-        },
-        //fetch by keyword
-        [fetchAsyncByKeyword.pending]: (state) => {
+        })
+        //
+        builder.addCase(fetchAsyncByKeyword.pending, (state) => {
             return {
                 ...state,
                 SERVICES_KEYWORD: {
@@ -160,8 +104,8 @@ const orgSlice = createSlice({
                     status: STATUS.LOADING,
                 },
             };
-        },
-        [fetchAsyncByKeyword.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchAsyncByKeyword.fulfilled, (state, { payload }) => {
             const { services, products, totalServices, totalProducts } =
                 payload;
             return {
@@ -177,8 +121,8 @@ const orgSlice = createSlice({
                     total_products: totalProducts,
                 },
             };
-        },
-        [fetchAsyncByKeyword.rejected]: (state) => {
+        })
+        builder.addCase(fetchAsyncByKeyword.rejected, (state) => {
             return {
                 ...state,
                 SERVICES_KEYWORD: {
@@ -190,7 +134,7 @@ const orgSlice = createSlice({
                     status: STATUS.FAIL,
                 },
             };
-        },
+        })
     },
 });
 const { actions } = orgSlice;

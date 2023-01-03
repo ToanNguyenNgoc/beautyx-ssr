@@ -3,12 +3,7 @@ import dayjs from "dayjs";
 import locale from 'dayjs/locale/vi'
 import relativeTime from 'dayjs/plugin/relativeTime'
 
-export const formatDate = (dateParams: any) => {
-    const dateArr = dateParams?.split(' ');
-    const date = dateArr[0]?.split('-')?.reverse().join('/')
-    return date
-}
-export const formatDateFromNow = (date:string)=>{
+export const formatDateFromNow = (date: string) => {
     dayjs.extend(relativeTime)
     return dayjs(date).locale(locale.name).fromNow()
 }
@@ -36,8 +31,7 @@ export const checkTimeExpired = (time_expired: any) => {
     return dateExpired
 }
 export const formatTime = (dateParams: any) => {
-    const dateArr = dateParams?.split(' ');
-    const time = dateArr[1]?.slice(0, 5);
+    const time = dayjs(dateParams).format('HH:mm')
     return time
 }
 

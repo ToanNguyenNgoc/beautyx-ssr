@@ -175,6 +175,7 @@ import starLine from "../assets/icon/star.svg";
 import settingPurple from "../assets/icon/setting-purple.svg";
 import servicesPurpleBold from "../assets/icon/servicesPurpleBold.svg";
 import mapMarkerOrg from "../assets/icon/mapMarkerOrg.svg";
+import comment_bold_purple from 'assets/icon/comment_bold_purple.svg'
 
 // btn assistan home
 import xWhite from "../assets/icon/x-white.svg";
@@ -238,6 +239,7 @@ import chatSquare from 'assets/icon/chatSquare.svg'
 import createAtGray from 'assets/icon/createAtGray.svg'
 import postGray from 'assets/icon/postGray.svg'
 import userGray from 'assets/icon/userGray.svg'
+import startBold from 'assets/icon/startBold.svg'
 
 const icon = {
     noApply,
@@ -452,6 +454,6 @@ const icon = {
     phoneWhiteBold,
     trendGreen, downLoadWhite,
     thumbUp, thumbUpPurple, chatSquare,
-    createAtGray, postGray, userGray
+    createAtGray, postGray, userGray, comment_bold_purple, startBold
 };
 export default icon;

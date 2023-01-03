@@ -16,7 +16,7 @@ function TimeItem(props: IProps) {
 
     let disableItem = disablePrev;
     const timePicNew = bookTime.date.split("-");
-    const dayPickNumber = parseInt(`${timePicNew[2]}${timePicNew[1]}${timePicNew[0]}`)
+    const dayPickNumber = parseInt(`${timePicNew[0]}${timePicNew[1]}${timePicNew[2]}`)
     const todayNumber = parseInt(dayjs().format('YYYYMMDD'))
 
     if (dayPickNumber > todayNumber) {

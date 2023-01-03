@@ -5,11 +5,12 @@ import {
     paramDiscounts,
     paramProductCatesOrg,
     paramServiceCatesOrg,
-    paramsProducts,
-    paramsServices
+    paramsProductsOrg,
+    paramsServicesOrg
 } from 'params-query'
 import { ResponseType } from 'interface'
 import { pickBy, identity } from 'lodash'
+
 
 export const orgPageApi = createApi({
     reducerPath: "orgPageApi",
@@ -51,8 +52,8 @@ export const orgPageApi = createApi({
             query: (org_id: number | string) => ({
                 url: API_ROUTE.ORG_PRODUCTS(org_id),
                 params: pickBy({
-                    ...paramsProducts,
-                    "limit": 12,
+                    ...paramsProductsOrg,
+                    "limit": 20,
                     "filter[special_price]": true,
                     "filter[special]": true,
                     "filter[special_ecommerce]": true
@@ -65,8 +66,8 @@ export const orgPageApi = createApi({
             query: (org_id: string | number) => ({
                 url: API_ROUTE.ORG_SERVICES(org_id),
                 params: pickBy({
-                    ...paramsServices,
-                    "limit": 12,
+                    ...paramsServicesOrg,
+                    "limit": 20,
                     "filter[special_price]": true,
                     "filter[special]": true,
                     "filter[special_ecommerce]": true
@@ -74,7 +75,7 @@ export const orgPageApi = createApi({
             }),
             keepUnusedDataFor: 3600,
             transformResponse: (response: ResponseType) => response?.context.data ?? {}
-        })
+        }),
     })
 })
 
@@ -83,5 +84,5 @@ export const {
     useGetProductCateOrgQuery,
     useGetDiscountsOrgQuery,
     useGetProductsSpecialOrgQuery,
-    useGetServicesSpecialOrgQuery
+    useGetServicesSpecialOrgQuery,
 } = orgPageApi

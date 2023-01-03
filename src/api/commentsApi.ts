@@ -65,6 +65,7 @@ class Comments {
             ...values,
             body:  values.body,
         }
+        // console.log(params)
         return axiosClient.post(url, pickBy(params, identity), AUTH_HEADER());
     }
 }

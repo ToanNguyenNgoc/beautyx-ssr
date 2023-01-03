@@ -5,7 +5,7 @@ import { IUserAddress } from '../../interface/userAddress';
 
 interface IInitialState {
     address: IUserAddress[],
-    address_default:any,
+    address_default: any,
     status: any,
     status_up: any,
 }
@@ -63,7 +63,7 @@ export const updateAsyncAddress: any = createAsyncThunk(
 )
 const initialState: IInitialState = {
     address: [],
-    address_default:null,
+    address_default: null,
     status: null,
     status_up: null,
 }
@@ -76,78 +76,68 @@ const userAddressSlice = createSlice({
         },
         removeDefaultItem: (state, action) => {
             state.address_default = action.payload
-            // const iIndex = state.address.findIndex((item: any) =>
-            //     item.id === action.payload.id
-            // );
-            // state.address[iIndex].is_default = false
-            //const old_address = { ...action.payload, is_default: false }
-            //const itemIndex = state.address.findIndex((item: any) => item.id === action.payload.id);
-            //state.address = state.address.fill(old_address, itemIndex, itemIndex + 1)
         }
     },
-    extraReducers: {
-        [fetchAsyncUserAddress.pending]: (state) => {
+    extraReducers(builder) {
+        //[GET]:
+        builder.addCase(fetchAsyncUserAddress.pending, (state) => {
             return { ...state, status: STATUS.LOADING }
-        },
-        [fetchAsyncUserAddress.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchAsyncUserAddress.fulfilled, (state, { payload }) => {
             return {
                 ...state,
-                address_default: payload.find((i:IUserAddress) => i.is_default === true),
+                address_default: payload.find((i: IUserAddress) => i.is_default === true),
                 address: payload,
                 status: STATUS.SUCCESS
             }
-        },
-        [fetchAsyncUserAddress.rejected]: (state) => {
+        })
+        builder.addCase(fetchAsyncUserAddress.rejected, (state) => {
             return { ...state, status: STATUS.FAIL }
-        },
-
-        [removeAsyncUserAddress.pending]: (state) => {
+        })
+        //[DELETE]:
+        builder.addCase(removeAsyncUserAddress.pending, (state) => {
             return { ...state, status_up: STATUS.LOADING }
-        },
-        [removeAsyncUserAddress.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(removeAsyncUserAddress.fulfilled, (state, { payload }) => {
             return {
                 ...state,
                 address: state.address.filter((item: any) => item.id !== payload),
                 status_up: STATUS.SUCCESS
             }
-        },
-        [removeAsyncUserAddress.rejected]: (state) => {
+        })
+        builder.addCase(removeAsyncUserAddress.rejected, (state) => {
             return { ...state, status_up: STATUS.FAIL }
-        },
-        //post address
-        [postAsyncAddress.pending]: (state) => {
+        })
+        //[POST]:
+        builder.addCase(postAsyncAddress.pending, (state) => {
             return { ...state, status_up: STATUS.LOADING }
-        },
-        [postAsyncAddress.fulfilled]: (state, { payload }) => {
-            return {
-                ...state,
-                address_default : payload,
-                address: [payload, ...state.address,],
-                status_up: STATUS.SUCCESS
-            }
-        },
-        [postAsyncAddress.rejected]: (state) => {
-            return { ...state, status_up: STATUS.FAIL }
-        },
-        //updateAddress
-        [updateAsyncAddress.pending]: (state) => {
-            return { ...state, status_up: STATUS.LOADING }
-        },
-        [updateAsyncAddress.fulfilled]: (state, { payload }) => {
-            //const itemIndex = state.address.findIndex((item: any) => item.id === payload.id);
-            //const arr = state.address.filter((item: any, index: number) => index !== itemIndex);
+        })
+        builder.addCase(postAsyncAddress.fulfilled, (state, { payload }) => {
             return {
                 ...state,
                 address_default: payload,
-                //address: [payload, ...arr],
+                address: [payload, ...state.address],
                 status_up: STATUS.SUCCESS
             }
-        },
-        [updateAsyncAddress.rejected]: (state) => {
+        })
+        builder.addCase(postAsyncAddress.rejected, (state) => {
             return { ...state, status_up: STATUS.FAIL }
-        }
-
-    }
+        })
+        //[UPDATE]:
+        builder.addCase(updateAsyncAddress.pending, (state) => {
+            return { ...state, status_up: STATUS.LOADING }
+        })
+        builder.addCase(updateAsyncAddress.fulfilled, (state, { payload }) => {
+            return {
+                ...state,
+                address_default: payload,
+                status_up: STATUS.SUCCESS
+            }
+        })
+        builder.addCase(updateAsyncAddress.rejected, (state) => {
+            return { ...state, status_up: STATUS.FAIL }
+        })
+    },
 })
 const { actions } = userAddressSlice;
 export const { removeAddress, removeDefaultItem } = actions

@@ -53,13 +53,11 @@ export function OrgServices(props: IProps) {
                         <ul className="cates-list">
                             <li
                                 onClick={() => handleChooseCate(null)}
-                                style={
-                                    !cate_id
-                                        ? {
-                                            color: "var(--bgWhite)",
-                                            backgroundColor: "var(--purple)",
-                                        }
-                                        : {}
+                                style={!cate_id ?
+                                    {
+                                        color: "var(--bgWhite)",
+                                        backgroundColor: "var(--purple)",
+                                    } : {}
                                 }
                                 className="cate-list__item"
                             >

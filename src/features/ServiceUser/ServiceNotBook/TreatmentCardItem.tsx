@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { IServiceUser, IUser_Items } from "interface/servicesUser";
 import ServiceSoldItem from "./ServiceSoldItem";
-import { formatDate, formatTime } from "utils/format";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "context/AppProvider";
 import { XButton } from "components/Layout";
+import dayjs from "dayjs";
 
 interface IProps {
     card_items: IServiceUser,
@@ -41,8 +41,8 @@ function TreatmentCardItem(props: IProps) {
                 <div className="head_detail">
                     <div className="time">
                         {`${t("acc.date_created")}:`}
-                        <span>{formatDate(card_items?.created_at)}</span>{" "}
-                        <span>{formatTime(card_items?.created_at)}</span>
+                        <span>{dayjs(card_items?.created_at).format('DD/MM/YYYY')}</span>{" "}
+                        <span>{dayjs(card_items?.created_at).format('HH:mm')}</span>
                     </div>
                     <div className="code">
                         {`${t("pm.code_orders")}: `}

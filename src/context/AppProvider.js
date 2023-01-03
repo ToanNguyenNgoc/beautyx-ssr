@@ -26,9 +26,6 @@ export default function AppProvider({ children }) {
                 long: res.coords.longitude
             }
             sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location));
-            // const api_url = API_3RD.API_MAP_BOX(user_location.lat, user_location.long)
-            // const resAddress = await axios.get(api_url);
-            // setGeo(resAddress?.features[0]);
         } catch (error) {
             console.log(error)
         }

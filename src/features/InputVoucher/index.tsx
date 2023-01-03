@@ -13,8 +13,8 @@ import style from './ip-vc.module.css'
 interface InputVoucherProps {
     open: boolean,
     setOpen: (open: boolean) => void,
-    organization: IOrganization,
-    services_id: number[],
+    organization: IOrganization, //organization applied voucher
+    services_id: number[], 
     products_id: number[],
     cartAmount: number
     outDiscounts: IDiscountPar[]

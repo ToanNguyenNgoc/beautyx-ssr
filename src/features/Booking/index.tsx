@@ -34,15 +34,9 @@ import BookingMap from "./components/BookingMap";
 import { AUTH_LOCATION } from "api/authLocation";
 import PaymentMethod from "components/PaymentMethod";
 import { PLF_TYPE } from "constants/plat-form";
+import { useNoti } from "interface/useNoti";
 
-// end
 const date = dayjs();
-const initOpenNoti = {
-    content: "",
-    open: false,
-    children: <></>,
-    load: false
-}
 function Booking() {
     const dispatch = useDispatch();
     const { t } = useContext(AppContext)
@@ -50,8 +44,8 @@ function Booking() {
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const LOCATION = AUTH_LOCATION()
     const IS_MB = useDeviceMobile();
+    const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
     const FLAT_FORM = EXTRA_FLAT_FORM();
-    const [openNoti, setOpenNoti] = useState(initOpenNoti);
     const { USER } = useSelector((state: any) => state.USER);
     const history = useHistory();
     const location: any = useLocation();
@@ -164,7 +158,8 @@ function Booking() {
     };
     async function handlePostOrder() {
         const params = pickBy(params_string, identity);
-        setOpenNoti({ ...initOpenNoti, load: true })
+        // setOpenNoti({ ...initOpenNoti, load: true })
+        firstLoad()
         try {
             //tracking.PAY_CONFIRM_CLICK(org?.id, formatProductList(params.products))
             const response = await order.postOrder(org?.id, params);
@@ -183,43 +178,15 @@ function Booking() {
                     search: transaction_uuid,
                     state: { state_payment, actionAfter, listPayment },
                 });
-                setOpenNoti({ ...initOpenNoti, load: false })
+                resultLoad('')
                 if (FLAT_FORM === 'MOMO') localStorage.setItem('APP_INFO', JSON.stringify(actionAfter))
             } else {
-                setOpenNoti({
-                    open: true,
-                    content: t('my_ser.create_order_fail'),
-                    children: <>
-                        <XButton
-                            title={t('my_ser.ok')}
-                            onClick={() => setOpenNoti({ ...openNoti, open: false })}
-                        />
-                        <XButton
-                            title={t('pm.goto_home')}
-                            onClick={() => history.push("/home")}
-                        />
-                    </>,
-                    load: false
-                });
+                resultLoad(t('my_ser.create_order_fail'))
             }
             //setLoading(false);
         } catch (err) {
             console.log(err);
-            setOpenNoti({
-                open: true,
-                content: t('my_ser.create_order_fail'),
-                children: <>
-                    <XButton
-                        title="Đã hiểu"
-                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
-                    />
-                    <XButton
-                        title={t('pm.goto_home')}
-                        onClick={() => history.push("/home")}
-                    />
-                </>,
-                load: false
-            });
+            resultLoad(t('my_ser.create_order_fail'))
         }
     }
     //func appointment
@@ -227,72 +194,30 @@ function Booking() {
         history.push("/lich-hen?tab=1");
     };
     const handlePostApps = async () => {
-        setOpenNoti({ ...initOpenNoti, load: true })
+        firstLoad()
         try {
             await apointmentApi.postAppointment(action, org?.id);
             dispatch(clearAllServices())
-            setOpenNoti({
-                open: true,
-                content: t('my_ser.bk_success'),
-                children: <>
-                    <XButton
-                        title={t('Header.see_calendar')}
-                        onClick={gotoAppointment}
-                    />
-                </>,
-                load: false
-            });
+            resultLoad(
+                t('my_ser.bk_success'),
+                <XButton title={t('Header.see_calendar')} onClick={gotoAppointment} />
+            )
         } catch (error) {
             console.log(error);
-            setOpenNoti({
-                open: true,
-                content: t('my_ser.bk_fail_title'),
-                children: <>
-                    <XButton
-                        title={t('my_ser.ok')}
-                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
-                    />
-                    <XButton
-                        title={t('Header.see_calendar')}
-                        onClick={() => history.push("/home")}
-                    />
-                </>,
-                load: false
-            });
+            resultLoad(t('my_ser.bk_fail_title'))
         }
     };
     const handleBooking = () => {
         if (!USER) return history.push('/sign-in?1')
         if (!bookTime.time)
-            return setOpenNoti({
-                ...initOpenNoti,
-                open: true,
-                content: t('my_ser.pl_select_date'),
-                children: <></>
-            });
+            return resultLoad(t('my_ser.pl_select_date'));
         if (location.state.TYPE === "BOOK_NOW" && finalAmount < 1000)
-            return setOpenNoti({
-                ...initOpenNoti,
-                open: true,
-                content: t('my_ser.minimum_order_is_1_000_VND'),
-                children: <></>
-            });
+            return resultLoad(t('my_ser.minimum_order_is_1_000_VND'));
         if (FLAT_FORM === FLAT_FORM_TYPE.MB && !checkPhoneValid(USER?.telephone))
-            return setOpenNoti({
-                ...initOpenNoti,
-                open: true,
-                content: t('my_ser.enter_update_phone'),
-                children: <>
-                    <XButton
-                        title={t('my_ser.update')}
-                        onClick={() => history.push('/otp-form')}
-                    />
-                    <XButton
-                        title={t('pm.later')}
-                        onClick={() => setOpenNoti({ ...openNoti, open: false })}
-                    />
-                </>
-            });
+            return resultLoad(
+                t('my_ser.enter_update_phone'),
+                <XButton title={t('my_ser.update')} onClick={() => history.push('/otp-form')} />
+            )
         if (location.state.TYPE === "BOOK_NOW") return handlePostOrder();
         handlePostApps();
     };
@@ -441,7 +366,7 @@ function Booking() {
                                         ? t('my_ser.pay_and_book')
                                         : t('Home.Order_step_4')
                                 }
-                                loading={openNoti.load}
+                                loading={noti.load}
                                 onClick={handleBooking}
                             />
                         </div>
@@ -457,10 +382,10 @@ function Booking() {
             />
             <PopupNotification
                 title={t('Header.noti')}
-                content={openNoti.content}
-                open={openNoti.open}
-                children={openNoti.children}
-                setOpen={() => setOpenNoti({ ...openNoti, open: false })}
+                content={noti.message}
+                open={noti.openAlert}
+                setOpen={onCloseNoti}
+                children={noti.element}
             />
         </>
     );

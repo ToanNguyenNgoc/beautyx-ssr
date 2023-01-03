@@ -53,7 +53,7 @@ const routes = [
     {
         path: '/tai-khoan/dia-chi-giao-hang',
         component: <Address />
-    }
+    },
 ];
 function Account() {
     const { t, appointment_today } = useContext(AppContext)

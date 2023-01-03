@@ -9,7 +9,6 @@ import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import cateReducer from "./cate-tree/cateTreeSlice";
 import orgMapReducer from "./org/orgMapSlice";
 import filterResultReduce from "./filter-result";
-import searchHistoryReducer from './search_history'
 import communityReducer from './community'
 // react toolkit query
 import { homeApi } from "redux-toolkit-query/hook-home";
@@ -28,7 +27,6 @@ const rootReducer = {
     CATE_TREE: cateReducer,
     ORGS_MAP: orgMapReducer,
     FILTER_RESULT: filterResultReduce,
-    SEARCH_HIS: searchHistoryReducer,
     COMMUNITY: communityReducer,
 
     [homeApi.reducerPath]: homeApi.reducer,

@@ -36,7 +36,7 @@ export const fetchServiceByCateChild: any = createAsyncThunk(
 export const fetProductsByCateChild: any = createAsyncThunk(
     "CATE_TREE/fetProductsByCateChild",
     async (values: any) => {
-       
+
         const res = await productsApi.getProductsAll(values);
         return {
             products: res.data.data.hits.map((item: any) => {
@@ -131,11 +131,11 @@ const cateTreeSlice = createSlice({
             state.PRODUCTS.products = [];
         }
     },
-    extraReducers: {
-        [fetchOrgsByTag.pending]: (state) => {
+    extraReducers(builder) {
+        builder.addCase(fetchOrgsByTag.pending, (state) => {
             return { ...state, ORGS: { ...state.ORGS, state: STATUS.LOADING } }
-        },
-        [fetchOrgsByTag.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchOrgsByTag.fulfilled, (state, { payload }) => {
             const { orgs, totalItem, page } = payload;
             return {
                 ...state,
@@ -147,15 +147,15 @@ const cateTreeSlice = createSlice({
                     status: STATUS.SUCCESS
                 }
             }
-        },
-        [fetchOrgsByTag.rejected]: (state) => {
+        })
+        builder.addCase(fetchOrgsByTag.rejected, (state) => {
             return { ...state, ORGS: { ...state.ORGS, state: STATUS.FAIL } }
-        },
-        //fetch service by cate child
-        [fetchServiceByCateChild.pending]: (state) => {
+        })
+        //
+        builder.addCase(fetchServiceByCateChild.pending, (state) => {
             return { ...state, SERVICES: { ...state.SERVICES, status: STATUS.LOADING } }
-        },
-        [fetchServiceByCateChild.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchServiceByCateChild.fulfilled, (state, { payload }) => {
             const { services, totalItem, page, CATE_CHILD, CATE } = payload
             return {
                 ...state,
@@ -169,20 +169,19 @@ const cateTreeSlice = createSlice({
                     CATE: CATE
                 }
             }
-        },
-        [fetchServiceByCateChild.pending]: (state) => {
+        })
+        builder.addCase(fetchServiceByCateChild.rejected, (state) => {
             return { ...state, SERVICES: { ...state.SERVICES, status: STATUS.FAIL } }
-        },
-        //fetch product by cate child
-        [fetProductsByCateChild.pending]: (state) => {
+        })
+        //
+        builder.addCase(fetProductsByCateChild.pending, (state) => {
             return { ...state, PRODUCTS: { ...state.PRODUCTS, status: STATUS.LOADING } }
-        },
-        [fetProductsByCateChild.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetProductsByCateChild.fulfilled, (state, { payload }) => {
             const {
                 products,
                 totalItem,
                 page,
-                //CATE_CHILD 
                 keyword
             } = payload
             return {
@@ -192,16 +191,15 @@ const cateTreeSlice = createSlice({
                     products: [...state.PRODUCTS.products, ...products],
                     totalItem: totalItem,
                     page: page,
-                    //CATE_CHILD: CATE_CHILD,
                     status: STATUS.SUCCESS,
                     keyword: keyword
                 }
             }
-        },
-        [fetProductsByCateChild.pending]: (state) => {
+        })
+        builder.addCase(fetProductsByCateChild.rejected, (state) => {
             return { ...state, PRODUCTS: { ...state.PRODUCTS, status: STATUS.FAIL } }
-        },
-    }
+        })
+    },
 })
 const { actions } = cateTreeSlice;
 export const { onChooseCate, onChooseTab, onSetFirstCateProducts, onClearProducts } = actions;

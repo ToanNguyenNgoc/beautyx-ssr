@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
-import { IOrderV2 } from "interface";
+import { IOrderV2, ItemReviewed } from "interface";
 import icon from "constants/icon";
-import { onErrorImg } from "utils";
+import { clst, onErrorImg } from "utils";
 import formatPrice from "utils/formatPrice";
 import PopupQr from "features/AppointmentDetail/PopupQr";
 import OrderDetail from "features/OrderDetail";
@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import { XButton } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 import { AppContext } from "context/AppProvider";
+import Review from "features/Review";
 
 interface IProp {
     order: IOrderV2;
@@ -17,8 +18,9 @@ interface IProp {
 
 function OrderItem(props: IProp) {
     const IS_MB = useDeviceMobile()
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const [openQr, setOpenQr] = useState(false);
+    const [openReview, setOpenReview] = useState(false)
     const { order } = props;
     const countItem = order.items_count;
     const [open, setOpen] = useState(false);
@@ -75,8 +77,21 @@ function OrderItem(props: IProp) {
                 break;
         }
     };
+    const itemsReviewed: ItemReviewed[] = order.items?.map(i => {
+        return {
+            id: i.productable_id,
+            name: i.productable.product_name ?? i.productable?.service_name,
+            image_url: i.productable?.image_url,
+            type: i.productable_type === "App\\Models\\CI\\Product" ? "PRODUCT" : "SERVICE"
+        }
+    })
     return (
         <>
+            <Review
+                itemsReviews={itemsReviewed}
+                org={order.organization}
+                setOpen={setOpenReview} open={openReview}
+            />
             <PopupQr open={openQr} setOpen={setOpenQr} qr={order.qr_link} />
             <div className={style.container}>
                 <div className={style.head_create}>
@@ -157,6 +172,16 @@ function OrderItem(props: IProp) {
                     </div>
                 </div>
                 <div className={style.bottom}>
+                    {
+                        order.status === 'PAID' &&
+                        <XButton
+                            className={clst([style.bottom_detail_btn, style.review_btn])}
+                            title={t('detail_item.evaluate')}
+                            icon={icon.chatWhite}
+                            iconSize={10}
+                            onClick={() => setOpenReview(true)}
+                        />
+                    }
                     <XButton
                         onClick={() => setOpen(true)}
                         className={style.bottom_detail_btn}

@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
-import { Container, Drawer } from "@mui/material";
+import { Container } from "@mui/material";
 import Slider from "react-slick";
 import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork, IOrgTimeWork } from "../Functions/extraOrg";
@@ -27,7 +27,6 @@ function OrgDetail(props: IProps) {
     })
     const { t } = useContext(AppContext);
     const [openPopupContact, setOpenPopupContact] = useState(false);
-    const [open, setOpen] = useState(false);
     const [openPopupMap, setOpenPopupMap] = useState(false);
     const orgTimes = extraOrgTimeWork(org?.opening_time);
     const orgTimeToday = orgTimes?.find(i => i.todayAct)
@@ -167,16 +166,6 @@ function OrgDetail(props: IProps) {
                                                             />
                                                             <span className="text">
                                                                 4.5
-                                                            </span>
-                                                        </div>
-                                                        <div className="flexX-gap-4 org-left-detail__rate-item">
-                                                            <img
-                                                                src={icon.chatAll}
-                                                                alt=""
-                                                                className="icon"
-                                                            />
-                                                            <span className="text">
-                                                                0
                                                             </span>
                                                         </div>
                                                         <div className="flexX-gap-4 org-left-detail__rate-item">
@@ -321,45 +310,6 @@ function OrgDetail(props: IProps) {
                 openPopupContact={openPopupContact}
                 setOpenPopupContact={setOpenPopupContact}
             />
-            <Drawer open={open} anchor="bottom" onClose={() => setOpen(false)}>
-                <div className="se-branch__drawer">
-                    <p className="se-branch__title">
-                        {t("Mer_de.list_branch")}
-                    </p>
-                    <div className="se-branch__list">
-                        {org?.branches.map((item: any, index: number) => (
-                            <div key={index} className="se-branch__item">
-                                <div>
-                                    <div className="branch-item__top">
-                                        <div className="item-top__distance">
-                                            <img src={icon.mapPinRed} alt="" />
-                                            <span>3km</span>
-                                        </div>
-                                        <div className="item-top__name">
-                                            <p>{item?.name}</p>
-                                        </div>
-                                    </div>
-                                    <div className="branch-item__bottom">
-                                        <div className="item-bottom__address">
-                                            <p>{item?.address}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    onClick={(e) => {
-                                        setOpenPopupMap(true);
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                    }}
-                                    className="branch-item__pinmap"
-                                >
-                                    <img src={icon.mapMarkerOrg} alt="" />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </Drawer>
         </div>
     );
 }
