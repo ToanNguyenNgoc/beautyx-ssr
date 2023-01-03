@@ -152,8 +152,7 @@ function HomeBanner2() {
                             <img
                                 className={style.banner_img}
                                 src={item.imageURL}
-                                // src={bannerInit}
-                                // src="https://res.cloudinary.com/dhrgif3tc/image/upload/v1671013455/1_6_vmgnvu.jpg"
+                                // src='https://res.cloudinary.com/dhrgif3tc/image/upload/v1672375710/Banner_App_BeautyX_Te%CC%82%CC%81t_1_sfuf6d.jpg'
                                 alt=""
                             />
                         </div>

@@ -33,7 +33,7 @@ import Calendar from "pages/Calendar";
 import Cart from "pages/Cart";
 import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
-import { Bottom } from "components/Layout";
+import Bottom from "components/Bottom";
 import Head from "components/Head";
 import { useSelector } from "react-redux";
 import IStore from "interface/IStore";

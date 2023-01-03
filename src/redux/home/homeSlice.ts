@@ -43,20 +43,18 @@ const homeSlice = createSlice({
             state.DISCOUNTS = initialState.DISCOUNTS
         }
     },
-    extraReducers: {
-        [fetchAsyncHome.pending]: (state) => {
-            return state;
-        },
-        [fetchAsyncHome.fulfilled]: (state, { payload }) => {
+    extraReducers(builder) {
+        builder.addCase(fetchAsyncHome.pending, (state) => { return state })
+        builder.addCase(fetchAsyncHome.fulfilled, (state, { payload }) => {
             return {
                 ...state,
                 ...payload,
                 status: STATUS.SUCCESS,
             };
-        },
-        [fetchAsyncHome.rejected]: (state) => {
-            return { ...state, status: STATUS.FAIL };
-        },
+        })
+        builder.addCase(fetchAsyncHome.rejected, (state) => {
+            return { ...state, status: STATUS.FAIL }
+        })
     },
 });
 const { actions } = homeSlice;

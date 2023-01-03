@@ -54,45 +54,46 @@ const loginFlatFormSlice = createSlice({
     initialState,
     reducers: {
     },
-    extraReducers: {
-        [loginAsyncMomo.pending]: (state) => {
+    extraReducers(builder) {
+        //[MOMO]:
+        builder.addCase(loginAsyncMomo.pending, (state) => {
             return { ...state, status: STATUS.LOADING }
-        },
-        [loginAsyncMomo.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(loginAsyncMomo.fulfilled, (state, { payload }) => {
             return {
                 response: payload,
                 status: STATUS.SUCCESS
             }
-        },
-        [loginAsyncMomo.rejected]: (state) => {
+        })
+        builder.addCase(loginAsyncMomo.rejected, (state) => {
             return { ...state, status: STATUS.FAIL }
-        },
-        //tiki
-        [loginAsyncTiki.pending]: (state) => {
+        })
+        //[TIKI]:
+        builder.addCase(loginAsyncTiki.pending, (state) => {
             return { ...state, status: STATUS.LOADING }
-        },
-        [loginAsyncTiki.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(loginAsyncTiki.fulfilled, (state, { payload }) => {
             return {
                 response: payload,
                 status: STATUS.SUCCESS
             }
-        },
-        [loginAsyncTiki.rejected]: (state) => {
+        })
+        builder.addCase(loginAsyncTiki.rejected, (state) => {
             return { ...state, status: STATUS.FAIL }
-        },
-        //Mb bank
-        [loginAsyncMb.pending]: (state) => {
+        })
+        //[MB BANK]
+        builder.addCase(loginAsyncMb.pending, (state) => {
             return { ...state, status: STATUS.LOADING }
-        },
-        [loginAsyncMb.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(loginAsyncMb.fulfilled, (state, { payload }) => {
             return {
                 response: payload,
                 status: STATUS.SUCCESS
             }
-        },
-        [loginAsyncMb.rejected]: (state) => {
+        })
+        builder.addCase(loginAsyncMb.rejected, (state) => {
             return { ...state, status: STATUS.FAIL }
-        }
-    }
+        })
+    },
 })
 export default loginFlatFormSlice.reducer;

@@ -17,7 +17,7 @@ export interface ITems {
     services_count: number;
     discount_value: number;
     discount_id: null | number;
-    discount:IDiscountPar
+    discount: IDiscountPar
 }
 export interface IOrderOrigin {
     id: number;
@@ -100,4 +100,10 @@ export interface IOrderV2 {
     };
     items: ITems[]
     origin?: IOrderOrigin;
+}
+export interface ItemReviewed {
+    id: number,
+    name: string,
+    image_url: string,
+    type: 'SERVICE' | 'PRODUCT'
 }

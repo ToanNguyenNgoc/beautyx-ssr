@@ -1,12 +1,20 @@
 import { Checkbox } from '@mui/material';
 import { XButton } from 'components/Layout';
+import { PopupNotification } from 'components/Notification';
 import icon from 'constants/icon';
 import img from 'constants/img';
 import { AppContext } from 'context/AppProvider';
 import { IBranch, ICart, ICartGroupOrg, IOrganization } from 'interface';
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { ascItem, descItem, onClearApplyVoucher, onClearPrevCartItem, checkConfirm, removeItem } from 'redux/cart';
+import {
+    ascItem,
+    descItem,
+    onClearApplyVoucher,
+    onClearPrevCartItem,
+    checkConfirm,
+    removeItem
+} from 'redux/cart';
 import { clst } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import style from '../cart.module.css'
@@ -31,7 +39,7 @@ const checkedStItem = {
 }
 
 export function CartOrgItem(props: CartItemProps) {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { itemOrg, orgChoose, cart_confirm, onChangeBranch, branch_id } = props
     const refBranch = useRef<HTMLDivElement>(null)
     const openBranch = () => refBranch.current?.classList.toggle(style.branch_show)
@@ -144,6 +152,7 @@ const CartItem = (
         { item: ICart, itemOrg: ICartGroupOrg, orgChoose?: IOrganization, onClearBranch: () => void }
 ) => {
     const dispatch = useDispatch()
+    const [open, setOpen] = useState(false)
     const onTriggerQuantity = (btn: 'asc' | 'desc') => {
         if (btn === 'asc') {
             dispatch(ascItem(item))
@@ -184,60 +193,71 @@ const CartItem = (
     }
 
     return (
-        <div className={style.cart_item}>
-            {
-                item.discount &&
-                <div
-                    style={item.org_id === orgChoose?.id ? {
-                        opacity: '1'
-                    } : {}}
-                    className={style.discount_badge}
-                >
-                    <span>{item.discount?.coupon_code}</span>
-                    <img src={icon.cardDiscountWhite} alt="" />
+        <>
+            <div className={style.cart_item}>
+                {
+                    item.discount &&
+                    <div
+                        style={item.org_id === orgChoose?.id ? {
+                            opacity: '1'
+                        } : {}}
+                        className={style.discount_badge}
+                    >
+                        <span>{item.discount?.coupon_code}</span>
+                        <img src={icon.cardDiscountWhite} alt="" />
+                    </div>
+                }
+                <div className={style.cart_item_left}>
+                    <div className={style.cart_item_left_check}>
+                        <Checkbox
+                            checked={item.isConfirm}
+                            onClick={handleConfirm}
+                            sx={checkedStItem} size='small'
+                        />
+                        <div className={style.item_img}>
+                            <img
+                                src={item?.cart_item?.image_url ??
+                                    itemOrg?.org?.image_url ?? img.imgDefault}
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                    <span className={style.item_name}>{item.name}</span>
                 </div>
-            }
-            <div className={style.cart_item_left}>
-                <div className={style.cart_item_left_check}>
-                    <Checkbox
-                        checked={item.isConfirm}
-                        onClick={handleConfirm}
-                        sx={checkedStItem} size='small'
-                    />
-                    <div className={style.item_img}>
-                        <img
-                            src={item?.cart_item?.image_url ??
-                                itemOrg?.org?.image_url ?? img.imgDefault}
-                            alt=""
+                <div className={style.cart_item_right}>
+                    <div className={style.cart_item_right_price}>
+                        {item.price_discount ? formatPrice(item.price_discount) : formatPrice(item.price)}
+                    </div>
+                    <div className={style.cart_item_right_quantity}>
+                        <XButton
+                            onClick={() => onTriggerQuantity('desc')}
+                            title='-'
+                        />
+                        <span className={style.item_quantity}>{item.quantity}</span>
+                        <XButton
+                            onClick={() => onTriggerQuantity('asc')}
+                            title='+'
+                        />
+                    </div>
+                    <div className={style.cart_item_right_price_total}>
+                        {formatPrice(totalAmount)}
+                        <XButton
+                            icon={icon.trash}
+                            className={clst([style.left_head_ctl_item_btn, style.remove_item_btn])}
+                            onClick={() => setOpen(true)}
                         />
                     </div>
                 </div>
-                <span className={style.item_name}>{item.name}</span>
             </div>
-            <div className={style.cart_item_right}>
-                <div className={style.cart_item_right_price}>
-                    {item.price_discount ? formatPrice(item.price_discount) : formatPrice(item.price)}
-                </div>
-                <div className={style.cart_item_right_quantity}>
-                    <XButton
-                        onClick={() => onTriggerQuantity('desc')}
-                        title='-'
-                    />
-                    <span className={style.item_quantity}>{item.quantity}</span>
-                    <XButton
-                        onClick={() => onTriggerQuantity('asc')}
-                        title='+'
-                    />
-                </div>
-                <div className={style.cart_item_right_price_total}>
-                    {formatPrice(totalAmount)}
-                    <XButton
-                        icon={icon.trash}
-                        className={clst([style.left_head_ctl_item_btn, style.remove_item_btn])}
-                        onClick={() => dispatch(removeItem(item))}
-                    />
-                </div>
-            </div>
-        </div>
+            <PopupNotification
+                title='Thông báo'
+                content={`Xóa "${item.name}" khỏi giỏ hàng ?`}
+                open={open} setOpen={setOpen}
+                children={<>
+                    <XButton title='Hủy' onClick={() => setOpen(false)} />
+                    <XButton title='Xác nhận' onClick={() => { dispatch(removeItem(item)); setOpen(false) }} />
+                </>}
+            />
+        </>
     )
 }

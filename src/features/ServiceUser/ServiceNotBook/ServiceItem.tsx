@@ -1,10 +1,10 @@
 import { Checkbox } from "@mui/material";
 import React, { useCallback, useContext, useState } from "react";
 import { useSelector } from "react-redux";
-import ServiceReview from "../ServiceReview";
+import Review from "features/Review";
 import dayjs from "dayjs";
 import { IServiceSold, IUser_Service } from "interface/servicesUser";
-import { IOrganization } from "interface";
+import { IOrganization, ItemReviewed } from "interface";
 import { AppContext } from "context/AppProvider";
 import { checkTimeExpired, onErrorImg } from "utils";
 
@@ -40,14 +40,20 @@ function ServiceItem(props: IProps) {
   const onOpenServiceReview = useCallback(() => {
     setOpen(true)
   }, [])
+  const itemsReviews: ItemReviewed[] = [
+    { id: service.id, name: service.service_name, type: 'SERVICE', image_url: service.image_url }
+  ]
   return (
     <>
-      <ServiceReview
-        open={open}
-        setOpen={setOpen}
-        service={service}
-        org={org}
-      />
+      {
+        org &&
+        <Review
+          open={open}
+          setOpen={setOpen}
+          itemsReviews={itemsReviews}
+          org={org}
+        />
+      }
       <div>
         {
           service.remain_time === 0 &&
@@ -101,10 +107,10 @@ function ServiceItem(props: IProps) {
             <div className="flex-row-sp">
               {
                 service.time_expired &&
-                <div 
-                  style={!dateExpired?{
-                    backgroundColor:'var(--bg-white)'
-                  }:{}}
+                <div
+                  style={!dateExpired ? {
+                    backgroundColor: 'var(--bg-white)'
+                  } : {}}
                   className="quantity-text__time-ex"
                 >
                   {t('order.Expired')} | {dayjs(service.time_expired).format('DD/MM/YYYY')}

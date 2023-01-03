@@ -16,7 +16,7 @@
         "@mui/material": "^5.10.1",
         "@mui/styles": "^5.9.3",
         "@react-google-maps/api": "^2.0.2",
-        "@reduxjs/toolkit": "^1.8.5",
+        "@reduxjs/toolkit": "^1.9.1",
         "@sentry/react": "^6.19.6",
         "@sentry/tracing": "^6.19.6",
         "@testing-library/jest-dom": "^5.16.5",

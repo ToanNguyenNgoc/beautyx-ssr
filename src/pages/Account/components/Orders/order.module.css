@@ -165,6 +165,10 @@
 .bottom_detail_btn img {
     margin: 0px 0px 0px 4px;
 }
+.review_btn{
+    background-color: var(--green);
+    margin-right: 12px;
+}
 
 @media only screen and (max-width: 1023px) {
     .order_container {

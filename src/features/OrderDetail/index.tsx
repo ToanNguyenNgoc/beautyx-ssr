@@ -9,9 +9,10 @@ import HeadMobile from "../HeadMobile";
 import { useDeviceMobile } from "hooks";
 import { AppContext } from "context/AppProvider";
 import { IOrderV2 } from "interface";
-import { formatDate, onErrorImg, scrollTop } from "utils";
+import {  onErrorImg, scrollTop } from "utils";
 import formatPrice from "utils/formatPrice";
 import { XButton } from "components/Layout";
+import dayjs from "dayjs";
 
 const view = window.screen.width;
 const Transition = React.forwardRef(function Transition(
@@ -59,7 +60,9 @@ function OrderDetail(props: any) {
           </span>
           <div className="flex-row order-de__head-date">
             <span className="flex-row date">
-              {t("booking.date")} Order: <h4>{formatDate(order?.created_at)}</h4>
+              {t("booking.date")} Order: <h4>
+                {dayjs(order.created_at).format('DD/MM/YYYY')}
+              </h4>
             </span>
             <span className="flex-row time">
               {t("order.time")}: <h4>{order?.created_at?.split(' ')[1]}</h4>
