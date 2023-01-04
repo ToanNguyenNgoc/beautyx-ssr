@@ -240,6 +240,8 @@ import createAtGray from 'assets/icon/createAtGray.svg'
 import postGray from 'assets/icon/postGray.svg'
 import userGray from 'assets/icon/userGray.svg'
 import startBold from 'assets/icon/startBold.svg'
+import coins from 'assets/icon/coins.svg'
+import paperWhite from 'assets/icon/paperWhite.svg'
 
 const icon = {
     noApply,
@@ -454,6 +456,7 @@ const icon = {
     phoneWhiteBold,
     trendGreen, downLoadWhite,
     thumbUp, thumbUpPurple, chatSquare,
-    createAtGray, postGray, userGray, comment_bold_purple, startBold
+    createAtGray, postGray, userGray, comment_bold_purple, startBold, coins,
+    paperWhite
 };
 export default icon;

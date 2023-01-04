@@ -1,82 +1,31 @@
 import React, { useContext, useState } from "react";
-import { IOrderV2, ItemReviewed } from "interface";
+import { IOrderV2, IOrganization, ItemReviewed, ITems } from "interface";
 import icon from "constants/icon";
 import { clst, onErrorImg } from "utils";
 import formatPrice from "utils/formatPrice";
 import PopupQr from "features/AppointmentDetail/PopupQr";
-import OrderDetail from "features/OrderDetail";
 import style from '../order.module.css'
 import dayjs from "dayjs";
 import { XButton } from "components/Layout";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useTransformOrderStatus } from "hooks";
 import { AppContext } from "context/AppProvider";
 import Review from "features/Review";
+import OrderDetail from "../../OrderDetail";
 
 interface IProp {
     order: IOrderV2;
 }
 
 function OrderItem(props: IProp) {
+    const { order } = props;
     const IS_MB = useDeviceMobile()
     const { t } = useContext(AppContext)
     const [openQr, setOpenQr] = useState(false);
-    const [openReview, setOpenReview] = useState(false)
-    const { order } = props;
-    const countItem = order.items_count;
+    const [openReview, setOpenReview] = useState(false);
+    const { statusTransform } = useTransformOrderStatus(order.status)
     const [open, setOpen] = useState(false);
-    const checkStatus = (status: string) => {
-        switch (status) {
-            case "CANCELED":
-                return (
-                    <div
-                        style={{ color: "var(--red-cl)" }}
-                        className={style.status}
-                    >
-                        {t('acc.canceled')}
-                    </div>
-                );
-            case "CANCELED_BY_USER":
-                return (
-                    <div
-                        style={{ color: "var(--red-cl)" }}
-                        className={style.status}
-                    >
-                        {t('acc.canceled')}
-                    </div>
-                );
-            case "REFUND":
-                return (
-                    <div
-                        style={{ color: "var(--red-cl)" }}
-                        className={style.status}
-                    >
-                        {t('acc.canceled')}
-                    </div>
-                );
-            case "PENDING":
-                return (
-                    <div
-                        style={{ color: "var(--red-cl)" }}
-                        className={style.status}
-                    >
-                        {t('acc.canceled')}
-                    </div>
-                );
-            case "PAID":
-                return (
-                    <>
-                        <div
-                            style={{ color: "var(--green)" }}
-                            className={style.status}
-                        >
-                            {t('acc.pain')}
-                        </div>
-                    </>
-                );
-            default:
-                break;
-        }
-    };
+    const org = order.organization
+
     const itemsReviewed: ItemReviewed[] = order.items?.map(i => {
         return {
             id: i.productable_id,
@@ -119,37 +68,20 @@ function OrderItem(props: IProp) {
                 </div>
                 <div className={style.head_org}>
                     <span className={style.head_org_name}>{order?.organization?.name}</span>
-                    {checkStatus(order.status)}
+                    <div
+                        style={{ color: statusTransform?.color }}
+                        className={style.status}
+                    >
+                        {statusTransform?.title}
+                    </div>
                 </div>
                 <ul className={style.order_items}>
                     {
-                        order?.items?.map((item, index: number) => {
-                            const displayPrice = item.discount ?
-                                item.base_price - item.discount_value / item.quantity :
-                                item.base_price
-                            return (
-                                <li key={index} className={style.order_items_pro}>
-                                    <div className={style.pro_container}>
-                                        <div className={style.pro_img}>
-                                            <img src={
-                                                item.productable?.image ?
-                                                    item.productable?.image_url :
-                                                    order?.organization?.image_url
-                                            } onError={(e) => onErrorImg(e)} alt="" />
-                                        </div>
-                                        <div className={style.pro_detail}>
-                                            <p className={style.pro_detail_name}>
-                                                {item.productable?.service_name ?? item.productable?.product_name}
-                                            </p>
-                                            <div className={style.pro_detail_price}>
-                                                <span>{formatPrice(displayPrice)}đ</span>
-                                                <span>x {item.quantity}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            )
-                        })
+                        order?.items?.map((item, index: number) => (
+                            <li key={index} className={style.order_items_pro}>
+                                <Item item={item} org={org} />
+                            </li>
+                        ))
                     }
                 </ul>
                 <div className={style.amount}>
@@ -192,14 +124,36 @@ function OrderItem(props: IProp) {
                 </div>
             </div>
             <OrderDetail
-                open={open}
-                setOpen={setOpen}
-                org={order?.organization}
-                order={order}
-                countItem={countItem}
+                open={open} setOpen={setOpen} order={order}
             />
         </>
     );
 }
 
 export default OrderItem;
+
+export const Item = ({ item, org }: { item: ITems, org: IOrganization }) => {
+    const displayPrice = item.discount ?
+        item.base_price - item.discount_value / item.quantity :
+        item.base_price
+    return (
+        <div className={style.pro_container}>
+            <div className={style.pro_img}>
+                <img src={
+                    item.productable?.image ?
+                        item.productable?.image_url :
+                        org?.image_url
+                } onError={(e) => onErrorImg(e)} alt="" />
+            </div>
+            <div className={style.pro_detail}>
+                <p className={style.pro_detail_name}>
+                    {item.productable?.service_name ?? item.productable?.product_name}
+                </p>
+                <div className={style.pro_detail_price}>
+                    <span>{formatPrice(displayPrice)}đ</span>
+                    <span>x {item.quantity}</span>
+                </div>
+            </div>
+        </div>
+    )
+}

@@ -20,6 +20,7 @@ import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
 import HomeRecommend from "./HomeRecommend";
 import HomeProvince from "./HomeProvince";
+import style from './home.module.css'
 
 
 export default function HomePage() {
@@ -32,7 +33,7 @@ export default function HomePage() {
     
     return (
         <>
-            <div className="homepage">
+            <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
                         <HomeCate />

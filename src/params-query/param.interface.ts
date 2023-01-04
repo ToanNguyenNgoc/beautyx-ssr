@@ -9,7 +9,7 @@ export interface ParamOrg {
     "filter[max_price]"?: number | string,
     "filter[province_code]"?: number | string,
     "filter[district_code]"?: number | string,
-    "filter[is_demo]"?:boolean | string,
+    "filter[is_demo]"?: boolean | string,
     "sort"?: string,
     "include"?: string
 }
@@ -47,9 +47,16 @@ export interface ParamOrder {
     "limit": string | number,
     "filter[platform]": string,
     "filter[status]": string,
-    "filter[withServicesSold]": boolean|any,
-    "filter[productable]": boolean| any,
+    "filter[withServicesSold]": boolean | any,
+    "filter[productable]": boolean | any,
     "include": string,
     "sort": string,
-    "append":string
+    "append": string
+}
+export interface ParamsProductable {
+    "limit": number | string,
+    "keyword": string,
+    "on_ecommerce": string | boolean,
+    "location": string,
+    "sort": "distance|random" | "distance" | "random" | ""
 }

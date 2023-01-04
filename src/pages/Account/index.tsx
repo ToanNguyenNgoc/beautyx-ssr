@@ -9,9 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import style from './account.module.css'
 import { Container } from "@mui/system";
 import IStore from "interface/IStore";
-import { clst, onErrorImg } from 'utils'
+import { clst, formatPhoneNumber, onErrorImg } from 'utils'
 import icon from "constants/icon";
-import { postMedia, useDeviceMobile } from "hooks";
+import { postMedia, useDeviceMobile, useSwr } from "hooks";
 import { updateAsyncUser } from 'redux/user/userSlice'
 import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
@@ -28,6 +28,9 @@ import languages from "data/languages";
 import { AppContext } from "context/AppProvider";
 import i18next from "i18next";
 import { PopupMessage } from "components/Notification";
+import API_ROUTE from "api/_api";
+import { paramsUserProfile } from "params-query";
+import { phoneSupport } from "constants/index";
 
 const routes = [
     {
@@ -64,7 +67,9 @@ function Account() {
     const history = useHistory()
     const location = useLocation()
     const IS_MB = useDeviceMobile();
-    const { USER } = useSelector((state: IStore) => state.USER)
+    const user_redux = useSelector((state: IStore) => state.USER.USER)
+    const { response } = useSwr(API_ROUTE.USER_PROFILE, true, paramsUserProfile)
+    const USER = { ...user_redux, response }
     const onChangeAvatar = async (e: any) => {
         const { model_id } = await postMedia(e)
         await dispatch(updateAsyncUser({
@@ -134,37 +139,52 @@ function Account() {
                         className={style.left_cnt}
                     >
                         {IS_MB && <HeadAccount />}
-                        <div className={style.left_cnt_head}>
-                            <div className={style.user_avatar_cnt}>
-                                <img
-                                    onClick={onOpenAvatar}
-                                    className={style.user_avatar}
-                                    src={USER?.avatar} alt=""
-                                    onError={(e) => onErrorImg(e)}
-                                />
-                                <label htmlFor="file" className={style.user_avatar_btn}>
-                                    <img src={icon.Camera_purple} alt="" />
-                                </label>
-                                <input
-                                    hidden
-                                    id="file"
-                                    type="file"
-                                    name="file"
-                                    accept="image/jpeg"
-                                    onChange={onChangeAvatar}
-                                />
+                        <div className={style.left_user}>
+                            <div className={style.left_cnt_head}>
+                                <div className={style.user_avatar_cnt}>
+                                    <img
+                                        onClick={onOpenAvatar}
+                                        className={style.user_avatar}
+                                        src={USER?.avatar} alt=""
+                                        onError={(e) => onErrorImg(e)}
+                                    />
+                                    <label htmlFor="file" className={style.user_avatar_btn}>
+                                        <img src={icon.Camera_purple} alt="" />
+                                    </label>
+                                    <input
+                                        hidden
+                                        id="file"
+                                        type="file"
+                                        name="file"
+                                        accept="image/jpeg"
+                                        onChange={onChangeAvatar}
+                                    />
+                                </div>
+                                <div className={style.user_info}>
+                                    <p className={style.user_fullname}>{USER?.fullname}</p>
+                                    <p className={style.user_email}>
+                                        <img src={icon.phoneWhite} alt="" />
+                                        {USER?.email}
+                                    </p>
+                                    <p className={style.user_telephone}>
+                                        <img src={icon.emailWhite} alt="" />
+                                        {USER?.telephone}
+                                    </p>
+                                </div>
                             </div>
-                            <div className={style.user_info}>
-                                <p className={style.user_fullname}>{USER?.fullname}</p>
-                                <p className={style.user_email}>
-                                    <img src={icon.phoneWhite} alt="" />
-                                    {USER?.email}
-                                </p>
-                                <p className={style.user_telephone}>
-                                    <img src={icon.emailWhite} alt="" />
-                                    {USER?.telephone}
-                                </p>
-                            </div>
+                            {/* <div className={style.user_coin}>
+                                <span className={style.user_coin_label}>BEAUTYX COIN</span>
+                                <div className={style.coin_cnt}>
+                                    <img className={style.icon_left} src={icon.coins} alt="" />
+                                    <div className={style.coin_value}>
+                                        <p className={style.coin_value_label}>BTX</p>
+                                        <div className={style.coin_value_count}>
+                                            <span>10000</span>
+                                            <img className={style.coin_value_count_icon} src={icon.coins} alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
                         </div>
                         <div className={style.left_cnt_link}>
                             <ul className={style.link_list}>
@@ -234,7 +254,7 @@ function Account() {
                                 <XButton
                                     iconSize={14}
                                     icon={icon.phonePurple}
-                                    title="0289 9959 938"
+                                    title={formatPhoneNumber(phoneSupport)}
                                     onClick={handleCallingPhone}
                                 />
                             </div>

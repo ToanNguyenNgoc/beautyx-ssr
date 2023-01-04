@@ -35,7 +35,7 @@ const initialState: IFilterResult = {
         "filter[min_price]": "",
         "filter[max_price]": "",
         "sort": "",
-        "include": "favorites_count|favorites"
+        "include": "favorites_count|favorites|branches"
     }
 }
 const FilterResultSlice = createSlice({
