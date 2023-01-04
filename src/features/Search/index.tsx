@@ -256,9 +256,9 @@ function Search(props: SearchProps) {
                     </div>
                 }
                 {
-                    (USER && KEY_WORD === "") &&
+                    (KEY_WORD === "") &&
                     <div>
-                        <SearchHistory onCloseSearch={onCloseSearch} />
+                        {USER && <SearchHistory onCloseSearch={onCloseSearch} />}
                         <div
                             onClick={onCloseSearch}
                             className={style.section_keyword_trend}

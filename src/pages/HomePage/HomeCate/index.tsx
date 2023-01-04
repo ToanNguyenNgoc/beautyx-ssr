@@ -85,7 +85,6 @@ function HomeCate() {
                 onBlur={() => onToggleCatePar(false)}
             >
                 <div className={style.cate_header}>
-                    {/* <img src={icon.lipstickOrange} alt="" /> */}
                     <span className={style.cate_header_title}>Sản phẩm </span>
                 </div>
                 <div ref={refCatePar} className={style.cate_par_cnt}>
@@ -212,7 +211,7 @@ const CateChildHover = ({ parent }: { parent: ITag[] }) => {
 const TagItemService = ({ tag }: { tag: ITag }) => {
     const [openChild, setOpenChild] = useState(false)
     const onBlurTagItem = () => {
-        setTimeout(() => { setOpenChild(false) }, 100)
+        setTimeout(() => { setOpenChild(false) }, 300)
     }
     return (
         <button

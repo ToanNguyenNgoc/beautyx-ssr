@@ -56,7 +56,6 @@ function BuyNow() {
         }
     })
     const listPayment = location.state?.products.map((item: any) => {
-        const is_type = 1;
         const sale_price =
             item.product?.special_price > 0
                 ? item.product?.special_price
@@ -64,7 +63,7 @@ function BuyNow() {
         const values = formatAddCart(
             item.product,
             org,
-            is_type,
+            "PRODUCT",
             item.quantity,
             sale_price,
         );

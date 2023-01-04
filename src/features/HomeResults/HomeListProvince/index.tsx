@@ -6,10 +6,11 @@ import { onResetFilter } from "redux/filter-result";
 import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
-import style from './list-province.module.css'
-import {  useDeviceMobile, useSearchKeyword } from "hooks";
+import { useDeviceMobile, useSearchKeyword } from "hooks";
 import { Input, XButton } from "components/Layout";
 import icon from "constants/icon";
+import style from './list-province.module.css'
+import { Masonry } from "@mui/lab";
 
 function HomeListProvince() {
     const [value, setValue] = useState('')
@@ -31,39 +32,36 @@ function HomeListProvince() {
     const list = value === '' ? provinces_org : provinces
     return (
         <>
-           {
-            IS_MB &&
-            <div className={style.head}>
-            <XButton
-                onClick={() => history.goBack()}
-                icon={icon.chevronLeft}
-                iconSize={28}
-            />
-            <Input
-                classNamePar={style.head_input}
-                className={style.head_input_child}
-                icon={icon.searchPurple}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="Tìm kiếm tỉnh thành...."
-            />
-        </div>
-           }
-            <div className="home-province">
-                <Container>
-                    <div className="home-province_list">
+            {
+                IS_MB &&
+                <div className={style.head}>
+                    <XButton
+                        onClick={() => history.goBack()}
+                        icon={icon.chevronLeft}
+                        iconSize={28}
+                    />
+                    <Input
+                        classNamePar={style.head_input}
+                        className={style.head_input_child}
+                        icon={icon.searchPurple}
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        placeholder="Tìm kiếm tỉnh thành...."
+                    />
+                </div>
+            }
+            <Container>
+                <div className={style.container}>
+                    <Masonry columns={IS_MB ? 2 : 4} spacing={IS_MB ? 1 : 2}>
                         {list?.map(
                             (item: IProvince, index: number) => (
                                 <div
                                     onClick={() => gotoResult(item)}
                                     key={index}
-                                    className="home-province_item"
+                                    className={style.province}
                                 >
-                                    <img
-                                        src={`${item.media[1].original_url}`}
-                                        alt=""
-                                    />
-                                    <div className="province-item-cnt">
+                                    <img src={`${item.media[1].original_url}`} alt="" />
+                                    <div className={style.province_item}>
                                         <span>{item.name}</span>
                                         <span>
                                             {formatRoundOrgCount(item.organizations_count + item?.branches_count)}{" "}
@@ -73,9 +71,9 @@ function HomeListProvince() {
                                 </div>
                             )
                         )}
-                    </div>
-                </Container>
-            </div>
+                    </Masonry>
+                </div>
+            </Container>
         </>
     );
 }

@@ -2,11 +2,14 @@
 
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm"
 import dayjs from "dayjs"
-import { ParamOrg, ParamService, ParamProduct, ParamOrder } from "./param.interface"
+import { ParamOrg, ParamService, ParamProduct, ParamOrder, ParamsProductable } from "./param.interface"
 
 const PLAT_FORM = EXTRA_FLAT_FORM()
 
 // const LOCATION = AUTH_LOCATION();
+export const paramsUserProfile = {
+    "append": "btx_points"
+}
 export const paramsGalleries = {
     "include": "images|videos",
     "limit": "15",
@@ -135,4 +138,11 @@ export const paramsComment = {
     "include": "rate|children|children.media",
     "sort": "-created_at",
     "append": "media_url"
+}
+export const paramsProductable: ParamsProductable = {
+    "limit": 15,
+    "keyword": "",
+    "on_ecommerce": true,
+    "location": "",
+    "sort": ""
 }

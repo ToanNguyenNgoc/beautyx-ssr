@@ -6,6 +6,8 @@ import scrollTop from "utils/scrollTop";
 import img, { paymentMethod, social } from "constants/img";
 import icon from "constants/icon";
 import { AppContext } from "context/AppProvider";
+import { phoneSupport } from "constants/index";
+import { formatPhoneNumber } from "utils";
 
 function Footer() {
     const url_map = `https://goo.gl/maps/dnGMKnfdeB91xCj7A`;
@@ -27,9 +29,9 @@ function Footer() {
                     id: 12,
                     title: `${t(
                         "footer.customer_care_call_center"
-                    )} : 02899959938`,
+                    )} : ${formatPhoneNumber(phoneSupport)}`,
                     type: "NUMBER",
-                    url: "0289 9959 938",
+                    url: `${phoneSupport}`,
                 },
                 {
                     id: 13,

@@ -63,7 +63,8 @@
         display: none;
     }
     .head_left {
-        width: 46px;
+        width: fit-content;
+        max-width: 46px;
         height: 32px;
         display: flex;
         align-items: center;

@@ -1,6 +1,7 @@
 import axiosClient from "./axios";
 import { identity, pickBy } from "lodash";
-import { AUTH_HEADER } from "./authHeader";
+import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
+import { paramsUserProfile } from "params-query";
 
 class Auth {
   login = (values: any) => {
@@ -16,9 +17,9 @@ class Auth {
     return axiosClient.post(url, params);
   };
   getUserProfile = () => {
-    const url = `/users/profile`;
+    const url = `/users/profile`
     if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-      return axiosClient.get(url, AUTH_HEADER());
+      return axiosClient.get(url, AUTH_HEADER_PARAM_GET(paramsUserProfile));
       // return axiosClient.get(url);
     }
   };
@@ -36,7 +37,7 @@ class Auth {
     return axiosClient.post(url, {
       'refresh_token': token,
       'platform': 'BEAUTYX'
-    },AUTH_HEADER())
+    }, AUTH_HEADER())
   }
 
 }

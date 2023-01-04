@@ -3,6 +3,7 @@ import { openUrlIn_Mb } from "../rootComponents/mb/doPostMessageMBbank";
 import openUrlIn_Tiki from "../rootComponents/tiki/test";
 import { MOMO } from "../api/_momoImport";
 import { PLF_TYPE } from "constants/plat-form";
+import { phoneSupport } from "constants/index";
 // export const handleSubiz = () => {
 //     let $: any = window;
 //     let su_widget = document.querySelector(
@@ -55,7 +56,7 @@ export const handleChat = () => {
 };
 export const handleCallingPhone = () => {
     const FLAT_FORM = sessionStorage.getItem("FLAT_FORM");
-    const phoneNumber = "tel:02899959938";
+    const phoneNumber = `tel:${phoneSupport}`;
     switch (FLAT_FORM) {
         case PLF_TYPE.TIKI:
             // callApiFromTiki("openNativeAppStore", {
@@ -63,7 +64,7 @@ export const handleCallingPhone = () => {
             //     appleStoreId: "454638411",
             // });
             callApiFromTiki('makePhoneCall', {
-                number: '02899959938'
+                number: phoneSupport
             })
             window.open(phoneNumber, "_blank");
             break;

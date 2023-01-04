@@ -15,7 +15,7 @@ import { ICart } from 'interface';
 import { XButton } from 'components/Layout';
 
 function PaymentInfo(props: any) {
-    const history = useHistory();
+    const history = useHistory()
     const IS_MB = useDeviceMobile()
     const { data, handleCancelOrder, action, orderItems } = props;
     const organization = data.res?.organization;

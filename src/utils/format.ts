@@ -79,3 +79,13 @@ export const formatTelephone = (telephone: string) => {
     return "+84" + telephone.toString().slice(1);
     // return `+84${phone}`
 }
+export const formatPhoneNumber = (phoneNumberString: string) => {
+    var cleaned = ('' + phoneNumberString).replace(/\D/g, '');
+    let phone = ''
+    var match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        var intlCode = (match[1] ? '+1 ' : '');
+        phone = [intlCode, '', match[2], ' ', match[3], ' ', match[4]].join('');
+    }
+    return phone;
+}
