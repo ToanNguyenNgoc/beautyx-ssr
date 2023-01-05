@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import PopupQr from 'features/AppointmentDetail/PopupQr';
 import HeadMobile from 'features/HeadMobile';
 import { useDeviceMobile, useTransformOrderStatus } from 'hooks';
-import { IOrderV2 } from 'interface';
+import { IOrderV2, ITems } from 'interface';
 import IStore from 'interface/IStore';
 import React, { useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -30,6 +30,15 @@ function OrderDetail(props: OrderDetailProp) {
     const [openQr, setOpenQr] = useState(false)
     const { statusTransform } = useTransformOrderStatus(order.status)
     const IS_MB = useDeviceMobile()
+    const checkBlockItem = (item: ITems) => {
+        let isBlock = false
+        if (item.discount && item.discount?.discount_type === 'FINAL_PRICE') {
+            return isBlock = false
+        }
+        if (!order.organization?.is_momo_ecommerce_enable) return isBlock = true
+        if (!item?.productable?.is_momo_ecommerce_enable) return isBlock = true
+        return isBlock
+    }
     return (
         <Dialog fullScreen={IS_MB} open={open} onClose={() => setOpen(false)} >
             {IS_MB &&
@@ -38,7 +47,7 @@ function OrderDetail(props: OrderDetailProp) {
                     title='Thông tin đơn hàng'
                     element={order.status === 'PAID' ?
                         <XButton
-                            icon={icon.scanQrBtn}
+                            icon={icon.scanQrBtnOrange}
                             iconSize={22}
                             className={style.scan_btn}
                             onClick={() => setOpenQr(true)}
@@ -75,6 +84,7 @@ function OrderDetail(props: OrderDetailProp) {
                                     to={{ pathname: formatRouterLinkOrg(order.organization?.subdomain) }}
                                 >
                                     {order.organization?.name}
+                                    <img src={icon.chevronRight} alt="" />
                                 </Link>
                             }
                             <span style={{ color: statusTransform?.color }} className={style.order_status}>
@@ -86,6 +96,12 @@ function OrderDetail(props: OrderDetailProp) {
                                 order.items?.map((item, index: number) => (
                                     <li key={index} className={style.list_item}>
                                         <Item item={item} org={order.organization} />
+                                        {
+                                            checkBlockItem(item) &&
+                                            <div className={style.list_item_block}>
+                                                Dịch vụ/sản phẩm này không còn được bán
+                                            </div>
+                                        }
                                     </li>
                                 ))
                             }
@@ -111,6 +127,17 @@ function OrderDetail(props: OrderDetailProp) {
                         </div>
                     </div>
                     <div className={style.order_created}>
+                        {
+                            (order.payment_gateway?.transaction_uuid && order.origin_id) &&
+                            <div className={style.order_created_row}>
+                            <span className={style.order_created_row_label}>
+                                Mã
+                            </span>
+                            <span className={style.order_created_row_value}>
+                                {order.payment_gateway?.transaction_uuid}-{order.origin_id}
+                            </span>
+                        </div>
+                        }
                         <div className={style.order_created_row}>
                             <span className={style.order_created_row_label}>
                                 Thời gian đặt

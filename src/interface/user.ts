@@ -6,5 +6,6 @@ export interface User {
       id: number
       telephone: string
       token: string
-      token_expired_at: string
+      token_expired_at: string,
+      btx_points:number
 }

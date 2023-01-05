@@ -1,8 +1,9 @@
-import { IServicePromo } from "interface"
-import { ParamOrg, ParamProduct, ParamService } from "params-query/param.interface"
+import { IServicePromo, Productable } from "interface"
+import { ParamOrg, ParamProduct, ParamService, ParamsProductable } from "params-query/param.interface"
 import { unique } from "utils"
 import { pick } from 'lodash'
-import { useSwrInfinite } from "hooks"
+import { useFetchInfinite, useSwrInfinite } from "hooks"
+import { API_ROUTE_V } from "api/_api"
 
 export const useOrgs = (paramOrg: ParamOrg, condition: boolean) => {
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(condition, "/organizations", paramOrg)
@@ -67,3 +68,18 @@ export const useServicesGroup = (
     const isLoadSer = isValidating
     return { services, totalService, onLoadMoreService, isLoadSer, servicesGroupByOrg }
 }
+
+export const useProductableService = (param: ParamsProductable, condition: boolean) => {
+    const { resData, totalItem, isValidating, onLoadMore } = useFetchInfinite(
+        condition,
+        API_ROUTE_V.PRODUCTABLE('v3'),
+        { ...param, type: '1' }
+    )
+    const services: Productable[] = resData ?? []
+    const totalService = totalItem ?? 1
+    const onLoadMoreService = onLoadMore
+    const isLoad = isValidating
+    return { services, totalItem, }
+
+}
+

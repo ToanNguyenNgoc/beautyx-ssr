@@ -31,6 +31,7 @@ import { PopupMessage } from "components/Notification";
 import API_ROUTE from "api/_api";
 import { paramsUserProfile } from "params-query";
 import { phoneSupport } from "constants/index";
+import { User } from "interface";
 
 const routes = [
     {
@@ -67,9 +68,8 @@ function Account() {
     const history = useHistory()
     const location = useLocation()
     const IS_MB = useDeviceMobile();
-    const user_redux = useSelector((state: IStore) => state.USER.USER)
-    const { response } = useSwr(API_ROUTE.USER_PROFILE, true, paramsUserProfile)
-    const USER = { ...user_redux, response }
+    const {USER} = useSelector((state: IStore) => state.USER)
+    const userResponse:User = useSwr(API_ROUTE.USER_PROFILE, true, paramsUserProfile).response
     const onChangeAvatar = async (e: any) => {
         const { model_id } = await postMedia(e)
         await dispatch(updateAsyncUser({
@@ -172,19 +172,19 @@ function Account() {
                                     </p>
                                 </div>
                             </div>
-                            {/* <div className={style.user_coin}>
+                            <div className={style.user_coin}>
                                 <span className={style.user_coin_label}>BEAUTYX COIN</span>
                                 <div className={style.coin_cnt}>
                                     <img className={style.icon_left} src={icon.coins} alt="" />
                                     <div className={style.coin_value}>
                                         <p className={style.coin_value_label}>BTX</p>
                                         <div className={style.coin_value_count}>
-                                            <span>10000</span>
-                                            <img className={style.coin_value_count_icon} src={icon.coins} alt="" />
+                                            <span>{userResponse?.btx_points}</span>
+                                            {/* <img className={style.coin_value_count_icon} src={icon.coins} alt="" /> */}
                                         </div>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                         <div className={style.left_cnt_link}>
                             <ul className={style.link_list}>

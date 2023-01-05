@@ -28,10 +28,10 @@ function OrderItem(props: IProp) {
 
     const itemsReviewed: ItemReviewed[] = order.items?.map(i => {
         return {
-            id: i.productable_id,
-            name: i.productable.product_name ?? i.productable?.service_name,
-            image_url: i.productable?.image_url,
-            type: i.productable_type === "App\\Models\\CI\\Product" ? "PRODUCT" : "SERVICE"
+            id: i?.productable_id,
+            name: i?.productable?.product_name ?? i?.productable?.service_name,
+            image_url: i?.productable?.image_url,
+            type: i?.productable_type === "App\\Models\\CI\\Product" ? "PRODUCT" : "SERVICE"
         }
     })
     return (

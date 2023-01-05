@@ -79,7 +79,7 @@ const cart = createSlice({
                     value: templeCart.price,
                     currency: 'VND'
                 });
-                state.cartList.push(templeCart);
+                state.cartList.unshift(templeCart);
             }
             localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },

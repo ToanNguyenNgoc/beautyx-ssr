@@ -26,22 +26,31 @@ function OrderDetailBottom({ order }: { order: IOrderV2 }) {
         }
         return type
     }
+    const itemsPreOrder = items?.filter(i => i.productable?.is_momo_ecommerce_enable || (
+        i.discount && i.discount?.discount_type === 'FINAL_PRICE'
+    ))
+    let enablePreOrder = true
+    if (!order.organization?.is_momo_ecommerce_enable) enablePreOrder = false
+    if (itemsPreOrder.length === 0) enablePreOrder = false
     const handleReOrder = () => {
-        dispatch(onClearPrevCartItem())
-        for (var i = 0; i < items.length; i++) {
-            const type = checkType(items[i].productable_type)
-            const productable = items[i].productable
-            const detail: DetailProp = {
-                name: productable?.service_name ?? productable?.product_name ?? productable?.name,
-                type: type,
-                SPECIAL_PRICE: formatSalePriceService(productable?.special_price, productable?.special_price_momo),
-                PRICE: type === 'COMBO' ? productable?.use_value : (productable?.price ?? productable?.retail_price),
-                ...productable
+        if (enablePreOrder) {
+            dispatch(onClearPrevCartItem())
+            for (var i = 0; i < itemsPreOrder.length; i++) {
+                const type = checkType(itemsPreOrder[i].productable_type)
+                const discount = itemsPreOrder[i].discount
+                const productable = itemsPreOrder[i].productable
+                const detail: DetailProp = {
+                    name: productable?.service_name ?? productable?.product_name ?? productable?.name,
+                    type: type,
+                    SPECIAL_PRICE: formatSalePriceService(productable?.special_price, productable?.special_price_momo),
+                    PRICE: type === 'COMBO' ? productable?.use_value : (productable?.price ?? productable?.retail_price),
+                    ...productable
+                }
+                const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
+                const values = formatAddCart(detail, org, detail.type, 1, sale_price, discount, true);
+                dispatch(addCart({ ...values, user_id: USER.id }))
+                history.push('/gio-hang')
             }
-            const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
-            const values = formatAddCart(detail, org, detail.type, 1, sale_price, null, true);
-            dispatch(addCart({ ...values, user_id: USER.id }))
-            history.push('/gio-hang')
         }
     }
     return (
@@ -50,6 +59,7 @@ function OrderDetailBottom({ order }: { order: IOrderV2 }) {
                 title='Mua lại'
                 className={style.bottom_btn}
                 onClick={handleReOrder}
+                style={enablePreOrder ? {} : { opacity: '0.4', cursor: 'no-drop' }}
             />
         </div>
     );
