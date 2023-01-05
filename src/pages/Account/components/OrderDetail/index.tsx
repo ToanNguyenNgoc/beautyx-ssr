@@ -134,7 +134,7 @@ function OrderDetail(props: OrderDetailProp) {
                         }
                     </div>
                 </div>
-                {/* <OrderDetailBottom order={order} /> */}
+                <OrderDetailBottom order={order} />
             </div>
         </Dialog>
     );

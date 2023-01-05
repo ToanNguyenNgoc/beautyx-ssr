@@ -50,7 +50,8 @@ const cart = createSlice({
             );
 
             if (iIndex >= 0) {
-                state.cartList[iIndex].quantity += action.payload.quantity;
+                state.cartList[iIndex].quantity += action.payload.quantity
+                state.cartList[iIndex].isConfirm = action.payload.isConfirm
                 tracking.ADD_CART_CLICK(
                     state.cartList[iIndex].org_id,
                     state.cartList[iIndex].id,
@@ -219,6 +220,7 @@ const cart = createSlice({
                 };
             });
             state.cartList = newCartList;
+            localStorage.setItem(storageName, JSON.stringify(state.cartList));
         },
         //add discount by org_id to cart
         addVoucherByOrg: (state, action) => {

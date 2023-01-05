@@ -34,7 +34,7 @@ import { phoneSupport } from "constants/index";
 
 const routes = [
     {
-        path: `/tai-khoan/thong-tin-ca-nhan`,
+        path: '/tai-khoan/thong-tin-ca-nhan',
         component: <Information />,
     },
     {
