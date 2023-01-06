@@ -11,6 +11,11 @@ export function useFetchInfinite(
     let resData: any[] = [].filter(Boolean)
     let totalItem: number = 1
     let totalPage: number = 1
+
+    let resDataV2: any[] = [].filter(Boolean)
+    let totalItemV2: number = 1
+    let totalPageV2: number = 1
+
     if (query) {
         paramsURL = `&${new URLSearchParams(pickBy(query, identity)).toString()}`
     }
@@ -24,12 +29,17 @@ export function useFetchInfinite(
         totalItem = data[0]?.data?.context?.total ?? data[0]?.data?.total;
         resData = Array.isArray(data) ? data?.map((i: any) => (i?.data?.context?.data ?? i?.data?.data?.hits)).flat().filter(Boolean) : [];
         totalPage = data[0]?.data?.context?.total_page ?? data[0]?.data?.total_page
+
+        totalItemV2 = data[0]?.context?.total
+        resDataV2 = Array.isArray(data) ? data?.map((i: any) => (i?.context?.data)).flat().filter(Boolean) : []
+        totalPageV2 = data[0]?.context?.total_page ?? data[0]?.data?.total_page
     }
     const onLoadMore = () => {
         setSize(size + 1)
     }
     return {
         totalItem, resData, totalPage,
+        totalItemV2, resDataV2, totalPageV2,
         onLoadMore, mutate, isValidating, error
     }
 }

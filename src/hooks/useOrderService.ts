@@ -13,10 +13,9 @@ export function useOrderService() {
     const params: ParamOrder = {
         ...paramOrder,
         "filter[status]": 'PAID',
-        'include': 'items|organization|appointments', //btxReward
         "filter[withServicesSold]": true,
         "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
-        "limit": 14
+        "limit": 8
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
         USER,

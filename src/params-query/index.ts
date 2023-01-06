@@ -88,7 +88,8 @@ export const paramOrder: ParamOrder = {
     "filter[status]": "",
     "filter[withServicesSold]": true,
     "filter[productable]": true,
-    "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
+    // "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
+    'include': 'items|organization|appointments', //btxReward
     "sort": "-created_at",
     "append": "qr_link"
 }
@@ -139,10 +140,20 @@ export const paramsComment = {
     "sort": "-created_at",
     "append": "media_url"
 }
-export const paramsProductable: ParamsProductable = {
+export const paramsProductable:ParamsProductable = {
     "limit": 15,
     "keyword": "",
     "on_ecommerce": true,
     "location": "",
-    "sort": ""
+    "sort": "",
+    "type":"",
+    "organization_id":"",
+    "discount_price":"",
+    "discount_ecommerce_price":"",
+    "min_price":"",
+    "max_price":"",
+    "discount_min_price":"",
+    "discount_max_price":"",
+    "discount_min_price_ecommerce":"",
+    "discount_max_price_ecommerce":"",
 }

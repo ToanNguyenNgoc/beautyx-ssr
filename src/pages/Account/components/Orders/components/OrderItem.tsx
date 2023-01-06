@@ -3,7 +3,6 @@ import { IOrderV2, IOrganization, ItemReviewed, ITems } from "interface";
 import icon from "constants/icon";
 import { clst, onErrorImg } from "utils";
 import formatPrice from "utils/formatPrice";
-import PopupQr from "features/AppointmentDetail/PopupQr";
 import style from '../order.module.css'
 import dayjs from "dayjs";
 import { XButton } from "components/Layout";
@@ -11,6 +10,7 @@ import { useDeviceMobile, useTransformOrderStatus } from "hooks";
 import { AppContext } from "context/AppProvider";
 import Review from "features/Review";
 import OrderDetail from "../../OrderDetail";
+import { PopupQr } from "components/Notification";
 
 interface IProp {
     order: IOrderV2;
@@ -28,10 +28,10 @@ function OrderItem(props: IProp) {
 
     const itemsReviewed: ItemReviewed[] = order.items?.map(i => {
         return {
-            id: i.productable_id,
-            name: i.productable.product_name ?? i.productable?.service_name,
-            image_url: i.productable?.image_url,
-            type: i.productable_type === "App\\Models\\CI\\Product" ? "PRODUCT" : "SERVICE"
+            id: i?.productable_id,
+            name: i?.productable?.product_name ?? i?.productable?.service_name,
+            image_url: i?.productable?.image_url,
+            type: i?.productable_type === "App\\Models\\CI\\Product" ? "PRODUCT" : "SERVICE"
         }
     })
     return (

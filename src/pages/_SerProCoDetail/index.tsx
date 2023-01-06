@@ -18,7 +18,7 @@ import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { addCart } from 'redux/cart';
+import { addCart, onClearPrevCartItem } from 'redux/cart';
 import { PopupMessage } from 'components/Notification';
 import { clearAllServices } from 'redux/booking';
 import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
@@ -559,9 +559,10 @@ const DetailQuantity = (
     const { USER } = useSelector((state: IStore) => state.USER)
     const history = useHistory()
     const onDescQuantity = () => quantity > 1 && setQuantity(quantity - 1)
+    //transform data add to cart
+    const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
+    const values = formatAddCart(detail, org, detail.type, quantity, sale_price);
     const handleAddCart = () => {
-        const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
-        const values = formatAddCart(detail, org, detail.type, quantity, sale_price);
         if (USER) {
             const valuesCart = {
                 ...values,
@@ -588,13 +589,15 @@ const DetailQuantity = (
         }
     }
     const onBuyNow = () => {
-        const TYPE = "BOOK_NOW";
-        const products = [{ product: detail, quantity: quantity }];
         if (USER) {
-            history.push({
-                pathname: "/mua-hang",
-                state: { org, products, TYPE },
-            });
+            dispatch(onClearPrevCartItem())
+            const valuesCart = {
+                ...values,
+                isConfirm:true,
+                user_id: USER.id
+            }
+            dispatch(addCart(valuesCart))
+            history.push('/gio-hang')
         } else {
             history.push("/sign-in?1");
         }
@@ -629,7 +632,7 @@ const DetailQuantity = (
                 {(detail.type === 'PRODUCT' || detail.type === 'COMBO') &&
                     <XButton
                         style={draType === "NOW" ? { display: 'flex' } : {}}
-                        title={t('detail_item.payment_now')}
+                        title={t('cart.payment_now')}
                         className={style.add_cart_btn}
                         onClick={onBuyNow}
                     />

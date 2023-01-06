@@ -21,7 +21,6 @@ import { LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
-import DealBanner from "pages/DealBanner";
 import DiscountDetail from "pages/_DiscountDetail";
 import HomeDiscountList from "features/HomeResults/HomeDiscountList";
 import CategoryTree from "features/CategoryTree";
@@ -31,7 +30,6 @@ import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
 import Calendar from "pages/Calendar";
 import Cart from "pages/Cart";
-import VoucherPage from "pages/VoucherPage";
 import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
@@ -45,9 +43,10 @@ const PostDetail = lazy(() => import('pages/Community/pages/PostDetail'))
 const GroupDetail = lazy(() => import('pages/Community/pages/GroupDetail'))
 
 //update import lazy
-const BuyNow = lazy(() => import('features/BuyNow'))
+const DealBanner = lazy(() => import('pages/DealBanner'))
+const VoucherPage = lazy(() => import('pages/VoucherPage'))
 const Booking = lazy(() => import('features/Booking'))
-const HomeListProvince = lazy(() => import('features/HomeResults/HomeListProvince'))
+const HomeListProvince = lazy(() => import('pages/Provinces'))
 const HomeMap = lazy(() => import('features/HomeMap'))
 const Partner = lazy(() => import("../pages/Partner"))
 const Policy = lazy(() => import('pages/Policy'))
@@ -273,10 +272,6 @@ function RouterConfig() {
         {
             path: "/thanh-toan-momo/:tran_uid",
             component: <PaymentStatus />,
-        },
-        {
-            path: "/mua-hang",
-            component: <BuyNow />,
         },
         {
             path: "/gio-hang",

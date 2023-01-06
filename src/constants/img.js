@@ -21,6 +21,7 @@ import clinic from "../assets/image/tags/clinic.jpg";
 import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
 import beautyx from "../assets/image/beautyx_icon.png";
 import Partner from 'assets/image/partner.png'
+import iconAppointment from 'assets/image/iconAppointment.png'
 
 // social
 import facebook from "../assets/image/social/facebook.png";
@@ -68,7 +69,8 @@ const img = {
     home_blog,
     home_partners,
     beautyX,
-    Partner
+    Partner,
+    iconAppointment
 };
 export const social = {
     facebook,

@@ -96,6 +96,10 @@ body>iframe {
 .MuiContainer-root {
     padding: 0px !important;
 }
+.MuiDialog-paper{
+    max-width: unset !important;
+    max-height: unset !important;
+}
 
 
 /* .MuiPaper-root{

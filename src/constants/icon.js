@@ -242,6 +242,7 @@ import userGray from 'assets/icon/userGray.svg'
 import startBold from 'assets/icon/startBold.svg'
 import coins from 'assets/icon/coins.svg'
 import paperWhite from 'assets/icon/paperWhite.svg'
+import scanQrBtnOrange from 'assets/icon/scanQrBtnOrange.svg'
 
 const icon = {
     noApply,
@@ -457,6 +458,6 @@ const icon = {
     trendGreen, downLoadWhite,
     thumbUp, thumbUpPurple, chatSquare,
     createAtGray, postGray, userGray, comment_bold_purple, startBold, coins,
-    paperWhite
+    paperWhite, scanQrBtnOrange
 };
 export default icon;

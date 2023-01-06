@@ -7,9 +7,6 @@ const API_3RD = {
         return `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${keyMapBox}&language=vi&country=vn`
     },
     API_MAP_BOX_KEY_WORD: (keyword: string) => `https://api.mapbox.com/geocoding/v5/mapbox.places/${keyword}.json?access_token=${keyMapBox}&country=vn`,
-}
-export const API_TIKTOK = {
-    getVideoByUrl: `${API_3RD.API_NODE}/tiktok/getVideoByUrl`,
-    getCommentsByUrl:`${API_3RD.API_NODE}/tiktok/getCommentsByUrl`,
+    API_PARTNER: "https://myspa.vn/Frontend/register_momo"
 }
 export default API_3RD

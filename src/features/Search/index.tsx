@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useCallback, KeyboardEvent, useState, useContext } from "react"
+import React, { useCallback, KeyboardEvent, useState } from "react"
 import { useDeviceMobile, useFetch } from "hooks"
 import { onErrorImg } from 'utils'
 import { paramOrgs, paramsProducts, paramsServices } from "params-query"
@@ -74,8 +73,14 @@ function Search(props: SearchProps) {
         "limit": IS_MB ? 4 : 6,
         "filter[keyword]": KEY_WORD_DE
     }
+    // const paramsProductableServices: ParamsProductable = {
+    //     ...paramsProductable,
+    //     "limit": 4,
+    //     "keyword": KEY_WORD_DE
+    // }
     const { orgs, totalOrg, isLoad } = useOrgs(PARAM_ORG, KEY_WORD !== "")
-    const { services, totalService, isLoadSer } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    const { services, totalService } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    // const { services, totalService } = useProductableService(paramsProductableServices, KEY_WORD !== '')
     const { products, totalProduct, isLoadPr } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
     //
     const tabs = [
@@ -227,6 +232,26 @@ function Search(props: SearchProps) {
                                 ))
                             }
                         </ul>
+                        {/* <ul className={style.result_list}>
+                            {
+                                services.map((item: Productable, index: number) => (
+                                    <li
+                                        onClick={() => {
+                                            onCloseSearch();
+                                            USER && postHistorySearch(
+                                                item.content?.name,
+                                                'SERVICE',
+                                                item.content?.organization_id,
+                                                item.content?.id
+                                            )
+                                        }}
+                                        key={index} className={style.result_item_cnt}
+                                    >
+                                        <ProductableItem changeStyle productable={item} />
+                                    </li>
+                                ))
+                            }
+                        </ul> */}
                     </div>
                 }
                 {

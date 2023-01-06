@@ -19,6 +19,21 @@ export interface ITems {
     discount_id: null | number;
     discount: IDiscountPar
 }
+export interface BTX_points {
+    created_at: string,
+    deleted_at?: string,
+    expired_at: string,
+    id: number,
+    reward_points: number,
+    rewardable_id: number,
+    rewardable_type: string,
+    spent_points: number,
+    spentable_id?: number,
+    spentable_type?: any,
+    type: string,
+    updated_at: string,
+    user_id: string
+}
 export interface IOrderOrigin {
     id: number;
     uid: number;
@@ -100,6 +115,7 @@ export interface IOrderV2 {
     };
     items: ITems[]
     origin?: IOrderOrigin;
+    btx_reward: BTX_points
 }
 export interface ItemReviewed {
     id: number,

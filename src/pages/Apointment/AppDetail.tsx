@@ -17,6 +17,38 @@ function AppDetail(props: AppDetailProps) {
     const { open, setOpen, app } = props;
     const IS_MB = useDeviceMobile();
     return (
+        // <Dialog
+        //     open={open}
+        //     onClose={() => setOpen(false)}
+        //     fullScreen={IS_MB}
+        // >
+        //     <div className={style.container}>
+        //         <div className={style.body}>
+        //             <div className={style.status}>
+        //                 <img src={icon.calendarWhite} alt="" />
+        //                 <div className={style.status_content}>
+        //                     <span className={style.status_content_label}>
+        //                         Trạng thái lịch hẹn
+        //                     </span>
+        //                     <span className={style.status_content_txt}>
+        //                         {app.status}
+        //                     </span>
+        //                 </div>
+        //             </div>
+        //             <div className={style.info}>
+        //                 <p className={style.info_title}>
+        //                     Thông tin lịch hẹn
+        //                 </p>
+        //                 <div className={style.info_row}>
+        //                     <span className={style.info_row_label}>Thời gian</span>
+        //                     <span className={style.info_row_value}>
+        //                         {dayjs(app.created_at).format('DD/MM/YYYY HH:mm')}
+        //                     </span>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //     </div>
+        // </Dialog>
         <Dialog
             open={open}
             onClose={() => setOpen(false)}

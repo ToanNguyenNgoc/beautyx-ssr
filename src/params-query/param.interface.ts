@@ -54,9 +54,19 @@ export interface ParamOrder {
     "append": string
 }
 export interface ParamsProductable {
-    "limit": number | string,
-    "keyword": string,
-    "on_ecommerce": string | boolean,
-    "location": string,
-    "sort": "distance|random" | "distance" | "random" | ""
+    "limit"?: number | string,
+    "keyword"?: string,
+    "on_ecommerce"?: "" | boolean,
+    "location"?: string,
+    "sort"?: "distance|random" | "distance" | "random" | "",
+    "type"?: "" | "1" | "2" | "3" | "4",  //SERVICE:1|PRODUCT:2|PREPAY CARD:3|TREATMENT COMBO:4
+    "organization_id"?: "" | number,
+    "discount_price"?: "" | boolean,
+    "discount_ecommerce_price"?: "" | boolean,
+    "min_price"?: "" | number,
+    "max_price"?: "" | number,
+    "discount_min_price"?: "" | number,
+    "discount_max_price"?: "" | number,
+    "discount_min_price_ecommerce"?: "" | number,
+    "discount_max_price_ecommerce"?: "" | number,
 }

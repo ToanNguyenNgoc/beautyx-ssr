@@ -25,6 +25,7 @@ import {
   OrgInformation, OrgDealHot, OrgGalleries
 } from "./components/OrgPages";
 import { useGalleriesQuery } from "redux-toolkit-query/hook-home";
+import API_ROUTE from "api/_api";
 
 
 function MerchantDetail() {
@@ -34,7 +35,7 @@ function MerchantDetail() {
   const params: any = useParams()
   const { subdomain } = params
 
-  const { response, error, isValidating } = useSwr(`/organizations/${subdomain}`, subdomain)
+  const { response, error, isValidating } = useSwr(API_ROUTE.ORG(subdomain), subdomain)
 
   const org: IOrganization = response
   const { data } = useGalleriesQuery(subdomain)

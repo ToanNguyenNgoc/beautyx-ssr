@@ -29,7 +29,6 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
-   
     
     return (
         <>

@@ -1,5 +1,9 @@
+import { baseURL } from "./axios"
+const API_ROUTE_V = {
+    PRODUCTABLE: (version?: 'v1' | 'v2' | 'v3') => `${baseURL?.replace('v1/', version ?? 'v1')}/productables`
+}
 const API_ROUTE = {
-    USER_PROFILE:`/users/profile`,
+    USER_PROFILE: `/users/profile`,
     PROVINCES_CODE_DISTRICTS: (province_code: number | string) => `/provinces/${province_code}/districts`,
     ORGS: '/organizations',
     ORG: (id: number | string) => `/organizations/${id}`,
@@ -24,5 +28,6 @@ const API_ROUTE = {
     APPOINTMENTS: '/appointments',
     PAYMENT_METHOD: '/paymentmethods'
 }
+export { API_ROUTE_V }
 
 export default API_ROUTE
