@@ -70,16 +70,16 @@ export const useServicesGroup = (
 }
 
 export const useProductableService = (param: ParamsProductable, condition: boolean) => {
-    const { resData, totalItem, isValidating, onLoadMore } = useFetchInfinite(
+    const { resDataV2, totalItemV2, isValidating, onLoadMore } = useFetchInfinite(
         condition,
         API_ROUTE_V.PRODUCTABLE('v3'),
         { ...param, type: '1' }
     )
-    const services: Productable[] = resData ?? []
-    const totalService = totalItem ?? 1
+    const services: Productable[] = resDataV2
+    const totalService = totalItemV2
     const onLoadMoreService = onLoadMore
     const isLoad = isValidating
-    return { services, totalItem, }
+    return { services, onLoadMoreService, isLoad, totalService }
 
 }
 

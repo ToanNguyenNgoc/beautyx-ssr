@@ -151,7 +151,7 @@ export const paramsProductable:ParamsProductable = {
     "discount_price":"",
     "discount_ecommerce_price":"",
     "min_price":"",
-    "max_price":"max_price",
+    "max_price":"",
     "discount_min_price":"",
     "discount_max_price":"",
     "discount_min_price_ecommerce":"",

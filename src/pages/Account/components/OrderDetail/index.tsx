@@ -1,9 +1,9 @@
 import { Dialog } from '@mui/material';
 import { XButton } from 'components/Layout';
+import { PopupQr } from 'components/Notification';
 import icon from 'constants/icon';
 import { AppContext } from 'context/AppProvider';
 import dayjs from 'dayjs';
-import PopupQr from 'features/AppointmentDetail/PopupQr';
 import HeadMobile from 'features/HeadMobile';
 import { useDeviceMobile, useTransformOrderStatus } from 'hooks';
 import { IOrderV2, ITems } from 'interface';

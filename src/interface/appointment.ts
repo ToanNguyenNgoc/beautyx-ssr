@@ -6,7 +6,7 @@ export interface Appointment {
   date: string;
   branch_id: null;
   branch?: IBranch;
-  created_at: String;
+  created_at: string;
   deleted_at: null;
   id: number;
   note: string;

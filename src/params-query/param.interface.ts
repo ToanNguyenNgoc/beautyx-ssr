@@ -64,7 +64,7 @@ export interface ParamsProductable {
     "discount_price"?: "" | boolean,
     "discount_ecommerce_price"?: "" | boolean,
     "min_price"?: "" | number,
-    "max_price"?: "max_price" | number,
+    "max_price"?: "" | number,
     "discount_min_price"?: "" | number,
     "discount_max_price"?: "" | number,
     "discount_min_price_ecommerce"?: "" | number,

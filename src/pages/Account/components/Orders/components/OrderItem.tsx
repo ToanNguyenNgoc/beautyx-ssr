@@ -3,7 +3,6 @@ import { IOrderV2, IOrganization, ItemReviewed, ITems } from "interface";
 import icon from "constants/icon";
 import { clst, onErrorImg } from "utils";
 import formatPrice from "utils/formatPrice";
-import PopupQr from "features/AppointmentDetail/PopupQr";
 import style from '../order.module.css'
 import dayjs from "dayjs";
 import { XButton } from "components/Layout";
@@ -11,6 +10,7 @@ import { useDeviceMobile, useTransformOrderStatus } from "hooks";
 import { AppContext } from "context/AppProvider";
 import Review from "features/Review";
 import OrderDetail from "../../OrderDetail";
+import { PopupQr } from "components/Notification";
 
 interface IProp {
     order: IOrderV2;

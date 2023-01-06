@@ -1,3 +1,4 @@
 export * from "./PopupNotification"
 export * from "./PopupMessage"
 export * from "./PopupSnack"
+export * from "./PopupQr"

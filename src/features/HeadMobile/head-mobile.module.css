@@ -64,7 +64,8 @@
     }
     .head_left {
         width: fit-content;
-        max-width: 46px;
+        min-width: 32px;
+        max-width: 56px;
         height: 32px;
         display: flex;
         align-items: center;
