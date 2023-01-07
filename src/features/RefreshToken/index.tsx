@@ -1,7 +1,7 @@
 import { auth } from 'api/authApi';
 import { XButton } from 'components/Layout';
 import { PopupNotification } from 'components/Notification';
-import { useNoti } from 'interface/useNoti';
+import { useNoti } from 'hooks';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';

@@ -5,9 +5,8 @@ import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
 import { XButton } from "components/Layout";
-import { postMediaMulti, useDeviceMobile } from "hooks";
+import { postMediaMulti, useDeviceMobile, useNoti } from "hooks";
 import commentsApi from "api/commentsApi";
-import { useNoti } from "interface/useNoti";
 import { IOrganization, ItemReviewed } from "interface";
 import style from './review.module.css'
 import { PopupSnack } from "components/Notification";

@@ -22,7 +22,7 @@ import LoadDetail from "components/LoadingSketion/LoadDetail";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 import DiscountDetail from "pages/_DiscountDetail";
-import HomeDiscountList from "features/HomeResults/HomeDiscountList";
+import Discounts from "pages/Discounts";
 import CategoryTree from "features/CategoryTree";
 import ProductsByCate from "features/CategoryTree/ProductsByCate";
 import HomeCateResult from "pages/HomeCateResult";
@@ -197,7 +197,7 @@ function RouterConfig() {
         },
         {
             path: "/giam-gia",
-            component: <HomeDiscountList />,
+            component: <Discounts />,
         },
         {
             path: "/-danh-muc/",

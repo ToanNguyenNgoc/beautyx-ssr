@@ -13,6 +13,16 @@ export interface ParamOrg {
     "sort"?: string,
     "include"?: string
 }
+export interface ParamDiscounts {
+    "page"?: number,
+    "limit"?: number,
+    "filter[platform]": "" | "MOMO" | "MOBA" | "BEAUTYX" | "TIKI",
+    "filter[discount_type]"?: "" | "SUB_TOTAL" | "FINAL_PRICE" | "PRODUCT",
+    "filter[organization_id]"?: "" | number,
+    "filter[location]"?: string,
+    "sort"?: string   //title|created_at|coupon_code|discount_value|total|used|limit|priority
+    "append"?: string
+}
 export interface ParamService {
     "limit"?: number,
     "filter[keyword]"?: string,

@@ -105,7 +105,7 @@ const FormTelephone = (props: FormTelephoneProps) => {
                 telephone: values.telephone,
                 verification_id: res.verificationId
             })
-            resultLoad('', false)
+            resultLoad('')
             setStep(2)
         } catch (error) {
             console.log(error);
@@ -213,7 +213,6 @@ const FormOtp = (props: FormOtpProps) => {
                 dispatch(putUser({ ...USER, telephone: data.telephone }));
                 resultLoad(
                     'Thay đổi thông tin thành công',
-                    true,
                     <XButton
                         title='Trở lại giỏ hàng'
                         onClick={() => history.goBack()}
@@ -283,7 +282,7 @@ const FormOtp = (props: FormOtpProps) => {
                     content={noti.message}
                     open={noti.openAlert}
                     setOpen={onCloseNoti}
-                    children={noti.child}
+                    children={noti.element}
                 />
             </div>
         </>

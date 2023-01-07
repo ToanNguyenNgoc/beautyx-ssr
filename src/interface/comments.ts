@@ -6,7 +6,7 @@ export interface ICommentChildMedia{
 
 export interface ICommentChild {
     id?: number,
-    body: number,
+    body: string,
     user_id: number,
     user: User,
     organization_id?: number,

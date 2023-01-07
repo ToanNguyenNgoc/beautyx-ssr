@@ -1,16 +1,16 @@
 import { Dialog } from "@mui/material";
 import React, { useContext } from "react";
-import icon from "../../../constants/icon";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { AppContext } from "../../../context/AppProvider";
 import API_3RD from "api/3rd-api";
 import axios from "axios";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import { useNoti } from "interface/useNoti";
 import { PopupNotification } from "components/Notification";
 import { Input, XButton } from "components/Layout";
 import '../style.css'
+import { useNoti } from "hooks";
+import { AppContext } from "context/AppProvider";
+import icon from "constants/icon";
 
 
 export default function PopupDetailContact(props: any) {

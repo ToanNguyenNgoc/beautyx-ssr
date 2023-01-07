@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Dialog } from '@mui/material';
 import style from "./appdetail.module.css";
 import dayjs from 'dayjs';
 import { useDeviceMobile } from 'hooks';
 import icon from 'constants/icon';
-import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { AppointmentTime } from 'interface/appointment';
+import { onErrorImg } from 'utils';
+import HeadMobile from 'features/HeadMobile';
+import { AppContext } from 'context/AppProvider';
+import { XButton } from 'components/Layout';
+import { PopupQr } from 'components/Notification';
 
 interface AppDetailProps {
     open: boolean,
@@ -14,143 +18,96 @@ interface AppDetailProps {
 }
 
 function AppDetail(props: AppDetailProps) {
-    const { open, setOpen, app } = props;
-    const IS_MB = useDeviceMobile();
+    const { t } = useContext(AppContext)
+    const { open, setOpen, app } = props
+    const [openQr, setOpenQr] = useState(false)
+    const IS_MB = useDeviceMobile()
     return (
-        // <Dialog
-        //     open={open}
-        //     onClose={() => setOpen(false)}
-        //     fullScreen={IS_MB}
-        // >
-        //     <div className={style.container}>
-        //         <div className={style.body}>
-        //             <div className={style.status}>
-        //                 <img src={icon.calendarWhite} alt="" />
-        //                 <div className={style.status_content}>
-        //                     <span className={style.status_content_label}>
-        //                         Trạng thái lịch hẹn
-        //                     </span>
-        //                     <span className={style.status_content_txt}>
-        //                         {app.status}
-        //                     </span>
-        //                 </div>
-        //             </div>
-        //             <div className={style.info}>
-        //                 <p className={style.info_title}>
-        //                     Thông tin lịch hẹn
-        //                 </p>
-        //                 <div className={style.info_row}>
-        //                     <span className={style.info_row_label}>Thời gian</span>
-        //                     <span className={style.info_row_value}>
-        //                         {dayjs(app.created_at).format('DD/MM/YYYY HH:mm')}
-        //                     </span>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </Dialog>
         <Dialog
             open={open}
             onClose={() => setOpen(false)}
-            fullScreen={IS_MB && true}
+            fullScreen={IS_MB}
         >
-            <div className={style.app_detail_cnt}>
-                <div className={style.app_detail_head}>
-                    <div className={style.app_detail_head_left}>
-                        <button
-                            onClick={() => setOpen(false)}
-                        >
-                            <img
-                                src={icon.chevronLeft} alt=""
-                                width={26} height={26}
-                            />
-                        </button>
-                        <span className={style.app_detail_head_text}>
-                            Thông tin lịch hẹn
-                        </span>
-                        <div className={style.mb_right}></div>
-                    </div>
-                    <div className={style.app_detail_head_time}>
-                        <div style={{ display: "flex" }} >
-                            <div className={style.app_detail_date}>
-                                ngày: <span>{dayjs(app.time_start).format("DD/MM/YYYY")}</span>
-                            </div>
-                            <div className={style.app_detail_date}>
-                                Giờ: <span>{dayjs(app.time_start).format("hh:mm A")}</span>
-                            </div>
-                        </div>
-                        <div className={style.app_detail_head_status}>
-                            {app.status}
-                        </div>
-                    </div>
-                </div>
-                <div className={style.app_detail_body}>
-                    <div className={style.app_detail_body_left}>
-                        <span className={style.app_detail_title}>
-                            Danh sách dịch vụ
-                        </span>
-                        <ul className={style.app_services}>
-                            {
-                                app.services?.map((item: any, index: number) => (
-                                    <li key={index} className={style.app_service_item}>
-                                        <div className={style.app_service_item_img}>
-                                            <img
-                                                src={item.image ? item.image_url : app.organization?.image_url}
-                                                alt=''
-                                                width={"100%"} height={"100%"}
-                                            />
-                                        </div>
-                                        <div className={style.app_service_item_de}>
-                                            <div>
-                                                <span className={style.service_name}>
-                                                    {item.service_name}
-                                                </span>
-                                                <div className={style.service_detail}>
-                                                    {
-                                                        item.duration > 0 &&
-                                                        <div className={style.service_detail_item}>
-                                                            <span>Thời gian:</span>
-                                                            <h4>{item.duration} phút</h4>
-                                                        </div>
-                                                    }
-                                                    <div className={style.service_detail_item}>
-                                                        <h5>{item.description}</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className={style.app_service_item_price}>
-                                                {
-                                                    formatSalePriceService(item.special_price, item.special_price_momo) > 0 ?
-                                                        `${formatPrice(formatSalePriceService(
-                                                            item.special_price,
-                                                            item.special_price_momo))}đ`
-                                                        :
-                                                        `${formatPrice(item.price)}đ`
-                                                }
-                                            </div>
-                                        </div>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-                    <div className={style.app_detail_body_right}>
-                        <div className={style.app_detail_body_right_section}>
-                            <span className={style.app_detail_title}>
-                                Địa chỉ
+            {IS_MB &&
+                <HeadMobile
+                    onBack={() => setOpen(false)}
+                    title={t('pm.payment_booking')}
+                    element={<XButton
+                        icon={icon.scanQrBtnOrange}
+                        iconSize={22}
+                        className={style.scan_btn}
+                        onClick={() => setOpenQr(true)}
+                    />}
+                />}
+            <PopupQr open={openQr} setOpen={setOpenQr} qr={app.qr_link} />
+            <div className={style.container}>
+                <div className={style.body}>
+                    <div className={style.status}>
+                        <img src={icon.calendarWhite} alt="" />
+                        <div className={style.status_content}>
+                            <span className={style.status_content_label}>
+                               {t('Home.appointment_status')}
                             </span>
-                            <span className={style.app_detail_body_right_text}>
+                            <span className={style.status_content_txt}>
+                                {app.status}
+                            </span>
+                        </div>
+                    </div>
+                    <div className={style.info}>
+                        <p className={style.info_title}>
+                           {t('order.appo_detail')}
+                        </p>
+                        <div className={style.info_row}>
+                            <span className={style.info_row_label}>{t('order.time')}:</span>
+                            <span className={style.info_row_value}>
+                                {dayjs(app.time_start).format('DD/MM/YYYY  HH:mm')}-
+                                {dayjs(app.time_end).format('HH:mm')}
+                            </span>
+                        </div>
+                        <div className={style.info_row}>
+                            <span className={style.info_row_label}>{t('Mer_de.address')}:</span>
+                            <span className={style.info_row_value}>
                                 {app.branch?.full_address ?? app.organization?.full_address}
                             </span>
                         </div>
-                        <div className={style.app_detail_body_right_section}>
-                            <span className={style.app_detail_title}>
-                                Ghi chú
-                            </span>
-                            <span className={style.app_detail_body_right_text}>
-                                {app.note !== "" && app.note}
-                            </span>
+                    </div>
+                    <div className={style.org}>
+                        <div className={style.org_img}>
+                            <img
+                                src={app.branch?.image_url ?? app.organization?.image_url}
+                                onError={(e) => onErrorImg(e)}
+                                alt="" />
                         </div>
+                        <span className={style.org_name}>
+                            {app.branch?.name ?? app.organization?.name}
+                        </span>
+                    </div>
+                    <ul className={style.list_service}>
+                        {
+                            app.services?.map(service => (
+                                <li key={service.id} className={style.list_service_item}>
+                                    <div className={style.service}>
+                                        <div className={style.service_img}>
+                                            <img src={service?.image_url ?? app.organization?.image_url}
+                                                alt="" onError={(e) => onErrorImg(e)}
+                                            />
+                                        </div>
+                                        <div className={style.service_detail}>
+                                            <p className={style.service_name}>{service.service_name}</p>
+                                            {
+                                                service.duration &&
+                                                <p className={style.service_duration}>
+                                                    Thời gian:{" "}{service.duration}
+                                                </p>
+                                            }
+                                        </div>
+                                    </div>
+                                </li>
+                            ))
+                        }
+                    </ul>
+                    <div className={style.note}>
+                        {app.note}
                     </div>
                 </div>
             </div>
