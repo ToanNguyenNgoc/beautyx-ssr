@@ -32,7 +32,6 @@ import API_ROUTE from "api/_api";
 import { paramsUserProfile } from "params-query";
 import { phoneSupport } from "constants/index";
 import { User } from "interface";
-import { token } from "api/authHeader";
 
 const routes = [
     {
@@ -70,7 +69,7 @@ function Account() {
     const location = useLocation()
     const IS_MB = useDeviceMobile();
     const {USER} = useSelector((state: IStore) => state.USER)
-    const userResponse:User = useSwr(API_ROUTE.USER_PROFILE, token, paramsUserProfile).response
+    const userResponse:User = useSwr(API_ROUTE.USER_PROFILE, USER, paramsUserProfile).response
     const onChangeAvatar = async (e: any) => {
         const { model_id } = await postMedia(e)
         await dispatch(updateAsyncUser({
@@ -180,7 +179,7 @@ function Account() {
                                     <div className={style.coin_value}>
                                         <p className={style.coin_value_label}>BTX</p>
                                         <div className={style.coin_value_count}>
-                                            <span>{userResponse?.btx_points ?? 0}</span>
+                                            <span>{userResponse?.btx_points ?? USER?.btx_points}</span>
                                             {/* <img className={style.coin_value_count_icon} src={icon.coins} alt="" /> */}
                                         </div>
                                     </div>
