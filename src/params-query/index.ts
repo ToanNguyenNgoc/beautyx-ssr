@@ -2,7 +2,7 @@
 
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm"
 import dayjs from "dayjs"
-import { ParamOrg, ParamService, ParamProduct, ParamOrder, ParamsProductable } from "./param.interface"
+import { ParamOrg, ParamService, ParamProduct, ParamOrder, ParamsProductable, ParamDiscounts } from "./param.interface"
 
 const PLAT_FORM = EXTRA_FLAT_FORM()
 
@@ -89,11 +89,12 @@ export const paramOrder: ParamOrder = {
     "filter[withServicesSold]": true,
     "filter[productable]": true,
     // "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
-    'include': 'items|organization|appointments', //btxReward
+    'include': 'items|organization|appointments|btxReward', //btxReward
     "sort": "-created_at",
     "append": "qr_link"
 }
-export const paramDiscounts = {
+export const paramDiscounts:ParamDiscounts = {
+    "limit":20,
     "filter[platform]": "MOMO",
     "filter[discount_type]": "",
     "filter[organization_id]": "",

@@ -59,6 +59,13 @@
 .cmt_item_par_body {
     width: 66.66%;
 }
+.par_body_top_star{
+    display: flex;
+    align-items: center;
+}
+.par_body_top_star img{
+    margin-right: 4px;
+}
 
 .par_body_top {
     display: flex;
@@ -75,11 +82,11 @@
 .par_body_check {
     display: flex;
     align-items: center;
-    margin: 6px 0px;
+    margin: 2px 0px;
 }
 
 .par_body_check_text {
-    margin-left: 10px;
+    margin-left: 2px;
     font-size: 14px;
     line-height: 16px;
     font-weight: 600;
@@ -211,6 +218,11 @@
     background-color: var(--bg-color);
     padding: 7px 12px;
     border-radius: 0px 6px 6px 0px;
+}
+.btn_cmt span{
+    width: 18px !important;
+    height: 18px !important;
+    margin-top: 5px;
 }
 
 .btn_cmt_img {

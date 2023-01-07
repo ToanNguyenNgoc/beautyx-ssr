@@ -1,26 +1,25 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-interface INoti {
+interface Noti {
     load: boolean,
     message: string,
     openAlert: boolean,
-    child: any
+    element?: React.ReactElement
 }
 
 export function useNoti() {
-    const [noti, setNoti] = useState<INoti>({
+    const [noti, setNoti] = useState<Noti>({
         load: false,
         message: "",
-        openAlert: false,
-        child: null
+        openAlert: false
     })
     const firstLoad = () => setNoti({ ...noti, load: true })
-    const resultLoad = (text: string, openAlert?: boolean, child?: React.ReactNode) => {
+    const resultLoad = (text: string, element?: React.ReactElement) => {
         setNoti({
             load: false,
             message: text,
-            openAlert: openAlert ?? true,
-            child: child ?? ''
+            openAlert: true,
+            element: element
         })
     }
     const onCloseNoti = () => setNoti({ ...noti, openAlert: false })

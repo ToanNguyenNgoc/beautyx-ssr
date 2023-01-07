@@ -24,7 +24,7 @@ import { XButton } from "components/Layout";
 import { PopupNotification } from "components/Notification";
 import { checkPhoneValid } from "utils/phoneUpdate";
 import UserPaymentInfo from "pages/Account/components/UserPaymentInfo";
-import { useDeviceMobile, useSwr } from "hooks";
+import { useDeviceMobile, useNoti, useSwr } from "hooks";
 import { AppContext } from "context/AppProvider";
 import style from './booking.module.css'
 import img from "constants/img";
@@ -34,7 +34,6 @@ import BookingMap from "./components/BookingMap";
 import { AUTH_LOCATION } from "api/authLocation";
 import PaymentMethod from "components/PaymentMethod";
 import { PLF_TYPE } from "constants/plat-form";
-import { useNoti } from "interface/useNoti";
 
 const date = dayjs();
 function Booking() {

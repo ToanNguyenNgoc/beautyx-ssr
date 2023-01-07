@@ -1,5 +1,5 @@
 import { EmptyRes, SerProItem } from 'components/Layout';
-import DiscountItem from 'pages/HomeDiscounts/DiscountItem';
+import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem';
 import { IOrganization } from 'interface';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
 import React from 'react';

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import tracking from "api/trackApi";
 import { STATUS } from "redux/status";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
-import HomeDiscount from "pages/HomeDiscounts";
+import HomeDiscount from "pages/HomePage/HomeDiscounts";
 import { OpenApp, PlashScreen } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
