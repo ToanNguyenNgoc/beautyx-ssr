@@ -180,7 +180,7 @@ function Account() {
                                     <div className={style.coin_value}>
                                         <p className={style.coin_value_label}>BTX</p>
                                         <div className={style.coin_value_count}>
-                                            <span>{userResponse?.btx_points}</span>
+                                            <span>{userResponse?.btx_points ?? 0}</span>
                                             {/* <img className={style.coin_value_count_icon} src={icon.coins} alt="" /> */}
                                         </div>
                                     </div>

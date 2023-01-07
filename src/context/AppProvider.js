@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { getPosition } from "api/authLocation";
-import { useFetch, useAppointment, useOrderService, useProductCate } from "hooks"
+import { useAppointment, useOrderService } from "hooks"
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
@@ -36,8 +36,7 @@ export default function AppProvider({ children }) {
         dispatch(fetchAsyncHome())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    const productCate = useProductCate()
-    const serviceCate = useFetch(true, "https://beautyx.vercel.app/v1/tags-all").response
+    const serviceCate = []
     //get services, appointment user
     const { appointment, appointment_today } = useAppointment()
     const { orderService, order_app } = useOrderService()
@@ -47,7 +46,6 @@ export default function AppProvider({ children }) {
         language,
         setLanguage,
         // geo,
-        productCate,
         serviceCate,
         appointment,
         appointment_today,
