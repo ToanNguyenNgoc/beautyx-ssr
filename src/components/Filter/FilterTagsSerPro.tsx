@@ -1,8 +1,6 @@
-import API_ROUTE from 'api/_api';
 import icon from 'constants/icon';
-import { useSwr } from 'hooks';
+import { useTags } from 'hooks';
 import { ITag } from 'interface';
-import { paramsProductsCate } from 'params-query';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import style from './style.module.css'
@@ -15,54 +13,48 @@ interface FilterTagsSerProProps {
 }
 
 export function FilterTagsSerPro(props: FilterTagsSerProProps) {
-    const { originKey, type, value, onChange } = props
+    const { originKey, value, onChange } = props
+    const { tagsChildServiceLevel2 } = useTags()
     const result: ITag = useFindTagByName(originKey)
-    const paramTag = {
-        ...paramsProductsCate,
-        'filter[group]': type
-    }
-    const tagDetail: ITag = useSwr(API_ROUTE.TAGS_ID(result?.id), result, paramTag).response
+    const tagsChildServiceLevel2ByParentId = tagsChildServiceLevel2.filter(i => i.parent_id === result?.id)
     const onChangeTagPar = (tagName: string) => {
         if (onChange) onChange(tagName)
     }
 
     return (
-        result ?
-            <div className={style.tag_ser_container}>
-                <span className={style.tag_ser_title}>Danh mục</span>
-                <div className={style.tag_ser_list_cnt}>
-                    <ul className={style.tag_ser_list}>
-                        <li
-                            onClick={() => onChangeTagPar('')}
-                            className={style.tag_ser_item}
-                        >
-                            {
-                                value === '' &&
-                                <div className={style.tag_ser_item_select}>
-                                    <img src={icon.checkWhite} alt="" />
-                                </div>
-                            }
-                            <div className={style.tag_ser_item_img}>
-                                <img src={tagDetail?.media[0]?.original_url} alt="" />
-                            </div>
-                            <span className={style.tag_ser_item_text}>Tất cả</span>
-                        </li>
+        <div className={style.tag_ser_container}>
+            <span className={style.tag_ser_title}>Danh mục</span>
+            <div className={style.tag_ser_list_cnt}>
+                <ul className={style.tag_ser_list}>
+                    <li
+                        onClick={() => onChangeTagPar('')}
+                        className={style.tag_ser_item}
+                    >
                         {
-                            tagDetail?.children?.map((child, index: number) => (
-                                <TagSerItem
-                                    key={index}
-                                    child={child}
-                                    index={index}
-                                    onChangeTagPar={onChangeTagPar}
-                                    value={value ?? ''}
-                                />
-                            ))
+                            value === '' &&
+                            <div className={style.tag_ser_item_select}>
+                                <img src={icon.checkWhite} alt="" />
+                            </div>
                         }
-                    </ul>
-                </div>
+                        <div className={style.tag_ser_item_img}>
+                            <img src={result?.media[0]?.original_url} alt="" />
+                        </div>
+                        <span className={style.tag_ser_item_text}>Tất cả</span>
+                    </li>
+                    {
+                        tagsChildServiceLevel2ByParentId?.map((child, index: number) => (
+                            <TagSerItem
+                                key={index}
+                                child={child}
+                                index={index}
+                                onChangeTagPar={onChangeTagPar}
+                                value={value ?? ''}
+                            />
+                        ))
+                    }
+                </ul>
             </div>
-            :
-            <></>
+        </div>
     );
 }
 
