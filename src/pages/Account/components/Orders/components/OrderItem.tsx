@@ -11,6 +11,8 @@ import { AppContext } from "context/AppProvider";
 import Review from "features/Review";
 import OrderDetail from "../../OrderDetail";
 import { PopupQr } from "components/Notification";
+import { Link } from "react-router-dom";
+import { formatLinkDetail } from "utils/formatRouterLink/formatRouter";
 
 interface IProp {
     order: IOrderV2;
@@ -136,8 +138,12 @@ export const Item = ({ item, org }: { item: ITems, org: IOrganization }) => {
     const displayPrice = item.discount ?
         item.base_price - item.discount_value / item.quantity :
         item.base_price
+    const name = item.productable?.service_name ?? item.productable?.product_name ?? item.productable?.name
     return (
-        <div className={style.pro_container}>
+        <Link
+            to={{ pathname: formatLinkDetail(item.productable_id, org.id, name, item.productable_type) }}
+            className={style.pro_container}
+        >
             <div className={style.pro_img}>
                 <img src={
                     item.productable?.image ?
@@ -147,13 +153,13 @@ export const Item = ({ item, org }: { item: ITems, org: IOrganization }) => {
             </div>
             <div className={style.pro_detail}>
                 <p className={style.pro_detail_name}>
-                    {item.productable?.service_name ?? item.productable?.product_name}
+                    { }
                 </p>
                 <div className={style.pro_detail_price}>
                     <span>{formatPrice(displayPrice)}đ</span>
                     <span>x {item.quantity}</span>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }

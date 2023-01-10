@@ -16,7 +16,6 @@ import { formatRouterLinkDiscount } from "utils/formatRouterLink/formatRouter";
 import dayjs from "dayjs";
 import Skeleton from "react-loading-skeleton";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { BackTopButton } from "components/Layout";
 
 interface DiscountItemsType extends IITEMS_DISCOUNT {
     discount: IDiscountPar
@@ -76,7 +75,6 @@ export default function VoucherPage() {
                     </InfiniteScroll>
                 </div>
             </Container>
-            <BackTopButton />
         </div>
     );
 }

@@ -102,7 +102,7 @@ function ServiceItem(props: IProps) {
               {service?.service_name}
             </span>
             <span className="ser-desc">
-              {service.description !== null && service.description}
+              {service.description !== null && service.description }
             </span>
             <div className="flex-row-sp">
               {

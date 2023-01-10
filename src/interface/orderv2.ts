@@ -8,7 +8,7 @@ export interface ITems {
     order_id: number;
     base_price: number;
     quantity: number;
-    productable_type: string;
+    productable_type: | 'App\\Models\\CI\\Service' | 'App\\Models\\CI\\Product' | 'App\\Models\\CI\\TreatmentCombo',
     productable_id: number;
     productable: Service | Product | any;
     created_at: string;

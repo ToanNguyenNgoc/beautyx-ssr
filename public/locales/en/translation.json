@@ -174,7 +174,9 @@
         "search_by_service": "Search by service name",
         "galleries": "Galleries",
         "business_hours": "Business hours",
-        "branch": "Branch"
+        "branch": "Branch",
+        "priority":"Priority",
+        "favorite":"Favorite"
     },
     "pr": {
         "merchant_detail": "Merchant detail",
@@ -329,7 +331,12 @@
         "verification_invalid": "Verification code invalid",
         "verification_code_of_6_characters": "Verification code of 6 characters",
         "change_password_successfully": "Change password successfully",
-        "sending": "Sending..."
+        "sending": "Sending...",
+        "back_to_sign_in_page":"Back to sign in page",
+        "an_error":"An error occurred. Please try again!",
+        "code":"Code",
+        "get_code":"Get code",
+        "verification_code_has_been_sent_to":"Verification code has been sent to"
     },
     "partner": {
         "online_business": "Online business platform for the beauty industry",

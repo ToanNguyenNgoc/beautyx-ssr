@@ -45,16 +45,16 @@ function SignUps(props: any) {
             await authentication.forgotPassword(params);
             setLoading(false);
             setNoti({
-                content: "Đăng ký thành công",
+                content: t('form.register_success'),
                 open: true,
                 children: <XButton
-                    title='Quay vè trang đăng nhập'
+                    title={t('form.back_to_sign_in_page')}
                     onClick={onBackSignIn}
                 />
             })
         } catch (error) {
             setNoti({
-                content: `Có lỗi xảy ra. Vui lòng thử lại!`,
+                content: t('form.an_error'),
                 open: true,
                 children: <></>
             })
@@ -74,10 +74,10 @@ function SignUps(props: any) {
             await authentication.register(params);
             setLoading(false);
             setNoti({
-                content: "Đăng ký thành công",
+                content: t('form.register_success'),
                 open: true,
                 children: <XButton
-                    title='Quay vè trang đăng nhập'
+                    title={t('form.back_to_sign_in_page')}
                     onClick={onBackSignIn}
                 />
             })
@@ -88,7 +88,7 @@ function SignUps(props: any) {
                 handleAsyncForgotPass(params)
             } else {
                 setNoti({
-                    content: `Có lỗi xảy ra. Vui lòng thử lại (${err.response?.status})`,
+                    content: `${t('form.an_error')} (${err.response?.status})`,
                     open: true,
                     children: <></>
                 })

@@ -7,6 +7,7 @@ import { AppContext } from 'context/AppProvider';
 import { IBranch, ICart, ICartGroupOrg, IOrganization } from 'interface';
 import React, { useContext, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
     ascItem,
     descItem,
@@ -17,6 +18,7 @@ import {
 } from 'redux/cart';
 import { clst } from 'utils';
 import formatPrice from 'utils/formatPrice';
+import { formatRouterLinkOrg, formatLinkDetail } from 'utils/formatRouterLink/formatRouter';
 import style from '../cart.module.css'
 
 interface CartItemProps {
@@ -74,10 +76,14 @@ export function CartOrgItem(props: CartItemProps) {
                             onClick={onChooseCartItemOrg}
                             checked={isCheck}
                         />
-                        <div className={style.org_img}>
-                            <img src={itemOrg.org?.image_url ?? img.imgDefault} alt="" />
-                        </div>
-                        <span className={style.org_name}>{itemOrg.org?.name}</span>
+                        <Link className={style.org_link_cnt} to={{ pathname: formatRouterLinkOrg(itemOrg.org?.subdomain) }} >
+                            <div className={style.org_img}>
+                                <img src={itemOrg.org?.image_url ?? img.imgDefault} alt="" />
+                            </div>
+                            <span className={style.org_name}>
+                                {itemOrg.org?.name}
+                            </span>
+                        </Link>
                     </div>
                     {
                         itemOrg.org?.branches?.length > 0 && orgChoose?.id === itemOrg.org_id &&
@@ -214,6 +220,10 @@ const CartItem = (
                             onClick={handleConfirm}
                             sx={checkedStItem} size='small'
                         />
+                         <Link
+                        className={style.link_cart_item_detail}
+                        to={{ pathname: formatLinkDetail(item.id, item.org_id, item.name, item.is_type) }}
+                    >
                         <div className={style.item_img}>
                             <img
                                 src={item?.cart_item?.image_url ??
@@ -221,8 +231,9 @@ const CartItem = (
                                 alt=""
                             />
                         </div>
+                        <span className={style.item_name}>{item.name}</span>
+                    </Link>
                     </div>
-                    <span className={style.item_name}>{item.name}</span>
                 </div>
                 <div className={style.cart_item_right}>
                     <div className={style.cart_item_right_price}>

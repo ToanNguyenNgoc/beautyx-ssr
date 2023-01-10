@@ -51,7 +51,7 @@
 
 .content_container {
     position: fixed;
-    bottom: 0;
+    bottom: 82px;
     left: 0;
     width: 100%;
     z-index: 10;

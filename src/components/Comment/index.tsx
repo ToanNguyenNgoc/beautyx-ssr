@@ -56,11 +56,11 @@ function Comment(props: CommentProps) {
         "commentable_type": commentable_type,
         "organization_id": org_id,
         "media_ids": tempCmt.media_ids,
-        "rate": 5,
+        // "rate": 5,
     }
     const handlePostCmt = async () => {
         if (!USER) return history.push("/sign-in?1")
-        if (USER && (paramPost.body.length > 0 || paramPost.media_ids.length > 0)) {
+        if (USER && ((paramPost.body.length > 0 && paramPost.body !== '‭') || paramPost.media_ids.length > 0)) {
             firstLoad()
             try {
                 const res = await commentsApi.postComment2(paramPost)

@@ -10,7 +10,7 @@ import { paramsServices } from 'params-query';
 import { ParamService } from 'params-query/param.interface';
 import API_ROUTE from 'api/_api';
 import { IServicePromo } from 'interface';
-import { BackTopButton, SerProItem, XButton } from 'components/Layout';
+import {  SerProItem, XButton } from 'components/Layout';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { LoadGrid } from 'components/LoadingSketion';
 import icon from 'constants/icon';
@@ -95,7 +95,6 @@ function DealBanner() {
                     </InfiniteScroll>
                 </div>
             </Container>
-            <BackTopButton />
         </>
     );
 }

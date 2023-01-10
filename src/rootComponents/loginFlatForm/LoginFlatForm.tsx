@@ -144,11 +144,13 @@ function LoginFlatForm(props: any) {
         if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
                 case FLAT_FORM_TYPE.MOMO:
+                    //[TEMPLE]: login with params URL
                     if (params) {
                         onLoginFlatFormMomowithParams();
                     } else {
                         onLoginFlatFormMomo();
                     }
+                    //
                     // onLoginFlatFormMomo();
                     // if (params?.requestId) {
                     //     history.replace(`/thanh-toan-momo/${params.requestId}`)

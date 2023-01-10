@@ -1,22 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, Tab } from "@mui/material";
 import { Masonry, TabContext, TabList, TabPanel } from "@mui/lab";
-import OrgGalleryItem from "./OrgGalleryItem";
-import { Transition } from "../../../../../utils/transition";
-import icon from "../../../../../constants/icon";
 import OrgGalleriesVideo from "./OrgGalleriesVideo";
 import { useDeviceMobile } from "hooks";
+import { Transition } from "utils";
+import icon from "constants/icon";
+import { FullImage } from "components/Layout";
+import { IOrgMobaGalleries } from "interface";
 
-function OrgGalleriesDialog(props: any) {
+interface OrgGalleriesDialogProps {
+    chooseThumb: IOrgMobaGalleries,
+    open: boolean, setOpen: (open: boolean) => void
+}
+
+function OrgGalleriesDialog(props: OrgGalleriesDialogProps) {
     const { chooseThumb, open, setOpen } = props;
     const [value, setValue] = React.useState("1");
-
+    const [fullImg, setFullImg] = useState(false)
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
     const IS_MOBILE = useDeviceMobile();
+    const onFullImg = () => setFullImg(true)
     return (
         <Dialog fullScreen open={open} TransitionComponent={Transition}>
+            <FullImage
+                open={fullImg} setOpen={setFullImg}
+                src={chooseThumb?.images?.map(i => i.image_url)}
+            />
             <div className="org-galleries__images-section">
                 <div className="flex-row title">
                     <button
@@ -29,7 +40,7 @@ function OrgGalleriesDialog(props: any) {
                 </div>
                 <div className="images-section__wrap">
                     <TabContext
-                        value={chooseThumb?.videos?.length > "0" ? value : "1"}
+                        value={chooseThumb?.videos?.length > 0 ? value : "1"}
                     >
                         <div className="galleries-tab">
                             <TabList
@@ -50,10 +61,9 @@ function OrgGalleriesDialog(props: any) {
                                 >
                                     {chooseThumb?.images?.map(
                                         (item: any, index: number) => (
-                                            <OrgGalleryItem
-                                                key={index}
-                                                image_url={item?.image_url}
-                                            />
+                                            <div onClick={onFullImg} key={index} className="org-image-items__box">
+                                                <img src={item.image_url} alt="" />
+                                            </div>
                                         )
                                     )}
                                 </Masonry>
@@ -77,19 +87,6 @@ function OrgGalleriesDialog(props: any) {
                             </div>
                         </TabPanel>
                     </TabContext>
-                    {/* <Masonry
-                        columns={IS_MOBILE ? 2 : 5}
-                        spacing={IS_MOBILE ? 1 : 2}
-                    >
-                        {chooseThumb?.images?.map(
-                            (item: any, index: number) => (
-                                <OrgGalleryItem
-                                    key={index}
-                                    image_url={item?.image_url}
-                                />
-                            )
-                        )}
-                    </Masonry> */}
                 </div>
             </div>
         </Dialog>

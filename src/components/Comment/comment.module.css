@@ -119,6 +119,8 @@
     position: relative;
     border-radius: 8px;
     margin: 3px;
+    background-color: var(--bg-color);
+    cursor: pointer;
 }
 
 .media_url_list_item img {
@@ -327,5 +329,15 @@
     }
     .input_top{
         margin-top: 6px;
+    }
+    .media_url_list li{
+        width: 25%;
+        padding: 3px;
+    }
+    .media_url_list_item{
+        width: 100%;
+        height: unset;
+        margin: 0px;
+        padding-bottom: 100%;
     }
 }

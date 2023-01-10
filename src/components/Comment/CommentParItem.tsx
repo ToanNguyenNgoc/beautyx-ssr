@@ -38,12 +38,12 @@ function CommentParItem(props: CommentParItemProps) {
         "commentable_type": "REPLY_COMMENT",
         "organization_id": org_id,
         // "media_ids": tempCmt.media_ids,
-        "rate": 5,
+        // "rate": 5,
     }
     const onChangeInputCmt = (e: any) => setTempCmt({ ...tempCmt, body: e.target.value })
     const handlePostCmtReply = async () => {
         if (!USER) history.push("/sign-in?1")
-        if (USER && paramPost.body.length > 0) {
+        if (USER && paramPost.body.length > 0 && paramPost.body !== '‭') {
             firstLoad()
             try {
                 const res = await commentsApi.postComment2(paramPost);
@@ -61,7 +61,7 @@ function CommentParItem(props: CommentParItemProps) {
 
     }
     const starElement = []
-    const rate: number = comment.rate ?? 0
+    const rate: number = comment.rate?.point ?? 0
     for (var i = 0; i < rate; i++) {
         starElement.push(<img key={i} src={icon.star} width={14} height={14} alt="" />)
     }
@@ -99,15 +99,17 @@ function CommentParItem(props: CommentParItemProps) {
                 {
                     media_url?.length > 0 &&
                     <>
-                        <div onClick={() => setOpenImg(true)} className={style.media_url_list}>
+                        <ul onClick={() => setOpenImg(true)} className={style.media_url_list}>
                             {
                                 media_url.map((url: string, index: number) => (
-                                    <div key={index} className={style.media_url_list_item}>
+                                    <li  key={index} >
+                                        <div className={style.media_url_list_item}>
                                         <img src={url} alt="" />
                                     </div>
+                                    </li>
                                 ))
                             }
-                        </div>
+                        </ul>
                         <FullImage
                             content={
                                 <div className={style.img_content} >

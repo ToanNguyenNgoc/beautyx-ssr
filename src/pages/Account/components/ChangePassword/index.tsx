@@ -97,7 +97,7 @@ function ChangePassword() {
         try {
             const result = await signInWithPhoneNumber(authentication, phoneNumber, window.recaptchaVerifier);
             formik.setFieldValue('verification_id', result.verificationId)
-            setAlert({ open: true, content: `Mã xác thực đã được gửi đến "${USER.telephone}"`, load: false })
+            setAlert({ open: true, content: `${t('form.verification_code_has_been_sent_to')} "${USER.telephone}"`, load: false })
         } catch (error) {
             console.log(error)
             let errorCode = error.code;
@@ -127,7 +127,7 @@ function ChangePassword() {
     //
     return (
         <>
-            <HeadTitle title='Thay đổi mật khẩu' />
+            <HeadTitle title={t('acc.change_pass')} />
             <div className={style.container}>
                 <form
                     className={style.form_container}
@@ -136,7 +136,7 @@ function ChangePassword() {
                 >
                     <div className={style.form_row}>
                         <div className={style.form_row_label}>
-                            Mã xác thực
+                            {t('form.code')}
                         </div>
                         <div className={clst([style.form_row_input, style.form_row_otp])}>
                             <Input
@@ -144,10 +144,10 @@ function ChangePassword() {
                                 name='code'
                                 value={formik.values.code}
                                 onChange={formik.handleChange}
-                                placeholder='Mã xác thực'
+                                placeholder={t('form.code')}
                             />
                             <XButton
-                                title='Lấy mã'
+                                title={t('form.get_code')}
                                 type='button'
                                 onClick={onSubmitTelephone}
                                 loading={alert.load}
@@ -162,14 +162,14 @@ function ChangePassword() {
                     </div>
                     <div className={style.form_row}>
                         <div className={style.form_row_label}>
-                            Mật khẩu
+                           {t('Home.Sign_in_pl_password')}
                         </div>
                         <div className={style.form_row_input}>
                             <Input
                                 name='new_password'
                                 value={formik.values.new_password}
                                 onChange={formik.handleChange}
-                                placeholder='Mật khẩu'
+                                placeholder={t('Home.Sign_in_pl_password')}
                                 type={show.pass ? 'text' : 'password'}
                             />
                             <img
@@ -187,14 +187,14 @@ function ChangePassword() {
                     </div>
                     <div className={style.form_row}>
                         <div className={style.form_row_label}>
-                            Nhập lại mật khẩu
+                            {t('form.confirm_password')}
                         </div>
                         <div className={style.form_row_input}>
                             <Input
                                 name='confirm_password'
                                 value={formik.values.confirm_password}
                                 onChange={formik.handleChange}
-                                placeholder='Nhập lại mật khẩu'
+                                placeholder={t('form.confirm_password')}
                                 type={show.confirm ? 'text' : 'password'}
                             />
                             <img
@@ -212,7 +212,7 @@ function ChangePassword() {
                     </div>
                     <div className={style.form_bot}>
                         <XButton
-                            title='Lưu thay đổi'
+                            title={t('acc.save')}
                             type='submit'
                             loading={noti.load}
                         />

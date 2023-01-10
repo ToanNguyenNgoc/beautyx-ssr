@@ -40,7 +40,7 @@ function HomeOrgDistance() {
         "filter[location]": LOCATION,
         "sort":""
     }
-    const { data, isLoading } = useOrgsDistanceQuery(params)
+    const { data, isFetching } = useOrgsDistanceQuery(params)
     const orgs: IOrganization[] = data ?? []
 
     const onViewMore = () => {
@@ -89,7 +89,7 @@ function HomeOrgDistance() {
                 </ul>
             </div>
             {
-                isLoading &&
+                isFetching &&
                 (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={4} />)
             }
             <div className={style.org_list_cnt}>

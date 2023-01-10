@@ -13,7 +13,7 @@ import { OrderSkelton } from "pages/Account/components/Orders/components/TabOrde
 function ServicesUser() {
     const { t } = useContext(AppContext);
     const IS_MB = useDeviceMobile();
-    const { resData, totalItem, onLoadMore, isValidating } = useOrderService()
+    const { resData, totalItem, onLoadMore, isValidating, checkTimeExpired } = useOrderService()
     return (
         <>
             {(resData?.length === 0 && isValidating) && <OrderSkelton />}
@@ -31,6 +31,7 @@ function ServicesUser() {
                                             <TreatmentCardItem
                                                 key={index}
                                                 card_items={item}
+                                                checkTimeExpired={checkTimeExpired}
                                             />
                                         )
                                     )}

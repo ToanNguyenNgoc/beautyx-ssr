@@ -168,7 +168,9 @@
         "search_by_service": "Tìm theo tên dịch vụ",
         "galleries": "Hình ảnh",
         "business_hours": "Giờ mở cửa",
-        "branch": "Chi nhánh"
+        "branch": "Chi nhánh",
+        "priority":"Độ ưu tiên",
+        "favorite":"Được yêu thích"
     },
     "pr": {
         "merchant_detail": "Về doanh nghiệp",
@@ -323,7 +325,12 @@
         "verification_code_of_6_characters": "Mã xác thực gồm 6 ký tự",
         "change_password_successfully": "Đổi mật khẩu thành công",
         "please_enter_your_verification_code": "Vui lòng nhập mã xác thực",
-        "sending": "Đang gửi..."
+        "sending": "Đang gửi...",
+        "back_to_sign_in_page":"Quay về trang đăng nhập",
+        "an_error":"Có lỗi xảy ra. Vui lòng thử lại",
+        "code":" Mã xác thực",
+        "get_code":"Lấy mã",
+        "verification_code_has_been_sent_to":"Mã xác thực đã được gửi đến"
     },
     "partner": {
         "online_business": "Nền tảng kinh doanh online ngành làm đẹp",

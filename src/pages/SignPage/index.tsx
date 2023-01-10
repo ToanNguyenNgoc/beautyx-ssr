@@ -12,7 +12,7 @@ import img from "constants/img";
 import LoginFlatFormRequest from "rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
 import style from './sign-page.module.css'
 
-function SignPage(props: any) {
+function SignPage() {
   const { t } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const location: any = useLocation();

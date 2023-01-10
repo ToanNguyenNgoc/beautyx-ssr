@@ -13,23 +13,23 @@ interface ISort {
 
 export function FilterSort(props: FilterSortProps) {
     const { type, onChange, value } = props
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const paramSortService: ISort[] = [
         { query: '-discount_percent', title: t('home_2.hot_promotion') },
-        { query: 'price', title: 'Giá tăng dần' },
-        { query: '-price', title: 'Giá giảm dần' },
-        { query: '-org_priority', title: 'Độ ưu tiên' },
+        { query: 'price', title: t('Mer_de.ascending_price') },
+        { query: '-price', title: t('Mer_de.decrease_price') },
+        { query: '-org_priority', title: t('Mer_de.priority') },
     ]
     const paramSortProduct: ISort[] = [
         { query: '-discount_percent', title: t('home_2.hot_promotion') },
-        { query: 'retail_price', title: 'Giá tăng dần' },
-        { query: '-retail_price', title: 'Giá giảm dần' },
-        { query: '-org_priority', title: 'Độ ưu tiên' },
+        { query: 'retail_price', title: t('Mer_de.ascending_price') },
+        { query: '-retail_price', title: t('Mer_de.decrease_price') },
+        { query: '-org_priority', title: t('Mer_de.priority') },
         { query: '-bought_count', title: 'Bán chạy' },
     ]
     const paramSortOrg: ISort[] = [
-        { query: '-priority', title: 'Độ ưu tiên' },
-        { query: '-favorites_count', title: 'Được yêu thích' },
+        { query: '-priority', title: t('Mer_de.priority') },
+        { query: '-favorites_count', title: t('Mer_de.favorite') },
     ]
     const renderSortDe = () => {
         let list: ISort[] = []
@@ -49,13 +49,13 @@ export function FilterSort(props: FilterSortProps) {
         return list
     }
     const onChangeSort = (query: string) => {
-        if (onChange){
+        if (onChange) {
             onChange(query)
         }
     }
     return (
         <div className={style.container}>
-            <span className={style.title}>Sắp xếp theo</span>
+            <span className={style.title}>{t('Mer_de.sort_by')}</span>
             <ul className={style.sort_list}>
                 {
                     renderSortDe().map((item: ISort) => (

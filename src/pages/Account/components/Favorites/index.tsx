@@ -12,10 +12,10 @@ import icon from 'constants/icon';
 import { XButton } from 'components/Layout';
 import Skeleton from 'react-loading-skeleton';
 import { AppContext } from 'context/AppProvider';
-import { useSwrInfinite } from 'hooks';
+import { useFavorite, useSwrInfinite } from 'hooks';
 
 function Favorites() {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
         'user_id': USER?.id,
@@ -57,6 +57,12 @@ export default Favorites;
 
 const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
     const org = favorite.organization
+    const { favoriteSt, onToggleFavorite } = useFavorite({
+        org_id: org?.id ?? 0,
+        type: 'ORG',
+        count: org?.favorites_count ?? 0,
+        favorite: org?.is_favorite ?? true
+    })
     const refLink = useRef<HTMLDivElement>(null)
     const refView = useRef<HTMLDivElement>(null)
     const toggleView = (className: string) => {
@@ -123,7 +129,12 @@ const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
                             </div>
                             <div className={style.org_view_cnt_bot}>
                                 <XButton
-                                    title='Đang theo dõi'
+                                    title={favoriteSt.is_favorite ? 'Đang theo dõi' : 'Theo dõi'}
+                                    onClick={(e) => {
+                                        onToggleFavorite();
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}
                                 />
                                 <XButton
                                     title='Xem chi tiết'

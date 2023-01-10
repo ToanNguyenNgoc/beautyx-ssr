@@ -7,7 +7,7 @@ import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import { useDeviceMobile, useSearchKeyword } from "hooks";
-import { BackTopButton, Input, XButton } from "components/Layout";
+import {  Input, XButton } from "components/Layout";
 import icon from "constants/icon";
 import style from './list-province.module.css'
 
@@ -76,7 +76,6 @@ function Provinces() {
                     </ul>
                 </div>
             </Container>
-            <BackTopButton/>
         </>
     );
 }

@@ -97,7 +97,7 @@ function AppDetail(props: AppDetailProps) {
                                             {
                                                 service.duration &&
                                                 <p className={style.service_duration}>
-                                                    Thời gian:{" "}{service.duration}
+                                                    Thời gian:{" "}{service.duration}{""}{t('detail_item.minute')}
                                                 </p>
                                             }
                                         </div>

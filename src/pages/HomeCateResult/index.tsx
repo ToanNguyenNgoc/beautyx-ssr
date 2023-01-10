@@ -1,19 +1,20 @@
-import React, { ReactElement, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Container } from '@mui/system';
-import { SerProItem, XButton } from 'components/Layout';
+import {  SerProItem, XButton } from 'components/Layout';
 import { FilterPrice, FilterLocation, EventLocation, FilterSort } from 'components/Filter';
-import { useSwr, useSwrInfinite } from 'hooks';
+import { useDeviceMobile, useSwrInfinite, useTags } from 'hooks';
 import { ITag } from 'interface';
-import { paramsProducts, paramsProductsCate } from 'params-query';
+import { paramsProducts } from 'params-query';
 import { formatParamsString, formatRouterCateResult } from 'utils/formatRouterLink/formatRouter';
 import icon from 'constants/icon';
 import { LoadGrid } from 'components/LoadingSketion';
 import style from "./home-cate.module.css"
 import { extraParamsUrl } from 'utils';
 import Slider from 'react-slick';
-import Skeleton from 'react-loading-skeleton';
+import HeadMobile from 'features/HeadMobile';
+import { Drawer } from '@mui/material';
 
 interface IPageGroup {
     page: number,
@@ -40,25 +41,20 @@ const PrevButton = (props: any) => {
 }
 
 function HomeCateResult() {
+    const IS_MB = useDeviceMobile()
     const params: any = extraParamsUrl();
     const location = useLocation();
+    const { queryTag } = useTags()
+    const [openFilter, setOpenFilter] = useState(false)
     const page_url = location.pathname.split("/")[1];
     const history = useHistory();
     const id = params?.id
     const type = page_url === "danh-sach-dich-vu" ? "SERVICE" : "PRODUCT"
-    const paramCate = {
-        ...paramsProductsCate,
-        'filter[group]':type
-    }
     const query = params?.sort ?? ""
     const userLocation = params?.location ?? ''
-    const { response, isValidating } = useSwr(`/tags/${id}`, id, paramCate)
-    const tag: ITag = response
-    const tagParent: ITag = useSwr(`/tags/${tag?.parent_id}`, tag?.parent_id, paramCate).response
-    const tagParParent: ITag = useSwr(
-        `/tags/${tagParent?.parent_id}`,
-        tagParent?.parent_id,
-        paramCate).response
+    const tag = queryTag(id, type)
+    const tagParent = queryTag(tag?.parent_id, type)
+    const tagParParent = queryTag(tagParent?.parent_id, type)
     const newParams = {
         ...paramsProducts,
         "filter[location]": userLocation,
@@ -111,7 +107,7 @@ function HomeCateResult() {
         history.push(`${pathname}?${formatParamsString(paramsChange)}`)
     }
     //pagination tags child
-    const perPage = 6
+    const perPage = IS_MB ? 4 : 6
     const totalTagChild = tag?.children?.length ?? 0
     const totalPage = Math.ceil(totalTagChild / perPage)
     const pageGroup: IPageGroup[] = []
@@ -140,6 +136,7 @@ function HomeCateResult() {
 
     return (
         <>
+            {IS_MB && <HeadMobile title={tag?.name ?? ''} />}
             <Container>
                 <div className={style.container}>
                     <div className={style.head}>
@@ -180,36 +177,69 @@ function HomeCateResult() {
                             </span>
                         }
                     </div>
-                    <div className={style.cate_child_cnt}>
-                        {!tag && isValidating && <LoadCateChild />}
-                        <Slider {...settings} >
-                            {
-                                pageGroup.map((page: IPageGroup) => (
-                                    <ul
-                                        key={page.page} className={style.cate_child_list}
-                                    >
-                                        {
-                                            page.items?.map((tag_child: ITag, index: number) => (
-                                                <li key={index} className={style.cate_child_item}>
-                                                    <Link
-                                                        to={{ pathname: formatRouterCateResult(tag_child.id, tag_child.name, type) }}
-                                                        className={style.cate_child_item_cnt}
-                                                    >
-                                                        <div className={style.cate_child_item_img}>
-                                                            <img src={tag_child.media[0]?.original_url} alt="" />
-                                                        </div>
-                                                        <p className={style.cate_child_item_title}>
-                                                            {tag_child.name}
-                                                        </p>
-                                                    </Link>
-                                                </li>
-                                            ))
-                                        }
-                                    </ul>
-                                ))
-                            }
-                        </Slider>
-                    </div>
+                    {
+                        pageGroup.length > 0 &&
+                        <div className={style.cate_child_cnt}>
+                            <Slider {...settings} >
+                                {
+                                    pageGroup.map((page: IPageGroup) => (
+                                        <ul
+                                            key={page.page} className={style.cate_child_list}
+                                        >
+                                            {
+                                                page.items?.map((tag_child: ITag, index: number) => (
+                                                    <li key={index} className={style.cate_child_item}>
+                                                        <Link
+                                                            to={{ pathname: formatRouterCateResult(tag_child.id, tag_child.name, type) }}
+                                                            className={style.cate_child_item_cnt}
+                                                        >
+                                                            <div className={style.cate_child_item_img}>
+                                                                <img src={tag_child.media[0]?.original_url} alt="" />
+                                                            </div>
+                                                            <p className={style.cate_child_item_title}>
+                                                                {tag_child.name}
+                                                            </p>
+                                                        </Link>
+                                                    </li>
+                                                ))
+                                            }
+                                        </ul>
+                                    ))
+                                }
+                            </Slider>
+                        </div>
+                    }
+                    {
+                        IS_MB &&
+                        <div className={style.filter_mobile_cnt}>
+                            <div className={style.filter_mobile_location}>
+                                <FilterLocation
+                                    onChange={onChangeLocation}
+                                />
+                            </div>
+                            <div className={style.filter_mobile_other}>
+                                <XButton
+                                    icon={icon.settingsSliders} iconSize={18}
+                                    className={style.filter_mobile_other_open}
+                                    title='Bộ lọc'
+                                    onClick={() => setOpenFilter(true)}
+                                />
+                                <Drawer anchor="bottom" open={openFilter} onClose={() => setOpenFilter(false)} >
+                                    <FilterSort
+                                        type={type}
+                                        onChange={onChangeSort}
+                                        value={query}
+                                    />
+                                    <FilterPrice
+                                        onChangePrice={onChangeFilter}
+                                        onCloseDrawer={() => setOpenFilter(false)}
+                                        min_price={params?.min_price ?? ""}
+                                        max_price={params?.max_price ?? ""}
+                                    />
+                                </Drawer>
+                            </div>
+                        </div>
+                    }
                     <div className={style.body}>
                         <div className={style.body_left}>
                             <FilterLocation
@@ -243,7 +273,7 @@ function HomeCateResult() {
                                         ))
                                     }
                                 </ul>
-                                {resData.length < totalItem && <LoadGrid grid={5} />}
+                                {resData.length < totalItem && <LoadGrid grid={IS_MB ? 2 : 5} />}
                             </InfiniteScroll>
                         </div>
                     </div>
@@ -254,25 +284,3 @@ function HomeCateResult() {
 }
 
 export default HomeCateResult;
-
-const LoadCateChild = () => {
-    const renderGridChild = () => {
-        let GridChildElement: ReactElement[] = []
-        for (var i = 0; i < 6; i++) {
-            GridChildElement.push(
-                <li key={i} className={style.cate_child_item_load}>
-                    <Skeleton
-                        style={{ width: '100%', height: '100%' }}
-                    />
-                </li>
-            )
-        }
-        return GridChildElement
-    }
-
-    return (
-        <ul className={style.cate_child_list}>
-            {renderGridChild()}
-        </ul>
-    )
-}

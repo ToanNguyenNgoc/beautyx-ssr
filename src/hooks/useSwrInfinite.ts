@@ -18,7 +18,7 @@ export function useSwrInfinite(
         }
     );
     let resData: any[] = [];
-    let originData:any[]=[]
+    let originData: any[] = []
     let totalItem = 1;
     if (data) {
         totalItem = data[0]?.data?.context?.total ?? data[0]?.data?.total;

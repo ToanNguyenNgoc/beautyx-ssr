@@ -4,7 +4,6 @@ import { Link, useParams } from "react-router-dom";
 import { extraParamsUrl } from 'utils'
 import { ICON } from "constants/icon2";
 import { Container } from "@mui/material";
-import { BackTopButton } from "components/Layout";
 import { AppContext } from "context/AppProvider";
 import style from './search-result.module.css'
 import TabService from "./TabService";
@@ -78,7 +77,6 @@ function SearchResults() {
                     </div>
                 </div>
             </Container>
-            <BackTopButton />
         </>
     );
 }

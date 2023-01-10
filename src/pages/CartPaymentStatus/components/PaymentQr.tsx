@@ -24,7 +24,7 @@ function PaymentQr(props: any) {
                             <h4>Bước 1:</h4>Mở ứng dụng <h4>MOMO</h4> để thanh toán
                         </li>
                         <li className={style.guide_item}>
-                            <h4>Bước 2:</h4>Chọn<h4>"Thanh toán"</h4> và quét mã QR tạ đây
+                            <h4>Bước 2:</h4>Chọn<h4>"Thanh toán"</h4> và quét mã QR tại đây
                         </li>
                         <li className={style.guide_item}>
                             <h4>Bước 3:</h4>Hoàn thành các bước thanh toán và đợi<h4>BeautyX</h4> xử lý trong giây lát

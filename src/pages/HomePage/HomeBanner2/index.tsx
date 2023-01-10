@@ -120,14 +120,14 @@ function HomeBanner2() {
                     content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
                     icon: icon.communityPurple
                 });
-                // return history.push('/cong-dong')
+            // return history.push('/cong-dong')
             case "REW":
                 return setMessage({
                     open: true,
                     content: 'Tính năng "Rewards" đang trong giai đoạn phát triển.',
                     icon: icon.rewardOrange
                 });
-                // return history.push('/coins')
+            // return history.push('/coins')
             case "CAL":
                 return history.push("/lich-hen?tab=1");
             case "MAP":
@@ -152,7 +152,7 @@ function HomeBanner2() {
                             <img
                                 className={style.banner_img}
                                 src={item.imageURL}
-                                // src='https://res.cloudinary.com/dhrgif3tc/image/upload/v1672375710/Banner_App_BeautyX_Te%CC%82%CC%81t_1_sfuf6d.jpg'
+                                // src='https://res.cloudinary.com/dt3auapd8/image/upload/v1673340495/Banner_BeautyX_Momo_1_btsvmb.jpg'
                                 alt=""
                             />
                         </div>

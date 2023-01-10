@@ -137,12 +137,13 @@
     padding: 12px;
     background-color: var(--bgWhite);
     position: relative;
+    transition: var(--trans);
 }
 
 .treat-card-item__dot {
     width: 10px;
     height: 10px;
-    background-color: var(--red-cl);
+    background-color: var(--green);
     position: absolute;
     top: 0;
     right: 0;
@@ -897,6 +898,9 @@
         width: 100vw !important;
         margin-left: -12px !important;
         margin-bottom: 10px !important;
+    }
+    .treat-card-item__dot{
+       display: none;
     }
 
     .treat-card-item__head .org-name {

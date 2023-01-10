@@ -2,7 +2,7 @@ import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { useDeviceMobile, useFavorite } from 'hooks';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useDiscountDetail } from './useDiscountDetail';
 import style from '../_SerProCoDetail/detail.module.css'
 import { Container, Drawer, Rating } from '@mui/material';
@@ -23,6 +23,7 @@ import { addCart } from 'redux/cart';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
 import { clearAllServices } from 'redux/booking';
+import { AppContext } from 'context/AppProvider';
 
 function DiscountDetail() {
     const IS_MB = useDeviceMobile()
@@ -231,17 +232,18 @@ const DetailBottom = (
     { detail, org, discount, PERCENT }:
         { detail: DetailProp, org: IOrganization, discount: IDiscountPar, PERCENT: number }
 ) => {
+    const {t} = useContext(AppContext)
     const [dra, setDra] = useState({
         open: false, type: ''
     })
     return (
         <div className={style.bottom}>
             <XButton
-                title={detail.type === 'SERVICE' ? 'Đặt hẹn ngay' : 'Mua ngay'}
+                title={detail.type === 'SERVICE' ? t('pm.booking_now') : t('cart.payment_now')}
                 onClick={() => setDra({ open: true, type: 'NOW' })}
             />
             <XButton
-                title='Thêm vào giỏ hàng'
+                title={t('pr.add_to_cart')}
                 onClick={() => setDra({ open: true, type: 'ADD_CART' })}
             />
             <Drawer anchor='bottom' open={dra.open} onClose={() => setDra({ open: false, type: '' })} >
@@ -284,6 +286,7 @@ const DetailBottom = (
 }
 
 const DetailQuantity = (props: DetailQuantityProps) => {
+    const {t} = useContext(AppContext)
     const { discount, org, detail, draType } = props
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
@@ -340,7 +343,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
             }
             <div className={style.detail_cart}>
                 <div className={style.detail_quantity}>
-                    <span className={style.detail_quantity_title}>Số lượng</span>
+                    <span className={style.detail_quantity_title}>{t('pr.quantity')}</span>
                     <div className={style.detail_quantity_calc}>
                         <XButton
                             title='-'
@@ -359,7 +362,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
                     {detail.type === 'SERVICE' &&
                         <XButton
                             style={draType === "NOW" ? { display: 'flex' } : {}}
-                            title='Đặt hẹn ngay'
+                            title={t('pm.booking_now')}
                             className={style.add_cart_btn}
                             onClick={onBookingNow}
                         />
@@ -368,7 +371,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
                         style={draType === "ADD_CART" ? { display: 'flex' } : {}}
                         icon={icon.cartWhiteBold}
                         iconSize={15}
-                        title='Thêm vào giỏ hàng'
+                        title={t('pr.add_to_cart')}
                         className={style.add_cart_btn}
                         onClick={handleAddCart}
                     />
@@ -388,7 +391,6 @@ const DetailQuantity = (props: DetailQuantityProps) => {
                             onClose={() => setOpen(false)}
                             status="WARNING"
                             title={`Bạn đã hết lượt mua với giá khuyến mại`}
-                        // title={`Giá bán này chỉ áp dụng ${discount.limit}lượt mua/người`}
                         />
                 }
             </div>
