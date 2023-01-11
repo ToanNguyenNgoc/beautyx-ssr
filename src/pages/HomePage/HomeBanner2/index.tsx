@@ -13,7 +13,8 @@ import { Dialog } from "@mui/material";
 import { PopupMessage } from "components/Notification";
 import { useDeviceMobile } from "hooks";
 import { AppContext } from "context/AppProvider";
-// import bannerInit from 'assets/image/bannerInit.png'
+import {bannersHard} from '../data'
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 interface PopupProps {
     open: boolean;
@@ -46,6 +47,7 @@ const NextButton = (props: any) => {
 
 function HomeBanner2() {
     const { t } = useContext(AppContext)
+    const PLAT_FORM = EXTRA_FLAT_FORM()
     const features = [
         // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },
         { title: t('Home.community'), icon: icon.communityPurple, func: "COM" },
@@ -138,12 +140,16 @@ function HomeBanner2() {
                 break;
         }
     };
+    const banners2 = bannersHard(PLAT_FORM)
+    const banners1 = banners.slice(0,1)
+    const bannersLast = banners.slice(2, banners.length)
+    const BANNERS = [...banners1,...banners2,...bannersLast]
 
     return (
         <div className={style.container}>
             <div className={style.banner_container}>
                 <Slider {...settings}>
-                    {banners.map((item: IBanner, index: number) => (
+                    {BANNERS.map((item: IBanner, index: number) => (
                         <div
                             onClick={() => onClickBanner(item)}
                             key={index}

@@ -47,6 +47,7 @@ import zaloPay from "../assets/image/paymentMethod/zaloPay.svg";
 import bannerBlur from "../assets/image/bannerBlur.png";
 import beautyxSlogan from "assets/image/beautyxSlogan.png";
 import beautyX from "assets/image/beautyX.svg"
+import plashScreenPc from 'assets/image/plashScreenPc.png'
 
 const img = {
     appStore,
@@ -70,7 +71,8 @@ const img = {
     home_partners,
     beautyX,
     Partner,
-    iconAppointment
+    iconAppointment,
+    plashScreenPc
 };
 export const social = {
     facebook,

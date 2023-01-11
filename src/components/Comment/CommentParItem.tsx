@@ -21,7 +21,13 @@ interface CommentParItemProps {
 }
 
 function CommentParItem(props: CommentParItemProps) {
-    const { comment, org_id, USER_PAR_NAME, bought } = props;
+    const { org_id, USER_PAR_NAME, bought, comment } = props;
+    let body = comment.body
+    try {
+        body = JSON.parse(comment.body).text
+    } catch (error) {
+        body = comment.body
+    }
     const history = useHistory()
     const [openImg, setOpenImg] = useState(false)
     const IS_MB = useDeviceMobile();
@@ -82,7 +88,7 @@ function CommentParItem(props: CommentParItemProps) {
                     </div>
                 </div>
                 {
-                    comment.body?.includes('‭') &&
+                    body?.includes('‭') &&
                     <div className={style.par_body_check}>
                         <img
                             src={icon.checkFlowGreen} alt=""
@@ -94,7 +100,7 @@ function CommentParItem(props: CommentParItemProps) {
                     </div>
                 }
                 <div className={style.cmt_text}>
-                    {comment?.body}
+                    {body}
                 </div>
                 {
                     media_url?.length > 0 &&
@@ -102,10 +108,10 @@ function CommentParItem(props: CommentParItemProps) {
                         <ul onClick={() => setOpenImg(true)} className={style.media_url_list}>
                             {
                                 media_url.map((url: string, index: number) => (
-                                    <li  key={index} >
+                                    <li key={index} >
                                         <div className={style.media_url_list_item}>
-                                        <img src={url} alt="" />
-                                    </div>
+                                            <img src={url} alt="" />
+                                        </div>
                                     </li>
                                 ))
                             }
