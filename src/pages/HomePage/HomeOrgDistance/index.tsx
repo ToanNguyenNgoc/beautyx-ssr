@@ -38,7 +38,7 @@ function HomeOrgDistance() {
         "limit": 4,
         "filter[is_momo_ecommerce_enable]": true,
         "filter[location]": LOCATION,
-        "sort":""
+        "sort": ""
     }
     const { data, isFetching } = useOrgsDistanceQuery(params)
     const orgs: IOrganization[] = data ?? []
@@ -88,11 +88,11 @@ function HomeOrgDistance() {
                     }
                 </ul>
             </div>
-            {
-                isFetching &&
-                (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={4} />)
-            }
             <div className={style.org_list_cnt}>
+                {
+                    isFetching &&
+                    (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={4} />)
+                }
                 <ul className={style.org_list}>
                     {orgs.map((item: IOrganization) => (
                         <li key={item.id} className={style.org_list_item}>

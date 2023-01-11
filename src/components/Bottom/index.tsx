@@ -20,7 +20,8 @@ const paths = [
     "/homepage",
     "/tai-khoan",
     "/lich-hen",
-    "/-danh-muc"
+    "/-danh-muc",
+    "/danh-muc"
 ];
 
 function Bottom() {

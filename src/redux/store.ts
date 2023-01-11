@@ -7,6 +7,7 @@ import userAddressReducer from "./user/userAddressSlice";
 import orgReducer from "./org/orgSlice";
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import cateReducer from "./cate-tree/cateTreeSlice";
+import cateTree from "./cates-tree";
 import orgMapReducer from "./org/orgMapSlice";
 import filterResultReduce from "./filter-result";
 import communityReducer from './community'
@@ -25,6 +26,7 @@ const rootReducer = {
     ORG: orgReducer,
     ADDRESS: userAddressReducer,
     CATE_TREE: cateReducer,
+    CATE: cateTree,
     ORGS_MAP: orgMapReducer,
     FILTER_RESULT: filterResultReduce,
     COMMUNITY: communityReducer,
