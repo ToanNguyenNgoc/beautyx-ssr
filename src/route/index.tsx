@@ -38,7 +38,7 @@ import IStore from "interface/IStore";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import RefreshToken from 'features/RefreshToken'
 import { BackTopButton } from "components/Layout";
-import CateTree from "pages/CateTree";
+// import CateTree from "pages/CateTree";
 
 //community page
 const PostDetail = lazy(() => import('pages/Community/pages/PostDetail'))
@@ -205,10 +205,10 @@ function RouterConfig() {
             path: "/-danh-muc/",
             component: <CategoryTree />,
         },
-        {
-            path: '/danh-muc',
-            component: <CateTree />
-        },
+        // {
+        //     path: '/danh-muc',
+        //     component: <CateTree />
+        // },
         {
             path: "/dat-hen",
             component: <Booking />,

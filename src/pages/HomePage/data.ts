@@ -13,6 +13,8 @@ import homeWhy4 from "assets/icon/homeWhy4.svg";
 import deal0 from "assets/image/deal0.jpg"
 import deal1 from "assets/image/deal1.jpg"
 import deal2 from "assets/image/deal2.jpg"
+import bannerMomo from 'assets/image/bannerMomo.jpg'
+import dayjs from "dayjs";
 
 
 
@@ -25,7 +27,7 @@ export interface Ideals {
     img: string,
     banner: string,
     percent?: number,
-    special_price?:boolean
+    special_price?: boolean
 }
 export interface IProductsSection {
     id: number,
@@ -44,7 +46,7 @@ export const deals: Ideals[] = [
         keyword: 'Gội đầu',
         img: '',
         banner: deal0,
-        special_price:true
+        special_price: true
     },
     {
         id: 2,
@@ -54,17 +56,17 @@ export const deals: Ideals[] = [
         img: '',
         // percent: 50,
         banner: deal1,
-        special_price:false
+        special_price: false
     },
     {
         id: 3,
         title: "Da mịn màng rạng ngời đón Tết",
         min_price: null,
         img: '',
-        keyword:'Chăm sóc da',
+        keyword: 'Chăm sóc da',
         // percent: 30,
         banner: deal2,
-        special_price:true
+        special_price: true
     },
 ];
 export const topics = [
@@ -125,3 +127,33 @@ export const whyNots = [
 export const searchKeyRecommend = [
     'Gội đầu', 'Cắt tóc', 'Nặn mụn', 'Xăm chân mày', 'Triệt lông', 'Sơn gel', 'Chăm sóc da'
 ]
+
+const banners = [
+    {
+        id: -1,
+        name: "Beautyx vs Momo",
+        type: '',
+        imageURL: bannerMomo,
+        htmlTemplate: null,
+        url: '',
+        target: null,
+        width: 0,
+        height: 0,
+        view_count: 68,
+        expires_at: '2023-31-01 00:00:00',
+        platform: 'MOMO|BEAUTYX',
+        origin_type: null,
+        origin_id: null,
+        deleted_at: null,
+        created_at: '',
+        updated_at: '',
+        priority: 3
+    }
+]
+const todayNumber = parseInt(dayjs().format('YYYYMMDD'))
+export const bannersHard = (platform: string) => {
+    const bannersResult = banners.filter(item => (
+        parseInt(dayjs(item.expires_at).format('YYYYMMDD')) >= todayNumber && item.platform?.includes(platform)
+    ))
+    return bannersResult
+}
