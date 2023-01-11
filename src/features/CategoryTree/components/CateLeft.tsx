@@ -1,18 +1,18 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { category } from "../../../data/category";
+import { category } from "data/category";
 import {
     onChooseCate,
     fetchOrgsByTag,
-} from "../../../redux/cate-tree/cateTreeSlice";
-import { cateChild1 } from "../../../data/category";
+} from "redux/cate-tree/cateTreeSlice";
+import { cateChild1 } from "data/category";
 import {
     fetchServiceByCateChild,
     onSetFirstCateProducts,
-} from "../../../redux/cate-tree/cateTreeSlice";
+} from "redux/cate-tree/cateTreeSlice";
 
 // ==== api tracking ====
- import tracking from "../../../api/trackApi";
+ import tracking from "api/trackApi";
 // end
 function CateLeft(props: any) {
     const { CATE, VALUE } = props;

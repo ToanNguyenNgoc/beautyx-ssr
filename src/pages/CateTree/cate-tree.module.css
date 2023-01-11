@@ -1,0 +1,15 @@
+.container{
+    margin: 24px 0px;
+    border-radius: 4px;
+    /* background-color: var(--bg-color); */
+    /* padding: 12px; */
+}
+.left{
+    width: 230px;
+    height:  100vh;
+    background-color: antiquewhite;
+    position: sticky;
+    margin-top: 0px;
+    top: 12px;
+    padding: 12px;
+}
