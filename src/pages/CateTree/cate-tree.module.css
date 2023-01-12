@@ -177,7 +177,8 @@
     display: flex;
     justify-content: space-between;
 }
-.right_org_cnt_label a{
+
+.right_org_cnt_label a {
     padding-left: 10px;
 }
 
@@ -209,9 +210,6 @@
     object-fit: cover;
 }
 
-.services_cnt {
-    margin-top: 12px;
-}
 
 .service_list {
     display: grid;
@@ -224,6 +222,8 @@
     font-size: 14px;
     line-height: 16px;
     font-weight: 600;
+    display: flex;
+    justify-content: space-between;
 }
 
 .product_child_child_list {
@@ -268,6 +268,10 @@
     .head {
         border: 0px;
         margin: 0px;
+        position: fixed;
+        width: 100%;
+        background-color: var(--bg-white);
+        z-index: 10;
     }
 
     .tab_btn {
@@ -275,12 +279,14 @@
     }
 
     .left {
-        margin: 0px;
         width: 25%;
-        height: calc(100vh - 72px);
-        position: unset;
-        top: 0px;
+        height: 100%;
         background-color: var(--grey);
+        position: fixed;
+        left: 0;
+        top: 0px;
+        z-index: 9;
+        padding: 37px 0px 72px 0px;
     }
 
     .left_cate_par_list {
@@ -323,11 +329,14 @@
     }
 
     .right {
+        position: fixed;
+        right: 0;
         width: 75%;
-        height: calc(100vh - 72px);
-        overflow-y: scroll;
+        margin-top: 37px;
+        height: 100%;
+        overflow: scroll;
         min-height: unset;
-        padding: 6px;
+        padding: 6px 6px 110px 6px;
     }
 
     .right_tag_child_item {

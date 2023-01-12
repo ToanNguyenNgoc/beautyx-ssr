@@ -23,8 +23,6 @@ import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 import DiscountDetail from "pages/_DiscountDetail";
 import Discounts from "pages/Discounts";
-import CategoryTree from "features/CategoryTree";
-import ProductsByCate from "features/CategoryTree/ProductsByCate";
 import HomeCateResult from "pages/HomeCateResult";
 import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
@@ -202,10 +200,6 @@ function RouterConfig() {
             component: <Discounts />,
         },
         {
-            path: "/-danh-muc/",
-            component: <CategoryTree />,
-        },
-        {
             path: '/danh-muc',
             component: <CateTree />
         },
@@ -216,10 +210,6 @@ function RouterConfig() {
         {
             path: "/landingpage/:name",
             component: <LandingPage />,
-        },
-        {
-            path: "/san-pham",
-            component: <ProductsByCate />,
         },
         {
             path: "/ban-do",

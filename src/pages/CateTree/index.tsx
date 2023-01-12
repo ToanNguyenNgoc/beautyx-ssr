@@ -6,7 +6,6 @@ import { useSwrInfinite, useTags } from 'hooks';
 import { IOrganization, ITag } from 'interface';
 import IStore from 'interface/IStore';
 import { paramOrgs } from 'params-query';
-import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -115,7 +114,7 @@ function CateTree() {
                                 <p className={style.right_org_cnt_label}>
                                     Cửa hàng
                                     <span
-                                        onClick={()=>history.push(navigateSearchResult("ORG", tagsParent?.name??''))}
+                                        onClick={() => history.push(navigateSearchResult("ORG", tagsParent?.name ?? ''))}
                                     >
                                         Xem thêm
                                     </span>

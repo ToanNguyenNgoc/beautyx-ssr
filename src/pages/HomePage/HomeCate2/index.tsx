@@ -3,11 +3,11 @@ import icon from "constants/icon";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { onChooseTab } from "redux/cate-tree/cateTreeSlice";
 import { onResetFilter } from "redux/filter-result";
 import { useDeviceMobile } from "hooks";
 import HomeLocation from "../HomeLocation";
 import style from "./style.module.css";
+import { onSetTab } from "redux/cates-tree";
 
 function HomeCate2() {
     const IS_MB = useDeviceMobile();
@@ -43,8 +43,8 @@ function HomeCate2() {
     ];
     const onCateClick = (cate: any) => {
         if (cate.link === "product") {
-            dispatch(onChooseTab("PRODUCT"));
-            history.push("/-danh-muc");
+            dispatch(onSetTab("PRODUCT"));
+            history.push("/danh-muc");
         } else {
             dispatch(onResetFilter());
             history.push(cate.link);

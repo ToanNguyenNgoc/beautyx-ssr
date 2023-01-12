@@ -6,10 +6,13 @@ import { useDeviceMobile, useSwrInfinite } from 'hooks';
 import { IServicePromo, ITag } from 'interface';
 import { paramsServices } from 'params-query';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { navigateSearchResult } from 'utils/formatRouterLink/formatRouter';
 import style from './cate-tree.module.css'
 
 function SectionService({ tagChild }: { tagChild?: ITag }) {
     const LOCATION = AUTH_LOCATION()
+    const history = useHistory()
     const IS_MB = useDeviceMobile()
     const { resData, isValidating } = useSwrInfinite(
         tagChild,
@@ -21,6 +24,12 @@ function SectionService({ tagChild }: { tagChild?: ITag }) {
     )
     return (
         <div className={style.services_cnt}>
+            <p className={style.product_child_child_labe}>
+                Dịch vụ
+                <span
+                    onClick={() => history.push(navigateSearchResult('SERVICE', tagChild?.name ?? ''))}
+                >Xem thêm</span>
+            </p>
             <ul className={style.service_list}>
                 {
                     resData?.map((service: IServicePromo, index: number) => (
