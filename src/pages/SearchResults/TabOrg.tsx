@@ -37,8 +37,7 @@ function TabOrg({ keyword }: { keyword: string }) {
     useEffect(() => {
         dispatch(onChangeFilterOrg({
             ...ORG_PR,
-            // "filter[tags]": resultTag[0]?.name ?? ORG_PR["filter[tags]"],
-            "filter[tags]":ORG_PR["filter[tags]"],
+            "filter[tags]": resultTag[0]?.name ?? ORG_PR["filter[tags]"],
             "filter[province_code]": params?.province
         }))
     }, [])
@@ -169,7 +168,7 @@ function TabOrg({ keyword }: { keyword: string }) {
                     title='Bản đồ'
                     className={style.bottom_btn}
                     onClick={() => history.push({
-                        pathname:'/ban-do'
+                        pathname: '/ban-do'
                     })}
                 />
             </div>

@@ -16,6 +16,11 @@ const cateTree = createSlice({
     name: "CATE",
     initialState,
     reducers: {
+        onSetTab: (state, action) => {
+            state.tab = action.payload
+            state.childId = null
+            state.parentId = null
+        },
         onSetCateParentId: (state, action) => {
             state.parentId = action.payload
             state.childId = null
@@ -27,5 +32,5 @@ const cateTree = createSlice({
 })
 
 const { actions } = cateTree
-export const { onSetCateParentId, onSetCateChildId } = actions
+export const { onSetTab, onSetCateParentId, onSetCateChildId } = actions
 export default cateTree.reducer

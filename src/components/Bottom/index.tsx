@@ -52,7 +52,7 @@ function Bottom() {
             title: t("Home.cate"),
             icon: ICON.cate,
             iconAct: ICON.cateAct,
-            path: "/-danh-muc",
+            path: "/danh-muc",
             params: "",
             badge: 0
         },
