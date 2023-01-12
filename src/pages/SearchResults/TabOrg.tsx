@@ -24,6 +24,7 @@ function TabOrg({ keyword }: { keyword: string }) {
     const [openFilter, setOpenFilter] = useState(false)
     const { tags } = useSelector((state: any) => state.HOME)
     const resultTag = handlePassTagKeyword(keyword, tags)
+
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -37,11 +38,10 @@ function TabOrg({ keyword }: { keyword: string }) {
     useEffect(() => {
         dispatch(onChangeFilterOrg({
             ...ORG_PR,
-            // "filter[tags]": resultTag[0]?.name ?? ORG_PR["filter[tags]"],
-            "filter[tags]":ORG_PR["filter[tags]"],
+            "filter[tags]": resultTag[0]?.name ?? ORG_PR["filter[tags]"],
             "filter[province_code]": params?.province
         }))
-    }, [])
+    }, [tags])
     const { orgs, totalOrg, onLoadMoreOrg } = useOrgs(PRAMS_ORG, true)
     const onViewMore = () => {
         if (orgs.length >= 15 && orgs.length < totalOrg) {
@@ -169,7 +169,7 @@ function TabOrg({ keyword }: { keyword: string }) {
                     title='Bản đồ'
                     className={style.bottom_btn}
                     onClick={() => history.push({
-                        pathname:'/ban-do'
+                        pathname: '/ban-do'
                     })}
                 />
             </div>

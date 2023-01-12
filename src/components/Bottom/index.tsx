@@ -20,7 +20,8 @@ const paths = [
     "/homepage",
     "/tai-khoan",
     "/lich-hen",
-    "/-danh-muc"
+    "/-danh-muc",
+    "/danh-muc"
 ];
 
 function Bottom() {
@@ -51,7 +52,7 @@ function Bottom() {
             title: t("Home.cate"),
             icon: ICON.cate,
             iconAct: ICON.cateAct,
-            path: "/-danh-muc",
+            path: "/danh-muc",
             params: "",
             badge: 0
         },

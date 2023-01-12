@@ -84,3 +84,19 @@ export const formatParamsString = (params: any) => {
     const paramsURL = `${new URLSearchParams(pickBy(params, identity)).toString()}`
     return paramsURL
 }
+export const navigateSearchResult = (
+    type: 'SERVICE' | 'PRODUCT' | 'ORG',
+    keyword: string
+) => {
+    let link = ''
+    if (type === 'SERVICE') {
+        link = `/ket-qua-tim-kiem/dich-vu?keyword=${keyword}`
+    }
+    if (type === 'PRODUCT') {
+        link = `/ket-qua-tim-kiem/san-pham?keyword=${keyword}`
+    }
+    if (type === 'ORG') {
+        link = `/ket-qua-tim-kiem/cua-hang?keyword=${keyword}`
+    }
+    return link
+}

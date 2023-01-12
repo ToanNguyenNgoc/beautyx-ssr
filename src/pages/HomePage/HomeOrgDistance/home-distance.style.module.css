@@ -46,6 +46,8 @@
 
 .org_list_cnt {
     padding: 12px 0 10px 0px;
+    height: 304px;
+    overflow: hidden;
 }
 
 .org_list {
@@ -157,11 +159,10 @@
         padding: 16px 12px;
     }
     .org_list_cnt {
-        padding: 12px 0 0 0px;
-    }
-    .org_list_cnt {
         width: 100%;
+        height: 240px;
         overflow-x: scroll;
+        padding: 12px 0 0 0px;
     }
 
     .org_list {

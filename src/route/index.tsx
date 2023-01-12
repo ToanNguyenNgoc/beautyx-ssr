@@ -23,8 +23,6 @@ import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 import DiscountDetail from "pages/_DiscountDetail";
 import Discounts from "pages/Discounts";
-import CategoryTree from "features/CategoryTree";
-import ProductsByCate from "features/CategoryTree/ProductsByCate";
 import HomeCateResult from "pages/HomeCateResult";
 import ServicesUser from "features/ServiceUser";
 import Account from "pages/Account";
@@ -38,7 +36,7 @@ import IStore from "interface/IStore";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import RefreshToken from 'features/RefreshToken'
 import { BackTopButton } from "components/Layout";
-// import CateTree from "pages/CateTree";
+import CateTree from "pages/CateTree";
 
 //community page
 const PostDetail = lazy(() => import('pages/Community/pages/PostDetail'))
@@ -202,13 +200,9 @@ function RouterConfig() {
             component: <Discounts />,
         },
         {
-            path: "/-danh-muc/",
-            component: <CategoryTree />,
+            path: '/danh-muc',
+            component: <CateTree />
         },
-        // {
-        //     path: '/danh-muc',
-        //     component: <CateTree />
-        // },
         {
             path: "/dat-hen",
             component: <Booking />,
@@ -216,10 +210,6 @@ function RouterConfig() {
         {
             path: "/landingpage/:name",
             component: <LandingPage />,
-        },
-        {
-            path: "/san-pham",
-            component: <ProductsByCate />,
         },
         {
             path: "/ban-do",
