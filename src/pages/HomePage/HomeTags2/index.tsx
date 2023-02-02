@@ -1,13 +1,19 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
+import { AppContext } from 'context/AppProvider';
+import { useTags } from 'hooks';
 import { ITag } from 'interface';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { slugify, scrollTop } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import style from './style.module.css'
+
+interface IPageGroup {
+    page: number,
+    items: ITag[]
+}
 
 const NextButton = (props: any) => {
     return (
@@ -30,7 +36,28 @@ const PrevButton = (props: any) => {
 }
 
 function HomeTags2() {
-    const [slide, setSlide] = useState(0)
+    const { t } = useContext(AppContext)
+    const [slide, setSlide] = useState(1)
+    //---
+    const { tagsChildServiceLevel2 } = useTags()
+    //pagination tags child
+    const perPage = 16
+    const totalTagChild = tagsChildServiceLevel2?.length ?? 0
+    const totalPage = Math.ceil(totalTagChild / perPage)
+    const pageGroup: IPageGroup[] = []
+    for (var i = 0; i < totalPage; i++) {
+        const pageItem = {
+            page: i + 1,
+            items: tagsChildServiceLevel2
+                ?.sort((a, b) => (b.children?.length ?? 0) - (a.children?.length ?? 0))
+                ?.slice(i * perPage, i * perPage + perPage) ?? []
+        }
+        pageGroup.push(pageItem)
+    }
+    let showNext = false
+    let showPrev = false
+    if (slide >= 1 && slide < pageGroup.length) showNext = true
+    if (slide > 1) showPrev = true
     const settings = {
         dots: false,
         infinite: false,
@@ -38,74 +65,44 @@ function HomeTags2() {
         speed: 800,
         slidesToShow: 1,
         slidesToScroll: 1,
-        nextArrow: slide === 0 ? <NextButton /> : <></>,
-        prevArrow: slide === 1 ? <PrevButton /> : <></>,
+        nextArrow: showNext ? <NextButton /> : <></>,
+        prevArrow: showPrev ? <PrevButton /> : <></>,
         swipe: true,
         afterChange: function (index: number) {
-            setSlide(index)
+            setSlide(index + 1)
         },
     }
-
-    //---
-    const { tags } = useSelector((state: any) => state.HOME)
-    const TAGS_SERVICE = tags?.map((i: ITag) => {
-        return {
-            // ...i,
-            children: i.children?.filter((child: ITag) => child.group === "SERVICE")
-        }
-    })?.filter((tag: any) => tag.children?.length > 0)?.sort((a: any, b: any) => b.children?.length - a.children?.length)
-    const cateList = TAGS_SERVICE.map((item: any) => item.children).flat()
     return (
         <div className={style.container}>
             <HomeTitle
-                title={'Danh mục nối bật'}
+                title={t('Home.linked_directory')}
             />
             <div className={style.cate_list_cnt}>
                 <Slider {...settings} >
-                    <ul
-                        className={style.cate_list}
-                    >
-                        {
-                            cateList.slice(0, 16).map((item: ITag, index: number) => (
-                                <li key={index} className={style.cate_item_cnt}>
-                                    <Link
-                                        onClick={scrollTop}
-                                        className={style.cate_link}
-                                        to={{ pathname: `/danh-sach-dich-vu/${slugify(item.name)}?id=${item.id}` }}
-                                    >
-                                        <div className={style.cate_link_img}>
-                                            <img src={item.media[0]?.original_url} alt="" />
-                                        </div>
-                                        <span className={style.cate_link_title}>
-                                            {item.name}
-                                        </span>
-                                    </Link>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                    <ul
-                        className={style.cate_list}
-                    >
-                        {
-                            cateList.slice(16, 32).map((item: ITag, index: number) => (
-                                <li key={index} className={style.cate_item_cnt}>
-                                    <Link
-                                        onClick={scrollTop}
-                                        className={style.cate_link}
-                                        to={{ pathname: `/danh-sach-dich-vu/${slugify(item.name)}?id=${item.id}` }}
-                                    >
-                                        <div className={style.cate_link_img}>
-                                            <img src={item.media[0]?.original_url} alt="" />
-                                        </div>
-                                        <span className={style.cate_link_title}>
-                                            {item.name}
-                                        </span>
-                                    </Link>
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    {
+                        pageGroup?.map(page => (
+                            <ul key={page.page} className={style.cate_list}>
+                                {
+                                    page?.items?.map((item: ITag, index: number) => (
+                                        <li key={index} className={style.cate_item_cnt}>
+                                            <Link
+                                                onClick={scrollTop}
+                                                className={style.cate_link}
+                                                to={{ pathname: `/danh-sach-dich-vu/${slugify(item.name)}?id=${item.id}` }}
+                                            >
+                                                <div className={style.cate_link_img}>
+                                                    <img src={item.media[0]?.original_url} alt="" />
+                                                </div>
+                                                <span className={style.cate_link_title}>
+                                                    {item.name}
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        ))
+                    }
                 </Slider>
             </div>
         </div>

@@ -1,0 +1,386 @@
+.back_btn{
+    position: fixed;
+    z-index: 11;
+    top: 6px;
+    left: 6px;
+    padding: 4px;
+    border-radius: 100%;
+    background-color: transparent;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100vh;
+}
+
+.left {
+    width: 60%;
+}
+
+.video_container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+
+.video_blur {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video_wrapper {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+}
+
+.video {
+    width: 100%;
+    height: 100%;
+}
+
+.right {
+    width: 40%;
+    background-color: var(--bg-white);
+    position: relative;
+}
+
+.right_top {
+    padding: 24px 24px 12px 24px;
+}
+
+.right_top_org {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.org_detail {
+    width: calc(100% - 144px);
+    display: flex;
+    align-items: center;
+}
+
+.org_detail_img {
+    width: 72px;
+    height: 72px;
+    position: relative;
+    background-color: var(--bg-color);
+    border-radius: 100%;
+}
+
+.org_detail_img img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2;
+    border-radius: 100%;
+}
+
+.org_detail_right {
+    width: calc(100% - 72px);
+    padding-left: 12px;
+}
+
+.org_detail_name {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.time_late {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--text-hover);
+}
+
+.right_top_org_btn {
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+.title {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+}
+
+.content {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 500;
+    margin-top: 6px;
+}
+
+.right_top_services {
+    margin-top: 8px;
+}
+
+.service_link_text {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--purple);
+    margin-right: 8px;
+    opacity: 0.7;
+    transition: var(--trans);
+}
+
+.service_link_text:hover {
+    opacity: 1;
+    transition: var(--trans);
+}
+
+/* interactive */
+.interactive {
+    margin-top: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.interactive_item {
+    display: flex;
+    align-items: center;
+    margin-right: 14px;
+}
+
+.interactive_icon_btn {
+    padding: 8px;
+    background-color: var(--bgGray);
+}
+
+.interactive_item_text {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.comment_container {
+    width: 100%;
+    height: calc(100% - 268px);
+    overflow-y: scroll;
+}
+
+.comment_list {
+    width: 100%;
+    height: max-content;
+    padding: 16px;
+    padding-bottom: 60px;
+}
+
+.comment_item_cnt {
+    padding: 12px 0px;
+}
+
+.comment_item_par {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment_user_avatar {
+    width: 42px;
+    height: 42px;
+    background-color: var(--bg-color);
+    border: 100%;
+    position: relative;
+    border-radius: 100%;
+}
+
+.comment_user_avatar img {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.comment_item_par_right {
+    width: calc(100% - 54px);
+}
+
+.comment_item_box {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    padding: 8px 10px;
+}
+
+.comment_text {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 20px;
+}
+
+.comment_user_name {
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.comment_bot {
+    margin-top: 8px;
+}
+
+.comment_bot_create {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    margin-right: 10px;
+}
+
+.comment_bot_reply {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 16px;
+    cursor: pointer;
+}
+
+.comment_item_child {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.comment_item_child_item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0px;
+}
+
+.comment_input {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background-color: blueviolet;
+    z-index: 10;
+}
+
+/* load */
+.detail_comment_list {
+    padding: 16px;
+}
+
+.load_item {
+    margin-bottom: 12px;
+    width: 100%;
+    height: 82px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.load_item_left {
+    width: 42px;
+    height: 42px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.load_item_right {
+    height: 100%;
+    width: calc(100% - 54px);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        background-color: var(--bgGray);
+    }
+
+    .video_container {
+        height: 250px;
+    }
+
+    .right {
+        width: 100%;
+        margin-top: 250px;
+    }
+
+    .right_top {
+        padding: 6px 8px;
+    }
+
+    .org_detail_img {
+        width: 64px;
+        height: 64px;
+        border: solid 1px var(--bg-color);
+    }
+
+    .org_detail_right {
+        width: calc(100% - 70px);
+    }
+
+    .right_top_org_btn {
+        font-size: 12px;
+        line-height: 16px;
+        font-weight: 600;
+        padding: 8px;
+    }
+
+    .title,
+    .content {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .content {
+        font-weight: 500;
+    }
+
+    .right_top_services {
+        margin-top: 4px;
+    }
+
+    .interactive {
+        margin: 0px;
+        padding: 4px;
+        border-bottom: solid 1px var(--bg-color);
+    }
+
+    .interactive_icon_btn {
+        border-radius: 100%;
+    }
+
+    .comment_container {
+        height: max-content;
+    }
+
+    .comment_list {
+        padding: 0px 12px;
+    }
+
+    .comment_text {
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .comment_input {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1;
+    }
+}

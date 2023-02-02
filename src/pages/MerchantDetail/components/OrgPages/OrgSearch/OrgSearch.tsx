@@ -13,7 +13,7 @@ function OrgSearch(props: any) {
     const [tab, setTab] = useState(1);
     const tabs = useMemo(
         () => [
-            { id: 1, title: "", total: SERVICES_KEYWORD.total_services },
+            { id: 1, title: "Dịch vụ", total: SERVICES_KEYWORD.total_services },
             {
                 id: 2,
                 title: "Sản phẩm",

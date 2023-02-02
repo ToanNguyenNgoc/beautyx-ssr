@@ -37,7 +37,6 @@ export const EX_VOUCHER_TITLE_DISCOUNT = (discount:IDiscountPar)=>{
     return displayTitle
 }
 export const EX_APPLY_DATE = (discount: IDiscountPar) => {
-    console.log(discount)
     let validDate = false;
     if (!discount.valid_from && !discount.valid_util) {
         validDate = true
@@ -64,7 +63,7 @@ export const EX_DISCOUNT_TYPE = (discount: IDiscountPar) => {
     const value = EX_DISCOUNT_UNIT(discount)
     switch (discount_type) {
         case DISCOUNT_TYPE.FINAL_PRICE.key:
-            return text = DISCOUNT_TYPE.FINAL_PRICE.text;
+            return text = `${DISCOUNT_TYPE.FINAL_PRICE.text} ${formatPrice(discount?.discount_value)}đ/mỗi items`;
         case DISCOUNT_TYPE.SUB_TOTAL.key:
             return text = `Giảm ${value} trên tổng đơn ${discount.maximum_discount_value ?
                 `(tối đa ${formatPrice(discount.maximum_discount_value)})` : ''

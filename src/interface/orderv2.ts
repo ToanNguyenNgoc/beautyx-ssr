@@ -1,21 +1,38 @@
 import { Service } from "./service";
 import { Product } from "./product";
 import { IOrganization } from "./organization";
+import { IDiscountPar } from "./discount";
 
 export interface ITems {
     id: number;
     order_id: number;
     base_price: number;
     quantity: number;
-    productable_type: string;
+    productable_type: | 'App\\Models\\CI\\Service' | 'App\\Models\\CI\\Product' | 'App\\Models\\CI\\TreatmentCombo',
     productable_id: number;
-    productable: Service | Product;
+    productable: Service | Product | any;
     created_at: string;
     updated_at: string;
     origin_id: null | number;
     services_count: number;
     discount_value: number;
     discount_id: null | number;
+    discount: IDiscountPar
+}
+export interface BTX_points {
+    created_at: string,
+    deleted_at?: string,
+    expired_at: string,
+    id: number,
+    reward_points: number,
+    rewardable_id: number,
+    rewardable_type: string,
+    spent_points: number,
+    spentable_id?: number,
+    spentable_type?: any,
+    type: string,
+    updated_at: string,
+    user_id: string
 }
 export interface IOrderOrigin {
     id: number;
@@ -96,5 +113,13 @@ export interface IOrderV2 {
         deleted_at: null;
         items: ITems[];
     };
+    items: ITems[]
     origin?: IOrderOrigin;
+    btx_reward: BTX_points
+}
+export interface ItemReviewed {
+    id: number,
+    name: string,
+    image_url: string,
+    type: 'SERVICE' | 'PRODUCT'
 }

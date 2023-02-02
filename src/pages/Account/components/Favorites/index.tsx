@@ -1,18 +1,21 @@
 import API_ROUTE from 'api/_api';
 import IStore from 'interface/IStore';
 import { HeadTitle } from 'pages/Account';
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Favorite } from 'interface'
 import { useSelector } from 'react-redux';
-import { useSwrInfinite, onErrorImg } from 'utils'
+import { onErrorImg } from 'utils'
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter'
 import style from './favorite.module.css'
 import { Link } from 'react-router-dom';
 import icon from 'constants/icon';
 import { XButton } from 'components/Layout';
 import Skeleton from 'react-loading-skeleton';
+import { AppContext } from 'context/AppProvider';
+import { useFavorite, useSwrInfinite } from 'hooks';
 
 function Favorites() {
+    const { t } = useContext(AppContext)
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
         'user_id': USER?.id,
@@ -23,7 +26,7 @@ function Favorites() {
     const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite(USER?.id, `${API_ROUTE.FAVORITES}`, params)
     return (
         <>
-            <HeadTitle title='Đang theo dõi' />
+            <HeadTitle title={t('Header.Following')} />
             <div className={style.container}>
                 <ul className={style.favorite_list}>
                     {
@@ -41,7 +44,7 @@ function Favorites() {
                         <XButton
                             onClick={onLoadMore}
                             loading={isValidating}
-                            title='Xem thêm'
+                            title={t('Mer_de.view_more')}
                         />
                     </div>
                 }
@@ -54,6 +57,12 @@ export default Favorites;
 
 const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
     const org = favorite.organization
+    const { favoriteSt, onToggleFavorite } = useFavorite({
+        org_id: org?.id ?? 0,
+        type: 'ORG',
+        count: org?.favorites_count ?? 0,
+        favorite: org?.is_favorite ?? true
+    })
     const refLink = useRef<HTMLDivElement>(null)
     const refView = useRef<HTMLDivElement>(null)
     const toggleView = (className: string) => {
@@ -120,7 +129,12 @@ const FavoriteItem = ({ favorite }: { favorite: Favorite }) => {
                             </div>
                             <div className={style.org_view_cnt_bot}>
                                 <XButton
-                                    title='Đang theo dõi'
+                                    title={favoriteSt.is_favorite ? 'Đang theo dõi' : 'Theo dõi'}
+                                    onClick={(e) => {
+                                        onToggleFavorite();
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                    }}
                                 />
                                 <XButton
                                     title='Xem chi tiết'

@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAuth } from 'hooks'
-import { useHistory } from 'react-router-dom'
+import {  useHistory } from 'react-router-dom'
 import React, { ReactNode, useEffect } from 'react'
 
 interface LayoutProps {
-    children: ReactNode
+    children: ReactNode[]
 }
 
 function AuthRoute({ children }: LayoutProps) {
@@ -21,3 +21,4 @@ function AuthRoute({ children }: LayoutProps) {
 }
 
 export default AuthRoute;
+

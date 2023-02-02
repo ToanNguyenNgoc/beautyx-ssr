@@ -1,7 +1,7 @@
 import axiosClient from "./axios";
 import { pickBy, identity } from "lodash";
-import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 import { AUTH_LOCATION } from './authLocation';
+import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class ProductApi {
     getByOrgId = (values: any) => {
@@ -12,7 +12,7 @@ class ProductApi {
             "filter[keyword]": values.keyword,
             "filter[special]": values.special,
             "filter[product_category_id]": values.cate_id,
-            "filter[is_momo_ecommerce_enable]": values.isEnable,
+            "filter[is_momo_ecommerce_enable]": values.isEnable ?? true,
             "include": "favorites_count|category",
             "append": "is_favorite|rating",
         };

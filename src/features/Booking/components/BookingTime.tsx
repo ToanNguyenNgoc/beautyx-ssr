@@ -1,51 +1,58 @@
-import React from "react";
-import DatePicker from "../../../components/DatePicker/index";
-import TimePicker from "../../../components/TimePicker";
+import React, { useContext } from "react";
 import { Dialog } from "@mui/material";
-import HeadMobile from "../../HeadMobile";
-import { Transition } from "../../../utils/transition";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
+import { useDeviceMobile } from "hooks";
+import style from '../booking.module.css'
+import { DatePicker, XButton } from "components/Layout";
+import { Transition } from "utils";
+import HeadMobile from "features/HeadMobile";
+import TimePicker from "components/TimePicker";
+// import DatePicker from "components/DatePicker";
+import { AppContext } from "context/AppProvider";
 
 function BookingTime(props: any) {
+    const { t } = useContext(AppContext)
     const { open, setOpen, bookTime, setBookTime, org } = props;
     const IS_MB = useDeviceMobile();
     const onChangeDatePicker = (e: any) => {
-        setBookTime({ ...bookTime, date: e });
+        setBookTime({ ...bookTime, date: e, time: null });
     };
     const onChangeTimePicker = (time: string) => {
         setBookTime({ ...bookTime, time: time });
     };
     return (
         <Dialog
-            fullScreen={IS_MB ? true : false}
+            fullScreen={IS_MB}
             open={open}
             onClose={() => setOpen(false)}
             TransitionComponent={Transition}
         >
-            <div className="flex-column book-time-cnt">
-                {IS_MB && (
-                    <HeadMobile onBack={setOpen} title="Chọn thời gian" />
-                )}
-                <div className="flex-row-sp book-time-cnt__wrap">
-                    <div className="book-time__date">
-                        <DatePicker onChange={(e) => onChangeDatePicker(e)} />
+            {IS_MB && (
+                <HeadMobile onBack={setOpen} title={t('my_ser.time_select')} />
+            )}
+            <div className={style.book_time_cnt}>
+                <div className={style.book_time_top}>
+                    <div className={style.book_time_top_left}>
+                        <DatePicker disablePrev onChange={(e) => onChangeDatePicker(e)} />
                     </div>
-                    <div className="book-time__time">
+                    <div className={style.book_time_top_right}>
                         <TimePicker
                             bookTime={bookTime}
                             org={org}
                             onChange={(e) => onChangeTimePicker(e)}
+                            disablePrev
                         />
                     </div>
                 </div>
-                {bookTime.date && bookTime.time && (
-                    <button
+                <div className={style.book_time_bot}>
+                    <XButton
+                        className={style.book_time_bot_btn}
+                        title={t('my_ser.confirm_time')}
                         onClick={() => setOpen(false)}
-                        className="book-time__btn"
-                    >
-                        Xác nhận thời gian
-                    </button>
-                )}
+                        style={
+                            (bookTime.date && bookTime.time) ? {opacity:1}:{opacity:0.4}
+                        }
+                    />
+                </div>
             </div>
         </Dialog>
     );

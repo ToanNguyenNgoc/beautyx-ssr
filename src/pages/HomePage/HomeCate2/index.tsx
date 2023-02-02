@@ -3,11 +3,11 @@ import icon from "constants/icon";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { onChooseTab } from "redux/CateTree/cateTreeSlice";
 import { onResetFilter } from "redux/filter-result";
-import { useDeviceMobile } from "utils";
+import { useDeviceMobile } from "hooks";
 import HomeLocation from "../HomeLocation";
 import style from "./style.module.css";
+import { onSetTab } from "redux/cates-tree";
 
 function HomeCate2() {
     const IS_MB = useDeviceMobile();
@@ -18,28 +18,33 @@ function HomeCate2() {
         {
             title: "Spa",
             icon: icon.cateSpa,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=spa`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=spa`,
         },
         {
             title: "Nail",
             icon: icon.cateNail,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=nail`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=nail`,
         },
         {
             title: "Salon",
             icon: icon.cateSalon,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=salon`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=salon`,
         },
         {
-            title: "Clinic",
+            title: "Nha khoa",
             icon: icon.cateClinic,
-            link: `/ket-qua-tim-kiem/cua-hang?keyword=clinic`,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=Nha khoa`,
+        },
+        {
+            title: "Thẩm mỹ viện",
+            icon: icon.cateSpa,
+            link: `/ket-qua-tim-kiem/dich-vu?keyword=Thẩm mỹ viện`,
         },
     ];
     const onCateClick = (cate: any) => {
         if (cate.link === "product") {
-            dispatch(onChooseTab("PRODUCT"));
-            history.push("/-danh-muc");
+            dispatch(onSetTab("PRODUCT"));
+            history.push("/danh-muc");
         } else {
             dispatch(onResetFilter());
             history.push(cate.link);

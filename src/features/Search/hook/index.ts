@@ -1,5 +1,9 @@
-import { ParamOrg, ParamProduct, ParamService } from "params-query/param.interface"
-import { useSwrInfinite } from "utils"
+import { IServicePromo, Productable } from "interface"
+import { ParamOrg, ParamProduct, ParamService, ParamsProductable } from "params-query/param.interface"
+import { unique } from "utils"
+import { pick } from 'lodash'
+import { useFetchInfinite, useSwrInfinite } from "hooks"
+import { API_ROUTE_V } from "api/_api"
 
 export const useOrgs = (paramOrg: ParamOrg, condition: boolean) => {
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(condition, "/organizations", paramOrg)
@@ -25,3 +29,57 @@ export const useServices = (paramService: ParamService, condition: boolean) => {
     const isLoadSer = isValidating
     return { services, totalService, onLoadMoreService, isLoadSer }
 }
+export const useServicesGroup = (
+    paramService: ParamService,
+    condition: boolean
+) => {
+    const { originData, totalItem, onLoadMore, isValidating, resData } = useSwrInfinite(condition, "/services", paramService)
+    const itemInPage = originData?.map((i: any) => i.data?.data?.hits)
+    // console.log(itemInPage)
+    const itemOrgInPage = itemInPage?.map((i: any) => i?.map((j: any) => j.org_id))
+    const itemOrgIdInPage = itemOrgInPage?.map((i: any) => unique(i))
+
+    const servicesGroup = itemInPage?.map((services: IServicePromo[], index: number) => {
+        const matchIndex = itemOrgIdInPage?.find((i: any, o_index: number) => o_index === index)
+        const itemGroup = matchIndex?.map((id: number) => {
+            return {
+                org: pick(
+                    services?.filter((ser: IServicePromo) => ser.org_id === id)[0],
+                    [
+                        'org_id',
+                        'org_image',
+                        'org_name',
+                        'org_telephone',
+                        'org_province_name',
+                        'org_district_name',
+                        'org_full_address',
+                        '_geoDistance'
+                    ]
+                ),
+                services: services?.filter((ser: IServicePromo) => ser.org_id === id)
+            }
+        })
+        return itemGroup
+    })
+    const servicesGroupByOrg = servicesGroup?.flat() ?? []
+    const services = resData
+    const totalService = totalItem
+    const onLoadMoreService = onLoadMore
+    const isLoadSer = isValidating
+    return { services, totalService, onLoadMoreService, isLoadSer, servicesGroupByOrg }
+}
+
+export const useProductableService = (param: ParamsProductable, condition: boolean) => {
+    const { resDataV2, totalItemV2, isValidating, onLoadMore } = useFetchInfinite(
+        condition,
+        API_ROUTE_V.PRODUCTABLE('v3'),
+        { ...param, type: '1' }
+    )
+    const services: Productable[] = resDataV2
+    const totalService = totalItemV2
+    const onLoadMoreService = onLoadMore
+    const isLoad = isValidating
+    return { services, onLoadMoreService, isLoad, totalService }
+
+}
+

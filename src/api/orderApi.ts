@@ -1,7 +1,7 @@
 import axiosClient from './axios';
-import { AUTH_HEADER_PARAM_GET, AUTH_HEADER } from '../utils/authHeader';
 import { EXTRA_FLAT_FORM } from './extraFlatForm';
 import { pickBy, identity } from 'lodash'
+import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from './authHeader';
 
 class Order {
       getOrder = (page: number) => {
@@ -24,10 +24,11 @@ class Order {
             return axiosClient.get(url, AUTH_HEADER_PARAM_GET(pickBy(paramsOb, identity)))
       }
       postOrder = (org_id: number, params: object) => {
-            const data = JSON.stringify(params);
+            const data = JSON.stringify(pickBy(params, identity));
             const url = `/organizations/${org_id}/orders`;
             return axiosClient.post(url, data, AUTH_HEADER())
       }
 }
 const order = new Order();
+export const orderApi = new Order()
 export default order

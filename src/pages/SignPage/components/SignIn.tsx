@@ -5,16 +5,13 @@ import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
-import { Input, XButton } from "components/Layout";
+import { BackButton, Input, XButton } from "components/Layout";
 import style from "../sign-page.module.css";
 import { AppContext } from "context/AppProvider";
 import authentication from "api/authApi";
-import { fetchAsyncUser } from "redux/USER/userSlice";
-import { fetchAsyncApps } from "redux/appointment/appSlice";
-import { fetchAsyncOrderServices } from "redux/order/orderSlice";
+import { fetchAsyncUser } from "redux/user/userSlice";
 import { PopupNotification } from "components/Notification";
-import { useNoti } from "utils";
+import { useNoti } from "hooks";
 import icon from "constants/icon";
 
 function SignIn(props: any) {
@@ -22,9 +19,7 @@ function SignIn(props: any) {
     const dispatch = useDispatch();
     const { setActiveTabSign } = props;
     const history = useHistory();
-    const [typePass, setTypePass] = useState<"text" | "password">("password");
-    const [checkType, setCheckType] = useState<boolean>(true);
-
+    const [showPass, setShowPass] = useState(false);
     const [child, setChild] = useState<React.ReactElement>(<></>);
     const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti();
     const [remember, setRemember] = useState(true);
@@ -34,18 +29,30 @@ function SignIn(props: any) {
             const response = await authentication.login(values);
             if (remember === true) {
                 localStorage.setItem("_WEB_TK", response.data.context.token);
+                localStorage.setItem(
+                    "_WEB_TK_RE",
+                    response.data.context.refresh_token
+                );
+                localStorage.setItem(
+                    "_WEB_TK_EX",
+                    response.data.context.token_expired_at
+                );
             } else {
-                window.sessionStorage.setItem(
-                    "_WEB_TK",
-                    response.data.context.token
+                sessionStorage.setItem("_WEB_TK", response.data.context.token);
+                sessionStorage.setItem(
+                    "_WEB_TK_RE",
+                    response.data.context.refresh_token
+                );
+                sessionStorage.setItem(
+                    "_WEB_TK_EX",
+                    response.data.context.token_expired_at
                 );
             }
             const res = await dispatch(fetchAsyncUser());
             if (res?.payload) {
-                dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")));
-                dispatch(fetchAsyncOrderServices({ page: 1 }));
+                // dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
+                history.goBack();
             }
-            history.goBack();
         } catch (error) {
             const err = error as AxiosError;
             switch (err.response?.status) {
@@ -106,97 +113,101 @@ function SignIn(props: any) {
             handleLogin(values);
         },
     });
+
     return (
-        <div>
-            <form
-                onSubmit={formik.handleSubmit}
-                autoComplete="off"
-                className={style.form_container}
-            >
-                <div className={style.input_wrapper}>
-                    <Input
-                        className={style.input}
-                        icon={icon.User}
-                        type="text"
-                        placeholder={t("Home.Sign_in_pl_user_name")}
-                        name="email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.email && formik.touched.email && (
-                        <p className={style.input_wrapper_error}>
-                            {formik.errors.email}
-                        </p>
-                    )}
-                </div>
-                <div className={style.input_wrapper}>
-                    <Input
-                        className={style.input}
-                        icon={icon.Lock}
-                        name="password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        type={typePass}
-                        placeholder={t("Home.Sign_in_pl_password")}
-                    />
-                    <img
-                        onClick={() => handleToggleSeePass()}
-                        className={style.input_wrapper_icon_show}
-                        src={checkType === true ? icon.eye : icon.hiddenEye}
-                        alt=""
-                    />
-                    {formik.errors.password && formik.touched.password && (
-                        <p className={style.input_wrapper_error}>
-                            {formik.errors.password}
-                        </p>
-                    )}
-                    {/* <p style={{ marginTop: "16px" }} className={style.input_wrapper_error}>
+        <>
+            <BackButton />
+            <div>
+                <form
+                    onSubmit={formik.handleSubmit}
+                    autoComplete="off"
+                    className={style.form_container}
+                >
+                    <div className={style.input_wrapper}>
+                        <Input
+                            className={style.input}
+                            icon={icon.User}
+                            type="text"
+                            placeholder={t("Home.Sign_in_pl_user_name")}
+                            name="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                        />
+                        {formik.errors.email && formik.touched.email && (
+                            <p className={style.input_wrapper_error}>
+                                {formik.errors.email}
+                            </p>
+                        )}
+                    </div>
+                    <div className={style.input_wrapper}>
+                        <Input
+                            className={style.input}
+                            icon={icon.Lock}
+                            name="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            type={showPass ? "text" : "password"}
+                            placeholder={t("Home.Sign_in_pl_password")}
+                        />
+                        <img
+                            onClick={() => setShowPass(!showPass)}
+                            className={style.input_wrapper_icon_show}
+                            src={showPass ? icon.eyeCrossPurple : icon.eye}
+                            alt=""
+                        />
+                        {formik.errors.password && formik.touched.password && (
+                            <p className={style.input_wrapper_error}>
+                                {formik.errors.password}
+                            </p>
+                        )}
+                        {/* <p style={{ marginTop: "16px" }} className={style.input_wrapper_error}>
                         {errPass}
                     </p> */}
-                </div>
-                <div className={style.sign_check}>
-                    <div className={style.sign_check_left}>
-                        <Checkbox
-                            defaultChecked={true}
-                            onChange={() => setRemember(!remember)}
-                            sx={{
-                                color: "#7161BA",
-                                "&.Mui-checked": {
-                                    color: "#7161BA",
-                                },
-                            }}
-                        />
-                        <span>{t("Home.Sign_remember")}</span>
                     </div>
-                    <span
-                        className={style.sign_check_forgot}
-                        onClick={() => history.replace("/doi-mat-khau")}
-                    >
-                        {t("Home.Sign_forgot")} ?
+                    <div className={style.sign_check}>
+                        <div className={style.sign_check_left}>
+                            <Checkbox
+                                defaultChecked={true}
+                                onChange={() => setRemember(!remember)}
+                                sx={{
+                                    color: "#7161BA",
+                                    "&.Mui-checked": {
+                                        color: "#7161BA",
+                                    },
+                                }}
+                            />
+                            <span>{t("Home.Sign_remember")}</span>
+                        </div>
+                        <span
+                            className={style.sign_check_forgot}
+                            onClick={() => history.replace("/doi-mat-khau")}
+                        >
+                            {t("Home.Sign_forgot")} ?
+                        </span>
+                    </div>
+                    <div className={style.form_submit_btn}>
+                        <XButton
+                            title={t("Home.Sign_in")}
+                            type="submit"
+                            loading={noti.load}
+                        />
+                    </div>
+                </form>
+                <p className={style.sign_other_setup}>
+                    {t("Home.Sign_no_acc")}?
+                    <span onClick={() => setActiveTabSign(2)}>
+                        {t("Home.Sign_up_now")}
                     </span>
-                </div>
-                <div className={style.form_submit_btn}>
-                    <XButton
-                        title={t("Home.Sign_in")}
-                        type="submit"
-                        loading={noti.load}
-                    />
-                </div>
-            </form>
-            <p className={style.sign_other_setup}>
-                {t("Home.Sign_no_acc")}?
-                <span onClick={() => setActiveTabSign(2)}>
-                    {t("Home.Sign_up_now")}
-                </span>
-            </p>
-            <PopupNotification
-                open={noti.openAlert}
-                setOpen={onCloseNoti}
-                title="Thông báo"
-                content={noti.message}
-                children={child}
-            />
-        </div>
+                </p>
+                <PopupNotification
+                    open={noti.openAlert}
+                    setOpen={onCloseNoti}
+                    title="Thông báo"
+                    content={noti.message}
+                    children={child}
+                />
+            </div>
+        </>
     );
 }
 

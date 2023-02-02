@@ -78,8 +78,8 @@ const orgMapReducer = createSlice({
             }
         },
     },
-    extraReducers: {
-        [fetchOrgsMapFilter.pending]: (state) => {
+    extraReducers(builder) {
+        builder.addCase(fetchOrgsMapFilter.pending, (state) => {
             return {
                 ...state,
                 orgsMap: {
@@ -87,8 +87,8 @@ const orgMapReducer = createSlice({
                     status: STATUS.LOADING,
                 },
             };
-        },
-        [fetchOrgsMapFilter.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchOrgsMapFilter.fulfilled, (state, { payload }) => {
             const { orgs, page, totalItem, mountNth } = payload;
             return {
                 ...state,
@@ -100,8 +100,8 @@ const orgMapReducer = createSlice({
                     status: STATUS.SUCCESS,
                 },
             };
-        },
-        [fetchOrgsMapFilter.rejected]: (state) => {
+        })
+        builder.addCase(fetchOrgsMapFilter.rejected, (state) => {
             return {
                 ...state,
                 orgsMap: {
@@ -109,7 +109,7 @@ const orgMapReducer = createSlice({
                     status: STATUS.FAIL,
                 },
             };
-        },
+        })
     },
 });
 const { actions } = orgMapReducer;

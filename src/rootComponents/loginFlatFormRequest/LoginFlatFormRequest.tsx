@@ -2,42 +2,38 @@
 import React, { useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import dayjs from "dayjs";
 import "./style.css";
-import icon from "../../constants/icon";
-import {XButton} from 'components/Layout'
-import { FLAT_FORM_TYPE } from "../flatForm";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-// SLICE
-
-import { fetchAsyncUser } from "../../redux/USER/userSlice";
-import { fetchAsyncApps } from "../../redux/appointment/appSlice";
-import { EXTRA_REDUCER_STATUS } from "../../redux/status";
-
+import { XButton } from 'components/Layout'
 // ==== END
 
 // MOMO
 
-import momoApi, {
-    IUserConsentsData,
-    IUserConsentsStatus,
-    IUserConsents,
-} from "../../api/momoApi";
-import momoAuthApi from "../../api/_momoAuthApi";
+// import momoApi, {
+//     IUserConsentsData,
+//     IUserConsentsStatus,
+//     IUserConsents,
+// } from "../../api/momoApi";
+// import momoAuthApi from "../../api/_momoAuthApi";
 import { handleGetUserInfoMomo } from "../momo/handleMomo";
 
 // ==== END
 // TIKI
 
-import tikiAuthApi from "../../api/_tikiAuthApi";
+// import tikiAuthApi from "../../api/_tikiAuthApi";
 import doPostMakePaymentMessageTiki from "../tiki/doPostMessageTiki";
 import useGetMessageTiki from "../useGetMessageTiki";
 
 // ==== END
 
 // MB BANK
-import { loginAsyncMb } from "../../redux/loginFlatForm/loginFlatFrom";
 import { exitMbMiniApp } from "../mb/doPostMessageMBbank";
+import { FLAT_FORM_TYPE } from "rootComponents/flatForm";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import tikiAuthApi from "api/_tikiAuthApi";
+import { loginAsyncMb } from "redux/loginFlatForm/loginFlatFrom";
+import { EXTRA_REDUCER_STATUS } from "redux/status";
+import { fetchAsyncUser } from "redux/user/userSlice";
+import icon from "constants/icon";
 // ==== END
 function LoginFlatFormRequest(props: any) {
     const { pathname, setClose } = props;
@@ -110,10 +106,7 @@ function LoginFlatFormRequest(props: any) {
     };
     // ==== utils custom
     async function fetchAsyncUserAndinitApp() {
-        const res_user = await dispatch(fetchAsyncUser());
-        if (res_user.payload) {
-            dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")));
-        }
+        await dispatch(fetchAsyncUser());
         if (setClose) return setClose(false);
         if (pathname && pathname === "/tai-khoan/thong-tin-ca-nhan") {
             history.push("/home");

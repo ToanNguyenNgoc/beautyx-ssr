@@ -2,18 +2,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import icon from '../../../constants/icon';
-import { IOrganization } from '../../../interface/organization';
-import {
-    onDeleteFavoriteOrg,
-    onFavoriteOrg,
-    fetchAsyncByKeyword
-} from '../../../redux/org/orgSlice';
 import OrgSearch from './OrgPages/OrgSearch/OrgSearch';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from 'lodash';
-import { getTotal } from '../../../redux/cartSlice';
-import IStore from 'interface/IStore';
+import { getTotal } from 'redux/cart';
+import { IOrganization } from 'interface';
+import { fetchAsyncByKeyword } from 'redux/org/orgSlice';
+import icon from 'constants/icon';
 
 interface IProps {
     org: IOrganization,
@@ -22,37 +17,23 @@ interface IProps {
 }
 
 // onload event
-window.addEventListener("scroll", function () {
-    const scrolled = window.scrollY;
-    const de_header = document.querySelector(".mb-head-org-cnt");
-    const windowPosition = scrolled > 80;
-    if (de_header) {
-        de_header.classList.toggle("mb-head-act", windowPosition);
-    }
-});
 
 function HeadOrg(props: IProps) {
+    window.addEventListener("scroll", function () {
+        const scrolled = window.scrollY;
+        const de_header = document.getElementById("org_head");
+        if (de_header) {
+            de_header.style.backgroundColor = `rgb(255 255 255 / ${scrolled}%)`
+        }
+    });
+    const { org, isShowSearch, onBackFunc } = props;
     const { USER } = useSelector((state: any) => state.USER);
     const dispatch = useDispatch();
     const history = useHistory();
-    const { org, isShowSearch, onBackFunc } = props;
-    const org_redux = useSelector((state:IStore) => state.ORG.org)
     const orgHeadRef = useRef<any>();
     const orgSearchBtn = useRef<any>();
     const orgSearchCnt = useRef<any>();
     const orgInputRef = useRef<any>();
-    const handleFavoriteOrg = () => {
-        if (USER) {
-            if (org_redux?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org_redux))
-            } else {
-                dispatch(onFavoriteOrg(org_redux))
-            }
-        }
-        else {
-            history.push('/sign-in?1')
-        }
-    }
     const onBackClick = () => {
         if (onBackFunc) {
             return onBackFunc()
@@ -105,7 +86,7 @@ function HeadOrg(props: IProps) {
 
     return (
         <>
-            <div ref={orgHeadRef} className='flex-row-sp mb-head-org-cnt' >
+            <div id='org_head' ref={orgHeadRef} className='flex-row-sp mb-head-org-cnt' >
                 <div className="mb-head-org-cnt__left">
                     <button
                         className='mb-head-org-cnt__button'
@@ -151,24 +132,16 @@ function HeadOrg(props: IProps) {
                             <img src={icon.ShoppingCartSimple} alt="" />
                         </div>
                     </button>
-                    {
-                        isShowSearch &&
-                        <button
-                            className='mb-head-org-cnt__button'
-                            onClick={handleFavoriteOrg}
-                        >
-                            <div className="icon-btn">
-                                <img src={org_redux?.is_favorite ? icon.heart : icon.unHeart} alt="" />
-                            </div>
-                        </button>
-                    }
                 </div>
             </div>
-            <OrgSearch
-                orgSearchCnt={orgSearchCnt}
-                keyword={keyword}
-                org={org}
-            />
+            {
+                isShowSearch &&
+                <OrgSearch
+                    orgSearchCnt={orgSearchCnt}
+                    keyword={keyword}
+                    org={org}
+                />
+            }
         </>
     );
 }

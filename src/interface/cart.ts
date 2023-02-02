@@ -18,17 +18,23 @@ export interface Cart {
       cart_item: Product | Service | Combo
 }
 export interface ICart {
-      cart_id: number,
+      cart_id: string,
       cart_item: Product | Service | Combo,
       discount?: IDiscountPar,
       id: number
       isConfirm: boolean
-      is_type: number
+      is_type: 'SERVICE' | 'PRODUCT' | 'COMBO'
       name: string
       org: IOrganization
       org_id: number
       org_name: string
       price: number
       price_discount?: number
-      quantity: number
+      quantity: number,
+      final_price: any
+}
+export interface ICartGroupOrg {
+      org_id: number,
+      org: IOrganization,
+      cartItemsOrg: ICart[]
 }

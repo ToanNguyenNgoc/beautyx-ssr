@@ -1,13 +1,9 @@
+import icon from "constants/icon";
+import img from "constants/img";
+import { IOrganization } from "interface";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import icon from "../../constants/icon";
-import img from "../../constants/img";
-import { IOrganization } from "../../interface/organization";
-import onErrorImg from "../../utils/errorImg";
-import { formatDistance } from "../../utils/format";
+import { onErrorImg } from "utils";
 import MapOrgItemDetailMb from "./MapOrgItemDetailMb";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
 
 interface IProps {
     item: IOrganization,
@@ -16,33 +12,16 @@ interface IProps {
 
 export default function MapTagsItemMB(props: IProps) {
     const { item, handleDirection } = props;
-    const org: IOrganization = useSelector((state: any) => state.ORG.org);
-    const dispatch = useDispatch();
     const [open, setOpen] = useState(false);
-    const history = useHistory();
     const gotoDetail = () => {
-        // setOpen({...open,open:true})
         setOpen(true)
-        dispatch(fetchAsyncOrg(item.subdomain));
-        // history.push({
-        //     pathname: `/org/${item.subdomain}`,
-        //     // search: `${item.id}`,
-        //     state: item,
-        // });
     };
-    const onRouteDirection = (e: any) => {
-        // dispatch(fetchAsyncOrg(item.subdomain));
-        e.stopPropagation()
-        if (handleDirection) {
-            handleDirection()
-        }
-    }
     return (
         <>
             <MapOrgItemDetailMb
                 open={open}
                 setOpen={setOpen}
-                org={org}
+                org={item}
                 handleDirection={handleDirection}
             />
             <div onClick={gotoDetail} className="map-item__wrap">
@@ -68,12 +47,6 @@ export default function MapTagsItemMB(props: IProps) {
                                 </div>
                                 <p>5</p>
                             </div>
-                            {/* <div className="evaluate-item">
-                            <div className="evaluate-item__img">
-                                <img src={icon.cartCheckPurple} alt="" />
-                            </div>
-                            <p>10</p>
-                        </div> */}
                             <div className="evaluate-item">
                                 <div className="evaluate-item__img">
                                     <img src={icon.heart} alt="" />
@@ -82,16 +55,6 @@ export default function MapTagsItemMB(props: IProps) {
                                     {item?.favorites?.length}
                                 </p>
                             </div>
-                            {/* {item.distance && (
-                            <div className="flex-row map-item__distance">
-                                <img
-                                    className="map-item__distance-icon"
-                                    src={icon.pinMapRed}
-                                    alt=""
-                                />
-                                {formatDistance(item.distance)}
-                            </div>
-                            )}*/}
                         </div>
                     </div>
                 </div>

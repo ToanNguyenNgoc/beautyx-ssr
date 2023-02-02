@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAsyncUser } from "../../redux/USER/userSlice";
+import { fetchAsyncUser } from "../../redux/user/userSlice";
 import { FLAT_FORM_TYPE } from "../flatForm";
 import {
     loginAsyncMomo,
@@ -56,6 +56,9 @@ function LoginFlatForm(props: any) {
             console.log(err);
             // alert(JSON.stringify(err));
         }
+        // if (params.requestId) {
+        //     history.replace(`/thanh-toan-momo/${params.requestId}`)
+        // }
     };
     const requestUserConsents = () => {
         MOMO.showLoading([""]);
@@ -79,9 +82,9 @@ function LoginFlatForm(props: any) {
                 if (data.phone) {
                     await dispatch(loginAsyncMomo(data));
                     await dispatch(fetchAsyncUser());
-                    if (params.requestId) {
-                        history.push(`/thanh-toan-momo/${params.requestId}`)
-                    }
+                    // if (params.requestId) {
+                    //     history.replace(`/thanh-toan-momo/${params.requestId}`)
+                    // }
                 } else {
                     MOMO.showToast({
                         description: "có lỗi khi nhận thông tin từ momo",
@@ -92,6 +95,7 @@ function LoginFlatForm(props: any) {
                 }
                 return { data: data };
             }
+
         );
     };
     const onLoginFlatFormMomowithParams = async () => {
@@ -140,11 +144,17 @@ function LoginFlatForm(props: any) {
         if (params || flatForm === FLAT_FORM_TYPE.MOMO) {
             switch (flatForm) {
                 case FLAT_FORM_TYPE.MOMO:
+                    //[TEMPLE]: login with params URL
                     if (params) {
                         onLoginFlatFormMomowithParams();
                     } else {
                         onLoginFlatFormMomo();
                     }
+                    //
+                    // onLoginFlatFormMomo();
+                    // if (params?.requestId) {
+                    //     history.replace(`/thanh-toan-momo/${params.requestId}`)
+                    // }
                     break;
                 case FLAT_FORM_TYPE.TIKI:
                     onLoginFlatFormTiki();

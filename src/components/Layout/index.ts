@@ -15,4 +15,11 @@ export * from "./OrgItemSec"
 export * from "./FornAddLocation"
 export * from "./BackTopButton"
 export * from "./OrgMapQuick"
-export * from "./Bottom"
+export * from "./PlashScreen"
+export * from './ButtonFavorite'
+export * from './BeautyxCare'
+export * from './ShareSocial'
+export * from './Seo'
+export * from './OpenFullImage'
+export * from './VoucherItem'
+export * from './ProductableItem'

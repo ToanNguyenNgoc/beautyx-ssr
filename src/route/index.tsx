@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import AuthRoute from "./AuthRoute";
 import {
     BrowserRouter as Router,
@@ -7,61 +7,73 @@ import {
     BrowserRouter,
     Route,
 } from "react-router-dom";
-import MerchantDetail from "../pages/MerchantDetail/index";
-import Partner from "../pages/Partner";
-import Cart from "../features/Cart/index";
-import Account from "../pages/Account";
-import ProductDetail from "../pages/ProductDetail";
-import ServiceDetail from "../pages/ServiceDetail";
-import SignPage from "../pages/SignPage/index";
-import CartPaymentStatus from "../features/CartPaymentStatus";
-import ServicesUser from "../features/ServiceUser";
-import SearchResults from "../pages/SearchResults/index";
-import HomeListProvince from "../features/HomeResults/HomeListProvince";
-import HomeDealBanner from "../features/HomeResults/HomeDealBanner";
-import Policy from "../pages/Policy";
-import SellerCenter from "../pages/SellerCenter";
-import Otp from "../features/Otp";
-import ResetPassword from "../pages/ResetPassword";
-import ComboDetail from "../features/ComboDetail";
-import DiscountDetail from "../pages/DiscountDetail";
-import HomeDiscountList from "../features/HomeResults/HomeDiscountList";
-import HomeMap from "../features/HomeMap";
-import HomeCateResult from "../features/HomeResults/HomeCateResult";
-import Blog from "../features/Blog";
-import CategoryTree from "../features/CategoryTree";
-import Booking from "../features/Booking";
-import Calendar from "../features/Calendar";
-import BuyNow from "../features/BuyNow";
-import Carts from "../pages/Carts";
-import AssistantBtn from "../components/AssistantBtn";
-import ProductsByCate from "../features/CategoryTree/ProductsByCate";
+import CartPaymentStatus from "../pages/CartPaymentStatus";
 import PageNotFound from "../components/PageNotFound";
-import { analytics, logEvent } from "../firebase";
 import HomePage from "pages/HomePage";
-// import ExtraFlatForm from "rootComponents/extraFlatForm";
-import LadingPage from "pages/LandingPage";
-import OtpMbPage from "pages/OtpMbPage";
+import ExtraFlatForm from "rootComponents/extraFlatForm";
+import AssistantBtn from "../components/AssistantBtn";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
-import Trends from "pages/Trends";
-import Community from "pages/Community";
-import VoucherPage from "pages/VoucherPage";
+import SerProCoDetail from "pages/_SerProCoDetail";
+import Footer from "components/Footer";
+import MerchantDetail from "pages/MerchantDetail";
+import { analytics, logEvent } from "../firebase";
+import { LoadProgress } from "components/LoadingSketion";
+import LoadDetail from "components/LoadingSketion/LoadDetail";
+import ResetPassword from "pages/ResetPassword";
+import SearchResults from "pages/SearchResults";
+import DiscountDetail from "pages/_DiscountDetail";
+import Discounts from "pages/Discounts";
+import HomeCateResult from "pages/HomeCateResult";
+import ServicesUser from "features/ServiceUser";
+import Account from "pages/Account";
+import Calendar from "pages/Calendar";
+import Cart from "pages/Cart";
+import SignPage from "pages/SignPage";
+import Bottom from "components/Bottom";
+import Head from "components/Head";
+import { useSelector } from "react-redux";
+import IStore from "interface/IStore";
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
+import RefreshToken from 'features/RefreshToken'
+import { BackTopButton } from "components/Layout";
+import CateTree from "pages/CateTree";
+
+//community page
+const PostDetail = lazy(() => import('pages/Community/pages/PostDetail'))
+const GroupDetail = lazy(() => import('pages/Community/pages/GroupDetail'))
+
+//update import lazy
+const DealBanner = lazy(() => import('pages/DealBanner'))
+const VoucherPage = lazy(() => import('pages/VoucherPage'))
+const Booking = lazy(() => import('features/Booking'))
+const HomeListProvince = lazy(() => import('pages/Provinces'))
+const HomeMap = lazy(() => import('features/HomeMap'))
+const Partner = lazy(() => import("../pages/Partner"))
+const Policy = lazy(() => import('pages/Policy'))
+const SellerCenter = lazy(() => import('pages/SellerCenter'))
+const Otp = lazy(() => import('features/Otp'))
+const LandingPage = lazy(() => import('pages/LandingPage'))
+const OtpMbPage = lazy(() => import('pages/OtpMbPage'))
+const Trends = lazy(() => import('pages/Trends'))
+const Community = lazy(() => import('pages/Community'))
+const TrendsDetail = lazy(() => import('pages/TrendsDetail'))
+const Rewards = lazy(() => import('pages/Rewards'))
 
 function RouterConfig() {
     const routes = [
         // START mini app share link
         {
-            path: "/TIKI/dich-vu",
-            component: <ServiceDetail />,
+            path: "/TIKI/dich-vu/",
+            component: <SerProCoDetail />,
         },
 
         {
-            path: "/TIKI/san-pham/:name",
-            component: <ProductDetail />,
+            path: "/TIKI/san-pham/",
+            component: <SerProCoDetail />,
         },
         {
-            path: "/TIKI/combo-detail/:name",
-            component: <ComboDetail />,
+            path: "/TIKI/combo-detail/",
+            component: <SerProCoDetail />,
         },
         {
             path: "/TIKI/cua-hang/:subdomain",
@@ -69,6 +81,28 @@ function RouterConfig() {
         },
         {
             path: "/TIKI/org/:subdomain",
+            component: <MerchantDetail />,
+        },
+        //
+        {
+            path: "/MOMO/dich-vu/",
+            component: <SerProCoDetail />,
+        },
+
+        {
+            path: "/MOMO/san-pham/",
+            component: <SerProCoDetail />,
+        },
+        {
+            path: "/MOMO/combo-detail/",
+            component: <SerProCoDetail />,
+        },
+        {
+            path: "/MOMO/cua-hang/:subdomain",
+            component: <MerchantDetail />,
+        },
+        {
+            path: "/MOMO/org/:subdomain",
             component: <MerchantDetail />,
         },
         // END mini app share link
@@ -109,20 +143,20 @@ function RouterConfig() {
             component: <SearchResults />,
         },
         {
-            path: "/cart",
-            component: <Cart />,
+            path: "/tim-kiem/:tab",
+            component: <SearchResults />,
         },
         {
-            path: "/san-pham/:name",
-            component: <ProductDetail />,
+            path: "/san-pham/",
+            component: <SerProCoDetail />,
         },
         {
-            path: "/combo-detail/:name",
-            component: <ComboDetail />,
+            path: "/combo-detail/",
+            component: <SerProCoDetail />,
         },
         {
             path: "/dich-vu/",
-            component: <ServiceDetail />,
+            component: <SerProCoDetail />,
         },
         {
             path: "/sign-up",
@@ -153,24 +187,21 @@ function RouterConfig() {
             component: <SellerCenter />,
         },
         {
-            path: "/deal/:title",
-            component: <HomeDealBanner />,
-        },
-        {
-            path: "/tin-tuc",
-            component: <Blog />,
+            path: "/deal/:_id",
+            component: <DealBanner />,
         },
         {
             path: "/chi-tiet-giam-gia/:name",
             component: <DiscountDetail />,
+            load: <LoadDetail />
         },
         {
             path: "/giam-gia",
-            component: <HomeDiscountList />,
+            component: <Discounts />,
         },
         {
-            path: "/-danh-muc/",
-            component: <CategoryTree />,
+            path: '/danh-muc',
+            component: <CateTree />
         },
         {
             path: "/dat-hen",
@@ -178,11 +209,7 @@ function RouterConfig() {
         },
         {
             path: "/landingpage/:name",
-            component: <LadingPage />,
-        },
-        {
-            path: "/san-pham",
-            component: <ProductsByCate />,
+            component: <LandingPage />,
         },
         {
             path: "/ban-do",
@@ -201,8 +228,24 @@ function RouterConfig() {
             component: <Trends />,
         },
         {
+            path: "/video/:id",
+            component: <TrendsDetail />,
+        },
+        {
             path: "/cong-dong",
             component: <Community />,
+        },
+        {
+            path: '/bai-viet/:id',
+            component: <PostDetail />
+        },
+        {
+            path: '/nhom/:id',
+            component: <GroupDetail />
+        },
+        {
+            path: "/error",
+            component: <PageNotFound />,
         },
     ];
     const routesPrivate = [
@@ -227,12 +270,8 @@ function RouterConfig() {
             component: <PaymentStatus />,
         },
         {
-            path: "/mua-hang",
-            component: <BuyNow />,
-        },
-        {
             path: "/gio-hang",
-            component: <Carts />,
+            component: <Cart />,
         },
         {
             path: "/otp-form",
@@ -242,20 +281,31 @@ function RouterConfig() {
             path: "/ma-giam-gia",
             component: <VoucherPage />,
         },
+        {
+            path: "/coins",
+            component: <Rewards />
+        }
     ];
     logEvent(analytics, "page_view", {
         page_title: document.title,
         page_path: window.location.pathname,
         page_location: window.location.href,
     });
+    const { refresh } = useSelector((state: IStore) => state.USER)
+    const PLAT_FORM: string = EXTRA_FLAT_FORM()
+    // const refresh = true
     return (
         <BrowserRouter>
             <Router>
+                <Head />
+                {(refresh && PLAT_FORM === 'BEAUTYX') && <RefreshToken />}
                 <Switch>
                     <Redirect exact from="/" to="homepage" />
                     {routes.map((item, index: number) => (
                         <Route key={index} path={item.path}>
-                            {item.component}
+                            <Suspense fallback={item.load ?? <LoadProgress />}>
+                                {item.component}
+                            </Suspense>
                         </Route>
                     ))}
                     <AuthRoute>
@@ -265,12 +315,13 @@ function RouterConfig() {
                             </Route>
                         ))}
                     </AuthRoute>
-                    <Route path="*">
-                        {" "}
-                        <PageNotFound />{" "}
-                    </Route>
+                    <Redirect exact from="*" to="error" />
                 </Switch>
+                <ExtraFlatForm />
+                <BackTopButton />
                 <AssistantBtn />
+                <Footer />
+                <Bottom />
             </Router>
         </BrowserRouter>
     );

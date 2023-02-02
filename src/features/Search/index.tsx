@@ -1,23 +1,24 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useCallback, KeyboardEvent, useState, useContext } from "react"
-import { onErrorImg, useDeviceMobile, useFetch } from "utils"
+import React, { useCallback, KeyboardEvent, useState } from "react"
+import { useDeviceMobile, useFetch } from "hooks"
+import { onErrorImg } from 'utils'
 import { paramOrgs, paramsProducts, paramsServices } from "params-query"
 import style from "./search.module.css"
 import { Link, useHistory } from "react-router-dom"
 import { useOrgs, useProducts, useServices } from "./hook"
 import { IProductPromo } from "interface/productPromo"
-import { SerProItem, SpecialItem, XButton } from "components/Layout"
+import { SerProItem, XButton } from "components/Layout"
 import { IServicePromo } from "interface/servicePromo"
 import { IOrganization } from "interface/organization"
 import icon from "constants/icon"
 import { debounce } from "lodash"
 import tracking from "api/trackApi"
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter"
-import { AppContext } from "context/AppProvider"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import API_3RD from "api/3rd-api"
-import slugify from "utils/formatUrlString"
 import { onResetFilter } from "redux/filter-result"
+import SearchHistory from "./SearchHistory"
+import IStore from "interface/IStore"
+import { usePostSearchHisMutation } from "redux-toolkit-query/hook-search-history"
 
 interface SearchProps {
     key_work?: string,
@@ -28,7 +29,7 @@ interface SearchProps {
 
 
 function Search(props: SearchProps) {
-    const { specialItems } = useContext(AppContext)
+    const { USER } = useSelector((state: IStore) => state.USER)
     const keysRecommend = useFetch(true, `${API_3RD.API_NODE}/history/view`).response
     const { key_work, key_work_debounce, onCloseSearchTimeOut, onCloseSearchDialog } = props
     const IS_MB = useDeviceMobile()
@@ -72,8 +73,14 @@ function Search(props: SearchProps) {
         "limit": IS_MB ? 4 : 6,
         "filter[keyword]": KEY_WORD_DE
     }
+    // const paramsProductableServices: ParamsProductable = {
+    //     ...paramsProductable,
+    //     "limit": 4,
+    //     "keyword": KEY_WORD_DE
+    // }
     const { orgs, totalOrg, isLoad } = useOrgs(PARAM_ORG, KEY_WORD !== "")
-    const { services, totalService, isLoadSer } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    const { services, totalService } = useServices(PARAM_SERVICE, KEY_WORD !== "")
+    // const { services, totalService } = useProductableService(paramsProductableServices, KEY_WORD !== '')
     const { products, totalProduct, isLoadPr } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
     //
     const tabs = [
@@ -85,30 +92,29 @@ function Search(props: SearchProps) {
     const dispatch = useDispatch()
     const onResult = () => {
         dispatch(onResetFilter())
-        if (KEY_WORD_DE !== "") history.push({
-            pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
-            search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
-        })
-        onCloseSearchTimeOut && onCloseSearchTimeOut()
-        onCloseSearchDialog && onCloseSearchDialog()
+        if (KEY_WORD_DE !== "") {
+            history.push({
+                pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
+                search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
+            })
+            onCloseSearchTimeOut && onCloseSearchTimeOut()
+            onCloseSearchDialog && onCloseSearchDialog()
+            if (USER) { postHistorySearch(KEY_WORD_DE, 'KEYWORD') }
+        }
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
             onResult()
         }
     }
-    // const onSaveOrg = (item: IOrganization) => {
-    //     dispatch(addHistory({
-    //         TYPE: "ORG", id: item.id, item: item
-    //     }))
-    // }
-    const onItemSpecial = (item: any) => {
-        if (item.type === "DISCOUNT") {
-            history.push({
-                pathname: `/chi-tiet-giam-gia/service_${item.organization_id}_${item.id}_${item.item_id}_${slugify(item.name)}`,
-            });
-        }
-        if (item.type === "SERVICE") return history.push(`/dich-vu/${item.id}_${item.organization_id}_${slugify(item.name)}`);
+    const [addSearch] = usePostSearchHisMutation()
+    const postHistorySearch = (KEY_WORD_DE: string, type: any, organization_id?: any, productable_id?: any) => {
+        addSearch({
+            text: KEY_WORD_DE,
+            type: type,
+            organization_id: organization_id,
+            productable_id: productable_id
+        })
     }
     return (
         <div
@@ -148,7 +154,11 @@ function Search(props: SearchProps) {
                 {
                     KEY_WORD !== "" &&
                     <Link
-                        onClick={() => onCloseSearch()}
+                        onClick={() => {
+                            onCloseSearch();
+                            dispatch(onResetFilter())
+                            USER && postHistorySearch(KEY_WORD_DE, 'KEYWORD')
+                        }}
                         to={{
                             pathname: `/ket-qua-tim-kiem/${tabSort[0].link}`,
                             search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
@@ -176,7 +186,9 @@ function Search(props: SearchProps) {
                                 {
                                     orgs.map((item: IOrganization) => (
                                         <Link
-                                            // onClick={() => onSaveOrg(item)}
+                                            onClick={() => USER && postHistorySearch(
+                                                item.name, 'ORG', item.id
+                                            )}
                                             key={item.id} to={{ pathname: formatRouterLinkOrg(item.subdomain) }}
                                         >
                                             <div className={style.org_item}>
@@ -204,7 +216,15 @@ function Search(props: SearchProps) {
                             {
                                 services.map((item: IServicePromo, index: number) => (
                                     <li
-                                        onClick={onCloseSearch}
+                                        onClick={() => {
+                                            onCloseSearch();
+                                            USER && postHistorySearch(
+                                                item.service_name,
+                                                'SERVICE',
+                                                item.org_id,
+                                                item.service_id
+                                            )
+                                        }}
                                         key={index} className={style.result_item_cnt}
                                     >
                                         <SerProItem changeStyle={true} item={item} type="SERVICE" />
@@ -212,6 +232,26 @@ function Search(props: SearchProps) {
                                 ))
                             }
                         </ul>
+                        {/* <ul className={style.result_list}>
+                            {
+                                services.map((item: Productable, index: number) => (
+                                    <li
+                                        onClick={() => {
+                                            onCloseSearch();
+                                            USER && postHistorySearch(
+                                                item.content?.name,
+                                                'SERVICE',
+                                                item.content?.organization_id,
+                                                item.content?.id
+                                            )
+                                        }}
+                                        key={index} className={style.result_item_cnt}
+                                    >
+                                        <ProductableItem changeStyle productable={item} />
+                                    </li>
+                                ))
+                            }
+                        </ul> */}
                     </div>
                 }
                 {
@@ -222,7 +262,15 @@ function Search(props: SearchProps) {
                             {
                                 products.map((item: IProductPromo, index: number) => (
                                     <li
-                                        onClick={onCloseSearch}
+                                        onClick={() => {
+                                            onCloseSearch();
+                                            USER && postHistorySearch(
+                                                item.product_name,
+                                                'PRODUCT',
+                                                item.org_id,
+                                                item.product_id
+                                            )
+                                        }}
                                         key={index} className={style.result_item_cnt}
                                     >
                                         <SerProItem changeStyle={true} item={item} type="PRODUCT" />
@@ -232,73 +280,37 @@ function Search(props: SearchProps) {
                         </ul>
                     </div>
                 }
-                {/* {
-                    KEY_WORD === "" &&
-                    <div className={style.section_container}>
-                        <span className={style.section_title}>Đã tìm kiếm</span>
-                        <div className={style.org_list}>
-                            <div
-                                onClick={onCloseSearch}
-                                className={style.org_list_wrapper}
-                            >
-                                {
-                                    HISTORY
-                                        .filter((i: any) => i.TYPE === "ORG")
-                                        .map((item: any) => (
-                                            <Link key={item.id} to={{ pathname: formatRouterLinkOrg(item.item.subdomain) }} >
-                                                <div className={style.org_item}>
-                                                    <img
-                                                        src={item.item.image_url}
-                                                        onError={(e) => onErrorImg(e)}
-                                                        className={style.org_item_img} alt=""
-                                                    />
-                                                    <span className={style.org_item_name}>
-                                                        {item.item.name}
-                                                    </span>
-                                                </div>
-                                            </Link>
-                                        ))
-                                }
+                {
+                    (KEY_WORD === "") &&
+                    <div>
+                        {USER && <SearchHistory onCloseSearch={onCloseSearch} />}
+                        <div
+                            onClick={onCloseSearch}
+                            className={style.section_keyword_trend}
+                        >
+                            <div className={style.section_keyword_title}>
+                                <img className={style.section_keyword_title_icon} src={icon.trendGreen} alt="" />
+                                <span>Xu hướng</span>
                             </div>
+                            <ul className={style.keyword_trend_list}>
+                                {
+                                    keysRecommend.map((i: any, index: number) => (
+                                        <li key={index} className={style.keyword_trend_item}>
+                                            <Link
+                                                to={{
+                                                    pathname: `/ket-qua-tim-kiem/dich-vu/`,
+                                                    search: `keyword=${i._id}`
+                                                }}
+                                                className={style.keyword_trend_link}
+                                            >
+                                                {i._id}
+                                            </Link>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
                         </div>
                     </div>
-                } */}
-                {
-                    KEY_WORD === "" &&
-                    <>
-                        <div className={style.section_recommend}>
-                            <span className={style.section_title}>Dịch vụ bán chạy</span>
-                            <ul className={style.list_special}>
-                                {specialItems.map((item: any, index: number) => (
-                                    <li
-                                        onClick={() => onItemSpecial(item)}
-                                        key={index} className={style.list_special_item}
-                                    >
-                                        <SpecialItem item={item} />
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                        <div className={style.section_recommend}>
-                            <span className={style.section_title}>Gợi ý tìm kiếm</span>
-                            <ul className={style.list_key}>
-                                {keysRecommend.map((item: any, index: number) => (
-                                    <li
-                                        onClick={onCloseSearch}
-                                        key={index} className={style.list_key_item}
-                                    >
-                                        <Link
-                                            className={style.key_item}
-                                            to={{ pathname: `/ket-qua-tim-kiem/dich-vu/?keyword=${item._id}` }}
-                                        >
-                                            <img src={icon.searchGray} alt="" />
-                                            <span>{item._id}</span>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </>
                 }
             </div>
         </div>

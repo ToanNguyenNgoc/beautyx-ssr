@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import HomeTitle from "../Components/HomeTitle";
 import { whyNots } from "../data";
 import style from "./style.module.css";
 import Slider from "react-slick";
+import { AppContext } from "context/AppProvider";
 
 function HomeWhyNot() {
+    const {t} = useContext(AppContext)
     const settings: any = {
         dots: false,
         infinite: false,
@@ -30,7 +32,7 @@ function HomeWhyNot() {
     return (
         <div className={style.container}>
             <div className={style.whynot_title}>
-                <HomeTitle title="Vì sao nên chọn BeautyX?" />
+                <HomeTitle title={t('Home.why_choose')} />
             </div>
             <Slider {...settings}>
                 {whyNots.map((item) => (

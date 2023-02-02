@@ -1,32 +1,34 @@
 import React, { useContext } from 'react';
-import { onErrorImg, useFetch } from 'utils';
+import { useFetch } from 'hooks';
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { Link } from 'react-router-dom';
 import { SerProCommonWatched } from 'interface/servicePromo';
-import slugify from 'utils/formatUrlString';
+import { slugify, onErrorImg, clst } from 'utils';
 import API_3RD from 'api/3rd-api';
 import { AppContext } from 'context/AppProvider';
 import style from "./home-watched.module.css";
 import icon from 'constants/icon';
 import { useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
+import { formatRouterLinkProduct, formatRouterLinkService } from 'utils/formatRouterLink/formatRouter';
 
 interface HomeWatchedProps {
-    styleProp?: any
+    styleProp?: any,
+    classNameTile?: string
 }
 
 
 function HomeWatched(props: HomeWatchedProps) {
-    const {USER} = useSelector((state:IStore) => state.USER)
-    const { styleProp } = props
-    const { response } = useFetch(USER,`${API_3RD.API_NODE}/history`)
+    const { USER } = useSelector((state: IStore) => state.USER)
+    const { styleProp, classNameTile } = props
+    const { response } = useFetch(USER, `${API_3RD.API_NODE}/history`)
     return (
         response?.context?.data?.length > 0 ?
             <div
                 style={styleProp ? styleProp : {}}
                 className={style.container}
             >
-                <span className={style.title}>
+                <span className={clst([style.title, classNameTile ?? ''])}>
                     Dịch vụ / Sản phẩm đã xem
                 </span>
                 <div className={style.body}>
@@ -48,14 +50,14 @@ function HomeWatched(props: HomeWatchedProps) {
 
 export default HomeWatched;
 
-const CardItemCommon = ({ detail }: { detail: SerProCommonWatched }) => {
+export const CardItemCommon = ({ detail }: { detail: SerProCommonWatched }) => {
     const { t } = useContext(AppContext);
     const special_price = formatSalePriceService(detail.special_price, detail.special_price_momo)
     const discount_percent = 100 - Math.round(special_price / detail.price * 100)
-    let LINK = `/dich-vu/${slugify(detail.name)}?id=${detail.id}&org=${detail.org_id}`
-    if (detail.type === "PRODUCT") LINK = `/san-pham/${slugify(detail.name)}?id=${detail.id}&org=${detail.org_id}`
+    let LINK = formatRouterLinkService(detail.id, detail.org_id, detail.name)
+    if (detail.type === "PRODUCT") LINK = formatRouterLinkProduct(detail.id, detail.org_id, detail.name)
     if (detail.type === "DISCOUNT") {
-        LINK = `/chi-tiet-giam-gia/${slugify(detail.name)}?type=service&org_id=${detail.org_id}&dis_id=${detail.id}&item_id=${detail.productable_id}`
+        LINK = `/chi-tiet-giam-gia/service_${detail.org_id}_${detail.id}_${detail.productable_id}_${slugify(detail.name)}`
     }
     return (
         <Link

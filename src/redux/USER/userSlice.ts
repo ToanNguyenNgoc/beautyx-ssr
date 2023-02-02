@@ -1,14 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import authentication from '../../api/authApi';
-import discountApi from '../../api/discountApi';
-import { STATUS } from '../status';
-import { IDiscountPar } from '../../interface/discount'
-import { checkPhoneValid } from '../../utils/phoneUpdate';
+import authentication from 'api/authApi';
+import { handleValidToken } from 'api/authHeader';
+import { checkPhoneValid } from 'utils/phoneUpdate';
 import { analytics, logEvent } from '../../firebase';
 
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
-    async () => {
+    async (values, { rejectWithValue }) => {
         try {
             const res = await authentication.getUserProfile();
             let context = res?.data.context;
@@ -21,15 +19,20 @@ export const fetchAsyncUser: any = createAsyncThunk(
             })
             return context
         } catch (error) {
-            localStorage.removeItem('_WEB_TK')
+            if (!error.response) {
+                throw error
+            }
+            const refresh = handleValidToken()
+            if (!refresh) localStorage.removeItem('_WEB_TK')
+            return rejectWithValue(refresh)
         }
     }
 )
 export const updateAsyncUser: any = createAsyncThunk(
-    "USER/fetchAsyncUser",
+    "USER/updateAsyncUser",
     async (params, { rejectWithValue }) => {
         try {
-            const res = await authentication.putUserProfile(params);
+            const res: any = await authentication.putUserProfile(params);
             const payload = res.data.context
             if (res.data.context.token) {
                 localStorage.setItem('_WEB_TK', res.data.context.token)
@@ -44,44 +47,18 @@ export const updateAsyncUser: any = createAsyncThunk(
     }
 )
 
-export const fetchAsyncDiscountsUser: any = createAsyncThunk(
-    "USER/fetchAsyncDiscountsUser",
-    async (values: any) => {
-        try {
-            const res = await discountApi.getAll(values);
-            const payload = {
-                discounts: res.data.context.data,
-                totalItem: res.data.context.total
-            }
-            return payload
-        } catch (error) {
-            console.log(error)
-        }
-    }
-)
-
 export interface IUSER {
     USER: any,
     error: any,
-    DISCOUNTS_USER: {
-        discounts: IDiscountPar[],
-        page: number,
-        totalItem: number,
-        status_discount: string
-    }
-    loading: boolean
+    loading: boolean,
+    refresh: boolean
 }
 
 const initialState: IUSER = {
     USER: null,
     error: null,
-    DISCOUNTS_USER: {
-        discounts: [],
-        page: 1,
-        totalItem: 1,
-        status_discount: ""
-    },
-    loading: true
+    loading: true,
+    refresh: false
 }
 const userSlice = createSlice({
     initialState,
@@ -95,61 +72,33 @@ const userSlice = createSlice({
             state.loading = false
         }
     },
-    extraReducers: {
-        [fetchAsyncUser.pending]: (state) => {
+    extraReducers(builder) {
+        //[GET]:
+        builder.addCase(fetchAsyncUser.pending, (state) => {
             return { ...state, loading: true }
-        },
-        [fetchAsyncUser.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(fetchAsyncUser.fulfilled, (state, { payload }) => {
             return { ...state, USER: payload, loading: false }
-        },
-
-        [updateAsyncUser.pending]: (state) => {
+        })
+        builder.addCase(fetchAsyncUser.rejected, (state, { payload }) => {
+            return { ...state, refresh: payload }
+        })
+        //[UPDATE]:
+        builder.addCase(updateAsyncUser.pending, (state) => {
             return { ...state, loading: true }
-        },
-        [updateAsyncUser.fulfilled]: (state, { payload }) => {
+        })
+        builder.addCase(updateAsyncUser.fulfilled, (state, { payload }) => {
             return {
                 ...state,
                 USER: payload,
                 loading: false
             }
-        },
-        [updateAsyncUser.rejected]: (state, { payload }) => {
+        })
+        builder.addCase(updateAsyncUser.rejected, (state, { payload }) => {
             return { ...state, loading: false, error: payload }
-        },
-
-        [fetchAsyncDiscountsUser.pending]: (state) => {
-            return {
-                ...state,
-                DISCOUNTS_USER: {
-                    ...state.DISCOUNTS_USER,
-                    status_discount: STATUS.LOADING
-                }
-            }
-        },
-        [fetchAsyncDiscountsUser.fulfilled]: (state, { payload }) => {
-            const { discounts, totalItem } = payload;
-            return {
-                ...state,
-                DISCOUNTS_USER: {
-                    ...state.DISCOUNTS_USER,
-                    discounts: [...state.DISCOUNTS_USER.discounts, ...discounts],
-                    totalItem: totalItem,
-                    status_discount: STATUS.SUCCESS
-                }
-            }
-        },
-        [fetchAsyncDiscountsUser.rejected]: (state) => {
-            return {
-                ...state,
-                DISCOUNTS_USER: {
-                    ...state.DISCOUNTS_USER,
-                    status_discount: STATUS.FAIL
-                }
-            }
-        }
-    }
+        })
+    },
 })
-// export const getUserProfile = (state: any) => state
 const { actions } = userSlice;
 export const { putUser, logoutUser } = actions;
 export default userSlice.reducer

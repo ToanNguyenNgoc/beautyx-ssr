@@ -7,10 +7,11 @@ import API_ROUTE from 'api/_api';
 import { Input, XButton, FormAddLocation } from 'components/Layout';
 import icon from 'constants/icon';
 import { IProvince, IDistrict } from 'interface';
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
-import { useSwr, useGetLocation, useDeviceMobile } from 'utils';
+import { useSwr, useGetLocation, useDeviceMobile } from 'hooks';
 import style from './style.module.css'
+import { AppContext } from 'context/AppProvider';
 
 export interface EventLocation {
     coords: string,
@@ -22,7 +23,8 @@ interface FilterLocationProps {
     onChange?: (e: EventLocation) => void,
     province_code?: number | string,
     district_code?: number | string,
-    title?: string
+    title?: string,
+    showApplyBtn?: boolean
 }
 
 const useSearchProvinces = (keyword: string, list: any[]) => {
@@ -43,8 +45,9 @@ const useSearchProvinces = (keyword: string, list: any[]) => {
 
 export function FilterLocation(props: FilterLocationProps) {
     const location = AUTH_LOCATION()
+    const {t} = useContext(AppContext)
     const IS_MB = useDeviceMobile()
-    const { onChange, province_code, district_code, title } = props
+    const { onChange, province_code, district_code, title, showApplyBtn } = props
     const [open, setOpen] = useState({
         oProvince: false,
         oDistrict: false
@@ -82,6 +85,7 @@ export function FilterLocation(props: FilterLocationProps) {
     const chooseProAndOpenDis = (pro: IProvince) => {
         setProvince(pro)
         setOpen({ ...open, oDistrict: true })
+        if (pro.province_code !== province?.province_code) setDistrict(null)
     }
     const chooseDisAndClose = (dis: IDistrict) => {
         setDistrict(dis)
@@ -111,13 +115,13 @@ export function FilterLocation(props: FilterLocationProps) {
         <div className={style.container}>
             <FormAddLocation open={openAddLo} setOpen={setOpenAddLo} />
             <span className={style.title}>
-                {title ?? "Khu vực"}
+                {title ?? t('Home.Filter_location')}
             </span>
             <div className={style.location}>
                 <span className={style.location_text}>
                     {
                         district?.name ? `${district.name},` : ""}{province?.name ??
-                            ((province === "cur" || district === "cur") ? "Gần bạn" : "Chọn vị trí")
+                            ((province === "cur" || district === "cur") ? t('Home.near_you') : t('Home.choose_a_location'))
                     }
                 </span>
                 <XButton
@@ -136,7 +140,7 @@ export function FilterLocation(props: FilterLocationProps) {
             >
                 <div className={style.province_cnt}>
                     <div className={style.province_cnt_head}>
-                        <Input value={keyword} onChange={onChangeKeyword} placeholder='Tìm kiếm khu vực' />
+                        <Input value={keyword} onChange={onChangeKeyword} placeholder={t('Home.search_area')} />
                     </div>
                     <div className={style.province_list_cnt}>
                         <ul className={style.province_list}>
@@ -152,7 +156,7 @@ export function FilterLocation(props: FilterLocationProps) {
                                         }
                                     </div>
                                     <span className={style.province_name}>
-                                        Gần bạn
+                                        {t('Home.near_you')}
                                     </span>
                                 </div>
                             </li>
@@ -172,7 +176,7 @@ export function FilterLocation(props: FilterLocationProps) {
                                                     province?.province_code === pro.province_code &&
                                                     `${district?.name},`
                                                 }
-                                                {pro.name}
+                                                {pro.name.replace('Thành phố','')}
                                             </span>
                                         </div>
                                         <XButton
@@ -187,6 +191,19 @@ export function FilterLocation(props: FilterLocationProps) {
                         </ul>
                     </div>
                 </div>
+                {
+                    showApplyBtn &&
+                    <div className={style.province_bottom}>
+                        <XButton
+                            className={style.province_btn_apply}
+                            title='Áp dụng'
+                            onClick={() => {
+                                handleChange(province === "cur" ? location : "");
+                                setOpen({ oDistrict: false, oProvince: false })
+                            }}
+                        />
+                    </div>
+                }
             </Drawer>
             <Drawer
                 open={open.oDistrict}

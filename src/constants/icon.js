@@ -36,10 +36,6 @@ import User_purple from "../assets/icon/user_box.svg";
 import Location from "../assets/icon/location.svg";
 import ArrowDownWhite from "../assets/icon/arrow-down-white.svg";
 import SearchWhite from "../assets/icon/search-white.svg";
-// import suppportIcon from "../assets/icon/support.svg";
-import hiddenEye from "../assets/icon/hiddenEye.svg";
-
-
 import Lock from "../assets/icon/lock.svg";
 import eye from "../assets/icon/eye.svg";
 import facebook from "../assets/icon/facebook.svg";
@@ -179,6 +175,7 @@ import starLine from "../assets/icon/star.svg";
 import settingPurple from "../assets/icon/setting-purple.svg";
 import servicesPurpleBold from "../assets/icon/servicesPurpleBold.svg";
 import mapMarkerOrg from "../assets/icon/mapMarkerOrg.svg";
+import comment_bold_purple from "assets/icon/comment_bold_purple.svg";
 
 // btn assistan home
 import xWhite from "../assets/icon/x-white.svg";
@@ -200,29 +197,52 @@ import filterBlack from "../assets/icon/filterBlack.svg";
 import closeBlack from "../assets/icon/closeBlack.svg";
 import locationCate from "../assets/icon/locationCate.png";
 import noApply from "../assets/icon/no-apply.svg";
-import directionRed from '../assets/icon/directionRed.svg';
-import archiveRed from '../assets/icon/archiveRed.svg';
-import pinMapRedGoogle from '../assets/icon/pinMapRedGoogle.png';
-import listOrange from "../assets/icon/listOrange.svg"
+import directionRed from "../assets/icon/directionRed.svg";
+import archiveRed from "../assets/icon/archiveRed.svg";
+import pinMapRedGoogle from "../assets/icon/pinMapRedGoogle.png";
+import listOrange from "../assets/icon/listOrange.svg";
 import barberOrange from "../assets/icon/barberOrange.svg";
 import lipstickOrange from "../assets/icon/lipstickOrange.svg";
 import boxOrange from "../assets/icon/boxOrange.svg";
-import mapMarker from 'assets/icon/mapMarker.svg';
-import bellWhite from 'assets/icon/bellWhite.svg';
-import cartWhiteBold from 'assets/icon/cartWhiteBold.svg';
-import cartLineBlack from 'assets/icon/cartLineBlack.svg';
-import settingLineBlack from 'assets/icon/settingLineBlack.svg';
-import calendarGreen from 'assets/icon/calendarGreen.svg';
-import communityPurple from 'assets/icon/communityPurple.svg';
-import rewardOrange from 'assets/icon/rewardOrange.svg';
-import ticketRed from 'assets/icon/ticketRed.svg';
-import cateClinic from 'assets/icon/cateClinic.svg';
-import cateNail from 'assets/icon/cateNail.svg';
-import cateSalon from 'assets/icon/cateSalon.svg';
-import cateSanpham from 'assets/icon/cateSanpham.svg';
-import cateSpa from 'assets/icon/cateSpa.svg';
-import flash from 'assets/icon/flash.svg';
-
+import mapMarker from "assets/icon/mapMarker.svg";
+import bellWhite from "assets/icon/bellWhite.svg";
+import cartWhiteBold from "assets/icon/cartWhiteBold.svg";
+import cartLineBlack from "assets/icon/cartLineBlack.svg";
+import settingLineBlack from "assets/icon/settingLineBlack.svg";
+import calendarGreen from "assets/icon/calendarGreen.svg";
+import communityPurple from "assets/icon/communityPurple.svg";
+import rewardOrange from "assets/icon/rewardOrange.svg";
+import ticketRed from "assets/icon/ticketRed.svg";
+import cateClinic from "assets/icon/cateClinic.svg";
+import cateNail from "assets/icon/cateNail.svg";
+import cateSalon from "assets/icon/cateSalon.svg";
+import cateSanpham from "assets/icon/cateSanpham.svg";
+import cateSpa from "assets/icon/cateSpa.svg";
+import flash from "assets/icon/flash.svg";
+import eyeCrossPurple from "assets/icon/eyeCrossPurple.svg";
+import clockGray from "assets/icon/clockGray.svg";
+import shareWhite from "assets/icon/shareWhite.svg";
+import heartBoldBlack from "assets/icon/heartBoldBlack.svg";
+import heartBoldRed from "assets/icon/heartBoldRed.svg";
+import commentBoldBlack from "assets/icon/commentBoldBlack.svg";
+import eyeBoldBlack from "assets/icon/eyeBoldBlack.svg";
+import shareBoldBlack from "assets/icon/shareBoldBlack.svg";
+import chevronLeftWhite from "assets/icon/chevronLeftWhite.svg";
+import clockAppGray from "assets/icon/clockAppGray.svg";
+import scanQrBtn from "assets/icon/scanQrBtn.svg";
+import phoneWhiteBold from "assets/icon/phoneWhiteBold.svg";
+import trendGreen from "assets/icon/trendGreen.svg";
+import downLoadWhite from "assets/icon/downLoadWhite.svg";
+import thumbUpPurple from "assets/icon/thumbUpPurple.svg";
+import thumbUp from "assets/icon/thumbUp.svg";
+import chatSquare from "assets/icon/chatSquare.svg";
+import createAtGray from "assets/icon/createAtGray.svg";
+import postGray from "assets/icon/postGray.svg";
+import userGray from "assets/icon/userGray.svg";
+import startBold from "assets/icon/startBold.svg";
+import coins from "assets/icon/coins.svg";
+import paperWhite from "assets/icon/paperWhite.svg";
+import scanQrBtnOrange from "assets/icon/scanQrBtnOrange.svg";
 
 const icon = {
     hiddenEye,
@@ -425,10 +445,48 @@ const icon = {
     archiveRed,
     pinMapRedGoogle,
     listOrange,
-    barberOrange, lipstickOrange, boxOrange, mapMarker,
-    bellWhite, cartWhiteBold, cartLineBlack, settingLineBlack,
-    calendarGreen, rewardOrange, ticketRed, communityPurple,
-    cateClinic, cateSalon, cateSanpham, cateSpa, cateNail,
-    flash
+    barberOrange,
+    lipstickOrange,
+    boxOrange,
+    mapMarker,
+    bellWhite,
+    cartWhiteBold,
+    cartLineBlack,
+    settingLineBlack,
+    calendarGreen,
+    rewardOrange,
+    ticketRed,
+    communityPurple,
+    cateClinic,
+    cateSalon,
+    cateSanpham,
+    cateSpa,
+    cateNail,
+    flash,
+    eyeCrossPurple,
+    clockGray,
+    shareWhite,
+    heartBoldBlack,
+    heartBoldRed,
+    commentBoldBlack,
+    eyeBoldBlack,
+    shareBoldBlack,
+    chevronLeftWhite,
+    clockAppGray,
+    scanQrBtn,
+    phoneWhiteBold,
+    trendGreen,
+    downLoadWhite,
+    thumbUp,
+    thumbUpPurple,
+    chatSquare,
+    createAtGray,
+    postGray,
+    userGray,
+    comment_bold_purple,
+    startBold,
+    coins,
+    paperWhite,
+    scanQrBtnOrange,
 };
 export default icon;

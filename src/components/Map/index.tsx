@@ -1,8 +1,8 @@
 import { Dialog } from "@mui/material";
+import { useDeviceMobile } from "hooks";
 import { useHistory } from "react-router-dom";
 import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
 import icon from "../../constants/icon";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 import MapContent from "./MapContent";
 import "./style.css";
 export default function Map(props: any) {

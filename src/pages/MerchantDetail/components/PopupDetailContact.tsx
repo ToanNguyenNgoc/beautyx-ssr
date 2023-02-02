@@ -1,15 +1,16 @@
 import { Dialog } from "@mui/material";
 import React, { useContext } from "react";
-import icon from "../../../constants/icon";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { AppContext } from "../../../context/AppProvider";
 import API_3RD from "api/3rd-api";
 import axios from "axios";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import { useNoti } from "interface/useNoti";
 import { PopupNotification } from "components/Notification";
-import { XButton } from "components/Layout";
+import { Input, XButton } from "components/Layout";
+import '../style.css'
+import { useNoti } from "hooks";
+import { AppContext } from "context/AppProvider";
+import icon from "constants/icon";
 
 
 export default function PopupDetailContact(props: any) {
@@ -68,11 +69,11 @@ export default function PopupDetailContact(props: any) {
                 ),
             gmail: Yup.string()
                 .required(`${t("contact_form.vali_email")}`),
-                // .matches(
-                //     // eslint-disable-next-line no-useless-escape
-                //     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i,
-                //     `${t("contact_form.vali_err_email")}`
-                // ),
+            // .matches(
+            //     // eslint-disable-next-line no-useless-escape
+            //     /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/i,
+            //     `${t("contact_form.vali_err_email")}`
+            // ),
             phone: Yup.string()
                 .min(10, `${t("contact_form.vali_phone_min")}`)
                 .max(11, `${t("contact_form.vali_phone_max")}`)
@@ -108,13 +109,8 @@ export default function PopupDetailContact(props: any) {
 
                     <div className="wrap-btn">
                         <div className="sign-form__box">
-                            <img
-                                className="sign-form__box-icon "
-                                src={icon.User}
-                                alt=""
-                            />
-                            <input
-                                autoComplete="off"
+                            <Input
+                                icon={icon.User}
                                 value={formikContact.values.name}
                                 onChange={formikContact.handleChange}
                                 name="name"
@@ -130,13 +126,8 @@ export default function PopupDetailContact(props: any) {
                             )}
 
                         <div className="sign-form__box">
-                            <img
-                                className="sign-form__box-icon "
-                                src={icon.Message}
-                                alt=""
-                            />
-                            <input
-                                autoComplete="off"
+                            <Input
+                                icon={icon.Message}
                                 value={formikContact.values.gmail}
                                 onChange={formikContact.handleChange}
                                 name="gmail"
@@ -152,13 +143,8 @@ export default function PopupDetailContact(props: any) {
                             )}
 
                         <div className="sign-form__box">
-                            <img
-                                className="sign-form__box-icon "
-                                src={icon.Phone}
-                                alt=""
-                            />
-                            <input
-                                autoComplete="off"
+                            <Input
+                                icon={icon.Phone}
                                 value={formikContact.values.phone}
                                 onChange={formikContact.handleChange}
                                 name="phone"
@@ -174,13 +160,8 @@ export default function PopupDetailContact(props: any) {
                             )}
 
                         <div className="sign-form__box">
-                            <img
-                                className="sign-form__box-icon "
-                                src={icon.DeskAlt}
-                                alt=""
-                            />
-                            <input
-                                autoComplete="off"
+                            <Input
+                                icon={icon.DeskAlt}
                                 value={formikContact.values.business}
                                 onChange={formikContact.handleChange}
                                 name="business"
@@ -196,13 +177,8 @@ export default function PopupDetailContact(props: any) {
                             )}
 
                         <div className="sign-form__box">
-                            <img
-                                className="sign-form__box-icon "
-                                src={icon.Location}
-                                alt=""
-                            />
-                            <input
-                                autoComplete="off"
+                            <Input
+                                icon={icon.Location}
                                 value={formikContact.values.address}
                                 onChange={formikContact.handleChange}
                                 name="address"

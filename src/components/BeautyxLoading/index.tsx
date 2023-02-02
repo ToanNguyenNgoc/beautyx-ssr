@@ -7,7 +7,6 @@ function BeautyLoading() {
     return (
         <div className='loading-cnt'>
             <CircularProgress />
-            {/* <img src={img.beautyx} alt="" /> */}
         </div>
     );
 }

@@ -1,5 +1,5 @@
+import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
 import axiosClient from "./axios";
-import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
 class UserAddress {
     getAll = (session: any, local: any) => {
         const url = `/useraddresses`;

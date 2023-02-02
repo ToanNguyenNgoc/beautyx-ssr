@@ -3,7 +3,7 @@ import { Transition } from '../../../../../utils/transition';
 import { Dialog } from '@mui/material';
 import UserAddress from './UserAddress';
 import HeadMobile from '../../../../../features/HeadMobile';
-import useDeviceMobile from '../../../../../utils/useDeviceMobile';
+import { useDeviceMobile } from 'hooks';
 
 function UserAddressMoba(props: any) {
     const { open, setOpen } = props;

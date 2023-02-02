@@ -2,14 +2,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-import { LoadingMapOrg } from "../../components/LoadingSketion/LoadOrg";
-// import Map from '../../components/Map';
-import MapContent from "../../components/Map/MapContent";
-import icon from "../../constants/icon";
-import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
-import { STATUS } from "../../redux/status";
-import useDeviceMobile from "../../utils/useDeviceMobile";
+import { LoadingMapOrg } from "components/LoadingSketion/LoadOrg";
+import MapContent from "components/Map/MapContent";
+import icon from "constants/icon";
+import { fetchOrgsMapFilter } from "redux/org/orgMapSlice";
+import { STATUS } from "redux/status";
 
 function HomeMap() {
     const dispatch = useDispatch();
@@ -30,8 +27,6 @@ function HomeMap() {
             );
         }
     };
-    const IS_MB = useDeviceMobile();
-    const platform = EXTRA_FLAT_FORM();
     useEffect(() => {
         callOrgsByDistance();
     }, []);
@@ -39,17 +34,7 @@ function HomeMap() {
         history.push("/");
     };
     return (
-        <div
-            style={
-                platform === "BEAUTYX" && IS_MB === true
-                    ? {
-                          width: "100vw",
-                          height: "90vh",
-                      }
-                    : { width: "100vw", height: "100vh" }
-            }
-            className="map"
-        >
+        <div className="map">
             <div onClick={handleClose} className="dialog-map__close">
                 <div className="dialog-map__close-img">
                     <img src={icon.closeCircleWhite} alt="" />

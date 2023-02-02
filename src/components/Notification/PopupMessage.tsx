@@ -20,7 +20,7 @@ export function PopupMessage(props: PopupMessageProps) {
         if (autoHide) {
             const timer = setTimeout(() => {
                 onCloseMessage();
-            }, 2300);
+            }, 2500);
             return () => clearTimeout(timer);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

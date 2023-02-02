@@ -11,6 +11,19 @@ export interface ITrendService {
     updatedAt: string,
     __v: number
 }
+export interface ITrendTiktok {
+    collect_count: number,
+    comment_count: number,
+    desc: string,
+    digg_count: string,
+    origin_cover?: string,
+    play_addr: string,
+    play_addr_bytevc1: string,
+    play_count: number,
+    share_count: number,
+    trend_url: string,
+    trend: string
+}
 export interface ITrend {
     _id: string,
     organization_id: string,
@@ -25,5 +38,6 @@ export interface ITrend {
     trend_url: string,
     createdAt: string,
     updatedAt: string,
+    tiktok: ITrendTiktok
     __v: number
 }

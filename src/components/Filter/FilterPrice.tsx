@@ -1,10 +1,12 @@
 import { Input } from 'components/Layout';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { XButton } from 'components/Layout'
 import style from "./style.module.css"
+import { AppContext } from 'context/AppProvider';
 
 interface FilterPriceProps {
-    onChangePrice?: (e: any) => void
+    onChangePrice?: (e: any) => void,
+    onCloseDrawer?: () => void
     min_price?: any,
     max_price?: any
 }
@@ -17,11 +19,12 @@ export const pricesList: PriceList[] = [
     { id: 3, min_price: "4000000", max_price: "8000000", title: "Từ 4 - 8 triệu" },
     { id: 4, min_price: "8000000", max_price: "12000000", title: "Từ 8 - 12 triệu" },
     { id: 5, min_price: "12000000", max_price: "20000000", title: "Từ 12 - 20 triệu" },
-    { id: 6, min_price: "20000000", max_price: "", title: "Trên 20 triệu" }
+    { id: 6, min_price: "20000000", max_price: "10000000000", title: "Trên 20 triệu" }
 ]
 
 export function FilterPrice(props: FilterPriceProps) {
-    const { onChangePrice, min_price, max_price } = props;
+    const {t} = useContext(AppContext)
+    const { onChangePrice, min_price, max_price, onCloseDrawer } = props;
     const [value, setValue] = useState({
         min_price: min_price ?? "",
         max_price: max_price ?? ""
@@ -35,36 +38,38 @@ export function FilterPrice(props: FilterPriceProps) {
         if (max > 0 || max === "") setValue({ ...value, max_price: max })
     }
     const onApplyPrice = () => {
-        if (parseInt(value.max_price) > parseInt(value.min_price) || (value.min_price === "" && value.max_price === "")) {
+        if (
+            parseInt(value.max_price) > parseInt(value.min_price) || (value.min_price === "" && value.max_price === "")) {
             if (onChangePrice) onChangePrice(value)
         }
+        if (onCloseDrawer) onCloseDrawer()
     }
-    const onChoosePrice = (item:PriceList)=>{
+    const onChoosePrice = (item: PriceList) => {
         setValue({
-            max_price:item.max_price,
-            min_price:item.min_price
+            max_price: item.max_price,
+            min_price: item.min_price
         })
     }
     return (
         <div className={style.container}>
-            <span className={style.filter_title}>Giá</span>
+            <span className={style.filter_title}>{t('home_2.price')}</span>
             <div className={style.body}>
-                <span className={style.body_title}>Chọn khoảng giá</span>
+                <span className={style.body_title}>{t('home_2.Choose a price range')}</span>
                 <div className={style.price_cnt}>
                     <div className={style.price_item}>
-                        <Input type="number" value={value.min_price} onChange={onChangeMin} placeholder='Từ' />
+                        <Input type="number" value={value.min_price} onChange={onChangeMin} placeholder={t('se.from')} />
                     </div>
                     <div className={style.price_item}>
-                        <Input type="number" value={value.max_price} onChange={onChangeMax} placeholder='đến' />
+                        <Input type="number" value={value.max_price} onChange={onChangeMax} placeholder={t('se.to')} />
                     </div>
                 </div>
                 {
                     parseInt(value.min_price) >= parseInt(value.max_price) && value.min_price !== "" && value.max_price !== "" &&
                     <div className={style.price_invalid}>
-                        Vui lòng điền khoảng giá phù hợp
+                        {t('se.Please enter the appropriate price range')}
                     </div>
                 }
-                <ul className={style.price_list_cnt}>
+                {/* <ul className={style.price_list_cnt}>
                     {
                         pricesList.map((item:PriceList)=>(
                             <li 
@@ -82,10 +87,10 @@ export function FilterPrice(props: FilterPriceProps) {
                             </li>
                         ))
                     }
-                </ul>
+                </ul> */}
                 <XButton
                     className={style.price_btn}
-                    title='Áp dụng'
+                    title={t('se.Apply')}
                     onClick={onApplyPrice}
                 />
             </div>
