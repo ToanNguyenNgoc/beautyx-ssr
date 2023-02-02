@@ -138,8 +138,8 @@ function Head(props: IProps) {
         const header = document.getElementById("header");
         const scrolled = window.scrollY;
         if (header && changeStyle && IS_MB) {
-            // header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
-            header.style.backgroundColor = `rgb(230 77 74 / ${scrolled}%)`
+            header.style.backgroundColor = `rgb(113 97 186 / ${scrolled}%)`
+            // header.style.backgroundColor = `rgb(230 77 74 / ${scrolled}%)`
         }
     })
     return (
