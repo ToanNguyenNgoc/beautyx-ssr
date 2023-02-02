@@ -40,31 +40,31 @@ export interface IProductsSection {
 export const deals: Ideals[] = [
     {
         id: 1,
-        title: "Tóc mượt mà Tết thả ga",
-        // min_price: 50000,
-        // max_price: 100000,
-        keyword: 'Gội đầu',
+        title: "Deal HOT",
+        min_price: 50000,
+        max_price: 100000,
+        // keyword: 'Gội đầu',
         img: '',
         banner: deal0,
         special_price: true
     },
     {
         id: 2,
-        title: "Nail xinh đón Tết",
+        title: "Dịch vụ dưỡng da giảm 50",
         min_price: null,
-        keyword: 'Nail',
+        // keyword: 'Dưỡng',
         img: '',
-        // percent: 50,
+        percent: 50,
         banner: deal1,
         special_price: false
     },
     {
         id: 3,
-        title: "Da mịn màng rạng ngời đón Tết",
+        title: "Thẩm mỹ đẹp toàn diện",
         min_price: null,
         img: '',
-        keyword: 'Chăm sóc da',
-        // percent: 30,
+        // keyword: 'Chăm sóc da',
+        percent: 30,
         banner: deal2,
         special_price: true
     },
