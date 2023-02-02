@@ -140,7 +140,7 @@ const banners = [
         width: 0,
         height: 0,
         view_count: 68,
-        expires_at: '2023-31-01 00:00:00',
+        expires_at: '2023-01-31 00:00:00',
         platform: 'MOMO|BEAUTYX',
         origin_type: null,
         origin_id: null,
