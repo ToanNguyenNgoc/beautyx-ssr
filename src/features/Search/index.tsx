@@ -1,6 +1,6 @@
 import React, { useCallback, KeyboardEvent, useState } from "react"
 import { useDeviceMobile, useFetch } from "hooks"
-import { onErrorImg } from 'utils'
+import { onErrorImg, hashtag } from 'utils'
 import { paramOrgs, paramsProducts, paramsServices } from "params-query"
 import style from "./search.module.css"
 import { Link, useHistory } from "react-router-dom"
@@ -93,13 +93,18 @@ function Search(props: SearchProps) {
     const onResult = () => {
         dispatch(onResetFilter())
         if (KEY_WORD_DE !== "") {
-            history.push({
-                pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
-                search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
-            })
+            const { isHashtag, textReplace } = hashtag('@', KEY_WORD)
+            if (isHashtag) {
+                history.push(`/cua-hang/${textReplace}`)
+            } else {
+                history.push({
+                    pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
+                    search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
+                })
+                if (USER) { postHistorySearch(KEY_WORD_DE, 'KEYWORD') }
+            }
             onCloseSearchTimeOut && onCloseSearchTimeOut()
             onCloseSearchDialog && onCloseSearchDialog()
-            if (USER) { postHistorySearch(KEY_WORD_DE, 'KEYWORD') }
         }
     }
     const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

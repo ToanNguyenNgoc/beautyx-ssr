@@ -10,6 +10,7 @@ interface SeoProps {
 
 export function Seo(props: SeoProps) {
     const { title, content, imageCover } = props;
+    const href = window.location.href.replace('/deal-hot', '')
     return (
         <Helmet
         >
@@ -19,7 +20,7 @@ export function Seo(props: SeoProps) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <meta property="og:image" content={imageCover} />
             <meta property="twitter:image" content={imageCover} />
-            <link rel="canonical" href="https://yoast.com/wordpress-seo/" />
+            <link rel="canonical" href={href} />
         </Helmet>
     );
 }

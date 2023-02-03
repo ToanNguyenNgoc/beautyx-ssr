@@ -8,3 +8,4 @@ export * from "./scrollTop"
 export * from './format'
 export * from './transition'
 export * from './phoneUpdate'
+export * from './hashtag'
