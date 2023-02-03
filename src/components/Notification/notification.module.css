@@ -83,6 +83,24 @@
     display: flex;
     justify-content: flex-end;
 }
+/* popup btx point */
+.btx_container{
+    width: calc(100vh - 24px);
+    max-width: 410px;
+    height: 200px;
+    position: relative;
+}
+.btx_container::after{
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: bisque;
+    clip-path: polygon(50% 10%, 100% 38%, 100% 100%, 0 100%, 0% 38%);
+    border-radius: 4px;
+    margin-top: -10px;
+}
 
 @media screen and (max-width: 1023.98px) {
     .container {

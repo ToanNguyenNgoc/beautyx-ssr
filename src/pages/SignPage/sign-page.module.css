@@ -144,6 +144,28 @@
 .input {
     border-radius: 18px !important;
 }
+/* login social */
+.social{
+    width: 100%;
+    margin: 12px 0px;
+}
+.social_title{
+    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+}
+.social_list_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+}
+.social_list_btn button{
+    padding: 0px;
+    margin:6px;
+    background-color: transparent;
+}
 
 
 @media only screen and (max-width: 1023px) {

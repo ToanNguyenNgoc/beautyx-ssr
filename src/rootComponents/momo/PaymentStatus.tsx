@@ -4,7 +4,7 @@ import { XButton } from 'components/Layout';
 import img from 'constants/img';
 import HeadMobile from 'features/HeadMobile';
 import IStore from 'interface/IStore';
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { useNoti, useSwr } from 'hooks';
@@ -12,19 +12,20 @@ import formatPrice from 'utils/formatPrice';
 import style from './style.module.css'
 import apointmentApi from 'api/apointmentApi';
 import { pick } from 'lodash';
-import { PopupMessage } from 'components/Notification';
-import icon from 'constants/icon';
+import { ResponsePmStatus, IOrderV2 } from 'interface';
+import { orderApi } from 'api/orderApi';
+import {  PopupBtxReward2 } from 'components/Notification';
 
 function PaymentStatus() {
     const history = useHistory()
-    const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
+    const { firstLoad, resultLoad, noti } = useNoti()
     const params: any = useParams()
     const tran_uid = params.tran_uid
     const { USER } = useSelector((state: IStore) => state.USER)
     const { response } = useSwr(API_ROUTE.PAYMENT_GATEWAYS(tran_uid), (tran_uid && USER))
     //handle post appointment after payment success
     const data = localStorage.getItem('APP_INFO') && JSON.parse(`${localStorage.getItem('APP_INFO')}`)
-    const handlePostApp = async () => {
+    const handlePostApp = useCallback(async () => {
         const params = pick(data, 'note', 'order_id', 'service_ids', 'time_start')
         firstLoad()
         try {
@@ -33,42 +34,33 @@ function PaymentStatus() {
         } catch (error) {
             resultLoad('Có lỗi xảy ra trong quá trình đặt hẹn')
         }
-    }
+    }, [])
     useEffect(() => {
         if (data) {
             handlePostApp()
         }
     }, [])
     const onClearAppointment = () => localStorage.removeItem('APP_INFO')
+    const onNavigateBooking = () => {
+        onClearAppointment()
+        if (data) {
+            history.push('/lich-hen?tab=1')
+        } else {
+            history.push('/lich-hen?tab=2')
+        }
+    }
     return (
         <>
             <HeadMobile onBackFunc={() => history.push('/')} title='Trạng thái' />
-            <PopupMessage
-                content={noti.message}
-                open={noti.openAlert}
-                onClose={onCloseNoti}
-                iconLabel={icon.calendarGreen}
-                iconSize={40}
-                child={
-                    <XButton
-                        className={style.navigate_app_btn}
-                        title='Xem lịch hẹn'
-                        onClick={() => {
-                            history.push('/lich-hen?tab=1');
-                            onClearAppointment()
-                        }}
-                    />
-                }
-            />
             <div className={style.container}>
                 <div className={style.head}>
                     <img src={img.imgDefault} alt="" />
                     <div className={style.head_status}>
                         <span className={style.head_status_left}>
-                            Trạng thái thanh toán
+                            {/* Trạng thái thanh toán */}
                         </span>
                         <div className={style.head_status_right}>
-                            Thanh toán thành công
+                            {data ? noti.message : 'Thanh toán thành công'}
                         </div>
                     </div>
                 </div>
@@ -108,13 +100,6 @@ function PaymentStatus() {
                     <div className={style.navigate_cnt}>
                         <div className={style.navigate_cnt_body}>
                             Xem các dịch vụ đã mua và đặt hẹn
-                            <span
-                                onClick={() => {
-                                    history.push('/lich-hen?tab=2');
-                                    onClearAppointment()
-                                }}
-                                className={style.navigate_cnt_btn}
-                            >Tại đây</span>
                         </div>
                     </div>
                 }
@@ -125,12 +110,39 @@ function PaymentStatus() {
                             onClearAppointment()
                         }}
                         className={style.bottom_bnt}
-                        title='Trở về trang chủ'
+                        title='Trang chủ'
+                    />
+                    <XButton
+                        onClick={onNavigateBooking}
+                        className={style.bottom_bnt}
+                        title={data ? 'Lịch hẹn' : 'Đặt hẹn'}
                     />
                 </div>
             </div>
+            {response?.paymentable_id && <NotificationBTX response={response} />}
         </>
     );
 }
 
 export default PaymentStatus;
+
+const NotificationBTX = ({ response }: { response: ResponsePmStatus }) => {
+    const [openBtx, setOpenBtx] = useState({ open: false, btx: 0 })
+    const getOrderDetail = async () => {
+        const res = await orderApi.getOrderById(response?.paymentable_id)
+        const order: IOrderV2 = await res?.data?.context
+        if (order?.btx_reward?.reward_points) {
+            setOpenBtx({ open: true, btx: order?.btx_reward?.reward_points })
+        }
+    }
+    useEffect(() => {
+        getOrderDetail()
+    }, [])
+    return (
+        <PopupBtxReward2
+            open={openBtx.open}
+            onClose={() => setOpenBtx({ open: false, btx: 0 })}
+            btxPoint={openBtx.btx}
+        />
+    )
+}
