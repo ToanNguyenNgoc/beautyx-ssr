@@ -153,7 +153,7 @@ export const Item = ({ item, org }: { item: ITems, org: IOrganization }) => {
             </div>
             <div className={style.pro_detail}>
                 <p className={style.pro_detail_name}>
-                    { }
+                    {name}
                 </p>
                 <div className={style.pro_detail_price}>
                     <span>{formatPrice(displayPrice)}đ</span>

@@ -9,10 +9,11 @@ import PaymentInfo from "./components/PaymentInfo";
 import useGetMessageTiki from "rootComponents/useGetMessageTiki";
 import apointmentApi from "api/apointmentApi";
 import HeadMobile from "features/HeadMobile";
-import { PopupNotification } from "components/Notification";
+import { PopupBtxReward, PopupNotification } from "components/Notification";
 import { useHistory } from "react-router-dom";
 import { clearByCheck } from "redux/cart";
 import { ICart } from "interface/cart";
+import { orderApi } from "api/orderApi";
 // ==== api tracking ====
 import tracking from "api/trackApi";
 import { formatProductList } from "utils/tracking";
@@ -20,6 +21,7 @@ import { XButton } from "components/Layout";
 import { useCartReducer, useCountDown, useSwr } from "hooks";
 
 import style from './payment.module.css'
+import { IOrderV2 } from "interface";
 
 const initOpen = {
     content: "",
@@ -101,6 +103,17 @@ function CartPaymentStatus() {
             console.log(error);
         }
     };
+    //show btx reward after payment "PAID"
+    const [openBtx, setOpenBtx] = useState({ open: false, btx_point: 0 })
+    const onShowNotiBTXPoint = async (order_id: number) => {
+        const res = await orderApi.getOrderById(order_id)
+        // const btx_reward = await res?.data?.context?.btx_reward?.reward_points
+        const orderDetail: IOrderV2 = await res.data?.context
+        const btx_reward = orderDetail?.payment_gateway?.amount / 100
+        if (btx_reward && btx_reward >= 500) {
+            setOpenBtx({ open: true, btx_point: btx_reward })
+        }
+    }
     useEffect(() => {
         if (response && response?.status !== "PENDING") {
             setStatusOrder({
@@ -111,6 +124,7 @@ function CartPaymentStatus() {
         if (response?.status === "PAID") {
             dispatch(clearByCheck())
             if (action) handlePostApp()
+            if (response?.paymentable_id) onShowNotiBTXPoint(response?.paymentable_id)
         }
     }, [response?.status])
     useCancelByTime(sec, handleCancelCallStatus)
@@ -209,6 +223,11 @@ function CartPaymentStatus() {
                 content={open.content}
                 open={open.open}
                 children={open.children}
+            />
+            <PopupBtxReward
+                open={openBtx.open}
+                onClose={() => setOpenBtx({ ...openBtx, open: false })}
+                btxPoint={openBtx.btx_point}
             />
         </>
     );

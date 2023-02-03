@@ -20,8 +20,8 @@ import yoga from "../assets/image/tags/yoga.svg";
 import clinic from "../assets/image/tags/clinic.jpg";
 import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
 import beautyx from "../assets/image/beautyx_icon.png";
-import Partner from 'assets/image/partner.png'
-import iconAppointment from 'assets/image/iconAppointment.png'
+import Partner from "assets/image/partner.png";
+import iconAppointment from "assets/image/iconAppointment.png";
 
 // social
 import facebook from "../assets/image/social/facebook.png";
@@ -31,6 +31,7 @@ import instagram from "../assets/image/social/instagram.png";
 import qrCode from "../assets/icon/qr-code.svg";
 import appStore from "../assets/image/appstore.png";
 import playStore from "../assets/image/playstore.png";
+import zalo from 'assets/image/social/zalo.png'
 
 // payment method
 import atm from "../assets/image/paymentMethod/atm.svg";
@@ -47,9 +48,11 @@ import zaloPay from "../assets/image/paymentMethod/zaloPay.svg";
 import bannerBlur from "../assets/image/bannerBlur.png";
 import beautyxSlogan from "assets/image/beautyxSlogan.png";
 import beautyX from "assets/image/beautyX.svg"
-import plashScreenPc from 'assets/image/plashScreenPc.png'
+import plashScreenPc from 'assets/image/plashScreenPc.png';
+import bgNotiBtxPoint from 'assets/image/bgNotiBtxPoint.jpg'
 
 const img = {
+    bgNotiBtxPoint,
     appStore,
     playStore,
     qrCode,
@@ -79,6 +82,7 @@ export const social = {
     tiktok,
     instagram,
     youtube,
+    zalo
 };
 export const paymentMethod = {
     vnPay,
@@ -91,7 +95,7 @@ export const paymentMethod = {
     masterCard,
     mocaGrap,
     phonePay,
-    momoPayment
+    momoPayment,
 };
 
 export const imgTag = {

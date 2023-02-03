@@ -60,7 +60,7 @@
     align-items: center;
 }
 
-.input_column>div:first-child {
+.input_column > div:first-child {
     width: 50%;
 }
 
@@ -72,7 +72,7 @@
 
 .input_wrapper_icon_show {
     position: absolute;
-    right: 0;
+    right: 16px;
     z-index: 10;
     cursor: pointer;
     margin: -26px 12px 0px 0px;
@@ -144,9 +144,33 @@
 .input {
     border-radius: 18px !important;
 }
-
+/* login social */
+.social{
+    width: 100%;
+    margin: 12px 0px;
+}
+.social_title{
+    text-align: center;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+}
+.social_list_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+}
+.social_list_btn button{
+    padding: 0px;
+    margin:6px;
+    background-color: transparent;
+}
 
 @media only screen and (max-width: 1023px) {
+    .input_wrapper_icon_show {
+        width: 18px;
+    }
     .container {
         height: fit-content;
         flex-direction: column;
