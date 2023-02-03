@@ -245,7 +245,6 @@ import paperWhite from "assets/icon/paperWhite.svg";
 import scanQrBtnOrange from "assets/icon/scanQrBtnOrange.svg";
 
 const icon = {
-    hiddenEye,
     noApply,
     payon,
     momo,

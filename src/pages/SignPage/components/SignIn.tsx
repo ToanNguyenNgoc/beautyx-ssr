@@ -87,12 +87,6 @@ function SignIn(props: any) {
     const handleLogin = (values: any) => {
         submitLogin(values);
     };
-    const handleToggleSeePass = () => {
-        setCheckType(!checkType);
-        checkType && checkType === true
-            ? setTypePass("text")
-            : setTypePass("password");
-    };
     const formik = useFormik({
         initialValues: {
             email: "",

@@ -20,8 +20,8 @@ import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
 import HomeRecommend from "./HomeRecommend";
 import HomeProvince from "./HomeProvince";
-import style from './home.module.css'
-
+import style from "./home.module.css";
+import PopupBtxReward from "components/Notification/PopupBtxReward";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -30,25 +30,22 @@ export default function HomePage() {
         tracking.HOME_LOAD();
     }, []);
 
-    useTags()
-    
+    useTags();
+
     return (
         <>
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
                         <HomeCate />
-                        {
-                            banner_status !== STATUS.SUCCESS ?
-                                <>
-                                    {IS_MB ? <PlashScreen /> : <LoadHomeBanner />}
-                                </>
-                                :
-                                <>
-                                    <HomeBanner2/>
-                                    {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
-                                </>
-                        }
+                        {banner_status !== STATUS.SUCCESS ? (
+                            <>{IS_MB ? <PlashScreen /> : <LoadHomeBanner />}</>
+                        ) : (
+                            <>
+                                <HomeBanner2 />
+                                {IS_MB ? <HomeCate2 /> : <HomeTags2 />}
+                            </>
+                        )}
                     </Container>
                 </div>
                 <HomeDiscount />
@@ -64,6 +61,7 @@ export default function HomePage() {
                 </Container>
                 <OpenApp type="none" />
             </div>
+            <PopupBtxReward />
         </>
     );
 }
