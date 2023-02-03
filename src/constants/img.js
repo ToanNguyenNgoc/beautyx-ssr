@@ -20,8 +20,8 @@ import yoga from "../assets/image/tags/yoga.svg";
 import clinic from "../assets/image/tags/clinic.jpg";
 import sellerCenterImg from "../assets/image/sellerCenterImg.jpeg";
 import beautyx from "../assets/image/beautyx_icon.png";
-import Partner from 'assets/image/partner.png'
-import iconAppointment from 'assets/image/iconAppointment.png'
+import Partner from "assets/image/partner.png";
+import iconAppointment from "assets/image/iconAppointment.png";
 
 // social
 import facebook from "../assets/image/social/facebook.png";
@@ -52,6 +52,7 @@ import plashScreenPc from 'assets/image/plashScreenPc.png';
 import bgNotiBtxPoint from 'assets/image/bgNotiBtxPoint.jpg'
 
 const img = {
+    bgNotiBtxPoint,
     appStore,
     playStore,
     qrCode,
@@ -74,8 +75,7 @@ const img = {
     beautyX,
     Partner,
     iconAppointment,
-    plashScreenPc,
-    bgNotiBtxPoint
+    plashScreenPc
 };
 export const social = {
     facebook,
@@ -95,7 +95,7 @@ export const paymentMethod = {
     masterCard,
     mocaGrap,
     phonePay,
-    momoPayment
+    momoPayment,
 };
 
 export const imgTag = {

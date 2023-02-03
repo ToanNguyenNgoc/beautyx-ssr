@@ -5,13 +5,13 @@ import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useDispatch } from "react-redux";
-import { BackButton, Input, XButton } from 'components/Layout'
-import style from '../sign-page.module.css'
+import { BackButton, Input, XButton } from "components/Layout";
+import style from "../sign-page.module.css";
 import { AppContext } from "context/AppProvider";
 import authentication from "api/authApi";
 import { fetchAsyncUser } from "redux/user/userSlice";
-import { PopupNotification } from 'components/Notification';
-import { useNoti } from 'hooks'
+import { PopupNotification } from "components/Notification";
+import { useNoti } from "hooks";
 import icon from "constants/icon";
 // import SignInSocial from "./SignInSocial";
 
@@ -20,43 +20,66 @@ function SignIn(props: any) {
     const dispatch = useDispatch();
     const { setActiveTabSign } = props;
     const history = useHistory();
-    const [showPass, setShowPass] = useState(false)
-    const [child, setChild] = useState<React.ReactElement>(<></>)
-    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
+    const [showPass, setShowPass] = useState(false);
+    const [child, setChild] = useState<React.ReactElement>(<></>);
+    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti();
     const [remember, setRemember] = useState(true);
     async function submitLogin(values: any) {
-        firstLoad()
+        firstLoad();
         try {
             const response = await authentication.login(values);
             if (remember === true) {
                 localStorage.setItem("_WEB_TK", response.data.context.token);
-                localStorage.setItem('_WEB_TK_RE', response.data.context.refresh_token)
-                localStorage.setItem('_WEB_TK_EX', response.data.context.token_expired_at)
+                localStorage.setItem(
+                    "_WEB_TK_RE",
+                    response.data.context.refresh_token
+                );
+                localStorage.setItem(
+                    "_WEB_TK_EX",
+                    response.data.context.token_expired_at
+                );
             } else {
                 sessionStorage.setItem("_WEB_TK", response.data.context.token);
-                sessionStorage.setItem('_WEB_TK_RE', response.data.context.refresh_token)
-                sessionStorage.setItem('_WEB_TK_EX', response.data.context.token_expired_at)
+                sessionStorage.setItem(
+                    "_WEB_TK_RE",
+                    response.data.context.refresh_token
+                );
+                sessionStorage.setItem(
+                    "_WEB_TK_EX",
+                    response.data.context.token_expired_at
+                );
             }
             const res = await dispatch(fetchAsyncUser());
             if (res?.payload) {
                 // dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
-                history.goBack()
+                history.goBack();
             }
         } catch (error) {
             const err = error as AxiosError;
             switch (err.response?.status) {
                 case 401:
-                    resultLoad('Mật khẩu chưa chính xác. Vui lòng thử lại !')
+                    resultLoad("Mật khẩu chưa chính xác. Vui lòng thử lại !");
                     break;
                 case 404:
-                    resultLoad(`Emai "${values.email}" ${t("form.is_not_registered")}`)
-                    setChild(<XButton
-                        title={`${t('Home.Sign_up')} ${t('form.now')}`}
-                        onClick={() => history.replace({ pathname: '/sign-up', search: '2' })}
-                    />)
+                    resultLoad(
+                        `Emai "${values.email}" ${t("form.is_not_registered")}`
+                    );
+                    setChild(
+                        <XButton
+                            title={`${t("Home.Sign_up")} ${t("form.now")}`}
+                            onClick={() =>
+                                history.replace({
+                                    pathname: "/sign-up",
+                                    search: "2",
+                                })
+                            }
+                        />
+                    );
                     break;
                 default:
-                    resultLoad(`Có lỗi xảy ra (${err.response?.status}).Vui lòng thử lại sau!`,)
+                    resultLoad(
+                        `Có lỗi xảy ra (${err.response?.status}).Vui lòng thử lại sau!`
+                    );
                     break;
             }
         }
@@ -86,7 +109,6 @@ function SignIn(props: any) {
         },
     });
 
-
     return (
         <>
             <BackButton />
@@ -96,7 +118,7 @@ function SignIn(props: any) {
                     autoComplete="off"
                     className={style.form_container}
                 >
-                    <div className={style.input_wrapper} >
+                    <div className={style.input_wrapper}>
                         <Input
                             className={style.input}
                             icon={icon.User}
@@ -107,21 +129,19 @@ function SignIn(props: any) {
                             onChange={formik.handleChange}
                         />
                         {formik.errors.email && formik.touched.email && (
-                            <p
-                                className={style.input_wrapper_error}
-                            >
+                            <p className={style.input_wrapper_error}>
                                 {formik.errors.email}
                             </p>
                         )}
                     </div>
-                    <div className={style.input_wrapper} >
+                    <div className={style.input_wrapper}>
                         <Input
                             className={style.input}
                             icon={icon.Lock}
                             name="password"
                             value={formik.values.password}
                             onChange={formik.handleChange}
-                            type={showPass ? 'text' : 'password'}
+                            type={showPass ? "text" : "password"}
                             placeholder={t("Home.Sign_in_pl_password")}
                         />
                         <img
@@ -131,9 +151,7 @@ function SignIn(props: any) {
                             alt=""
                         />
                         {formik.errors.password && formik.touched.password && (
-                            <p
-                                className={style.input_wrapper_error}
-                            >
+                            <p className={style.input_wrapper_error}>
                                 {formik.errors.password}
                             </p>
                         )}
@@ -155,7 +173,10 @@ function SignIn(props: any) {
                             />
                             <span>{t("Home.Sign_remember")}</span>
                         </div>
-                        <span className={style.sign_check_forgot} onClick={() => history.replace("/doi-mat-khau")}>
+                        <span
+                            className={style.sign_check_forgot}
+                            onClick={() => history.replace("/doi-mat-khau")}
+                        >
                             {t("Home.Sign_forgot")} ?
                         </span>
                     </div>

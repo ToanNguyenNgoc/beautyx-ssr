@@ -14,7 +14,7 @@ import apointmentApi from 'api/apointmentApi';
 import { pick } from 'lodash';
 import { ResponsePmStatus, IOrderV2 } from 'interface';
 import { orderApi } from 'api/orderApi';
-import {  PopupBtxReward2 } from 'components/Notification';
+import { PopupBtxReward } from 'components/Notification';
 
 function PaymentStatus() {
     const history = useHistory()
@@ -139,7 +139,7 @@ const NotificationBTX = ({ response }: { response: ResponsePmStatus }) => {
         getOrderDetail()
     }, [])
     return (
-        <PopupBtxReward2
+        <PopupBtxReward
             open={openBtx.open}
             onClose={() => setOpenBtx({ open: false, btx: 0 })}
             btxPoint={openBtx.btx}
