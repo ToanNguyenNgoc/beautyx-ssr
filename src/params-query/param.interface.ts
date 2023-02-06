@@ -13,6 +13,17 @@ export interface ParamOrg {
     "sort"?: string,
     "include"?: string
 }
+export interface ParamBranchV3 {
+    "page"?: number | string,
+    "limit"?: number | string,
+    "keyword"?: string,
+    "is_momo_ecommerce_enable"?: boolean | '',
+    "location"?: string,
+    "sort"?: string,
+    "province_code"?: number | string,
+    "district_code"?: number | string,
+    "is_demo"?: boolean | ''
+}
 export interface ParamDiscounts {
     "page"?: number,
     "limit"?: number,

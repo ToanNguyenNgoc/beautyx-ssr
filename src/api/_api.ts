@@ -1,7 +1,10 @@
 import { baseURL } from "./axios"
+// api route version
 const API_ROUTE_V = {
-    PRODUCTABLE: (version?: 'v1' | 'v2' | 'v3') => `${baseURL?.replace('v1/', version ?? 'v1')}/productables`
+    PRODUCTABLE: (version?: 'v1' | 'v2' | 'v3') => `${baseURL?.replace('v1/', version ?? 'v1')}/productables`,
+    BRANCHES: (version?: 'v1' | 'v2' | 'v3') => `${baseURL?.replace('v1/', version ?? 'v1')}/branches`,
 }
+// api route version 1
 const API_ROUTE = {
     USER_PROFILE: `/users/profile`,
     PROVINCES_CODE_DISTRICTS: (province_code: number | string) => `/provinces/${province_code}/districts`,

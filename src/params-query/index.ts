@@ -2,7 +2,7 @@
 
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm"
 import dayjs from "dayjs"
-import { ParamOrg, ParamService, ParamProduct, ParamOrder, ParamsProductable, ParamDiscounts } from "./param.interface"
+import { ParamOrg, ParamService, ParamProduct, ParamOrder, ParamsProductable, ParamDiscounts, ParamBranchV3 } from "./param.interface"
 
 const PLAT_FORM = EXTRA_FLAT_FORM()
 
@@ -27,6 +27,16 @@ export const paramOrgs: ParamOrg = {
     "filter[district_code]": "",
     "sort": "",
     "include": "tags|province|district|ward|branches|favorites|favorites_count"
+}
+export const pramsBranchV3:ParamBranchV3={
+    "limit":15,
+    "keyword":"",
+    "is_momo_ecommerce_enable":"",
+    "location":"",
+    "sort":"",
+    "province_code":"",
+    "district_code":"",
+    "is_demo":false
 }
 export const paramsDiscounts = {
     "append": "user_available_purchase_count",

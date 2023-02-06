@@ -49,7 +49,9 @@ import bannerBlur from "../assets/image/bannerBlur.png";
 import beautyxSlogan from "assets/image/beautyxSlogan.png";
 import beautyX from "assets/image/beautyX.svg"
 import plashScreenPc from 'assets/image/plashScreenPc.png';
-import bgNotiBtxPoint from 'assets/image/bgNotiBtxPoint.jpg'
+import bgNotiBtxPoint from 'assets/image/bgNotiBtxPoint.jpg';
+import qrCodeTiki from 'assets/image/qrCodeTiki.png';
+import qrCodeMomo from 'assets/image/qrCodeMomo.png'
 
 const img = {
     bgNotiBtxPoint,
@@ -75,7 +77,8 @@ const img = {
     beautyX,
     Partner,
     iconAppointment,
-    plashScreenPc
+    plashScreenPc,
+    qrCodeTiki, qrCodeMomo
 };
 export const social = {
     facebook,
