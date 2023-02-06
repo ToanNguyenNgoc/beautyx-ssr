@@ -1,16 +1,14 @@
 import icon from "constants/icon";
 import { Productable } from "interface";
-import React from "react";
 import { Link } from "react-router-dom";
-import { formatDistance, formatDistanceKM, onErrorImg } from "utils";
+import { formatDistanceKM, onErrorImg } from "utils";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
-import style from "./productable.module.css";
-import img from "constants/img";
 import {
     formatRouterLinkCombo,
     formatRouterLinkProduct,
     formatRouterLinkService,
 } from "utils/formatRouterLink/formatRouter";
+import style from "./productable.module.css";
 
 interface ProductableItemProps {
     productable: Productable;
