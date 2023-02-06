@@ -82,18 +82,14 @@ export const useProductableService = (param: ParamsProductable, condition: boole
     return { services, onLoadMoreService, isLoad, totalService }
 }
 export const useBranches = (param: ParamBranchV3, condition: boolean) => {
-    const { resData, totalItem, isValidating, onLoadMore } = useFetchInfinite(
+    const { isValidating, onLoadMore, resDataV2, totalItemV2 } = useFetchInfinite(
         condition,
         API_ROUTE_V.BRANCHES('v3'),
         param
     )
-    const branches: IBranchV3[] = resData ?? []
-    const totalBranch = totalItem
-    const onLoadMoreBranch = () => {
-        if (branches.length <= totalBranch) {
-            onLoadMore()
-        }
-    }
+    const branches: IBranchV3[] = resDataV2 ?? []
+    const totalBranch = totalItemV2
+    const onLoadMoreBranch = onLoadMore
     const isLoadBranch = isValidating
     return { branches, totalBranch, onLoadMoreBranch, isLoadBranch }
 }

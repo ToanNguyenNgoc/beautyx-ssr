@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { ParamOrg, ParamService, ParamProduct } from 'params-query/param.interface'
+import { ParamOrg, ParamService, ParamProduct, ParamBranchV3 } from 'params-query/param.interface'
 
 export interface IFilterResult {
     prev_param: string,
     SERVICE_PR: ParamService,
     PRODUCT_PR: ParamProduct,
     ORG_PR: ParamOrg,
+    BRANCH_PR:ParamBranchV3
 }
 const initialState: IFilterResult = {
     prev_param: "",
@@ -36,6 +37,12 @@ const initialState: IFilterResult = {
         "filter[max_price]": "",
         "sort": "",
         "include": "favorites_count|favorites|branches"
+    },
+    BRANCH_PR:{
+        "location":"",
+        "district_code":"",
+        "province_code":"",
+        "sort":"",
     }
 }
 const FilterResultSlice = createSlice({
@@ -54,10 +61,14 @@ const FilterResultSlice = createSlice({
         onChangeFilterOrg: (state, action) => {
             state.ORG_PR = { ...state.ORG_PR, ...action.payload }
         },
+        onChangeFilterBranch:(state, action)=>{
+            state.BRANCH_PR = {...state.BRANCH_PR, ...action.payload}
+        },
         onResetFilter: (state) => {
             state.SERVICE_PR = initialState.SERVICE_PR
             state.PRODUCT_PR = initialState.PRODUCT_PR
             state.ORG_PR = initialState.ORG_PR
+            state.BRANCH_PR = initialState.BRANCH_PR
         },
         onResetFilterOrg: (state) => {
             state.ORG_PR = {
@@ -76,6 +87,7 @@ export const {
     onResetFilterOrg,
     onSavePrevPa,
     onChangeFilterOrg,
-    onChangeFilterProduct
+    onChangeFilterProduct,
+    onChangeFilterBranch
 } = actions
 export default reducer

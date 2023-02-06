@@ -11,6 +11,7 @@ import TabProduct from "./TabProduct";
 import TabOrg from "./TabOrg";
 import { useDeviceMobile } from "hooks";
 import TabServiceGroup from "./TabServiceGroup";
+import TabBranch from "./TabBranch";
 
 function SearchResults() {
     const { t } = useContext(AppContext)
@@ -74,6 +75,7 @@ function SearchResults() {
                         {tab === "dich-vu" && <>{tabService}</>}
                         {tab === "san-pham" && <TabProduct keyword={keyword} />}
                         {tab === "cua-hang" && <TabOrg keyword={keyword} />}
+                        {/* {tab === "cua-hang" && <TabBranch keyword={keyword} />} */}
                     </div>
                 </div>
             </Container>
