@@ -11,9 +11,9 @@ const axiosClient = axios.create({
         "Content-Type": "application/json",
     },
     paramsSerializer: {
-        encode: (param: string) => { },
+        encode: (param: string) => {},
         serialize: (params) => queryString.stringify(params),
-        indexes: false
+        indexes: false,
     },
 });
 axiosClient.interceptors.request.use(async (config) => {
