@@ -90,4 +90,6 @@ export interface ParamsProductable {
     "discount_max_price"?: "" | number,
     "discount_min_price_ecommerce"?: "" | number,
     "discount_max_price_ecommerce"?: "" | number,
+    "province_code"?: string | number,
+    "district_code"?: string | number
 }

@@ -6,12 +6,13 @@ import { ICON } from "constants/icon2";
 import { Container } from "@mui/material";
 import { AppContext } from "context/AppProvider";
 import style from './search-result.module.css'
-import TabService from "./TabService";
+// import TabService from "./TabService";
 import TabProduct from "./TabProduct";
 import TabOrg from "./TabOrg";
 import { useDeviceMobile } from "hooks";
-import TabServiceGroup from "./TabServiceGroup";
-import TabBranch from "./TabBranch";
+// import TabServiceGroup from "./TabServiceGroup";
+import TabServiceProductable from "./TabServiceProductable";
+// import TabBranch from "./TabBranch";
 
 function SearchResults() {
     const { t } = useContext(AppContext)
@@ -42,8 +43,10 @@ function SearchResults() {
         }
     }
     //
-    let tabService = <TabService keyword={keyword} />
-    if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
+    // let tabService = <TabService keyword={keyword} />
+    // if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
+    let tabService = <TabServiceProductable keyword={keyword} />
+    if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
     return (
         <>
             <Container>

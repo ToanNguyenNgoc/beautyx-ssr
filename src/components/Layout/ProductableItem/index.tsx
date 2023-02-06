@@ -2,15 +2,15 @@ import icon from "constants/icon";
 import { Productable } from "interface";
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatDistance, formatDistanceKM, onErrorImg } from "utils";
+import {  formatDistanceKM, onErrorImg } from "utils";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
 import style from "./productable.module.css";
-import img from "constants/img";
 import {
     formatRouterLinkCombo,
     formatRouterLinkProduct,
     formatRouterLinkService,
 } from "utils/formatRouterLink/formatRouter";
+import img from "constants/img";
 
 interface ProductableItemProps {
     productable: Productable;
@@ -20,7 +20,7 @@ interface ProductableItemProps {
 export function ProductableItem(props: ProductableItemProps) {
     const { productable, changeStyle } = props;
     const org = productable?.organization[0];
-    let image_url = org.image_url;
+    let image_url = org.image_url ?? img.imgDefault;
     if (productable.media) {
         image_url = productable.media[0]?.original_url;
     }
@@ -78,7 +78,7 @@ export function ProductableItem(props: ProductableItemProps) {
                     {!changeStyle && (
                         <img
                             className={style.item_org_avatar}
-                            src={org?.image_url}
+                            src={org?.image_url ?? img.imgDefault}
                             alt=""
                             onError={(e) => onErrorImg(e)}
                         />

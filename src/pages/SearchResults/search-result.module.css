@@ -180,6 +180,9 @@
     .result_list {
         grid-template-columns: repeat(2, 1fr);
     }
+    .result_list_service{
+        grid-template-columns: repeat(1, 1fr);
+    }
 
     .result_list_org {
         grid-template-columns: repeat(1, 1fr);
