@@ -2,8 +2,8 @@ import axios from "axios";
 import queryString from "query-string";
 
 // export const baseURL = process.env.REACT_APP_API_TEST;
-export const baseURL = process.env.REACT_APP_API_URL;
-// export const baseURL = process.env.REACT_APP_API_PRO;
+// export const baseURL = process.env.REACT_APP_API_URL;
+export const baseURL = process.env.REACT_APP_API_PRO;
 const axiosClient = axios.create({
     baseURL: baseURL,
     headers: {
@@ -11,9 +11,9 @@ const axiosClient = axios.create({
         "Content-Type": "application/json",
     },
     paramsSerializer: {
-        encode: (param: string) => { },
+        encode: (param: string) => {},
         serialize: (params) => queryString.stringify(params),
-        indexes: false
+        indexes: false,
     },
 });
 axiosClient.interceptors.request.use(async (config) => {
