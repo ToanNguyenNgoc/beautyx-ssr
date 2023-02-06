@@ -1,6 +1,5 @@
 import icon from "constants/icon";
 import { Productable } from "interface";
-import React from "react";
 import { Link } from "react-router-dom";
 import {  formatDistanceKM, onErrorImg } from "utils";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
