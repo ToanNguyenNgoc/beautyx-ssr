@@ -1,19 +1,19 @@
 import React, { useContext, useState } from "react";
 import HomeTitle from "../Components/HomeTitle";
-import { paramsServices } from "params-query";
+import { paramsProductable } from "params-query";
 import { AppContext } from "context/AppProvider";
-import { IServicePromo, SerProCommonWatched } from "interface/servicePromo";
 import { AUTH_LOCATION } from "api/authLocation";
-import { SerProItem, XButton } from "components/Layout";
-import { useServicesGroup } from 'features/Search/hook';
+import { ProductableItem, XButton } from "components/Layout";
 import style from './recommend.module.css'
 import { useFetchInfinite } from "hooks";
 import API_3RD from "api/3rd-api";
 import { useSelector } from "react-redux";
-import IStore from "interface/IStore";
 import { CardItemCommon } from "../HomeWatched";
-import { IServiceSold, IServiceUser, IUser_Items } from "interface/servicesUser";
 import { unique } from "utils";
+import { IServicePromo, IServiceSold, IServiceUser, IUser_Items, Productable, SerProCommonWatched } from "interface";
+import IStore from "interface/IStore";
+import { ParamsProductable } from 'params-query/param.interface'
+import { API_ROUTE_V } from "api/_api";
 
 
 export default function HomeRecommend() {
@@ -69,19 +69,24 @@ export default function HomeRecommend() {
     );
 }
 const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[] }) => {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const LOCATION = AUTH_LOCATION()
-    const params = {
-        ...paramsServices,
-        "filter[keyword]": servicesNameOrders.length > 0 ? servicesNameOrders[0] : 'Gội đầu',
+    const params: ParamsProductable = {
+        ...paramsProductable,
+        "keyword": servicesNameOrders.length > 0 ? servicesNameOrders[0] : 'Gội đầu',
         "limit": 30,
-        "filter[location]": LOCATION,
+        "location": LOCATION,
+        "sort": "distance"
     }
-    const { servicesGroupByOrg, onLoadMoreService, isLoadSer } = useServicesGroup(params, true)
+    const { resDataV2, totalItemV2, onLoadMore, isValidating } = useFetchInfinite(
+        true,
+        API_ROUTE_V.PRODUCTABLE('v3'),
+        params
+    )
     return (
         <div className={style.tab_container}>
             <ul className={style.list_recommend}>
-                {
+                {/* {
                     servicesGroupByOrg?.map((itemGroup: any, index: number) => (
                         <div key={index} >
                             {
@@ -93,16 +98,23 @@ const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[]
                             }
                         </div>
                     ))
+                } */}
+                {
+                    resDataV2?.map((item: Productable, index) => (
+                        <li key={index} className={style.list_recommend_item}>
+                            <ProductableItem productable={item} />
+                        </li>
+                    ))
                 }
             </ul>
             {
-                servicesGroupByOrg?.length < 100 &&
+                resDataV2?.length < totalItemV2 &&
                 <div className={style.tab_bottom}>
                     <XButton
                         className={style.tab_bottom_btn}
                         title={t('Mer_de.view_more')}
-                        onClick={onLoadMoreService}
-                        loading={isLoadSer}
+                        onClick={onLoadMore}
+                        loading={isValidating}
                     />
                 </div>
             }
@@ -111,19 +123,24 @@ const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[]
 }
 
 const TabRecommendKey = ({ tab }: any) => {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const LOCATION = AUTH_LOCATION()
-    const params = {
-        ...paramsServices,
-        "filter[keyword]": tab?.title,
+    const params: ParamsProductable = {
+        ...paramsProductable,
+        "keyword": tab?.title,
         "limit": 30,
-        "filter[location]": LOCATION,
+        "location": LOCATION,
+        "sort": "distance"
     }
-    const { servicesGroupByOrg, onLoadMoreService, isLoadSer } = useServicesGroup(params, true)
+    const { resDataV2, totalItemV2, onLoadMore, isValidating } = useFetchInfinite(
+        true,
+        API_ROUTE_V.PRODUCTABLE('v3'),
+        params
+    )
     return (
         <div className={style.tab_container}>
             <ul className={style.list_recommend}>
-                {
+                {/* {
                     servicesGroupByOrg?.map((itemGroup: any, index: number) => (
                         <div key={index} >
                             {
@@ -135,16 +152,23 @@ const TabRecommendKey = ({ tab }: any) => {
                             }
                         </div>
                     ))
+                } */}
+                {
+                    resDataV2?.map((item: Productable, index) => (
+                        <li key={index} className={style.list_recommend_item}>
+                            <ProductableItem productable={item} />
+                        </li>
+                    ))
                 }
             </ul>
             {
-                servicesGroupByOrg?.length < 100 &&
+                resDataV2?.length < totalItemV2 &&
                 <div className={style.tab_bottom}>
                     <XButton
                         className={style.tab_bottom_btn}
                         title={t('Mer_de.view_more')}
-                        onClick={onLoadMoreService}
-                        loading={isLoadSer}
+                        onClick={onLoadMore}
+                        loading={isValidating}
                     />
                 </div>
             }

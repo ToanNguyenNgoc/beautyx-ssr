@@ -18,14 +18,14 @@ export function FilterSort(props: FilterSortProps) {
         { query: '-discount_percent', title: t('home_2.hot_promotion') },
         { query: 'price', title: t('Mer_de.ascending_price') },
         { query: '-price', title: t('Mer_de.decrease_price') },
-        { query: '-org_priority', title: t('Mer_de.priority') },
+        { query: '-favorites_count', title: t('Mer_de.priority') },
     ]
     const paramSortProduct: ISort[] = [
         { query: '-discount_percent', title: t('home_2.hot_promotion') },
-        { query: 'retail_price', title: t('Mer_de.ascending_price') },
-        { query: '-retail_price', title: t('Mer_de.decrease_price') },
-        { query: '-org_priority', title: t('Mer_de.priority') },
-        { query: '-bought_count', title: 'Bán chạy' },
+        { query: 'price', title: t('Mer_de.ascending_price') },
+        { query: '-price', title: t('Mer_de.decrease_price') },
+        { query: '-favorites_count', title: t('Mer_de.priority') },
+        { query: '-sold_count', title: 'Bán chạy' },
     ]
     const paramSortOrg: ISort[] = [
         { query: '-priority', title: t('Mer_de.priority') },

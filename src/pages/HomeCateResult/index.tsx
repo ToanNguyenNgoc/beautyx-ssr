@@ -1,7 +1,6 @@
 import { Drawer } from "@mui/material";
 import { Container } from "@mui/system";
 import { API_ROUTE_V } from "api/_api";
-import { AUTH_LOCATION } from "api/authLocation";
 import {
     EventLocation,
     FilterLocation,
@@ -62,21 +61,14 @@ function HomeCateResult() {
     const type = page_url === "danh-sach-dich-vu" ? "SERVICE" : "PRODUCT";
     let check_type_params = type === "SERVICE" ? "1" : "2";
     const query = params?.sort ?? "";
-    // const userLocation = params?.location ?? "";
-    const LOCATION = AUTH_LOCATION();
-
+    const userLocation = params?.location ?? "";
     const tag = queryTag(id, type);
     const tagParent = queryTag(tag?.parent_id, type);
     const tagParParent = queryTag(tagParent?.parent_id, type);
-    // const newParams = {
-    //     ...paramsProducts,
-    //     "filter[location]": userLocation,
-    //     "filter[keyword]": tag?.name,
-    //     "filter[min_price]": parseInt(params.min_price) ?? "",
-    //     "filter[max_price]": parseInt(params.max_price) ?? "",
-    //     "filter[special_price]": query === "-discount_percent" ? true : "",
-    //     "sort": query !== "location" && query
-    // }
+    let sort = ''
+    if (query === '' && userLocation !== '') { sort = 'distance' }
+    if (query !== '') { sort = query }
+    if(query === '-discount_percent'){sort=''}
     const newParams = {
         ...paramsProductable,
         type: check_type_params,
@@ -85,22 +77,13 @@ function HomeCateResult() {
         min_price: parseInt(params.min_price) ?? "",
         max_price: parseInt(params.max_price) ?? "",
         on_ecommerce: true,
-        location: LOCATION,
+        location: userLocation,
         discount_price: query === "-discount_percent" ? true : "",
-        sort: query !== "location" && query,
+        sort: sort,
     };
     let condition = false;
     if (tag?.name && (type === "PRODUCT" || type === "SERVICE"))
         condition = true;
-    // let APL_URL = ""
-    // if (type === "SERVICE") APL_URL = "/services"
-    // if (type === "PRODUCT") APL_URL = "/products"
-    // const { resData, totalItem, onLoadMore } = useSwrInfinite(
-    //     condition,
-    //     APL_URL,
-    //     newParams
-    // )
-
     const { resDataV2, totalItemV2, onLoadMore } = useFetchInfinite(
         condition,
         API_ROUTE_V.PRODUCTABLE("v3"),
@@ -125,6 +108,7 @@ function HomeCateResult() {
     const onChangeLocation = (e: EventLocation) => {
         const paramsChange = {
             ...params,
+            sort:'',
             location: e.coords,
         };
         const pathname = location.pathname;
@@ -343,29 +327,6 @@ function HomeCateResult() {
                                 loader={<></>}
                                 next={onViewMore}
                             >
-                                {/* <ul className={style.body_right_list}>
-                                    {resDataV2.map(
-                                        (item: any, index: number) => (
-                                            <li
-                                                key={index}
-                                                className={style.body_list_item}
-                                            >
-                                                {type === "PRODUCT" && (
-                                                    <SerProItem
-                                                        item={item}
-                                                        type="PRODUCT"
-                                                    />
-                                                )}
-                                                {type === "SERVICE" && (
-                                                    <SerProItem
-                                                        item={item}
-                                                        type="SERVICE"
-                                                    />
-                                                )}
-                                            </li>
-                                        )
-                                    )}
-                                </ul> */}
                                 <ul className={style.body_right_list}>
                                     {resDataV2.map(
                                         (item: any, index: number) => (
@@ -373,16 +334,9 @@ function HomeCateResult() {
                                                 key={index}
                                                 className={style.body_list_item}
                                             >
-                                                {type === "PRODUCT" && (
-                                                    <ProductableItem
+                                                <ProductableItem
                                                         productable={item}
                                                     />
-                                                )}
-                                                {type === "SERVICE" && (
-                                                    <ProductableItem
-                                                        productable={item}
-                                                    />
-                                                )}
                                             </li>
                                         )
                                     )}

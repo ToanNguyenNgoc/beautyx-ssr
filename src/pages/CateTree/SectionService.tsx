@@ -1,10 +1,10 @@
 import { AUTH_LOCATION } from 'api/authLocation';
-import API_ROUTE from 'api/_api';
-import { SerProItem } from 'components/Layout';
+import { API_ROUTE_V } from 'api/_api';
+import { ProductableItem } from 'components/Layout';
 import { LoadGrid } from 'components/LoadingSketion';
-import { useDeviceMobile, useSwrInfinite } from 'hooks';
-import { IServicePromo, ITag } from 'interface';
-import { paramsServices } from 'params-query';
+import { useDeviceMobile, useFetchInfinite } from 'hooks';
+import { ITag, Productable } from 'interface';
+import { paramsProductable } from 'params-query';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { navigateSearchResult } from 'utils/formatRouterLink/formatRouter';
@@ -14,12 +14,15 @@ function SectionService({ tagChild }: { tagChild?: ITag }) {
     const LOCATION = AUTH_LOCATION()
     const history = useHistory()
     const IS_MB = useDeviceMobile()
-    const { resData, isValidating } = useSwrInfinite(
+    const { resDataV2, isValidating } = useFetchInfinite(
         tagChild,
-        API_ROUTE.SERVICES,
+        API_ROUTE_V.PRODUCTABLE('v3'),
         {
-            ...paramsServices, 'filter[keyword]': tagChild?.name,
-            'limit': '15', 'filter[location]': LOCATION
+            ...paramsProductable,
+            keyword: tagChild?.name,
+            type: 1,
+            location: LOCATION,
+            sort: 'location'
         }
     )
     return (
@@ -32,14 +35,14 @@ function SectionService({ tagChild }: { tagChild?: ITag }) {
             </p>
             <ul className={style.service_list}>
                 {
-                    resData?.map((service: IServicePromo, index: number) => (
+                    resDataV2?.map((productable: Productable, index: number) => (
                         <li key={index} className={style.service_list_item}>
-                            <SerProItem changeStyle={IS_MB} item={service} type='SERVICE' />
+                            <ProductableItem productable={productable} changeStyle />
                         </li>
                     ))
                 }
             </ul>
-            {(isValidating && resData?.length === 0)
+            {(isValidating && resDataV2?.length === 0)
                 && <LoadGrid grid={IS_MB ? 1 : 5} item_count={15} />}
         </div>
     );

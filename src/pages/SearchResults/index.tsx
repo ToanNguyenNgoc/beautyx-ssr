@@ -6,13 +6,10 @@ import { ICON } from "constants/icon2";
 import { Container } from "@mui/material";
 import { AppContext } from "context/AppProvider";
 import style from './search-result.module.css'
-// import TabService from "./TabService";
-import TabProduct from "./TabProduct";
 import TabOrg from "./TabOrg";
 import { useDeviceMobile } from "hooks";
-// import TabServiceGroup from "./TabServiceGroup";
 import TabServiceProductable from "./TabServiceProductable";
-// import TabBranch from "./TabBranch";
+import TabProductProductable from "./TabProductProductable";
 
 function SearchResults() {
     const { t } = useContext(AppContext)
@@ -76,7 +73,7 @@ function SearchResults() {
                     </div>
                     <div className={style.right_cnt}>
                         {tab === "dich-vu" && <>{tabService}</>}
-                        {tab === "san-pham" && <TabProduct keyword={keyword} />}
+                        {tab === "san-pham" && <TabProductProductable keyword={keyword} />}
                         {tab === "cua-hang" && <TabOrg keyword={keyword} />}
                         {/* {tab === "cua-hang" && <TabBranch keyword={keyword} />} */}
                     </div>

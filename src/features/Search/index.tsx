@@ -1,13 +1,11 @@
 import React, { useCallback, KeyboardEvent, useState } from "react"
-import { useDeviceMobile, useFetch } from "hooks"
+import { useDeviceMobile, useFetch, useProductable } from "hooks"
 import { onErrorImg, hashtag } from 'utils'
-import { paramOrgs, paramsProducts, paramsServices } from "params-query"
+import { paramOrgs, paramsProductable } from "params-query"
 import style from "./search.module.css"
 import { Link, useHistory } from "react-router-dom"
-import { useOrgs, useProducts, useServices } from "./hook"
-import { IProductPromo } from "interface/productPromo"
-import { SerProItem, XButton } from "components/Layout"
-import { IServicePromo } from "interface/servicePromo"
+import { useOrgs } from "./hook"
+import { ProductableItem, XButton } from "components/Layout"
 import { IOrganization } from "interface/organization"
 import icon from "constants/icon"
 import { debounce } from "lodash"
@@ -19,6 +17,8 @@ import { onResetFilter } from "redux/filter-result"
 import SearchHistory from "./SearchHistory"
 import IStore from "interface/IStore"
 import { usePostSearchHisMutation } from "redux-toolkit-query/hook-search-history"
+import { ParamsProductable } from "params-query/param.interface"
+import { Productable } from "interface"
 
 interface SearchProps {
     key_work?: string,
@@ -63,30 +63,18 @@ function Search(props: SearchProps) {
         ...paramOrgs,
         "filter[keyword]": KEY_WORD_DE
     }
-    const PARAM_PRODUCT = {
-        ...paramsProducts,
-        "limit": IS_MB ? 4 : 6,
-        "filter[keyword]": KEY_WORD_DE
-    }
-    const PARAM_SERVICE = {
-        ...paramsServices,
-        "limit": IS_MB ? 4 : 6,
-        "filter[keyword]": KEY_WORD_DE
-    }
-    // const paramsProductableServices: ParamsProductable = {
-    //     ...paramsProductable,
-    //     "limit": 4,
-    //     "keyword": KEY_WORD_DE
-    // }
     const { orgs, totalOrg, isLoad } = useOrgs(PARAM_ORG, KEY_WORD !== "")
-    const { services, totalService } = useServices(PARAM_SERVICE, KEY_WORD !== "")
-    // const { services, totalService } = useProductableService(paramsProductableServices, KEY_WORD !== '')
-    const { products, totalProduct, isLoadPr } = useProducts(PARAM_PRODUCT, KEY_WORD !== "")
-    //
+    const params: ParamsProductable = {
+        ...paramsProductable,
+        keyword: KEY_WORD_DE,
+        limit: IS_MB ? 4 : 6,
+    }
+    const { serviceData } = useProductable("1", params, true)
+    const { productData } = useProductable('2', params, true)
     const tabs = [
-        { link: "dich-vu", total: totalService },
+        { link: "dich-vu", total: serviceData.totalItem },
         { link: "cua-hang", total: totalOrg },
-        { link: "san-pham", total: totalProduct }
+        { link: "san-pham", total: productData.totalItem }
     ]
     const tabSort = tabs.sort((a, b) => b.total - a.total);
     const dispatch = useDispatch()
@@ -148,11 +136,11 @@ function Search(props: SearchProps) {
                     {
                         keyword.key !== '' &&
                         <XButton
-                            iconSize={(isLoad && isLoadPr && isLoadPr) ? 0 : 22}
+                            iconSize={(isLoad && serviceData.isLoad && productData.isLoad) ? 0 : 22}
                             onClick={() => setKeyword({ key: "", key_debounce: "" })}
                             className={style.close_bnt}
                             icon={icon.closeBlack}
-                            loading={isLoad && isLoadPr && isLoadPr}
+                            loading={isLoad && serviceData.isLoad && productData.isLoad}
                         />
                     }
                 </div>
@@ -214,25 +202,25 @@ function Search(props: SearchProps) {
                     </div>
                 }
                 {
-                    (KEY_WORD !== "" && totalService > 0) &&
+                    (KEY_WORD !== "" && serviceData.totalItem > 0) &&
                     <div className={style.section_container}>
                         <span className={style.section_title}>Dịch vụ</span>
                         <ul className={style.result_list}>
                             {
-                                services.map((item: IServicePromo, index: number) => (
+                                serviceData.productable?.map((item: Productable, index: number) => (
                                     <li
                                         onClick={() => {
                                             onCloseSearch();
                                             USER && postHistorySearch(
-                                                item.service_name,
+                                                item.name,
                                                 'SERVICE',
-                                                item.org_id,
-                                                item.service_id
+                                                item.organization_id,
+                                                item.origin_id
                                             )
                                         }}
                                         key={index} className={style.result_item_cnt}
                                     >
-                                        <SerProItem changeStyle={true} item={item} type="SERVICE" />
+                                        <ProductableItem productable={item} changeStyle />
                                     </li>
                                 ))
                             }
@@ -260,25 +248,25 @@ function Search(props: SearchProps) {
                     </div>
                 }
                 {
-                    (KEY_WORD !== "" && totalProduct > 0) &&
+                    (KEY_WORD !== "" && productData.totalItem > 0) &&
                     <div className={style.section_container}>
                         <span className={style.section_title}>Sản phẩm</span>
                         <ul className={style.result_list}>
                             {
-                                products.map((item: IProductPromo, index: number) => (
+                                productData.productable?.map((item: Productable, index: number) => (
                                     <li
                                         onClick={() => {
                                             onCloseSearch();
                                             USER && postHistorySearch(
-                                                item.product_name,
+                                                item.name,
                                                 'PRODUCT',
-                                                item.org_id,
-                                                item.product_id
+                                                item.organization_id,
+                                                item.origin_id
                                             )
                                         }}
                                         key={index} className={style.result_item_cnt}
                                     >
-                                        <SerProItem changeStyle={true} item={item} type="PRODUCT" />
+                                        <ProductableItem productable={item} changeStyle />
                                     </li>
                                 ))
                             }
