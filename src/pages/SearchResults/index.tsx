@@ -11,7 +11,9 @@ import TabProduct from "./TabProduct";
 import TabOrg from "./TabOrg";
 import { useDeviceMobile } from "hooks";
 // import TabServiceGroup from "./TabServiceGroup";
-import TabServiceProductable from "./TabServiceProductable";
+// import TabServiceProductable from "./TabServiceProductable";
+import TabService from "./TabService";
+import TabServiceGroup from "./TabServiceGroup";
 // import TabBranch from "./TabBranch";
 
 function SearchResults() {
@@ -43,10 +45,10 @@ function SearchResults() {
         }
     }
     //
-    // let tabService = <TabService keyword={keyword} />
-    // if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
-    let tabService = <TabServiceProductable keyword={keyword} />
-    if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
+    let tabService = <TabService keyword={keyword} />
+    if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
+    // let tabService = <TabServiceProductable keyword={keyword} />
+    // if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
     return (
         <>
             <Container>
