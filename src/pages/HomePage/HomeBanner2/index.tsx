@@ -142,7 +142,7 @@ function HomeBanner2() {
     };
     const banners2 = bannersHard(PLAT_FORM)
     const banners1 = banners.slice(0,1)
-    const bannersLast = banners.slice(2, banners.length)
+    const bannersLast = banners.slice(1, banners.length)
     const BANNERS = [...banners1,...banners2,...bannersLast]
 
     return (

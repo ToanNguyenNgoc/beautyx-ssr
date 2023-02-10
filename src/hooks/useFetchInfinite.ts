@@ -23,7 +23,8 @@ export function useFetchInfinite(
     const { data, error, mutate, isValidating, setSize, size } = useSWRInfinite(
         (index) =>
             `${API_URL}?page=${index + 1}${paramsURL}`,
-        fetcher
+        fetcher,
+        {revalidateOnFocus:false}
     );
     if (data) {
         totalItem = data[0]?.data?.context?.total ?? data[0]?.data?.total;

@@ -121,7 +121,32 @@
     font-weight: 500;
     color: var(--white);
 }
-
+/* popup qr code mini app */
+.footer-pop-child{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.footer-pop-child-title{
+    display: flex;
+    align-items: flex-end;
+}
+.footer-pop-child-title span{
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+}
+.footer-pop-child-title img{
+    width: 36px;
+    height: 36px;
+    margin-left: 6px;
+}
+.footer-pop-child-qr-code{
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    margin-top: 16px;
+}
 /* Mobile */
 @media only screen and (max-width: 769px) {
     .footer {

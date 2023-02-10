@@ -1,17 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./footer.css";
 import { Container } from "@mui/material";
 import slugify from "utils/formatUrlString";
-import scrollTop from "utils/scrollTop";
 import img, { paymentMethod, social } from "constants/img";
 import icon from "constants/icon";
 import { AppContext } from "context/AppProvider";
 import { phoneSupport } from "constants/index";
 import { formatPhoneNumber } from "utils";
+import { PopupNotification } from "components/Notification";
 
 function Footer() {
-    const url_map = `https://goo.gl/maps/dnGMKnfdeB91xCj7A`;
+    const url_map = `https://www.google.com/maps/@10.7968352,106.6920552,19.42z`;
     const { t } = useContext(AppContext);
+    const [openPopup, setOpenPopup] = useState({
+        open:false,
+        content:'',
+        child:<></>
+    })
     const data_footer = [
         {
             id: 1,
@@ -209,17 +214,18 @@ function Footer() {
             id: 1,
             img: icon.momo,
             type: "APP",
-            url: "bit.ly/myspamomo",
+            url: process.env.REACT_APP_DEEP_LINK_MOMO,
+            qrCode: img.qrCodeMomo
         },
         {
             id: 2,
             img: paymentMethod.tikiPay,
             type: "APP",
-            url: "https://ti.ki/beautyx12 ",
+            url: process.env.REACT_APP_DEEP_LINK_TIKI,
+            qrCode: img.qrCodeTiki
         },
     ];
     const gotoPolicy = (item: any) => {
-        scrollTop();
         switch (item.type) {
             case "NUMBER":
                 return window.open(`tel:${item.url}`, "_seft");
@@ -248,11 +254,17 @@ function Footer() {
                     "noopener,noreferrer"
                 );
             case "APP":
-                return window.open(
-                    `${item.url}`,
-                    "_blank",
-                    "noopener,noreferrer"
-                );
+                return setOpenPopup({
+                    open:true,
+                    content:'',
+                    child:<div className="footer-pop-child">
+                        <div className="footer-pop-child-title">
+                            <span>Trải nghiệm mini app trên ứng dụng</span>
+                            <img src={item.img} alt="" />
+                        </div>
+                        <img src={item.qrCode} alt="" className="footer-pop-child-qr-code" />
+                    </div>
+                })
             default:
                 break;
         }
@@ -269,6 +281,13 @@ function Footer() {
     // },[params.id, params.org])
     return (
         <div className="footer">
+            <PopupNotification
+                title="Quét mã QR"
+                open={openPopup.open}
+                setOpen={()=> setOpenPopup({...openPopup, open:false})}
+                content={openPopup.content}
+                children={openPopup.child}
+            />
             <Container>
                 <div className="footer-cnt">
                     <div className="footer-left">

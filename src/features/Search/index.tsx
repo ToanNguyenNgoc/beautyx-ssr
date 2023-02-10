@@ -93,7 +93,7 @@ function Search(props: SearchProps) {
     const onResult = () => {
         dispatch(onResetFilter())
         if (KEY_WORD_DE !== "") {
-            const { isHashtag, textReplace } = hashtag('@', KEY_WORD)
+            const { isHashtag, textReplace } = hashtag("@", KEY_WORD)
             if (isHashtag) {
                 history.push(`/cua-hang/${textReplace}`)
             } else {

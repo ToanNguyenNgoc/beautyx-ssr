@@ -1,5 +1,5 @@
-import { IServicePromo, Productable } from "interface"
-import { ParamOrg, ParamProduct, ParamService, ParamsProductable } from "params-query/param.interface"
+import { IBranchV3, IServicePromo, Productable } from "interface"
+import { ParamBranchV3, ParamOrg, ParamProduct, ParamService, ParamsProductable } from "params-query/param.interface"
 import { unique } from "utils"
 import { pick } from 'lodash'
 import { useFetchInfinite, useSwrInfinite } from "hooks"
@@ -80,6 +80,17 @@ export const useProductableService = (param: ParamsProductable, condition: boole
     const onLoadMoreService = onLoadMore
     const isLoad = isValidating
     return { services, onLoadMoreService, isLoad, totalService }
-
+}
+export const useBranches = (param: ParamBranchV3, condition: boolean) => {
+    const { isValidating, onLoadMore, resDataV2, totalItemV2 } = useFetchInfinite(
+        condition,
+        API_ROUTE_V.BRANCHES('v3'),
+        param
+    )
+    const branches: IBranchV3[] = resDataV2 ?? []
+    const totalBranch = totalItemV2
+    const onLoadMoreBranch = onLoadMore
+    const isLoadBranch = isValidating
+    return { branches, totalBranch, onLoadMoreBranch, isLoadBranch }
 }
 
