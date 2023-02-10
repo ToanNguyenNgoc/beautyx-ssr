@@ -7,7 +7,7 @@ import tracking from "api/trackApi";
 import { STATUS } from "redux/status";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "pages/HomePage/HomeDiscounts";
-import { OpenApp, PlashScreen, XButton } from "components/Layout";
+import { OpenApp, PlashScreen } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
@@ -46,10 +46,6 @@ export default function HomePage() {
                 </div>
                 <HomeDiscount />
                 <Container>
-                    <XButton
-                        onClick={test}
-                        title="Test"
-                    />
                     <HomeOrgDistance />
                     <HomeTopic />
                     <HomeProducts />
