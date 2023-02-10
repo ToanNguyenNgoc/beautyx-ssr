@@ -7,7 +7,7 @@ class Banners {
                   page: 1,
                   limit: 15,
                   'filter[platform]': 'MOMO',
-                  sort: '-priority|-created_at'
+                  'sort': '-priority|-created_at',
             }
             return axiosClient.get(url, { params })
       }
