@@ -36,7 +36,7 @@ export const pramsBranchV3:ParamBranchV3={
     "sort":"",
     "province_code":"",
     "district_code":"",
-    "is_demo":false
+    "is_demo":'false'
 }
 export const paramsDiscounts = {
     "append": "user_available_purchase_count",
@@ -154,7 +154,7 @@ export const paramsComment = {
 export const paramsProductable:ParamsProductable = {
     "limit": 15,
     "keyword": "",
-    "on_ecommerce": true,
+    "on_ecommerce": "true",
     "location": "",
     "sort": "",
     "type":"",

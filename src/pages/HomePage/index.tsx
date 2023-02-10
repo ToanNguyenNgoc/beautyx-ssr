@@ -7,8 +7,8 @@ import tracking from "api/trackApi";
 import { STATUS } from "redux/status";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "pages/HomePage/HomeDiscounts";
-import { OpenApp, PlashScreen } from "components/Layout";
-import { useDeviceMobile, useTags } from "hooks";
+import { OpenApp, PlashScreen, XButton } from "components/Layout";
+import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
 import HomeTags2 from "./HomeTags2";
@@ -28,9 +28,6 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
-
-    useTags();
-
     return (
         <>
             <div className={style.container}>
@@ -49,6 +46,10 @@ export default function HomePage() {
                 </div>
                 <HomeDiscount />
                 <Container>
+                    <XButton
+                        onClick={test}
+                        title="Test"
+                    />
                     <HomeOrgDistance />
                     <HomeTopic />
                     <HomeProducts />

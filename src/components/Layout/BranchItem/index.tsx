@@ -2,7 +2,7 @@ import icon from 'constants/icon';
 import img from 'constants/img';
 import { IBranchV3 } from 'interface';
 import { Link } from 'react-router-dom';
-import { clst, onErrorImg } from 'utils';
+import { clst, onErrorImg, formatDistanceKM } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { XButton } from '../XButton';
 import style from './branch-item.module.css'
@@ -12,7 +12,7 @@ export function BranchV3Item({ branch, changeStyle }: { branch: IBranchV3, chang
         <>
             <Link
                 to={{
-                    pathname: formatRouterLinkOrg(branch.organization_id)
+                    pathname: formatRouterLinkOrg(branch.subdomain ?? branch.organization_id)
                 }}
             >
                 <div className={changeStyle ? clst([style.container, style.container_ch]) : style.container}>
@@ -96,7 +96,7 @@ export function BranchV3Item({ branch, changeStyle }: { branch: IBranchV3, chang
                                     className={clst([style.org_branch_btn, style.org_map_btn])}
                                     icon={icon.pinMapRed}
                                     iconSize={12}
-                                    title={`${branch.distance}`}
+                                    title={`${formatDistanceKM(branch.distance)}`}
                                 />
                             }
                         </div>

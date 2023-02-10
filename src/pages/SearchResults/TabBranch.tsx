@@ -2,7 +2,7 @@ import { useBranches } from 'features/Search/hook';
 import { pramsBranchV3 } from 'params-query';
 import { ParamBranchV3 } from 'params-query/param.interface';
 import style from './search-result.module.css'
-import React, { useState } from 'react';
+import React from 'react';
 import { EmptyRes, XButton } from 'components/Layout';
 import { clst } from 'utils';
 import { IBranchV3 } from 'interface';
@@ -10,8 +10,6 @@ import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useDeviceMobile } from 'hooks';
 import { BranchV3Item } from 'components/Layout/BranchItem';
-import { Drawer } from '@mui/material';
-import icon from 'constants/icon';
 import { EventLocation, FilterLocation } from 'components/Filter';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
@@ -20,22 +18,23 @@ import { onChangeFilterBranch } from 'redux/filter-result';
 function TabBranch({ keyword }: { keyword: string }) {
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
-    const [openFilter, setOpenFilter] = useState(false)
     const { BRANCH_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
     const PARAMS_BRANCH: ParamBranchV3 = {
         ...pramsBranchV3,
         ...BRANCH_PR,
-        "limit": 10,
+        "limit": 15,
         "keyword": keyword,
+        "district_code":BRANCH_PR.district_code === 'cur' ? '':BRANCH_PR.district_code,
+        'province_code':BRANCH_PR.province_code === 'cur' ? '':BRANCH_PR.province_code
     }
     const { branches, totalBranch, onLoadMoreBranch } = useBranches(PARAMS_BRANCH, true)
     const onFilterLocation = (e: EventLocation) => {
         dispatch(onChangeFilterBranch({
             ...BRANCH_PR,
             "location": e.coords,
-            "sort": "distance"
-            // "province_code": e.province?.province_code ?? "cur",
-            // "district_code": e.district?.district_code ?? "cur"
+            "sort": "distance",
+            "province_code": e.province?.province_code ?? "cur",
+            "district_code": e.district?.district_code ?? "cur"
         }))
     }
     const onViewMore = () => {
@@ -55,7 +54,7 @@ function TabBranch({ keyword }: { keyword: string }) {
                     />
                 </div>
                 <div className={style.filter_left}>
-                    {
+                    {/* {
                         IS_MB ?
                             <>
                                 <XButton
@@ -67,7 +66,7 @@ function TabBranch({ keyword }: { keyword: string }) {
                                 <Drawer
                                     open={openFilter} onClose={() => setOpenFilter(false)} anchor="bottom"
                                 >
-                                    {/* <div className={style.filter_cnt_mt}>
+                                    <div className={style.filter_cnt_mt}>
                                         <FilterTags
                                             onChange={onChangeTag}
                                             value={ORG_PR["filter[tags]"] ?? ""}
@@ -82,12 +81,12 @@ function TabBranch({ keyword }: { keyword: string }) {
                                             min_price={ORG_PR["filter[min_price]"]}
                                             max_price={ORG_PR["filter[max_price]"]}
                                         />
-                                    </div> */}
+                                    </div>
                                 </Drawer>
                             </>
                             :
                             <>
-                                {/* <FilterTags
+                                <FilterTags
                                     onChange={onChangeTag}
                                     value={ORG_PR["filter[tags]"] ?? ""}
                                 />
@@ -100,9 +99,9 @@ function TabBranch({ keyword }: { keyword: string }) {
                                     onChangePrice={onChangePrice}
                                     min_price={ORG_PR["filter[min_price]"]}
                                     max_price={ORG_PR["filter[max_price]"]}
-                                /> */}
+                                />
                             </>
-                    }
+                    } */}
                 </div>
             </div>
             <div className={style.result_body}>

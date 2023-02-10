@@ -248,6 +248,15 @@
     font-size: 14px;
     line-height: 18px;
 }
+.location_result{
+    padding: 8px 0px;
+}
+.location_item{
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 16px;
+    padding-bottom: 8px;
+}
 
 @media only screen and (max-width: 1023px) {
     .container {
@@ -329,11 +338,4 @@
     .list_special_item {
         width: 1000%;
     }
-}
-
-
-/* custom css khai  */
-
-.section_recommend {
-    padding-top: 12px;
 }

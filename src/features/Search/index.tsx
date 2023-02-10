@@ -1,11 +1,11 @@
 import React, { useCallback, KeyboardEvent, useState } from "react"
 import { useDeviceMobile, useFetch, useProductable } from "hooks"
-import { onErrorImg, hashtag } from 'utils'
+import { hashtag } from 'utils'
 import { paramOrgs, paramsProductable } from "params-query"
 import style from "./search.module.css"
 import { Link, useHistory } from "react-router-dom"
 import { useOrgs } from "./hook"
-import { ProductableItem, XButton } from "components/Layout"
+import { ProductableItem, XButton, XImage } from "components/Layout"
 import { IOrganization } from "interface/organization"
 import icon from "constants/icon"
 import { debounce } from "lodash"
@@ -19,6 +19,7 @@ import IStore from "interface/IStore"
 import { usePostSearchHisMutation } from "redux-toolkit-query/hook-search-history"
 import { ParamsProductable } from "params-query/param.interface"
 import { Productable } from "interface"
+import SearchLocation from "./SearchLocation"
 
 interface SearchProps {
     key_work?: string,
@@ -69,8 +70,8 @@ function Search(props: SearchProps) {
         keyword: KEY_WORD_DE,
         limit: IS_MB ? 4 : 6,
     }
-    const { serviceData } = useProductable("1", params, true)
-    const { productData } = useProductable('2', params, true)
+    const { serviceData } = useProductable("1", params, KEY_WORD_DE !== '')
+    const { productData } = useProductable('2', params, KEY_WORD_DE !== '')
     const tabs = [
         { link: "dich-vu", total: serviceData.totalItem },
         { link: "cua-hang", total: totalOrg },
@@ -78,7 +79,7 @@ function Search(props: SearchProps) {
     ]
     const tabSort = tabs.sort((a, b) => b.total - a.total);
     const dispatch = useDispatch()
-    const onResult = () => {
+    const onResult = (tabName?: string, outKeyword?: string) => {
         dispatch(onResetFilter())
         if (KEY_WORD_DE !== "") {
             const { isHashtag, textReplace } = hashtag("@", KEY_WORD)
@@ -86,10 +87,10 @@ function Search(props: SearchProps) {
                 history.push(`/cua-hang/${textReplace}`)
             } else {
                 history.push({
-                    pathname: `/ket-qua-tim-kiem/${tabSort[0]?.link}`,
-                    search: `?keyword=${encodeURIComponent(KEY_WORD)}`,
+                    pathname: `/ket-qua-tim-kiem/${tabName ?? tabSort[0]?.link}`,
+                    search: `?keyword=${encodeURIComponent(outKeyword ?? KEY_WORD)}`,
                 })
-                if (USER) { postHistorySearch(KEY_WORD_DE, 'KEYWORD') }
+                if (USER) { postHistorySearch(outKeyword ?? KEY_WORD_DE, 'KEYWORD') }
             }
             onCloseSearchTimeOut && onCloseSearchTimeOut()
             onCloseSearchDialog && onCloseSearchDialog()
@@ -185,10 +186,9 @@ function Search(props: SearchProps) {
                                             key={item.id} to={{ pathname: formatRouterLinkOrg(item.subdomain) }}
                                         >
                                             <div className={style.org_item}>
-                                                <img
+                                                <XImage
                                                     src={item.image_url}
-                                                    onError={(e) => onErrorImg(e)}
-                                                    className={style.org_item_img} alt=""
+                                                    className={style.org_item_img}
                                                 />
                                                 <span className={style.org_item_name}>
                                                     {item.name}
@@ -201,6 +201,7 @@ function Search(props: SearchProps) {
                         </div>
                     </div>
                 }
+                {KEY_WORD !== "" && <SearchLocation keyword={KEY_WORD_DE} onResult={onResult} />}
                 {
                     (KEY_WORD !== "" && serviceData.totalItem > 0) &&
                     <div className={style.section_container}>
@@ -290,6 +291,7 @@ function Search(props: SearchProps) {
                                     keysRecommend.map((i: any, index: number) => (
                                         <li key={index} className={style.keyword_trend_item}>
                                             <Link
+                                                onClick={() => dispatch(onResetFilter())}
                                                 to={{
                                                     pathname: `/ket-qua-tim-kiem/dich-vu/`,
                                                     search: `keyword=${i._id}`
