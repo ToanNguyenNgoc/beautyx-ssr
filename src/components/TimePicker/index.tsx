@@ -26,19 +26,20 @@ function TimePicker(props: IProps) {
     // const { from_time_opening, to_time_opening } = time_works_today;
     const from_time_opening = time_works_today?.from_time_opening ?? ''
     const to_time_opening = time_works_today?.to_time_opening ?? ''
-    const timeOpen = from_time_opening.split(":");
-    const timeClose = to_time_opening.split(":");
+    // const from_time_opening = ''
+    // const to_time_opening = ''
+    const timeOpen = from_time_opening.split(":").filter(Boolean);
+    const timeClose = to_time_opening.split(":").filter(Boolean);
     const [t, setT] = useState();
-    // var rows = [];
     let timeOpens = dayjs()
-        .set("hour", parseInt(timeOpen[0]) ?? 8)
-        .set("minute", parseInt(timeOpen[1]) ?? 0)
+        .set("hour", timeOpen.length > 0 ? parseInt(timeOpen[0]) : 8)
+        .set("minute", timeOpen.length > 0 ? parseInt(timeOpen[1]) : 0)
         .set("second", 0)
         .subtract(30, "minute");
 
     let timeCloses = dayjs()
-        .set("hour", parseInt(timeClose[0]) ?? 21)
-        .set("minute", (parseInt(timeClose[1])) ?? 0)
+        .set("hour", timeOpen.length > 0 ? parseInt(timeClose[0]) : 21)
+        .set("minute", timeClose.length > 0 ? (parseInt(timeClose[1])) : 0)
         .set("second", 0);
 
     const arr: any = [];
