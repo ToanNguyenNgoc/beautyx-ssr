@@ -6,12 +6,15 @@ import { ICON } from "constants/icon2";
 import { Container } from "@mui/material";
 import { AppContext } from "context/AppProvider";
 import style from './search-result.module.css'
-// import TabOrg from "./TabOrg";
 import { useDeviceMobile } from "hooks";
-import TabServiceProductable from "./TabServiceProductable";
+// import TabServiceGroup from "./TabServiceGroup";
+// import TabServiceProductable from "./TabServiceProductable";
+// import TabService from "./TabService";
+// import TabServiceGroup from "./TabServiceGroup";
 import TabProductProductable from "./TabProductProductable";
 import TabBranch from "./TabBranch";
-
+import TabServiceProductable from "./TabServiceProductable";
+// import TabOrg from "./TabOrg";
 
 function SearchResults() {
     const { t } = useContext(AppContext)

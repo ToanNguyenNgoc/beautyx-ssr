@@ -28,6 +28,7 @@ export default function HomePage() {
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
+
     return (
         <>
             <div className={style.container}>

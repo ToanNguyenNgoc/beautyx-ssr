@@ -40,7 +40,7 @@ function HomeOrgDistance() {
         "filter[location]": LOCATION,
         "sort": ""
     }
-    const { data, isFetching } = useOrgsDistanceQuery(params)
+    const { data,isFetching  } = useOrgsDistanceQuery(params)
     const orgs: IOrganization[] = data ?? []
 
     const onViewMore = () => {

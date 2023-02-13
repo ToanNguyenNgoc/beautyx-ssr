@@ -1,15 +1,22 @@
 import API_3RD from 'api/3rd-api';
-import { XButton } from 'components/Layout';
+import { Input, XButton, XButtonFile } from 'components/Layout';
 import icon from 'constants/icon';
-import { useFetch, useFetchInfinite } from 'hooks';
+import { useFavorite, useFetch, useFetchInfinite, useSwr } from 'hooks';
 import { ITrend } from 'pages/Trends/trend.interface';
-import React from 'react';
 import { Link, useParams, useHistory } from 'react-router-dom';
-import { formatRouterLinkOrg, formatRouterLinkService } from 'utils/formatRouterLink/formatRouter';
+import { 
+    formatRouterLinkOrg, 
+    formatRouterLinkService 
+} from 'utils/formatRouterLink/formatRouter';
 import style from './trend-detail.module.css'
 import Skeleton from 'react-loading-skeleton';
 import { ITrendComment, ITrendCommentChild } from './interface';
-import { formatDateFromNow } from 'utils';
+import { formatDateFromNow, onErrorImg } from 'utils';
+import { IOrganization } from 'interface';
+import API_ROUTE from 'api/_api';
+import { useSelector } from 'react-redux';
+import IStore from 'interface/IStore';
+import { acceptImage } from 'utils/validateForm';
 
 function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
     const params = useParams()
@@ -20,7 +27,16 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
         `${API_3RD.API_NODE}/trends/${trend_id}`,
         { 'include': 'services|tiktok' }
     ).response?.context
-
+    const org: IOrganization = useSwr(
+        API_ROUTE.ORG(trend?.organization_id),
+        trend?.organization_id
+    ).response
+    const { onToggleFavorite, favoriteSt } = useFavorite({
+        org_id: org?.id,
+        type: 'ORG',
+        count: org?.favorites_count,
+        favorite: org?.is_favorite
+    })
     const { resData, totalItem, isValidating } = useFetchInfinite(
         trend_id,
         `${API_3RD.API_NODE}/tiktok/getCommentsByUrl`,
@@ -77,8 +93,11 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
                                 </div>
                             </div>
                             <XButton
-                                className={style.right_top_org_btn}
-                                title='Đang theo dõi'
+                                onClick={onToggleFavorite}
+                                className={
+                                    favoriteSt.is_favorite ? style.right_top_org_btn : style.org_btn_act
+                                }
+                                title={favoriteSt.is_favorite ? 'Đang theo dõi':'Theo dõi'}
                             />
                         </div>
                         <div className={style.right_top_content}>
@@ -118,9 +137,12 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
                                 <XButton
                                     iconSize={16}
                                     className={style.interactive_icon_btn}
-                                    icon={icon.heartBoldBlack}
+                                    onClick={onToggleFavorite}
+                                    icon={favoriteSt.is_favorite ? icon.heartBoldRed : icon.heartBoldBlack}
                                 />
-                                <span className={style.interactive_item_text}>{trend?.tiktok?.digg_count}</span>
+                                <span className={style.interactive_item_text}>
+                                    {trend?.tiktok?.digg_count + (favoriteSt.favorite_count ?? 0)}
+                                </span>
                             </div>
                             <div className={style.interactive_item}>
                                 <XButton
@@ -128,7 +150,9 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
                                     className={style.interactive_icon_btn}
                                     icon={icon.commentBoldBlack}
                                 />
-                                <span className={style.interactive_item_text}>{trend?.tiktok?.comment_count}</span>
+                                <span className={style.interactive_item_text}>
+                                    {trend?.tiktok?.comment_count}
+                                </span>
                             </div>
                             <div className={style.interactive_item}>
                                 <XButton
@@ -157,6 +181,7 @@ interface TrendsDetailCommentProps {
 
 const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
     const { comments } = props
+    const {USER} = useSelector((state:IStore) => state.USER)
     return (
         <>
             <div
@@ -172,9 +197,31 @@ const TrendsDetailComment = (props: TrendsDetailCommentProps) => {
                     }
                 </ul>
             </div>
-            {/* <div className={style.comment_input}>
-
-            </div> */}
+            <div className={style.comment_input}>
+                <div className={style.comment_user_avatar}>
+                    <img
+                        src={USER?.avatar ?? icon.userCircle}
+                        alt=""
+                        onError={(e) => onErrorImg(e)}
+                    />
+                </div>
+                <div className={style.comment_input_cnt}>
+                    <Input
+                        classNamePar={style.comment_input_par}
+                        className={style.comment_input_child}
+                        placeholder='Viết bình luận...'
+                    />
+                    <div className={style.comment_input_ctrl}>
+                    <XButtonFile
+                        className={style.comment_btn}
+                    />
+                    <XButton
+                        icon={icon.sendBlack}
+                        className={style.comment_btn}
+                    />
+                    </div>
+                </div>
+            </div>
         </>
     )
 }
@@ -203,7 +250,11 @@ const CommentItem = ({ comment }: { comment: ITrendComment }) => {
                             comment.children?.map((child: ITrendCommentChild, i: number) => (
                                 <li key={i} className={style.comment_item_child_item}>
                                     <div className={style.comment_user_avatar}>
-                                        <img src={child.user?.avatar ?? icon.userCircle} alt="" />
+                                        <img 
+                                            src={child.user?.avatar ?? icon.userCircle} 
+                                            alt="" 
+                                            onError={(e) => onErrorImg(e)}
+                                        />
                                     </div>
                                     <div className={style.comment_item_par_right}>
                                         <div

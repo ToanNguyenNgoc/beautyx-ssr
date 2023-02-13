@@ -2,14 +2,16 @@ import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import React, { useContext } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import HomeTitle from "../Components/HomeTitle";
 import style from "./style.module.css";
 import { Link } from "react-router-dom";
+import { onChangeFilterBranch, onResetFilter } from 'redux/filter-result'
 
 export default function HomeProvince() {
     const { t } = useContext(AppContext);
+    const dispatch = useDispatch()
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;
     return (
@@ -28,11 +30,15 @@ export default function HomeProvince() {
                     ?.slice(0, 6)
                     .map((item: IProvince, index: number) => (
                         <Link
-                            onClick={scrollTop}
+                            onClick={() => {
+                                dispatch(onResetFilter());
+                                dispatch(onChangeFilterBranch({province_code:item.province_code}))
+                                scrollTop()
+                            }}
                             key={index}
                             to={{
                                 pathname: "/ket-qua-tim-kiem/cua-hang",
-                                search: `?province=${item.province_code}`,
+                                search: `?keyword=${item.name}&province=${item.province_code}`,
                             }}
                             className={style.home_province_item}
                         >

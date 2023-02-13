@@ -6,7 +6,7 @@ import { ITrend } from "./trend.interface";
 import { Container } from "@mui/system";
 import style from "./trends.module.css";
 import dayjs from "dayjs";
-import locate from 'dayjs/locale/vi'
+// import locate from 'dayjs/locale/vi'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import icon from "constants/icon";
 import { useHistory } from "react-router-dom";
@@ -22,7 +22,10 @@ function Trends() {
     const { response } = useFetch(
         true,
         `${API_3RD.API_NODE}/trends`,
-        { 'include': 'services|tiktok' }
+        {
+            'limit': '20',
+            'include': 'services|tiktok'
+        }
     );
 
     const trends: ITrend[] = response?.context?.data ?? [];
@@ -96,7 +99,7 @@ const VideoItemThumb = (props: VideoItemThumbProps) => {
                     </div>
                     <div className={style.trend_item_head_name}>
                         <p className={style.org_name}>{item.organization_name}</p>
-                        <p className={style.create_at}>{dayjs(item.createdAt).locale(locate.name).fromNow()}</p>
+                        {/* <p className={style.create_at}>{dayjs(item.createdAt).locale(locate.name).fromNow()}</p> */}
                     </div>
                 </div>
                 <div className={style.trend_item_body}>
