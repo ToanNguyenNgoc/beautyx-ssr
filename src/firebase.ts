@@ -5,13 +5,13 @@ import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDpR6tnzXJaKhp_uHsHEpHVn9o9tMQeASU",
-    authDomain: "myspa-api-2197e.firebaseapp.com",
-    projectId: "myspa-api-2197e",
-    storageBucket: "myspa-api-2197e.appspot.com",
-    messagingSenderId: "91288679971",
-    appId: "1:91288679971:web:7b301c6698c90469396396",
-    measurementId: "G-SVW84J67ZJ"
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_SEND_ID,
+    appId: process.env.REACT_APP_APP_ID,
+    measurementId: process.env.REACT_APP_MEASUREMENTID
 };
 const app = initializeApp(firebaseConfig)
 const analytics = getAnalytics(app);
