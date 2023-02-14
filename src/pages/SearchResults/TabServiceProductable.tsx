@@ -1,13 +1,14 @@
-import { EventLocation, FilterLocation, FilterPrice } from "components/Filter";
+import { Drawer } from "@mui/material";
+import { EventLocation, FilterLocation, FilterPrice, FilterSort, FilterTagsSerPro } from "components/Filter";
 import { EmptyRes, ProductableItem, XButton } from "components/Layout";
 import { LoadGrid } from "components/LoadingSketion";
-import { useProductableService } from "features/Search/hook";
-import { useDeviceMobile } from "hooks";
+import icon from "constants/icon";
+import { useDeviceMobile, useProductable } from "hooks";
 import { Productable } from "interface";
 import IStore from "interface/IStore";
 import { paramsProductable } from "params-query";
 import { ParamsProductable } from "params-query/param.interface";
-import React from "react";
+import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { onChangeFilterServiceProductable } from "redux/filter-result";
@@ -17,23 +18,21 @@ import style from './search-result.module.css'
 function TabServiceProductable({ keyword }: { keyword: string }) {
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
+    const [openFilter, setOpenFilter] = useState(false)
     const { SERVICE_PRODUCTABLE_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
-    console.log(SERVICE_PRODUCTABLE_PR)
     const SERVICE_PARAM: ParamsProductable = {
         ...paramsProductable,
         'min_price': SERVICE_PRODUCTABLE_PR.min_price,
         'max_price': SERVICE_PRODUCTABLE_PR.max_price,
-        'keyword': keyword,
+        'keyword': SERVICE_PRODUCTABLE_PR.keyword === '' ? keyword : SERVICE_PRODUCTABLE_PR.keyword,
+        'discount_price': SERVICE_PRODUCTABLE_PR.discount_price,
         'location': SERVICE_PRODUCTABLE_PR.location,
-        'sort': SERVICE_PRODUCTABLE_PR.location !== '' ? 'distance' : ''
+        'sort': SERVICE_PRODUCTABLE_PR.sort
     }
-    const { services, totalService, onLoadMoreService } = useProductableService(
-        SERVICE_PARAM,
-        true
-    )
+    const { serviceData } = useProductable("1", SERVICE_PARAM, true)
     const onViewMore = () => {
-        if (services.length >= 15 && services.length < totalService) {
-            onLoadMoreService()
+        if (serviceData.productable?.length >= 15 && serviceData.productable.length < serviceData.totalItem) {
+            serviceData.onLoadMore()
         }
     }
     const onChangeFilterLocation = (e: EventLocation) => {
@@ -41,7 +40,8 @@ function TabServiceProductable({ keyword }: { keyword: string }) {
             ...SERVICE_PRODUCTABLE_PR,
             "location": e.coords,
             "province_code": e.province?.province_code ?? "cur",
-            "district_code": e.district?.district_code ?? "cur"
+            "district_code": e.district?.district_code ?? "cur",
+            "sort": "location"
         }))
     }
     const onChangePrice = (e: any) => {
@@ -51,10 +51,23 @@ function TabServiceProductable({ keyword }: { keyword: string }) {
             max_price: e.max_price
         }))
     }
+    const onChangeSort = (query: string) => {
+        dispatch(onChangeFilterServiceProductable({
+            ...SERVICE_PRODUCTABLE_PR,
+            sort: query,
+            discount_price: query === '-discount_percent' ? true : ''
+        }))
+    }
+    const onChangeTag = (value: string) => {
+        dispatch(onChangeFilterServiceProductable({
+            ...SERVICE_PRODUCTABLE_PR,
+            'keyword': value
+        }))
+    }
+
     return (
         <>
             <div className={style.filter_container}>
-                {/* <FilterTagsSerPro type='SERVICE' value={keyword} /> */}
                 <div className={style.filter_right}>
                     <FilterLocation
                         onChange={onChangeFilterLocation}
@@ -67,7 +80,7 @@ function TabServiceProductable({ keyword }: { keyword: string }) {
                     {
                         IS_MB ?
                             <>
-                                {/* <XButton
+                                <XButton
                                     icon={icon.settingsSliders}
                                     title="Bộ lọc"
                                     className={style.filter_btn}
@@ -75,26 +88,33 @@ function TabServiceProductable({ keyword }: { keyword: string }) {
                                 />
                                 <Drawer open={openFilter} onClose={() => setOpenFilter(false)} anchor="bottom" >
                                     <div className={style.filter_cnt_mt}>
+                                        <FilterTagsSerPro
+                                            originKey={keyword}
+                                            value={SERVICE_PRODUCTABLE_PR.keyword}
+                                            type='SERVICE'
+                                            onChange={onChangeTag}
+                                        />
                                         <FilterSort
                                             type="SERVICE"
                                             onChange={onChangeSort}
-                                            value={SERVICE_PR.sort}
+                                            value={SERVICE_PRODUCTABLE_PR.sort}
                                         />
                                         <FilterPrice
                                             onChangePrice={onChangePrice}
-                                            min_price={SERVICE_PR["filter[min_price]"]}
-                                            max_price={SERVICE_PR["filter[max_price]"]}
+                                            onCloseDrawer={() => setOpenFilter(false)}
+                                            min_price={SERVICE_PRODUCTABLE_PR.min_price}
+                                            max_price={SERVICE_PRODUCTABLE_PR.max_price}
                                         />
                                     </div>
-                                </Drawer> */}
+                                </Drawer>
                             </>
                             :
                             <>
-                                {/* <FilterSort
+                                <FilterSort
                                     type="SERVICE"
                                     onChange={onChangeSort}
-                                    value={SERVICE_PR.sort}
-                                /> */}
+                                    value={SERVICE_PRODUCTABLE_PR.sort}
+                                />
                                 <FilterPrice
                                     onChangePrice={onChangePrice}
                                     min_price={SERVICE_PRODUCTABLE_PR.min_price}
@@ -105,9 +125,9 @@ function TabServiceProductable({ keyword }: { keyword: string }) {
                 </div>
             </div>
             <div className={style.result_body}>
-                {totalService === 0 && <EmptyRes title="Không có dịch vụ phù hợp !" />}
+                {serviceData.totalItem === 0 && <EmptyRes title="Không có dịch vụ phù hợp !" />}
                 <InfiniteScroll
-                    dataLength={services.length}
+                    dataLength={serviceData.productable.length}
                     hasMore={true}
                     loader={<></>}
                     next={onViewMore}
@@ -116,14 +136,14 @@ function TabServiceProductable({ keyword }: { keyword: string }) {
                         className={clst([style.result_list, style.result_list_service])}
                     >
                         {
-                            services.map((item: Productable) => (
+                            serviceData.productable.map((item: Productable) => (
                                 <li key={item.id} className={style.result_list_item}>
                                     <ProductableItem productable={item} changeStyle={IS_MB} />
                                 </li>
                             ))
                         }
                     </ul>
-                    {services.length < totalService && <>
+                    {serviceData.productable.length < serviceData.totalItem && <>
                         <>
                             <LoadGrid grid={IS_MB ? 1 : 5} item_count={10} />
                             <div className={style.load_bottom}>

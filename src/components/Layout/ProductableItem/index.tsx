@@ -1,8 +1,8 @@
+/* eslint-disable eqeqeq */
 import icon from "constants/icon";
 import { Productable } from "interface";
-import React from "react";
 import { Link } from "react-router-dom";
-import {  formatDistanceKM, onErrorImg } from "utils";
+import { formatDistanceKM, onErrorImg } from "utils";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
 import style from "./productable.module.css";
 import {
@@ -29,24 +29,24 @@ export function ProductableItem(props: ProductableItemProps) {
         productable?.discount_ecommerce_price
     );
     const percent = 100 - Math.ceil((special_price / productable?.price) * 100);
-    const onItemClick = () => {};
-    const LINK_DETAIL = formatRouterLinkService(
+    let LINK_DETAIL = formatRouterLinkService(
         productable?.origin_id,
         productable?.organization_id,
         productable?.name
     );
-    if (productable?.type === 2)
-        formatRouterLinkProduct(
+    if (productable?.type == 2)
+        LINK_DETAIL = formatRouterLinkProduct(
             productable?.origin_id,
             productable?.organization_id,
             productable?.name
         );
-    if (productable?.type === 4)
-        formatRouterLinkCombo(
+    if (productable?.type == 4)
+        LINK_DETAIL = formatRouterLinkCombo(
             productable?.origin_id,
             productable?.organization_id,
             productable?.name
         );
+    const onItemClick = () => { };
     return (
         <Link to={{ pathname: LINK_DETAIL }} onClick={onItemClick}>
             <div
@@ -72,7 +72,7 @@ export function ProductableItem(props: ProductableItemProps) {
                         style={changeStyle ? { borderRadius: "8px" } : {}}
                         className={style.item_img}
                         onError={(e) => onErrorImg(e)}
-                        src={image_url}
+                        src={image_url ?? org.image_url}
                         alt=""
                     />
                     {!changeStyle && (

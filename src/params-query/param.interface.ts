@@ -13,6 +13,16 @@ export interface ParamOrg {
     "sort"?: string,
     "include"?: string
 }
+export interface ParamComment {
+    "page"?: number | string,
+    "limit"?: number | string,
+    "filter[commentable_type]": "ORGANIZATION" | "SERVICE" | "PRODUCT" | "REPLY_COMMENT",
+    "filter[commentable_id]": number | string,
+    "filter[organization_id]"?: number | string,
+    "include"?: string,
+    "sort"?: string,
+    "append"?: string
+}
 export interface ParamBranchV3 {
     "page"?: number | string,
     "limit"?: number | string,
@@ -22,7 +32,7 @@ export interface ParamBranchV3 {
     "sort"?: string,
     "province_code"?: number | string,
     "district_code"?: number | string,
-    "is_demo"?: boolean | ''
+    "is_demo"?: boolean | '' | 'true' | 'false'
 }
 export interface ParamDiscounts {
     "page"?: number,
@@ -77,7 +87,7 @@ export interface ParamOrder {
 export interface ParamsProductable {
     "limit"?: number | string,
     "keyword"?: string,
-    "on_ecommerce"?: "" | boolean,
+    "on_ecommerce"?: "" | boolean | "true" | "false",
     "location"?: string,
     "sort"?: "distance|random" | "distance" | "random" | "",
     "type"?: "" | "1" | "2" | "3" | "4",  //SERVICE:1|PRODUCT:2|PREPAY CARD:3|TREATMENT COMBO:4

@@ -7,15 +7,14 @@ import {
     useDeviceMobile,
     useElementOnScreen,
     useFetchInfinite,
-    useSwrInfinite,
 } from "hooks";
 import { slugify } from "utils";
 import { Container } from "@mui/system";
-import { paramsProductable, paramsServices } from "params-query";
-import { ParamService, ParamsProductable } from "params-query/param.interface";
-import API_ROUTE, { API_ROUTE_V } from "api/_api";
-import { IServicePromo, Productable } from "interface";
-import { ProductableItem, SerProItem, XButton } from "components/Layout";
+import { paramsProductable } from "params-query";
+import { ParamsProductable } from "params-query/param.interface";
+import { API_ROUTE_V } from "api/_api";
+import { Productable } from "interface";
+import { ProductableItem, XButton } from "components/Layout";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { LoadGrid } from "components/LoadingSketion";
 import icon from "constants/icon";
@@ -30,23 +29,6 @@ function DealBanner() {
     useEffect(() => {
         if (!deal) history.replace("/error");
     }, []);
-    // const param: ParamService = {
-    //     ...paramsServices,
-    //     'limit': 18,
-    //     'filter[special_price]': deal?.special_price ?? '',
-    //     'filter[keyword]': deal?.keyword ?? '',
-    //     'filter[is_momo_ecommerce_enable]': true,
-    //     'filter[discount_percent]': deal?.percent ?? '',
-    //     'filter[min_price]': deal?.min_price ?? '',
-    //     'filter[max_price]': deal?.max_price ?? '',
-    //     'filter[location]': LOCATION
-    // }
-    // const { resData, totalItem, onLoadMore } = useSwrInfinite(
-    //     deal,
-    //     API_ROUTE.SERVICES,
-    //     param
-    // )
-    // const onMore = () => { if (resData.length < totalItem) onLoadMore() }
     const param: ParamsProductable = {
         ...paramsProductable,
         type: "1",
@@ -101,27 +83,6 @@ function DealBanner() {
                             alt=""
                         />
                     </div>
-                    {/* <InfiniteScroll
-                        dataLength={resData.length}
-                        hasMore={true}
-                        loader={<></>}
-                        next={onMore}
-                    >
-                        <ul className={style.list_container}>
-                            {resData?.map(
-                                (item: IServicePromo, index: number) => (
-                                    <SerProItem
-                                        key={index}
-                                        item={item}
-                                        type="SERVICE"
-                                    />
-                                )
-                            )}
-                        </ul>
-                        {resData.length < totalItem && (
-                            <LoadGrid item_count={12} grid={IS_MB ? 2 : 6} />
-                        )}
-                    </InfiniteScroll> */}
                     <InfiniteScroll
                         dataLength={resDataV2.length}
                         hasMore={true}

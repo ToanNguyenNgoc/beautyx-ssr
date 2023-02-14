@@ -10,8 +10,9 @@ export function useSwr(
     let result
     let response
     let responseArray = []
-    let paramsURL = "";
+    let paramsURL = ""
     let initData
+    let totalItem = 0
     if (params) {
         paramsURL = `?${new URLSearchParams(pickBy(params, identity)).toString()}`
     }
@@ -27,6 +28,7 @@ export function useSwr(
     if (data) {
         response = data.data?.context ?? data
         responseArray = data.data?.context.data
+        totalItem = data?.data.context?.total
         result = data
     }
     return {
@@ -36,6 +38,7 @@ export function useSwr(
         isValidating,
         mutate,
         initData,
-        error
+        error,
+        totalItem
     }
 }

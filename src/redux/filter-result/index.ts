@@ -4,10 +4,11 @@ import { ParamOrg, ParamService, ParamProduct, ParamBranchV3, ParamsProductable 
 export interface IFilterResult {
     prev_param: string,
     SERVICE_PR: ParamService,
-    SERVICE_PRODUCTABLE_PR:ParamsProductable,
+    SERVICE_PRODUCTABLE_PR: ParamsProductable,
+    PRODUCT_PRODUCTABLE_PR: ParamsProductable,
     PRODUCT_PR: ParamProduct,
     ORG_PR: ParamOrg,
-    BRANCH_PR:ParamBranchV3
+    BRANCH_PR: ParamBranchV3
 }
 const initialState: IFilterResult = {
     prev_param: "",
@@ -20,13 +21,23 @@ const initialState: IFilterResult = {
         "filter[max_price]": "",
         "sort": ""
     },
-    SERVICE_PRODUCTABLE_PR:{
-       "keyword":"",
-       "min_price":1000,
-       "max_price":"",
-       "location":"",
-       "district_code":"",
-       "province_code":""
+    SERVICE_PRODUCTABLE_PR: {
+        "keyword": "",
+        "min_price": 1000,
+        "max_price": "",
+        "location": "",
+        "district_code": "",
+        "province_code": "",
+        "discount_price": ""
+    },
+    PRODUCT_PRODUCTABLE_PR: {
+        "keyword": "",
+        "min_price": 1000,
+        "max_price": "",
+        "location": "",
+        "district_code": "",
+        "province_code": "",
+        "discount_price": ""
     },
     PRODUCT_PR: {
         "filter[location]": "",
@@ -47,11 +58,11 @@ const initialState: IFilterResult = {
         "sort": "",
         "include": "favorites_count|favorites|branches"
     },
-    BRANCH_PR:{
-        "location":"",
-        "district_code":"",
-        "province_code":"",
-        "sort":"",
+    BRANCH_PR: {
+        "location": "",
+        "district_code": "",
+        "province_code": "",
+        "sort": "",
     }
 }
 const FilterResultSlice = createSlice({
@@ -64,8 +75,11 @@ const FilterResultSlice = createSlice({
         onChangeFilterService: (state, action) => {
             state.SERVICE_PR = { ...state.SERVICE_PR, ...action.payload }
         },
-        onChangeFilterServiceProductable:(state, action)=>{
-            state.SERVICE_PRODUCTABLE_PR = {...state.SERVICE_PRODUCTABLE_PR,...action.payload}
+        onChangeFilterServiceProductable: (state, action) => {
+            state.SERVICE_PRODUCTABLE_PR = { ...state.SERVICE_PRODUCTABLE_PR, ...action.payload }
+        },
+        onChangeFilterProductProductable: (state, action) => {
+            state.PRODUCT_PRODUCTABLE_PR = { ...state.PRODUCT_PRODUCTABLE_PR, ...action.payload }
         },
         onChangeFilterProduct: (state, action) => {
             state.PRODUCT_PR = { ...state.PRODUCT_PR, ...action.payload }
@@ -73,13 +87,14 @@ const FilterResultSlice = createSlice({
         onChangeFilterOrg: (state, action) => {
             state.ORG_PR = { ...state.ORG_PR, ...action.payload }
         },
-        onChangeFilterBranch:(state, action)=>{
-            state.BRANCH_PR = {...state.BRANCH_PR, ...action.payload}
+        onChangeFilterBranch: (state, action) => {
+            state.BRANCH_PR = { ...state.BRANCH_PR, ...action.payload }
         },
         onResetFilter: (state) => {
             state.SERVICE_PR = initialState.SERVICE_PR
             state.PRODUCT_PR = initialState.PRODUCT_PR
             state.SERVICE_PRODUCTABLE_PR = initialState.SERVICE_PRODUCTABLE_PR
+            state.PRODUCT_PRODUCTABLE_PR = initialState.PRODUCT_PRODUCTABLE_PR
             state.ORG_PR = initialState.ORG_PR
             state.BRANCH_PR = initialState.BRANCH_PR
         },
@@ -102,6 +117,7 @@ export const {
     onChangeFilterOrg,
     onChangeFilterProduct,
     onChangeFilterBranch,
-    onChangeFilterServiceProductable
+    onChangeFilterServiceProductable,
+    onChangeFilterProductProductable
 } = actions
 export default reducer

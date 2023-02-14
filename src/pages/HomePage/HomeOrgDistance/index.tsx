@@ -40,7 +40,7 @@ function HomeOrgDistance() {
         "filter[location]": LOCATION,
         "sort": ""
     }
-    const { data,isFetching  } = useOrgsDistanceQuery(params)
+    const { data, isFetching } = useOrgsDistanceQuery(params)
     const orgs: IOrganization[] = data ?? []
 
     const onViewMore = () => {
@@ -63,7 +63,7 @@ function HomeOrgDistance() {
         <div className={style.container}>
             <HomeTitle
                 onClick={onViewMore}
-                url={`/ket-qua-tim-kiem/cua-hang`}
+                url={`/ket-qua-tim-kiem/cua-hang?keyword=${ORG_PR['filter[tags]']}`}
                 title={t('Home.near_you')} seemore={t('detail_item.see_more') + '>'}
             />
             <div className={style.org_filter_cnt}>

@@ -11,7 +11,7 @@ import {
 } from "react-router-dom";
 import HeadOrg from "./components/HeadOrg";
 import OrgDetail from "./components/OrgDetail";
-import { OpenApp, Seo } from 'components/Layout'
+import { BackTopButton, OpenApp, Seo } from 'components/Layout'
 import { useSwr, useDeviceMobile } from 'hooks'
 import { IOrganization, IOrgMobaGalleries } from 'interface'
 import { AppContext } from "context/AppProvider";
@@ -117,6 +117,7 @@ function MerchantDetail() {
         </>
       )}
       {org && <OpenApp type="org" org_id={org.id} />}
+      <BackTopButton/>
     </div>
   );
 }

@@ -2,12 +2,12 @@ import { Container } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { onResetFilter } from "redux/filter-result";
+import { onChangeFilterBranch, onResetFilter } from "redux/filter-result";
 import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import { useDeviceMobile, useSearchKeyword } from "hooks";
-import {  Input, XButton } from "components/Layout";
+import { BackTopButton, Input, XButton } from "components/Layout";
 import icon from "constants/icon";
 import style from './list-province.module.css'
 
@@ -22,9 +22,10 @@ function Provinces() {
     const gotoResult = (province: IProvince) => {
         history.push({
             pathname: "/ket-qua-tim-kiem/cua-hang",
-            search: `?province=${province.province_code}`,
+            search: `?keyword=${province.name}&province=${province.province_code}`,
         });
         dispatch(onResetFilter())
+        dispatch(onChangeFilterBranch({ province_code: province.province_code }))
         scrollTop();
     };
     const provinces = useSearchKeyword(value, provinces_org)
@@ -76,6 +77,7 @@ function Provinces() {
                     </ul>
                 </div>
             </Container>
+            <BackTopButton/>
         </>
     );
 }

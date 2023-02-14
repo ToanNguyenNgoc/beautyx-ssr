@@ -6,15 +6,16 @@ import { ICON } from "constants/icon2";
 import { Container } from "@mui/material";
 import { AppContext } from "context/AppProvider";
 import style from './search-result.module.css'
-// import TabService from "./TabService";
-import TabProduct from "./TabProduct";
-import TabOrg from "./TabOrg";
 import { useDeviceMobile } from "hooks";
 // import TabServiceGroup from "./TabServiceGroup";
 // import TabServiceProductable from "./TabServiceProductable";
-import TabService from "./TabService";
-import TabServiceGroup from "./TabServiceGroup";
-// import TabBranch from "./TabBranch";
+// import TabService from "./TabService";
+// import TabServiceGroup from "./TabServiceGroup";
+import TabProductProductable from "./TabProductProductable";
+import TabBranch from "./TabBranch";
+import TabServiceProductable from "./TabServiceProductable";
+import { BackTopButton } from "components/Layout";
+// import TabOrg from "./TabOrg";
 
 function SearchResults() {
     const { t } = useContext(AppContext)
@@ -45,10 +46,10 @@ function SearchResults() {
         }
     }
     //
-    let tabService = <TabService keyword={keyword} />
-    if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
-    // let tabService = <TabServiceProductable keyword={keyword} />
-    // if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
+    // let tabService = <TabService keyword={keyword} />
+    // if (IS_MB) tabService = <TabServiceGroup keyword={keyword} />
+    let tabService = <TabServiceProductable keyword={keyword} />
+    if (IS_MB) tabService = <TabServiceProductable keyword={keyword} />
     return (
         <>
             <Container>
@@ -78,12 +79,13 @@ function SearchResults() {
                     </div>
                     <div className={style.right_cnt}>
                         {tab === "dich-vu" && <>{tabService}</>}
-                        {tab === "san-pham" && <TabProduct keyword={keyword} />}
-                        {tab === "cua-hang" && <TabOrg keyword={keyword} />}
-                        {/* {tab === "cua-hang" && <TabBranch keyword={keyword} />} */}
+                        {tab === "san-pham" && <TabProductProductable keyword={keyword} />}
+                        {/* {tab === "cua-hang" && <TabOrg keyword={keyword} />} */}
+                        {tab === "cua-hang" && <TabBranch keyword={keyword} />}
                     </div>
                 </div>
             </Container>
+            <BackTopButton/>
         </>
     );
 }

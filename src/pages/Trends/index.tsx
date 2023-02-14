@@ -22,7 +22,10 @@ function Trends() {
     const { response } = useFetch(
         true,
         `${API_3RD.API_NODE}/trends`,
-        { 'include': 'services|tiktok' }
+        {
+            'limit': '20',
+            'include': 'services|tiktok'
+        }
     );
 
     const trends: ITrend[] = response?.context?.data ?? [];

@@ -1,5 +1,5 @@
-import { IBranchV3, IServicePromo, Productable } from "interface"
-import { ParamBranchV3, ParamOrg, ParamProduct, ParamService, ParamsProductable } from "params-query/param.interface"
+import { IBranchV3, IServicePromo } from "interface"
+import { ParamBranchV3, ParamOrg, ParamProduct, ParamService } from "params-query/param.interface"
 import { unique } from "utils"
 import { pick } from 'lodash'
 import { useFetchInfinite, useSwrInfinite } from "hooks"
@@ -67,19 +67,6 @@ export const useServicesGroup = (
     const onLoadMoreService = onLoadMore
     const isLoadSer = isValidating
     return { services, totalService, onLoadMoreService, isLoadSer, servicesGroupByOrg }
-}
-
-export const useProductableService = (param: ParamsProductable, condition: boolean) => {
-    const { resDataV2, totalItemV2, isValidating, onLoadMore } = useFetchInfinite(
-        condition,
-        API_ROUTE_V.PRODUCTABLE('v3'),
-        { ...param, type: '1' }
-    )
-    const services: Productable[] = resDataV2
-    const totalService = totalItemV2
-    const onLoadMoreService = onLoadMore
-    const isLoad = isValidating
-    return { services, onLoadMoreService, isLoad, totalService }
 }
 export const useBranches = (param: ParamBranchV3, condition: boolean) => {
     const { isValidating, onLoadMore, resDataV2, totalItemV2 } = useFetchInfinite(
