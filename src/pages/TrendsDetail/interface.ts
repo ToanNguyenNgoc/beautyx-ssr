@@ -24,7 +24,8 @@ export interface ITrendComment {
         avatar: string,
         fullname: string
     },
-    children: ITrendCommentChild[]
+    children: ITrendCommentChild[],
+    media_url:string[]
 }
 
 export interface ITrendItem {

@@ -8,7 +8,8 @@ interface XButtonFileProps {
     accept?: 'image/png, image/gif, image/jpeg',
     icon?: string,
     iconSize?: number,
-    className?: string
+    className?: string,
+    multiple?:boolean
 }
 
 export function XButtonFile(props: XButtonFileProps) {
@@ -24,6 +25,7 @@ export function XButtonFile(props: XButtonFileProps) {
                 name="file_custom"
                 accept={accept ?? acceptImage}
                 onChange={handleChange}
+                multiple={props.multiple ?? false}
             />
             <label
                 htmlFor="file_custom"

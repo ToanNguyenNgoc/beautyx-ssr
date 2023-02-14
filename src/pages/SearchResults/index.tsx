@@ -14,6 +14,7 @@ import { useDeviceMobile } from "hooks";
 import TabProductProductable from "./TabProductProductable";
 import TabBranch from "./TabBranch";
 import TabServiceProductable from "./TabServiceProductable";
+import { BackTopButton } from "components/Layout";
 // import TabOrg from "./TabOrg";
 
 function SearchResults() {
@@ -84,6 +85,7 @@ function SearchResults() {
                     </div>
                 </div>
             </Container>
+            <BackTopButton/>
         </>
     );
 }

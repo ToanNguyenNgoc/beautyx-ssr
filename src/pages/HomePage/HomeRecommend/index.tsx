@@ -76,7 +76,7 @@ const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[]
         "keyword": servicesNameOrders.length > 0 ? servicesNameOrders[0] : 'Gội đầu',
         "limit": 30,
         "location": LOCATION,
-        "sort": "distance"
+        "sort": LOCATION ? "distance" : ''
     }
     const { resDataV2, totalItemV2, onLoadMore, isValidating } = useFetchInfinite(
         true,
@@ -130,7 +130,7 @@ const TabRecommendKey = ({ tab }: any) => {
         "keyword": tab?.title,
         "limit": 30,
         "location": LOCATION,
-        "sort": "distance"
+        "sort": LOCATION ? "distance" : ''
     }
     const { resDataV2, totalItemV2, onLoadMore, isValidating } = useFetchInfinite(
         true,

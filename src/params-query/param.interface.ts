@@ -13,6 +13,16 @@ export interface ParamOrg {
     "sort"?: string,
     "include"?: string
 }
+export interface ParamComment {
+    "page"?: number | string,
+    "limit"?: number | string,
+    "filter[commentable_type]": "ORGANIZATION" | "SERVICE" | "PRODUCT" | "REPLY_COMMENT",
+    "filter[commentable_id]": number | string,
+    "filter[organization_id]"?: number | string,
+    "include"?: string,
+    "sort"?: string,
+    "append"?: string
+}
 export interface ParamBranchV3 {
     "page"?: number | string,
     "limit"?: number | string,

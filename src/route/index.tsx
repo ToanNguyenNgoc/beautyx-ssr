@@ -35,7 +35,6 @@ import { useSelector } from "react-redux";
 import IStore from "interface/IStore";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import RefreshToken from 'features/RefreshToken'
-import { BackTopButton } from "components/Layout";
 import CateTree from "pages/CateTree";
 
 //community page
@@ -318,7 +317,6 @@ function RouterConfig() {
                     <Redirect exact from="*" to="error" />
                 </Switch>
                 <ExtraFlatForm />
-                <BackTopButton />
                 <AssistantBtn />
                 <Footer />
                 <Bottom />

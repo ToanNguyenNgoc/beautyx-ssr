@@ -7,7 +7,7 @@ import {
     FilterPrice,
     FilterSort,
 } from "components/Filter";
-import { ProductableItem, XButton } from "components/Layout";
+import { BackTopButton, ProductableItem, XButton } from "components/Layout";
 import { LoadGrid } from "components/LoadingSketion";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
@@ -349,6 +349,7 @@ function HomeCateResult() {
                     </div>
                 </div>
             </Container>
+            <BackTopButton/>
         </>
     );
 }

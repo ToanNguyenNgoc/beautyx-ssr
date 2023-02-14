@@ -7,7 +7,7 @@ import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { IDiscountPar, IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
-import { BeautyxCare, OpenApp, SerProItem, ShareSocial, XButton } from 'components/Layout';
+import { BackTopButton, BeautyxCare, OpenApp, SerProItem, ShareSocial, XButton } from 'components/Layout';
 import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
 import Slider from 'react-slick';
@@ -294,6 +294,7 @@ function SerProCoDetail() {
                     item_id={DETAIL.id}
                     org_id={org?.id}
                 />
+                <BackTopButton/>
             </>
             :
             <LoadDetail />
