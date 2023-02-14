@@ -130,6 +130,10 @@ function RouterConfig() {
             component: <HomePage />,
         },
         {
+            path: "/auth/zalo",
+            component: <HomePage />,
+        },
+        {
             path: `/otp`,
             component: <Otp />,
         },
