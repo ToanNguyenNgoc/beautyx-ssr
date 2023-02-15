@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import HomeOrgDistance from "./HomeOrgDistance";
 import { useSelector } from "react-redux";
 import tracking from "api/trackApi";
@@ -21,6 +21,7 @@ import HomeCate from "./HomeCate";
 import HomeRecommend from "./HomeRecommend";
 import HomeProvince from "./HomeProvince";
 import style from "./home.module.css";
+import HomeCurrentLocation from "./HomeCurrentLocation";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -34,7 +35,10 @@ export default function HomePage() {
             <div className={style.container}>
                 <div className="home_container_par">
                     <Container>
-                        <HomeCate />
+                        <div className={style.home_cate_head}>
+                            <HomeCate />
+                            {!IS_MB && <HomeCurrentLocation />}
+                        </div>
                         {banner_status !== STATUS.SUCCESS ? (
                             <>{IS_MB ? <PlashScreen /> : <LoadHomeBanner />}</>
                         ) : (

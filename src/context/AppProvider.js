@@ -10,7 +10,7 @@ import { useAppointment, useOrderService } from "hooks"
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
-    // const [geo, setGeo] = useState();
+    const [geo, setGeo] = useState();
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const token = localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')
@@ -25,9 +25,11 @@ export default function AppProvider({ children }) {
                 lat: res.coords.latitude,
                 long: res.coords.longitude
             }
+            setGeo(user_location)
             sessionStorage.setItem('USER_LOCATION', JSON.stringify(user_location));
         } catch (error) {
             console.log(error)
+            setGeo(null)
         }
     }
     useEffect(() => {
@@ -45,7 +47,7 @@ export default function AppProvider({ children }) {
         t,
         language,
         setLanguage,
-        // geo,
+        geo,
         serviceCate,
         appointment,
         appointment_today,
