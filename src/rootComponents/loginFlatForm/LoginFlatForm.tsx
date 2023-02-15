@@ -11,8 +11,6 @@ import { pickBy, identity } from "lodash";
 import MOMO from '../../api/_momoImport';
 import momoApi, { IUserConsentsData } from "../../api/momoApi";
 import { useHistory } from "react-router-dom";
-// import momoAuthApi from '../../api/_momoAuthApi';
-// import { AnyAaaaRecord } from 'dns';
 
 function LoginFlatForm(props: any) {
     const dispatch = useDispatch();
@@ -150,11 +148,6 @@ function LoginFlatForm(props: any) {
                     } else {
                         onLoginFlatFormMomo();
                     }
-                    //
-                    // onLoginFlatFormMomo();
-                    // if (params?.requestId) {
-                    //     history.replace(`/thanh-toan-momo/${params.requestId}`)
-                    // }
                     break;
                 case FLAT_FORM_TYPE.TIKI:
                     onLoginFlatFormTiki();
