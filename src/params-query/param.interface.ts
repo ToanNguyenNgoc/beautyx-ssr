@@ -101,5 +101,6 @@ export interface ParamsProductable {
     "discount_min_price_ecommerce"?: "" | number,
     "discount_max_price_ecommerce"?: "" | number,
     "province_code"?: string | number,
-    "district_code"?: string | number
+    "district_code"?: string | number,
+    "is_demo"?:boolean|'false'|'true'
 }
