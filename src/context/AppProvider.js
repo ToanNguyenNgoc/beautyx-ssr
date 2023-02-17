@@ -4,13 +4,19 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
-import { getPosition } from "api/authLocation";
+import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useOrderService } from "hooks"
 
 export const AppContext = createContext();
 export default function AppProvider({ children }) {
     const { t } = useTranslation();
-    const [geo, setGeo] = useState();
+    let lat; let long
+    const location = AUTH_LOCATION()
+    if (location) {
+        lat = location.split(',')[0]
+        long = location.split(',')[1]
+    }
+    const [geo, setGeo] = useState({ lat: lat, long: long });
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const token = localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')

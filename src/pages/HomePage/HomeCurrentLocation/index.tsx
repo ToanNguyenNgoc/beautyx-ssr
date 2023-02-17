@@ -8,15 +8,15 @@ import icon from 'constants/icon';
 
 function HomeCurrentLocation() {
     const { geo } = useContext(AppContext);
-    const { response } = useFetch(
+    const { response, isValidating } = useFetch(
         geo,
         API_3RD.API_MAP_BOX(geo?.lat, geo?.long)
     )
     let place
     if (response && response?.features?.length > 0) {
         const context = response?.features[0]?.context
-        const txt1 = context[0]?.text_vi ?? ''
-        const txt2 = context[1]?.text_vi ?? ''
+        const txt1 = parseInt(context[0]?.text_vi) ? '' : context[0]?.text_vi
+        const txt2 = parseInt(context[1]?.text_vi) ? '' : context[1]?.text_vi
         const txt3 = context[2]?.text_vi ?? ''
         place = `: ${txt1},${txt2},${txt3}`
     }
@@ -32,7 +32,7 @@ function HomeCurrentLocation() {
             <div className={style.text}>
                 <span className={style.label}>Điểm làm đẹp gần</span>
                 <span className={style.value}>
-                    {geo === undefined && '...'}
+                    {(geo?.lat === undefined || isValidating) && '...'}
                     {geo === null && 'bạn'}
                     {place}
                 </span>

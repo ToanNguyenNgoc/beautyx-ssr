@@ -1,7 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/system';
 import HeadMobile from 'features/HeadMobile';
 import { useDeviceMobile } from 'hooks';
-import React from 'react';
 import { NavLink, Redirect, RouteComponentProps, Switch, useLocation } from 'react-router-dom';
 import style from './community.module.css'
 import TabCommunity from './TabCommunity';
@@ -25,6 +25,9 @@ function Community() {
     const location = useLocation()
     const path = location.pathname?.split('/')[2]
     const IS_MB = useDeviceMobile()
+    //------------------------------
+
+
     return (
         <>
             {IS_MB && <HeadMobile title='Cộng đồng' />}

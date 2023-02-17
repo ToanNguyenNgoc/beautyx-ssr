@@ -22,6 +22,7 @@ import HomeRecommend from "./HomeRecommend";
 import HomeProvince from "./HomeProvince";
 import style from "./home.module.css";
 import HomeCurrentLocation from "./HomeCurrentLocation";
+import HomeTrends from "./HomeTrends";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
@@ -58,6 +59,7 @@ export default function HomePage() {
                     <HomeWhyNot />
                     <HomeRecommend />
                     <HomeProvince />
+                    {!IS_MB && <HomeTrends/>}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />

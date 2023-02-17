@@ -30,7 +30,7 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const { firstLoad, resultLoad, noti } = useNoti()
     const onInputChange = (e: any) => {
         if (text.length <= 25) {
-            setText(e.target.value)
+            setText(e.target.value.toUpperCase())
             resultLoad('')
             setResponse(null)
         }
