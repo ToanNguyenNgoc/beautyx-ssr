@@ -25,7 +25,7 @@ export function useDiscountDetail() {
     const paramsUrl = useGetParamUrl()
     const typeItemProps = routeType.find(i => i.path === paramsUrl[0])
     const params = {
-        id: parseInt(paramsUrl[2]),
+        id: paramsUrl[2],
         org_id: parseInt(paramsUrl[1]),
         item_id: parseInt(paramsUrl[3])
     }

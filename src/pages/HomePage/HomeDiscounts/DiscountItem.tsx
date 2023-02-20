@@ -30,6 +30,7 @@ function DiscountItem(props: IProps) {
             merchant: discountItem.organization.name
         })
         history.push(pathDiscountOb);
+        // console.log(pathDiscountOb)
     };
     // console.log(discountItem);
     const displayDisPrice = discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
