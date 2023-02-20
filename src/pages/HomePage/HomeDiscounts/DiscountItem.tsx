@@ -42,7 +42,10 @@ function DiscountItem(props: IProps) {
                 {
                     discountItem.organization.image_url !== '' &&
                     discountItem.organization.image_url !== null &&
-                    <img src={discountItem.organization.image_url} onError={(e) => onErrorImg(e)} className="home-discount-item__org-logo" alt="" />
+                    <img src={discountItem.organization.image_url}
+                        onError={(e) => onErrorImg(e)}
+                        className="home-discount-item__org-logo" alt=""
+                    />
                 }
                 <div className='discount_item_percent'>
                     -{percent}%
