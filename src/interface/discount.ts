@@ -79,6 +79,7 @@ export interface IDiscountChild {
 }
 export interface IDiscountPar {
     id: number,
+    uuid:string,
     title: string,
     description: string,
     coupon_code: string,
