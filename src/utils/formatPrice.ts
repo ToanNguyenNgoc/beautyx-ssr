@@ -1,7 +1,7 @@
 
 
 export default function formatPrice(num: any) {
-      return num?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+      return parseInt(num)?.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
 }
 export const formatSalePriceService = (special_price: number, special_price_momo: number) => {
       let sale = 0;
