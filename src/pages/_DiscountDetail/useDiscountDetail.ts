@@ -26,8 +26,8 @@ export function useDiscountDetail() {
     const typeItemProps = routeType.find(i => i.path === paramsUrl[0])
     const params = {
         id: paramsUrl[2],
-        org_id: parseInt(paramsUrl[1]),
-        item_id: parseInt(paramsUrl[3])
+        org_id: paramsUrl[1],
+        item_id: paramsUrl[3]
     }
     let redirectPageError = false
     if (!typeItemProps) redirectPageError = true

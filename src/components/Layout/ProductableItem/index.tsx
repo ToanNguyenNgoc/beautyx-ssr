@@ -2,7 +2,7 @@
 import icon from "constants/icon";
 import { Productable } from "interface";
 import { Link } from "react-router-dom";
-import { formatDistanceKM, onErrorImg } from "utils";
+import { formatDistance, onErrorImg } from "utils";
 import formatPrice, { formatSalePriceService } from "utils/formatPrice";
 import style from "./productable.module.css";
 import {
@@ -121,7 +121,7 @@ export function ProductableItem(props: ProductableItemProps) {
                     {productable?.distance && (
                         <div className={style.item_distance}>
                             <span></span>
-                            <h5>{formatDistanceKM(productable?.distance)}</h5>
+                            <h5>{formatDistance(productable?.distance)}</h5>
                         </div>
                     )}
                     <div className={style.item_address}>

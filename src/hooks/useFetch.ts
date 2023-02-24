@@ -16,7 +16,7 @@ export function useFetch(condition: any, API_URL: string, query?: any) {
         response = data.data ?? data
     }
     return {
-        response, error, isValidating
+        response, error, isValidating, data
     }
 }
 export default useFetch
