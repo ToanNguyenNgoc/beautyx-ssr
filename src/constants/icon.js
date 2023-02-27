@@ -244,7 +244,8 @@ import coins from "assets/icon/coins.svg";
 import paperWhite from "assets/icon/paperWhite.svg";
 import scanQrBtnOrange from "assets/icon/scanQrBtnOrange.svg";
 import sendBlack from "assets/icon/sendBlack.svg";
-import imageBlack from "assets/icon/imageBlack.svg"
+import imageBlack from "assets/icon/imageBlack.svg";
+import refresh from 'assets/icon/refresh.svg'
 
 const icon = {
     noApply,
@@ -490,6 +491,7 @@ const icon = {
     paperWhite,
     scanQrBtnOrange,
     sendBlack,
-    imageBlack
+    imageBlack,
+    refresh
 };
 export default icon;

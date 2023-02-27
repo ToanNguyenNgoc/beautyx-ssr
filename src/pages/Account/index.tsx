@@ -32,6 +32,7 @@ import API_ROUTE from "api/_api";
 import { paramsUserProfile } from "params-query";
 import { phoneSupport } from "constants/index";
 import { User } from "interface";
+import CardCoin from "./components/CardCoin";
 
 const routes = [
     {
@@ -123,6 +124,7 @@ function Account() {
     const [guide, setGuide] = useState(false)
     const [openImg, setOpenImg] = useState(false)
     const [openP, setOpenP] = useState(false)
+    const [openCard, setOpenCard] = useState(false)
     const onOpenAvatar = () => IS_MB && setOpenImg(true)
 
     return (
@@ -130,6 +132,7 @@ function Account() {
             <FullImage
                 open={openImg} setOpen={setOpenImg} src={[USER?.avatar]}
             />
+            <CardCoin open={openCard} setOpen={setOpenCard} user={userResponse} />
             <Container>
                 <div className={style.container}>
                     <div
@@ -139,7 +142,7 @@ function Account() {
                         className={style.left_cnt}
                     >
                         {IS_MB && <HeadAccount />}
-                        <div className={style.left_user}>
+                        <div onClick={()=>setOpenCard(true)} className={style.left_user}>
                             <div className={style.left_cnt_head}>
                                 <div className={style.user_avatar_cnt}>
                                     <img
@@ -180,7 +183,6 @@ function Account() {
                                         <p className={style.coin_value_label}>BTX</p>
                                         <div className={style.coin_value_count}>
                                             <span>{userResponse?.btx_points ?? USER?.btx_points}</span>
-                                            {/* <img className={style.coin_value_count_icon} src={icon.coins} alt="" /> */}
                                         </div>
                                     </div>
                                 </div>

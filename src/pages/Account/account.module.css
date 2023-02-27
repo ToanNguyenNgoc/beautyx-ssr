@@ -282,6 +282,7 @@
         padding: 0px 12px;
         position: relative;
         margin-top: -8px;
+        transition: var(--trans);
     }
 
     .left_cnt {
