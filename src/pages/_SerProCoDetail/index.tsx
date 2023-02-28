@@ -7,7 +7,7 @@ import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { IDiscountPar, IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
-import { BackTopButton, BeautyxCare, OpenApp, SerProItem, ShareSocial, XButton } from 'components/Layout';
+import { BackTopButton, BeautyxCare, OpenApp, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
 import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
 import Slider from 'react-slick';
@@ -141,6 +141,7 @@ function SerProCoDetail() {
         response && org ?
             <>
                 {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
+                <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>
