@@ -1,7 +1,6 @@
 import API_3RD from "api/3rd-api"
 import { useFetch } from "hooks"
 import { LocationMapBox } from "interface"
-import React from "react"
 import style from './search.module.css'
 
 interface SearchLocationProps {
@@ -26,7 +25,11 @@ function SearchLocation(props: SearchLocationProps) {
                             key={index} className={style.location_item}
                             onClick={() => onResult('cua-hang', item.place_name)}
                         >
-                            {item.place_name}
+                            {/* <Link
+                                to={{ pathname: "/ket-qua-tim-kiem/cua-hang", search: `keyword=${encodeURIComponent(item.place_name)}` }}
+                            > */}
+                                {item.place_name}
+                            {/* </Link> */}
                         </li>
                     ))
                 }

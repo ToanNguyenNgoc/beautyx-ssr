@@ -54,13 +54,13 @@ const MapContent = (props: IProps) => {
         lat: isDetail
             ? orgs[0]?.latitude
             : LOCATION
-            ? parseFloat(LOCATION?.split(",")[0])
-            : orgs[0]?.latitude,
+                ? parseFloat(LOCATION?.split(",")[0])
+                : orgs[0]?.latitude,
         long: isDetail
             ? orgs[0]?.longitude
             : LOCATION
-            ? parseFloat(LOCATION?.split(",")[1])
-            : orgs[0]?.longitude,
+                ? parseFloat(LOCATION?.split(",")[1])
+                : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -209,7 +209,6 @@ const MapContent = (props: IProps) => {
 
     return (
         <div className="map-content">
-            {/* map */}
             <MapOrgFilter
                 slideRef={slideRef}
                 mapRef={mapRef}
@@ -220,7 +219,6 @@ const MapContent = (props: IProps) => {
             <MapCurrentUser handleBackCurrentUser={handleBackCurrentUser} />
             {
                 <MapGL
-                    // onViewportChange={onCenterChange}
                     onMouseMove={onCenterChange}
                     onTouchMove={onCenterChange}
                     style={{ width: "100vw", height: "100vh" }}
@@ -233,7 +231,6 @@ const MapContent = (props: IProps) => {
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                     mapStyle="mapbox://styles/mapbox/streets-v10"
                     ref={mapRef}
-                    // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
                     <NavigationControl
                         position="bottom-right"
@@ -314,7 +311,6 @@ const MapContent = (props: IProps) => {
                             org={org}
                             setOpenDetail={setOpenDetail}
                             openDetail={openDetail}
-                            // handleDirection={handleDirection}
                         />
                     ) : null}
                     <div
@@ -342,12 +338,12 @@ const MapContent = (props: IProps) => {
                     style={
                         isDetail
                             ? {
-                                  position: "fixed",
-                                  width: "auto",
-                                  height: "auto",
-                                  left: 0,
-                                  right: 0,
-                              }
+                                position: "fixed",
+                                width: "auto",
+                                height: "auto",
+                                left: 0,
+                                right: 0,
+                            }
                             : {}
                     }
                 >

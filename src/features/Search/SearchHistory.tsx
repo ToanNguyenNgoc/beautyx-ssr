@@ -70,7 +70,7 @@ function SearchHistory(props: SearchHistoryProps) {
                             >
                                 <Link
                                     className={style.item_link}
-                                    to={{ pathname: "/ket-qua-tim-kiem/dich-vu/", search: `keyword=${encodeURIComponent(i.text)}` }}
+                                    to={{ pathname: "/ket-qua-tim-kiem/dich-vu", search: `keyword=${encodeURIComponent(i.text)}` }}
                                 >
                                     <span className={style.item_link_text}>{i.text}</span>
                                 </Link>

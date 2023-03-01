@@ -88,7 +88,7 @@ function Search(props: SearchProps) {
             } else {
                 history.push({
                     pathname: `/ket-qua-tim-kiem/${tabName ?? tabSort[0]?.link}`,
-                    search: `?keyword=${encodeURIComponent(outKeyword ?? KEY_WORD)}`,
+                    search: `keyword=${encodeURIComponent(outKeyword ?? KEY_WORD)}`,
                 })
                 if (USER) { postHistorySearch(outKeyword ?? KEY_WORD_DE, 'KEYWORD') }
             }
