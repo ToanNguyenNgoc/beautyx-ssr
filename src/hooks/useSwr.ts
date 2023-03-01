@@ -28,7 +28,7 @@ export function useSwr(
     if (data) {
         response = data.data?.context ?? data
         responseArray = data.data?.context.data
-        totalItem = data?.data.context?.total
+        totalItem = data?.data?.context?.total
         result = data
     }
     return {
