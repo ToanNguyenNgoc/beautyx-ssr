@@ -36,7 +36,7 @@ interface StatusOrderProps {
 }
 
 function CartPaymentStatus() {
-    const sec = useCountDown(600);
+    const {sec} = useCountDown(600);
     const dispatch = useDispatch();
     const history = useHistory();
     const [open, setOpen] = useState(initOpen);

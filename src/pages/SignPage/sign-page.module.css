@@ -166,6 +166,12 @@
     margin:6px;
     background-color: transparent;
 }
+.opt_count_down{
+    margin: 0px 0px 24px 8px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+}
 
 @media only screen and (max-width: 1023px) {
     .input_wrapper_icon_show {

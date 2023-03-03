@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { FormControl, RadioGroup, FormControlLabel, Radio, Checkbox } from '@mui/material'
@@ -13,18 +13,16 @@ import { PopupNotification } from 'components/Notification'
 import { useHistory } from 'react-router-dom';
 
 import style from '../sign-page.module.css'
+import { useCountDown, useNoti } from 'hooks';
 
 function SignUps(props: any) {
     const { t } = useContext(AppContext)
     const { setActiveTabSign } = props;
     const history = useHistory()
-    const [loading, setLoading] = useState(false);
+    const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
+    const { sec, setSec } = useCountDown(60)
     const [show, setShow] = useState({ pass: false, confirm: false })
-    const [noti, setNoti] = useState({
-        content: "",
-        open: false,
-        children: <></>
-    })
+    const [versionOtp, setVersionOtp] = useState<"v1" | "v2">("v1")
     const [openOtp, setOpenOtp] = useState(true);
     const [dataOtp, setDataOtp] = useState({
         telephone: '',
@@ -43,24 +41,19 @@ function SignUps(props: any) {
         }
         try {
             await authentication.forgotPassword(params);
-            setLoading(false);
-            setNoti({
-                content: t('form.register_success'),
-                open: true,
-                children: <XButton
+            resultLoad(
+                t('form.register_success'),
+                <XButton
                     title={t('form.back_to_sign_in_page')}
                     onClick={onBackSignIn}
                 />
-            })
+            )
         } catch (error) {
-            setNoti({
-                content: t('form.an_error'),
-                open: true,
-                children: <></>
-            })
+            resultLoad(t('form.an_error'))
         }
     }
     async function handleSubmitForm(values: any) {
+        firstLoad()
         const params = {
             fullname: values.name,
             email: values.email,
@@ -71,27 +64,29 @@ function SignUps(props: any) {
             platform: 'BEAUTYX'
         }
         try {
-            await authentication.register(params);
-            setLoading(false);
-            setNoti({
-                content: t('form.register_success'),
-                open: true,
-                children: <XButton
+            if (versionOtp === "v1") {
+                await authentication.register(params);
+            }
+            if (versionOtp === "v2") {
+                await authentication.forgotVoiceSms({
+                    telephone: params.telephone,
+                    code: params.code,
+                    new_password: params.password
+                })
+            }
+            resultLoad(
+                t('form.register_success'),
+                <XButton
                     title={t('form.back_to_sign_in_page')}
                     onClick={onBackSignIn}
                 />
-            })
+            )
         } catch (error) {
-            setLoading(false);
             const err = error as AxiosError;
             if (err.response?.status === 400) {
                 handleAsyncForgotPass(params)
             } else {
-                setNoti({
-                    content: `${t('form.an_error')} (${err.response?.status})`,
-                    open: true,
-                    children: <></>
-                })
+                resultLoad(`${t('form.an_error')} (${err.response?.status})`)
             }
         }
     }
@@ -125,7 +120,7 @@ function SignUps(props: any) {
             code: Yup.string()
                 .required("Vui lòng nhập mã xác thực")
                 .matches(/^[0-9]+$/, "Mã xác thực không hợp lệ")
-                .min(6, 'Mã xác thực gồm 6 ký tự')
+                .min(4, 'Mã xác thực gồm 6 ký tự')
                 .max(6, 'Mã xác thực gồm 6 ký tự'),
             password: Yup.string()
                 .min(8, "Mật khẩu lớn hơn 8 ký tự")
@@ -140,10 +135,16 @@ function SignUps(props: any) {
             ),
         }),
         onSubmit: (values: any) => {
-            setLoading(true)
             handleSubmitForm(values)
         }
     })
+    const onReSendOtp = async () => {
+        await authentication.forgotVoiceSms({
+            telephone: dataOtp.telephone
+        })
+        setSec(60)
+        setVersionOtp("v2")
+    }
     return (
         <>
             <BackButton onBackFunc={onBackSignIn} />
@@ -265,11 +266,16 @@ function SignUps(props: any) {
                                 <p className={style.input_wrapper_error}>{formik.errors.code}</p>
                             )}
                         </div>
-                        <XButton
-                            className={style.btn_change_phone}
-                            title='Đổi số điện thoại'
-                            onClick={() => setOpenOtp(true)}
-                        />
+                        {
+                            sec > 0 ?
+                                <span className={style.opt_count_down}>Hết hạn sau {sec}s</span>
+                                :
+                                <XButton
+                                    className={style.btn_change_phone}
+                                    title='Gửi lại mã'
+                                    onClick={onReSendOtp}
+                                />
+                        }
                     </div>
                     <div className={style.input_wrapper}>
                         <Input
@@ -339,16 +345,16 @@ function SignUps(props: any) {
                         <XButton
                             title={t("Home.Sign_up")}
                             type="submit"
-                            loading={loading}
+                            loading={noti.load}
                         />
                     </div>
                 </form>
                 <PopupNotification
                     title='Thông báo'
-                    open={noti.open}
-                    content={noti.content}
-                    children={noti.children}
-                    setOpen={() => setNoti({ ...noti, open: false })}
+                    open={noti.openAlert}
+                    content={noti.message}
+                    children={noti.element}
+                    setOpen={onCloseNoti}
                 />
             </div>
         </>
