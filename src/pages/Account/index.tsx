@@ -127,6 +127,7 @@ function Account() {
     const [openCard, setOpenCard] = useState(false)
     const onOpenAvatar = () => IS_MB && setOpenImg(true)
 
+
     return (
         <>
             <FullImage
@@ -142,7 +143,10 @@ function Account() {
                         className={style.left_cnt}
                     >
                         {IS_MB && <HeadAccount />}
-                        <div onClick={()=>setOpenCard(true)} className={style.left_user}>
+                        <div 
+                            onClick={()=>setOpenCard(true)} 
+                            className={style.left_user}
+                        >
                             <div className={style.left_cnt_head}>
                                 <div className={style.user_avatar_cnt}>
                                     <img
