@@ -29,6 +29,9 @@ function ExtraFlatForm() {
             case FLAT_FORM_TYPE.ZALO:
                 sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.ZALO);
                 break
+            case FLAT_FORM_TYPE.BEAUTYX_MOBILE:
+                sessionStorage.setItem('FLAT_FORM', FLAT_FORM_TYPE.BEAUTYX_MOBILE);
+                break
             default:
                 sessionStorage.setItem('FLAT_FORM', 'BEAUTYX');
         }

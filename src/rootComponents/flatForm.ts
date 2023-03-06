@@ -3,5 +3,6 @@ export const FLAT_FORM_TYPE = {
     MOMO: "MOMO",
     TIKI: "TIKI",
     MB: "MBBANK",
-    ZALO: "ZALO"
+    ZALO: "ZALO",
+    BEAUTYX_MOBILE:"BEAUTYX MOBILE"
 }

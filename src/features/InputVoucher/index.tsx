@@ -8,20 +8,21 @@ import { IDiscountPar, IOrganization } from "interface";
 import IStore from "interface/IStore";
 import { useContext, useState } from "react";
 import { useSelector } from "react-redux";
+import validateForm from "utils/validateForm";
 import style from './ip-vc.module.css'
 
 interface InputVoucherProps {
     open: boolean,
     setOpen: (open: boolean) => void,
     organization: IOrganization, //organization applied voucher
-    services_id: number[], 
+    services_id: number[],
     products_id: number[],
     cartAmount: number
     outDiscounts: IDiscountPar[]
 }
 
 export const InputVoucher = (props: InputVoucherProps) => {
-    const {t} = useContext(AppContext)
+    const { t } = useContext(AppContext)
     const IS_MB = useDeviceMobile();
     const { open, setOpen, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const { VOUCHER_APPLY } = useSelector((state: IStore) => state.carts)
@@ -30,16 +31,17 @@ export const InputVoucher = (props: InputVoucherProps) => {
     const { firstLoad, resultLoad, noti } = useNoti()
     const onInputChange = (e: any) => {
         if (text.length <= 25) {
-            setText(e.target.value.toUpperCase())
+            setText(e.target.value.toUpperCase().replace(validateForm.replace_code,""))
             resultLoad('')
             setResponse(null)
         }
     }
     const getDiscountDetail = async () => {
-        if (text !== "") {
+        const code = text.replace(validateForm.replace_code, "")
+        if (code !== "") {
             firstLoad()
             try {
-                const res = await discountApi.getById({ id: text })
+                const res = await discountApi.getById({ id: code })
                 setResponse(res.data.context)
                 resultLoad('')
             } catch (error) {
@@ -77,10 +79,11 @@ export const InputVoucher = (props: InputVoucherProps) => {
                     <div className={style.vc_body_input}>
                         <input
                             autoFocus={true}
-                            value={text} onChange={onInputChange} type="text"
+                            value={text.replace(validateForm.replace_code, "")}
+                            onChange={onInputChange} type="text"
                         />
                         <XButton
-                            style={text === "" ? {
+                            style={text.replace(validateForm.replace_code, "") === "" ? {
                                 backgroundColor: "var(--bg-color)",
                                 cursor: "no-drop"
                             } : {}}

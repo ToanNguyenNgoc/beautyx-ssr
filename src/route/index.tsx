@@ -126,6 +126,10 @@ function RouterConfig() {
             component: <HomePage />,
         },
         {
+            path: "/BEAUTYX_MOBILE",
+            component: <HomePage />,
+        },
+        {
             path: "/ZALO",
             component: <HomePage />,
         },
