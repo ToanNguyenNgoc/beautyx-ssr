@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import {
   Link,
   RouteComponentProps,
@@ -9,28 +9,23 @@ import {
   useParams,
   Redirect
 } from "react-router-dom";
-import "../../assets/styles/main.css";
 import HeadOrg from "./components/HeadOrg";
 import OrgDetail from "./components/OrgDetail";
-import { OpenApp } from 'components/Layout'
-import { useSwr, useDeviceMobile } from 'utils'
+import { BackTopButton, OpenApp, Seo } from 'components/Layout'
+import { useSwr, useDeviceMobile } from 'hooks'
 import { IOrganization, IOrgMobaGalleries } from 'interface'
 import { AppContext } from "context/AppProvider";
 import LoadOrg from "components/LoadingSketion/LoadOrg";
 import PageNotFound from "components/PageNotFound";
 import HeadTitle from "features/HeadTitle";
-import Head from "features/Head";
-
 import "./style.css";
 import { usePostAnalytics } from "./Functions";
-import Footer from "features/Footer";
 import {
   OrgProducts, OrgServices, OrgCombos,
-  OrgInformation, OrgDealHot, OrgReviews, OrgGalleries
+  OrgInformation, OrgDealHot, OrgGalleries
 } from "./components/OrgPages";
+import { useGalleriesQuery } from "redux-toolkit-query/hook-home";
 import API_ROUTE from "api/_api";
-import { useDispatch } from "react-redux";
-import { onSetOrgDetail } from "redux/org/orgSlice";
 
 
 function MerchantDetail() {
@@ -38,18 +33,13 @@ function MerchantDetail() {
   const IS_MB = useDeviceMobile()
   const location: any = useLocation()
   const params: any = useParams()
-  const dispatch = useDispatch()
   const { subdomain } = params
 
-  const { response, error, isValidating } = useSwr(`/organizations/${subdomain}`, subdomain)
-  const { responseArray } = useSwr(
-    API_ROUTE.GALLERIES_ORG_ID(subdomain),
-    subdomain,
-    { "include": "images|videos" }
-  )
-  const galleries: IOrgMobaGalleries[] = responseArray ?? []
+  const { response, error, isValidating } = useSwr(API_ROUTE.ORG(subdomain), subdomain)
 
   const org: IOrganization = response
+  const { data } = useGalleriesQuery(subdomain)
+  const galleries: IOrgMobaGalleries[] = data ?? []
 
   let tabs = [
     {
@@ -74,10 +64,6 @@ function MerchantDetail() {
     },
     {
       open: true,
-      id: 6, title: `${t("Mer_de.feedback")}`, path: 'phan-hoi'
-    },
-    {
-      open: true,
       id: 7, title: t("Mer_de.galleries"), path: 'thu-vien'
     },
   ];
@@ -86,17 +72,14 @@ function MerchantDetail() {
     return active
   }
   usePostAnalytics(org)
-  useEffect(() => {
-    dispatch(onSetOrgDetail(org))
-  }, [org])
-
 
   return (
     <div className="mb-cnt">
       {!org && isValidating && <LoadOrg />}
       {error && <PageNotFound />}
+      {org && <Seo imageCover={org.image_url} title={org.name} content={org.description} />}
       <HeadTitle title={org?.name ? org.name : "Đang tải..."} />
-      {IS_MB && org ? <HeadOrg org={org} isShowSearch={true} /> : <Head />}
+      {IS_MB && org && <HeadOrg org={org} isShowSearch={true} />}
       {org && (
         <>
           <OrgDetail
@@ -128,13 +111,13 @@ function MerchantDetail() {
           </div>
           <Container>
             <div className="org_tab_cnt">
-              <ChildPage org={org} galleries={galleries} />
+              {org?.id && <ChildPage org={org} galleries={galleries} />}
             </div>
           </Container>
         </>
       )}
-      <Footer />
       {org && <OpenApp type="org" org_id={org.id} />}
+      <BackTopButton/>
     </div>
   );
 }
@@ -170,10 +153,6 @@ const ChildPage = (props: ChildPageProps) => {
     {
       path: `/cua-hang/:id/thong-tin`,
       component: <OrgInformation org={org} />
-    },
-    {
-      path: `/cua-hang/:id/phan-hoi`,
-      component: <OrgReviews org={org} />
     },
     {
       path: `/cua-hang/:id/thu-vien`,

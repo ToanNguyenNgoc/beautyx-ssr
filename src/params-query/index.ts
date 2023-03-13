@@ -1,12 +1,19 @@
-// import { AUTH_LOCATION } from "../api/authLocation"
-
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm"
 import dayjs from "dayjs"
-import { ParamOrg, ParamService, ParamProduct, ParamOrder } from "./param.interface"
+import {
+    ParamOrg,
+    ParamService,
+    ParamProduct,
+    ParamOrder,
+    ParamsProductable,
+    ParamDiscounts,
+    ParamBranchV3
+} from "./param.interface"
 
 const PLAT_FORM = EXTRA_FLAT_FORM()
-
-// const LOCATION = AUTH_LOCATION();
+export const paramsUserProfile = {
+    "append": "btx_points"
+}
 export const paramsGalleries = {
     "include": "images|videos",
     "limit": "15",
@@ -24,6 +31,16 @@ export const paramOrgs: ParamOrg = {
     "filter[district_code]": "",
     "sort": "",
     "include": "tags|province|district|ward|branches|favorites|favorites_count"
+}
+export const pramsBranchV3: ParamBranchV3 = {
+    "limit": 15,
+    "keyword": "",
+    "is_momo_ecommerce_enable": "",
+    "location": "",
+    "sort": "",
+    "province_code": "",
+    "district_code": "",
+    "is_demo": 'false'
 }
 export const paramsDiscounts = {
     "append": "user_available_purchase_count",
@@ -76,20 +93,22 @@ export const paramOrderService = {
     "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM,
     "filter[status]": "PAID",
     "filter[withServicesSold]": true,
-    "include": "items|items_count|organization|appointments",
+    "include": "items|organization|appointments",
     "sort": "-created_at"
 }
 export const paramOrder: ParamOrder = {
     "limit": "14",
-    "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX | BEAUTYX MOBILE' : PLAT_FORM,
+    "filter[platform]": '',
     "filter[status]": "",
     "filter[withServicesSold]": true,
     "filter[productable]": true,
-    "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
+    // "include": "items|organization|branch|user|paymentMethod|deliveryAddress|appointments",
+    'include': 'items|organization|appointments|btxReward', //btxReward
     "sort": "-created_at",
-    "append": ""
+    "append": "qr_link"
 }
-export const paramDiscounts = {
+export const paramDiscounts: ParamDiscounts = {
+    "limit": 20,
     "filter[platform]": "MOMO",
     "filter[discount_type]": "",
     "filter[organization_id]": "",
@@ -126,4 +145,31 @@ export const paramsProductsOrg = {
     "filter[is_momo_ecommerce_enable]": true,
     "include": "category | favorites",
     "append": "is_favorite|rating"
+}
+export const paramsComment = {
+    "limit": 10,
+    "filter[commentable_type]": "",
+    "filter[commentable_id]": "",
+    "filter[organization_id]": "",
+    "include": "rate|children|children.media",
+    "sort": "-created_at",
+    "append": "media_url"
+}
+export const paramsProductable: ParamsProductable = {
+    "limit": 15,
+    "keyword": "",
+    "on_ecommerce": "true",
+    "location": "",
+    "sort": "",
+    "type": "",
+    "organization_id": "",
+    "discount_price": "",
+    "discount_ecommerce_price": "",
+    "min_price": "",
+    "max_price": "",
+    "discount_min_price": "",
+    "discount_max_price": "",
+    "discount_min_price_ecommerce": "",
+    "discount_max_price_ecommerce": "",
+    "is_demo":"false"
 }

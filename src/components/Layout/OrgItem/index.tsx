@@ -7,15 +7,10 @@ import { useHistory } from "react-router-dom";
 import scrollTop from "../../../utils/scrollTop";
 import onErrorImg from "../../../utils/errorImg";
 import { AppContext } from "../../../context/AppProvider";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    onDeleteFavoriteOrg,
-    onFavoriteOrg,
-} from "../../../redux/org/orgSlice";
-import useDeviceMobile from "../../../utils/useDeviceMobile";
 import { Drawer } from "@mui/material";
 import { fakeOrgStar } from "../../../utils/format";
 import { formatRouterLinkOrg } from "../../../utils/formatRouterLink/formatRouter";
+import { useDeviceMobile } from "hooks";
 
 interface IProps {
     org: IOrganization;
@@ -26,8 +21,6 @@ export function OrgItem(props: IProps) {
     const { org, changeStyle } = props;
     const { t } = useContext(AppContext);
     const history = useHistory();
-    const { USER } = useSelector((state: any) => state.USER);
-    const dispatch = useDispatch();
     const IS_MB = useDeviceMobile();
     const gotoDetail = () => {
         scrollTop();
@@ -38,17 +31,6 @@ export function OrgItem(props: IProps) {
     };
     const [open, setOpen] = useState(false);
 
-    const handleFavoriteOrg = (org: any) => {
-        if (USER) {
-            if (org?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org));
-            } else {
-                dispatch(onFavoriteOrg(org));
-            }
-        } else {
-            history.push("/sign-in?1");
-        }
-    };
     return (
         <>
             <div onClick={gotoDetail} className="re-org-item">
@@ -80,7 +62,7 @@ export function OrgItem(props: IProps) {
                                 alt=""
                                 onError={(e) => onErrorImg(e)}
                             />
-                            <div
+                            {/* <div
                                 className="re-change-favorite"
                                 onClick={(e) => {
                                     handleFavoriteOrg(org);
@@ -96,7 +78,7 @@ export function OrgItem(props: IProps) {
                                     }
                                     alt=""
                                 />
-                            </div>
+                            </div> */}
                         </div>
                         <div className="re-change-wrap">
                             <div className="re-change-img">

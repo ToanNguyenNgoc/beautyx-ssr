@@ -1,22 +1,15 @@
 import React, { useContext, useRef, useState } from "react";
-import { Container, Drawer } from "@mui/material";
-import onErrorImg from "../../../utils/errorImg";
-import icon from "../../../constants/icon";
+import { Container } from "@mui/material";
 import Slider from "react-slick";
-import {
-    onActiveTab,
-    onDeleteFavoriteOrg,
-    onFavoriteOrg,
-} from "../../../redux/org/orgSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 import PopupDetailContact from "./PopupDetailContact";
-import { extraOrgTimeWork } from "../Functions/extraOrg";
-import { AppContext } from "../../../context/AppProvider";
-
+import { extraOrgTimeWork, IOrgTimeWork } from "../Functions/extraOrg";
 import { IOrgMobaGalleries, IOrganization } from 'interface'
-import IStore from "interface/IStore";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
+import { AppContext } from "context/AppProvider";
+import { onErrorImg } from "utils";
+import icon from "constants/icon";
+import { useFavorite } from "hooks";
+import img from "constants/img";
 
 interface IProps {
     org: IOrganization;
@@ -25,41 +18,24 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
-    const org_redux = useSelector((state:IStore) => state.ORG.org)
+    const { favoriteSt, onToggleFavorite } = useFavorite({
+        id: org.id,
+        org_id: org.id,
+        type: 'ORG',
+        count: org.favorites_count,
+        favorite: org.is_favorite
+    })
     const { t } = useContext(AppContext);
-    const { totalItem } = useSelector((state: any) => state.ORG_COMMENTS);
-    const dispatch = useDispatch();
-    const history = useHistory();
-    const { USER } = useSelector((state: any) => state.USER);
     const [openPopupContact, setOpenPopupContact] = useState(false);
-    const [open, setOpen] = useState(false);
     const [openPopupMap, setOpenPopupMap] = useState(false);
-    // time works
-    const now = new Date();
-    const today = now.getDay() + 1;
     const orgTimes = extraOrgTimeWork(org?.opening_time);
-    const time_works_today = orgTimes?.find(
-        (item: any, index: number) => index + 2 === today
-    );
-    const refListTimeWorks = useRef<any>();
-    const handleOpenSelector = () => {
-        refListTimeWorks.current.classList.toggle("org-time-work__list-active");
+    const orgTimeToday = orgTimes?.find(i => i.todayAct)
+    const refListTimeWorks = useRef<HTMLUListElement>(null);
+    const onOpenTime = () => {
+        refListTimeWorks.current?.classList.add("org-time-work__list-active");
     };
-
-    // handle favorite Org
-    const handleFavoriteOrg = () => {
-        if (USER) {
-            if (org_redux?.is_favorite) {
-                dispatch(onDeleteFavoriteOrg(org_redux));
-            } else {
-                dispatch(onFavoriteOrg(org_redux));
-            }
-        } else {
-            history.push("/sign-in?1");
-        }
-    };
-
-    // setting slider
+    const onCloseTime = () => refListTimeWorks.current?.classList.remove("org-time-work__list-active");
+    window.onclick = () => onCloseTime()
     const settings = {
         dots: true,
         infinite: true,
@@ -67,10 +43,8 @@ function OrgDetail(props: IProps) {
         arrows: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        //autoplay: true,
         swipe: true,
         autoplaySpeed: 2000,
-        //fade: true,
         responsive: [
             {
                 breakpoint: 1024,
@@ -88,20 +62,9 @@ function OrgDetail(props: IProps) {
             },
         ],
     };
-
-    const onActiveTabGallery = () => {
-        dispatch(onActiveTab(7));
-    };
     const handleOpenMap = () => {
         setOpenPopupMap(true);
     };
-    // const onOpenChatOrg = () => {
-    //     if (USER) {
-    //         dispatch(onToggleOpenChat(true));
-    //     } else {
-    //         history.push("/sign-in?1");
-    //     }
-    // };
     return (
         <div className="org-detail">
             {
@@ -114,10 +77,7 @@ function OrgDetail(props: IProps) {
             }
             <Container>
                 <div className="org-detail__cnt">
-                    <div
-                        onClick={onActiveTabGallery}
-                        className="org-detail__cnt-top"
-                    >
+                    <div className="org-detail__cnt-top">
                         <Slider {...settings}>
                             {galleries.length === 0 &&
                                 (
@@ -126,16 +86,14 @@ function OrgDetail(props: IProps) {
                                             <div className="back-drop">
                                                 <img
                                                     style={{ width: "100%" }}
-                                                    src={org?.image_url}
+                                                    src={org?.image_url ?? img.imgDefault}
                                                     alt=""
                                                     className="back-drop__img"
-                                                    onError={(e) =>
-                                                        onErrorImg(e)
-                                                    }
+                                                    onError={(e) => onErrorImg(e)}
                                                 />
                                                 <div className="banner-item__cnt">
                                                     <img
-                                                        src={org?.image_url}
+                                                        src={org?.image_url ?? img.imgDefault}
                                                         alt=""
                                                         className="banner-item__img"
                                                     />
@@ -153,13 +111,13 @@ function OrgDetail(props: IProps) {
                                     <div className="org-detail__banner-de__item">
                                         <div className="back-drop">
                                             <img
-                                                src={item?.image_url}
+                                                src={item?.image_url ?? img.imgDefault}
                                                 alt=""
                                                 className="back-drop__img"
                                             />
                                             <div className="banner-item__cnt">
                                                 <img
-                                                    src={item?.image_url}
+                                                    src={item?.image_url ?? img.imgDefault}
                                                     alt=""
                                                     className="banner-item__img"
                                                 />
@@ -177,7 +135,7 @@ function OrgDetail(props: IProps) {
                                     <div className="flexX-gap-8">
                                         <div className="org-avatar">
                                             <img
-                                                src={org?.image_url}
+                                                src={org?.image_url ?? img.imgDefault}
                                                 onError={(e) => onErrorImg(e)}
                                                 alt=""
                                             />
@@ -212,22 +170,12 @@ function OrgDetail(props: IProps) {
                                                         </div>
                                                         <div className="flexX-gap-4 org-left-detail__rate-item">
                                                             <img
-                                                                src={icon.chatAll}
-                                                                alt=""
-                                                                className="icon"
-                                                            />
-                                                            <span className="text">
-                                                                {totalItem}
-                                                            </span>
-                                                        </div>
-                                                        <div className="flexX-gap-4 org-left-detail__rate-item">
-                                                            <img
                                                                 src={icon.heart}
                                                                 alt=""
                                                                 className="icon"
                                                             />
                                                             <span className="text">
-                                                                {org_redux?.favorites_count}
+                                                                {favoriteSt.favorite_count}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -262,37 +210,18 @@ function OrgDetail(props: IProps) {
                                     <div className="org-mess-flo">
                                         <div
                                             className="org-mess"
-                                            style={
-                                                org_redux?.is_favorite
-                                                    ? {
-                                                        backgroundColor:
-                                                            "#e64d4a",
-                                                        border: "1px solid #e64d4a",
-                                                    }
-                                                    : {}
-                                            }
-                                            onClick={handleFavoriteOrg}
+                                            style={favoriteSt.is_favorite ? {
+                                                backgroundColor: "#e64d4a",
+                                                border: "1px solid #e64d4a",
+                                            } : {}}
+                                            onClick={onToggleFavorite}
                                         >
                                             <span
-                                                style={
-                                                    org_redux?.is_favorite
-                                                        ? {
-                                                            color: "#fff",
-                                                        }
-                                                        : {}
-                                                }
+                                                style={favoriteSt ? { color: "#fff", } : {}}
                                             >
-                                                {org_redux?.is_favorite
-                                                    ? t("Mer_de.flowing")
-                                                    : t("Mer_de.flow")}
+                                                {favoriteSt?.is_favorite ? t("Mer_de.flowing") : t("Mer_de.flow")}
                                             </span>
                                         </div>
-                                        {/* <div
-                                            onClick={() => onOpenChatOrg()}
-                                            className="org-flo"
-                                        >
-                                            <span>Nhắn tin</span>
-                                        </div> */}
                                         <div
                                             className="org-flo"
                                             onClick={() => {
@@ -311,64 +240,42 @@ function OrgDetail(props: IProps) {
                                             />
                                             <span className="title">
                                                 {t("Mer_de.time_work")}{" "}
-                                                {time_works_today?.day_week}:
+                                                {orgTimeToday?.day_week ?? ''}:
                                             </span>
                                         </div>
                                         <div className="flex-row org-time-work__right">
                                             <div
-                                                onClick={() =>
-                                                    handleOpenSelector()
-                                                }
+                                                onClick={(e) => {
+                                                    onOpenTime();
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                }}
                                                 className="flex-row-sp org-time-work__right-list"
                                             >
-                                                {
-                                                    time_works_today?.from_time_opening
-                                                }{" "}
-                                                -{" "}
-                                                {
-                                                    time_works_today?.to_time_opening
-                                                }
-                                                <img
-                                                    src={icon.arrowDownPurple}
-                                                    alt=""
-                                                />
+                                                {orgTimeToday?.from_time_opening}{" "}-{" "}
+                                                {orgTimeToday?.to_time_opening}
+                                                <img src={icon.arrowDownPurple} alt="" />
                                             </div>
                                             {/* selector time_works_today */}
                                             <ul
                                                 ref={refListTimeWorks}
                                                 className="org-time-work__list"
                                             >
-                                                {orgTimes?.map(
-                                                    (
-                                                        item: any,
-                                                        index: number
-                                                    ) => (
-                                                        <li
-                                                            style={
-                                                                index + 2 ===
-                                                                    today
-                                                                    ? {
-                                                                        color: "var(--purple)",
-                                                                    }
-                                                                    : {}
-                                                            }
-                                                            key={index}
-                                                            className="flex-row org-time-list__item"
-                                                        >
-                                                            <span className="org-time-list__left">
-                                                                {item.day_week}
-                                                            </span>
-                                                            <div className="org-time-list__right">
-                                                                {
-                                                                    item?.from_time_opening
-                                                                }{" "}
-                                                                -{" "}
-                                                                {
-                                                                    item?.to_time_opening
-                                                                }
-                                                            </div>
-                                                        </li>
-                                                    )
+                                                {orgTimes?.map((item: IOrgTimeWork, index: number) => (
+                                                    <li
+                                                        style={item.todayAct ? { color: "var(--purple)" } : {}}
+                                                        key={index}
+                                                        className="flex-row org-time-list__item"
+                                                    >
+                                                        <span className="org-time-list__left">
+                                                            {item.day_week}
+                                                        </span>
+                                                        <div className="org-time-list__right">
+                                                            {item?.from_time_opening}{" "}-{" "}
+                                                            {item?.to_time_opening}
+                                                        </div>
+                                                    </li>
+                                                )
                                                 )}
                                             </ul>
                                         </div>
@@ -377,20 +284,13 @@ function OrgDetail(props: IProps) {
                             </div>
                             <div className="right">
                                 <button
-                                    style={
-                                        org_redux?.is_favorite
-                                            ? {
-                                                backgroundColor:
-                                                    "var(--purple)",
-                                                color: "var(--bgWhite)",
-                                            }
-                                            : {}
-                                    }
-                                    onClick={handleFavoriteOrg}
+                                    style={favoriteSt.is_favorite ? {
+                                        backgroundColor: "var(--purple)",
+                                        color: "var(--bgWhite)",
+                                    } : {}}
+                                    onClick={onToggleFavorite}
                                 >
-                                    {org_redux?.is_favorite
-                                        ? t("Mer_de.flowing")
-                                        : t("Mer_de.flow")}
+                                    {favoriteSt?.is_favorite ? t("Mer_de.flowing") : t("Mer_de.flow")}
                                 </button>
                                 <br />
                                 <button
@@ -400,7 +300,6 @@ function OrgDetail(props: IProps) {
                                 >
                                     {t("Mer_de.contact")}
                                 </button>
-                                {/* <button onClick={onOpenChatOrg}>Chat</button> */}
                             </div>
                         </div>
                     </div>
@@ -411,45 +310,6 @@ function OrgDetail(props: IProps) {
                 openPopupContact={openPopupContact}
                 setOpenPopupContact={setOpenPopupContact}
             />
-            <Drawer open={open} anchor="bottom" onClose={() => setOpen(false)}>
-                <div className="se-branch__drawer">
-                    <p className="se-branch__title">
-                        {t("Mer_de.list_branch")}
-                    </p>
-                    <div className="se-branch__list">
-                        {org?.branches.map((item: any, index: number) => (
-                            <div key={index} className="se-branch__item">
-                                <div>
-                                    <div className="branch-item__top">
-                                        <div className="item-top__distance">
-                                            <img src={icon.mapPinRed} alt="" />
-                                            <span>3km</span>
-                                        </div>
-                                        <div className="item-top__name">
-                                            <p>{item?.name}</p>
-                                        </div>
-                                    </div>
-                                    <div className="branch-item__bottom">
-                                        <div className="item-bottom__address">
-                                            <p>{item?.address}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div
-                                    onClick={(e) => {
-                                        setOpenPopupMap(true);
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                    }}
-                                    className="branch-item__pinmap"
-                                >
-                                    <img src={icon.mapMarkerOrg} alt="" />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </Drawer>
         </div>
     );
 }

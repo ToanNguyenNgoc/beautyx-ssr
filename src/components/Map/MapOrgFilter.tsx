@@ -27,7 +27,7 @@ const PlaceComponent = (props: any) => {
     const tags_data = [
         // { id: 9, title: t("home_2.places_near_you"), text: t("home_2.places_near_you"), img: icon.distance },
         { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },
-        { id: 3, title: "Salon", text: "Salon", img: imgTag.hairSalon },
+        { id: 3, title: "Salon", text: "Salon", img: '' },
         { id: 1, title: "Nail", text: "Nail", img: imgTag.nails },
         {
             id: 6,

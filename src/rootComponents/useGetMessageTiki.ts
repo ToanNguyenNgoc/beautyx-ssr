@@ -22,17 +22,21 @@ function useGetMessageTiki() {
     const [response, setResponse] = useState<any>();
     const callbacks: any = {};
     useEffect(() => {
-        window.addEventListener('message', (e) => {
-            const { requestId, result } = e.data;
-            if (requestId === undefined) {
-                return setResponse(null);
-            }
-            delete callbacks[requestId];
-            setResponse({
-                requestId: requestId,
-                result: result
-            });
-        })
+        let mount = true
+        if (mount) {
+            window.addEventListener('message', (e) => {
+                const { requestId, result } = e.data;
+                if (requestId === undefined) {
+                    return setResponse(null);
+                }
+                delete callbacks[requestId];
+                setResponse({
+                    requestId: requestId,
+                    result: result
+                });
+            })
+        }
+        return () => { mount = false }
     }, [])
     return response;
 }

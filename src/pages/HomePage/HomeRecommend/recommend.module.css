@@ -1,0 +1,84 @@
+.container {
+    margin: 24px 0;
+    padding: 10px;
+    background: #fff;
+}
+
+.tab {
+    margin: 12px 0px;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.tab_list {
+    display: flex;
+    align-items: center;
+    width: max-content;
+}
+
+.tab_list_item {
+    padding: 7px 10px;
+    margin-right: 12px;
+    border: solid 1px var(--bg-white);
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 28px;
+    cursor: pointer;
+    transition: var(--trans);
+    max-width: 150px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.tab_container {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.list_recommend {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 24px;
+}
+
+.list_recommend_item>a>div {
+    box-shadow: none;
+}
+
+.tab_bottom {
+    display: flex;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+.tab_bottom_btn {
+    padding: 7px 84px;
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid #595959;
+    color: #595959;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .list_recommend {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .list_recommend {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tab_list_item {
+        padding: 4px 9px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 20px;
+    }
+}

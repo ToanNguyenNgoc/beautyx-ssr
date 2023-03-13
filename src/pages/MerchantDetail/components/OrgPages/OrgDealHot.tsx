@@ -1,18 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable eqeqeq */
 import { EmptyRes, SerProItem } from 'components/Layout';
-import DiscountItem from 'features/HomeDiscounts/DiscountItem';
+import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem';
 import { IOrganization } from 'interface';
 import { IDiscountPar, IITEMS_DISCOUNT } from 'interface/discount';
-import React, { useEffect } from 'react';
-import { useDeviceMobile } from 'utils';
+import React from 'react';
+import { useDeviceMobile } from 'hooks';
 import { Service, Product } from 'interface'
 import {
     useDiscountsOrg,
     useServicesSpecial,
     useProductsSpecial
 } from 'pages/MerchantDetail/Functions';
-import { useHistory } from 'react-router-dom';
+import { LoadGrid } from 'components/LoadingSketion';
 
 interface OrgDealHotProps {
     org: IOrganization
@@ -21,10 +19,7 @@ interface OrgDealHotProps {
 export function OrgDealHot(props: OrgDealHotProps) {
     const { org } = props
     const IS_MB = useDeviceMobile();
-    const history = useHistory()
-
-
-
+    // const history = useHistory()
     const { discounts, loadDiscounts } = useDiscountsOrg(org)
     const { services_special, loadServices } = useServicesSpecial(org)
     const { products_special, loadProducts } = useProductsSpecial(org)
@@ -32,17 +27,11 @@ export function OrgDealHot(props: OrgDealHotProps) {
         (item.discount_type === "PRODUCT" || item.discount_type === "FINAL_PRICE") &&
         item.items.length > 0
     ))
-
-    const onNavigate = () => {
-        if (
-            !loadDiscounts && !loadServices && !loadProducts
-            && discounts.length === 0 && services_special.length === 0 && products_special.length === 0
-        )
-            history.push(`/cua-hang/${org.subdomain}/thong-tin`)
-    }
-    // useEffect(() => {
-    //     onNavigate()
-    // }, [discounts, loadDiscounts, services_special, loadServices, products_special, loadProducts])
+    let load = true
+    if (
+        discounts.length + services_special.length + products_special.length > 0
+    ) load = false
+    if (!loadDiscounts && !loadProducts && !loadServices) load = false
 
     return (
         <div className="org-deal-hot">
@@ -106,10 +95,15 @@ export function OrgDealHot(props: OrgDealHotProps) {
                     </ul>
                 </div>
             )}
+            {
+                (discounts.length + services_special.length + products_special.length === 0) &&
+                (loadDiscounts && loadServices && loadProducts) &&
+                <LoadGrid grid={IS_MB ? 1 : 6} />
+            }
             {discounts?.length +
                 services_special?.length +
-                products_special?.length ==
-                0 && (
+                products_special?.length ===
+                0 && !load && (
                     <EmptyRes title="Hiện chưa có deal hot nào dành cho bạn!" />
                 )}
         </div>

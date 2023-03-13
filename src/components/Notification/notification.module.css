@@ -63,6 +63,7 @@
 .message_left_icon {
     width: 70px;
     height: 70px;
+    border-radius: 12px;
 }
 
 .message_right {
@@ -82,6 +83,58 @@
     display: flex;
     justify-content: flex-end;
 }
+/* PopupBtxReward */
+
+.popup_btx_reward {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* width: calc(100vw - 48px); */
+    max-width: 500px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-position: center;
+    border-radius: 16px;
+}
+.icon_btx_reward {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+}
+.title_btx_reward {
+    font-size: 18px;
+    color: var(--bg-white);
+    font-weight: normal;
+    margin: 32px 0 8px 0;
+}
+.point_btx_reward {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fedd5f;
+}
+.note_btx_reward {
+    font-size: 16px;
+    color: var(--bg-white);
+}
+.desc_btx_reward {
+    font-size: 14px;
+    padding: 4px 12px;
+    background-color: rgba(66, 66, 66, 0.411);
+    border-radius: 50px;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.69);
+    text-align: center;
+}
+.btn_btx_reward {
+    margin-top: 16px;
+    background-color: #fedd5f;
+    border-radius: 50px;
+    color: #d45423;
+}
 
 @media screen and (max-width: 1023.98px) {
     .container {
@@ -91,5 +144,10 @@
 
     .pop_noti_bot button {
         margin: 0px 4px;
+    }
+}
+@media screen and (max-width: 767.98px) {
+    .popup_btx_reward {
+        width: calc(100vw - 48px);
     }
 }

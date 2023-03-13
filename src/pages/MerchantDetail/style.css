@@ -68,8 +68,8 @@
 }
 
 .mb-head-org-cnt .icon-btn {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
 }
 
 
@@ -354,7 +354,7 @@
     width: 100%;
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 11;
     margin-top: 32px;
 }
 
@@ -1138,6 +1138,21 @@
     line-height: 14px;
     font-weight: 500;
 }
+.err-text{
+    margin: 2px 0px 0px 0px !important;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--red-cl);
+}
+.dialog-forgot__password-btn{
+    display: flex;
+    margin-top: 8px;
+    justify-content: space-between;
+}
+.dialog-forgot__password-btn button{
+    width: calc(50% - 6px);
+}
 
 @media only screen and (max-width: 1023px) {
     .org-mess-flo {
@@ -1210,7 +1225,7 @@
 
     .org-detail {
         padding: 0px;
-        height: 375px;
+        height: 350px;
     }
 
     .org-detail__cnt-top {
@@ -1237,6 +1252,7 @@
         left: 0;
         transform: translateY(75%);
         z-index: 23;
+        position: relative;
     }
 
     .org-detail__cnt-bot {
@@ -1416,7 +1432,7 @@
 
     .org-information {
         width: 100%;
-        padding: 16px 0;
+        padding: 16px 12px;
     }
 
     .org-information__map-cnt {
@@ -1516,7 +1532,7 @@
     }
 
     .org-galleries-cnt {
-        padding: 0px;
+        padding: 16px 12px;
     }
 
     .org-container .org-galleries-cnt {
@@ -1607,5 +1623,10 @@
     .org-information__map-cnt .map-org-detail__slide {
         width: 100%;
         min-width: 240px;
+    }
+    .form-contact {
+        width: 90vw;
+        padding: 12px;
+        border-radius: 6px;
     }
 }

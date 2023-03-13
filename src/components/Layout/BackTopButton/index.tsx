@@ -1,7 +1,6 @@
-import React from 'react';
-import icon from '../../../constants/icon';
+import icon from 'constants/icon';
+import { scrollTop } from 'utils';
 import './style.css';
-import scrollTop from '../../../utils/scrollTop';
 
 window.addEventListener("scroll", function () {
     const scrolled = window.scrollY;
@@ -16,7 +15,7 @@ export function BackTopButton() {
     return (
         <div
             className='back-top-btn'
-            onClick={() => scrollTop()}
+            onClick={scrollTop}
         >
             <img src={icon.arrowSmallUpWhite} alt="" />
         </div>

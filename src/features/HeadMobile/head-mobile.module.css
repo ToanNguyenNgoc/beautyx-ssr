@@ -36,7 +36,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        z-index: 10;
+        z-index: 1001;
         background-color: var(--bg-white);
     }
     .wrapper {
@@ -63,7 +63,9 @@
         display: none;
     }
     .head_left {
-        width: 46px;
+        width: fit-content;
+        min-width: 32px;
+        max-width: 56px;
         height: 32px;
         display: flex;
         align-items: center;

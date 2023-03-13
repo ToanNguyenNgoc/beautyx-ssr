@@ -1,6 +1,6 @@
 import axiosClient from "./axios";
 import { pickBy, identity } from "lodash";
-import { AUTH_HEADER_PARAM_GET } from "../utils/authHeader";
+import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class ServiceApi {
     getByOrgId = (values: any) => {
@@ -12,7 +12,7 @@ class ServiceApi {
             "filter[service_group_id]": values.cate_id,
             "filter[special]": values.special,
             "filter[special_ecommerce]": values.special_ecommerce,
-            "filter[is_momo_ecommerce_enable]": values.isEnable,
+            "filter[is_momo_ecommerce_enable]": values.isEnable ?? true,
             "include": "category|favorites_count",
             "append": "is_favorite|rating|bought_count",
         };

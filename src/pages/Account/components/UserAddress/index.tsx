@@ -8,13 +8,13 @@ import {
     fetchAsyncUserAddress,
     removeAsyncUserAddress,
     updateAsyncAddress,
-} from 'redux/USER/userAddressSlice';
+} from 'redux/user/userAddressSlice';
 import { STATUS } from 'redux/status';
 import ModalLoad from 'components/ModalLoad';
 import IStore from 'interface/IStore';
 import { HeadTitle } from 'pages/Account';
 import { XButton } from 'components/Layout';
-import { useDeviceMobile } from 'utils';
+import { useDeviceMobile } from 'hooks';
 import icon from 'constants/icon';
 
 function Address() {
@@ -57,11 +57,11 @@ function Address() {
                         onClick={gotoAddNewAddress}
                         iconSize={14}
                         className='add_address_btn'
-                        title={IS_MB ? '' : 'Thêm mới'}
+                        title={IS_MB ? '' : t('acc.add new')}
                         icon={icon.plusPurple}
                     />
                 }
-                title='Địa chỉ giao hàng'
+                title={t('acc.order_address')}
             />
             {
                 address?.map((item: IUserAddress, index: number) => (

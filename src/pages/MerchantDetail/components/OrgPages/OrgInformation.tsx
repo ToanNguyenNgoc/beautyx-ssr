@@ -1,19 +1,18 @@
 import React, { useContext, useRef, useState } from "react";
-import { IOrganization } from "../../../../interface/organization";
 import Slider from "react-slick";
-import onErrorImg from "../../../../utils/errorImg";
-import icon from "../../../../constants/icon";
-import { extraOrgTimeWork } from "../../Functions/extraOrg";
-import { AppContext } from "../../../../context/AppProvider";
 import { OrgItemMap } from "components/Layout/OrgItemMap";
 import { OrgMapQuick } from "components/Layout";
+import Comment from 'components/Comment'
+import { IOrganization } from "interface";
+import { AppContext } from "context/AppProvider";
+import { extraOrgTimeWork } from "pages/MerchantDetail/Functions/extraOrg";
+import { onErrorImg } from "utils";
+import icon from "constants/icon";
 
 interface IProps {
     org: IOrganization;
     refMap?: any;
 }
-const day = new Date();
-const today = day.getDay() + 1;
 
 export function OrgInformation(props: IProps) {
     const { org, refMap } = props;
@@ -160,7 +159,7 @@ export function OrgInformation(props: IProps) {
                                                 className="icon"
                                             />
                                             <div className="rate-item__text">
-                                                122 +
+                                                {org.favorites_count}+
                                             </div>
                                         </div>
                                     </div>
@@ -183,8 +182,8 @@ export function OrgInformation(props: IProps) {
                                 {branch?.full_address}
                             </li>
                             {org?.branches
-                                .filter((i: any) => i?.id !== branch?.id)
-                                .map((item: any, index: number) => (
+                                ?.filter((i: any) => i?.id !== branch?.id)
+                                ?.map((item: any, index: number) => (
                                     <li
                                         onClick={() =>
                                             handleSetBranch(item, index)
@@ -199,30 +198,30 @@ export function OrgInformation(props: IProps) {
                     </div>
                 </div>
             )}
-            <div className="org-information__branches">
-                <div className="title">{t("Mer_de.business_hours")}</div>
-                <ul className="org-time-list">
-                    {orgTimes.map((item: any, index: number) => (
-                        <li
-                            style={
-                                index + 2 === today
-                                    ? { color: "var(--text-black)" }
-                                    : {}
-                            }
-                            key={index}
-                            className="flex-row org-time-list__item"
-                        >
-                            <span className="org-time-list__left">
-                                {item.day_week}
-                            </span>
-                            <div className="org-time-list__right">
-                                {item?.from_time_opening} -{" "}
-                                {item?.to_time_opening}
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            {
+                org.opening_time &&
+                <div className="org-information__branches">
+                    <div className="title">{t("Mer_de.business_hours")}</div>
+                    <ul className="org-time-list">
+                        {orgTimes.map((item: any, index: number) => (
+                            <li
+                                style={item.todayAct
+                                    ? { color: "var(--text-black)" } : {}}
+                                key={index}
+                                className="flex-row org-time-list__item"
+                            >
+                                <span className="org-time-list__left">
+                                    {item.day_week}
+                                </span>
+                                <div className="org-time-list__right">
+                                    {item?.from_time_opening} -{" "}
+                                    {item?.to_time_opening}
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            }
             <div className="org-information__branches">
                 <div className="title">{t("Mer_de.about")}</div>
                 <div className="org-information__about">
@@ -234,31 +233,15 @@ export function OrgInformation(props: IProps) {
                     }
                 </div>
             </div>
-            {/* <div className="org-information__branches">
-                <div className="title">{t("Mer_de.utilities")}</div>
-                <ul className="org-information-utils">
-                    <li className="flex-row utils-item">
-                        <img src={icon.carBlack} alt="" className="icon" />
-                        <span>{t("detail_item.parking")}</span>
-                    </li>
-                    <li className="flex-row utils-item">
-                        <img src={icon.wifiBlack} alt="" className="icon" />
-                        <span>Wifi</span>
-                    </li>
-                    <li className="flex-row utils-item">
-                        <img
-                            src={icon.creditCardBlack}
-                            alt=""
-                            className="icon"
-                        />
-                        <span>{t("detail_item.accept_card_payment")}</span>
-                    </li>
-                </ul>
-            </div> */}
             <OrgItemMap
                 open={openOrgMap}
                 setOpen={setOpenOrgMap}
                 org={org}
+            />
+            <Comment
+                org_id={org.id}
+                commentable_id={org.id}
+                commentable_type="ORGANIZATION"
             />
         </div>
     );

@@ -1,16 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { extraParamsUrl, useDeviceMobile, useSwr } from 'utils'
+import {  useDeviceMobile, useSwr } from 'hooks'
 import PageNotFound from 'components/PageNotFound';
 import { IBanner } from 'interface/banner'
-import Footer from 'features/Footer';
 import style from './landing.module.css'
 import { Container } from '@mui/material';
-import Head from 'features/Head';
 import Skeleton from 'react-loading-skeleton';
 import { TypeLandingPage, TypeSearchResult } from "./components"
 import { useHistory } from 'react-router-dom';
 import HeadMobile from 'features/HeadMobile';
+import { extraParamsUrl } from 'utils';
 
 function LadingPage() {
     const IS_MB = useDeviceMobile()
@@ -27,7 +26,7 @@ function LadingPage() {
     return (
         <>
             <>
-                {IS_MB ? <HeadMobile title={banner?.name ?? ""} /> : <Head />}
+                {IS_MB && <HeadMobile title={banner?.name ?? ""} />}
                 <div className={style.container}>
                     <Container>
                         <div className={style.banner_container}>
@@ -42,7 +41,6 @@ function LadingPage() {
                         </div>
                     </Container>
                 </div>
-                <Footer />
             </>
             {!render && <PageNotFound />}
         </>

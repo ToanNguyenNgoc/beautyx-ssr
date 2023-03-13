@@ -1,121 +1,88 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import icon from '../../../../constants/icon';
-import { AppContext } from '../../../../context/AppProvider';
-import { STATUS } from '../../../../redux/status';
-import { fetchAsyncUserAddress } from '../../../../redux/USER/userAddressSlice';
-import DialogChangeInfo from '../DialogChangeInfo';
-
-import "./style.css";
-import useDeviceMobile from '../../../../utils/useDeviceMobile';
+import icon from 'constants/icon';
+import { AppContext } from 'context/AppProvider';
+import style from './user-payment.module.css'
+import { useSwr } from 'hooks';
+import { XButton } from 'components/Layout';
+import API_ROUTE from 'api/_api';
+import { IUserAddress } from 'interface';
 
 interface IProps {
     onSetAddressDefault?: (address?: any) => void;
     disableEdit?: boolean;
+    disableAddress?: boolean
+    title?: string,
 }
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext);
-    const IS_MB = useDeviceMobile();
-    const { onSetAddressDefault, disableEdit } = props;
+    const { onSetAddressDefault, disableEdit, title, disableAddress } = props;
     const history = useHistory();
-    const dispatch = useDispatch();
     const USER = useSelector((state: any) => state.USER.USER);
-    const ADDRESS = useSelector((state: any) => state.ADDRESS);
-    const { status, address_default } = ADDRESS;
-    const [openInfo, setOpenInfo] = useState(false);
-    //const [useAddress, setUserAddress] = useState<IUserAddress>();
-    const callUserAddress = () => {
-        if (status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncUserAddress())
-        }
-        if (onSetAddressDefault) {
-            onSetAddressDefault(address_default)
-        }
-    };
+    const { response } = useSwr(API_ROUTE.ADDRESSES, USER)
+    const addresses: IUserAddress[] = response ?? []
+    const addressDefault = addresses.find(i => i.is_default === true)
     useEffect(() => {
-        callUserAddress();
-    }, [status]);
-    const gotoEditInformation = () => {
-        if (IS_MB) {
-            setOpenInfo(true);
-        } else {
-            history.push("/tai-khoan/thong-tin-ca-nhan");
+        let mount = true
+        if (addressDefault && onSetAddressDefault && mount) {
+            onSetAddressDefault(addressDefault)
         }
-    };
+        return () => {mount = false}
+    }, [addresses])
     return (
-        <div className="user-address-form">
-            <span className="user-address-form__title">
-                {t("pm.payment_info")}
+        <div className={style.container}>
+            <span className={style.title}>
+                {title ?? t("pm.payment_info")}
             </span>
-            <div className="flex-row-sp user-pm-de-cnt">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td className="user-pm-de-cnt__tb-left">
-                                {t("pm.buyer")}
-                            </td>
-                            <td
-                                style={{ color: "var(--black)" }}
-                                className="user-pm-de-cnt__tb-left"
-                            >
-                                {USER?.fullname}
-                            </td>
-                            {disableEdit ? (
-                                <></>
-                            ) : (
-                                <td>
-                                    <button onClick={gotoEditInformation}>
-                                        <img src={icon.edit} alt="" />
-                                    </button>
-                                </td>
-                            )}
-                        </tr>
-                        <tr>
-                            <td className="user-pm-de-cnt__tb-left">
-                                {t("pm.phone")}
-                            </td>
-                            <td
-                                style={{ color: "var(--black)" }}
-                                className="user-pm-de-cnt__tb-left"
-                            >
-                                {USER?.telephone}
-                            </td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td className="user-pm-de-cnt__tb-left">
-                                {t("pm.address")}
-                            </td>
-                            <td
-                                style={{ color: "var(--black)" }}
-                                className='user-pm-de-cnt__tb-left'>
-                                {address_default ? address_default?.address
-                                    :
-                                    "Chưa có địa chỉ giao hàng"
-                                }
-                            </td>
-                            {/* {
-                                disableEdit ?
-                                    <></>
-                                    :
-                                    <td>
-                                        <button
-                                            onClick={() => history.push('/tai-khoan/thong-tin-ca-nhan?address=true')}
-                                        >
-                                            <img className='img-icon' src={address_default ? icon.edit : icon.plus} alt="" />
-                                        </button>
-                                    </td>
-                            } */}
-                        </tr>
-                    </tbody>
-                </table>
+            <div className={style.container_user}>
+                <div className={style.user_row}>
+                    <div className={style.user_row_label}>{t("pm.buyer")}</div>
+                    <div className={style.user_row_detail}>
+                        <span className={style.user_row_detail_text}>{USER?.fullname}</span>
+                        {
+                            !disableEdit &&
+                            <XButton
+                                onClick={() => history.push("/tai-khoan/thong-tin-ca-nhan")}
+                                className={style.user_edit_btn}
+                                icon={icon.editWhite}
+                                iconSize={14}
+                            />
+                        }
+                    </div>
+                </div>
+                <div className={style.user_row}>
+                    <div className={style.user_row_label}>{t("pm.phone")}</div>
+                    <div className={style.user_row_detail}>
+                        <span className={style.user_row_detail_text}>{USER?.telephone}</span>
+                    </div>
+                </div>
+                {
+                    !disableAddress &&
+                    <div className={style.user_row}>
+                        <div className={style.user_row_label}>{t("pm.address")}</div>
+                        <div className={style.user_row_detail}>
+                            <span className={style.user_row_detail_text}>
+                                {addressDefault?.address}
+                            </span>
+                            {
+                                !disableEdit &&
+                                <XButton
+                                    className={style.user_edit_btn}
+                                    icon={icon.editWhite}
+                                    iconSize={14}
+                                    onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')}
+                                />
+                            }
+                        </div>
+                    </div>
+                }
             </div>
-            {USER && <DialogChangeInfo open={openInfo} setOpen={setOpenInfo} />}
         </div>
     );
 }
 
 export default UserPaymentInfo;
+

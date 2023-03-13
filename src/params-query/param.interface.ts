@@ -9,8 +9,40 @@ export interface ParamOrg {
     "filter[max_price]"?: number | string,
     "filter[province_code]"?: number | string,
     "filter[district_code]"?: number | string,
+    "filter[is_demo]"?: boolean | string,
     "sort"?: string,
     "include"?: string
+}
+export interface ParamComment {
+    "page"?: number | string,
+    "limit"?: number | string,
+    "filter[commentable_type]": "ORGANIZATION" | "SERVICE" | "PRODUCT" | "REPLY_COMMENT",
+    "filter[commentable_id]": number | string,
+    "filter[organization_id]"?: number | string,
+    "include"?: string,
+    "sort"?: string,
+    "append"?: string
+}
+export interface ParamBranchV3 {
+    "page"?: number | string,
+    "limit"?: number | string,
+    "keyword"?: string,
+    "is_momo_ecommerce_enable"?: boolean | '',
+    "location"?: string,
+    "sort"?: string,
+    "province_code"?: number | string,
+    "district_code"?: number | string,
+    "is_demo"?: boolean | '' | 'true' | 'false'
+}
+export interface ParamDiscounts {
+    "page"?: number,
+    "limit"?: number,
+    "filter[platform]": "" | "MOMO" | "MOBA" | "BEAUTYX" | "TIKI",
+    "filter[discount_type]"?: "" | "SUB_TOTAL" | "FINAL_PRICE" | "PRODUCT",
+    "filter[organization_id]"?: "" | number,
+    "filter[location]"?: string,
+    "sort"?: string   //title|created_at|coupon_code|discount_value|total|used|limit|priority
+    "append"?: string
 }
 export interface ParamService {
     "limit"?: number,
@@ -46,9 +78,29 @@ export interface ParamOrder {
     "limit": string | number,
     "filter[platform]": string,
     "filter[status]": string,
-    "filter[withServicesSold]": boolean,
-    "filter[productable]": boolean,
+    "filter[withServicesSold]": boolean | any,
+    "filter[productable]": boolean | any,
     "include": string,
     "sort": string,
-    "append":string
+    "append": string
+}
+export interface ParamsProductable {
+    "limit"?: number | string,
+    "keyword"?: string,
+    "on_ecommerce"?: "" | boolean | "true" | "false",
+    "location"?: string,
+    "sort"?: "distance|random" | "distance" | "random" | "",
+    "type"?: "" | "1" | "2" | "3" | "4",  //SERVICE:1|PRODUCT:2|PREPAY CARD:3|TREATMENT COMBO:4
+    "organization_id"?: "" | number,
+    "discount_price"?: "" | boolean,
+    "discount_ecommerce_price"?: "" | boolean,
+    "min_price"?: "" | number,
+    "max_price"?: "" | number,
+    "discount_min_price"?: "" | number,
+    "discount_max_price"?: "" | number,
+    "discount_min_price_ecommerce"?: "" | number,
+    "discount_max_price_ecommerce"?: "" | number,
+    "province_code"?: string | number,
+    "district_code"?: string | number,
+    "is_demo"?:boolean|'false'|'true'
 }

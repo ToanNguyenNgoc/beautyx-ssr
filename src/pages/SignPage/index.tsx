@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import SignIn from "./components/SignIn";
 import { Container } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
 import SignUps from "./components/SignUps";
 import { AppContext } from "context/AppProvider";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
@@ -12,7 +12,7 @@ import img from "constants/img";
 import LoginFlatFormRequest from "rootComponents/loginFlatFormRequest/LoginFlatFormRequest";
 import style from './sign-page.module.css'
 
-function SignPage(props: any) {
+function SignPage() {
   const { t } = useContext(AppContext);
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const location: any = useLocation();
@@ -43,7 +43,6 @@ function SignPage(props: any) {
   }
   return (
     <>
-      <BackButton />
       <div className="page-sign">
         {
           FLAT_FORM === FLAT_FORM_TYPE.BEAUTYX ?
@@ -80,11 +79,14 @@ function SignPage(props: any) {
               </div>
             </Container>
             :
-            <Container>
-              <LoginFlatFormRequest
-                pathname={pathname}
-              />
-            </Container>
+            <>
+              <BackButton />
+              <Container>
+                <LoginFlatFormRequest
+                  pathname={pathname}
+                />
+              </Container>
+            </>
         }
       </div>
     </>

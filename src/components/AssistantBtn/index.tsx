@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
-import { handleChat } from "../../utils/customChat";
+import { handleCallingPhone, handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
 import "./style.css";
+import { useDeviceMobile } from "hooks";
 // ==== api tracking ====
 // end
-import useDeviceMobile from "../../utils/useDeviceMobile";
 // import useScript from "../../utils/useScript";
 
 export default function AssistantBtn() {
@@ -103,6 +103,41 @@ export default function AssistantBtn() {
                                 <img
                                     style={{ width: "20px" }}
                                     src={icon.chatWhite}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                    )}
+                    {is_mb === true ? (
+                        <button
+                            onTouchStart={(e) => {
+                                handleCallingPhone();
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
+                            className="btn2 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.phoneWhiteBold}
+                                    alt=""
+                                />
+                            </div>
+                        </button>
+                    ) : (
+                        <div
+                            onClick={(e) => {
+                                handleCallingPhone();
+                                e.preventDefault();
+                                e.stopPropagation();
+                            }}
+                            className="btn2 buttons"
+                        >
+                            <div className="btn-img">
+                                <img
+                                    style={{ width: "20px" }}
+                                    src={icon.phoneWhiteBold}
                                     alt=""
                                 />
                             </div>

@@ -1,17 +1,20 @@
 import { XButton } from "components/Layout";
 import icon from "constants/icon";
 import { IBanner } from "interface";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useSelector } from "react-redux";
 import Slider from "react-slick";
-import { clst, slugify, useDeviceMobile } from "utils";
+import { clst, slugify } from "utils";
 import tracking from "api/trackApi";
 import style from "./banner-mobile.module.css";
 import { formatRouterLinkOrg } from "utils/formatRouterLink/formatRouter";
 import { useHistory } from "react-router-dom";
 import { Dialog } from "@mui/material";
-import ReactPlayer from "react-player";
 import { PopupMessage } from "components/Notification";
+import { useDeviceMobile } from "hooks";
+import { AppContext } from "context/AppProvider";
+import {bannersHard} from '../data'
+import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 
 interface PopupProps {
     open: boolean;
@@ -41,15 +44,17 @@ const NextButton = (props: any) => {
     );
 };
 
-const features = [
-    // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },
-    { title: "Cộng đồng", icon: icon.communityPurple, func: "COM" },
-    { title: "Lịch hẹn", icon: icon.calendarGreen, func: "CAL" },
-    { title: "Mã giảm giá", icon: icon.ticketRed, func: "DIS" },
-    { title: "Rewards", icon: icon.rewardOrange, func: "REW" },
-];
 
 function HomeBanner2() {
+    const { t } = useContext(AppContext)
+    const PLAT_FORM = EXTRA_FLAT_FORM()
+    const features = [
+        // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },
+        { title: t('Home.community'), icon: icon.communityPurple, func: "COM" },
+        { title: t('Home.appointment'), icon: icon.calendarGreen, func: "CAL" },
+        { title: t('Home.coupon_code'), icon: icon.ticketRed, func: "DIS" },
+        { title: "Rewards", icon: icon.rewardOrange, func: "REW" },
+    ];
     const { banners } = useSelector((state: any) => state.HOME);
     const [popup, setPopup] = useState<PopupProps>({
         open: false,
@@ -60,14 +65,14 @@ function HomeBanner2() {
     const settings = {
         dots: true,
         arrows: !IS_MB,
-        speed: 900,
+        speed: 1200,
         slidesToShow: 1,
         slidesToScroll: 1,
         nextArrow: <NextButton />,
         prevArrow: <PrevButton />,
         swipe: true,
-        // autoplay: true,
-        autoplaySpeed: 2900,
+        autoplay: IS_MB,
+        autoplaySpeed: 3500,
         appendDots: (dots: any) => (
             <div className="banner-dot">
                 <ul>{dots}</ul>
@@ -117,12 +122,14 @@ function HomeBanner2() {
                     content: 'Tính năng "Cộng đồng" đang trong giai đoạn phát triển.',
                     icon: icon.communityPurple
                 });
+            // return history.push('/cong-dong')
             case "REW":
                 return setMessage({
                     open: true,
                     content: 'Tính năng "Rewards" đang trong giai đoạn phát triển.',
                     icon: icon.rewardOrange
                 });
+            // return history.push('/coins')
             case "CAL":
                 return history.push("/lich-hen?tab=1");
             case "MAP":
@@ -133,12 +140,16 @@ function HomeBanner2() {
                 break;
         }
     };
+    const banners2 = bannersHard(PLAT_FORM)
+    const banners1 = banners.slice(0,1)
+    const bannersLast = banners.slice(1, banners.length)
+    const BANNERS = [...banners1,...banners2,...bannersLast]
 
     return (
         <div className={style.container}>
             <div className={style.banner_container}>
                 <Slider {...settings}>
-                    {banners.map((item: IBanner, index: number) => (
+                    {BANNERS.map((item: IBanner, index: number) => (
                         <div
                             onClick={() => onClickBanner(item)}
                             key={index}
@@ -147,17 +158,9 @@ function HomeBanner2() {
                             <img
                                 className={style.banner_img}
                                 src={item.imageURL}
+                                // src='https://res.cloudinary.com/dt3auapd8/image/upload/v1673340495/Banner_BeautyX_Momo_1_btsvmb.jpg'
                                 alt=""
                             />
-                            {IS_MB && (
-                                <div className={style.banner_mb_cnt}>
-                                    <img
-                                        className={style.banner_mb_cnt_img}
-                                        src={item.imageURL}
-                                        alt=""
-                                    />
-                                </div>
-                            )}
                         </div>
                     ))}
                 </Slider>
@@ -208,7 +211,7 @@ const PopupBanner = (props: PopupBannerProps) => {
             onClick={() => setPopup({ open: false, banner: null })}
         >
             <div className={style.popup_container}>
-                {popup.banner?.type === "VIDEO" && (
+                {/* {popup.banner?.type === "VIDEO" && (
                     <div className={style.video_container}>
                         <ReactPlayer
                             controls
@@ -217,7 +220,7 @@ const PopupBanner = (props: PopupBannerProps) => {
                             url={`${popup.banner?.url}`}
                         />
                     </div>
-                )}
+                )} */}
                 {popup.banner?.type === "HTML" && (
                     <div className={style.html_container}>
                         <div

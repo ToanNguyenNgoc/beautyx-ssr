@@ -1,3 +1,5 @@
+import icon from 'constants/icon';
+import { useDeviceMobile } from 'hooks';
 import { ITag } from 'interface';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -11,6 +13,7 @@ interface FilterTagsProps {
 
 export function FilterTags(props: FilterTagsProps) {
     const { onChange, value, title } = props;
+    const IS_MB = useDeviceMobile()
     const tagsArr = value?.split('|').filter(Boolean) ?? []
     const { tags } = useSelector((state: any) => state.HOME)
     const onChangeTag = (tag_name: string) => {
@@ -44,14 +47,16 @@ export function FilterTags(props: FilterTagsProps) {
                                 }
                             >
                                 <div className={style.tag_check}>
-                                    {actItem && <span></span>}
+                                    {
+                                        actItem && <span>
+                                            {IS_MB && <img src={icon.checkWhite} alt='' />}
+                                        </span>
+                                    }
                                 </div>
-                                <span className={
-                                    actItem ?
-                                        clst([style.tag_name, style.tag_name_act])
-                                        :
-                                        style.tag_name
-                                }>{item.name}</span>
+                                <div className={style.tag_item_cnt_img}>
+                                    <img src={item.media[0]?.original_url} alt="" />
+                                </div>
+                                <span className={style.tag_name}>{item.name}</span>
                             </li>
                         )
                     })

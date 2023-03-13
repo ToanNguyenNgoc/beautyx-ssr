@@ -4,10 +4,19 @@ import icon from '../../../constants/icon';
 import { Container } from '@mui/material';
 import { useHistory } from 'react-router-dom'
 
-export function BackButton(props: any) {
+interface BackButtonProps {
+      onBackFunc?: () => void,
+      setOpenFilter?: any,
+      setStep?: any
+}
+
+export function BackButton(props: BackButtonProps) {
       const history = useHistory();
-      const { setOpenFilter, setStep } = props;
+      const { setOpenFilter, setStep, onBackFunc } = props;
       const backClick = () => {
+            if (onBackFunc) {
+                  return onBackFunc()
+            }
             if (setOpenFilter) {
                   setOpenFilter(false)
             }

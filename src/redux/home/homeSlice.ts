@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import bannerApi from "../../api/bannerApi";
-import provincesApi from "../../api/provinceApi";
-import tagsApi from "../../api/tagApi";
+import bannerApi from "api/bannerApi";
+import provincesApi from "api/provinceApi";
+import tagsApi from "api/tagApi";
 import { STATUS } from "../status";
-import discountApi from "../../api/discountApi";
 
 export const fetchAsyncHome: any = createAsyncThunk(
     "HOME/fetchAsyncHome",
@@ -20,21 +19,6 @@ export const fetchAsyncHome: any = createAsyncThunk(
             tags: await res_tags.data.context.data,
         };
         return payload;
-    }
-);
-export const fetchAsyncDiscounts: any = createAsyncThunk(
-    "HOME/fetchAsyncDiscounts",
-    async (values: any) => {
-        try {
-            const res = await discountApi.getAll(values);
-            const payload = {
-                discounts: res.data.context.data,
-                totalItem: res.data.context.total,
-            };
-            return payload;
-        } catch (error) {
-            console.log(error);
-        }
     }
 );
 const initialState = {
@@ -59,51 +43,18 @@ const homeSlice = createSlice({
             state.DISCOUNTS = initialState.DISCOUNTS
         }
     },
-    extraReducers: {
-        [fetchAsyncHome.pending]: (state) => {
-            return state;
-        },
-        [fetchAsyncHome.fulfilled]: (state, { payload }) => {
+    extraReducers(builder) {
+        builder.addCase(fetchAsyncHome.pending, (state) => { return state })
+        builder.addCase(fetchAsyncHome.fulfilled, (state, { payload }) => {
             return {
                 ...state,
                 ...payload,
                 status: STATUS.SUCCESS,
             };
-        },
-        [fetchAsyncHome.rejected]: (state) => {
-            return { ...state, status: STATUS.FAIL };
-        },
-
-        [fetchAsyncDiscounts.pending]: (state) => {
-            return {
-                ...state,
-                DISCOUNTS: {
-                    ...state.DISCOUNTS,
-                    status_discount: STATUS.LOADING,
-                },
-            };
-        },
-        [fetchAsyncDiscounts.fulfilled]: (state, { payload }) => {
-            const { discounts, totalItem } = payload;
-            return {
-                ...state,
-                DISCOUNTS: {
-                    ...state.DISCOUNTS,
-                    discounts: [...state.DISCOUNTS.discounts, ...discounts],
-                    totalItem: totalItem,
-                    status_discount: STATUS.SUCCESS,
-                },
-            };
-        },
-        [fetchAsyncDiscounts.rejected]: (state) => {
-            return {
-                ...state,
-                DISCOUNTS: {
-                    ...state.DISCOUNTS,
-                    status_discount: STATUS.FAIL,
-                },
-            };
-        },
+        })
+        builder.addCase(fetchAsyncHome.rejected, (state) => {
+            return { ...state, status: STATUS.FAIL }
+        })
     },
 });
 const { actions } = homeSlice;

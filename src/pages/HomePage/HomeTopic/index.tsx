@@ -1,11 +1,16 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import React from 'react';
+import { AppContext } from 'context/AppProvider';
+import { useDeviceMobile } from 'hooks';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { clst, scrollTop, slugify, useDeviceMobile } from 'utils';
+import { clst, scrollTop, slugify } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
-import { deals, topics } from '../data'
+import {
+    deals,
+    // topics 
+} from '../data'
 import style from './style.module.css'
 
 const Next = (props: any) => {
@@ -27,25 +32,26 @@ const Prev = (props: any) => {
     );
 };
 
-const settingsSlideBot = {
-    dots: false,
-    infinite: true,
-    arrows: true,
-    speed: 800,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    swipe: true,
-    nextArrow: <Next />,
-    prevArrow: <Prev />,
-};
+// const settingsSlideBot = {
+//     dots: false,
+//     infinite: true,
+//     arrows: true,
+//     speed: 800,
+//     slidesToShow: 2,
+//     slidesToScroll: 1,
+//     swipe: true,
+//     nextArrow: <Next />,
+//     prevArrow: <Prev />,
+// };
 
 function HomeTopic() {
+    const { t } = useContext(AppContext)
     const IS_MB = useDeviceMobile();
     const settingsSlideTop = {
         dots: false,
         infinite: true,
         arrows: true,
-        centerPadding: IS_MB ? "18px" : "100px",
+        centerPadding: IS_MB ? "14px" : "62px",
         centerMode: true,
         speed: 800,
         slidesToShow: 1,
@@ -69,7 +75,7 @@ function HomeTopic() {
             <div className={style.topic_title}>
                 <div className={style.title}>
                     <img src={icon.flash} className={style.title_icon} alt="" />
-                    <HomeTitle title="Phụ nữ Việt - Đẹp toàn diện" />
+                    <HomeTitle title={t('Home.Vietnamese_women_totally_beautiful')} />
                 </div>
             </div>
             <div className={style.body}>
@@ -80,8 +86,7 @@ function HomeTopic() {
                                 <Link
                                     onClick={scrollTop}
                                     to={{
-                                        pathname: `/deal/${slugify(item.title)}`,
-                                        search: `${item.id}`,
+                                        pathname: `/deal/${slugify(item.title)}`
                                     }}
                                     key={item.id} className={style.detail_item_cnt}
                                 >
@@ -113,23 +118,23 @@ function HomeTopic() {
 
 export default HomeTopic;
 
-const TopicItem = (props: any) => {
-    const { item } = props;
-    return (
-        <div className={style.topic_item}>
-            <img src={item.image_url} className={style.topic_item_img} alt="" />
-            <div className={style.topic_item_desc}>
-                <div>
-                    <p className={style.topic_item_desc_title}>{item.title}</p>
-                    {/* <p className={style.topic_item_desc_content}>
-        {item.content}
-    </p> */}
-                </div>
-                {/* <XButton
-                    className={style.topic_item_btn}
-                    title="Xem chi tiết"
-                /> */}
-            </div>
-        </div>
-    );
-};
+// const TopicItem = (props: any) => {
+//     const { item } = props;
+//     return (
+//         <div className={style.topic_item}>
+//             <img src={item.image_url} className={style.topic_item_img} alt="" />
+//             <div className={style.topic_item_desc}>
+//                 <div>
+//                     <p className={style.topic_item_desc_title}>{item.title}</p>
+//                     <p className={style.topic_item_desc_content}>
+//                         {item.content}
+//                     </p>
+//                 </div>
+//                 <XButton
+//                     className={style.topic_item_btn}
+//                     title="Xem chi tiết"
+//                 />
+//             </div>
+//         </div>
+//     );
+// };

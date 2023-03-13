@@ -7,10 +7,14 @@ export const baseURL = process.env.REACT_APP_API_URL;
 const axiosClient = axios.create({
     baseURL: baseURL,
     headers: {
-        Accept: "application/json",
+        'Accept': "application/json, text/plain, */*",
         "Content-Type": "application/json",
     },
-    paramsSerializer: (params) => queryString.stringify(params),
+    paramsSerializer: {
+        encode: (param: string) => {},
+        serialize: (params) => queryString.stringify(params),
+        indexes: false,
+    },
 });
 axiosClient.interceptors.request.use(async (config) => {
     return config;

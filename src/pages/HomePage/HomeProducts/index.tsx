@@ -1,57 +1,41 @@
-import { cateChild1 } from 'data/category';
-import React from 'react';
+import { AppContext } from 'context/AppProvider';
+import { useDeviceMobile } from 'hooks';
+import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchOrgsByTag, onChooseCate, onChooseTab, onSetFirstCateProducts } from 'redux/CateTree/cateTreeSlice';
-import { useDeviceMobile, scrollTop } from 'utils';
+import { onSetCateParentId, onSetTab } from 'redux/cates-tree';
+import { scrollTop } from 'utils';
 import HomeTitle from '../Components/HomeTitle';
 import { productsSection, IProductsSection } from '../data'
 import style from './style.module.css'
 
 function HomeProducts() {
+    const { t } = useContext(AppContext)
     const IS_MB = useDeviceMobile()
     const history = useHistory()
     const dispatch = useDispatch()
-    const handleNavigateProductCate = (id: number, title: string) => {
-        const action = {
-            title: title,
-            cate_id: id,
-        };
-        dispatch(onChooseCate(action));
-        dispatch(
-            fetchOrgsByTag({
-                tags: title,
-                page: 1,
-            })
-        );
-        const cateProductsFirst = cateChild1.filter(
-            (i) => i.cate_id === id
-        );
-        dispatch(
-            onSetFirstCateProducts(
-                cateProductsFirst.filter((i) => i.type === "PRODUCT")[0]
-            )
-        );
-        dispatch(onChooseTab('PRODUCT'));
+    const handleNavigateProductCate = (id: number) => {
+        dispatch(onSetTab('PRODUCT'))
+        dispatch(onSetCateParentId(id))
     }
     const onProductItem = (item: IProductsSection) => {
         if (IS_MB) {
             switch (item.id) {
                 case 1:
-                    handleNavigateProductCate(4, 'Thẩm mỹ viện')
-                    history.push("-danh-muc")
+                    handleNavigateProductCate(129)
+                    history.push("danh-muc")
                     break;
                 case 2:
-                    handleNavigateProductCate(2, 'Salon')
-                    history.push("-danh-muc")
+                    handleNavigateProductCate(5)
+                    history.push("danh-muc")
                     break;
                 case 3:
-                    handleNavigateProductCate(7, '')
-                    history.push("-danh-muc")
+                    handleNavigateProductCate(185)
+                    history.push("danh-muc")
                     break;
                 case 4:
-                    handleNavigateProductCate(1, 'Spa')
-                    history.push("-danh-muc")
+                    handleNavigateProductCate(185)
+                    history.push("danh-muc")
                     break;
                 default:
                     break;
@@ -63,7 +47,7 @@ function HomeProducts() {
     }
     return (
         <div className={style.container}>
-            <HomeTitle title='Sản phẩm làm đẹp' />
+            <HomeTitle title={t('Home.beauty_products')} />
             <div className={style.content}>
                 <ul className={style.product_list}>
                     {

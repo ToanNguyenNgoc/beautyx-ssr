@@ -12,40 +12,23 @@ interface IProps {
 
 function TimeItem(props: IProps) {
     const { Time, onChangeItem, disablePrev, setT, t, bookTime } = props;
-    const now = dayjs();
-    const hourNow = now.format("HH");
-    const minuteNow = now.format("mm");
-    let disableItem = false;
 
-    // if (disablePrev === true) {
-    //     if (Time.format("HH") < hourNow) {
-    //         disableItem = true
-    //         console.log('disableItem', disableItem)
-    //     } else if (Time.format("HH") === hourNow && Time.format('mm') < minuteNow) {
-    //         disableItem = true
-    //     }
-    // }
+
+    let disableItem = disablePrev;
     const timePicNew = bookTime.date.split("-");
+    const dayPickNumber = parseInt(`${timePicNew[0]}${timePicNew[1]}${timePicNew[2]}`)
+    const todayNumber = parseInt(dayjs().format('YYYYMMDD'))
 
-    const pickTime = dayjs()
-        .set("date", timePicNew[0])
-        .set("month", timePicNew[1])
-        .set("year", timePicNew[2]);
-
-    if (pickTime.get("date") > now.get("date")) {
-        disableItem = false;
-    } else if (pickTime.get("month") > now.get("month") + 1) {
-        disableItem = false;
-    } else {
-        if (Time.format("HH") < hourNow) {
-            disableItem = true;
-        } else if (
-            Time.format("HH") === hourNow &&
-            Time.format("mm") < minuteNow
-        ) {
-            disableItem = true;
-        }
+    if (dayPickNumber > todayNumber) {
+        disableItem = false
     }
+    if (
+        dayPickNumber === todayNumber &&
+        parseInt(Time.format('HHmm')) >= parseInt(dayjs().format('HHmm')) + 10
+    ) {
+        disableItem = false
+    }
+
 
     const chooseTimeClick = () => {
         if (disableItem === false) {
@@ -60,11 +43,11 @@ function TimeItem(props: IProps) {
                 style={
                     disableItem === true
                         ? {
-                              backgroundColor: "var(--text-hover)",
-                              color: "var(--bgWhite)",
-                              border: "1px solid transparent",
-                              cursor: "not-allowed",
-                          }
+                            backgroundColor: "var(--text-hover)",
+                            color: "var(--bgWhite)",
+                            border: "1px solid transparent",
+                            cursor: "not-allowed",
+                        }
                         : {}
                 }
                 className={

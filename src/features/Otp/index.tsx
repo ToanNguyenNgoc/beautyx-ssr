@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import { authentication, RecaptchaVerifier, signInWithPhoneNumber} from '../../firebase';
 // import authentication from '../../api/authApi';
-import { vnPhoneCheck } from '../../utils/validateForm';
+// import { vnPhoneCheck } from '../../utils/validateForm';
 
 function Otp(props: any) {
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [verificationId, setVerificationId] = useState('')
+    // const [phoneNumber, setPhoneNumber] = useState('');
+    // const [verificationId, setVerificationId] = useState('')
     const [values, setValues] = useState({
         telephone: '',
         code: '',

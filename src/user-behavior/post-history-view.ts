@@ -1,6 +1,6 @@
 import axios from "axios"
 import API_3RD from "api/3rd-api"
-import { AUTH_HEADER } from "utils/authHeader"
+import { AUTH_HEADER } from "api/authHeader"
 
 interface PostHistoryViewProps {
     id: string | number,

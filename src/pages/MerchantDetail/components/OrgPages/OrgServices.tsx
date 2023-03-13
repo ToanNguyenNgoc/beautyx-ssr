@@ -6,18 +6,20 @@ import { IOrganization } from "interface/organization";
 import { Service } from "interface/service";
 import React, { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useDeviceMobile, useSwr, useSwrInfinite, extraParamsUrl } from "utils";
-import { paramServiceCatesOrg, paramsServicesOrg } from 'params-query'
+import { useDeviceMobile, useSwrInfinite } from "hooks";
+import { paramsServicesOrg } from 'params-query'
 import API_ROUTE from "api/_api";
 import { useHistory, useLocation } from "react-router-dom";
 import { LoadGrid } from "components/LoadingSketion";
+import { extraParamsUrl } from "utils";
+import { useGetServiceCateOrgQuery } from "redux-toolkit-query/hook-org";
 
 interface IProps {
     org: IOrganization;
 }
 
 export function OrgServices(props: IProps) {
-    const history = useHistory();
+    const history = useHistory()
     const location = useLocation()
     const IS_MB = useDeviceMobile();
     const { t } = useContext(AppContext);
@@ -30,11 +32,8 @@ export function OrgServices(props: IProps) {
             search: id ? `cate_id=${id}` : ''
         })
     }
-
-    const categories = useSwr(
-        API_ROUTE.SERVICE_CATES_ORG(org?.id),
-        org?.id,
-        paramServiceCatesOrg).responseArray
+    const { data } = useGetServiceCateOrgQuery(org.id)
+    const categories: CategoryService[] = data ?? []
     const { resData, totalItem, onLoadMore } = useSwrInfinite(org?.id, API_ROUTE.ORG_SERVICES(org?.id), {
         ...paramsServicesOrg,
         "filter[service_group_id]": cate_id
@@ -54,13 +53,11 @@ export function OrgServices(props: IProps) {
                         <ul className="cates-list">
                             <li
                                 onClick={() => handleChooseCate(null)}
-                                style={
-                                    !cate_id
-                                        ? {
-                                            color: "var(--bgWhite)",
-                                            backgroundColor: "var(--purple)",
-                                        }
-                                        : {}
+                                style={!cate_id ?
+                                    {
+                                        color: "var(--bgWhite)",
+                                        backgroundColor: "var(--purple)",
+                                    } : {}
                                 }
                                 className="cate-list__item"
                             >

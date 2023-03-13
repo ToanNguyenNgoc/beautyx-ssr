@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik'
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom'
-import validateForm from 'utils/validateForm';
 import { AppContext } from 'context/AppProvider';
 import icon from 'constants/icon';
 
 
 function FormTelephone(props: any) {
     const { t } = useContext(AppContext);
-    const { handlePostTelephone, title, load, isDialog } = props;
+    const { handlePostTelephone, title, load, isDialog, setActiveTabSign, prevUrl } = props;
     const history = useHistory();
     const formikTelephone = useFormik({
         initialValues: {
@@ -23,10 +22,15 @@ function FormTelephone(props: any) {
             values = {
                 ...values,
                 telephone: values.telephone.cleanString()
-             };
+            };
             handlePostTelephone(values.telephone, true)
         },
     });
+    const onBack = () => {
+        if (setActiveTabSign) return setActiveTabSign(1)
+        if(prevUrl) return history.replace(prevUrl)
+        history.goBack()
+    }
     return (
         <>
             <div id="recaptcha-container" ></div>
@@ -35,7 +39,7 @@ function FormTelephone(props: any) {
                     !isDialog
                     &&
                     <button
-                        onClick={() => history.goBack()}
+                        onClick={onBack}
                     >
                         <img src={icon.chevronLeft} alt="" />
                     </button>

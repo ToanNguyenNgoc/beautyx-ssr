@@ -4,6 +4,7 @@ import { AppContext } from "../../context/AppProvider";
 import Month from "./components/Month";
 import Calendar from "./components/Calendar";
 import "./datePicker.css";
+import "../../assets/styles/main.css"
 
 interface IProp {
     onChange: (e: string) => void;

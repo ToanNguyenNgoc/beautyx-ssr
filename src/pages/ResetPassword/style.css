@@ -13,7 +13,8 @@
     cursor: pointer;
 }
 .for-pass-cnt{
-    height: calc(100vh - 300px);
+    min-height: calc(100vh - 300px);
+    height: fit-content;
 }
 .for-pass-cnt__phone{
     width: 50%;
@@ -130,6 +131,9 @@
     font-size: 18px;
     color: var(--purple);
     cursor: pointer;
+}
+.for-pass-cnt__phone{
+    margin: 24px auto;
 }
 /* Mobile */
 @media only screen and (max-width: 767px) {

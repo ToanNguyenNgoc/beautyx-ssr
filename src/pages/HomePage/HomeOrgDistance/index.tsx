@@ -1,10 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import HomeTitle from '../Components/HomeTitle';
 import { ParamOrg } from 'params-query/param.interface';
-import { formatDistance, onErrorImg, useDeviceMobile, useSwr } from 'utils';
+import { formatDistance, onErrorImg } from 'utils';
 import style from './home-distance.style.module.css';
-import API_ROUTE from 'api/_api';
 import { IOrganization, IOrgMobaGalleries, ITag } from 'interface';
 import { Link } from 'react-router-dom';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
@@ -16,8 +14,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { onChangeFilterOrg, onResetFilter, onResetFilterOrg } from 'redux/filter-result';
 import IStore from 'interface/IStore';
 import Skeleton from 'react-loading-skeleton';
+import { useDeviceMobile } from 'hooks';
+import { AppContext } from 'context/AppProvider';
+import img from 'constants/img';
+import {
+    useGalleriesQuery,
+    useOrgsDistanceQuery
+} from 'redux-toolkit-query/hook-home';
 
 function HomeOrgDistance() {
+    const { t } = useContext(AppContext)
     const dispatch = useDispatch()
     const { tags } = useSelector((state: any) => state.HOME)
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)
@@ -25,15 +31,17 @@ function HomeOrgDistance() {
     const IS_MB = useDeviceMobile()
     useEffect(() => {
         dispatch(onResetFilterOrg())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const params: ParamOrg = {
         ...ORG_PR,
-        "limit": 8,
+        "limit": 4,
         "filter[is_momo_ecommerce_enable]": true,
         "filter[location]": LOCATION,
-        "sort": "-priority"
+        "sort": ""
     }
-    const { responseArray, isValidating } = useSwr(API_ROUTE.ORGS, true, params)
+    const { data, isFetching } = useOrgsDistanceQuery(params)
+    const orgs: IOrganization[] = data ?? []
 
     const onViewMore = () => {
         dispatch(onResetFilter())
@@ -55,8 +63,8 @@ function HomeOrgDistance() {
         <div className={style.container}>
             <HomeTitle
                 onClick={onViewMore}
-                url={`/ket-qua-tim-kiem/cua-hang`}
-                title={'Gần bạn'} seemore="Xem tất cả >"
+                url={`/ket-qua-tim-kiem/cua-hang?keyword=${ORG_PR['filter[tags]']}`}
+                title={t('Home.near_you')} seemore={t('detail_item.see_more') + '>'}
             />
             <div className={style.org_filter_cnt}>
                 {tags.length === 0 && <TagSkelton />}
@@ -80,14 +88,13 @@ function HomeOrgDistance() {
                     }
                 </ul>
             </div>
-            {
-                responseArray?.length === 0 &&
-                isValidating &&
-                (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={8} />)
-            }
             <div className={style.org_list_cnt}>
+                {
+                    isFetching &&
+                    (IS_MB ? <OrgSkelton /> : <LoadGrid grid={4} item_count={4} />)
+                }
                 <ul className={style.org_list}>
-                    {responseArray?.map((item: IOrganization) => (
+                    {orgs.map((item: IOrganization) => (
                         <li key={item.id} className={style.org_list_item}>
                             <OrgDistanceItem org={item} />
                         </li>
@@ -101,8 +108,8 @@ function HomeOrgDistance() {
 export default HomeOrgDistance;
 
 const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
-    const { responseArray } = useSwr(API_ROUTE.GALLERIES_ORG_ID(org?.id), org?.id)
-    const galleries: IOrgMobaGalleries[] = responseArray
+    const { data } = useGalleriesQuery(org.subdomain)
+    const galleries: IOrgMobaGalleries[] = data ?? []
     return (
         <Link
             className={style.org_card_item}
@@ -117,7 +124,7 @@ const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
                         />
                         :
                         <img
-                            className={style.org_avatar} src={org.image_url} alt=""
+                            className={style.org_avatar} src={org.image_url ?? img.imgDefault} alt=""
                             onError={(e) => onErrorImg(e)}
                         />
                 }
@@ -134,7 +141,7 @@ const OrgDistanceItem = ({ org }: { org: IOrganization }) => {
                 }
                 <div className={style.org_name_cnt}>
                     <div className={style.org_de_avt}>
-                        <img src={org.image_url} onError={(e) => onErrorImg(e)} alt="" />
+                        <img src={org.image_url ?? img.imgDefault} onError={(e) => onErrorImg(e)} alt="" />
                     </div>
                     <span className={style.org_de_name}>{org.name}</span>
                 </div>

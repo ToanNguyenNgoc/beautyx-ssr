@@ -1,10 +1,10 @@
+import { AUTH_HEADER } from "./authHeader";
 import axiosClient from "./axios";
-import { AUTH_HEADER } from "../utils/authHeader";
 
 class Media {
     postMedia = (formData: any) => {
         const url = `media`;
-        return axiosClient.post(url, formData, AUTH_HEADER())
+        return axiosClient.post(url, formData, AUTH_HEADER('multipart/form-data'))
     }
 }
 const mediaApi = new Media();

@@ -1,25 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-
 import React, { useCallback, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { AUTH_LOCATION } from "../../api/authLocation";
-import icon from "../../constants/icon";
 import MapTagsOrgItem from "./MapOrgItem";
 import { useDispatch, useSelector } from "react-redux";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Slider from "react-slick";
 import MapTagsItemMB from "./MapItemMB";
-import { IOrganization } from "../../interface/organization";
 import MapOrgItemDetail from "./MapOrgItemDetail";
 import MapOrgFilter from "./MapOrgFilter";
-import { fetchAsyncOrg } from "../../redux/org/orgSlice";
-import useDeviceMobile from "../../utils/useDeviceMobile";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import _, { debounce } from "lodash";
-import { onSetOrgCenter, onSetOrgsMapEmpty } from "../../redux/org/orgMapSlice";
-import { fetchOrgsMapFilter } from "../../redux/org/orgMapSlice";
 import MapCurrentUser from "./MapCurrentUser";
-import IStore from "../../interface/IStore";
 import {
     Marker,
     NavigationControl,
@@ -27,12 +18,17 @@ import {
     GeolocateResultEvent,
 } from "react-map-gl";
 import MapGL from "react-map-gl";
+import { useDeviceMobile } from "hooks";
+import { IOrganization } from "interface";
+import IStore from "interface/IStore";
+import { AUTH_LOCATION } from "api/authLocation";
+import { fetchOrgsMapFilter, onSetOrgCenter, onSetOrgsMapEmpty } from "redux/org/orgMapSlice";
+import { fetchAsyncOrg } from "redux/org/orgSlice";
+import { onErrorImg } from "utils";
+import icon from "constants/icon";
+import './style.css';
 import "mapbox-gl/dist/mapbox-gl.css";
-import onErrorImg from "../../utils/errorImg";
-import { EXTRA_FLAT_FORM } from "../../api/extraFlatForm";
-import './style.css'
 
-// import MapDirection from './MapDirection';
 interface IProps {
     orgs: IOrganization[];
     isDetail?: Boolean;
@@ -54,18 +50,17 @@ const MapContent = (props: IProps) => {
         open: false,
         check: false,
     });
-    const platform = EXTRA_FLAT_FORM();
     const [local] = useState({
         lat: isDetail
             ? orgs[0]?.latitude
             : LOCATION
-            ? parseFloat(LOCATION?.split(",")[0])
-            : orgs[0]?.latitude,
+                ? parseFloat(LOCATION?.split(",")[0])
+                : orgs[0]?.latitude,
         long: isDetail
             ? orgs[0]?.longitude
             : LOCATION
-            ? parseFloat(LOCATION?.split(",")[1])
-            : orgs[0]?.longitude,
+                ? parseFloat(LOCATION?.split(",")[1])
+                : orgs[0]?.longitude,
     });
 
     const refListOrg: any = useRef();
@@ -109,7 +104,6 @@ const MapContent = (props: IProps) => {
             totalItem >= 15 &&
             orgs.length < totalItem
         ) {
-            console.log("call");
             dispatch(
                 fetchOrgsMapFilter({
                     page: page + 1,
@@ -151,18 +145,6 @@ const MapContent = (props: IProps) => {
             onFlyTo(orgs[index]?.latitude, orgs[index]?.longitude);
         },
     };
-    // useEffect(() => {
-    //     if (!getValueCenter) {
-    //         switch (orgs.length) {
-    //             case 30: return mapRef?.current?.setZoom(15);
-    //             case 45: return mapRef?.current?.setZoom(14);
-    //             case 60: return mapRef?.current?.setZoom(13);
-    //             case 75: return mapRef?.current?.setZoom(12);
-    //             case 90: return mapRef?.current?.setZoom(11);
-    //             case 105: return mapRef?.current?.setZoom(10)
-    //         }
-    //     }
-    // }, [orgs.length, getValueCenter])
     const onMarkerClick = (item: IOrganization, index?: number) => {
         if (mapRef?.current.getZoom() < 15) {
             mapRef?.current.setZoom(15);
@@ -226,18 +208,7 @@ const MapContent = (props: IProps) => {
     };
 
     return (
-        <div
-            style={
-                platform === "BEAUTYX" && IS_MB === true
-                    ? {
-                          width: "100vw",
-                          height: "90vh",
-                      }
-                    : { width: "100vw", height: "100vh" }
-            }
-            className="map-content"
-        >
-            {/* map */}
+        <div className="map-content">
             <MapOrgFilter
                 slideRef={slideRef}
                 mapRef={mapRef}
@@ -248,17 +219,9 @@ const MapContent = (props: IProps) => {
             <MapCurrentUser handleBackCurrentUser={handleBackCurrentUser} />
             {
                 <MapGL
-                    // onViewportChange={onCenterChange}
                     onMouseMove={onCenterChange}
                     onTouchMove={onCenterChange}
-                    style={
-                        platform === "BEAUTYX" && IS_MB === true
-                            ? {
-                                  width: "100vw",
-                                  height: "90vh",
-                              }
-                            : { width: "100vw", height: "100vh" }
-                    }
+                    style={{ width: "100vw", height: "100vh" }}
                     initialViewState={{
                         latitude: local.lat,
                         longitude: local.long,
@@ -268,7 +231,6 @@ const MapContent = (props: IProps) => {
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                     mapStyle="mapbox://styles/mapbox/streets-v10"
                     ref={mapRef}
-                    // onZoomEnd={(e) => setZoom(Math.round(e.viewState.zoom))}
                 >
                     <NavigationControl
                         position="bottom-right"
@@ -349,7 +311,6 @@ const MapContent = (props: IProps) => {
                             org={org}
                             setOpenDetail={setOpenDetail}
                             openDetail={openDetail}
-                            // handleDirection={handleDirection}
                         />
                     ) : null}
                     <div
@@ -377,12 +338,12 @@ const MapContent = (props: IProps) => {
                     style={
                         isDetail
                             ? {
-                                  position: "fixed",
-                                  width: "auto",
-                                  height: "auto",
-                                  left: 0,
-                                  right: 0,
-                              }
+                                position: "fixed",
+                                width: "auto",
+                                height: "auto",
+                                left: 0,
+                                right: 0,
+                            }
                             : {}
                     }
                 >

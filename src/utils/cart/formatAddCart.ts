@@ -27,8 +27,7 @@ export const formatAddCart = (
         id: item?.id,
         org_id: org?.id,
         org_name: org?.name,
-        cart_id: parseInt(`${is_type}${org?.id}${item?.id}`), //is_type + org_id + id
-        //name: item?.product_name ? item?.product_name : item?.service_name,
+        cart_id: `${org?.id}${is_type}${item?.id}`, // org_id + is_type + id
         name: item?.product_name || item?.service_name || item?.name,
         quantity: quantity,
         is_type: is_type,

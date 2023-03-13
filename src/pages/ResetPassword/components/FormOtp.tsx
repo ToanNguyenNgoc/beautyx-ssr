@@ -1,27 +1,27 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup'
-import authentication from '../../../api/authApi';
 import { AxiosError } from "axios";
-import DialogNotification from './DialogNotification';
-import icon from '../../../constants/icon';
-import { CircularProgress } from "@mui/material";
-import { AppContext } from '../../../context/AppProvider';
+import { AppContext } from 'context/AppProvider';
+import authentication from 'api/authApi';
+import icon from 'constants/icon';
+import { useNoti } from 'hooks';
+import { PopupNotification } from 'components/Notification';
+import { XButton } from 'components/Layout';
+import { useHistory } from 'react-router-dom';
+import { omit } from "lodash";
+import { ParamsForgotSms } from "interface";
 
 function FormOtp(props: any) {
     const { t } = useContext(AppContext);
     const {
         data,
-        handlePostTelephone,
         setStep
     } = props;
-    const [errorCode, setErrorCode] = useState({
-        code: 0,
-        open: false,
-        title: '',
-        loading: false
-    })
-    const [sec, setSec] = useState(90);
+    const history = useHistory();
+    const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti();
+    const [sec, setSec] = useState(60);
+    const [versionOtp, setVersionOtp] = useState<"v1" | "v2">("v1")
     useEffect(() => {
         const timeSec = setInterval(() => {
             if (sec > 0) {
@@ -33,33 +33,33 @@ function FormOtp(props: any) {
     }, [sec])
 
     const handleOnResetPassword = async (params: any) => {
-        setErrorCode({ ...errorCode, loading: true })
+        firstLoad()
         try {
-            await authentication.forgotPassword(params)
-            setErrorCode({
-                code: 200,
-                open: true,
-                title: t("form.change_password_successfully"),
-                loading: false
-            })
+            if (versionOtp === "v1") {
+                await authentication.forgotPassword(params)
+            }
+            if (versionOtp === "v2") {
+                await authentication.forgotVoiceSms(omit(params, ["verification_id"]) as ParamsForgotSms)
+            }
+            resultLoad(
+                t("form.change_password_successfully"),
+                <XButton
+                    title='Trở về đăng nhập'
+                    onClick={() => history.replace({
+                        pathname: "/sign-in",
+                        search: "1",
+                    })}
+                />
+            )
         } catch (error) {
             const err = error as AxiosError;
             switch (err.response?.status) {
                 case 400:
-                    return setErrorCode({
-                        open: true,
-                        code: err.response?.status,
-                        title: 'Mã xác thực không chính xác',
-                        loading: false
-                    })
+                    return resultLoad('Mã xác thực không chính xác')
                 case 501:
-                    return setErrorCode({
-                        open: true,
-                        code: err.response?.status,
-                        title: 'Mã xác thực không chính xác',
-                        loading: false
-                    })
+                    return resultLoad('Mã xác thực không chính xác')
                 default:
+                    resultLoad('Có lỗi xảu ra')
                     break
             }
         }
@@ -74,7 +74,7 @@ function FormOtp(props: any) {
             otp: Yup.string()
                 .required(t("form.please_enter_your_verification_code"))
                 .matches(/^[0-9]+$/, t("form.verification_invalid"))
-                .min(6, t("form.verification_code_of_6_characters"))
+                .min(4, t("form.verification_code_of_6_characters"))
                 .max(6, t("form.verification_code_of_6_characters")),
             new_password: Yup.string()
                 .min(8, t("form.password_min"))
@@ -86,24 +86,30 @@ function FormOtp(props: any) {
         }),
         onSubmit: (values) => {
             const params = {
-                telephone: data.telephone,
-                code: values.otp,
+                telephone: `${data.telephone}`,
+                code: `${values.otp}`,
                 new_password: values.new_password,
                 verification_id: data.verification_id
             }
             handleOnResetPassword(params)
         },
     });
-    const onReSendOtp = () => {
-        handlePostTelephone(data.telephone, true);
-        setSec(90)
+    const onReSendOtp = async () => {
+        await authentication.forgotVoiceSms({
+            telephone: data.telephone
+        })
+        setVersionOtp("v2")
+        setSec(60)
     }
 
     return (
         <>
-            <DialogNotification
-                errorCode={errorCode}
-                setErrorCode={setErrorCode}
+            <PopupNotification
+                open={noti.openAlert}
+                setOpen={onCloseNoti}
+                title="Thông báo"
+                content={noti.message}
+                children={noti.element}
             />
             <div id="recaptcha-container" ></div>
             <div className="flex-row-sp for-pass-cnt__phone-head">
@@ -127,7 +133,7 @@ function FormOtp(props: any) {
                         name="otp"
                         value={formikTelephone.values.otp}
                         onChange={formikTelephone.handleChange}
-                        type="text"
+                        type="number" pattern="[0-9]*" inputMode="numeric"
                         style={{ textAlign: 'center' }}
                         className="for-pass-cnt__phone-ip"
                         placeholder={t("form.verification_code")}
@@ -176,18 +182,12 @@ function FormOtp(props: any) {
                                 <span onClick={onReSendOtp} >{t("form.resend_code")}</span>
                         }
                     </div>
-                    <button
+                    <XButton
+                        title={t("form.continue")}
                         className='for-pass-cnt__btn'
                         type='submit'
-                    >
-                        {
-                            errorCode.loading === true &&
-                            <div className="sign-loading">
-                                <CircularProgress size="25px" color="inherit" />
-                            </div>
-                        }
-                        {t("form.continue")}
-                    </button>
+                        loading={noti.load}
+                    />
                 </form>
             </div>
         </>

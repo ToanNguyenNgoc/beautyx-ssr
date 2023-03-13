@@ -38,7 +38,7 @@ export interface IServicePromo {
 export interface SerProCommonWatched {
     user_id: number,
     id: number,
-    productable_id:number,
+    productable_id: number,
     name: string,
     category_name: string,
     price: number,
@@ -51,8 +51,21 @@ export interface SerProCommonWatched {
     org_image: string,
     org_full_address: string,
     special_price_momo: number,
-    type: "SERVICE" | "PRODUCT"|"DISCOUNT",
+    type: "SERVICE" | "PRODUCT" | "DISCOUNT",
     createdAt: string,
     updatedAt: string,
     _id: string
+}
+export interface IServicePromoGroupOrg {
+    org: {
+        org_id: number,
+        org_image: string,
+        org_name: string,
+        org_telephone: string[],
+        org_province_name: string,
+        org_district_name: string,
+        org_full_address: string,
+        _geoDistance?:number
+    }
+    services: IServicePromo[]
 }

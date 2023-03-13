@@ -51,7 +51,6 @@ export const EX_CHECK_DATE = (voucher: IDiscountPar) => {
     } else if (voucher.valid_from < dayNow && voucher.valid_util > dayNow) {
         dateCondition = true
     }
-    console.log(voucher.valid_from, dayNow, voucher.valid_util)
     return dateCondition
 }
 export const EX_CHECK_VALID_TIME = (voucher: IDiscountPar) => {
@@ -92,7 +91,8 @@ export const EX_CHECK_SUB_TOTAL = (
 export const EX_CHECK_INCLUDE_ITEMS = (
     voucher: IDiscountPar, products_id: number[], services_id: number[]
 ) => {
-    let itemCondition = false;
+    let itemConditionProduct = false;
+    let itemConditionService = false
     const { productsInDis, servicesInDis } = discountReducerItem(voucher.items);
     const productsInDis_id = productsInDis.map((i: IITEMS_DISCOUNT) => i.productable_id);
     const servicesInDis_id = servicesInDis.map((i: IITEMS_DISCOUNT) => i.productable_id);
@@ -127,12 +127,16 @@ export const EX_CHECK_INCLUDE_ITEMS = (
     const productCartInDis = checkProductCartInDiscount()
     const serviceCartInDis = checkServiceCartInDiscount()
     if (voucher.items.length === 0) {
-        return itemCondition = true
+        itemConditionProduct = true
+        itemConditionService = true
     }
-    if (productCartInDis || serviceCartInDis) {
-        return itemCondition = true
+    if (productsInDis.length > 0 && productCartInDis) {
+        itemConditionProduct = true
     }
-    return itemCondition
+    if (servicesInDis.length > 0 && serviceCartInDis) {
+        itemConditionService = true
+    }
+    return { itemConditionProduct, itemConditionService }
 }
 export const EX_CHECK_INCLUDE_ORG = (discount: IDiscountPar, org_id: number) => {
     let orgCondition = false;

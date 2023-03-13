@@ -1,6 +1,9 @@
 .container {
     margin-top: 26px;
 }
+.navigate_app_btn{
+    padding: 4px 10px;
+}
 
 .head {
     padding: 12px;
@@ -108,10 +111,15 @@
     z-index: 10;
     background-color: var(--bg-white);
     border-radius: 8px 8px 0px 0px;
-    padding: 12px;
-    padding-bottom: 24px;
+    padding: 8px 12px 20px 12px;
     box-shadow: var(--box-shadow);
+    display: flex;
+    justify-content: space-between;
 }
 .bottom_bnt{
-    width: 100%;
+    width: calc(50% - 6px);
+}
+.bottom_bnt:first-child{
+    color: var(--purple);
+    background-color: var(--bg-color);
 }

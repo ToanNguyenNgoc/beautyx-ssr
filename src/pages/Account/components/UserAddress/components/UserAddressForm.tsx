@@ -8,7 +8,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { STATUS } from 'redux/status';
-import { postAsyncAddress } from 'redux/USER/userAddressSlice';
+import { postAsyncAddress } from 'redux/user/userAddressSlice';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -160,7 +160,7 @@ function UserAddressForm(props: any) {
     }
     return (
         <>
-            <HeadTitle title='Thêm mới địa chỉ' />
+            <HeadTitle title={t('acc.add new')} />
             <div
                 className='us_address-cnt'
             >

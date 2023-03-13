@@ -1,4 +1,3 @@
-import { dealHot } from "constants/img";
 import topic1 from "assets/image/topic1.png";
 import topic2 from "assets/image/topic2.png";
 import topic3 from "assets/image/topic3.png";
@@ -11,9 +10,12 @@ import homeWhy2 from "assets/icon/homeWhy2.svg";
 import homeWhy3 from "assets/icon/homeWhy3.svg";
 import homeWhy4 from "assets/icon/homeWhy4.svg";
 
-import deal0 from "assets/image/deal0.png"
-import deal1 from "assets/image/deal1.png"
-import deal2 from "assets/image/deal2.png"
+import deal0 from "assets/image/deal0.jpg"
+import deal1 from "assets/image/deal1.jpg"
+import deal2 from "assets/image/deal2.jpg"
+import bannerMomo from 'assets/image/bannerMomo.jpg'
+import dayjs from "dayjs";
+
 
 
 export interface Ideals {
@@ -21,9 +23,11 @@ export interface Ideals {
     title: string,
     min_price?: number | null,
     max_price?: number | null,
+    keyword?: string
     img: string,
     banner: string,
-    percent?: number
+    percent?: number,
+    special_price?: boolean
 }
 export interface IProductsSection {
     id: number,
@@ -36,27 +40,33 @@ export interface IProductsSection {
 export const deals: Ideals[] = [
     {
         id: 1,
-        title: "Deal hot từ 50-100k",
+        title: "Deal HOT",
         min_price: 50000,
         max_price: 100000,
-        img: dealHot.dealhot,
-        banner: deal0
+        // keyword: 'Gội đầu',
+        img: '',
+        banner: deal0,
+        special_price: true
     },
     {
         id: 2,
-        title: "Deal chăm sóc da làm đẹp Giảm 50%",
+        title: "Dịch vụ dưỡng da giảm 50",
         min_price: null,
-        img: dealHot.dealhot1,
+        // keyword: 'Dưỡng',
+        img: '',
         percent: 50,
-        banner: deal1
+        banner: deal1,
+        special_price: false
     },
     {
         id: 3,
-        title: "Dịch vụ xâm lấn Giảm 30%",
+        title: "Thẩm mỹ đẹp toàn diện",
         min_price: null,
-        img: dealHot.dealhot2,
+        img: '',
+        // keyword: 'Chăm sóc da',
         percent: 30,
-        banner: deal2
+        banner: deal2,
+        special_price: true
     },
 ];
 export const topics = [
@@ -114,3 +124,36 @@ export const whyNots = [
         image_url: homeWhy4,
     },
 ];
+export const searchKeyRecommend = [
+    'Gội đầu', 'Cắt tóc', 'Nặn mụn', 'Xăm chân mày', 'Triệt lông', 'Sơn gel', 'Chăm sóc da'
+]
+
+const banners = [
+    {
+        id: -1,
+        name: "Beautyx vs Momo",
+        type: '',
+        imageURL: bannerMomo,
+        htmlTemplate: null,
+        url: '',
+        target: null,
+        width: 0,
+        height: 0,
+        view_count: 68,
+        expires_at: '2023-01-31 00:00:00',
+        platform: 'MOMO|BEAUTYX',
+        origin_type: null,
+        origin_id: null,
+        deleted_at: null,
+        created_at: '',
+        updated_at: '',
+        priority: 3
+    }
+]
+const todayNumber = parseInt(dayjs().format('YYYYMMDD'))
+export const bannersHard = (platform: string) => {
+    const bannersResult = banners.filter(item => (
+        parseInt(dayjs(item.expires_at).format('YYYYMMDD')) >= todayNumber && item.platform?.includes(platform)
+    ))
+    return bannersResult
+}

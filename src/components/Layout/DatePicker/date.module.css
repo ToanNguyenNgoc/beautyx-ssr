@@ -17,8 +17,8 @@
 .date_btn_month {
     border: none;
     outline: none;
-    width: 25px;
-    height: 25px;
+    width: 36px;
+    height: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .date_btn_month:first-child {
-    margin-right: 8px;
+    margin-right: 12px;
 }
 
 .date_month_text {
@@ -62,21 +62,23 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .day_cell_item {
-    width: calc(100% / 7);
+    width: calc(100% / 7 - 3px);
     text-align: center;
     margin: 4px 0px;
-    padding: 6px 0px;
+    padding: 10px 0px;
     cursor: pointer;
-    height: 32px;
+    height: 36px;
     font-size: 12px;
     font-weight: 600;
     border-radius: 8px;
     transition: all .3s;
     border: solid 1px var(--bg-white);
     position: relative;
+    background-color: #FAFAFA;
 }
 .day_cell_item_dis{
     position: absolute;
