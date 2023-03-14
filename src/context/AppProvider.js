@@ -48,7 +48,6 @@ export default function AppProvider({ children }) {
     //get services, appointment user
     const { appointment, appointment_today } = useAppointment()
     const { orderService, order_app } = useOrderService()
-
     const value = {
         t,
         language,

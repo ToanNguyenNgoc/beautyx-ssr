@@ -5,8 +5,8 @@ import AppProvider from "./context/AppProvider";
 import "./utils/protoType";
 import "react-loading-skeleton/dist/skeleton.css";
 
+
 function App() {
-    
     return (
         <div>
             <AppProvider>
