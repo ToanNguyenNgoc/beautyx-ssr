@@ -19,10 +19,11 @@
         "see_calendar": "Xem lịch hẹn",
         "not_noti": "Bạn không có thông báo nào!",
         "language": "Ngôn ngữ",
-        "Service pack purchased":"Gói dịch vụ đã mua",
-        "Following":"Đang theo dõi",
-        "Delivery address":"Địa chỉ giao hàng",
-        "booking":"Đặt hẹn"
+        "Service pack purchased": "Gói dịch vụ đã mua",
+        "Following": "Đang theo dõi",
+        "Delivery address": "Địa chỉ giao hàng",
+        "booking": "Đặt hẹn",
+        "member": "Thành viên"
     },
     "Bottom": {
         "appointment": "Lịch hẹn",
@@ -103,19 +104,19 @@
         "trending": "Xu hướng",
         "cate": "Danh mục",
         "scan_qr": "Quét mã QR",
-        "community":"Cộng đồng",
-        "coupon_code":"Mã giảm giá",
-        "linked_directory":"Danh mục nối bật",
-        "near_you":"Gần bạn",
-        "Vietnamese_women_totally_beautiful":"Phụ nữ Việt - Đẹp toàn diện",
-        "beauty_products":"Sản phẩm làm đẹp",
-        "why_choose":"Vì sao nên chọn BeautyX ?",
-        "viewed":"Đã xem",
-        "become":"Trở thành",
-        "a_beautyX_partner":"Đối tác BeautyX",
-        "discover":"Khám phá",
-        "choose_a_location":"Chọn vị trí",
-        "search_area":"Tìm kiếm khu vực"
+        "community": "Cộng đồng",
+        "coupon_code": "Mã giảm giá",
+        "linked_directory": "Danh mục nối bật",
+        "near_you": "Gần bạn",
+        "Vietnamese_women_totally_beautiful": "Phụ nữ Việt - Đẹp toàn diện",
+        "beauty_products": "Sản phẩm làm đẹp",
+        "why_choose": "Vì sao nên chọn BeautyX ?",
+        "viewed": "Đã xem",
+        "become": "Trở thành",
+        "a_beautyX_partner": "Đối tác BeautyX",
+        "discover": "Khám phá",
+        "choose_a_location": "Chọn vị trí",
+        "search_area": "Tìm kiếm khu vực"
     },
     "Search_result": {
         "text_result": "kết quả tìm kiếm",
@@ -169,8 +170,8 @@
         "galleries": "Hình ảnh",
         "business_hours": "Giờ mở cửa",
         "branch": "Chi nhánh",
-        "priority":"Độ ưu tiên",
-        "favorite":"Được yêu thích"
+        "priority": "Độ ưu tiên",
+        "favorite": "Được yêu thích"
     },
     "pr": {
         "merchant_detail": "Về doanh nghiệp",
@@ -196,9 +197,9 @@
         "unlimited": "Không giới hạn",
         "map": "Bản đồ",
         "no_result": "Không tìm tháy kết quả cho",
-        "This product/service is not sold online yet":"Sản phẩm/ Dịch vụ này chưa được bán Online",
-        "liked":"Đã thích",
-        "like":"Thích"
+        "This product/service is not sold online yet": "Sản phẩm/ Dịch vụ này chưa được bán Online",
+        "liked": "Đã thích",
+        "like": "Thích"
     },
     "cart": {
         "into_money": "Thành tiền",
@@ -222,12 +223,12 @@
         "must_sign_in": "Vui lòng đăng nhập trước khi thanh toán",
         "limit_item_discount": "Giá dịch vụ đã thay đổi vì bạn chọn nhiều hơn số lượng được áp dụng mã",
         "order": "Đơn hàng",
-        "checkout":"Đặt hàng"
+        "checkout": "Đặt hàng"
     },
     "pm": {
         "payment": "THANH TOÁN",
         "payment_2": "Thanh toán",
-        "payment_booking":"Thông tin đặt hẹn",
+        "payment_booking": "Thông tin đặt hẹn",
         "payment_info": "Thông tin thanh toán",
         "full_name": "Họ và tên",
         "phone_number": "Số điện thoại",
@@ -261,10 +262,10 @@
         "see_details": "Xem chi tiết",
         "product_service": "Sản phẩm/dịch vụ",
         "service_list": "Danh sách dịch vụ",
-        "org":"Trụ sở",
-        "enter_coupon_code":"Nhập mã khuyến mại",
-        "promotion":"khuyến mại",
-        "temporary":"Tạm tính"
+        "org": "Trụ sở",
+        "enter_coupon_code": "Nhập mã khuyến mại",
+        "promotion": "khuyến mại",
+        "temporary": "Tạm tính"
     },
     "url": {
         "home": "Trang-chu",
@@ -326,11 +327,11 @@
         "change_password_successfully": "Đổi mật khẩu thành công",
         "please_enter_your_verification_code": "Vui lòng nhập mã xác thực",
         "sending": "Đang gửi...",
-        "back_to_sign_in_page":"Quay về trang đăng nhập",
-        "an_error":"Có lỗi xảy ra. Vui lòng thử lại",
-        "code":" Mã xác thực",
-        "get_code":"Lấy mã",
-        "verification_code_has_been_sent_to":"Mã xác thực đã được gửi đến"
+        "back_to_sign_in_page": "Quay về trang đăng nhập",
+        "an_error": "Có lỗi xảy ra. Vui lòng thử lại",
+        "code": " Mã xác thực",
+        "get_code": "Lấy mã",
+        "verification_code_has_been_sent_to": "Mã xác thực đã được gửi đến"
     },
     "partner": {
         "online_business": "Nền tảng kinh doanh online ngành làm đẹp",
@@ -372,9 +373,16 @@
         "date_created": "Ngày tạo",
         "history": "Lịch sử",
         "set_default_address": "Đặt làm địa chỉ mặc định",
-        "add new":"Thêm mới",
-        "canceled":"Đã hủy",
-        "code":"Mã"
+        "add new": "Thêm mới",
+        "canceled": "Đã hủy",
+        "code": "Mã",
+        "targets": "Chỉ tiêu",
+        "rank_information": "Thông tin xếp hạng",
+        "go_to_the_next_level_to_get_extra_Extras": " Lên cấp tiếp theo để nhận thêm Extra!",
+        "spending": "Chi tiêu",
+        "discount_on_bill": "Giảm trên bill",
+        "bonus": "Tiền thưởng",
+        "benefit": "Quyền lợi"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",
@@ -386,12 +394,12 @@
         "watch_info": "Xem thông tin",
         "book": "Đặt lịch",
         "appo_detail": "Chi tiết lịch hẹn",
-        "Service has expired":"Dịch vụ đã hết hạn",
-        "Service used":"Dịch vụ đã sử dụng",
-        "Review":"Đánh giá",
-        "Expired":"Hết hạn",
-        "Unlimited":"Không giới hạn",
-        "Used":"Đã sử dụng"
+        "Service has expired": "Dịch vụ đã hết hạn",
+        "Service used": "Dịch vụ đã sử dụng",
+        "Review": "Đánh giá",
+        "Expired": "Hết hạn",
+        "Unlimited": "Không giới hạn",
+        "Used": "Đã sử dụng"
     },
     "my_ser": {
         "business": "Doanh nghiệp",
@@ -422,15 +430,15 @@
         "code_err": "Mã lỗi",
         "booking": "Đặt lịch",
         "booking_his": "Lịch sử",
-        "note_1":"Ghi chú: Số lượng người, thông tin cần Doanh nghiệp lưu ý, v.v..",
-        "pay_and_book":"Thanh toán và đặt hẹn ngay",
-        "confirm_time":"Xác nhận thời gian",
-        "create_order_fail":"Tạo đơn hàng thất bại",
-        "ok":"Đã hiểu",
-        "minimum_order_is_1_000_VND":"Đơn hàng tối thiểu là 1.000đ",
-        "enter_update_phone":"Cập nhập số điện thoại để tiếp tục thanh toán!",
-        "update":"Cập nhập",
-        "choose_branch":"Chọn chi nhánh"
+        "note_1": "Ghi chú: Số lượng người, thông tin cần Doanh nghiệp lưu ý, v.v..",
+        "pay_and_book": "Thanh toán và đặt hẹn ngay",
+        "confirm_time": "Xác nhận thời gian",
+        "create_order_fail": "Tạo đơn hàng thất bại",
+        "ok": "Đã hiểu",
+        "minimum_order_is_1_000_VND": "Đơn hàng tối thiểu là 1.000đ",
+        "enter_update_phone": "Cập nhập số điện thoại để tiếp tục thanh toán!",
+        "update": "Cập nhập",
+        "choose_branch": "Chọn chi nhánh"
     },
     "home_2": {
         "categories": "Danh mục",
@@ -451,8 +459,8 @@
         "top_selling_products": "Top Sản Phẩm Bạn Chạy",
         "favorite_places": "Địa điểm được yêu thích",
         "suggestions_for_you": "Gợi ý dành cho bạn",
-        "price":"Giá",
-        "Choose a price range":"Chọn khoảng giá"
+        "price": "Giá",
+        "Choose a price range": "Chọn khoảng giá"
     },
     "se": {
         "search_results_for_keyword": "Kết quả tìm kiếm cho từ khóa",
@@ -474,8 +482,8 @@
         "guide": "Hướng dẫn sử dụng",
         "edit": "Chỉnh sửa",
         "distance": "Cách bạn",
-        "Please enter the appropriate price range":"Vui lòng điền khoảng giá phù hợp",
-        "Apply":"Áp dụng"
+        "Please enter the appropriate price range": "Vui lòng điền khoảng giá phù hợp",
+        "Apply": "Áp dụng"
     },
     "Contact": {
         "success": "Đã nhận thông tin"
@@ -556,8 +564,8 @@
         "total": "Tổng",
         "not_sale": "Sản phẩm này chưa được kích hoạt bán hàng Online",
         "see_more": "Xem thêm",
-        "shelf_life":"Thời hạn sử dụng: 1 tháng kể từ ngày mua hàng thành công",
-        "detailed_description":"Mô tả chi tiết"
+        "shelf_life": "Thời hạn sử dụng: 1 tháng kể từ ngày mua hàng thành công",
+        "detailed_description": "Mô tả chi tiết"
     },
     "footer": {
         "customer_support": "Hỗ trợ khách hàng",

@@ -13,7 +13,6 @@ import { SWRConfig } from "swr";
 import axiosClient from "./api/axios";
 import { PlashScreen } from "components/Layout";
 import { AUTH_HEADER } from "api/authHeader";
-import './setPublicPath.js'
 
 // Sentry.init({
 //     dsn: "https://38eb6d00469546558bd815998210f77f@o1108259.ingest.sentry.io/6554425",
