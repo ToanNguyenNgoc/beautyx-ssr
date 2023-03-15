@@ -3,7 +3,7 @@ import { AppContext } from "../../../../../context/AppProvider";
 
 export default function GuideItem(props: any) {
     const { item, slide, setSlide, setSlideIndex, goTosilide, step } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     return (
         <div className="guided-section-step">
             <div className="step-content">

@@ -17,7 +17,7 @@ interface DatePickerProps {
 const todayObj = dayjs();
 // const curMonth = todayObj.format("MM")
 export function DatePicker(props: DatePickerProps) {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const {
         onChange,
         onChangeMonth,

@@ -15,7 +15,7 @@ import { AppContext } from 'context/AppProvider';
 import { useFavorite, useSwrInfinite } from 'hooks';
 
 function Favorites() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {
         'user_id': USER?.id,

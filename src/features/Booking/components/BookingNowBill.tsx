@@ -20,7 +20,7 @@ interface BookingNowBillProps {
 
 function BookingNowBill(props: BookingNowBillProps) {
     const { setFinalAmount } = props
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { VOUCHER_APPLY } = useSelector((state: any) => state.carts);
     const { org } = props;
     const location: any = useLocation();

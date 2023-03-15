@@ -16,7 +16,7 @@ interface ButtonFavoriteProps {
 
 export function ButtonFavorite(props: ButtonFavoriteProps) {
     const { id, type, org_id, subdomain, is_icon } = props;
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const history = useHistory()
     const { USER } = useSelector((state: IStore) => state.USER)
     const params = {

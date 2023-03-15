@@ -18,7 +18,7 @@ function TreatmentCardItem(props: IProps) {
     const IS_MB = useDeviceMobile()
     const { card_items, checkTimeExpired } = props;
     const org = card_items.organization;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const [enableCart, setEnableCart] = useState(true);
     const servicesBookSlice = useSelector((state: any) => state.SERVICES_BOOK);
     const servicesBook = servicesBookSlice.servicesBook;

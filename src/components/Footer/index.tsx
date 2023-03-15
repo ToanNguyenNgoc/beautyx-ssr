@@ -11,7 +11,7 @@ import { PopupNotification } from "components/Notification";
 
 function Footer() {
     const url_map = `https://www.google.com/maps/@10.7968352,106.6920552,19.42z`;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const [openPopup, setOpenPopup] = useState({
         open:false,
         content:'',

@@ -5,10 +5,10 @@ import { useDispatch } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
-import { useAppointment, useOrderService } from "hooks"
+import { useAppointment, useOrderService } from "hooks";
 
-export const AppContext = createContext();
-export default function AppProvider({ children }) {
+export const AppContext = createContext({});
+export default function AppProvider({ children }:{children:any}) {
     const { t } = useTranslation();
     let lat; let long
     const location = AUTH_LOCATION()
@@ -16,7 +16,7 @@ export default function AppProvider({ children }) {
         lat = location.split(',')[0]
         long = location.split(',')[1]
     }
-    const [geo, setGeo] = useState({ lat: lat, long: long });
+    const [geo, setGeo] = useState<any>({ lat: lat, long: long });
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
     const token = localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')
@@ -26,7 +26,7 @@ export default function AppProvider({ children }) {
 
     const getLocationPlatFormBeauty = async () => {
         try {
-            const res = await getPosition();
+            const res:any = await getPosition();
             const user_location = {
                 lat: res.coords.latitude,
                 long: res.coords.longitude
@@ -44,7 +44,7 @@ export default function AppProvider({ children }) {
         dispatch(fetchAsyncHome())
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-    const serviceCate = []
+    const serviceCate:any[] = []
     //get services, appointment user
     const { appointment, appointment_today } = useAppointment()
     const { orderService, order_app } = useOrderService()

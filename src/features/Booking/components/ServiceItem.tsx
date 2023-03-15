@@ -13,7 +13,7 @@ interface IProps {
 }
 
 function ServiceBookItem(props: IProps) {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const { service, org } = props;
     return (
         <div className={style.service_item}>

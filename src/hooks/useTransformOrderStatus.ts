@@ -2,7 +2,7 @@ import { AppContext } from "context/AppProvider";
 import { useContext } from "react";
 
 export function useTransformOrderStatus(status: string) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const statusList = [
         { status: 'PAID', title: t('acc.pain'), color: '#ABD373' },
         { status: 'PENDING', title: t('order.pending'), color: '#E7C900' },

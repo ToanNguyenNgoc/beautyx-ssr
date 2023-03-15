@@ -13,7 +13,7 @@ import { omit } from "lodash";
 import { ParamsForgotSms } from "interface";
 
 function FormOtp(props: any) {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const {
         data,
         setStep

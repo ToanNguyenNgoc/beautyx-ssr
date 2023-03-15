@@ -23,7 +23,7 @@ export function OrgProducts(props: IProps) {
     const paramsUrl = extraParamsUrl()
     const cate_id = paramsUrl?.cate_id
     const { org } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const handleChooseCate = (id: number | null) => {
         history.replace({
             pathname: location.pathname,

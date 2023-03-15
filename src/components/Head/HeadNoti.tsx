@@ -13,7 +13,7 @@ import style from './head.module.css'
 
 function HeadNoti({ changeStyle }: { changeStyle?: boolean }) {
     const refNoti = useRef<HTMLDivElement>();
-    const { appointment_today, order_app } = useContext(AppContext);
+    const { appointment_today, order_app } = useContext(AppContext) as any;
     const IS_MB = useDeviceMobile()
     const onToggleNoti = (dis: "show" | "hide") => {
         if (IS_MB) {
@@ -69,7 +69,7 @@ interface HeadNotificationProps {
 }
 
 const HeadNotification = (props: HeadNotificationProps) => {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { refNoti, appointment_today, order_app } = props;
     const { USER } = useSelector((state: IStore) => state.USER);
     const history = useHistory();

@@ -17,7 +17,7 @@ import { pick } from 'lodash';
 import { AxiosError } from 'axios';
 
 function ChangePassword() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { USER } = useSelector((state: IStore) => state.USER)
     const [alert, setAlert] = useState({ open: false, content: '', load: false })
     const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()

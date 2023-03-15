@@ -10,7 +10,7 @@ import TimePicker from "components/TimePicker";
 import { AppContext } from "context/AppProvider";
 
 function BookingTime(props: any) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { open, setOpen, bookTime, setBookTime, org } = props;
     const IS_MB = useDeviceMobile();
     const onChangeDatePicker = (e: any) => {

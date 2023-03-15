@@ -12,7 +12,7 @@ const onDropList = () => {
 
 function SellerCenter() {
     const history = useHistory();
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const [sub, setSub] = useState('');
     const domains = ['.myspa.vn', '.myclinic.vn'];
     const [chooseDomain, setChooseDomain] = useState('.myspa.vn')

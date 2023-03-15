@@ -13,7 +13,7 @@ interface ISort {
 
 export function FilterSort(props: FilterSortProps) {
     const { type, onChange, value } = props
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const paramSortService: ISort[] = [
         { query: '-discount_percent', title: t('home_2.hot_promotion') },
         { query: 'price', title: t('Mer_de.ascending_price') },

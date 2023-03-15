@@ -66,7 +66,7 @@ const routes = [
     },
 ];
 function Account() {
-    const { t, appointment_today } = useContext(AppContext);
+    const { t, appointment_today } = useContext(AppContext) as any;
     const RouterPage = (
         props: { pageComponent: JSX.Element } & RouteComponentProps
     ) => props.pageComponent;
@@ -388,7 +388,7 @@ function Account() {
 export default Account;
 
 const SwitchLanguage = () => {
-    const { t, language, setLanguage } = useContext(AppContext);
+    const { t, language, setLanguage } = useContext(AppContext) as any;
     const handleChangeLang = (code: string) => {
         setLanguage(code);
         i18next.changeLanguage(code);

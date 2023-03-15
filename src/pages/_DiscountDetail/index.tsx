@@ -232,7 +232,7 @@ const DetailBottom = (
     { detail, org, discount, PERCENT }:
         { detail: DetailProp, org: IOrganization, discount: IDiscountPar, PERCENT: number }
 ) => {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const [dra, setDra] = useState({
         open: false, type: ''
     })
@@ -286,7 +286,7 @@ const DetailBottom = (
 }
 
 const DetailQuantity = (props: DetailQuantityProps) => {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const { discount, org, detail, draType } = props
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)

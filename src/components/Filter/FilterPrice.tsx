@@ -23,7 +23,7 @@ export const pricesList: PriceList[] = [
 ]
 
 export function FilterPrice(props: FilterPriceProps) {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const { onChangePrice, min_price, max_price, onCloseDrawer } = props;
     const [value, setValue] = useState({
         min_price: min_price ?? "",

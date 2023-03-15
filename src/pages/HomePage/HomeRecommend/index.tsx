@@ -17,9 +17,8 @@ import { API_ROUTE_V } from "api/_api";
 
 
 export default function HomeRecommend() {
-    const { t } = useContext(AppContext)
+    const { t, orderService } = useContext(AppContext) as any
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { orderService } = useContext(AppContext)
     const servicesOrders = orderService
         ?.map((i: IServiceUser) => i.items)
         ?.flat()
@@ -69,7 +68,7 @@ export default function HomeRecommend() {
     );
 }
 const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[] }) => {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const LOCATION = AUTH_LOCATION()
     const params: ParamsProductable = {
         ...paramsProductable,
@@ -123,7 +122,7 @@ const TabReCommendInit = ({ servicesNameOrders }: { servicesNameOrders: string[]
 }
 
 const TabRecommendKey = ({ tab }: any) => {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const LOCATION = AUTH_LOCATION()
     const params: ParamsProductable = {
         ...paramsProductable,

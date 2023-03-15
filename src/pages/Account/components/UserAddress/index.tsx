@@ -29,7 +29,7 @@ function Address() {
             dispatch(fetchAsyncUserAddress())
         }
     }
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     useEffect(() => {
         callUserAddress()
         // eslint-disable-next-line react-hooks/exhaustive-deps

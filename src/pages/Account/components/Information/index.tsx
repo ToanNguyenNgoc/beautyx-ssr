@@ -21,7 +21,7 @@ import { FLAT_FORM_TYPE } from 'rootComponents/flatForm';
 import { AppContext } from 'context/AppProvider';
 
 function Information() {
-  const {t} = useContext(AppContext)
+  const {t} = useContext(AppContext) as any
   const { USER } = useSelector((state: IStore) => state.USER)
   return (
     <>
@@ -40,7 +40,7 @@ interface IValues {
 }
 
 const Form = ({ USER }: { USER: User }) => {
-  const {t} = useContext(AppContext)
+  const {t} = useContext(AppContext) as any
   const dispatch = useDispatch()
   const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
   const PLAT_FORM = EXTRA_FLAT_FORM()

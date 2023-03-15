@@ -25,7 +25,7 @@ function OrgDetail(props: IProps) {
         count: org.favorites_count,
         favorite: org.is_favorite
     })
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const [openPopupContact, setOpenPopupContact] = useState(false);
     const [openPopupMap, setOpenPopupMap] = useState(false);
     const orgTimes = extraOrgTimeWork(org?.opening_time);

@@ -3,7 +3,7 @@ import { AppContext } from '../../../context/AppProvider';
 import OrgSelectItem from './OrgSelectItem';
 
 function OrgSelect(props: any) {
-      const { t } = useContext(AppContext)
+      const { t } = useContext(AppContext) as any
       const { myServices, setOrgAll, chooseOrg, setChooseOrg, servicesBook, setServicesBook } = props;
       const orgListId: any[] = [];
       for (var service of myServices) {

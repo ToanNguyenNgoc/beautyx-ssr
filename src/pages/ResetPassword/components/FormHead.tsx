@@ -7,7 +7,7 @@ import { AppContext } from '../../../context/AppProvider';
 
 function FormHead() {
     const history = useHistory();
-    const {t} = useContext(AppContext);
+    const {t} = useContext(AppContext) as any;
     return (
         <div
             className='for-head'

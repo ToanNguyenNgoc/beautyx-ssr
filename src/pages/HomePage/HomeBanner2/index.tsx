@@ -46,7 +46,7 @@ const NextButton = (props: any) => {
 
 
 function HomeBanner2() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const features = [
         // { title: "Vị trí", icon: icon.pinMapRed, func: "MAP" },

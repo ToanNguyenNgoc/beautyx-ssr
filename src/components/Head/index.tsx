@@ -84,7 +84,7 @@ function Head(props: IProps) {
     if (IS_MB && homePath.includes(pathname)) changeStyle = true
 
 
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const [key, setKey] = useState({ key: "", key_debounce: "" });
     const history = useHistory();
     const { USER } = useSelector((state: IStore) => state.USER);

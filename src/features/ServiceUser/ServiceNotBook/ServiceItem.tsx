@@ -17,7 +17,7 @@ interface IProps {
 }
 
 function ServiceItem(props: IProps) {
-  const { t } = useContext(AppContext);
+  const { t } = useContext(AppContext) as any;
   const {
     service,
     handleServiceBook,

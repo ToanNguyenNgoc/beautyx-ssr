@@ -23,7 +23,7 @@ import {
 } from 'redux-toolkit-query/hook-home';
 
 function HomeOrgDistance() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const dispatch = useDispatch()
     const { tags } = useSelector((state: any) => state.HOME)
     const { ORG_PR } = useSelector((state: IStore) => state.FILTER_RESULT)

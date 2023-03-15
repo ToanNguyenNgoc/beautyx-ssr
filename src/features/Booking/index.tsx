@@ -38,7 +38,7 @@ import { PLF_TYPE } from "constants/plat-form";
 const date = dayjs();
 function Booking() {
     const dispatch = useDispatch();
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const [finalAmount, setFinalAmount] = useState(0)
     const { SERVICES_BOOK } = useSelector((state: any) => state);
     const LOCATION = AUTH_LOCATION()

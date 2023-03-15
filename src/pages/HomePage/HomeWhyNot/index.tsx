@@ -6,7 +6,7 @@ import Slider from "react-slick";
 import { AppContext } from "context/AppProvider";
 
 function HomeWhyNot() {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const settings: any = {
         dots: false,
         infinite: false,

@@ -16,7 +16,7 @@ import style from '../sign-page.module.css'
 import { useCountDown, useNoti } from 'hooks';
 
 function SignUps(props: any) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { setActiveTabSign } = props;
     const history = useHistory()
     const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()

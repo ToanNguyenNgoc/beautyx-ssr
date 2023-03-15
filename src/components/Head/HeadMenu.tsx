@@ -42,7 +42,7 @@ interface HeadMenuProps {
 const HeadMenuBox = (props: HeadMenuProps) => {
     const { refMenu, onCloseTimeout } = props;
     const history = useHistory();
-    const { t, language, setLanguage } = useContext(AppContext);
+    const { t, language, setLanguage } = useContext(AppContext) as any;
     const { USER } = useSelector((state: IStore) => state.USER);
     const dispatch = useDispatch();
     const listMenu = [

@@ -16,7 +16,7 @@ import icon from "constants/icon";
 export default function PopupDetailContact(props: any) {
     const { noti, onCloseNoti, firstLoad, resultLoad } = useNoti()
     const { setOpenPopupContact, openPopupContact, org } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const platForm = EXTRA_FLAT_FORM();
 
     const handlePostContact = async (values: any) => {

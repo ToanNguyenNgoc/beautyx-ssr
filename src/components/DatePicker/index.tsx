@@ -14,7 +14,7 @@ interface IProp {
 const todayObj = dayjs();
 function DatePicker(props: IProp) {
     const { onChange } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const weekDays = [
         t("Home.su"),
         t("Home.mo"),

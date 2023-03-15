@@ -22,7 +22,7 @@ interface InputVoucherProps {
 }
 
 export const InputVoucher = (props: InputVoucherProps) => {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const IS_MB = useDeviceMobile();
     const { open, setOpen, organization, cartAmount, services_id, products_id, outDiscounts } = props;
     const { VOUCHER_APPLY } = useSelector((state: IStore) => state.carts)

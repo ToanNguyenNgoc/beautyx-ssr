@@ -144,7 +144,7 @@ interface AppointmentWeekProps {
 
 const AppointmentWeek = (props: AppointmentWeekProps) => {
   const { days, new_appointments, datePick } = props;
-  const { t } = useContext(AppContext);
+  const { t } = useContext(AppContext) as any;
   const IS_MB = useDeviceMobile();
   const weekDays = [
     { d: t("Home.Sunday"), date: days[0] },

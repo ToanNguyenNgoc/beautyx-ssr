@@ -3,7 +3,7 @@ import { AppContext } from "../../../context/AppProvider";
 import icon from "../../../constants/icon";
 import dayjs from "dayjs";
 function Month(props: any) {
-    const { language } = useContext(AppContext);
+    const { language } = useContext(AppContext) as any;
     const [, setLocale] = useState(language);
     const { handlePrev, handleNext, dayObj, thisMonth } = props;
     useEffect(() => {

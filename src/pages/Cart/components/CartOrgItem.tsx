@@ -41,7 +41,7 @@ const checkedStItem = {
 }
 
 export function CartOrgItem(props: CartItemProps) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { itemOrg, orgChoose, cart_confirm, onChangeBranch, branch_id } = props
     const refBranch = useRef<HTMLDivElement>(null)
     const openBranch = () => refBranch.current?.classList.toggle(style.branch_show)

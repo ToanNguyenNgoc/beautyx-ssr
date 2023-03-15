@@ -29,7 +29,7 @@ import API_ROUTE from "api/_api";
 
 
 function MerchantDetail() {
-  const { t } = useContext(AppContext)
+  const { t } = useContext(AppContext) as any
   const IS_MB = useDeviceMobile()
   const location: any = useLocation()
   const params: any = useParams()

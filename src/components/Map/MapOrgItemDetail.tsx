@@ -25,7 +25,7 @@ export default function MapOrgItemDetail(props: IProps) {
     const { org, setOpenDetail, openDetail } = props;
     const IS_MB = useDeviceMobile()
     const history = useHistory();
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const refDetail = useRef<HTMLDivElement>(null)
     const refListTime = useRef<HTMLDivElement>(null)
     const refIconTime = useRef<HTMLImageElement>(null)
@@ -166,7 +166,7 @@ export default function MapOrgItemDetail(props: IProps) {
 }
 
 const OrgImage = ({ images_url }: { images_url: string[] }) => {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     return (
         <>
             <p className={style.org_section_title}>{t('Mer_de.galleries')}</p>
@@ -196,7 +196,7 @@ const OrgImageItem = ({ image_url }: { image_url: string }) => {
     )
 }
 const OrgSpecial = ({ org }: { org: IOrganization }) => {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { services_special } = useServicesSpecial(org)
     const { products_special } = useProductsSpecial(org)
     return (

@@ -10,7 +10,7 @@ function AddressItem(props: any) {
         handleUpdateAddress,
         address_default,
     } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
 
     const onRemoveAddress = () => {
         if (handleRemoveAddress) {

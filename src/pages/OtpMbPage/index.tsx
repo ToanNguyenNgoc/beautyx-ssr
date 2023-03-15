@@ -68,7 +68,7 @@ interface FormTelephoneProps {
 
 const FormTelephone = (props: FormTelephoneProps) => {
     const { data, setData, setStep } = props
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { noti, firstLoad, resultLoad, onCloseNoti } = useNoti()
     const generateRecaptcha = async () => {
         try {

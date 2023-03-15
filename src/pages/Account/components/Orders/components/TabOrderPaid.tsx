@@ -11,7 +11,7 @@ import { useDeviceMobile, useOrderService } from "hooks";
 import style from '../order.module.css'
 
 function TabOrderPaid() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const IS_MB = useDeviceMobile()
     const { resData, totalItem, onLoadMore, isValidating } = useOrderService()
     const orders: IOrderV2[] = resData ?? []

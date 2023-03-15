@@ -14,7 +14,7 @@ interface PaymentMethodType {
 }
 
 function PaymentMethod(props: PaymentMethodType) {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const { onSetPaymentMethod } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const IS_MB = useDeviceMobile()

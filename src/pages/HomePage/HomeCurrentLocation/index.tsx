@@ -7,7 +7,7 @@ import { AppContext } from 'context/AppProvider';
 import icon from 'constants/icon';
 
 function HomeCurrentLocation() {
-    const { geo } = useContext(AppContext);
+    const { geo } = useContext(AppContext) as any;
     const { response, isValidating } = useFetch(
         geo,
         API_3RD.API_MAP_BOX(geo?.lat, geo?.long)

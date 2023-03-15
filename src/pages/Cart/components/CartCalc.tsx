@@ -30,7 +30,7 @@ const popupInit = {
 }
 
 export function CartCalc(props: CartCalcType) {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const { order, orgChoose } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const [openVc, setOpenVc] = useState(false)

@@ -11,7 +11,7 @@ import { useDeviceMobile, useOrderService } from "hooks";
 import { OrderSkelton } from "pages/Account/components/Orders/components/TabOrderPaid";
 
 function ServicesUser() {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const IS_MB = useDeviceMobile();
     const { resData, totalItem, onLoadMore, isValidating, checkTimeExpired } = useOrderService()
     return (

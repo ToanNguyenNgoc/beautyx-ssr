@@ -18,7 +18,7 @@ import { BackTopButton } from "components/Layout";
 // import TabOrg from "./TabOrg";
 
 function SearchResults() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const IS_MB = useDeviceMobile()
     const params = useParams();
     const paramsUrl: any = extraParamsUrl()

@@ -17,7 +17,7 @@ import { AlertSnack } from "components/Layout";
 import validateForm from "utils/validateForm";
 export default function DialogChangeInfo(props: any) {
     const { open, setOpen } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const { USER } = useSelector((state: any) => state.USER);
     const FLAT_FORM = sessionStorage.getItem('FLAT_FORM');
     const dispatch = useDispatch();

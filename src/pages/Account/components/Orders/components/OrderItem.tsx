@@ -21,7 +21,7 @@ interface IProp {
 function OrderItem(props: IProp) {
     const { order } = props;
     const IS_MB = useDeviceMobile()
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const [openQr, setOpenQr] = useState(false);
     const [openReview, setOpenReview] = useState(false);
     const { statusTransform } = useTransformOrderStatus(order.status)

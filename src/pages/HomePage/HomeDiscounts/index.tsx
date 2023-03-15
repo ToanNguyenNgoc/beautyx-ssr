@@ -16,7 +16,7 @@ import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { useHomeDiscountsQuery } from "redux-toolkit-query/hook-home";
 
 function HomeDiscount() {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const IS_MB = useDeviceMobile()
     const PLAT_FORM = EXTRA_FLAT_FORM();
     const LOCATION = AUTH_LOCATION();

@@ -24,7 +24,7 @@ interface ValuesProp {
 }
 
 export default function Partner() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const partnerListLabel = [
         t("partner.sell_products"),
         t("partner.customers"),

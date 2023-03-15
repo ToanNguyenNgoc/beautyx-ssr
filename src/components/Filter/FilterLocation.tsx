@@ -45,7 +45,7 @@ const useSearchProvinces = (keyword: string, list: any[]) => {
 
 export function FilterLocation(props: FilterLocationProps) {
     const location = AUTH_LOCATION()
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const IS_MB = useDeviceMobile()
     const { onChange, province_code, district_code, title, showApplyBtn } = props
     const [open, setOpen] = useState({

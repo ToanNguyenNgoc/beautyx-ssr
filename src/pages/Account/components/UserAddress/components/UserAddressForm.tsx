@@ -46,7 +46,7 @@ const onToggleWard = () => {
     $('.us_address-cnt .from-label__list-district')?.classList.remove('lis-province-ac')
 }
 function UserAddressForm(props: any) {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const ADDRESS = useSelector((state: any) => state.ADDRESS);
     const { provinces } = useSelector((state: any) => state.HOME);
     const { status_up } = ADDRESS;

@@ -23,7 +23,7 @@ import { STATUS } from "../../redux/status";
 
 const PlaceComponent = (props: any) => {
     const { mapRef, onFlyTo, setOpenDetail, openDetail, slideRef } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const tags_data = [
         // { id: 9, title: t("home_2.places_near_you"), text: t("home_2.places_near_you"), img: icon.distance },
         { id: 4, title: "Spa", text: "Spa", img: imgTag.spa },

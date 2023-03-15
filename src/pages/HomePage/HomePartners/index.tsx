@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import style from "./style.module.css";
 
 export default function HomePartners() {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     return (
         <div className={style.home_partners}>
             <div className={style.home_partner}>

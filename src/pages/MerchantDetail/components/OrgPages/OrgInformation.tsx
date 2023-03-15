@@ -16,7 +16,7 @@ interface IProps {
 
 export function OrgInformation(props: IProps) {
     const { org, refMap } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const branchesCntRef = useRef<any>();
     const sliderRef = useRef<any>();
     const [branch, setBranch] = useState<any>(org?.branches[0] || org);

@@ -16,7 +16,7 @@ import icon from "constants/icon";
 // import SignInSocial from "./SignInSocial";
 
 function SignIn(props: any) {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const dispatch = useDispatch();
     const { setActiveTabSign } = props;
     const history = useHistory();

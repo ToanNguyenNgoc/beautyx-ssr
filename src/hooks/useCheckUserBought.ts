@@ -11,7 +11,7 @@ interface CommentProps {
 export function useCheckUserBought({ commentable_type, commentable_id, org_id }: CommentProps) {
     let bought = false
 
-    const { orderService } = useContext(AppContext)
+    const { orderService } = useContext(AppContext) as any
 
     const orders: IOrderV2[] = orderService ?? []
     const organization_ids_order = orders.map(i => i.organization_id)

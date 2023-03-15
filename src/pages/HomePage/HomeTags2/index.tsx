@@ -36,7 +36,7 @@ const PrevButton = (props: any) => {
 }
 
 function HomeTags2() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const [slide, setSlide] = useState(1)
     //---
     const { tagsChildServiceLevel2 } = useTags()

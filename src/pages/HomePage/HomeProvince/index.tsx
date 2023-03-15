@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { onChangeFilterBranch, onResetFilter } from 'redux/filter-result'
 
 export default function HomeProvince() {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const dispatch = useDispatch()
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;

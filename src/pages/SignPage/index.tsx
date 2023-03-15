@@ -13,7 +13,7 @@ import LoginFlatFormRequest from "rootComponents/loginFlatFormRequest/LoginFlatF
 import style from './sign-page.module.css'
 
 function SignPage() {
-  const { t } = useContext(AppContext);
+  const { t } = useContext(AppContext) as any;
   const FLAT_FORM = EXTRA_FLAT_FORM();
   const location: any = useLocation();
   const pathname = location?.state?.from?.pathname;

@@ -19,7 +19,7 @@ interface IProps {
 
 export function OrgItem(props: IProps) {
     const { org, changeStyle } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const history = useHistory();
     const IS_MB = useDeviceMobile();
     const gotoDetail = () => {

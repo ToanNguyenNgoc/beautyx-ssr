@@ -34,7 +34,7 @@ export interface PostOrderType {
 }
 
 function Cart() {
-    const {t} = useContext(AppContext)
+    const {t} = useContext(AppContext) as any
     const IS_MB = useDeviceMobile()
     const platForm = EXTRA_FLAT_FORM()
     const dispatch = useDispatch()

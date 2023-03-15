@@ -10,7 +10,7 @@ import { productsSection, IProductsSection } from '../data'
 import style from './style.module.css'
 
 function HomeProducts() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const IS_MB = useDeviceMobile()
     const history = useHistory()
     const dispatch = useDispatch()

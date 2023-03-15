@@ -18,7 +18,7 @@ interface GuideProps {
 
 function Guide(props: GuideProps) {
     const { open, setOpen } = props;
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const step = [
         {
             title: `${t("account_guide.ac_gui_title1")}`,

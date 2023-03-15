@@ -18,7 +18,7 @@ interface AppDetailProps {
 }
 
 function AppDetail(props: AppDetailProps) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { open, setOpen, app } = props
     const [openQr, setOpenQr] = useState(false)
     const IS_MB = useDeviceMobile()

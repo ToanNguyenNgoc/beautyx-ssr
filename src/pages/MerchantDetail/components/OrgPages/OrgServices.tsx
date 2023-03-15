@@ -22,7 +22,7 @@ export function OrgServices(props: IProps) {
     const history = useHistory()
     const location = useLocation()
     const IS_MB = useDeviceMobile();
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const paramsUrl = extraParamsUrl()
     const cate_id = paramsUrl?.cate_id
     const { org } = props;

@@ -25,7 +25,7 @@ const paths = [
 ];
 
 function Bottom() {
-    const { t,appointment_today,order_app } = useContext(AppContext);
+    const { t,appointment_today,order_app } = useContext(AppContext) as any;
     const location = useLocation();
     const { USER } = useSelector((state: IStore) => state.USER)
     const Btns = [

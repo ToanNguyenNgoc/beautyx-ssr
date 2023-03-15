@@ -49,7 +49,7 @@ const tabContent = [
 ];
 export default function Member() {
     const { USER } = useSelector((state: IStore) => state.USER);
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const [tabActive, setTabActive] = useState(1);
     return (
         <>

@@ -9,7 +9,7 @@ import { AppContext } from "context/AppProvider";
 import "./order.css";
 
 function Orders() {
-  const { t } = useContext(AppContext);
+  const { t } = useContext(AppContext) as any;
   const [tab, setTab] = useState('PAID')
   const onChangeTab = (event: React.SyntheticEvent, newValue: string) => {
     setTab(newValue)

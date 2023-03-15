@@ -15,7 +15,7 @@ function Provinces() {
     const [value, setValue] = useState('')
     const IS_MB = useDeviceMobile()
     const dispatch = useDispatch()
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const HOME = useSelector((state: any) => state.HOME);
     const { provinces_org } = HOME;
     const history = useHistory();

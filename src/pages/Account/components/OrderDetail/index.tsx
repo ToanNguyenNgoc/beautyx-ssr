@@ -24,7 +24,7 @@ interface OrderDetailProp {
 }
 
 function OrderDetail(props: OrderDetailProp) {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const { open, setOpen, order } = props
     const { USER } = useSelector((state: IStore) => state.USER)
     const [openQr, setOpenQr] = useState(false)

@@ -11,7 +11,7 @@ import { AppContext } from "context/AppProvider";
 import { ApointmentTab } from "pages/Apointment";
 
 function Calendar() {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const history = useHistory();
     const params: any = extraParamsUrl();
     const tabList = [

@@ -45,7 +45,7 @@ const Prev = (props: any) => {
 // };
 
 function HomeTopic() {
-    const { t } = useContext(AppContext)
+    const { t } = useContext(AppContext) as any
     const IS_MB = useDeviceMobile();
     const settingsSlideTop = {
         dots: false,

@@ -7,7 +7,7 @@ import icon from 'constants/icon';
 
 
 function FormTelephone(props: any) {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const { handlePostTelephone, title, load, isDialog, setActiveTabSign, prevUrl } = props;
     const history = useHistory();
     const formikTelephone = useFormik({

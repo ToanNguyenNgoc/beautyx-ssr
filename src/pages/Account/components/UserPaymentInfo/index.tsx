@@ -18,7 +18,7 @@ interface IProps {
 }
 
 function UserPaymentInfo(props: IProps) {
-    const { t } = useContext(AppContext);
+    const { t } = useContext(AppContext) as any;
     const { onSetAddressDefault, disableEdit, title, disableAddress } = props;
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
