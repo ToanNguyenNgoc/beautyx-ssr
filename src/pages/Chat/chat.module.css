@@ -1,0 +1,350 @@
+.pageChat {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 24px;
+  display: flex;
+  height: 90vh;
+  overflow: hidden;
+}
+.chatLeft {
+  width: 25%;
+  border-right: 1px solid #ccc;
+}
+
+.leftHead {
+  padding: 16px 16px 10px 16px;
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  z-index: 999;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: var(--bg-white);
+}
+.leftHeadInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.headBtnGroup {
+  border: 1.5px solid #ccc;
+  border-radius: 4px;
+  padding: 6px;
+  cursor: pointer;
+}
+.headBtnGroup > img {
+  width: 16px;
+  height: 16px;
+}
+.leftHeadTitle {
+  display: flex;
+  align-items: center;
+}
+.leftHeadTitle > p:first-child {
+  font-size: 18px;
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.leftHeadTitle > p:last-child {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--purple);
+  padding: 2px 6px;
+  background-color: #e3e0f1;
+  border-radius: 24px;
+}
+.chatSearch > img {
+  margin-right: 10px;
+}
+.chatSearch {
+  margin-top: 16px;
+  display: flex;
+  padding: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.chatSearch > input {
+  border: 0;
+  outline: none;
+  background-color: transparent;
+  font-weight: bold;
+  font-size: 16px;
+}
+.chatSearch > input::-webkit-input-placeholder {
+  color: #b7c1cb;
+}
+.chatSearch:hover {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 4px #e3e0f1;
+}
+.chatItem {
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.chatItem:hover {
+  background-color: #e3e0f1;
+  transition: all 0.3s;
+}
+.chatItem:not(:last-child) {
+  border-bottom: 1px solid #ccc;
+}
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+}
+.itemTopLeft {
+  display: flex;
+  align-items: center;
+}
+.itemDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  flex-shrink: 0;
+  background-color: var(--purple);
+  margin-right: 8px;
+}
+.itemUser {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.itemAva {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 100rem;
+  background-color: #ccc;
+  flex-shrink: 0;
+}
+.itemActive {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  transform: translateX(12px);
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 100rem;
+  background-color: var(--green);
+}
+.itemName {
+  font-weight: bold;
+  color: var(--text-black);
+}
+.itemNameOrg,
+.chatTimeAgo {
+  color: grey;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.itemBot {
+  margin-top: 10px;
+  color: grey;
+  font-weight: 500;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
+.chatLeftList {
+  overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 130px;
+}
+.chatLeftList::-webkit-scrollbar {
+  width: 2px;
+  display: block;
+}
+
+.chatLeftList::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+/* close left */
+
+/* right */
+.chatRight {
+  width: 75%;
+  position: relative;
+  padding: 16px 0 16px 16px;
+}
+.chatRightHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+}
+.rightHeadUser {
+  display: flex;
+  align-items: center;
+}
+.rightUserAva {
+  height: 48px;
+  width: 48px;
+  border-radius: 100px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+.rightUserName {
+  display: flex;
+  align-items: center;
+}
+.rightUserName > p {
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 8px;
+}
+.rightUserContent > p {
+  font-size: 14px;
+  color: gray;
+  font-weight: 500;
+}
+.userStatus {
+  padding: 4px 8px;
+  background-color: #dbebe2;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+}
+.userStatus > span:first-child {
+  width: 8px;
+  display: inline-block;
+  height: 8px;
+  border-radius: 100px;
+  background-color: var(--green);
+  margin-right: 4px;
+}
+.userStatus > span:last-child {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+}
+.rightHeadBtns {
+  display: flex;
+  gap: 8px;
+}
+.rightHeadBtn {
+  border: 0;
+  outline: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+.rightHeadBtn:hover {
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+.rightHeadBtn > p {
+  font-weight: bold;
+  font-size: 16px;
+}
+.rightHeadBtn:nth-child(1) {
+  color: var(--purple);
+  background-color: #e3e0f1;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.rightHeadBtn:nth-child(2) {
+  border: 1px solid #ccc;
+  background-color: transparent;
+  color: black;
+}
+.rightHeadBtn:nth-child(3) {
+  color: #fff;
+  background-color: var(--purple);
+}
+
+.chatListMessage {
+  margin-top: 64px;
+  padding: 0 32px 194px 16px;
+  overflow-y: scroll;
+  height: 100%;
+}
+.chatListMessage::-webkit-scrollbar {
+  width: 2px;
+  display: block;
+}
+
+.chatListMessage::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+.chatListItem {
+  display: flex;
+  gap: 10px;
+  max-width: 80%;
+  margin-top: 16px;
+}
+.itemMessager {
+  padding: 8px 16px;
+  border-radius: 0 16px 16px 16px;
+  background-color: #eeedf2;
+  margin-top: 8px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.chatListItem > .itemInfo > .itemName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chatListItem > .itemInfo > .itemName > p:first-child {
+  font-size: 14px;
+  font-weight: 700;
+}
+.chatListItem > .itemInfo > .itemName > p:last-child {
+  font-size: 12px;
+  font-weight: 500;
+  color: grey;
+}
+.chatRightFoot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f5f5f7;
+}
+.footerWrapper {
+  padding: 16px;
+  margin: 16px 32px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  gap: 10px;
+  display: flex;
+}
+
+.footerWrapper > textarea {
+  width: 75%;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  resize: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+.footBtns {
+  width: 25%;
+  display: flex;
+  align-items: flex-end;
+}
+.btnsWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-gap: 14px;
+  width: 100%;
+}
+.btnIcon {
+  cursor: pointer;
+}
