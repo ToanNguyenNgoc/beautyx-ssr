@@ -28,10 +28,11 @@ export default function InputChat() {
       <div className={style.chatRightFoot}>
         <div className={style.footerWrapper}>
           <textarea
+            maxLength={1500}
             ref={textAreaRef}
             value={inputStr}
             onChange={(e) => setInputStr(e.target.value)}
-            rows={IS_MB ? 1 : 1}
+            rows={IS_MB ? 1 : 3}
             placeholder="Send a message"
           />
           <div className={style.footBtns}>
