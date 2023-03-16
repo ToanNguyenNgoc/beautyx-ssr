@@ -1,0 +1,276 @@
+/* right */
+.chatRight {
+  width: 75%;
+  position: relative;
+  padding: 16px 0 16px 16px;
+}
+.chatRightHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+}
+.rightHeadUser {
+  display: flex;
+  align-items: center;
+}
+.rightUserAva {
+  height: 48px;
+  width: 48px;
+  border-radius: 100px;
+  background-color: #ccc;
+  margin-right: 10px;
+}
+.rightUserName {
+  display: flex;
+  align-items: center;
+}
+.rightNameText {
+  font-size: 18px;
+  font-weight: 700;
+  margin-right: 8px;
+}
+.rightUserContent > .rightUserOrg {
+  font-size: 14px;
+  color: gray;
+  font-weight: 500;
+}
+.userStatus {
+  padding: 4px 8px;
+  background-color: #dbebe2;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+}
+.userStatus > span:first-child {
+  width: 8px;
+  display: inline-block;
+  height: 8px;
+  border-radius: 100px;
+  background-color: var(--green);
+  margin-right: 4px;
+}
+.userStatus > span:last-child {
+  color: var(--green);
+  font-size: 12px;
+  font-weight: bold;
+}
+.rightHeadBtns {
+  display: flex;
+  gap: 8px;
+}
+.rightHeadBtn {
+  border: 0;
+  outline: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+.rightHeadBtn:hover {
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+.rightHeadBtn > p {
+  font-weight: bold;
+  font-size: 16px;
+}
+.rightHeadBtn:nth-child(1) {
+  color: var(--purple);
+  background-color: #e3e0f1;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.rightHeadBtn:nth-child(2) {
+  border: 1px solid #ccc;
+  background-color: transparent;
+  color: black;
+}
+.rightHeadBtn:nth-child(3) {
+  color: #fff;
+  background-color: var(--purple);
+}
+
+.chatListMessage {
+  margin-top: 64px;
+  padding: 0 32px 194px 16px;
+  overflow-y: scroll;
+  height: 100%;
+}
+.chatListMessage::-webkit-scrollbar {
+  width: 2px;
+  display: block;
+}
+
+.chatListMessage::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+}
+.chatListItem {
+  display: flex;
+  gap: 10px;
+  width: 80%;
+  margin-top: 16px;
+}
+.itemMessager {
+  padding: 8px 16px;
+  border-radius: 0 8px 8px 8px;
+  background-color: #eeedf2;
+  margin-top: 8px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.chatListItem > .itemInfo > .itemName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chatListItem > .itemInfo > .itemName > p:first-child {
+  font-size: 14px;
+  font-weight: 700;
+}
+.chatListItem > .itemInfo > .itemName > p:last-child {
+  font-size: 12px;
+  font-weight: 500;
+  color: grey;
+}
+.chatRightFoot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f5f5f7;
+}
+.footerWrapper {
+  padding: 16px;
+  margin: 16px 32px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  gap: 10px;
+  display: flex;
+}
+
+.footerWrapper > textarea {
+  width: 75%;
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  resize: none;
+  font-size: 16px;
+  font-weight: bold;
+}
+.footBtns {
+  width: 25%;
+  display: flex;
+  align-items: flex-end;
+}
+.btnsWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  grid-gap: 14px;
+  width: 100%;
+}
+.btnIcon {
+  cursor: pointer;
+}
+.emojiPicker {
+  position: absolute;
+  bottom: 40px;
+  right: 0;
+}
+.btnsWrap > .btnIcon:nth-child(1) {
+  position: relative;
+}
+.itemAva {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 100rem;
+  background-color: #ccc;
+  flex-shrink: 0;
+}
+.itemAva > img,
+.rightUserAva > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: 100rem;
+}
+.itemActive {
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+  transform: translateX(12px);
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--bg-white);
+  border-radius: 100rem;
+  background-color: var(--green);
+}
+.rightHeadBack {
+  display: none;
+}
+@media screen and (max-width: 1023px) {
+  .chatRight {
+    width: 100%;
+    flex-shrink: 0;
+    transition: all 0.3s;
+    padding: 0;
+  }
+  .chatListItem {
+    width: 100%;
+  }
+  .rightNameText {
+    font-size: 16px;
+  }
+  .rightHeadBtns {
+    display: none;
+  }
+  .itemMessager {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .chatListMessage {
+    padding: 0 16px 200px 16px;
+  }
+  .footerWrapper {
+    margin: 8px 16px 20px 16px;
+    padding: 8px 16px;
+    align-items: flex-end;
+  }
+  .footerWrapper > textarea {
+    font-size: 14px;
+    overflow: hidden;
+    align-self: center;
+  }
+  .footBtnsSend {
+    padding: 8px;
+    font-size: 14px;
+  }
+  .chatRightHead {
+    padding: 8px 16px;
+  }
+  .rightHeadBack {
+    padding: 8px 8px 8px 0;
+    margin-right: 4px;
+    display: block;
+  }
+  .rightUserAva {
+    width: 40px;
+    height: 40px;
+  }
+  .itemAva {
+    width: 32px;
+    height: 32px;
+  }
+  .itemActive {
+    width: 12px;
+    height: 12px;
+  }
+}
