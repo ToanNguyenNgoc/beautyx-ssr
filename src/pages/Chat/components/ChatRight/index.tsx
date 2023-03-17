@@ -13,13 +13,14 @@ export default function ChatRight(props: any) {
         IS_MB && ACC_SHOW === "right"
           ? {
               marginLeft: "0px",
+              padding: "0 16px 200px 16px",
             }
           : {}
       }
       className={style.chatRight}
     >
       {/* head */}
-      <HeadChatRight />
+      <HeadChatRight ACC_SHOW={ACC_SHOW} />
       {/* close head */}
 
       {/* list chat */}
@@ -80,7 +81,7 @@ export default function ChatRight(props: any) {
       {/* close list chat */}
 
       {/* foot */}
-      <InputChat />
+      <InputChat ACC_SHOW={ACC_SHOW} />
       {/* close foot */}
     </div>
   );

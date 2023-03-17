@@ -3,17 +3,25 @@ import style from "./chatright.module.css";
 import { useHistory } from "react-router-dom";
 import icon from "constants/icon";
 import { XButton } from "components/Layout";
-export default function HeadChatRight() {
+import { useDeviceMobile } from "hooks";
+export default function HeadChatRight(props: any) {
   const history = useHistory();
-
+  const { ACC_SHOW } = props;
+  const IS_MB = useDeviceMobile();
   return (
     <>
-      <div className={style.chatRightHead}>
+      <div
+        style={
+          IS_MB && ACC_SHOW === "left"
+            ? {
+                transform: "translateX(100%)",
+              }
+            : {}
+        }
+        className={style.chatRightHead}
+      >
         <div className={style.rightHeadUser}>
-          <div
-            onClick={() => history.push("/chat")}
-            className={style.rightHeadBack}
-          >
+          <div onClick={() => history.goBack()} className={style.rightHeadBack}>
             <img src={icon.chevronLeft} alt="" />
           </div>
           <div className={style.rightUserAva}>

@@ -3,6 +3,7 @@ import ChatRight from "pages/Chat/components/ChatRight";
 import { useState } from "react";
 import style from "./chat.module.css";
 import { useLocation } from "react-router-dom";
+import { useDeviceMobile } from "hooks";
 
 const data = [
   {
@@ -36,12 +37,22 @@ const data = [
 ];
 export default function Chat() {
   const [value, setValue] = useState<string>("");
+  const IS_MB = useDeviceMobile();
   let ACC_SHOW = "left";
   const location = useLocation();
   if (location.pathname !== "/chat") ACC_SHOW = "right";
   return (
     <>
-      <div className={style.pageChat}>
+      <div
+        style={
+          IS_MB && ACC_SHOW === "left"
+            ? {
+                height: "100vh",
+              }
+            : {}
+        }
+        className={style.pageChat}
+      >
         <Chatleft ACC_SHOW={ACC_SHOW} data={data} />
         <ChatRight ACC_SHOW={ACC_SHOW} data={data} />
       </div>
