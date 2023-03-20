@@ -25,10 +25,11 @@
         "see_calendar": "See the appointment",
         "not_noti": "You don't have any notifications",
         "language": "Language",
-        "Service pack purchased":"Service pack purchased",
-        "Following":"Following",
-        "Delivery address":"Delivery address",
-        "booking":"Booking"
+        "Service pack purchased": "Service pack purchased",
+        "Following": "Following",
+        "Delivery address": "Delivery address",
+        "booking": "Booking",
+        "member": "Member"
     },
     "Bottom": {
         "appointment": "Appointment",
@@ -109,19 +110,19 @@
         "trending": "Trends",
         "cate": "Categories",
         "scan_qr": "Scan QR",
-        "community":"Community",
-        "coupon_code":"Coupon code",
-        "linked_directory":"Linked directory",
-        "near_you":"Near you",
-        "Vietnamese_women_totally_beautiful":"Vietnamese women - Totally beautiful",
-        "beauty_products":"Beauty products",
-        "why_choose":"Why choose BeautyX ?",
-        "viewed":"Viewed",
-        "become":"Become",
-        "a_beautyX_partner":"a BeautyX partner",
-        "discover":"Discover",
-        "choose_a_location":"Choose a location",
-        "search_area":"Search area"
+        "community": "Community",
+        "coupon_code": "Coupon code",
+        "linked_directory": "Linked directory",
+        "near_you": "Near you",
+        "Vietnamese_women_totally_beautiful": "Vietnamese women - Totally beautiful",
+        "beauty_products": "Beauty products",
+        "why_choose": "Why choose BeautyX ?",
+        "viewed": "Viewed",
+        "become": "Become",
+        "a_beautyX_partner": "a BeautyX partner",
+        "discover": "Discover",
+        "choose_a_location": "Choose a location",
+        "search_area": "Search area"
     },
     "Search_result": {
         "text_result": "search results",
@@ -175,8 +176,8 @@
         "galleries": "Galleries",
         "business_hours": "Business hours",
         "branch": "Branch",
-        "priority":"Priority",
-        "favorite":"Favorite"
+        "priority": "Priority",
+        "favorite": "Favorite"
     },
     "pr": {
         "merchant_detail": "Merchant detail",
@@ -202,9 +203,9 @@
         "unlimited": "Unlimited",
         "map": "Map",
         "no_result": "No results found for",
-        "This product/service is not sold online yet":"This product/service is not sold online yet",
-        "liked":"Liked",
-        "like":"Like"
+        "This product/service is not sold online yet": "This product/service is not sold online yet",
+        "liked": "Liked",
+        "like": "Like"
     },
     "cart": {
         "into_money": "Into money",
@@ -228,12 +229,12 @@
         "must_sign_in": "Please sign in before paying",
         "limit_item_discount": "The service price has changed because you choose more than the quantity to which the code is applied",
         "order": "Order",
-        "checkout":"Checkout"
+        "checkout": "Checkout"
     },
     "pm": {
         "payment": "PAYMENT",
         "payment_2": "Payment",
-        "payment_booking":"Booking information",
+        "payment_booking": "Booking information",
         "payment_info": "Payment information",
         "full_name": "Full name",
         "phone_number": "Phone number",
@@ -267,10 +268,10 @@
         "see_details": "See details",
         "product_service": "Product/service",
         "service_list": "Service list",
-        "org":"Organization",
-        "enter_coupon_code":"Enter coupon code",
-        "promotion":"promotion",
-        "temporary":"Temporary"
+        "org": "Organization",
+        "enter_coupon_code": "Enter coupon code",
+        "promotion": "promotion",
+        "temporary": "Temporary"
     },
     "url": {
         "home": "home",
@@ -332,11 +333,11 @@
         "verification_code_of_6_characters": "Verification code of 6 characters",
         "change_password_successfully": "Change password successfully",
         "sending": "Sending...",
-        "back_to_sign_in_page":"Back to sign in page",
-        "an_error":"An error occurred. Please try again!",
-        "code":"Code",
-        "get_code":"Get code",
-        "verification_code_has_been_sent_to":"Verification code has been sent to"
+        "back_to_sign_in_page": "Back to sign in page",
+        "an_error": "An error occurred. Please try again!",
+        "code": "Code",
+        "get_code": "Get code",
+        "verification_code_has_been_sent_to": "Verification code has been sent to"
     },
     "partner": {
         "online_business": "Online business platform for the beauty industry",
@@ -367,7 +368,7 @@
         "update_acc": "Fully update personal information to make the account better security",
         "dob": "Date of birth",
         "sex": "Sex",
-        "pain":"Paid",
+        "pain": "Paid",
         "order_address": "Orders address",
         "add_other_address": "Add other address",
         "default": "Default",
@@ -375,9 +376,16 @@
         "save": "Save",
         "all": "All",
         "set_default_address": "Set default address",
-        "add new":"Create new",
-        "canceled":"Cancelled",
-        "code":"Code"
+        "add new": "Create new",
+        "canceled": "Cancelled",
+        "code": "Code",
+        "targets": "Targets",
+        "rank_information": "Rank information",
+        "go_to_the_next_level_to_get_extra_Extras": "Go to the next level to get extra Extras!",
+        "spending": "Spending",
+        "discount_on_bill": "Discount on bill",
+        "bonus": "Bonus",
+        "benefit": "Benefit"
     },
     "order": {
         "order_his": "Orders history",
@@ -389,12 +397,12 @@
         "watch_info": "Watch information",
         "book": "Book",
         "appo_detail": "Appointment details",
-        "Service has expired":"Service has expired",
-        "Service used":"Service used",
-        "Review":"Review",
-        "Expired":"Expired",
-        "Unlimited":"Unlimited",
-        "Used":"Used"
+        "Service has expired": "Service has expired",
+        "Service used": "Service used",
+        "Review": "Review",
+        "Expired": "Expired",
+        "Unlimited": "Unlimited",
+        "Used": "Used"
     },
     "my_ser": {
         "business": "Business",
@@ -425,15 +433,15 @@
         "code_err": "Code error",
         "booking": "Booking",
         "booking_his": "History",
-        "note_1":"Note: Number of people, information to be noted by the Enterprise, etc.",
-        "pay_and_book":"Payment & Book now",
-        "confirm_time":"Confirm time",
-        "create_order_fail":"Create order failed",
-        "ok":"Ok",
-        "minimum_order_is_1_000_VND":"Minimum order is 1,000 VND",
-        "enter_update_phone":"Enter your phone number to continue paying!",
-        "update":"Update",
-        "choose_branch":"Select branch"
+        "note_1": "Note: Number of people, information to be noted by the Enterprise, etc.",
+        "pay_and_book": "Payment & Book now",
+        "confirm_time": "Confirm time",
+        "create_order_fail": "Create order failed",
+        "ok": "Ok",
+        "minimum_order_is_1_000_VND": "Minimum order is 1,000 VND",
+        "enter_update_phone": "Enter your phone number to continue paying!",
+        "update": "Update",
+        "choose_branch": "Select branch"
     },
     "home_2": {
         "categories": "Categories",
@@ -451,11 +459,11 @@
         "beauty_places": "Beauty places",
         "top_deal": "Top Deal",
         "top_selling_services": "Top Selling Services",
-        "top_selling_products":"Top Selling Products",
+        "top_selling_products": "Top Selling Products",
         "favorite_places": "Favorite places",
         "suggestions_for_you": "Suggestions for you",
-        "price":"Price",
-        "Choose a price range":"Choose a price range"
+        "price": "Price",
+        "Choose a price range": "Choose a price range"
     },
     "se": {
         "search_results_for_keyword": "Search results for keyword",
@@ -478,8 +486,8 @@
         "distance": "Distance",
         "guide": "Guides",
         "edit": "Edit",
-        "Please enter the appropriate price range":"Please enter the appropriate price range",
-        "Apply":"Apply"
+        "Please enter the appropriate price range": "Please enter the appropriate price range",
+        "Apply": "Apply"
     },
     "Contact": {
         "success": "submit success"
@@ -560,8 +568,8 @@
         "total": "Total",
         "not_sale": "This product has not been activated for online sales",
         "see_more": "See more",
-        "shelf_life":"Shelf life: 1 month from the date of successful purchase",
-        "detailed_description":"Detailed description"
+        "shelf_life": "Shelf life: 1 month from the date of successful purchase",
+        "detailed_description": "Detailed description"
     },
     "footer": {
         "customer_support": "Customer support",

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import Picker from "emoji-picker-react";
+import  { useEffect, useRef, useState } from "react";
+import Picker, {EmojiStyle} from "emoji-picker-react";
 import style from "./chatright.module.css";
 import { XButton } from "components/Layout";
 import { useDeviceMobile } from "hooks";
@@ -50,6 +50,7 @@ export default function InputChat() {
                 {showPicker && (
                   <div className={style.emojiPicker}>
                     <Picker
+                    emojiStyle={EmojiStyle.APPLE}
                       // pickerStyle={{ width: "100%" }}
                       onEmojiClick={onEmojiClick}
                     />
