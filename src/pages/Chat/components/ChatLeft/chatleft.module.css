@@ -1,6 +1,7 @@
 .chatLeft {
   width: 25%;
   border-right: 1px solid #ccc;
+  height: 100%;
 }
 
 .leftHead {
@@ -170,7 +171,6 @@
 .chatLeftList {
   overflow-y: scroll;
   height: 100%;
-  padding-bottom: 124px;
 }
 .chatLeftList::-webkit-scrollbar {
   width: 2px;

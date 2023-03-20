@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDeviceMobile } from "hooks";
 export default function Chatleft(props: any) {
   const { data, ACC_SHOW } = props;
+  console.log(ACC_SHOW);
   const [active, setActive] = useState<boolean>(true);
   const IS_MB = useDeviceMobile();
   const history = useHistory();

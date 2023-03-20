@@ -1,4 +1,11 @@
 /* right */
+.skelton {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  position: absolute;
+  border-radius: 6px;
+}
 .chatRight {
   width: 75%;
   position: relative;
@@ -14,6 +21,7 @@
   width: 100%;
   padding: 16px;
   border-bottom: 1px solid #ccc;
+  background-color: var(--bg-white);
 }
 .rightHeadUser {
   display: flex;
@@ -99,8 +107,8 @@
 .chatListMessage {
   margin-top: 64px;
   padding: 0 32px 194px 16px;
-  overflow-y: scroll;
   height: 100%;
+  overflow-y: scroll;
 }
 .chatListMessage::-webkit-scrollbar {
   width: 2px;
@@ -143,18 +151,20 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #f5f5f7;
+  background: rgba(245, 245, 247, 0.8);
+  backdrop-filter: blur(10px);
 }
-.footerWrapper {
-  padding: 16px;
-  margin: 16px 32px;
+.inputChatWraper {
   border: 1px solid #ccc;
+  margin: 8px 32px 16px 32px;
   border-radius: 8px;
+  padding: 16px;
+}
+.inputChat {
   gap: 10px;
   display: flex;
 }
-
-.footerWrapper > textarea {
+.inputChat > textarea {
   width: 80%;
   border: 0;
   outline: 0;
@@ -174,7 +184,7 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  grid-gap: 14px;
+  grid-gap: 8px;
   width: 100%;
 }
 .btnIcon {
@@ -218,12 +228,49 @@
 .rightHeadBack {
   display: none;
 }
+
+/* upload img */
+.listUploadImg {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+.imgItem {
+  width: 80px;
+  height: 80px;
+  position: relative;
+}
+.imgItem > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.removeImg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: var(--purple);
+  border-radius: 100%;
+  cursor: pointer;
+  padding: 6px;
+}
+.removeImg > img {
+  width: 10px;
+  height: 10px;
+}
+/* close upload img */
+
+/* MOBILE */
 @media screen and (max-width: 1023px) {
   .chatRight {
     width: 100%;
-    flex-shrink: 0;
-    transition: all 0.3s;
+    height: 100%;
     padding: 0;
+    /* flex-shrink: 0; */
+    overflow-y: scroll;
   }
   .chatListItem {
     width: 100%;
@@ -239,14 +286,16 @@
     line-height: 1.5;
   }
   .chatListMessage {
-    padding: 0 16px 200px 16px;
+    margin-top: 74px;
+    height: 100%;
+    overflow-y: unset;
+    padding: 0;
   }
-  .footerWrapper {
-    margin: 8px 16px 20px 16px;
+  .inputChat {
     padding: 8px 16px;
     align-items: flex-end;
   }
-  .footerWrapper > textarea {
+  .inputChat > textarea {
     font-size: 14px;
     align-self: center;
     width: 75%;
@@ -254,9 +303,13 @@
   .footBtnsSend {
     padding: 8px;
     font-size: 14px;
+    background-color: transparent;
   }
   .chatRightHead {
     padding: 8px 16px;
+    position: fixed;
+    z-index: 999;
+    transition: var(--trans);
   }
   .rightHeadBack {
     padding: 8px 8px 8px 0;
@@ -281,5 +334,16 @@
   }
   .footBtns {
     width: 25%;
+  }
+  .chatRightFoot {
+    position: fixed;
+    transition: var(--trans);
+  }
+  .inputChatWraper {
+    margin: 8px 16px 16px 16px;
+    padding: 0;
+  }
+  .listUploadImg {
+    margin: 16px 16px 0 16px;
   }
 }
