@@ -1,0 +1,17 @@
+.pageChat {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin: 24px;
+  display: flex;
+  height: 90vh;
+  overflow: hidden;
+}
+@media screen and (max-width: 1024px) {
+  .pageChat {
+    width: 100%;
+    margin: 0;
+    height: 100%;
+    overflow: unset;
+    border: 0;
+  }
+}
