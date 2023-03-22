@@ -4,12 +4,12 @@ import icon from "constants/icon";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDeviceMobile } from "hooks";
 export default function Chatleft(props: any) {
-  const { data, ACC_SHOW } = props;
-  console.log(ACC_SHOW);
+  const { data, CHAT_SHOW } = props;
   const [active, setActive] = useState<boolean>(true);
   const IS_MB = useDeviceMobile();
   const history = useHistory();
   const location = useLocation();
+
   const onNavigate = (link: string) => {
     history.push(`/chat/${link}`);
   };
@@ -17,7 +17,7 @@ export default function Chatleft(props: any) {
     <>
       <div
         style={
-          IS_MB && ACC_SHOW === "right"
+          IS_MB && CHAT_SHOW === "right"
             ? {
                 marginLeft: "-100vw",
               }

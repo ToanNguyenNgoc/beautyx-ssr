@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Picker from "emoji-picker-react";
+import Picker, { EmojiStyle } from "emoji-picker-react";
 import style from "./chatright.module.css";
 import { XButton } from "components/Layout";
 import { postMediaMulti, useDeviceMobile } from "hooks";
@@ -16,17 +16,21 @@ const initComment: InitChat = {
   media_ids: [],
 };
 export default function InputChat(props: any) {
-  const { ACC_SHOW } = props;
+  const { CHAT_SHOW } = props;
   const IS_MB = useDeviceMobile();
   const [inputStr, setInputStr] = useState<any>("");
-  const [showPicker, setShowPicker] = useState<any>(false);
   const [chat, setChat] = useState(initComment);
+  const emojiRef: any = useRef(true);
+  const textAreaRef: any = useRef(null);
+
   const onEmojiClick = (event: any) => {
     setInputStr((prevInput: any) => prevInput + event.emoji);
-    setShowPicker(false);
   };
 
-  const textAreaRef: any = useRef(null);
+  const onToggleEmoji = (open: boolean) => {
+    if (open) emojiRef?.current?.classList.add(style.emojiPicker_active);
+    if (!open) emojiRef?.current?.classList.remove(style.emojiPicker_active);
+  };
 
   const resizeTextArea = () => {
     textAreaRef.current.style.height = "auto";
@@ -58,6 +62,7 @@ export default function InputChat(props: any) {
       ],
     });
   };
+
   const onRemoveImg = (model_id: number) => {
     setChat({
       ...chat,
@@ -70,7 +75,7 @@ export default function InputChat(props: any) {
     <>
       <div
         style={
-          IS_MB && ACC_SHOW === "left"
+          IS_MB && CHAT_SHOW === "left"
             ? {
                 transform: "translateX(100%)",
               }
@@ -117,27 +122,36 @@ export default function InputChat(props: any) {
             />
             <div className={style.footBtns}>
               <div className={style.btnsWrap}>
-                <div
+                <button
+                  onFocus={() => onToggleEmoji(true)}
+                  onBlur={() => onToggleEmoji(false)}
                   style={IS_MB ? { display: "none" } : {}}
                   className={style.btnIcon}
                 >
                   <img
+                    onClick={() =>
+                      emojiRef?.current?.classList.toggle(
+                        style.emojiPicker_active
+                      )
+                    }
                     className="emoji-icon"
                     alt=""
                     src={icon.smilePurple}
-                    onClick={() => setShowPicker((val: any) => !val)}
                   />
-                  {showPicker && (
-                    <div className={style.emojiPicker}>
-                      <Picker
-                        // pickerStyle={{ width: "100%" }}
-                        onEmojiClick={onEmojiClick}
-                      />
-                    </div>
-                  )}
-                </div>
+
+                  <div
+                    onFocus={() => onToggleEmoji(true)}
+                    onBlur={() => onToggleEmoji(false)}
+                    ref={emojiRef}
+                    className={style.emojiPicker}
+                  >
+                    <Picker
+                      emojiStyle={EmojiStyle.APPLE}
+                      onEmojiClick={onEmojiClick}
+                    />
+                  </div>
+                </button>
                 <div className={style.btnIcon}>
-                  {/* <img src={icon.addImg} alt="" /> */}
                   <label className={style.body_media_btn} htmlFor="media">
                     <img src={icon.addImg} alt="" />
                   </label>
