@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState, KeyboardEvent, ChangeEvent } from "react";
-import Picker from "emoji-picker-react";
-import { useSelector } from 'react-redux'
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Picker, { EmojiStyle } from "emoji-picker-react";
 import style from "./chatright.module.css";
 import { XButton } from "components/Layout";
 import { postMediaMulti, useDeviceMobile } from "hooks";
 import icon from "constants/icon";
 import Skeleton from "react-loading-skeleton";
-import IStore from "interface/IStore";
+
+
 interface media_ids {
   model_id: number;
   original_url: string;
@@ -18,24 +18,28 @@ const initComment: InitChat = {
   media_ids: [],
 };
 export default function InputChat(props: any) {
-  const { USER } = useSelector((state: IStore) => state.USER)
-  const { ACC_SHOW, socket } = props;
+  const { CHAT_SHOW } = props;
   const IS_MB = useDeviceMobile();
   const [inputStr, setInputStr] = useState<any>("");
-  const [showPicker, setShowPicker] = useState<any>(false);
   const [chat, setChat] = useState(initComment);
+  const emojiRefCnt = useRef<HTMLDivElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
   const onEmojiClick = (event: any) => {
     setInputStr((prevInput: any) => prevInput + event.emoji);
-    setShowPicker(false);
   };
-
-  const textAreaRef: any = useRef(null);
+  window.addEventListener(
+    'click',
+    () => emojiRefCnt.current?.classList.remove(style.emojiPicker_active)
+  )
 
   const resizeTextArea = () => {
-    textAreaRef.current.style.height = "auto";
-    if (inputStr.length > 0) {
-      textAreaRef.current.style.height =
-        textAreaRef.current.scrollHeight + "px";
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+      if (inputStr.length > 0) {
+        textAreaRef.current.style.height =
+          textAreaRef.current.scrollHeight + "px";
+      }
     }
   };
 
@@ -65,6 +69,7 @@ export default function InputChat(props: any) {
       ],
     });
   };
+
   const onRemoveImg = (model_id: number) => {
     setChat({
       ...chat,
@@ -74,13 +79,9 @@ export default function InputChat(props: any) {
 
   useEffect(resizeTextArea, [inputStr]);
 
-  const onSendMessage = () => {
-    socket?.emit('message', { id: USER.id, body: inputStr, fullname: USER.fullname })
-    setInputStr('')
-  }
-  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.code === "Enter" || event?.nativeEvent.keyCode === 13) {
-      onSendMessage()
+
     }
   }
 
@@ -88,7 +89,7 @@ export default function InputChat(props: any) {
     <>
       <div
         style={
-          IS_MB && ACC_SHOW === "left"
+          IS_MB && CHAT_SHOW === "left"
             ? {
               transform: "translateX(100%)",
             }
@@ -144,15 +145,21 @@ export default function InputChat(props: any) {
                     className="emoji-icon"
                     alt=""
                     src={icon.smilePurple}
-                    onClick={() => setShowPicker((val: any) => !val)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      emojiRefCnt.current?.classList.toggle(style.emojiPicker_active)
+                    }}
                   />
-                  {showPicker && (
-                    <div className={style.emojiPicker}>
-                      <Picker
-                        onEmojiClick={onEmojiClick}
-                      />
-                    </div>
-                  )}
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    ref={emojiRefCnt}
+                    className={style.emojiPicker}
+                  >
+                    <Picker
+                      emojiStyle={EmojiStyle.APPLE}
+                      onEmojiClick={onEmojiClick}
+                    />
+                  </div>
                 </div>
                 <div className={style.btnIcon}>
                   <label className={style.body_media_btn} htmlFor="media">
@@ -172,7 +179,6 @@ export default function InputChat(props: any) {
                   icon={IS_MB ? icon.sendComment : ""}
                   title={IS_MB ? "" : "Send"}
                   className={style.footBtnsSend}
-                  onClick={onSendMessage}
                 />
               </div>
             </div>

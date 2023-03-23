@@ -6,13 +6,13 @@ import { XButton } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 export default function HeadChatRight(props: any) {
   const history = useHistory();
-  const { ACC_SHOW } = props;
+  const { CHAT_SHOW } = props;
   const IS_MB = useDeviceMobile();
   return (
     <>
       <div
         style={
-          IS_MB && ACC_SHOW === "left"
+          IS_MB && CHAT_SHOW === "left"
             ? {
                 transform: "translateX(100%)",
               }

@@ -10,33 +10,34 @@ import { useAppointment, useOrderService } from "hooks";
 import Echo from 'laravel-echo'
 const Pusher = require('pusher-js')
 
+const echoConfig = new Echo({
+    broadcaster: 'pusher',
+    key: 'doelMSn29xZaWDstRtb6',
+    cluster: 'DevMyspaAPIs',
+    disableStats: true,
+    forceTLS: true,
+    wsHost: 'devapi.myspa.vn',
+    wsPort: 2052,
+    wssPort: 2052,
+    encrypted: true,
+    enabledTransports: ['ws', 'wss'],
+    authEndpoint: 'https://devapi.myspa.vn/broadcasting/auth',
+    auth: {
+        headers: {
+            "Authorization": `Bearer 641bae44287a42cce3086172|Ar3gtVc2JVRYThA9TIsC`,
+            "Content-Type": ''
+        },
+    },
+})
+
 export const AppContext = createContext({});
 export default function AppProvider({ children }: { children: any }) {
     const { t } = useTranslation();
     const [echo, setEcho] = useState<Echo>()
+    useEffect(()=>{
+        echoConfig.private('chat').subscribed(() => console.log('OK...'))
+    },[echoConfig])
 
-    useEffect(() => {
-        const echoConfig = new Echo({
-            broadcaster: 'pusher',
-            key: 'doelMSn29xZaWDstRtb6',
-            cluster: 'DevMyspaAPIs',
-            disableStats: true,
-            forceTLS: true,
-            wsHost: 'devapi.myspa.vn',
-            wsPort: 2052,
-            wssPort: 2052,
-            encrypted: true,
-            enabledTransports: ['ws', 'wss'],
-            authEndpoint: 'https://devapi.myspa.vn/broadcasting/auth',
-            auth: {
-                headers: {
-                    "Authorization": `Bearer 641abd766097481e6b0f7922|GKcZNCJVqCYbA6FSxN5b`,
-                    "Content-Type": ''
-                },
-            },
-        })
-        setEcho(echoConfig)
-    }, [])
     let lat; let long
     const location = AUTH_LOCATION()
     if (location) {
