@@ -9,7 +9,8 @@
 .chatRight {
   width: 75%;
   position: relative;
-  padding: 16px 0 16px 16px;
+  padding: 16px 0 16px 32px;
+  /* overflow: scroll; */
 }
 .chatRightHead {
   display: flex;
@@ -22,6 +23,7 @@
   padding: 16px;
   border-bottom: 1px solid #ccc;
   background-color: var(--bg-white);
+  z-index: 99;
 }
 .rightHeadUser {
   display: flex;
@@ -105,10 +107,9 @@
 }
 
 .chatListMessage {
-  margin-top: 64px;
-  padding: 0 32px 194px 16px;
   height: 100%;
   overflow-y: scroll;
+  padding: 64px 32px 164px 0;
 }
 .chatListMessage::-webkit-scrollbar {
   width: 2px;
@@ -121,7 +122,7 @@
 .chatListItem {
   display: flex;
   gap: 10px;
-  width: 80%;
+  width: 70%;
   margin-top: 16px;
 }
 .itemMessager {
@@ -131,10 +132,13 @@
   margin-top: 8px;
   line-height: 1.5;
   font-weight: 500;
+  word-break: break-word;
+  display: inline-block;
 }
 .chatListItem > .itemInfo > .itemName {
   display: flex;
   align-items: center;
+  gap: 8px;
   justify-content: space-between;
 }
 .chatListItem > .itemInfo > .itemName > p:first-child {
@@ -170,7 +174,7 @@
   outline: 0;
   background-color: transparent;
   resize: none;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   max-height: 500px;
   overflow-y: scroll;
@@ -189,11 +193,24 @@
 }
 .btnIcon {
   cursor: pointer;
+  border: 0;
+  background-color: unset;
+  width: 24px;
+  height: 24px;
 }
 .emojiPicker {
   position: absolute;
-  bottom: 40px;
+  bottom: 0;
   right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--trans);
+}
+.emojiPicker_active {
+  bottom: 40px;
+  opacity: 1;
+  visibility: visible;
+  transition: var(--trans);
 }
 .btnsWrap > .btnIcon:nth-child(1) {
   position: relative;
@@ -231,13 +248,13 @@
 
 /* upload img */
 .listUploadImg {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   gap: 16px;
   margin-bottom: 8px;
 }
 .imgItem {
-  width: 80px;
-  height: 80px;
+  aspect-ratio: 1/1;
   position: relative;
 }
 .imgItem > img {
@@ -262,6 +279,15 @@
   height: 10px;
 }
 /* close upload img */
+
+.btnScrollBot {
+  position: absolute;
+  bottom: 148px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-right: 32px;
+  width: max-content;
+}
 
 /* MOBILE */
 @media screen and (max-width: 1023px) {
@@ -344,6 +370,15 @@
     padding: 0;
   }
   .listUploadImg {
-    margin: 16px 16px 0 16px;
+    padding: 16px 16px 0 16px;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .imgItem {
+    width: 100%;
+    height: unset;
+    aspect-ratio: 1 / 1;
   }
 }

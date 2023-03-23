@@ -38,14 +38,15 @@ const data = [
 export default function Chat() {
   const [value, setValue] = useState<string>("");
   const IS_MB = useDeviceMobile();
-  let ACC_SHOW = "left";
+  let CHAT_SHOW = "left";
   const location = useLocation();
-  if (location.pathname !== "/chat") ACC_SHOW = "right";
+  if (location.pathname !== "/chat") CHAT_SHOW = "right";
+
   return (
     <>
       <div
         style={
-          IS_MB && ACC_SHOW === "left"
+          IS_MB && CHAT_SHOW === "left"
             ? {
                 height: "100vh",
               }
@@ -53,8 +54,8 @@ export default function Chat() {
         }
         className={style.pageChat}
       >
-        <Chatleft ACC_SHOW={ACC_SHOW} data={data} />
-        <ChatRight ACC_SHOW={ACC_SHOW} data={data} />
+        <Chatleft CHAT_SHOW={CHAT_SHOW} data={data} />
+        <ChatRight CHAT_SHOW={CHAT_SHOW} data={data} />
       </div>
     </>
   );
