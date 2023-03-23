@@ -75,7 +75,7 @@ export default function InputChat(props: any) {
   useEffect(resizeTextArea, [inputStr]);
 
   const onSendMessage = () => {
-    socket.emit('message', { id: USER.id, body: inputStr, fullname: USER.fullname })
+    socket?.emit('message', { id: USER.id, body: inputStr, fullname: USER.fullname })
     setInputStr('')
   }
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {

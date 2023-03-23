@@ -1,7 +1,6 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics, logEvent } from "firebase/analytics"
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
-// import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 
 const firebaseConfig = {
 

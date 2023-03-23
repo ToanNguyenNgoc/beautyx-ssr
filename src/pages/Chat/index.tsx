@@ -1,12 +1,13 @@
 import Chatleft from "pages/Chat/components/ChatLeft";
 import ChatRight from "pages/Chat/components/ChatRight";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import style from "./chat.module.css";
 import { useLocation } from "react-router-dom";
 import { useDeviceMobile } from "hooks";
 import { useSelector } from 'react-redux'
 import * as io from 'socket.io-client'
 import IStore from "interface/IStore";
+import { AppContext } from "context/AppProvider";
 
 const data = [
   {
@@ -38,9 +39,13 @@ const data = [
     name: "Reven",
   },
 ];
-const socket = io.connect('http://localhost:3004')
+// const socket = io.connect()
 export default function Chat() {
-  const {USER} = useSelector((state:IStore) => state.USER)
+  const { echo } = useContext(AppContext) as any
+  useEffect(() => {
+    echo?.private('chat')?.subscribed(() => console.log('OK in chat...'))
+  },[echo])
+  const { USER } = useSelector((state: IStore) => state.USER)
   const [value, setValue] = useState<string>("");
   const IS_MB = useDeviceMobile();
   let ACC_SHOW = "left";
@@ -58,8 +63,8 @@ export default function Chat() {
         }
         className={style.pageChat}
       >
-        <Chatleft socket={socket} ACC_SHOW={ACC_SHOW} data={data} />
-        <ChatRight USER={USER} socket={socket} ACC_SHOW={ACC_SHOW} data={data} />
+        <Chatleft ACC_SHOW={ACC_SHOW} data={data} />
+        <ChatRight USER={USER} ACC_SHOW={ACC_SHOW} data={data} />
       </div>
     </>
   );

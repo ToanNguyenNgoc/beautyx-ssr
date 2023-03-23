@@ -12,7 +12,7 @@ export default function ChatRight(props: any) {
 
   const [message, setMessage] = useState<any>([])
   useEffect(() => {
-    socket.on('get_message', (data: any) => setMessage(data))
+    socket?.on('get_message', (data: any) => setMessage(data))
   }, [socket])
 
   return (

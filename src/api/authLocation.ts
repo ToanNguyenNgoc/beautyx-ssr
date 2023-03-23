@@ -9,3 +9,10 @@ export const AUTH_LOCATION = () => {
     LOCATION = `${location_user?.lat},${location_user?.long}`;
     if (location_user) return LOCATION
 }
+
+
+export const CusEcho = (options?: PositionOptions) => {
+    return new Promise((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    );
+}

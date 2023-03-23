@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
@@ -6,31 +7,36 @@ import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useOrderService } from "hooks";
-// import Echo from 'laravel-echo'
-// import Pusher from 'pusher-js/worker'
-// import { AUTH_HEADER } from "api/authHeader";
+import Echo from 'laravel-echo'
+const Pusher = require('pusher-js')
 
 export const AppContext = createContext({});
 export default function AppProvider({ children }: { children: any }) {
     const { t } = useTranslation();
-    // const pusher = new Pusher('APP_KEY', {
-    //     cluster: 'APP_CLUSTER',
-    // });
-    // const echo = new Echo({
-    //     broadcaster: pusher,
-    //     key: process.env.MIX_PUSHER_APP_KEY,
-    //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    //     disableStats: true,
-    //     forceTLS: false,
-    //     wsHost: window.location.hostname,
-    //     wsPort: 6001,
-    //     wssPort: 6001,
-    //     encrypted: false,
-    //     enabledTransports: ['ws', 'wss'],
-    //     authEndpoint: '/ws/auth',
-    //     auth: AUTH_HEADER()
-    // })
-    // console.log(echo)
+    const [echo, setEcho] = useState<Echo>()
+
+    useEffect(() => {
+        const echoConfig = new Echo({
+            broadcaster: 'pusher',
+            key: 'doelMSn29xZaWDstRtb6',
+            cluster: 'DevMyspaAPIs',
+            disableStats: true,
+            forceTLS: true,
+            wsHost: 'devapi.myspa.vn',
+            wsPort: 2052,
+            wssPort: 2052,
+            encrypted: true,
+            enabledTransports: ['ws', 'wss'],
+            authEndpoint: 'https://devapi.myspa.vn/broadcasting/auth',
+            auth: {
+                headers: {
+                    "Authorization": `Bearer 641abd766097481e6b0f7922|GKcZNCJVqCYbA6FSxN5b`,
+                    "Content-Type": ''
+                },
+            },
+        })
+        setEcho(echoConfig)
+    }, [])
     let lat; let long
     const location = AUTH_LOCATION()
     if (location) {
@@ -76,7 +82,8 @@ export default function AppProvider({ children }: { children: any }) {
         appointment,
         appointment_today,
         orderService,
-        order_app
+        order_app,
+        echo
     };
     return <AppContext.Provider value={value} > {children} </AppContext.Provider>;
 }
