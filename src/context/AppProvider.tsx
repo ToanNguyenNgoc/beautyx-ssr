@@ -1,42 +1,44 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncUser } from 'redux/user/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useOrderService } from "hooks";
 import Echo from 'laravel-echo'
+import echoConfig from "api/echoConfig";
+import IStore from "interface/IStore";
 const Pusher = require('pusher-js')
 
-const echoConfig = new Echo({
-    broadcaster: 'pusher',
-    key: 'doelMSn29xZaWDstRtb6',
-    cluster: 'DevMyspaAPIs',
-    disableStats: true,
-    forceTLS: true,
-    wsHost: 'devapi.myspa.vn',
-    wsPort: 2052,
-    wssPort: 2052,
-    encrypted: true,
-    enabledTransports: ['ws', 'wss'],
-    authEndpoint: 'https://devapi.myspa.vn/broadcasting/auth',
-    auth: {
-        headers: {
-            "Authorization": `Bearer 641bae44287a42cce3086172|Ar3gtVc2JVRYThA9TIsC`,
-            "Content-Type": ''
-        },
-    },
-})
+export type AppContextType = {
+    t: any,
+    language: any,
+    setLanguage: any,
+    geo: any,
+    serviceCate: any,
+    appointment: any,
+    appointment_today: any,
+    orderService: any,
+    order_app: any,
+    echo: Echo | null
+}
 
-export const AppContext = createContext({});
+
+export const AppContext = createContext<AppContextType | null>(null);
 export default function AppProvider({ children }: { children: any }) {
     const { t } = useTranslation();
-    const [echo, setEcho] = useState<Echo>()
-    useEffect(()=>{
-        echoConfig.private('chat').subscribed(() => console.log('OK...'))
-    },[echoConfig])
+    const { USER } = useSelector((state: IStore) => state.USER)
+    const [echo, setEcho] = useState<Echo | null>(null)
+    useEffect(() => {
+        if (USER) {
+            setEcho(echoConfig())
+        } else {
+            echoConfig().disconnect()
+            setEcho(null)
+        }
+    }, [USER])
 
     let lat; let long
     const location = AUTH_LOCATION()

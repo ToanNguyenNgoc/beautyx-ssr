@@ -240,6 +240,15 @@ body > iframe {
 .cursor-pointer {
     cursor: pointer;
 }
+.linkify-chat{
+    text-decoration: underline;
+    opacity: 0.8;
+    transition: var(--trans);
+}
+.linkify-chat:hover{
+    opacity: 1;
+    transition: var(--trans);
+}
 
 #cprhliqipldavybercftg .chat-button--img-container {
     display: none !important;

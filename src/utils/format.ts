@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 //2021-12-24 08:43:39
 import dayjs from "dayjs";
 import locale from "dayjs/locale/vi";
@@ -103,3 +104,14 @@ export const formatPhoneNumber = (phoneNumberString: string) => {
     }
     return phone;
 };
+export const linkify = (text: string) => {
+    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    return text.replace(urlRegex, function (url) {
+        return '<a class="linkify-chat" target="blank" href="' + url + '">' + url + "</a>";
+    });
+}
+export const checkHTML = (text: string) => {
+    var elem = document.createElement('div')
+    elem.innerHTML = text;
+    return !!elem.childElementCount;
+}

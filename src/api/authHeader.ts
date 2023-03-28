@@ -15,6 +15,17 @@ export const handleValidToken = () => {
     return refresh
 }
 
+export const AUTH_HEADER_WS = () => {
+    const session = window.sessionStorage.getItem("_WEB_TK");
+    const local = localStorage.getItem("_WEB_TK")
+    return {
+        headers: {
+            "Authorization": `Bearer ${session ? session : local}`,
+            "Content-Type": ''
+        },
+    }
+}
+
 export const AUTH_HEADER = (contentType?: 'application/json' | 'multipart/form-data'|"") => {
     const session = window.sessionStorage.getItem("_WEB_TK");
     const local = localStorage.getItem("_WEB_TK")

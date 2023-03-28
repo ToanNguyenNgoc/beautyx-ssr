@@ -4,7 +4,10 @@ import { useContext, useEffect, useState } from "react";
 import style from "./chat.module.css";
 import { useLocation } from "react-router-dom";
 import { useDeviceMobile } from "hooks";
-import { AppContext } from "context/AppProvider";
+import { AppContext, AppContextType } from "context/AppProvider";
+import { useSelector } from "react-redux";
+import IStore from "interface/IStore";
+import { _unique, _uniqueLast } from "utils";
 
 const data = [
   {
@@ -36,17 +39,48 @@ const data = [
     name: "Reven",
   },
 ];
-// const socket = io.connect()
 export default function Chat() {
-  const { echo } = useContext(AppContext) as any
-  useEffect(() => {
-    echo?.private('chat')?.subscribed(() => console.log('OK in chat...'))
-  },[echo])
-  const [value, setValue] = useState<string>("");
   const IS_MB = useDeviceMobile();
+  const { USER } = useSelector((state: IStore) => state.USER)
+  const { echo } = useContext(AppContext) as AppContextType
   let CHAT_SHOW = "left";
   const location = useLocation();
+  const [userChat, setUserChat] = useState<any[]>([])
   if (location.pathname !== "/chat") CHAT_SHOW = "right";
+  useEffect(() => {
+    if (USER) {
+      let chat: any = echo?.private('chat')
+        .subscribed(() => {
+          chat.whisper('connected', {
+            user: {
+              id: USER?.id,
+              fullname: USER?.fullname,
+              avatar: USER?.avatar
+            }, socketId: echo?.socketId()
+          })
+          chat.listenForWhisper('typing', (u: any) => {
+            console.log(u)
+          })
+        })
+        .listen('UserOnline', (u: any) => {
+          setUserChat((prev: any) => {
+            if (prev.findIndex((i: any) => i.id === u.id)) {
+              return _uniqueLast([...prev, { ...u, isOnline: true }])
+            }
+            return _uniqueLast(prev)
+          })
+        })
+        .listen('UserOffline', (u: any) => {
+          setUserChat((prev: any) => {
+            const iIndex = prev.findIndex((item: any) => item.id === u.id)
+            if (iIndex > 0) {
+              prev[iIndex].isOnline = false
+            }
+            return _unique(prev)
+          })
+        })
+    }
+  }, [echo, USER])
 
   return (
     <>
@@ -60,7 +94,7 @@ export default function Chat() {
         }
         className={style.pageChat}
       >
-        <Chatleft CHAT_SHOW={CHAT_SHOW} data={data} />
+        <Chatleft CHAT_SHOW={CHAT_SHOW} data={data} userChat={userChat} />
         <ChatRight CHAT_SHOW={CHAT_SHOW} data={data} />
       </div>
     </>

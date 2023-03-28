@@ -1,22 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import icon from "../../constants/icon";
 import { handleCallingPhone, handleChat } from "../../utils/customChat";
 import img from "../../constants/img";
 import "./style.css";
 import { useDeviceMobile } from "hooks";
-// ==== api tracking ====
-// end
-// import useScript from "../../utils/useScript";
 
 export default function AssistantBtn() {
     const location: any = useLocation();
-    // const FLAT_FORM = EXTRA_FLAT_FORM();
-
-
-    const viewDisable = ["/trang-thai-don-hang/", "/chat", "/map-box", "/ban-do"];
+    const originPath = location.pathname.split('/')[1]
+    const viewDisable = ["trang-thai-don-hang", "chat", "map-box", "ban-do"];
     let disable = false;
-    if (viewDisable.includes(location.pathname)) {
+    if (viewDisable.includes(originPath)) {
         disable = true;
     }
     const [overLay, setOverLay] = useState(false);
@@ -27,8 +22,8 @@ export default function AssistantBtn() {
         history.push("/");
     };
 
-    const refOverLay: any = useRef();
-    const refAssisBtn: any = useRef();
+    const refOverLay = useRef<HTMLDivElement>(null);
+    const refAssisBtn = useRef<HTMLDivElement>(null);
     const handleClickOverlay = () => {
         if (is_mb === true) {
             setOverLay(!overLay);
@@ -37,12 +32,12 @@ export default function AssistantBtn() {
 
     const handleHover = () => {
         if (is_mb === false) {
-            refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
+            refAssisBtn?.current?.classList.add("assistantBtn-wrap-hover");
         }
     };
     const handleHoverLeave = () => {
         if (is_mb === false) {
-            refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
+            refAssisBtn?.current?.classList.remove("assistantBtn-wrap-hover");
         }
     };
     // () =>
@@ -50,21 +45,17 @@ export default function AssistantBtn() {
     useEffect(() => {
         if (is_mb === true) {
             if (overLay === true) {
-                refOverLay.current.classList.add("active_btn");
-                refAssisBtn.current.classList.add("assistantBtn-wrap-hover");
+                refOverLay?.current?.classList.add("active_btn");
+                refAssisBtn?.current?.classList.add("assistantBtn-wrap-hover");
                 document.body.style.overflow = "hidden";
             } else {
-                refOverLay.current.classList.remove("active_btn");
-                refAssisBtn.current.classList.remove("assistantBtn-wrap-hover");
+                refOverLay?.current?.classList.remove("active_btn");
+                refAssisBtn?.current?.classList.remove("assistantBtn-wrap-hover");
                 document.body.style.overflow = "unset";
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [overLay]);
-    // const response = useGetMessageTiki();
-    // useMemo(() => {
-    //     alert(JSON.stringify(response))
-    // }, [response])
     const checkoutPageSearch = location.pathname === "/ket-qua-tim-kiem/";
     return disable === true ? (
         <></>

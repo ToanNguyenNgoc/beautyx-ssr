@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useDeviceMobile } from "hooks";
 
 export default function Chatleft(props: any) {
-  const { data, CHAT_SHOW } = props;
+  const { data, CHAT_SHOW, userChat } = props;
   const [active, setActive] = useState<boolean>(true);
   const IS_MB = useDeviceMobile();
   const history = useHistory();
@@ -43,7 +43,7 @@ export default function Chatleft(props: any) {
         </div>
 
         <ul className={style.chatLeftList}>
-          {data.map((item: any) => (
+          {userChat.map((item: any) => (
             <li
               style={
                 location.pathname === `/chat/${item.id}`
@@ -70,11 +70,11 @@ export default function Chatleft(props: any) {
                   ></div>
                   <div className={style.itemUser}>
                     <div className={style.itemAva}>
-                      <img src="https://source.unsplash.com/random" alt="" />
-                      <div className={style.itemActive}></div>
+                      <img src={item.avatar} alt="" />
+                      {item.isOnline === true && <div className={style.itemActive}></div>}
                     </div>
                     <div className={style.itemInfo}>
-                      <div className={style.itemName}>{item.name}</div>
+                      <div className={style.itemName}>{item.fullname}</div>
                       <div className={style.itemNameOrg}>@pmt</div>
                     </div>
                   </div>

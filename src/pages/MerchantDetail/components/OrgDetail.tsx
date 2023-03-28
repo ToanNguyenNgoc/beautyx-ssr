@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { Container } from "@mui/material";
 import Slider from "react-slick";
-import PopupDetailContact from "./PopupDetailContact";
+// import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork, IOrgTimeWork } from "../Functions/extraOrg";
 import { IOrgMobaGalleries, IOrganization } from 'interface'
 import { OrgItemMap } from "components/Layout/OrgItemMap";
@@ -10,6 +10,7 @@ import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import { useFavorite } from "hooks";
 import img from "constants/img";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
     org: IOrganization;
@@ -26,7 +27,8 @@ function OrgDetail(props: IProps) {
         favorite: org.is_favorite
     })
     const { t } = useContext(AppContext) as any;
-    const [openPopupContact, setOpenPopupContact] = useState(false);
+    const history = useHistory()
+    const onContact = () => history.push(`/chat`)
     const [openPopupMap, setOpenPopupMap] = useState(false);
     const orgTimes = extraOrgTimeWork(org?.opening_time);
     const orgTimeToday = orgTimes?.find(i => i.todayAct)
@@ -224,9 +226,7 @@ function OrgDetail(props: IProps) {
                                         </div>
                                         <div
                                             className="org-flo"
-                                            onClick={() => {
-                                                setOpenPopupContact(true);
-                                            }}
+                                            onClick={onContact}
                                         >
                                             <span> {t("Mer_de.contact")}</span>
                                         </div>
@@ -294,9 +294,7 @@ function OrgDetail(props: IProps) {
                                 </button>
                                 <br />
                                 <button
-                                    onClick={() => {
-                                        setOpenPopupContact(true);
-                                    }}
+                                    onClick={onContact}
                                 >
                                     {t("Mer_de.contact")}
                                 </button>
@@ -305,11 +303,11 @@ function OrgDetail(props: IProps) {
                     </div>
                 </div>
             </Container>
-            <PopupDetailContact
+            {/* <PopupDetailContact
                 org={org}
                 openPopupContact={openPopupContact}
                 setOpenPopupContact={setOpenPopupContact}
-            />
+            /> */}
         </div>
     );
 }
