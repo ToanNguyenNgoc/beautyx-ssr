@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Picker, { EmojiStyle } from "emoji-picker-react";
 import style from "./chatright.module.css";
 import { XButton } from "components/Layout";
@@ -8,7 +8,6 @@ import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import IStore from "interface/IStore";
 import { checkHTML } from "utils";
-import { AppContext, AppContextType } from "context/AppProvider";
 
 
 interface media_ids {
@@ -46,14 +45,10 @@ export default function InputChat(props: any) {
       }
     }
   };
-  useEffect(()=>{
-    echo?.private('chat').subscribed(() => console.log('ok...'))
-  },[inputStr])
   const { USER } = useSelector((state: IStore) => state.USER)
-  const { echo } = useContext(AppContext) as AppContextType
   const onInputChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setInputStr(e.target.value)
-   
+
   }
 
   const handleOnchangeMedia = async (e: any) => {
