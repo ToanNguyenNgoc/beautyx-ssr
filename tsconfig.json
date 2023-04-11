@@ -1,11 +1,5 @@
 {
   "compilerOptions": {
-    "useUnknownInCatchVariables": false,
-    "plugins": [
-      {
-        "name": "typescript-plugin-css-modules"
-      }
-    ],
     "target": "es5",
     "lib": [
       "dom",
@@ -24,16 +18,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    "incremental": true,
-    "baseUrl": "./src"
+    "jsx": "react-jsx"
   },
   "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-, "src/index.js"  ],
-  "exclude": [
-    "node_modules"
+    "src"
   ]
 }
