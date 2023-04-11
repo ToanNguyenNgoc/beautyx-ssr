@@ -1,0 +1,188 @@
+.add_address_btn{
+    color: var(--purple);
+    background-color: var(--bg-white);
+    border: solid 1px var(--purple);
+    font-size: 15px;
+    padding: 6px 10px;
+}
+.us_address-cnt {
+    width: 100%;
+}
+
+.us_address-cnt .form {
+    background-color: var(--bgWhite);
+    padding-right: 100px;
+}
+
+.us_address-cnt .from-label {
+    margin: 12px 0px;
+    position: relative;
+}
+
+.us_address-cnt .from-label_title {
+    font-size: 14px;
+}
+
+.us_address-cnt .from-label_ip {
+    width: 100%;
+    background-color: var(--bgWhite);
+    margin: 12px 0px;
+    padding: 8px 12px;
+    box-shadow: inset 0px 2px 6px rgba(113, 97, 186, 0.2);
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.us_address-cnt .from-label_ip span {
+    color: var(--text-hover);
+}
+
+.us_address-cnt .from-label__list-province,
+.us_address-cnt .from-label__list-district,
+.us_address-cnt .from-label__list-ward {
+    position: absolute;
+    height: 0px;
+    /* height: 234px; */
+    /* overflow-y: scroll; */
+    overflow: hidden;
+    z-index: 1;
+    background-color: var(--grey);
+    width: 100%;
+    padding: 0px 12px;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.lis-province-ac,
+.lis-district-ac,
+.lis-ward-ac {
+    height: 234px !important;
+    overflow-y: scroll !important;
+}
+
+.us_address-cnt .province-item {
+    margin: 6px 0px;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: bold;
+    color: var(--black);
+    cursor: pointer;
+}
+
+.us_address-cnt .from-label_ip input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background-color: var(--bgWhite);
+    font-weight: bold;
+}
+
+.us_address-cnt .form-btn button {
+    padding: 8px 16px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: var(--purple);
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    color: var(--bgWhite);
+    border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.us-add_item {
+    margin: 24px 0px;
+}
+
+.us-add_item-header .title,
+.us-add_item .se-default {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 500;
+    color: var(--purple);
+}
+
+.us-add_item .se-default {
+    cursor: pointer;
+    font-size: 12px;
+    margin-right: 4px;
+}
+
+.us-add_item-header_left .default {
+    padding: 4px 8px;
+    background-color: var(--grey);
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: bold;
+    color: var(--green);
+    border-radius: 6px;
+    margin-right: 6px;
+}
+
+.us-add_item-header_left button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    outline: none;
+}
+
+.us-add_item .content {
+    margin-top: 4px;
+    width: 100%;
+    background-color: var(--bgWhite);
+    padding: 8px 16px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 20px;
+    color: var(--text-black);
+    box-shadow: inset 0px 2px 6px rgba(113, 97, 186, 0.2);
+    border-radius: 18px;
+}
+
+.acc-add__btn {
+    display: none;
+}
+
+/* Mobile */
+@media only screen and (max-width: 767px) {
+    .address-moba-cnt {
+        display: block;
+        height: 100%;
+        width: 100%;
+        overflow-y: scroll;
+    }
+
+    .acc-add__btn {
+        z-index: 100;
+        display: block;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        margin-top: -17px;
+    }
+
+    .us_address-cnt {
+        height: 100%;
+        padding: 0px;
+        overflow-y: scroll;
+    }
+
+    .us_address-cnt .title {
+        display: none;
+    }
+
+    .us_address-cnt .form {
+        height: 100%;
+        padding: 0px;
+        border-radius: 0px;
+        margin: 0px;
+    }
+    .add_address_btn{
+        padding: 8px;
+    }
+}

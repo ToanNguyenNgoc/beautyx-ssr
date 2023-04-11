@@ -1,0 +1,342 @@
+.cal_cnt {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cal_left_cnt {
+    width: 25%;
+}
+
+.cal_left_date {
+    margin-bottom: 24px;
+}
+
+.cal_left_status {
+    width: 100%;
+    background-color: var(--bg-white);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px -1px rgb(0 0 0 / 10%);
+}
+
+.cal_left_status_title {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--text-black);
+}
+
+.list_status {
+    margin-top: 18px;
+}
+
+.status_item {
+    display: flex;
+    align-items: center;
+    padding: 8px 0px;
+}
+
+.status_item_text {
+    margin-left: 12px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 500;
+}
+
+.cal_right_cnt {
+    width: calc(75% - 12px);
+    background-color: var(--bg-white);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 16px -1px rgb(0 0 0 / 10%);
+}
+
+.week_cont {
+    display: flex;
+}
+
+.week_day_item {
+    width: calc(100% / 7);
+    padding: 12px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: solid 1px var(--bg-color);
+}
+
+.week_day_item h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.week_day_item span {
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--text-hover);
+}
+
+.week_apps_cnt {
+    display: flex;
+    height: 554px;
+    overflow-y: scroll;
+}
+
+.week_app_item {
+    width: calc(100% / 7);
+    min-height: 554px;
+    height: max-content;
+    padding: 6px;
+}
+
+.app_item_qr {
+    width: 80vw;
+    height: 80vw;
+    background-color: var(--bg-white);
+}
+
+.app_item {
+    margin: 12px 0px;
+    background-color: #e1daff;
+    padding: 24px 12px 12px 12px;
+    border-radius: 0px 8px 8px 0px;
+    border-left: solid 2px var(--purple);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.app_item_info {
+    display: none;
+}
+
+.app_item_status {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    z-index: 1;
+    padding: 2px 4px;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 500;
+    color: var(--bg-white);
+    background-color: var(--purple);
+    border-radius: 4px;
+}
+
+.app_item_time {
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+}
+
+
+.app_item_org {
+    margin: 8px 0px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+}
+
+.app_item_address {
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    color: #84828c;
+    display: -webkit-box;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+}
+
+.app_item_bottom {
+    display: flex;
+    margin-top: 12px;
+}
+
+.app_item_bottom button {
+    border: none;
+    outline: none;
+    background-color: var(--bg-color);
+    padding: 2px 4px;
+    font-size: 12px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--purple);
+    border-radius: 4px;
+}
+
+.app_item_bottom button:first-child {
+    display: none;
+}
+
+.app_item_bottom_qr {
+    width: 90vw;
+}
+
+.app_item_org_img,
+.app_item_icon,
+.app_icon_scan_btn,
+.app_item_services {
+    display: none;
+}
+
+@media screen and (max-width: 1023.98px) {
+    .cal_cnt {
+        flex-direction: column;
+    }
+
+    .cal_left_cnt {
+        width: 100%;
+    }
+
+    .cal_left_date {
+        padding-top: 46px;
+        margin-bottom: 6px;
+    }
+
+    .cal_left_status {
+        display: none;
+    }
+
+    .cal_right_cnt {
+        width: 100%;
+        box-shadow: none;
+        padding: 0px;
+    }
+
+    .week_cont {
+        display: none;
+    }
+
+    .week_apps_cnt {
+        height: max-content;
+    }
+
+    .week_app_item {
+        width: 100%;
+        padding: 0px 12px 82px 12px;
+    }
+
+    /* appointment item */
+    .app_item {
+        padding: 12px;
+        background-color: var(--bg-white);
+        box-shadow: var(--box-shadow);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin: 18px 0px;
+        border: none;
+        position: relative;
+    }
+
+    .app_icon_scan_btn {
+        display: flex;
+        justify-content: center;
+        padding: 6px;
+        position: absolute;
+        width: 36px;
+        height: 36px;
+        top: 12px;
+        right: 12px;
+        z-index: 1;
+        background-color: var(--text-orange);
+    }
+
+    .app_item_org_img {
+        display: block;
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        background-color: #84828c;
+        border-radius: 6px;
+        top: 12px;
+    }
+
+    .app_item_head {
+        padding-left: 52px;
+    }
+
+    .app_item_status {
+        top: -10px;
+        background-color: #e1daff;
+        color: var(--purple);
+        display: none;
+    }
+
+    .app_item_info {
+        display: flex;
+        border-radius: 8px 0px 0px 8px;
+        align-items: center;
+        color: var(--purple);
+    }
+
+    .app_item_icon {
+        display: block;
+    }
+
+    .app_item_info h3 {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+        margin: 0px 5px;
+    }
+
+    .app_item_info h5 {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+    }
+
+    .app_item_detail {
+        padding: 0px;
+        margin-top: 4px;
+        width: calc(100% - 44px);
+    }
+
+    .app_item_org {
+        display: none;
+    }
+
+    .app_item_time {
+        display: none;
+    }
+
+    .app_item_bottom {
+        /* display: flex; */
+        display: none;
+        justify-content: flex-end;
+    }
+
+    .app_item_bottom button {
+        padding: 5px 8px;
+        color: var(--bg-white);
+        font-weight: 600;
+        background-color: var(--purple);
+    }
+
+    .app_item_bottom button:first-child {
+        display: block;
+        margin-right: 6px;
+        background-color: var(--text-orange);
+    }
+
+    .app_item_services {
+        display: block;
+        margin-top: 10px;
+    }
+
+    .app_item_service_name {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 18px;
+        margin-bottom: 2px;
+    }
+}

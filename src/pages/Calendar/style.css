@@ -1,0 +1,136 @@
+.cal-cnt__tab-cnt .MuiTabPanel-root {
+    /* padding: 12px 0px !important; */
+    padding: 0px !important;
+}
+.css-nzlq59:hover {
+    background-color: unset !important;
+}
+.css-nzlq59:hover {
+    background-color: unset !important;
+}
+
+.cal-cnt__tab-cnt .MuiButtonBase-root {
+    padding: 8px 16px !important;
+    text-transform: none;
+    font-weight: 600;
+    font-family: "Nunito";
+    font-size: 16px;
+    min-height: unset !important;
+    line-height: 28px !important;
+}
+
+.cal-cnt__tab-cnt .Mui-selected {
+    color: var(--white) !important;
+    transition: all .3s;
+    z-index:  3 !important;
+}
+
+.cal-cnt__tab-cnt .MuiTabs-indicator {
+    background-color: var(--purple);
+    height: 44px !important;
+    border-radius: 22px !important;
+    z-index: 2 !important;
+}
+
+.cal-cnt__tab-cnt .MuiTabs-root {
+    min-height: unset !important;
+    height: fit-content !important;
+}
+
+.cal-cnt__tab-cnt-head .back-btn {
+    border: none;
+    outline: none;
+    display: none;
+    background-color: transparent;
+}
+
+/* appointment item */
+.appointment-item-time-mb {
+    display: none;
+}
+
+@media only screen and (max-width: 1023px) {
+    .cal-cnt__tab-cnt-head {
+        padding: 0px 12px;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: solid 1px var(--grey);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        background-color: var(--white);
+    }
+
+    .cal-cnt__tab-cnt-head .back-btn {
+        display: block;
+    }
+
+    /* appointment item */
+    .calendar-appointment__item {
+        padding: 0px;
+        border: solid 1px var(--grey);
+        box-shadow: none;
+        border-radius: 6px;
+    }
+
+    .appointment-item-time-mb {
+        display: block;
+        background-color: var(--grey);
+
+        padding: 12px;
+        width: 92px;
+    }
+
+    .appointment-item-time-mb .container {
+        justify-content: center;
+        height: 100%;
+    }
+
+    .appointment-item-time-mb .time {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 28px;
+    }
+
+    .appointment-item-time-mb .day-week {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .appointment-item-time-mb .day {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+    }
+
+    .calendar-appointment__item-column {
+        width: calc(100% - 92px);
+        padding: 8px 4px 8px 12px;
+    }
+
+    .calendar-appointment__item-time {
+        display: none;
+    }
+
+    .calendar-appointment__item p:nth-child(2) {
+        margin-bottom: 0px;
+    }
+
+    .calendar-appointment__item-detail {
+        width: fit-content;
+        margin-right: 8px;
+        color: var(--white);
+        background-color: var(--orange);
+    }
+
+    .calendar-appointment__item-detail:nth-child(2) {
+        background-color: var(--purple);
+    }
+    .cal-cnt__tab-cnt .MuiTabs-indicator{
+        height: 36px !important;
+        margin-bottom: 4px !important;
+    }
+}

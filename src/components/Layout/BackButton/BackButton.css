@@ -1,0 +1,51 @@
+.cus-back {
+  position: fixed;
+  top: 0;
+  width: fit-content;
+  left: 15px;
+  right: 0;
+  padding: 20px 0px;
+  z-index: 5;
+}
+@media (max-width: 768px), (max-width: 1024px) {
+  .cus-back {
+    padding: 20px 16px;
+  }
+}
+.cus-back__btn {
+  padding: 8px 16px;
+  border: solid 1px var(--purple);
+  outline: none;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 20px;
+  font-style: 700;
+  color: var(--purple);
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border-radius: 20px;
+  transition: all 0.3s;
+  z-index: 5;
+  background-color: var(--bg-color);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.css-m9glnp-MuiPaper-root-MuiDialog-paper {
+  border-radius: 0 !important;
+}
+.cus-back__btn:hover {
+  opacity: 0.6;
+}
+/* res-mobile */
+/* Mobile */
+@media only screen and (max-width: 767px) {
+  .cus-back {
+    padding-top: 18px;
+    left: 0;
+  }
+  .cus-back__btn {
+    /* border: none; */
+    background-color: var(--bg-color);
+    padding: unset;
+  }
+}

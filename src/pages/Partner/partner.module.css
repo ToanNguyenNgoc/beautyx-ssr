@@ -1,0 +1,127 @@
+.container {
+    margin: 24px 0px;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: var(--bg-white);
+    display: flex;
+    justify-content: space-between;
+}
+
+.left {
+    width: calc(60% - 6px);
+}
+
+.partner_title {
+    color: var(--purple);
+    font-size: 32px;
+    font-style: normal;
+    text-align: center;
+    font-weight: bold;
+    line-height: 36px;
+    white-space: normal;
+    padding-bottom: 24px;
+}
+
+.partner_img {
+    height: 360px;
+    margin: 0 auto;
+    max-width: 480px;
+}
+
+.partner_desc {
+    color: var(--text-black);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    padding-top: 24px;
+}
+
+.partner_list {
+    padding-top: 24px;
+}
+
+.partner_list_item {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.label_item {
+    width: calc(50% - 12px);
+    margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+}
+.right{
+    width: calc(40% - 6px);
+    padding: 12px;
+    border-radius: 6px;
+    box-shadow: var(--box-shadow);
+    height: fit-content;
+}
+.form_title{
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 28px;
+    color: var(--purple);
+    text-align: center;
+}
+.form{
+    margin-top: 12px;
+}
+.form_row{
+    margin-bottom: 20px;
+    width: 100%;
+    position: relative;
+}
+.input_wrapper_error{
+    position: absolute;
+    bottom: -16px;
+    margin-left: 12px;
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--red_2);
+}
+.form_bottom{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form_submit_btn{
+    width: 100%;
+    border-radius: 6px;
+}
+.view_more{
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--purple);
+}
+@media only screen and (max-width: 1023px) {
+    .container{
+        margin: 44px 0px 0px 0px;
+        flex-direction: column;
+    }
+    .right{
+        width: 100%;
+        box-shadow: none;
+        padding: 12px 0px;
+    }
+    .left,
+    .partner_title,
+    .partner_img{
+        display: none;
+    }
+    .form_title{
+        font-size: 16px;
+        line-height: 22px;
+        font-weight: 600;
+    }
+}

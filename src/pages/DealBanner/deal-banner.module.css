@@ -1,0 +1,76 @@
+.head{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 8px 12px;
+    background-color: transparent;
+    z-index: 11;
+    transition: all .5s;
+}
+.head_show{
+    background-color: var(--purple);
+    /* background-color: var(--red-2); */
+    backdrop-filter: blur(10px);
+    transition: all .5s;
+}
+.head button{
+    padding: 0px;
+    width: 38px;
+    height: 38px;
+    background-color: transparent;
+}
+.container {
+    margin-top: 24px;
+    background-color: var(--bg-white);
+    border-radius: 8px;
+}
+
+.list_container {
+    padding: 24px 12px 12px 12px;
+    background-color: var(--bg-white);
+}
+
+.list_container {
+    grid-gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+    .container {
+        margin: 0px;
+    }
+    .deal_banner_cnt{
+        padding-top: 60px;
+        background-color: #7265b9;
+    }
+    .list_container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media only screen and (max-width: 769px) {
+    .container {
+        margin: 0px;
+    }
+
+    .deal_banner_cnt {
+        background-color: #7265b9;
+        padding-bottom: 33%;
+        position: relative;
+    }
+
+    .deal_banner {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        object-fit: cover;
+    }
+
+    .list_container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
