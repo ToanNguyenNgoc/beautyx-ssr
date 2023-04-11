@@ -9,7 +9,6 @@ LoginFlatForm.tsx
 trackApi.ts   
 momoApi.ts 
 _momoImport.js
-package.json
 
 dist/
 .history
@@ -75,5 +74,3 @@ public/.htaccess
 .firebase/hosting.YnVpbGQ.cache
 
 *.cache
- 
- 

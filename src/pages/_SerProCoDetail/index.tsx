@@ -690,7 +690,7 @@ export const DetailRecommend = ({ detail, org }: { detail: DetailProp, org: IOrg
                             <ul className={style.list_recommend}>
                                 {
                                     data?.map((item: any, index: number) => (
-                                        <li key={index} style={style.list_recommend_item} >
+                                        <li key={index} className={style.list_recommend_item} >
                                             <SerProItem
                                                 type={detail.type === 'PRODUCT' ? 'PRODUCT' : 'SERVICE'}
                                                 item={item}
