@@ -1,5 +1,5 @@
 import { Dialog } from "@mui/material";
-import React, { useContext } from "react";
+import React, { Dispatch, useContext } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import API_3RD from "api/3rd-api";
@@ -11,9 +11,15 @@ import '../style.css'
 import { useNoti } from "hooks";
 import { AppContext } from "context/AppProvider";
 import icon from "constants/icon";
+import { IOrganization } from "interface";
 
+interface PopupDetailContactProps {
+    org: IOrganization,
+    openPopupContact: boolean,
+    setOpenPopupContact: Dispatch<React.SetStateAction<boolean>>
+}
 
-export default function PopupDetailContact(props: any) {
+export default function PopupDetailContact(props: PopupDetailContactProps) {
     const { noti, onCloseNoti, firstLoad, resultLoad } = useNoti()
     const { setOpenPopupContact, openPopupContact, org } = props;
     const { t } = useContext(AppContext) as any;
