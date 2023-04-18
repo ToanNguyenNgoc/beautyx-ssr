@@ -154,8 +154,6 @@ function Account() {
   const handleSignOut = () => {
     dispatch(logoutUser());
     history.push("/homepage");
-    localStorage.removeItem("_WEB_TK");
-    window.sessionStorage.removeItem("_WEB_TK");
   };
   const PLATFORM = EXTRA_FLAT_FORM();
   const [guide, setGuide] = useState(false);
@@ -174,8 +172,8 @@ function Account() {
             style={
               IS_MB && ACC_SHOW === "right"
                 ? {
-                    marginLeft: "-100vh",
-                  }
+                  marginLeft: "-100vh",
+                }
                 : {}
             }
             className={style.left_cnt}
@@ -244,8 +242,8 @@ function Account() {
                         style={
                           location.pathname === item.link
                             ? {
-                                backgroundColor: "var(--bg-color)",
-                              }
+                              backgroundColor: "var(--bg-color)",
+                            }
                             : {}
                         }
                         className={style.link_item}
@@ -315,8 +313,8 @@ function Account() {
             style={
               IS_MB && ACC_SHOW === "right"
                 ? {
-                    marginLeft: "0px",
-                  }
+                  marginLeft: "0px",
+                }
                 : {}
             }
             className={style.right_cnt}
@@ -360,8 +358,8 @@ const SwitchLanguage = () => {
           style={
             language === "en"
               ? {
-                  marginLeft: "30px",
-                }
+                marginLeft: "30px",
+              }
               : {}
           }
           className={style.switch_btn}

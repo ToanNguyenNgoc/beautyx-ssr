@@ -17,3 +17,8 @@ export interface ResponseType {
     message?: string,
     status?: number
 }
+export interface Response<Context> {
+    context: Context,
+    message?: string,
+    status?: number
+}

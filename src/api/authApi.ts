@@ -1,8 +1,9 @@
 import axiosClient from "./axios";
 import { identity, pickBy } from "lodash";
-import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
+// import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
 import { paramsUserProfile } from "params-query";
 import { ParamsForgotSms } from "interface"
+import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class Auth {
   login = (values: any) => {
@@ -17,11 +18,12 @@ class Auth {
     const url = `/auth/register`;
     return axiosClient.post(url, params);
   };
-  getUserProfile = () => {
+  getUserProfile = (token?: string) => {
     const url = `/users/profile`
-    if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-      return axiosClient.get(url, AUTH_HEADER_PARAM_GET(paramsUserProfile));
-    }
+    return axiosClient.get(url, token ? {
+      params: paramsUserProfile,
+      headers: { Authorization: `Bearer ${token}` }
+    } : AUTH_HEADER_PARAM_GET(paramsUserProfile))
   };
   forgotPassword = (values: any) => {
     const url = `/auth/forgot`;
@@ -34,14 +36,14 @@ class Auth {
   }
   putUserProfile = (params: any) => {
     const url = `/users/profile`;
-    return axiosClient.put(url, pickBy(params, identity), AUTH_HEADER())
+    return axiosClient.put(url, pickBy(params, identity))
   };
   refreshToken = (token: string) => {
     const url = '/auth/refresh'
     return axiosClient.post(url, {
       'refresh_token': token,
       'platform': 'BEAUTYX'
-    }, AUTH_HEADER())
+    })
   }
 
 }

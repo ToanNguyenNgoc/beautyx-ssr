@@ -10,7 +10,7 @@ import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import { useFavorite } from "hooks";
 import img from "constants/img";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 interface IProps {
     org: IOrganization;
@@ -28,9 +28,9 @@ function OrgDetail(props: IProps) {
         favorite: org.is_favorite
     })
     const { t } = useContext(AppContext) as any;
-    // const history = useHistory()
-    // const onContact = () => history.push(`/chat`)
-    const onContact = () => setOpenContact(true)
+    const history = useHistory()
+    const onContact = () => history.push(`/chat`)
+    // const onContact = () => setOpenContact(true)
     const [openPopupMap, setOpenPopupMap] = useState(false);
     const orgTimes = extraOrgTimeWork(org?.opening_time);
     const orgTimeToday = orgTimes?.find(i => i.todayAct)

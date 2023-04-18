@@ -75,11 +75,6 @@ const HeadMenuBox = (props: HeadMenuProps) => {
         setLanguage(code);
         i18next.changeLanguage(code);
     };
-    const handleSignOut = () => {
-        dispatch(logoutUser());
-        localStorage.removeItem("_WEB_TK");
-        window.sessionStorage.removeItem("_WEB_TK");
-    };
 
     return (
         <div
@@ -138,7 +133,7 @@ const HeadMenuBox = (props: HeadMenuProps) => {
             {USER && (
                 <div className={style.menu_bottom}>
                     <div
-                        onClick={handleSignOut}
+                        onClick={() => dispatch(logoutUser())}
                         className={style.menu_bottom_btn}
                     >
                         {t("Header.sign_out")}

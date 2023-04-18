@@ -10,7 +10,6 @@ export function extraParamsUrl() {
                 queryString[queryString.length - 1]
                 : "?" + queryString[1];
         const urlSearchParams = new URLSearchParams(result);
-        //console.log(result,Object.fromEntries(urlSearchParams.entries()))
         return Object.fromEntries(urlSearchParams.entries());
     }
 }

@@ -6,9 +6,9 @@ import { analytics, logEvent } from '../../firebase';
 
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
-    async (values, { rejectWithValue }) => {
+    async (values: string, { rejectWithValue }) => {
         try {
-            const res = await authentication.getUserProfile();
+            const res = await authentication.getUserProfile(values)
             let context = res?.data.context;
             if (context.telephone && !checkPhoneValid(context.telephone)) {
                 // if (context.telephone && !checkPhoneValid('context.telephone')) {
@@ -22,7 +22,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
             if (!error.response) {
                 throw error
             }
-            const refresh = handleValidToken()
+            const { refresh } = handleValidToken()
             if (!refresh) localStorage.removeItem('_WEB_TK')
             return rejectWithValue(refresh)
         }
@@ -70,6 +70,10 @@ const userSlice = createSlice({
         logoutUser: (state) => {
             state.USER = null;
             state.loading = false
+            localStorage.removeItem('_WEB_TK_EX')
+            localStorage.removeItem('_WEB_TK_RE')
+            localStorage.removeItem('_WEB_TK')
+            sessionStorage.removeItem('_WEB_TK')
         }
     },
     extraReducers(builder) {

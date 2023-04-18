@@ -118,13 +118,13 @@ export const paramDiscounts: ParamDiscounts = {
 }
 export const paramServiceCatesOrg = {
     "page": 1,
-    "limit": 15,
+    "limit": 80,
     "include": "servicesCount",
     "filter[is_momo_ecommerce_enable]": true
 }
 export const paramProductCatesOrg = {
     "page": 1,
-    "limit": 15,
+    "limit": 80,
     "include": "productsCount",
     "filter[is_momo_ecommerce_enable]": true
 }
@@ -171,5 +171,5 @@ export const paramsProductable: ParamsProductable = {
     "discount_max_price": "",
     "discount_min_price_ecommerce": "",
     "discount_max_price_ecommerce": "",
-    "is_demo":"false"
+    "is_demo": "false"
 }

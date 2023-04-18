@@ -49,9 +49,8 @@ function SignIn(props: any) {
                     response.data.context.token_expired_at
                 );
             }
-            const res = await dispatch(fetchAsyncUser());
+            const res = await dispatch(fetchAsyncUser(response.data.context.token));
             if (res?.payload) {
-                // dispatch(fetchAsyncApps(dayjs().format("YYYY-MM")))
                 history.goBack();
             }
         } catch (error) {

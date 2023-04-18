@@ -31,10 +31,6 @@ import Cart from "pages/Cart";
 import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
-import { useSelector } from "react-redux";
-import IStore from "interface/IStore";
-import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import RefreshToken from "features/RefreshToken";
 import CateTree from "pages/CateTree";
 import Chat from "pages/Chat";
 
@@ -303,14 +299,10 @@ function RouterConfig() {
     page_path: window.location.pathname,
     page_location: window.location.href,
   });
-  const { refresh } = useSelector((state: IStore) => state.USER);
-  const PLAT_FORM: string = EXTRA_FLAT_FORM();
-  // const refresh = true
   return (
     <BrowserRouter>
       <Router>
         <Head />
-        {refresh && PLAT_FORM === "BEAUTYX" && <RefreshToken />}
         <Switch>
           <Redirect exact from="/" to="homepage" />
           {routes.map((item, index: number) => (
