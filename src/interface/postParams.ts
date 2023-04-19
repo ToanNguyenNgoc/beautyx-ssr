@@ -3,3 +3,8 @@ export interface ParamsForgotSms{
   code?:string;
   new_password?:string
 }
+export interface ParamsPostMessage{
+  msg:string;
+  topic_id:string;
+  reply_id?:string;
+}

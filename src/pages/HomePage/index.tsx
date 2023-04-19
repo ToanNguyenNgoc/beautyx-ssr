@@ -58,7 +58,7 @@ export default function HomePage() {
                     <HomeWhyNot />
                     <HomeRecommend />
                     <HomeProvince />
-                    {!IS_MB && <HomeTrends/>}
+                    {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />

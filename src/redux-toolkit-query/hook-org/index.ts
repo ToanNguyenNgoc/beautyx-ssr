@@ -8,7 +8,7 @@ import {
     paramsProductsOrg,
     paramsServicesOrg
 } from 'params-query'
-import { ResponseType } from 'interface'
+import { IOrganization, Response, ResponseType } from 'interface'
 import { pickBy, identity } from 'lodash'
 
 
@@ -76,6 +76,13 @@ export const orgPageApi = createApi({
             keepUnusedDataFor: 3600,
             transformResponse: (response: ResponseType) => response?.context.data ?? {}
         }),
+        getOrgDetail: builder.query({
+            query: (org_id: string | number) => ({
+                url: API_ROUTE.ORG(org_id)
+            }),
+            keepUnusedDataFor: 3600,
+            transformResponse: (response: Response<IOrganization>) => response?.context
+        })
     })
 })
 
@@ -85,4 +92,5 @@ export const {
     useGetDiscountsOrgQuery,
     useGetProductsSpecialOrgQuery,
     useGetServicesSpecialOrgQuery,
+    useGetOrgDetailQuery
 } = orgPageApi

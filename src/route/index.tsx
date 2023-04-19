@@ -292,7 +292,7 @@ function RouterConfig() {
     {
       path: "/chat",
       component: <Chat />,
-    },
+    }
   ];
   logEvent(analytics, "page_view", {
     page_title: document.title,

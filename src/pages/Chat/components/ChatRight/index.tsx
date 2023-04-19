@@ -1,23 +1,24 @@
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
 import InputChat from "pages/Chat/components/ChatRight/InputChat";
-import Typing from "pages/Chat/components/Typing";
 import style from "./chatright.module.css";
 import HeadChatRight from "pages/Chat/components/ChatRight/HeadChatRight";
-import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import IStore from "interface/IStore";
-import { linkify } from "utils";
-
+import { formatDateFromNow, linkify } from "utils";
+import { useParams } from "react-router-dom";
+import { IMessage } from "interface";
+import { } from 'swr'
 
 export default function ChatRight(props: any) {
-  const { data, CHAT_SHOW } = props;
+  const { CHAT_SHOW } = props;
+  const params = useParams()
   const { USER } = useSelector((state: IStore) => state.USER)
   const IS_MB = useDeviceMobile();
-  const refListChat = useRef<any>(null);
-  const messagesEndRef = useRef<any>(null);
-
-  const [message, setMessage] = useState<any>([])
-
+  const { resData, mutate, originData } = useSwrInfinite<IMessage>(
+    params._id,
+    `/messages`,
+    { 'topic_id': params._id, 'sort': 'created_at' }
+  )
   return (
     <div
       style={
@@ -28,48 +29,60 @@ export default function ChatRight(props: any) {
           }
           : {}
       }
-      ref={refListChat}
       className={style.chatRight}
     >
       <HeadChatRight CHAT_SHOW={CHAT_SHOW} />
       <ul className={style.chatListMessage}>
-        {message?.map((item: any, index: number) => (
+        {resData?.map(item => (
           <li
             style={item?.user_id === USER?.id ? {
               flexDirection: "row-reverse",
               marginLeft: "auto",
             } : {}}
-            key={index}
+            key={item._id}
             className={style.chatListItem}
           >
-            <div className={style.itemAva}>
-              <img src="https://source.unsplash.com/random" alt="" />
-              <div className={style.itemActive}></div>
-            </div>
+            {
+              item?.user_id !== USER?.id &&
+              <div className={style.itemAva}>
+                <img src="https://source.unsplash.com/random" alt="" />
+                <div className={style.itemActive}></div>
+              </div>
+            }
             <div className={style.itemInfo}>
               <div className={style.itemName}>
-                {item.user_id !== USER.id && <p>{item.fullname}</p>}
-                <p>15:00</p>
+                {/* {item.user_id !== USER.id && <p>{item.fullname}</p>} */}
+                <p>{formatDateFromNow(item.created_at)}</p>
               </div>
               <p
-                style={item.user_id === USER.id ? {
+                style={item.user_id === USER?.id ? {
                   borderRadius: "8px 0px 8px 8px",
                   backgroundColor: "var(--purple)",
                   color: "#fff",
                 } : {}}
                 className={style.itemMessager}
-                dangerouslySetInnerHTML={{ __html: linkify(item.body) }}
+                dangerouslySetInnerHTML={{ __html: linkify(item.msg) }}
               />
             </div>
           </li>
         ))}
         <Typing />
-        <div ref={messagesEndRef} />
       </ul>
       {
-        ((IS_MB && CHAT_SHOW === 'right')||!IS_MB) &&
-        <InputChat setMessage={setMessage} CHAT_SHOW={CHAT_SHOW} />
+        ((IS_MB && CHAT_SHOW === 'right') || !IS_MB) &&
+        <InputChat topic_id={params._id as string} mutate={mutate} />
       }
+    </div>
+  );
+}
+const Typing = () => {
+  return (
+    <div className={style.chatBubble}>
+      <div className={style.typing}>
+        <div className={style.dot} />
+        <div className={style.dot} />
+        <div className={style.dot} />
+      </div>
     </div>
   );
 }

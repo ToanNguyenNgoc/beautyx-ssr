@@ -1,13 +1,13 @@
 import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
-import React, { useContext } from "react";
+import  { useContext } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import { formatRoundOrgCount, scrollTop } from "utils";
-import HomeTitle from "../Components/HomeTitle";
 import style from "./style.module.css";
 import { Link } from "react-router-dom";
 import { onChangeFilterBranch, onResetFilter } from 'redux/filter-result'
+import { HomeTitle } from "components/Layout";
 
 export default function HomeProvince() {
     const { t } = useContext(AppContext) as any;
