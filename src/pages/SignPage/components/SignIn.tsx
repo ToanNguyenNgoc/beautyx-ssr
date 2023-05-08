@@ -13,7 +13,7 @@ import { fetchAsyncUser } from "redux/user/userSlice";
 import { PopupNotification } from "components/Notification";
 import { useNoti } from "hooks";
 import icon from "constants/icon";
-import SignInSocial from "./SignInSocial";
+// import SignInSocial from "./SignInSocial";
 
 function SignIn(props: any) {
     const { t } = useContext(AppContext) as any;
@@ -154,9 +154,6 @@ function SignIn(props: any) {
                                 {formik.errors.password}
                             </p>
                         )}
-                        {/* <p style={{ marginTop: "16px" }} className={style.input_wrapper_error}>
-                        {errPass}
-                    </p> */}
                     </div>
                     <div className={style.sign_check}>
                         <div className={style.sign_check_left}>
@@ -187,7 +184,7 @@ function SignIn(props: any) {
                         />
                     </div>
                 </form>
-                <SignInSocial />
+                {/* <SignInSocial /> */}
                 <p className={style.sign_other_setup}>
                     {t("Home.Sign_no_acc")}?
                     <span onClick={() => setActiveTabSign(2)}>

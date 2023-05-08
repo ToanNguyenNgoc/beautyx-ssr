@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
-import Picker, { EmojiStyle } from "emoji-picker-react";
+// import Picker, { EmojiStyle } from "emoji-picker-react";
 import style from "./chatright.module.css";
 import { XButton } from "components/Layout";
 import { postMediaMulti, useDeviceMobile } from "hooks";
@@ -8,6 +8,8 @@ import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import IStore from "interface/IStore";
 import { checkHTML } from "utils";
+import { MutatorCallback } from "swr/dist/types";
+import { chatApi } from "api";
 
 
 interface media_ids {
@@ -20,17 +22,29 @@ interface InitChat {
 const initComment: InitChat = {
   media_ids: [],
 };
-export default function InputChat(props: any) {
-  const { setMessage } = props;
+
+interface InputChatProps {
+  mutate: (
+    data?: any[] |
+      Promise<any[]> |
+      MutatorCallback<any[]> |
+      undefined,
+    shouldRevalidate?: boolean | undefined
+  ) => Promise<any[] | undefined>,
+  topic_id: string
+}
+
+export default function InputChat(props: InputChatProps) {
+  const { mutate, topic_id } = props;
   const IS_MB = useDeviceMobile();
   const [inputStr, setInputStr] = useState<any>("");
   const [chat, setChat] = useState(initComment);
   const emojiRefCnt = useRef<HTMLDivElement>(null);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
-  const onEmojiClick = (event: any) => {
-    setInputStr((prevInput: any) => prevInput + event.emoji);
-  };
+  // const onEmojiClick = (event: any) => {
+  //   setInputStr((prevInput: any) => prevInput + event.emoji);
+  // };
   window.addEventListener(
     'click',
     () => emojiRefCnt.current?.classList.remove(style.emojiPicker_active)
@@ -88,10 +102,14 @@ export default function InputChat(props: any) {
       onSendMessage()
     }
   }
-  const onSendMessage = () => {
+  const onSendMessage = async () => {
     if (!checkHTML(inputStr)) {
-      setMessage((prev: any) => [...prev, { body: inputStr, user_id: USER.id }])
-      setInputStr('')
+      try {
+        const res = await chatApi.postMessage({ msg: inputStr, topic_id: topic_id })
+        console.log(res)
+        mutate()
+        setInputStr('')
+      } catch (error) { }
     }
   }
 
@@ -138,7 +156,7 @@ export default function InputChat(props: any) {
             />
             <div className={style.footBtns}>
               <div className={style.btnsWrap}>
-                {
+                {/* {
                   !IS_MB &&
                   <div
                     className={style.btnIcon}
@@ -163,7 +181,7 @@ export default function InputChat(props: any) {
                       />
                     </div>
                   </div>
-                }
+                } */}
                 <div className={style.btnIcon}>
                   <label className={style.body_media_btn} htmlFor="media">
                     <img src={icon.addImg} alt="" />

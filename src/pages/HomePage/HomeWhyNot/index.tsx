@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import HomeTitle from "../Components/HomeTitle";
+import { useContext } from "react";
 import { whyNots } from "../data";
 import style from "./style.module.css";
 import Slider from "react-slick";
 import { AppContext } from "context/AppProvider";
+import { HomeTitle } from "components/Layout";
 
 function HomeWhyNot() {
     const {t} = useContext(AppContext) as any

@@ -1,0 +1,26 @@
+.home-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.home-title .home-title__text {
+  font-size: 24px;
+  font-weight: bold;
+}
+.home-title .home-title__seemore {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--purple);
+}
+
+@media screen and (max-width: 767.98px) {
+  .home-title .home-title__text {
+      font-weight: 800;
+      font-size: 18px;
+      line-height: 24px;
+  }
+  .home-title .home-title__seemore {
+      font-size: 12px;
+  }
+}

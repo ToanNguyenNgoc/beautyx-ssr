@@ -2,11 +2,11 @@ import API_3RD from 'api/3rd-api';
 import { useDeviceMobile, useFetch } from 'hooks';
 import { ITrend } from 'pages/Trends/trend.interface';
 import TrendDetailDia from 'pages/Trends/TrendDetailDia';
-import React, { useRef, useState } from 'react';
+import  { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
-import HomeTitle from '../Components/HomeTitle';
 import style from './home-trends.module.css'
+import { HomeTitle } from 'components/Layout';
 
 function HomeTrends() {
     const { response } = useFetch(

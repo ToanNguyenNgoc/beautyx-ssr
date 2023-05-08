@@ -35,7 +35,7 @@ export default function AppProvider({ children }: { children: any }) {
         if (USER) {
             setEcho(echoConfig())
         } else {
-            echoConfig().disconnect()
+            // echoConfig().disconnect()
             setEcho(null)
         }
     }, [USER])

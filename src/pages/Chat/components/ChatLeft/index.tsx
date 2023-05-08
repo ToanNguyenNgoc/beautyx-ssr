@@ -1,19 +1,24 @@
-import React, { useState } from "react";
 import style from "./chatleft.module.css";
 import icon from "constants/icon";
 import { useHistory, useLocation } from "react-router-dom";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
+import { useSelector } from "react-redux";
+import IStore from "interface/IStore";
+import { ITopic } from "interface";
+import { useGetOrgDetailQuery } from "redux-toolkit-query/hook-org";
+import { formatDateFromNow } from "utils";
 
-export default function Chatleft(props: any) {
-  const { data, CHAT_SHOW, userChat } = props;
-  const [active, setActive] = useState<boolean>(true);
+export default function ChatLeft(props: any) {
+  const { CHAT_SHOW, userChat } = props;
+  const { USER } = useSelector((state: IStore) => state.USER)
   const IS_MB = useDeviceMobile();
-  const history = useHistory();
-  const location = useLocation();
+  console.log(userChat)
 
-  const onNavigate = (link: string) => {
-    history.push(`/chat/${link}`);
-  };
+  const { resData } = useSwrInfinite<ITopic>(
+    USER,
+    '/topics',
+    { "sort": "-updated_at" }
+  )
   return (
     <>
       <div
@@ -43,53 +48,95 @@ export default function Chatleft(props: any) {
         </div>
 
         <ul className={style.chatLeftList}>
-          {userChat.map((item: any) => (
-            <li
-              style={
-                location.pathname === `/chat/${item.id}`
-                  ? {
-                    borderLeft: "4px solid var(--purple)",
-                    backgroundColor: "#e3e0f1",
-                    transition: "all 0.3s",
-                  }
-                  : {}
-              }
-              onClick={() => onNavigate(item.id)}
-              key={item.id}
-              className={style.chatItem}
-            >
-              <div className={style.itemTop}>
-                <div className={style.itemTopLeft}>
-                  <div
-                    style={
-                      location.pathname === `/chat/${item.id}`
-                        ? { visibility: "hidden" }
-                        : {}
-                    }
-                    className={style.itemDot}
-                  ></div>
-                  <div className={style.itemUser}>
-                    <div className={style.itemAva}>
-                      <img src={item.avatar} alt="" />
-                      {item.isOnline === true && <div className={style.itemActive}></div>}
-                    </div>
-                    <div className={style.itemInfo}>
-                      <div className={style.itemName}>{item.fullname}</div>
-                      <div className={style.itemNameOrg}>@pmt</div>
+          {userChat.map((item:any) => (
+                <li
+                className={style.chatItem}
+              >
+                <div className={style.itemTop}>
+                  <div className={style.itemTopLeft}>
+                    <div
+                      className={style.itemDot}
+                    ></div>
+                    <div className={style.itemUser}>
+                      <div className={style.itemAva}>
+                        {/* <img src={data?.image_url} alt="" /> */}
+                        <div className={style.itemActive}></div>
+                      </div>
+                      <div className={style.itemInfo}>
+                        {/* <div className={style.itemName}>{data?.name}</div> */}
+                        {/* <div className={style.itemNameOrg}>@{data?.subdomain}</div> */}
+                      </div>
                     </div>
                   </div>
+                  <p className={style.chatTimeAgo}>
+                    {/* {formatDateFromNow(topic.created_at)} */}
+                  </p>
                 </div>
-                <p className={style.chatTimeAgo}>5min ago</p>
-              </div>
-              <p className={style.itemBot}>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Ratione, nostrum reiciendis! Modi nesciunt quidem neque, ea quia
-                inventore! Soluta, in!
-              </p>
-            </li>
+                {/* {
+                  topic.messages.length > 0 &&
+                  <p className={style.itemBot}>
+                    {topic.messages[0]?.msg}
+                  </p>
+                } */}
+              </li>
           ))}
         </ul>
       </div>
     </>
   );
+}
+const TopicItem = ({ topic }: { topic: ITopic }) => {
+  const history = useHistory();
+  const location = useLocation();
+  const onNavigate = () => {
+    history.push(`/chat/${topic.organization_id}/${topic._id}`);
+  };
+  const { data } = useGetOrgDetailQuery(topic.organization_id)
+  return (
+    <li
+      style={
+        location.pathname === `/chat/${topic.organization_id}/${topic._id}`
+          ? {
+            borderLeft: "4px solid var(--purple)",
+            backgroundColor: "#e3e0f1",
+            transition: "all 0.3s",
+          }
+          : {}
+      }
+      onClick={onNavigate}
+      className={style.chatItem}
+    >
+      <div className={style.itemTop}>
+        <div className={style.itemTopLeft}>
+          <div
+            style={
+              location.pathname === `/chat/${topic.organization_id}/${topic._id}`
+                ? { visibility: "hidden" }
+                : {}
+            }
+            className={style.itemDot}
+          ></div>
+          <div className={style.itemUser}>
+            <div className={style.itemAva}>
+              <img src={data?.image_url} alt="" />
+              <div className={style.itemActive}></div>
+            </div>
+            <div className={style.itemInfo}>
+              <div className={style.itemName}>{data?.name}</div>
+              <div className={style.itemNameOrg}>@{data?.subdomain}</div>
+            </div>
+          </div>
+        </div>
+        <p className={style.chatTimeAgo}>
+          {formatDateFromNow(topic.created_at)}
+        </p>
+      </div>
+      {
+        topic.messages.length > 0 &&
+        <p className={style.itemBot}>
+          {topic.messages[0]?.msg}
+        </p>
+      }
+    </li>
+  )
 }
