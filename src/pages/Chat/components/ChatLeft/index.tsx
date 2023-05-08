@@ -9,9 +9,10 @@ import { useGetOrgDetailQuery } from "redux-toolkit-query/hook-org";
 import { formatDateFromNow } from "utils";
 
 export default function ChatLeft(props: any) {
-  const { CHAT_SHOW } = props;
+  const { CHAT_SHOW, userChat } = props;
   const { USER } = useSelector((state: IStore) => state.USER)
   const IS_MB = useDeviceMobile();
+  console.log(userChat)
 
   const { resData } = useSwrInfinite<ITopic>(
     USER,
@@ -47,8 +48,37 @@ export default function ChatLeft(props: any) {
         </div>
 
         <ul className={style.chatLeftList}>
-          {resData.map(item => (
-            <TopicItem key={item._id} topic={item} />
+          {userChat.map((item:any) => (
+                <li
+                className={style.chatItem}
+              >
+                <div className={style.itemTop}>
+                  <div className={style.itemTopLeft}>
+                    <div
+                      className={style.itemDot}
+                    ></div>
+                    <div className={style.itemUser}>
+                      <div className={style.itemAva}>
+                        {/* <img src={data?.image_url} alt="" /> */}
+                        <div className={style.itemActive}></div>
+                      </div>
+                      <div className={style.itemInfo}>
+                        {/* <div className={style.itemName}>{data?.name}</div> */}
+                        {/* <div className={style.itemNameOrg}>@{data?.subdomain}</div> */}
+                      </div>
+                    </div>
+                  </div>
+                  <p className={style.chatTimeAgo}>
+                    {/* {formatDateFromNow(topic.created_at)} */}
+                  </p>
+                </div>
+                {/* {
+                  topic.messages.length > 0 &&
+                  <p className={style.itemBot}>
+                    {topic.messages[0]?.msg}
+                  </p>
+                } */}
+              </li>
           ))}
         </ul>
       </div>

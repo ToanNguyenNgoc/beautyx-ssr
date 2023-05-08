@@ -10,8 +10,7 @@ const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {
     "Accept": "application/json, text/plain, */*",
-    "Content-Type": "application/json",
-    "Authorization": `Bearer ${localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')}`
+    "Content-Type": "application/json"
   },
   paramsSerializer: {
     encode: (param: string) => { },
@@ -20,6 +19,7 @@ const axiosClient = axios.create({
   },
 });
 axiosClient.interceptors.request.use(async (config) => {
+  config.headers.Authorization = `Bearer ${localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')}`
   const { refresh, token_refresh, token } = handleValidToken()
   const platform = EXTRA_FLAT_FORM()
   if (refresh) {
@@ -27,25 +27,25 @@ axiosClient.interceptors.request.use(async (config) => {
       const response = await axios.post<Response<IRefreshToken>>(
         `${baseURL}auth/refresh`,
         { refresh_token: token_refresh, platform: platform },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       if (localStorage.getItem('_WEB_TK')) localStorage.setItem('_WEB_TK', response.data?.context?.token)
       if (sessionStorage.getItem('_WEB_TK')) sessionStorage.setItem('_WEB_TK', response.data?.context?.token)
       localStorage.setItem('_WEB_TK_EX', response.data?.context?.token_expired_at)
       config.headers.Authorization = `Bearer ${response.data?.context?.token}`
-    } catch (error) { }
+    } catch (error) {
+      localStorage.removeItem('_WEB_TK_EX')
+      localStorage.removeItem('_WEB_TK_RE')
+      localStorage.removeItem('_WEB_TK_RE')
+    }
   }
   return config;
 });
-axios.interceptors.response.use(
+axiosClient.interceptors.response.use(
   (response) => {
-    if (response && response.data) {
-      return response.data;
-    }
+    // if (response && response.data) {
+    //   return response.data;
+    // }
     return response;
   },
   (error) => {

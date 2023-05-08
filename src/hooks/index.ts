@@ -5,7 +5,6 @@ export * from './postMediaMulti'
 export * from "./useCountDown"
 export * from "./useDeviceMobile"
 export * from "./useFetch"
-export * from "./useRouter"
 export * from "./useGetLocation"
 export * from "./useScript"
 export * from "./useSwr"

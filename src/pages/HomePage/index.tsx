@@ -26,7 +26,7 @@ import HomeTrends from "./HomeTrends";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
-    const banner_status = useSelector((state: any) => state.HOME.status);
+    const [banner_status, USER] = useSelector((state: any) => [state.HOME.status, state.USER]);
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);
@@ -56,7 +56,7 @@ export default function HomePage() {
                     <HomeProducts />
                     <HomeDownApp />
                     <HomeWhyNot />
-                    <HomeRecommend />
+                    {USER.USER && <HomeRecommend />}
                     <HomeProvince />
                     {IS_MB ? <></> : <HomeTrends />}
                     <HomePartners />

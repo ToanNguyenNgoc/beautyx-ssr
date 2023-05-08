@@ -19,36 +19,39 @@ export default function Chat() {
   if (location.pathname !== "/chat") CHAT_SHOW = "right";
   useEffect(() => {
     if (USER) {
-      let chat: any = echo?.private('chat')
-        .subscribed(() => {
-          chat.whisper('connected', {
-            user: {
-              id: USER?.id,
-              fullname: USER?.fullname,
-              avatar: USER?.avatar
-            }, socketId: echo?.socketId()
-          })
-          chat.listenForWhisper('typing', (u: any) => {
-            console.log(u)
-          })
-        })
-        .listen('UserOnline', (u: any) => {
-          setUserChat((prev: any) => {
-            if (prev.findIndex((i: any) => i.id === u.id)) {
-              return _uniqueLast([...prev, { ...u, isOnline: true }])
-            }
-            return _uniqueLast(prev)
-          })
-        })
-        .listen('UserOffline', (u: any) => {
-          setUserChat((prev: any) => {
-            const iIndex = prev.findIndex((item: any) => item.id === u.id)
-            if (iIndex > 0) {
-              prev[iIndex].isOnline = false
-            }
-            return _unique(prev)
-          })
-        })
+      console.log('run')
+      echo?.private('chat').subscribed(() => console.log('Test...'))
+      // let chat: any = echo?.private('chat')
+      //   .subscribed(() => {
+      //     console.log('ok...')
+      //     chat.whisper('connected', {
+      //       user: {
+      //         id: USER?.id,
+      //         fullname: USER?.fullname,
+      //         avatar: USER?.avatar
+      //       }, socketId: echo?.socketId()
+      //     })
+      //     chat.listenForWhisper('typing', (u: any) => {
+      //       console.log(u)
+      //     })
+      //   })
+      //   .listen('UserOnline', (u: any) => {
+      //     setUserChat((prev: any) => {
+      //       if (prev.findIndex((i: any) => i.id === u.id)) {
+      //         return _uniqueLast([...prev, { ...u, isOnline: true }])
+      //       }
+      //       return _uniqueLast(prev)
+      //     })
+      //   })
+      //   .listen('UserOffline', (u: any) => {
+      //     setUserChat((prev: any) => {
+      //       const iIndex = prev.findIndex((item: any) => item.id === u.id)
+      //       if (iIndex > 0) {
+      //         prev[iIndex].isOnline = false
+      //       }
+      //       return _unique(prev)
+      //     })
+      //   })
     }
   }, [echo, USER])
 
