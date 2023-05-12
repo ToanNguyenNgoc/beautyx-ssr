@@ -425,7 +425,7 @@ function Footer() {
                     {t("footer.policy")}
                 </div>
                 <div className="footer-copy-right">
-                    © 2018 Copyright Myspa | ProductX teams.
+                    © 2021 Copyright Myspa | ProductX teams.
                 </div>
             </Container>
         </div>
