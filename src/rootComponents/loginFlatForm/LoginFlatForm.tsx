@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAsyncUser } from "../../redux/user/userSlice";
+import { fetchAsyncUser } from "../../redux/profile/userSlice";
 import { FLAT_FORM_TYPE } from "../flatForm";
 import {
     loginAsyncMomo,

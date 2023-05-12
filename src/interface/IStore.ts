@@ -1,6 +1,6 @@
 import { IOrgSlice } from '../redux/org/orgSlice';
 import { IORGS_MAP } from '../redux/org/orgMapSlice';
-import { IUSER } from "redux/user/userSlice"
+import { IUSER } from "redux/profile/userSlice"
 import { IFilterResult } from 'redux/filter-result'
 import { CartType } from 'redux/cart'
 import { CATE } from 'redux/cates-tree'

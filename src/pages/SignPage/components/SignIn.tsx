@@ -9,7 +9,7 @@ import { BackButton, Input, XButton } from "components/Layout";
 import style from "../sign-page.module.css";
 import { AppContext } from "context/AppProvider";
 import authentication from "api/authApi";
-import { fetchAsyncUser } from "redux/user/userSlice";
+import { fetchAsyncUser } from "redux/profile/userSlice";
 import { PopupNotification } from "components/Notification";
 import { useNoti } from "hooks";
 import icon from "constants/icon";

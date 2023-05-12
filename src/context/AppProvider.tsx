@@ -3,7 +3,7 @@
 import { createContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAsyncUser } from 'redux/user/userSlice';
+import { fetchAsyncUser } from 'redux/profile/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useOrderService } from "hooks";

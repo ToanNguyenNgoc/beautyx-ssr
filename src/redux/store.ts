@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cart";
 import homeReducer from "./home/homeSlice";
-import userReducer from "./user/userSlice";
+import userReducer from "./profile/userSlice";
 import servicesBookReducer from "./booking";
-import userAddressReducer from "./user/userAddressSlice";
+import userAddressReducer from "./profile/userAddressSlice";
 import orgReducer from "./org/orgSlice";
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import cateTree from "./cates-tree";

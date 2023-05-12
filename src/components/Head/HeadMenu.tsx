@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { AppContext } from 'context/AppProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { logoutUser } from 'redux/user/userSlice';
+import { logoutUser } from 'redux/profile/userSlice';
 
 function HeadMenu() {
     const refMenu = useRef<HTMLDivElement>();

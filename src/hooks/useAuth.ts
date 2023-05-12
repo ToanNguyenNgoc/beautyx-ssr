@@ -2,7 +2,7 @@
 import IStore from "interface/IStore";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAsyncUser } from "redux/user/userSlice";
+import { fetchAsyncUser } from "redux/profile/userSlice";
 
 export function useAuth() {
     const dispatch = useDispatch()
