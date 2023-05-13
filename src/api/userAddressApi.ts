@@ -34,13 +34,13 @@ class UserAddress {
         return axiosClient.post(url, params, AUTH_HEADER());
     }
 
-    deleteAddress = (id: number) => {
+    deleteAddress = (id: number | string) => {
         const url = `/useraddresses/${id}`;
         if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
             return axiosClient.delete(url, AUTH_HEADER());
         }
     }
-    updateAddress = (values: any) => {
+    updateAddress = (values: { id: number | string, address?: string }) => {
         const url = `/useraddresses/${values.id}`;
         const params = {
             "address": values.address,

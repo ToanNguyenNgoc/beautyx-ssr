@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncUser } from 'redux/profile/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
@@ -13,7 +13,7 @@ import IStore from "interface/IStore";
 const Pusher = require('pusher-js')
 
 export type AppContextType = {
-    t: any,
+    t: TFunction<"translation", undefined>,
     language: any,
     setLanguage: any,
     geo: any,
