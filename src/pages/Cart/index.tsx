@@ -113,8 +113,8 @@ function Cart() {
                             <div className={style.right}>
                                 <div className={style.right_section}>
                                     <UserPaymentInfo
-                                        onSetAddressDefault={(address) =>
-                                            setOrder({ ...order, user_address_id: address?.id })}
+                                        // onSetAddressDefault={(address) =>
+                                        //     setOrder({ ...order, user_address_id: address?.id })}
                                     />
                                 </div>
                                 <div

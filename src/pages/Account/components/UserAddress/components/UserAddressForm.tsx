@@ -8,7 +8,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { STATUS } from 'redux/status';
-import { postAsyncAddress } from 'redux/profile/userAddressSlice';
 
 interface IDataAdd {
     districts: IDistrict[],
@@ -136,26 +135,6 @@ function UserAddressForm(props: any) {
                     name: ward.name
                 }
             })
-        }
-    }
-
-    const handleSubmitForm = async () => {
-        if (
-            address.district.code &&
-            address.province.code &&
-            address.ward.code &&
-            address.short_address.length > 0
-        ) {
-            const values = {
-                address: `${address.short_address},${address.ward.name},${address.district.name},${address.province.name}`,
-                is_default: true
-            }
-            await dispatch(postAsyncAddress(values))
-            //const action = removeDefaultItem(address_default);
-            //dispatch(action)
-            // if (fullScreen === false) return history.goBack();
-            // if (setOpen && fullScreen === true) return setOpen(false)
-            history.goBack()
         }
     }
     return (
@@ -293,13 +272,6 @@ function UserAddressForm(props: any) {
                                 placeholder='Vui lòng nhập địa chỉ của bạn'
                             />
                         </div>
-                    </div>
-                    <div className="form-btn">
-                        <XButton
-                            loading={status_up === STATUS.LOADING ? true : false}
-                            onClick={handleSubmitForm}
-                            title="Thêm mới địa chỉ"
-                        />
                     </div>
                 </div>
             </div>

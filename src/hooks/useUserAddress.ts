@@ -1,5 +1,6 @@
 import userAddressApi from "api/userAddressApi";
 import { AxiosError, AxiosResponse } from "axios";
+import dayjs from "dayjs";
 import { IUserAddress } from "interface";
 import { useState } from "react";
 import useSWR from "swr"
@@ -34,6 +35,7 @@ export function useUserAddress() {
     revalidateOnFocus: false
   })
   const addresses: IUserAddress[] = data?.data?.context ?? []
+  const addressDefault = addresses.find(i => i.is_default)
   const postAddress = async ({ body, cb, onError }: PostAddress) => {
     setLoad({ ...load, create: true })
     try {
@@ -76,7 +78,7 @@ export function useUserAddress() {
   }
   const updateAddress = async ({ id, body, cb, onError }: UpdatePost) => {
     try {
-      const response = await userAddressApi.updateAddress({
+      await userAddressApi.updateAddress({
         id: id,
         address: body?.address
       })
@@ -91,7 +93,7 @@ export function useUserAddress() {
         ...data,
         data: {
           context: addresses,
-          updated_at: response.data?.context?.updated_at
+          updated_at: dayjs()
         }
       }
       mutate(mutateData, false)
@@ -104,6 +106,7 @@ export function useUserAddress() {
     isValidating,
     load,
     addresses,
+    addressDefault,
     postAddress,
     deleteAddress,
     updateAddress,
