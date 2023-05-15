@@ -56,9 +56,9 @@ export default function HomePage() {
                     <HomeProducts />
                     <HomeDownApp />
                     <HomeWhyNot />
-                    {USER.USER && <HomeRecommend />}
+                    {/* {USER.USER && <HomeRecommend />} */}
                     <HomeProvince />
-                    {IS_MB ? <></> : <HomeTrends />}
+                    {/* {IS_MB ? <></> : <HomeTrends />} */}
                     <HomePartners />
                 </Container>
                 <OpenApp type="none" />

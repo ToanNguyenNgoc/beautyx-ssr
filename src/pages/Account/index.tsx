@@ -97,14 +97,14 @@ function Account() {
       notiCount: 0,
       content: "",
     },
-    {
-      link: "/tai-khoan/thanh-vien",
-      title: "Thành viên",
-      hide: false,
-      icon: ICON.userAct,
-      notiCount: 0,
-      content: "",
-    },
+    // {
+    //   link: "/tai-khoan/thanh-vien",
+    //   title: "Thành viên",
+    //   hide: false,
+    //   icon: ICON.userAct,
+    //   notiCount: 0,
+    //   content: "",
+    // },
     {
       link: "/tai-khoan/lich-su-mua",
       title: t("Header.my_order"),
@@ -179,7 +179,10 @@ function Account() {
             className={style.left_cnt}
           >
             {IS_MB && <HeadAccount />}
-            <div onClick={() => setOpenCard(true)} className={style.left_user}>
+            <div 
+              // onClick={() => setOpenCard(true)} 
+              className={style.left_user}
+            >
               <div className={style.left_cnt_head}>
                 <div className={style.user_avatar_cnt}>
                   <img

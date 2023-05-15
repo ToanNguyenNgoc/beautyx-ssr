@@ -14,7 +14,7 @@ function HomeCate2() {
     const dispatch = useDispatch();
     const history = useHistory();
     const cates = [
-        { title: "Sản phẩm", icon: icon.cateSanpham, link: `product` },
+        // { title: "Sản phẩm", icon: icon.cateSanpham, link: `product` },
         {
             title: "Spa",
             icon: icon.cateSpa,
