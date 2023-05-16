@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import API_3RD from 'api/3rd-api'
-import { token } from 'api/authHeader'
+import { token } from 'config'
 import { identity, pickBy } from 'lodash'
 
 export const searchApi = createApi({

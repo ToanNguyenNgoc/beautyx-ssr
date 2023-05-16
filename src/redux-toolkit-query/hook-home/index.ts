@@ -1,9 +1,8 @@
-import { baseURL } from 'api/axios'
 import { IPaymentMethod, ResponseType } from 'interface'
 import API_ROUTE from 'api/_api'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { identity, pickBy } from 'lodash'
-import { token } from 'api/authHeader'
+import { baseURL, token } from 'config'
 
 export const homeApi = createApi({
     reducerPath: 'homeApi',

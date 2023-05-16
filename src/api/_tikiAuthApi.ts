@@ -1,4 +1,4 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import {identity, pickBy} from 'lodash'
 
 class TIKIAuth {

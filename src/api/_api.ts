@@ -1,4 +1,4 @@
-import { baseURL } from "./axios"
+import { baseURL } from "config"
 // api route version
 const API_ROUTE_V = {
     PRODUCTABLE: (version?: 'v1' | 'v2' | 'v3') => `${baseURL?.replace('v1/', version ?? 'v1')}/productables`,

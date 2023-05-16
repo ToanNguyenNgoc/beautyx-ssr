@@ -1,6 +1,6 @@
-import { AUTH_HEADER } from "../api/authHeader"
 import useSWR from "swr";
 import { identity, pickBy } from "lodash";
+import { AUTH_HEADER } from "config";
 
 export function useFetch(condition: any, API_URL: string, query?: any) {
     let paramsURL = ''

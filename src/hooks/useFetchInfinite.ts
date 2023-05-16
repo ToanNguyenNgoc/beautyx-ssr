@@ -1,4 +1,4 @@
-import { AUTH_HEADER } from 'api/authHeader';
+import { AUTH_HEADER } from 'config';
 import { identity, pickBy } from 'lodash';
 import { useSWRInfinite } from 'swr'
 

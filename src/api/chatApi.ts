@@ -1,4 +1,4 @@
-import axiosClient from "api/axios";
+import { axiosClient } from "config";
 import { ParamsPostMessage } from "interface";
 
 export const chatApi = {

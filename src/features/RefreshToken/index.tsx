@@ -1,4 +1,5 @@
 import { auth } from 'api/authApi';
+import { LOCAL_TK } from 'common';
 import { XButton } from 'components/Layout';
 import { PopupNotification } from 'components/Notification';
 import { useNoti } from 'hooks';
@@ -12,9 +13,9 @@ function RefreshToken() {
     const { firstLoad, resultLoad, noti } = useNoti()
     const handleCancel = () => {
         localStorage.removeItem('_WEB_TK_RE')
-        localStorage.removeItem('_WEB_TK')
+        localStorage.removeItem(LOCAL_TK)
         sessionStorage.removeItem('_WEB_TK_RE')
-        sessionStorage.removeItem('_WEB_TK')
+        sessionStorage.removeItem(LOCAL_TK)
         setOpen(false)
     }
     const handleRefreshToken = async () => {

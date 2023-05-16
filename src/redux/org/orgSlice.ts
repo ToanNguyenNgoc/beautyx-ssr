@@ -3,11 +3,10 @@ import orgApi from "api/organizationApi";
 import serviceApi from "api/serviceApi";
 import productsApi from "api/productApi";
 import { STATUS } from "../status";
-import { orgInit } from "../initials";
 import { IOrganization, Service, Product } from 'interface'
 // end
 export interface IOrgSlice {
-    org: IOrganization,
+    org: null | IOrganization,
     SERVICES_KEYWORD: {
         services_keyword: Service[],
         status: string,
@@ -51,7 +50,7 @@ export const fetchAsyncByKeyword: any = createAsyncThunk(
     }
 );
 const initialState: IOrgSlice = {
-    org: orgInit,
+    org: null,
     SERVICES_KEYWORD: {
         services_keyword: [],
         status: "",

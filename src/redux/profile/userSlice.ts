@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authentication from 'api/authApi';
-import { handleValidToken } from 'api/authHeader';
 import { checkPhoneValid } from 'utils/phoneUpdate';
 import { analytics, logEvent } from '../../firebase';
+import { handleValidToken } from 'config';
+import { LOCAL_TK } from 'common';
 
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
@@ -23,7 +24,7 @@ export const fetchAsyncUser: any = createAsyncThunk(
                 throw error
             }
             const { refresh } = handleValidToken()
-            if (!refresh) localStorage.removeItem('_WEB_TK')
+            if (!refresh) localStorage.removeItem(LOCAL_TK)
             return rejectWithValue(refresh)
         }
     }
@@ -35,7 +36,7 @@ export const updateAsyncUser: any = createAsyncThunk(
             const res: any = await authentication.putUserProfile(params);
             const payload = res.data.context
             if (res.data.context.token) {
-                localStorage.setItem('_WEB_TK', res.data.context.token)
+                localStorage.setItem(LOCAL_TK, res.data.context.token)
             }
             return payload
         } catch (error) {
@@ -72,8 +73,8 @@ const userSlice = createSlice({
             state.loading = false
             localStorage.removeItem('_WEB_TK_EX')
             localStorage.removeItem('_WEB_TK_RE')
-            localStorage.removeItem('_WEB_TK')
-            sessionStorage.removeItem('_WEB_TK')
+            localStorage.removeItem(LOCAL_TK)
+            sessionStorage.removeItem(LOCAL_TK)
         }
     },
     extraReducers(builder) {

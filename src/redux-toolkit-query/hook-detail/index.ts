@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseURL } from 'api/axios'
 import API_ROUTE from 'api/_api'
+import { baseURL } from 'config'
 import { ResponseType } from 'interface'
 
 export const serProComDetailApi = createApi({

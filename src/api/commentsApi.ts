@@ -1,6 +1,5 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { identity, pickBy } from "lodash";
-import { AUTH_HEADER } from "./authHeader";
 
 class Comments {
     //get comments org
@@ -13,7 +12,6 @@ class Comments {
             "filter[commentable_id]": values.org_id,
             append: "media_url",
             include: "rate|children|children.media",
-            // include: "rate|user|children",
             sort: "-created_at",
         };
         return axiosClient.get(url, { params });
@@ -29,7 +27,7 @@ class Comments {
             media_ids: values.media_ids,
             rate: values.rate
         };
-        return axiosClient.post(url, params, AUTH_HEADER());
+        return axiosClient.post(url, params);
     };
     //comments products, services
     getComments = (values: any) => {
@@ -42,7 +40,6 @@ class Comments {
             "filter[organization_id]": values.org_id,
             append: "media_url",
             include: "rate|children|children.media",
-            // include: "rate|children|user",
             sort: "-created_at",
         };
         return axiosClient.get(url, { params });
@@ -57,7 +54,7 @@ class Comments {
             media_ids: values.media_ids,
             rate: values.rate
         };
-        return axiosClient.post(url, params, AUTH_HEADER());
+        return axiosClient.post(url, params);
     };
     postComment2 = (values:any)=>{
         const url = `/comments`;
@@ -65,8 +62,7 @@ class Comments {
             ...values,
             body:  values.body,
         }
-        // console.log(params)
-        return axiosClient.post(url, pickBy(params, identity), AUTH_HEADER());
+        return axiosClient.post(url, pickBy(params, identity));
     }
 }
 const commentsApi = new Comments();

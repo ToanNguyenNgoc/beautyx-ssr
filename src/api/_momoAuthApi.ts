@@ -1,4 +1,4 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { pickBy, identity } from "lodash";
 class MOMOAuth {
     login = (data: any) => {

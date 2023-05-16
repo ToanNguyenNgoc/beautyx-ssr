@@ -1,6 +1,5 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { pickBy, identity } from "lodash";
-import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class ProductApi {
     getByOrgId = (values: any) => {
@@ -27,7 +26,7 @@ class ProductApi {
             append: "is_favorite|rating",
         };
         if (values.org_id && values.id) {
-            return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
+            return axiosClient.get(url, {params});
         }
     };
 }

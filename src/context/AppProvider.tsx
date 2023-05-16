@@ -8,8 +8,9 @@ import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useOrderService } from "hooks";
 import Echo from 'laravel-echo'
-import echoConfig from "api/echoConfig";
 import IStore from "interface/IStore";
+import { echoConfig } from "config";
+import { LOCAL_TK } from "common";
 const Pusher = require('pusher-js')
 
 export type AppContextType = {
@@ -49,7 +50,7 @@ export default function AppProvider({ children }: { children: any }) {
     const [geo, setGeo] = useState<any>({ lat: lat, long: long });
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
-    const token = localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')
+    const token = localStorage.getItem(LOCAL_TK) ?? sessionStorage.getItem(LOCAL_TK)
     const [language, setLanguage] = useState(
         (lg === "en-US" || lg === "en") ? "en" : "vn"
     );

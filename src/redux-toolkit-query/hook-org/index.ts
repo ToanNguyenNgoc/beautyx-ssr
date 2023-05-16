@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseURL } from 'api/axios'
 import API_ROUTE from 'api/_api'
 import {
     paramDiscounts,
@@ -10,6 +9,7 @@ import {
 } from 'params-query'
 import { IOrganization, Response, ResponseType } from 'interface'
 import { pickBy, identity } from 'lodash'
+import { baseURL } from 'config'
 
 
 export const orgPageApi = createApi({

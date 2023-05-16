@@ -1,9 +1,7 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { identity, pickBy } from "lodash";
-// import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
 import { paramsUserProfile } from "params-query";
 import { ParamsForgotSms } from "interface"
-import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class Auth {
   login = (values: any) => {
@@ -20,10 +18,7 @@ class Auth {
   };
   getUserProfile = (token?: string) => {
     const url = `/users/profile`
-    return axiosClient.get(url, token ? {
-      params: paramsUserProfile,
-      headers: { Authorization: `Bearer ${token}` }
-    } : AUTH_HEADER_PARAM_GET(paramsUserProfile))
+    return axiosClient.get(url, {params:paramsUserProfile})
   };
   forgotPassword = (values: any) => {
     const url = `/auth/forgot`;
