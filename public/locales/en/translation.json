@@ -385,7 +385,9 @@
         "spending": "Spending",
         "discount_on_bill": "Discount on bill",
         "bonus": "Bonus",
-        "benefit": "Benefit"
+        "benefit": "Benefit",
+        "create_address":"Add new address",
+        "update_address":"Update address"
     },
     "order": {
         "order_his": "Orders history",

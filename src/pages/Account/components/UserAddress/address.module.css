@@ -1,0 +1,73 @@
+.add_address_btn {
+  border: solid 1px var(--purple);
+  background-color: var(--white);
+}
+
+.container {
+  margin-top: 16px;
+}
+
+.address_item {
+  cursor: pointer;
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--trans);
+  border: solid 1px var(--grey);
+  border-radius: 6px;
+}
+
+.address_item_de {
+  border: solid 1px var(--purple);
+  border-radius: 6px;
+  transition: var(--trans);
+}
+
+.address_item_left {
+  width: calc(100% - 130px);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+}
+
+.address_item_right {
+  display: flex;
+  align-items: center;
+  transition: var(--trans);
+}
+
+.address_item_right button {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.address_item_right button:nth-child(2) {
+  margin-left: 6px;
+  background-color: var(--red_2);
+}
+
+.input_address {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  z-index: 1;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  border: 1px solid rgba(204, 204, 204, 0.361);
+  outline: none;
+  background-color: var(--bg-white);
+  padding: 8px 16px;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 6px rgb(113 97 186 / 20%);
+  cursor: pointer;
+}
+.input_address_dialog{
+  width: 40vw;
+  height: 70vh;
+  background-color: var(--white);
+}

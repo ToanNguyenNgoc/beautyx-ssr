@@ -2,7 +2,6 @@
 import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
-import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useContext, useEffect, useState } from "react";
 import { logoutUser } from "redux/profile/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +33,7 @@ import { phoneSupport } from "constants/index";
 import { User } from "interface";
 import CardCoin from "./components/CardCoin";
 import Member from "./components/Member";
+import AddressForm from "./components/UserAddress/AddressForm";
 
 const routes = [
   {
@@ -50,7 +50,7 @@ const routes = [
   },
   {
     path: "/tai-khoan/dia-chi",
-    component: <UserAddress />,
+    component: <AddressForm />,
   },
   {
     path: "/tai-khoan/theo-doi",

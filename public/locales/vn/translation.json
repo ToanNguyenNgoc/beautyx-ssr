@@ -382,7 +382,9 @@
         "spending": "Chi tiêu",
         "discount_on_bill": "Giảm trên bill",
         "bonus": "Tiền thưởng",
-        "benefit": "Quyền lợi"
+        "benefit": "Quyền lợi",
+        "create_address":"Thêm mới địa chỉ",
+        "update_address":"Cập nhật địa chỉ"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",
