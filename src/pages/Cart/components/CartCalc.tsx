@@ -1,6 +1,6 @@
 import { XButton } from 'components/Layout';
 import icon from 'constants/icon';
-import { useCartReducer, useNoti, useVoucher } from 'hooks';
+import { useCartReducer, useNoti, useUserAddress, useVoucher } from 'hooks';
 import { IDiscountPar, IOrganization } from 'interface';
 import IStore from 'interface/IStore';
 import React, { useContext, useEffect, useState } from 'react';
@@ -34,6 +34,7 @@ export function CartCalc(props: CartCalcType) {
     const { order, orgChoose } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const [openVc, setOpenVc] = useState(false)
+    const {addressDefault} = useUserAddress()
     const {firstLoad, resultLoad, noti} = useNoti()
     const history = useHistory()
     const [popup, setPopup] = useState(popupInit)
@@ -59,6 +60,7 @@ export function CartCalc(props: CartCalcType) {
     const onPostOrder = async () => {
         const param: PostOrderType = {
             ...order,
+            user_address_id:addressDefault?.id,
             products: products_id,
             treatment_combo: combos_id,
             services: services_id,
@@ -67,7 +69,7 @@ export function CartCalc(props: CartCalcType) {
         if (finalAmount - totalVoucherValue < 1000) {
             return setPopup({ ...popupInit, open: true, content: 'Giá trị đơn hàng tối thiểu 1.000đ' })
         }
-        if (products_id?.length > 0 && !order.user_address_id) {
+        if (products_id?.length > 0 && !addressDefault) {
             return setPopup({
                 content: 'Vui lòng thêm địa chỉ giao hàng!',
                 open: true,

@@ -6,6 +6,7 @@ import icon from 'constants/icon';
 import { AppContext } from 'context/AppProvider';
 import style from './user-payment.module.css'
 import { XButton } from 'components/Layout';
+import { useUserAddress } from 'hooks';
 
 interface IProps {
     disableEdit?: boolean;
@@ -16,6 +17,7 @@ interface IProps {
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext) as any;
     const { disableEdit, title, disableAddress } = props;
+    const {addressDefault} = useUserAddress()
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
     return (
@@ -45,7 +47,7 @@ function UserPaymentInfo(props: IProps) {
                         <span className={style.user_row_detail_text}>{USER?.telephone}</span>
                     </div>
                 </div>
-                {/* {
+                {
                     !disableAddress &&
                     <div className={style.user_row}>
                         <div className={style.user_row_label}>{t("pm.address")}</div>
@@ -64,7 +66,7 @@ function UserPaymentInfo(props: IProps) {
                             }
                         </div>
                     </div>
-                } */}
+                }
             </div>
         </div>
     );

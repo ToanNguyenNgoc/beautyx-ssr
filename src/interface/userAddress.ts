@@ -1,5 +1,5 @@
 export interface IUserAddress {
-    id: number | string,
+    id: any,
     latitude: null | number | string,
     longitude: null | number | string,
     address: string | null,

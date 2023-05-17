@@ -5,8 +5,8 @@ import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import { handleValidToken } from "config/header.config";
 import { LOCAL_TK } from "common";
 
-// export const baseURL = process.env.REACT_APP_API_URL;
-export const baseURL = process.env.REACT_APP_API_DEV;
+export const baseURL = process.env.REACT_APP_API_URL;
+// export const baseURL = process.env.REACT_APP_API_DEV;
 export const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {

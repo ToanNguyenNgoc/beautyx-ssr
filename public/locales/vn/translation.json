@@ -354,7 +354,9 @@
         "my_services": "Gói dịch vụ"
     },
     "acc": {
-        "province": "Tỉnh / Thành",
+        "province": "Tỉnh/thành",
+        "district":"Quận/huyện",
+        "ward":"Xã/phường",
         "scores": "Điểm",
         "surplus": "Số dư",
         "rank": "Hạng",

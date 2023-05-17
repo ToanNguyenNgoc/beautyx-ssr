@@ -3,12 +3,12 @@ import { useHistory } from 'react-router-dom';
 import { AppContext, AppContextType } from 'context/AppProvider';
 import { HeadTitle } from 'pages/Account';
 import { XButton } from 'components/Layout';
-import { useDeviceMobile, useUserAddress } from 'hooks';
+import {  useUserAddress } from 'hooks';
 import icon from 'constants/icon';
 import style from './address.module.css'
+import { Radio } from '@mui/material';
 
 function Address() {
-    const IS_MB = useDeviceMobile()
     const history = useHistory();
     const { t } = useContext(AppContext) as AppContextType
     const { addresses, deleteAddress, updateAddress } = useUserAddress()
@@ -40,17 +40,28 @@ function Address() {
                                 }
                                 onClick={() => onUpdateDefault(item.id)}
                             >
-                                <div className={style.address_item_left}>{item.address}</div>
+                                <div className={style.address_item_left}>
+                                    <Radio
+                                        style={{padding:'4px', color:'var(--purple)'}}
+                                        checked={item.is_default}
+                                        readOnly
+                                    />
+                                    <span className={style.address_name}>{item.address}</span>
+                                </div>
                                 <div className={style.address_item_right}>
-                                    <XButton
+                                    {/* <XButton
                                         iconSize={12}
                                         icon={icon.editWhite}
-                                    />
+                                    /> */}
                                     {
                                         !item.is_default &&
                                         <XButton
                                             iconSize={12}
                                             icon={icon.trash}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                deleteAddress({ id: item.id })
+                                            }}
                                         />
                                     }
                                 </div>

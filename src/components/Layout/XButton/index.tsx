@@ -11,6 +11,7 @@ interface IProps {
     style?: any
     icon?: string,
     iconSize?: number,
+    disable?:boolean
 }
 
 export function XButton(props: IProps) {
