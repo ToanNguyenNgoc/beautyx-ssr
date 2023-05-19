@@ -113,7 +113,7 @@ const PlaceComponent = (props: any) => {
         setKeyword(keyword)
         const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?access_token=${keyMapBox}&country=vn`;
         const res: any = await axios.get(url);
-        setCoorAddress(res.features)
+        setCoorAddress(res?.data?.features)
         debounceDropDown(keyword)
     }
     const onClickOrgItemClick = (org: IOrganization) => {
@@ -186,8 +186,8 @@ const PlaceComponent = (props: any) => {
                     <div className="map-filter-cnt__drop">
                         <ul className="map-filter-list-org">
                             {keyword.length > 0 &&
-                                coorAddress.length > 0 &&
-                                coorAddress.map((i: any, index: number) => (
+                                coorAddress?.length > 0 &&
+                                coorAddress?.map((i: any, index: number) => (
                                     <li
                                         onClick={() => handleSelectAddressItem(i)}
                                         className="map-list-org__item"
