@@ -15,7 +15,8 @@ import AssistantBtn from "../components/AssistantBtn";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
-import MerchantDetail from "pages/MerchantDetail";
+// import MerchantDetail from "pages/MerchantDetail";
+import Organization from "pages/Organization";
 import { analytics, logEvent } from "../firebase";
 import { LoadProgress } from "components/LoadingSketion";
 import LoadDetail from "components/LoadingSketion/LoadDetail";
@@ -73,11 +74,11 @@ function RouterConfig() {
     },
     {
       path: "/TIKI/cua-hang/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     {
       path: "/TIKI/org/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     //
     {
@@ -95,11 +96,11 @@ function RouterConfig() {
     },
     {
       path: "/MOMO/cua-hang/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     {
       path: "/MOMO/org/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     // END mini app share link
     {
@@ -172,7 +173,7 @@ function RouterConfig() {
     },
     {
       path: "/cua-hang/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     {
       path: "/dia-diem-quan-tam",

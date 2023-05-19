@@ -23,7 +23,7 @@ export function useSwr(
         error
     } = useSWR(condition && `${API_URL}${paramsURL}`, {
         revalidateOnFocus: false,
-        refreshInterval: refresh_time,
+        refreshInterval: refresh_time
     })
     if (data) {
         response = data.data?.context ?? data

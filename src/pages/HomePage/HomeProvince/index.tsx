@@ -1,6 +1,6 @@
 import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
-import  { useContext } from "react";
+import { useContext } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useDispatch, useSelector } from "react-redux";
 import { formatRoundOrgCount, scrollTop } from "utils";
@@ -32,7 +32,7 @@ export default function HomeProvince() {
                         <Link
                             onClick={() => {
                                 dispatch(onResetFilter());
-                                dispatch(onChangeFilterBranch({province_code:item.province_code}))
+                                dispatch(onChangeFilterBranch({ province_code: item.province_code }))
                                 scrollTop()
                             }}
                             key={index}

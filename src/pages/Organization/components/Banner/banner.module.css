@@ -1,0 +1,130 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.head_left {
+  width: calc(100% - 255px);
+}
+
+.head_left_detail {
+  display: flex;
+  align-items: center;
+}
+
+.head_left_detail img {
+  width: 36px;
+  height: 36px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.head_left_name {
+  margin-left: 8px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.head_left_map {
+  display: flex;
+  align-items: center;
+  color: var(--text-black);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.head_left_map img,
+.head_left_rate_item img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.head_left_rate_item img {
+  width: 13px;
+  height: 13px;
+  margin-right: 4px;
+}
+
+.head_left_rate,
+.head_left_rate_item {
+  display: flex;
+  align-items: center;
+}
+
+.head_left_rate_item {
+  margin-right: 12px;
+  color: var(--text-black);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.head_right {
+  display: flex;
+  align-items: center;
+}
+
+.head_right button {
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--black);
+  padding: 6px 9px;
+  font-size: 12px;
+}
+
+.head_right button:hover {
+  background-color: var(--grey);
+}
+
+.image_cnt {
+  margin-top: 10px;
+  width: 100%;
+  overflow: hidden;
+  aspect-ratio: 3 / 1.1;
+  border-radius: 20px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+}
+
+.image_cnt div {
+  position: relative;
+}
+
+.image_cnt div img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  object-fit: cover;
+}
+
+.image_cnt div:nth-child(1) {
+  background-color: var(--bg-color);
+  grid-area: 1 / 1 / 3 / 5;
+}
+
+.image_cnt div:nth-child(2) {
+  background-color: var(--bg-color);
+  grid-area: 1 / 5 / 2 / 7;
+}
+
+.image_cnt div:nth-child(3) {
+  background-color: var(--bg-color);
+  grid-area: 1 / 7 / 2 / 9;
+}
+
+.image_cnt div:nth-child(4) {
+  background-color: var(--bg-color);
+  grid-area: 2 / 5 / 3 / 7;
+}
+
+.image_cnt div:nth-child(5) {
+  background-color: var(--bg-color);
+  grid-area: 2 / 7 / 3 / 9;
+}
