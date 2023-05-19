@@ -6,7 +6,7 @@ import API_ROUTE from 'api/_api';
 import { IOrgMobaGalleries, IOrganization } from 'interface';
 import { useGalleriesQuery } from 'redux-toolkit-query/hook-home';
 import { Banner, Loading } from 'pages/Organization/components';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { AppContext, AppContextType } from 'context/AppProvider';
 
 function Organization() {
@@ -40,10 +40,10 @@ function Organization() {
       open: true,
       id: 5, title: IS_MB ? t("app.details") : t("pr.merchant_detail"), path: 'thong-tin'
     },
-    {
-      open: true,
-      id: 7, title: t("Mer_de.galleries"), path: 'thu-vien'
-    },
+    // {
+    //   open: true,
+    //   id: 7, title: t("Mer_de.galleries"), path: 'thu-vien'
+    // },
   ];
   const isActive = (path: string) => {
     const active = (`/cua-hang/${org.subdomain}/${path}` === location.pathname)
@@ -58,21 +58,25 @@ function Organization() {
             org &&
             <>
               <Banner galleries={galleries} isLoading={isLoading} org={org} />
-              <div className={style.tab_cnt}>
-                {
-                  tabs.filter(tab => tab.open === true).map(tab => (
-                    <Link
-                      style={isActive(tab.path) ? { color: "var(--purple)" } : {}}
-                      key={tab.path}
-                      to={{ pathname: `/cua-hang/${org.subdomain}/${tab.path}` }}
-                      className={style.tab_item}
-                      replace={true}
-                    >
-                      {tab.title}
-                    </Link>
-                  ))
-                }
+              <div className={style.tab_wrapper}>
+                <div className={style.tab_cnt}>
+                  {
+                    tabs.filter(tab => tab.open === true).map(tab => (
+                      <div
+                        onClick={() => window.scrollTo({ top: 1000, behavior: 'smooth' })}
+                        // style={isActive(tab.path) ? { color: "var(--purple)" } : {}}
+                        key={tab.path}
+                        // to={{ pathname: `/cua-hang/${org.subdomain}/${tab.path}` }}
+                        className={style.tab_item}
+                      // replace={true}
+                      >
+                        {tab.title}
+                      </div>
+                    ))
+                  }
+                </div>
               </div>
+              <Body />
             </>
           }
         </div>
@@ -80,5 +84,65 @@ function Organization() {
     </div>
   );
 }
-
 export default Organization;
+const Body = () => {
+  const [tab, setTab] = useState(1)
+  const refDealHot = useRef<HTMLDivElement>(null)
+  const refService = useRef<HTMLDivElement>(null)
+  const refProduct = useRef<HTMLDivElement>(null)
+  const refCombo = useRef<HTMLDivElement>(null)
+  const refDetail = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        refDealHot.current &&
+        refService.current &&
+        refProduct.current &&
+        refCombo.current &&
+        refDetail.current
+      ) {
+        const scrollY = window.scrollY + 90;
+        const dealHotOffset = refDealHot.current.offsetTop;
+        const serviceOffset = refService.current.offsetTop;
+        const productOffset = refProduct.current.offsetTop;
+        const comboOffset = refCombo.current.offsetTop;
+        const detailOffset = refDetail.current.offsetTop;
+        if (dealHotOffset < scrollY && scrollY < serviceOffset) {
+          setTab(1);
+        } else if (serviceOffset < scrollY && scrollY < productOffset) {
+          setTab(2);
+        } else if (productOffset < scrollY && scrollY < comboOffset) {
+          setTab(3);
+        } else if (comboOffset < scrollY && scrollY < detailOffset) {
+          setTab(4);
+        } else if (detailOffset < scrollY) {
+          setTab(5);
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+  console.log(tab)
+  return (
+    <div className={style.body}>
+      <div ref={refDealHot} className={style.body_section}>
+        deal hot
+      </div>
+      <div ref={refService} className={style.body_section}>
+        dịch vụ
+      </div>
+      <div ref={refProduct} className={style.body_section}>
+        sản phẩm
+      </div>
+      <div ref={refCombo} className={style.body_section}>
+        combo
+      </div>
+      <div ref={refDetail} className={style.body_section}>
+        doanh nghiệp
+      </div>
+    </div>
+  )
+}
