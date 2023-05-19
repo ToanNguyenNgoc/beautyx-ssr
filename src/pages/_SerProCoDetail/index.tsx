@@ -61,7 +61,7 @@ const routeType: RouteType[] = [
 ]
 
 function SerProCoDetail() {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const match = useRouteMatch()
     const paramsOld: any = extraParamsUrl();
     const history = useHistory()
@@ -295,7 +295,7 @@ function SerProCoDetail() {
                     item_id={DETAIL.id}
                     org_id={org?.id}
                 />
-                <BackTopButton/>
+                <BackTopButton />
             </>
             :
             <LoadDetail />
@@ -305,7 +305,7 @@ function SerProCoDetail() {
 export default SerProCoDetail
 
 export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const { favoriteSt, onToggleFavorite } = useFavorite({
         org_id: org?.id,
         type: 'ORG',
@@ -355,7 +355,7 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
     )
 }
 export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const [more, setMore] = useState(false)
     const [contentHeight, setContentHeight] = useState(10)
     const refContent = useRef<HTMLDivElement>(null)
@@ -391,7 +391,13 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
                     }}
                     ref={refContent}
                 >
-                    {detail.description === "" ? t('detail_item.updating')+'...' : detail.description}
+                    {
+                        detail.description === "" ? t('detail_item.updating') + '...' :
+                            <div
+                                className={style.container_desc_content_txt}
+                                dangerouslySetInnerHTML={{ __html: detail.description }}
+                            />
+                    }
                 </div>
                 {contentHeight > 100 && !more && <div className={style.gradient}></div>}
             </div>
@@ -488,7 +494,7 @@ const DetailBottom = (
             PERCENT: number, onCommerce: boolean
         }
 ) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const [dra, setDra] = useState({
         open: false, type: ''
     })
@@ -553,7 +559,7 @@ const DetailQuantity = (
     { detail, org, discounts, draType, onClose }:
         { detail: DetailProp, org: IOrganization, discounts: IDiscountPar[], draType?: string, onClose?: () => void }
 ) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
     const vouchers = IS_VOUCHER(discounts);
@@ -595,7 +601,7 @@ const DetailQuantity = (
             dispatch(onClearPrevCartItem())
             const valuesCart = {
                 ...values,
-                isConfirm:true,
+                isConfirm: true,
                 user_id: USER.id
             }
             dispatch(addCart(valuesCart))
