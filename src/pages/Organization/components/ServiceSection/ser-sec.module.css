@@ -1,0 +1,18 @@
+.container {
+  /* padding-bottom: 12px; */
+  /* border-bottom: solid 1px var(--bg-color); */
+  /* background-color: var(--bg-gray-1); */
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+
+.list_item {
+  grid-gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.item>a>div {
+  box-shadow: none;
+}

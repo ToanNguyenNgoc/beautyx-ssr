@@ -1,2 +1,7 @@
 export * from './Banner'
 export * from './Loading'
+export * from './Tab'
+export * from './Deal'
+export * from './ServiceSection'
+export * from './OrgDialog'
+export * from './Map'

@@ -42,7 +42,7 @@ export default function AppProvider({ children }: { children: any }) {
     }, [USER])
 
     let lat; let long
-    const location = AUTH_LOCATION()
+    const location: any = AUTH_LOCATION()
     if (location) {
         lat = location.split(',')[0]
         long = location.split(',')[1]

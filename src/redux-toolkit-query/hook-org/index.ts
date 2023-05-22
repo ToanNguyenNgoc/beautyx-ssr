@@ -53,7 +53,7 @@ export const orgPageApi = createApi({
                 url: API_ROUTE.ORG_PRODUCTS(org_id),
                 params: pickBy({
                     ...paramsProductsOrg,
-                    "limit": 20,
+                    "limit": 10,
                     "filter[special_price]": true,
                     "filter[special]": true,
                     "filter[special_ecommerce]": true
@@ -67,11 +67,11 @@ export const orgPageApi = createApi({
                 url: API_ROUTE.ORG_SERVICES(org_id),
                 params: pickBy({
                     ...paramsServicesOrg,
-                    "limit": 20,
+                    "limit": 10,
                     "filter[special_price]": true,
                     "filter[special]": true,
                     "filter[special_ecommerce]": true
-                }, identity)
+                }, identity),
             }),
             keepUnusedDataFor: 3600,
             transformResponse: (response: ResponseType) => response?.context.data ?? {}

@@ -14,7 +14,8 @@ export function useSwrInfinite<ResData = any>(
         (index) => condition && `${API_URL}?page=${index + 1}${paramsURL}`,
         {
             revalidateOnFocus: false,
-            initialSize: 1
+            initialSize: 1,
+            dedupingInterval:100000000
         }
     );
     let resData: ResData[] = [];

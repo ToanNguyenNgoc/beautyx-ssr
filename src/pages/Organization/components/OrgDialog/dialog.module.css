@@ -1,0 +1,24 @@
+.head {
+  width: 100%;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.head_back {
+  padding: 8px;
+  background-color: var(--white);
+}
+
+.head_back:hover {
+  background-color: var(--bg-color);
+}
+
+.head_back img {
+  transform: rotate(180deg);
+}
+.head_title{
+  font-size: 16px;
+  font-weight: 600;
+}
