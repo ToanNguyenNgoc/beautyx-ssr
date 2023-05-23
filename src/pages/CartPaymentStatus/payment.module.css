@@ -93,8 +93,8 @@
 
 .payment_left_qr {
     width: 100%;
-    height: calc(100% + 75px);
-    margin-top: -75px;
+    height: calc(100% + 670px);
+    margin-top: -670px;
     border: none;
     outline: none;
 }
