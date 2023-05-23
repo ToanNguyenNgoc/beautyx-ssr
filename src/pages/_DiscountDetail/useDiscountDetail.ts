@@ -42,11 +42,12 @@ export function useDiscountDetail() {
 }
 const useDiscount = (params: any) => {
     const history = useHistory()
-    const { response, error } = useSwr(
-        `${API_ROUTE.DISCOUNTS_ID(params.id)}`,
-        params.id,
-        { 'append': 'user_available_purchase_count' }
-    )
+    const { response, error } = useSwr({
+        API_URL: `${API_ROUTE.DISCOUNTS_ID(params.id)}`,
+        enable: params.id,
+        params: { 'append': 'user_available_purchase_count' },
+        dedupingInterval: 0
+    })
     useEffect(() => {
         if (error) history.replace('/error')
     }, [error])
@@ -54,11 +55,11 @@ const useDiscount = (params: any) => {
 }
 const useItem = (params: any, typeItemProps: any) => {
     const history = useHistory()
-    const { response, error } = useSwr(
-        `/organizations/${params.org_id}/${typeItemProps?.api}/${params.item_id}`,
-        (params.org_id && params.item_id && typeItemProps),
-        typeItemProps?.params
-    )
+    const { response, error } = useSwr({
+        API_URL: `/organizations/${params.org_id}/${typeItemProps?.api}/${params.item_id}`,
+        enable: (params.org_id && params.item_id && typeItemProps),
+        params: typeItemProps?.params
+    })
     useEffect(() => {
         if (error) history.replace('/error')
     }, [error])
@@ -67,11 +68,11 @@ const useItem = (params: any, typeItemProps: any) => {
 const useOrg = (params: any) => {
     const history = useHistory()
     const LOCATION = AUTH_LOCATION()
-    const { response, error } = useSwr(
-        `${API_ROUTE.ORG(params.org_id)}`,
-        params.org_id,
-        { 'filter[location]': LOCATION }
-    )
+    const { response, error } = useSwr({
+        API_URL: `${API_ROUTE.ORG(params.org_id)}`,
+        enable: params.org_id,
+        params: { 'filter[location]': LOCATION }
+    })
     useEffect(() => {
         if (error) history.replace('/error')
     }, [error])

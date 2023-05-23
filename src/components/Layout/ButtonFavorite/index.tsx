@@ -51,7 +51,13 @@ export function ButtonFavorite(props: ButtonFavoriteProps) {
     if (type === "ORG" && org_id) condition = true;
     if (type !== "ORG" && id) condition = true
 
-    const { response, mutate } = useSwr(API_URL, condition, (type !== "ORG" && params))
+    const { response, mutate } = useSwr(
+        {
+            API_URL: API_URL,
+            enable: condition,
+            params: type !== "ORG" && params
+        }
+    )
     const onToggleFavorite = () => {
         if (USER) {
             if (type === "ORG") {

@@ -155,14 +155,14 @@ function CateTree() {
 export default CateTree;
 
 const useOrgsByTag = (parent?: ITag) => {
-    const { resData, totalItem, isValidating } = useSwrInfinite(
-        parent,
-        API_ROUTE.ORGS,
-        {
+    const { resData, totalItem, isValidating } = useSwrInfinite({
+        enable: parent,
+        API_URL: API_ROUTE.ORGS,
+        params: {
             ...paramOrgs, 'filter[tags]': parent?.name, 'limit': '12',
             'filter[is_momo_ecommerce_enable]': true
         }
-    )
+    })
     const orgs: IOrganization[] = resData ?? []
     const totalOrg = totalItem ?? 1
     const loadOrgs = isValidating

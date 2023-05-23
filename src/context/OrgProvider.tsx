@@ -25,7 +25,10 @@ export const OrgContext = createContext<OrgContextType | null>(null);
 export function OrgProvider({ children }: { children: ReactNode }) {
   const params = useParams()
   const { subdomain } = params as { subdomain: string }
-  const { response: resOrg, isValidating: loadOrg } = useSwr(API_ROUTE.ORG(subdomain), subdomain)
+  const { response: resOrg, isValidating: loadOrg } = useSwr({
+    API_URL: API_ROUTE.ORG(subdomain),
+    enable: subdomain
+  })
   const { data, isLoading: loadGalleries } = useGalleriesQuery(subdomain)
   const galleries: IOrgMobaGalleries[] = data ?? []
   const { data: discounts = [] } = useGetDiscountsOrgQuery(

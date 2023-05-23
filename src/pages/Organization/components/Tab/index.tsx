@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { RefObject, useContext, useEffect } from 'react'
+import { RefObject, useContext, useEffect, useState } from 'react'
 import style from '../../organization.module.css'
 import { AppContext, AppContextType } from 'context/AppProvider'
-import { useHistory, useLocation } from 'react-router-dom'
 import { OrgContext, OrgContextType } from 'context'
 
 interface TabProps {
@@ -16,9 +15,7 @@ interface TabProps {
 export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }: TabProps) => {
   const { t } = useContext(AppContext) as AppContextType
   const { org } = useContext(OrgContext) as OrgContextType
-  const location = useLocation()
-  const childPath = location.pathname.split('/')[3]
-  const history = useHistory()
+  const [tabAct, setTabAct] = useState(0)
   const mrTop = 88
   let tabs = [
     {
@@ -47,36 +44,6 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
       ref: refDetail
     },
   ]
-  // useEffect(() => {
-  //   if (
-  //     childPath &&
-  //     refDealHot.current &&
-  //     refService.current &&
-  //     refProduct.current &&
-  //     refCombo.current &&
-  //     refDetail.current
-  //   ) {
-  //     switch (childPath) {
-  //       case 'deal-hot':
-  //         window.scrollTo({ top: refDealHot.current?.offsetTop - mrTop, behavior: 'smooth' })
-  //         break;
-  //       case 'dich-vu':
-  //         window.scrollTo({ top: refService.current?.offsetTop - mrTop, behavior: 'smooth' })
-  //         break;
-  //       case 'san-pham':
-  //         window.scrollTo({ top: refProduct.current?.offsetTop - mrTop, behavior: 'smooth' })
-  //         break;
-  //       case 'combo':
-  //         window.scrollTo({ top: refCombo.current?.offsetTop - mrTop, behavior: 'smooth' })
-  //         break;
-  //       case 'thong-tin':
-  //         window.scrollTo({ top: refDetail.current?.offsetTop - mrTop, behavior: 'smooth' })
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   }
-  // }, [])
   useEffect(() => {
     const handleScroll = () => {
       if (
@@ -93,17 +60,17 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
         const comboOffset = refCombo.current.offsetTop;
         const detailOffset = refDetail.current.offsetTop;
         if (scrollY < 500) {
-          history.replace(`/cua-hang/${org.subdomain}`)
+          setTabAct(0)
         } else if (dealHotOffset < scrollY && scrollY < serviceOffset) {
-          history.replace(`/cua-hang/${org.subdomain}/deal-hot`)
+          setTabAct(1)
         } else if (serviceOffset < scrollY && scrollY < productOffset) {
-          history.replace(`/cua-hang/${org.subdomain}/dich-vu`)
+          setTabAct(2)
         } else if (productOffset < scrollY && scrollY < comboOffset) {
-          history.replace(`/cua-hang/${org.subdomain}/san-pham`)
+          setTabAct(3)
         } else if (comboOffset < scrollY && scrollY < detailOffset) {
-          history.replace(`/cua-hang/${org.subdomain}/combo`)
+          setTabAct(4)
         } else if (detailOffset < scrollY) {
-          history.replace(`/cua-hang/${org.subdomain}/thong-tin`)
+          setTabAct(5)
         }
       }
     };
@@ -118,9 +85,8 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
         {
           tabs.filter(tab => tab.open === true).map(tab => (
             <div
-              style={tab.path === childPath ? { color: 'var(--purple)' } : {}}
               key={tab.path}
-              className={style.tab_item}
+              className={tab.id === tabAct ? `${style.tab_item} ${style.tab_item_act}` : style.tab_item}
               onClick={() => tab.ref.current && window.scrollTo({
                 top: tab.ref?.current.offsetTop - mrTop,
                 behavior: 'smooth'

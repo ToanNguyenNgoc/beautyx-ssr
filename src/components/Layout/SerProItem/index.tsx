@@ -18,7 +18,7 @@ import { logEvent, analytics } from '../../../firebase'
 interface SerProItemProps {
     item: any,
     org?: IOrganization,
-    type: "SERVICE" | "PRODUCT",
+    type: "SERVICE" | "PRODUCT"|"COMBO",
     changeStyle?: boolean
 }
 

@@ -19,11 +19,11 @@ const paramComboOrg = {
 export function OrgCombos(props: IProps) {
     const { org } = props;
     const IS_MB = useDeviceMobile()
-    const { resData, totalItem, onLoadMore } = useSwrInfinite(
-        org?.id,
-        API_ROUTE.ORG_COMBOS(org?.id),
-        paramComboOrg
-    )
+    const { resData, totalItem, onLoadMore } = useSwrInfinite({
+        enable:org?.id,
+        API_URL:API_ROUTE.ORG_COMBOS(org?.id),
+        params:paramComboOrg
+    })
 
     const combos = resData ?? []
 

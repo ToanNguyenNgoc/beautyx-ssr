@@ -14,11 +14,12 @@ export default function ChatRight(props: any) {
   const params = useParams()
   const { USER } = useSelector((state: IStore) => state.USER)
   const IS_MB = useDeviceMobile();
-  const { resData, mutate, originData } = useSwrInfinite<IMessage>(
-    params._id,
-    `/messages`,
-    { 'topic_id': params._id, 'sort': 'created_at' }
-  )
+  const { resData, mutate, originData } = useSwrInfinite({
+    enable:params._id,
+    API_URL:`/messages`,
+    params: { 'topic_id': params._id, 'sort': 'created_at' },
+    dedupingInterval:0
+  })
   return (
     <div
       style={

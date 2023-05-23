@@ -12,13 +12,13 @@ export default function ChatLeft(props: any) {
   const { CHAT_SHOW, userChat } = props;
   const { USER } = useSelector((state: IStore) => state.USER)
   const IS_MB = useDeviceMobile();
-  console.log(userChat)
 
-  const { resData } = useSwrInfinite<ITopic>(
-    USER,
-    '/topics',
-    { "sort": "-updated_at" }
-  )
+  const { resData } = useSwrInfinite({
+    enable: USER,
+    API_URL: '/topics',
+    params: { "sort": "-updated_at" },
+    dedupingInterval:0
+  })
   return (
     <>
       <div
@@ -48,37 +48,37 @@ export default function ChatLeft(props: any) {
         </div>
 
         <ul className={style.chatLeftList}>
-          {userChat.map((item:any) => (
-                <li
-                className={style.chatItem}
-              >
-                <div className={style.itemTop}>
-                  <div className={style.itemTopLeft}>
-                    <div
-                      className={style.itemDot}
-                    ></div>
-                    <div className={style.itemUser}>
-                      <div className={style.itemAva}>
-                        {/* <img src={data?.image_url} alt="" /> */}
-                        <div className={style.itemActive}></div>
-                      </div>
-                      <div className={style.itemInfo}>
-                        {/* <div className={style.itemName}>{data?.name}</div> */}
-                        {/* <div className={style.itemNameOrg}>@{data?.subdomain}</div> */}
-                      </div>
+          {userChat.map((item: any) => (
+            <li
+              className={style.chatItem}
+            >
+              <div className={style.itemTop}>
+                <div className={style.itemTopLeft}>
+                  <div
+                    className={style.itemDot}
+                  ></div>
+                  <div className={style.itemUser}>
+                    <div className={style.itemAva}>
+                      {/* <img src={data?.image_url} alt="" /> */}
+                      <div className={style.itemActive}></div>
+                    </div>
+                    <div className={style.itemInfo}>
+                      {/* <div className={style.itemName}>{data?.name}</div> */}
+                      {/* <div className={style.itemNameOrg}>@{data?.subdomain}</div> */}
                     </div>
                   </div>
-                  <p className={style.chatTimeAgo}>
-                    {/* {formatDateFromNow(topic.created_at)} */}
-                  </p>
                 </div>
-                {/* {
+                <p className={style.chatTimeAgo}>
+                  {/* {formatDateFromNow(topic.created_at)} */}
+                </p>
+              </div>
+              {/* {
                   topic.messages.length > 0 &&
                   <p className={style.itemBot}>
                     {topic.messages[0]?.msg}
                   </p>
                 } */}
-              </li>
+            </li>
           ))}
         </ul>
       </div>

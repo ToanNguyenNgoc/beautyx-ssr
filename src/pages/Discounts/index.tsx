@@ -18,7 +18,9 @@ function Discounts() {
         "sort": "-priority|-created_at|discount_value"
     }
     const IS_MB = useDeviceMobile();
-    const { resData, totalItem, onLoadMore } = useSwrInfinite(true, "/discounts", paramsDiscounts)
+    const { resData, totalItem, onLoadMore } = useSwrInfinite({
+        enable: true, API_URL: "/discounts", params: paramsDiscounts, dedupingInterval: 0
+    })
     const discounts: IDiscountPar[] = resData
     const onViewMore = () => {
         if (discounts?.length < totalItem) {

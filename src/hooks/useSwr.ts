@@ -1,12 +1,25 @@
+import { CACHE_TIME } from "common";
 import { identity, pickBy } from "lodash";
-import useSWR from "swr"
+import useSWR, { SWRResponse } from "swr"
 
-export function useSwr(
-    API_URL: string,
-    condition: any,
-    params?: any,
-    refresh_time?: number
-) {
+export type SWROptions<Data = any, Error = any> = {
+    API_URL: string;
+    enable: any;
+    params?: any;
+    dedupingInterval?: number;
+    revalidateOnMount?: boolean;
+    revalidateOnFocus?: boolean;
+    revalidateOnReconnect?: boolean;
+    refreshInterval?: number;
+    shouldRetryOnError?: (error: Error, swrState: SWRResponse<Data, Error>) => boolean;
+    onError?: (error: Error, key: string) => void;
+    onSuccess?: (data: Data, key: string) => void;
+    onFocus?: (callback: () => void) => void;
+    onReconnect?: (callback: () => void) => void;
+};
+
+export function useSwr(options: SWROptions) {
+    const { API_URL, params, revalidateOnFocus, refreshInterval, dedupingInterval, enable } = options
     let result
     let response
     let responseArray = []
@@ -21,11 +34,10 @@ export function useSwr(
         isValidating,
         mutate,
         error
-    } = useSWR(condition && `${API_URL}${paramsURL}`, {
-        revalidateOnFocus: false,
-        refreshInterval: refresh_time,
-        // revalidateOnMount:false
-        dedupingInterval:100000000
+    } = useSWR(enable && `${API_URL}${paramsURL}`, {
+        revalidateOnFocus: revalidateOnFocus ?? false,
+        refreshInterval: refreshInterval,
+        dedupingInterval: dedupingInterval === 0 ? 0 : CACHE_TIME
     })
     if (data) {
         response = data.data?.context ?? data

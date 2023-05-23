@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/material';
-import { Banner, Deal, Loading, ServiceSection, Tab } from './components';
+import { Banner, Deal, Loading, More, ServiceSection, Tab } from './components';
 import { useContext, useRef } from 'react';
 import { OrgContext, OrgContextType } from 'context';
 import style from './organization.module.css'
@@ -18,6 +18,7 @@ function Home() {
               <>
                 <Banner />
                 <Body />
+                <More/>
               </>
           }
         </div>

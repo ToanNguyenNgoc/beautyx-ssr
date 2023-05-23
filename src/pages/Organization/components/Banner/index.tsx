@@ -6,12 +6,12 @@ import { useFavorite } from 'hooks'
 import { useContext, useState } from 'react'
 import { OrgContext, OrgContextType } from 'context'
 import { usePostAnalytics } from '../../hooks'
-import { OrgDialog } from '../OrgDialog'
-import { MapOrg } from '../Map'
+import { Gallery } from '../Gallery'
+import { OrgItemMap } from 'components/Layout/OrgItemMap'
 
 
 export const Banner = () => {
-  const { galleries, org } = useContext(OrgContext) as OrgContextType
+  const { galleries, org, loadGalleries } = useContext(OrgContext) as OrgContextType
   const galleriesList = galleries.map(i => i.images)?.flat()?.map(i => i.image_url)?.slice(0, 5)
   const [oImg, setOImg] = useState(false)
   const [map, setMap] = useState(false)
@@ -53,11 +53,6 @@ export const Banner = () => {
           </div>
           <div className={style.head_right}>
             <XButton
-              iconSize={16}
-              icon={icon.share}
-              title='Chia sẻ'
-            />
-            <XButton
               onClick={onToggleFavorite}
               iconSize={16}
               icon={favoriteSt.is_favorite ? icon.heart : icon.unHeart}
@@ -67,6 +62,11 @@ export const Banner = () => {
               iconSize={16}
               icon={icon.chatSquare}
               title='Tư vấn'
+            />
+             <XButton
+              iconSize={16}
+              icon={icon.share}
+              title='Chia sẻ'
             />
           </div>
         </div>
@@ -85,19 +85,18 @@ export const Banner = () => {
           />
         </div>
       </div>
-      <OrgDialog
-        open={oImg}
-        title='Thư viện hình ảnh'
-        onClose={() => setOImg(false)}
-      >
-      </OrgDialog>
-      <OrgDialog
+      {
+        (!loadGalleries && oImg) &&
+        <Gallery
+          open={oImg}
+          onClose={() => setOImg(false)}
+        />
+      }
+      <OrgItemMap
         open={map}
-        title='Bản đồ & chi nhánh'
-        onClose={() => setMap(false)}
-      >
-        <MapOrg />
-      </OrgDialog>
+        setOpen={setMap}
+        org={org}
+      />
     </>
   )
 }

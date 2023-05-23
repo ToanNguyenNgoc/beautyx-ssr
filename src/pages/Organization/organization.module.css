@@ -28,18 +28,18 @@
 .tab_item {
   display: block;
   transition: var(--trans);
-  padding: 8px;
-  opacity: 0.7;
-  border-radius: 6px;
-  font-weight: 500;
+  padding: 6px 8px;
+  border-bottom: solid 1px transparent;
+  font-weight: 600;
   font-size: 16px;
   line-height: 22px;
   cursor: pointer;
 }
 
-.tab_item:hover {
+.tab_item_act {
+  color: var(--purple);
+  border-bottom: solid 1px var(--purple);
   transition: var(--trans);
-  opacity: 1;
 }
 
 .body_section {

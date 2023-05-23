@@ -10,13 +10,13 @@ export interface Category {
       products_count: number
 }
 export interface CategoryService {
-      branch_id: number
-      created_by_id: number
-      created_date: string
-      deleted: boolean
-      group_order: number
+      branch_id?: number
+      created_by_id?: number
+      created_date?: string
+      deleted?: boolean
+      group_order?: number
       id: number
-      modified_date: string
-      name: string
+      modified_date?: string
+      name?: string
       services_count: number
 }

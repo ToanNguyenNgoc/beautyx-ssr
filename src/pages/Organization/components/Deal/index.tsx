@@ -31,42 +31,48 @@ export const Deal = () => {
           ))}
         </ul>
       </div>
-      <div className={style.section_item}>
-        <div className={style.section_item_title}>
-          Dịch vụ giảm giá
+      {
+        servicesSpecial.length > 0 &&
+        <div className={style.section_item}>
+          <div className={style.section_item_title}>
+            Dịch vụ giảm giá
+          </div>
+          <ul className={style.special_list}>
+            {
+              servicesSpecial.map((item: Service) => (
+                <li key={item.id} className="">
+                  <SerProItem
+                    org={org}
+                    item={item}
+                    type="SERVICE"
+                  />
+                </li>
+              ))
+            }
+          </ul>
         </div>
-        <ul className={style.special_list}>
-          {
-            servicesSpecial.map((item: Service) => (
-              <li key={item.id} className="">
-                <SerProItem
-                  org={org}
-                  item={item}
-                  type="SERVICE"
-                />
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-      <div className={style.section_item}>
-        <div className={style.section_item_title}>
-          Sản phẩm giảm giá
+      }
+      {
+        productsSpecial.length > 0 &&
+        <div className={style.section_item}>
+          <div className={style.section_item_title}>
+            Sản phẩm giảm giá
+          </div>
+          <ul className={style.special_list}>
+            {
+              productsSpecial.map((item: Product) => (
+                <li key={item.id} className="">
+                  <SerProItem
+                    org={org}
+                    item={item}
+                    type='PRODUCT'
+                  />
+                </li>
+              ))
+            }
+          </ul>
         </div>
-        <ul className={style.special_list}>
-          {
-            productsSpecial.map((item: Product) => (
-              <li key={item.id} className="">
-                <SerProItem
-                  org={org}
-                  item={item}
-                  type='PRODUCT'
-                />
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      }
     </div>
   )
 }

@@ -76,8 +76,18 @@ function AddressForm() {
     onTriggerOpen('none')
     refInput.current?.focus()
   }
-  const { responseArray: districts } = useSwr(`/provinces/${address.province?.code}/districts`, address.province?.code)
-  const { responseArray: wards } = useSwr(`/districts/${address.district?.code}/wards`, address.district?.code)
+  const { responseArray: districts } = useSwr(
+    {
+      API_URL: `/provinces/${address.province?.code}/districts`,
+      enable: address.province?.code
+    }
+  )
+  const { responseArray: wards } = useSwr(
+    {
+      API_URL: `/districts/${address.district?.code}/wards`,
+      enable: address.district?.code
+    }
+  )
   const onSaveAddress = () => {
     if (address.ward && address.text) {
       postAddress({

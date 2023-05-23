@@ -6,7 +6,9 @@ import { useFetchInfinite, useSwrInfinite } from "hooks"
 import { API_ROUTE_V } from "api/_api"
 
 export const useOrgs = (paramOrg: ParamOrg, condition: boolean) => {
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(condition, "/organizations", paramOrg)
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite({
+        enable: condition, API_URL: "/organizations", params: paramOrg
+    })
     const orgs = resData
     const totalOrg = totalItem
     const onLoadMoreOrg = onLoadMore
@@ -14,7 +16,9 @@ export const useOrgs = (paramOrg: ParamOrg, condition: boolean) => {
     return { orgs, totalOrg, onLoadMoreOrg, isLoad }
 }
 export const useProducts = (paramProduct: ParamProduct, condition: boolean) => {
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(condition, "/products", paramProduct)
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite({
+        enable: condition, API_URL: "/products", params: paramProduct
+    })
     const products = resData
     const totalProduct = totalItem
     const onLoadMoreProduct = onLoadMore
@@ -22,7 +26,9 @@ export const useProducts = (paramProduct: ParamProduct, condition: boolean) => {
     return { products, totalProduct, onLoadMoreProduct, isLoadPr }
 }
 export const useServices = (paramService: ParamService, condition: boolean) => {
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(condition, "/services", paramService)
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite({
+        enable: condition, API_URL: "/services", params: paramService
+    })
     const services = resData
     const totalService = totalItem
     const onLoadMoreService = onLoadMore
@@ -33,7 +39,9 @@ export const useServicesGroup = (
     paramService: ParamService,
     condition: boolean
 ) => {
-    const { originData, totalItem, onLoadMore, isValidating, resData } = useSwrInfinite(condition, "/services", paramService)
+    const { originData, totalItem, onLoadMore, isValidating, resData } = useSwrInfinite({
+        enable: condition, API_URL: "/services", params: paramService
+    })
     const itemInPage = originData?.map((i: any) => i.data?.data?.hits)
     // console.log(itemInPage)
     const itemOrgInPage = itemInPage?.map((i: any) => i?.map((j: any) => j.org_id))
