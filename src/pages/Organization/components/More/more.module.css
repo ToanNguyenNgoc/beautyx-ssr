@@ -41,6 +41,8 @@
 .left {
   position: absolute;
   width: calc(20% - 12px);
+  max-height: calc(100vh - 87px);
+  overflow-y: scroll;
 }
 .cate_item{
   padding: 2px 0px;

@@ -6,10 +6,10 @@ import { useSwrInfinite } from 'hooks'
 import API_ROUTE from 'api/_api'
 import { useContext } from 'react'
 import { AppContext, AppContextType, OrgContext, OrgContextType } from 'context'
-import { CategoryService, Service } from 'interface'
+import { Category, CategoryService, Product, Service } from 'interface'
 import { SerProItem } from 'components/Layout'
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { paramServiceCatesOrg, paramsServicesOrg } from 'params-query'
+import { paramProductCatesOrg, paramServiceCatesOrg, paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import queryString from "query-string";
 import { LoadGrid } from 'components/LoadingSketion'
 
@@ -72,15 +72,15 @@ const ChildPage = () => {
   const routes = [
     {
       path: `/cua-hang/:id/dich-vu`,
-      component: <ServicePage />
+      component: <ServicePage type='SERVICE' />
     },
     {
       path: `/cua-hang/:id/san-pham`,
-      component: <ProductPage />
+      component: <ServicePage type='PRODUCT' />
     },
     {
       path: `/cua-hang/:id/goi-dich-vu`,
-      component: <ComboPage />
+      component: <ServicePage type='COMBO' />
     },
   ]
   return (
@@ -96,28 +96,53 @@ const ChildPage = () => {
   )
 }
 
-const ServicePage = () => {
+interface Page {
+  type: 'SERVICE' | 'PRODUCT' | 'COMBO'
+}
+type CateType = CategoryService & Category
+
+const ServicePage = ({ type }: Page) => {
   const location = useLocation()
   const mb = useMediaQuery('(max-width:767px)')
   const { subdomain, org } = useContext(OrgContext) as OrgContextType
   const queryParams = queryString.parse(location.search)
-  const { resData: resCates } = useSwrInfinite({
-    API_URL: API_ROUTE.SERVICE_CATES_ORG(org.id),
-    enable: org,
-    params: paramServiceCatesOrg
-  })
-  const categories: CategoryService[] = [
-    { id: 0, name: 'Tất cả', services_count: 1 },
-    ...resCates?.filter((i: CategoryService) => i.services_count > 0)
-  ]
-  const { resData, onLoadMore, totalItem } = useSwrInfinite({
-    enable: true,
-    API_URL: API_ROUTE.ORG_SERVICES(subdomain),
+  //---
+  let API = {
+    url_cate: API_ROUTE.SERVICE_CATES_ORG(org.id),
+    url: API_ROUTE.ORG_SERVICES(subdomain),
     params: {
       ...paramsServicesOrg,
       "filter[service_group_id]": queryParams.cate_id,
-      'limit': 20,
+    },
+    paramsCate: paramServiceCatesOrg
+  } as any
+  if (type == 'PRODUCT') {
+    API = {
+      url_cate: API_ROUTE.PRODUCT_CATES_ORG(org.id),
+      url: API_ROUTE.ORG_PRODUCTS(org?.id),
+      params: {
+        ...paramsProductsOrg,
+        "filter[product_category_id]": queryParams.cate_id,
+      },
+      paramsCate: paramProductCatesOrg
     }
+  }
+  //--
+  const { resData: resCates } = useSwrInfinite({
+    API_URL: API.url_cate,
+    enable: org,
+    params: API.paramsCate
+  })
+  const categories: CateType[] = [
+    { id: 0, name: 'Tất cả', services_count: 1 },
+    ...resCates?.filter((i: CateType) => (i.services_count > 0 || i.products_count > 0))
+  ]
+
+  //---
+  const { resData, onLoadMore, totalItem } = useSwrInfinite({
+    enable: true,
+    API_URL: API.url,
+    params: API.params
   })
   const cate_id = queryParams.cate_id ?? 0
   return (
@@ -152,13 +177,13 @@ const ServicePage = () => {
         >
           <ul className={style.list}>
             {
-              resData.map((item: Service, index: number) => (
+              resData.map((item: Service & Product, index: number) => (
                 <li
                   key={index} className={style.item}
                 >
                   <SerProItem
                     changeStyle={mb}
-                    type='SERVICE' item={item} org={org}
+                    type={type} item={item} org={org}
                   />
                 </li>
               ))
@@ -167,20 +192,6 @@ const ServicePage = () => {
           {resData.length < totalItem && <LoadGrid grid={mb ? 1 : 5} item_count={10} />}
         </InfiniteScroll>
       </div>
-    </div>
-  )
-}
-const ProductPage = () => {
-  return (
-    <div>
-      Product
-    </div>
-  )
-}
-const ComboPage = () => {
-  return (
-    <div>
-      Combo
     </div>
   )
 }

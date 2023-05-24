@@ -67,6 +67,31 @@ function DiscountDetail() {
             history.push(`/cua-hang/${org.subdomain}/dich-vu?cate_id=${DETAIL.category?.id}`)
         }
     }
+    const dispatch = useDispatch()
+    const values = formatAddCart(
+        DETAIL,
+        org,
+        DETAIL.type,
+        1,
+        DETAIL.PRICE,
+        discount?.user_available_purchase_count > 0 ? discount : null
+    );
+    const onBookingNow = () => {
+        const TYPE = "BOOK_NOW";
+        const service = {
+            ...DETAIL,
+            SPECIAL_PRICE:0,
+            discount: values.discount
+        };
+        const services = [{ service, quantity: 1 }];
+        tracking.ADD_CART_CLICK(values.org_id, values.id, values.price, values.quantity)
+        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
+        history.push({
+            pathname: "/dat-hen",
+            state: { org, services, TYPE },
+        });
+        dispatch(clearAllServices());
+    }
 
     return (
         (detail && org && discount) ?
@@ -187,7 +212,7 @@ function DiscountDetail() {
                                 </div>
                             </div>
                         </div>
-                        <DetailDesc detail={DETAIL} org={org} />
+                        <DetailDesc onBookingNow={onBookingNow} detail={DETAIL} PERCENT={PERCENT} org={org}/>
                         {
                             IS_MB &&
                             <div className={style.org_card_mb}>
