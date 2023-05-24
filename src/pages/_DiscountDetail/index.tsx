@@ -2,7 +2,7 @@ import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { useDeviceMobile, useFavorite } from 'hooks';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { useDiscountDetail } from './useDiscountDetail';
 import style from '../_SerProCoDetail/detail.module.css'
 import { Container, Drawer, Rating } from '@mui/material';
@@ -10,7 +10,7 @@ import Slider from 'react-slick';
 import { onErrorImg } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import icon from 'constants/icon';
-import { AlertSnack, OpenApp, ShareSocial, XButton } from 'components/Layout';
+import { AlertSnack, OpenApp, Seo, ShareSocial, XButton } from 'components/Layout';
 import { DetailDesc, DetailOrgCard, DetailRecommend } from 'pages/_SerProCoDetail';
 import Comment from 'components/Comment';
 import { IDiscountPar, IOrganization } from 'interface';
@@ -96,6 +96,11 @@ function DiscountDetail() {
     return (
         (detail && org && discount) ?
             <>
+                <Seo
+                    title={DETAIL.name}
+                    content={DETAIL.description}
+                    imageCover={detail.image_url}
+                />
                 {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
                 <Container>
                     <div className={style.wrapper} >

@@ -251,9 +251,9 @@
 
 .detail_org_right_btn {
     padding: 5px 20px;
-    border: solid 1px var(--bg-purple);
-    background-color: var(--bg-white);
-    color: var(--purple);
+    border: solid 1px var(--purple);
+    background-color: var(--purple);
+    color: var(--white);
     font-weight: 700;
     font-size: 14px;
     line-height: 18px;
@@ -261,6 +261,9 @@
     width: 100%;
     display: block;
     text-align: center;
+}
+.detail_org_right_btn:nth-child(2){
+    background-color: var(--white);
 }
 
 .detail_org_link {
@@ -324,7 +327,7 @@
     padding: 6px;
     width: 32px;
     border-radius: 4px;
-    background-color: var(--text-orange);
+    background-color: var(--pr-green);
 }
 
 .detail_quantity_btn:first-child {
@@ -346,7 +349,7 @@
 }
 
 .add_cart_btn {
-    background-color: var(--text-orange);
+    background-color: var(--pr-green);
     border-radius: 6px;
     margin-left: 12px;
 }
@@ -446,7 +449,7 @@
 .sticky_item_bot button{
     border-radius: 4px;
     width: 100%;
-    background-color: var(--text-orange);
+    background-color: var(--pr-green);
 }
 .desc_body_cnt{
     margin-top: -388.5px;
@@ -774,7 +777,7 @@
     }
 
     .bottom button:first-child {
-        background-color: var(--text-orange);
+        background-color: var(--pr-green);
     }
 
     .bottom_wrapper {

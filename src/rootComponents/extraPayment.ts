@@ -8,7 +8,7 @@ export const EXTRA_PAYMENT = (res: any) => {
         case FLAT_FORM_TYPE.BEAUTYX:
             EX_PAYMENT = {
                 deepLink: res?.payment_gateway?.extra_data?.deeplink,
-                qrCode: res?.payment_gateway?.extra_data?.payUrl,
+                qrCode: res?.payment_gateway?.extra_data?.payUrl ?? res?.payment_gateway?.extra_data?.url_checkout,
                 EXTRA_PAYMENT_ID: null
             }
             break;
