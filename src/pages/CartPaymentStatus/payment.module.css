@@ -352,7 +352,7 @@
 
     .bottom_pay_right_btn {
         padding: 8px 12px !important;
-        background-color: var(--text-orange) !important;
+        background-color: var(--pr-green) !important;
     }
 
     .bottom_pay_left_label,

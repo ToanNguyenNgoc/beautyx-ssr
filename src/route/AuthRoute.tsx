@@ -10,6 +10,7 @@ interface LayoutProps {
 function AuthRoute({ children }: LayoutProps) {
     const history = useHistory()
     const { firstLoad, USER } = useAuth()
+    console.log(firstLoad, USER)
     useEffect(() => {
         if (!firstLoad && !USER) history.replace('/sign-in?1')
     }, [firstLoad, USER])

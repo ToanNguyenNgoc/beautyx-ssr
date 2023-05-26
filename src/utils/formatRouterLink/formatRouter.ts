@@ -77,7 +77,7 @@ export const formatRouterLinkDiscount = (
     const name =
         discountChild.productable.service_name ??
         discountChild.productable.product_name;
-    const patchDiscountOb = `/chi-tiet-giam-gia/${type}_${org?.id}_${
+    const patchDiscountOb = `/giam-gia/${type}_${org?.id}_${
         discountPar.uuid ?? discountPar.id
     }_${discountChild.productable_id}_${slugify(name)}`;
     return patchDiscountOb;
