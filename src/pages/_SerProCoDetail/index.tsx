@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouteMatch, useHistory, Link, useLocation } from 'react-router-dom';
 import { useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
-import  { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { IDiscountPar, IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
-import { BackTopButton, BeautyxCare, OpenApp, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
+import { BackTopButton, BeautyxCare, FullImage, OpenApp, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
 import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
-import Slider from 'react-slick';
+import Slider, { Settings } from 'react-slick';
 import icon from 'constants/icon';
-import { clst, extraParamsUrl, formatDistance, onErrorImg, scrollTop } from 'utils';
+import { checkMediaType, clst, extraParamsUrl, extractImageUrls, formatDistance, onErrorImg, scrollTop } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
@@ -124,14 +124,6 @@ function SerProCoDetail() {
         });
     }, [params.id]);
     //---
-    const settings = {
-        dots: false,
-        arrows: false,
-        speed: 900,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        swipe: true,
-    }
     // const [openShare, setOpenShare] = useState(false)
     const onNavigateCateList = () => {
         if (org?.id) {
@@ -181,44 +173,7 @@ function SerProCoDetail() {
                         <div className={style.container}>
                             <div className={style.container_head}>
                                 <div className={style.container_head_left}>
-                                    <div className={style.container_head_img_slide}
-                                    >
-                                        <Slider
-                                            {...settings}
-                                            className={style.slide}
-                                        >
-                                            {
-                                                DETAIL.video_url &&
-                                                <div className={style.media_item_video}>
-                                                    <video
-                                                        className={style.media_item_bg}
-                                                        src={`${DETAIL.video_url}#t=0.001`}>
-                                                    </video>
-                                                    <video
-                                                        className={style.video_container}
-                                                        loop
-                                                        controls
-                                                        webkit-playsinline="webkit-playsinline"
-                                                        playsInline={true}
-                                                    >
-                                                        <source type="video/mp4" src={`${DETAIL.video_url}#t=0.001`} />
-                                                    </video>
-                                                </div>
-                                            }
-                                            {
-                                                [DETAIL.image_url].map(i => (
-                                                    <div
-                                                        style={IS_MB ? {
-                                                            height: `414px`
-                                                        } : {}}
-                                                        key={i} className={style.media_item_img}
-                                                    >
-                                                        <img src={i ?? org.image_url} onError={(e) => onErrorImg(e)} alt="" />
-                                                    </div>
-                                                ))
-                                            }
-                                        </Slider>
-                                    </div>
+                                    <SliderImage detail={DETAIL} org={org} />
                                     <div className={style.container_head_img_thumb}>
                                         {!IS_MB && <ShareSocial url={location.pathname} />}
                                     </div>
@@ -343,6 +298,123 @@ function SerProCoDetail() {
 
 export default SerProCoDetail
 
+export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
+    const IS_MB = useDeviceMobile()
+    const [index, setIndex] = useState(0)
+    const [open, setOpen] = useState(false)
+    const refSlider = useRef<any>(null)
+    const refThumb = useRef<any>(null)
+    const settings: Settings = {
+        dots: false,
+        arrows: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        swipe: true,
+        draggable:true,
+        afterChange: (currentIndex) => {
+            setIndex(currentIndex)
+            if (currentIndex % 5 === 0 && refThumb.current) refThumb.current.slickGoTo(currentIndex)
+        }
+    }
+    const settingsThumb: Settings = {
+        dots: false,
+        infinite: true,
+        arrows: !IS_MB,
+        speed: 300,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        prevArrow: <XButton />,
+        nextArrow: <XButton />
+    }
+    const images = [detail.video_url, detail.image_url || org.image_url]
+        .concat(extractImageUrls(detail.description))
+        .filter(Boolean)
+    const onSlickGoto = (i: number) => {
+        if (refSlider.current) {
+            refSlider.current.slickGoTo(i)
+            setIndex(i)
+        }
+    }
+    return (
+        <div className={style.container_head_img_slide}
+        >
+            <FullImage
+                open={open}
+                setOpen={setOpen}
+                src={images}
+                index={index}
+            />
+            <div className={style.container_head_slide}>
+                {
+                    images.length > 1 &&
+                    <div className={style.container_head_page}>
+                        {index + 1}/{images.length}
+                    </div>
+                }
+                <Slider ref={refSlider} {...settings}>
+                    {
+                        images.map((item) => (
+                            checkMediaType(item) === 'IMAGE' ?
+                                <img
+                                    onClick={() => setOpen(true)}
+                                    key={item} src={item} alt=''
+                                    className={style.side_item}
+                                />
+                                :
+                                <div key={item} className={style.side_item_video}>
+                                    <video
+                                        className={style.video_container}
+                                        loop
+                                        controls
+                                        webkit-playsinline="webkit-playsinline"
+                                        playsInline={true}
+                                    >
+                                        <source src={item} />
+                                    </video>
+                                </div>
+                        ))
+                    }
+                </Slider>
+            </div>
+            {
+                images.length > 5 &&
+                <div className={style.container_head_thumb}>
+                    <Slider ref={refThumb} {...settingsThumb}>
+                        {
+                            images.map((item, i: number) => (
+                                <div key={i} onClick={() => onSlickGoto(i)} className={style.side_item_thumb}>
+                                    <div
+                                        className={i === index ? `${style.thumb_img_cnt} ${style.thumb_act}` : style.thumb_img_cnt}
+                                    >
+                                        <img src={checkMediaType(item) === 'IMAGE' ? item : icon.movie} alt="" />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </Slider>
+                </div>
+            }
+            {
+                (images.length > 1 && images.length < 5) &&
+                <div className={style.container_head_small}>
+                    {
+                        images.map((item, i: number) => (
+                            <div key={i} onClick={() => onSlickGoto(i)} className={style.side_item_thumb}>
+                                <div
+                                    className={i === index ? `${style.thumb_img_cnt} ${style.thumb_act}` : style.thumb_img_cnt}
+                                >
+                                    <img src={checkMediaType(item) === 'IMAGE' ? item : icon.movie} alt="" />
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            }
+        </div>
+    )
+}
 export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
     const { t } = useContext(AppContext) as any
     const { favoriteSt, onToggleFavorite } = useFavorite({
@@ -397,7 +469,7 @@ interface DetailDescProps {
     detail: DetailProp;
     org: IOrganization;
     onBookingNow?: () => void;
-    PERCENT?:number
+    PERCENT?: number
 }
 export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescProps) => {
     const { t } = useContext(AppContext) as any
@@ -428,12 +500,12 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
                 <span className={style.detail_sticky_title}>Bạn đang xem</span>
                 <div className={style.sticky_item}>
                     <div className={style.sticky_item_img}>
-                       {
-                        detail.SPECIAL_PRICE > 0 &&
-                        <div className={style.sticky_item_percent}>
-                            -{PERCENT}%
-                        </div>
-                       }
+                        {
+                            detail.SPECIAL_PRICE > 0 &&
+                            <div className={style.sticky_item_percent}>
+                                -{PERCENT}%
+                            </div>
+                        }
                         <img src={detail.image_url ?? org.image_url} alt="" />
                     </div>
                     <div className={style.sticky_item_de}>

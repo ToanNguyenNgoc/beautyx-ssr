@@ -14,7 +14,7 @@ interface FullImageProps {
     index?: number
 }
 export function FullImage(props: FullImageProps) {
-    const { open, setOpen, src, content, index } = props;
+    const { open, setOpen, src, content, index = 0 } = props;
     const settings = {
         canAutoPlay: false,
         hasSizeButton: false,
@@ -25,7 +25,7 @@ export function FullImage(props: FullImageProps) {
         <Dialog fullScreen open={open}>
             <div className={style.container}>
                 <Carousel
-                    index={index ?? 0}
+                    index={index}
                     {...settings} objectFit="contain"
                     images={src.map(img_url => { return { src: img_url } })}
                 />

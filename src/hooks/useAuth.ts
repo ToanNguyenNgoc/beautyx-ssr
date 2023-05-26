@@ -9,8 +9,10 @@ export function useAuth() {
     const [firstLoad, setFirstLoad] = useState(true)
     const { USER } = useSelector((state: IStore) => state.USER)
     const getUser = async () => {
-        if (!USER) await dispatch(fetchAsyncUser())
-        setFirstLoad(false)
+        if (!USER) {
+            await dispatch(fetchAsyncUser())
+            setFirstLoad(false)
+        }
     }
     useEffect(() => {
         getUser()

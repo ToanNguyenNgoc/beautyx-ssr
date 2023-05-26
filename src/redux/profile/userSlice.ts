@@ -2,30 +2,31 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import authentication from 'api/authApi';
 import { checkPhoneValid } from 'utils/phoneUpdate';
 import { analytics, logEvent } from '../../firebase';
-import { handleValidToken } from 'config';
 import { LOCAL_TK } from 'common';
+import { handleValidToken } from 'config';
 
 export const fetchAsyncUser: any = createAsyncThunk(
     "USER/fetchAsyncUser",
     async (values: string, { rejectWithValue }) => {
-        try {
-            const res = await authentication.getUserProfile(values)
-            let context = res?.data.context;
-            if (context.telephone && !checkPhoneValid(context.telephone)) {
-                // if (context.telephone && !checkPhoneValid('context.telephone')) {
-                context = { ...context, telephone: 'số điện thoại' }
+        if (localStorage.getItem(LOCAL_TK) || sessionStorage.getItem(LOCAL_TK)) {
+            try {
+                const res = await authentication.getUserProfile(values)
+                let context = res?.data.context;
+                if (context.telephone && !checkPhoneValid(context.telephone)) {
+                    context = { ...context, telephone: 'số điện thoại' }
+                }
+                logEvent(analytics, 'login', {
+                    'User login': context.fullname
+                })
+                return context
+            } catch (error) {
+                if (!error.response) {
+                    throw error
+                }
+                const { refresh } = handleValidToken()
+                if (!refresh) localStorage.removeItem('_WEB_TK')
+                return rejectWithValue(refresh)
             }
-            logEvent(analytics, 'login', {
-                'User login': context.fullname
-            })
-            return context
-        } catch (error) {
-            if (!error.response) {
-                throw error
-            }
-            const { refresh } = handleValidToken()
-            if (!refresh) localStorage.removeItem(LOCAL_TK)
-            return rejectWithValue(refresh)
         }
     }
 )

@@ -9,6 +9,7 @@ import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { ParamDiscounts } from 'params-query/param.interface';
 import style from './discounts.module.css'
+import { CACHE_TIME } from 'common';
 
 function Discounts() {
     const paramsDiscounts: ParamDiscounts = {
@@ -19,7 +20,7 @@ function Discounts() {
     }
     const IS_MB = useDeviceMobile();
     const { resData, totalItem, onLoadMore } = useSwrInfinite({
-        enable: true, API_URL: "/discounts", params: paramsDiscounts, dedupingInterval: 0
+        enable: true, API_URL: "/discounts", params: paramsDiscounts, dedupingInterval: CACHE_TIME
     })
     const discounts: IDiscountPar[] = resData
     const onViewMore = () => {

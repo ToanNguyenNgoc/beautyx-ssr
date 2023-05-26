@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import  { lazy, Suspense } from "react";
 import AuthRoute from "./AuthRoute";
 import {
   BrowserRouter as Router,
@@ -19,7 +19,6 @@ import Footer from "components/Footer";
 import Organization from "pages/Organization";
 import { analytics, logEvent } from "../firebase";
 import { LoadProgress } from "components/LoadingSketion";
-import LoadDetail from "components/LoadingSketion/LoadDetail";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 import DiscountDetail from "pages/_DiscountDetail";
@@ -197,8 +196,11 @@ function RouterConfig() {
     },
     {
       path: "/chi-tiet-giam-gia/:name",
+      component: <DiscountDetail />
+    },
+    {
+      path: "/giam-gia/:name",
       component: <DiscountDetail />,
-      load: <LoadDetail />,
     },
     {
       path: "/giam-gia",
@@ -308,7 +310,7 @@ function RouterConfig() {
           <Redirect exact from="/" to="homepage" />
           {routes.map((item, index: number) => (
             <Route key={index} path={item.path}>
-              <Suspense fallback={item.load ?? <LoadProgress />}>
+              <Suspense fallback={<LoadProgress/>}>
                 {item.component}
               </Suspense>
             </Route>

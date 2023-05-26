@@ -10,8 +10,8 @@ import Slider from 'react-slick';
 import { onErrorImg } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import icon from 'constants/icon';
-import { AlertSnack, OpenApp, ShareSocial, XButton } from 'components/Layout';
-import { DetailDesc, DetailOrgCard, DetailRecommend } from 'pages/_SerProCoDetail';
+import { AlertSnack, OpenApp, Seo, ShareSocial, XButton } from 'components/Layout';
+import { DetailDesc, DetailOrgCard, DetailRecommend, SliderImage } from 'pages/_SerProCoDetail';
 import Comment from 'components/Comment';
 import { IDiscountPar, IOrganization } from 'interface';
 import { useDispatch, useSelector } from 'react-redux';
@@ -54,14 +54,6 @@ function DiscountDetail() {
         favorite: DETAIL.is_favorite
     })
     //----
-    const settings = {
-        dots: false,
-        arrows: false,
-        speed: 900,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        swipe: true,
-    }
     const onNavigateCateList = () => {
         if (org?.id) {
             history.push(`/cua-hang/${org.subdomain}/dich-vu?cate_id=${DETAIL.category?.id}`)
@@ -80,7 +72,7 @@ function DiscountDetail() {
         const TYPE = "BOOK_NOW";
         const service = {
             ...DETAIL,
-            SPECIAL_PRICE:0,
+            SPECIAL_PRICE: 0,
             discount: values.discount
         };
         const services = [{ service, quantity: 1 }];
@@ -92,54 +84,21 @@ function DiscountDetail() {
         });
         dispatch(clearAllServices());
     }
-
     return (
         (detail && org && discount) ?
             <>
+                <Seo
+                    title={detail.service_name}
+                    content={detail.description}
+                    imageCover={detail.image_url}
+                />
                 {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>
                             <div className={style.container_head}>
                                 <div className={style.container_head_left}>
-                                    <div className={style.container_head_img_slide}>
-                                        <Slider
-                                            {...settings}
-                                            className={style.slide}
-                                        >
-                                            {
-                                                DETAIL.video_url &&
-                                                <div className={style.media_item_video}>
-                                                    <video
-                                                        className={style.media_item_bg}
-                                                        src={DETAIL.video_url}>
-
-                                                    </video>
-                                                    <video
-                                                        className={style.video_container}
-                                                        loop
-                                                        controls
-                                                        webkit-playsinline="webkit-playsinline"
-                                                        playsInline={true}
-                                                    >
-                                                        <source src={DETAIL.video_url} />
-                                                    </video>
-                                                </div>
-                                            }
-                                            {
-                                                [DETAIL.image_url].map(i => (
-                                                    <div
-                                                        style={IS_MB ? {
-                                                            height: `414px`
-                                                        } : {}}
-                                                        key={i} className={style.media_item_img}
-                                                    >
-                                                        <img src={i ?? org.image_url} onError={(e) => onErrorImg(e)} alt="" />
-                                                    </div>
-                                                ))
-                                            }
-                                        </Slider>
-                                    </div>
+                                    <SliderImage detail={detail} org={org} />
                                     <div className={style.container_head_img_thumb}>
                                         {!IS_MB && <ShareSocial url={location.pathname} />}
                                     </div>
@@ -212,7 +171,7 @@ function DiscountDetail() {
                                 </div>
                             </div>
                         </div>
-                        <DetailDesc onBookingNow={onBookingNow} detail={DETAIL} PERCENT={PERCENT} org={org}/>
+                        <DetailDesc onBookingNow={onBookingNow} detail={DETAIL} PERCENT={PERCENT} org={org} />
                         {
                             IS_MB &&
                             <div className={style.org_card_mb}>
@@ -257,7 +216,7 @@ const DetailBottom = (
     { detail, org, discount, PERCENT }:
         { detail: DetailProp, org: IOrganization, discount: IDiscountPar, PERCENT: number }
 ) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const [dra, setDra] = useState({
         open: false, type: ''
     })
@@ -311,7 +270,7 @@ const DetailBottom = (
 }
 
 const DetailQuantity = (props: DetailQuantityProps) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const { discount, org, detail, draType } = props
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
@@ -346,7 +305,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         const TYPE = "BOOK_NOW";
         const service = {
             ...detail,
-            SPECIAL_PRICE:0,
+            SPECIAL_PRICE: 0,
             discount: values.discount
         };
         const services = [{ service, quantity: quantity }];

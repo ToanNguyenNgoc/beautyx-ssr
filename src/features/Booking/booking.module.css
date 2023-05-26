@@ -288,6 +288,7 @@
 }
 
 .post_btn {
+    background-color: var(--pr-green);
     margin-top: 12px;
     width: 100%;
     border-radius: 6px;

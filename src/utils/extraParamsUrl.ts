@@ -13,3 +13,10 @@ export function extraParamsUrl() {
         return Object.fromEntries(urlSearchParams.entries());
     }
 }
+export const extractImageUrls = (htmlTemplate: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTemplate, 'text/html');
+    const imgElements = doc.getElementsByTagName('img')
+    const imageUrls = Array.from(imgElements).map((img) => img.src);
+    return imageUrls;
+};
