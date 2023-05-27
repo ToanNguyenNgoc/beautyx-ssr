@@ -3,6 +3,7 @@ import { RefObject, useContext, useEffect, useState } from 'react'
 import style from '../../organization.module.css'
 import { AppContext, AppContextType } from 'context/AppProvider'
 import { OrgContext, OrgContextType } from 'context'
+import { Container } from '@mui/material'
 
 interface TabProps {
   refDealHot: RefObject<HTMLDivElement>
@@ -81,7 +82,8 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
   }, []);
   return (
     <div className={style.tab_wrapper}>
-      <div className={style.tab_cnt}>
+     <Container>
+     <div className={style.tab_cnt}>
         {
           tabs.filter(tab => tab.open === true).map(tab => (
             <div
@@ -97,6 +99,7 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
           ))
         }
       </div>
+     </Container>
     </div>
   )
 }

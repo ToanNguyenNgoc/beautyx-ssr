@@ -11,8 +11,14 @@ import { OrgItemMap } from 'components/Layout/OrgItemMap'
 
 
 export const Banner = () => {
-  const { galleries, org, loadGalleries } = useContext(OrgContext) as OrgContextType
-  const galleriesList = galleries.map(i => i.images)?.flat()?.map(i => i.image_url)?.slice(0, 5)
+  const { galleries, org, loadGalleries, discounts, servicesSpecial, productsSpecial } =
+    useContext(OrgContext) as OrgContextType
+  const servicesList = discounts?.map(i => i.items[0]?.productable?.image_url)
+    .concat(servicesSpecial.map(i => i.image_url))
+    .concat(productsSpecial.map(i => i.image_url))
+    .filter(Boolean)
+  const galleriesList = galleries.map(i => i.images)?.flat()?.map(i => i.image_url)
+    ?.concat(servicesList).slice(0, 5)
   const [oImg, setOImg] = useState(false)
   const [map, setMap] = useState(false)
   usePostAnalytics(org)
@@ -63,7 +69,7 @@ export const Banner = () => {
               icon={icon.chatSquare}
               title='Tư vấn'
             />
-             <XButton
+            <XButton
               iconSize={16}
               icon={icon.share}
               title='Chia sẻ'

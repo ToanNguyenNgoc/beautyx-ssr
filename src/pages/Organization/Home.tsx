@@ -9,20 +9,20 @@ function Home() {
   const { load } = useContext(OrgContext) as OrgContextType
   return (
     <div className={style.wrapper}>
-      <Container>
+      {/* <Container> */}
         <div className={style.container}>
           {
             load ?
-              <Loading />
+             <Container> <Loading /></Container>
               :
               <>
-                <Banner />
+               <Container> <Banner /></Container>
                 <Body />
                 <More/>
               </>
           }
         </div>
-      </Container>
+      {/* </Container> */}
     </div>
   );
 }
@@ -54,7 +54,7 @@ const Body = () => {
               <ServiceSection type='PRODUCT' />
             </div>
             <div ref={refCombo} className={style.body_section}>
-              combo
+            <ServiceSection type='COMBO' />
             </div>
           </>
         }

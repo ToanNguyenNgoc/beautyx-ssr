@@ -1,5 +1,5 @@
 .wrapper {
-  background-color: var(--white);
+  background-color: var(--grey_2);
   border-top: solid 1px var(--grey);
 }
 
@@ -12,7 +12,7 @@
   left: 0px;
   right: 0px;
   width: 100%;
-  background-color: var(--white);
+  background-color: var(--grey_2);
   position: sticky;
   z-index: 20;
   top: 0px;
@@ -51,7 +51,8 @@
 
 .body_section:nth-child(1),
 .body_section:nth-child(2),
-.body_section:nth-child(3) {
+.body_section:nth-child(3),
+.body_section:nth-child(4) {
   height: max-content;
   background-color: transparent;
 }
