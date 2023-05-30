@@ -82,24 +82,24 @@ export const Tab = ({ refDealHot, refService, refProduct, refCombo, refDetail }:
   }, []);
   return (
     <div className={style.tab_wrapper}>
-     <Container>
-     <div className={style.tab_cnt}>
-        {
-          tabs.filter(tab => tab.open === true).map(tab => (
-            <div
-              key={tab.path}
-              className={tab.id === tabAct ? `${style.tab_item} ${style.tab_item_act}` : style.tab_item}
-              onClick={() => tab.ref.current && window.scrollTo({
-                top: tab.ref?.current.offsetTop - mrTop,
-                behavior: 'smooth'
-              })}
-            >
-              {tab.title}
-            </div>
-          ))
-        }
-      </div>
-     </Container>
+      <Container>
+        <div className={style.tab_cnt}>
+          {
+            tabs.filter(tab => tab.open === true).map(tab => (
+              <div
+                key={tab.path}
+                className={tab.id === tabAct ? `${style.tab_item} ${style.tab_item_act}` : style.tab_item}
+                onClick={() => tab.ref.current && window.scrollTo({
+                  top: tab.ref?.current.offsetTop - mrTop,
+                  behavior: 'smooth'
+                })}
+              >
+                {tab.title}
+              </div>
+            ))
+          }
+        </div>
+      </Container>
     </div>
   )
 }

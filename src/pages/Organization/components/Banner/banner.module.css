@@ -27,6 +27,7 @@
 }
 
 .head_left_map {
+  width: fit-content;
   display: flex;
   align-items: center;
   color: var(--text-black);
@@ -64,12 +65,12 @@
   line-height: 24px;
 }
 
-.head_right {
+.head_right_fa {
   display: flex;
   align-items: center;
 }
 
-.head_right button {
+.head_right_fa button {
   border-radius: 6px;
   background-color: transparent;
   color: var(--black);
@@ -77,8 +78,94 @@
   font-size: 12px;
 }
 
-.head_right button:hover {
+.head_right_fa button:hover {
   background-color: var(--grey);
+}
+
+.head_right_time {
+  margin-top: 2px;
+  width: 100%;
+  height: 24px;
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.head_right_time_left {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  color: var(--black);
+  font-weight: 600;
+}
+
+.head_right_time_left img {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
+
+.head_right_time_right {
+  width: 50%;
+  height: 100%;
+  background-color: var(--bg-gray-1);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.time_tody {
+  padding: 0px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.time_tody_icon {
+  transition: var(--trans);
+}
+
+.time_tody_icon_ch {
+  transform: rotate(180deg);
+  transition: var(--trans);
+}
+
+.time_list_cnt {
+  position: absolute;
+  width: 100%;
+  z-index: 21;
+  background-color: var(--white);
+  top: 38px;
+  width: 75%;
+  right: 0px;
+  border-radius: 6px;
+  box-shadow: var(--box-shadow);
+  padding: 12px;
+  visibility: hidden;
+  opacity: 0;
+  transition: var(--trans);
+}
+
+.time_show {
+  visibility: visible;
+  top: 28px;
+  opacity: 1;
+  transition: var(--trans);
+}
+
+.time_work_item {
+  padding: 2px 0px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.time_work_item span {
+  font-weight: 600;
 }
 
 .image_cnt {
@@ -93,10 +180,12 @@
   grid-column-gap: 12px;
   grid-row-gap: 12px;
 }
-.image_cnt{
+
+.image_cnt {
   position: relative;
 }
-.open_image_btn{
+
+.open_image_btn {
   position: absolute;
   z-index: 2;
   right: 12px;
@@ -109,9 +198,11 @@
   color: var(--black);
   backdrop-filter: blur(10px);
 }
-.open_image_btn:hover{
+
+.open_image_btn:hover {
   opacity: 1;
 }
+
 .image_cnt div {
   position: relative;
 }
@@ -147,4 +238,129 @@
 .image_cnt div:nth-child(5) {
   background-color: var(--bg-color);
   grid-area: 2 / 7 / 3 / 9;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 767px) {}
+
+@media only screen and (max-width: 767px) {
+  .cnt {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .image_cnt {
+    margin-top: 0px;
+    display: block;
+    aspect-ratio: 2 / 1;
+    border-radius: 0px;
+  }
+
+  .sl_image_cnt {
+    aspect-ratio: 2 / 1;
+    position: relative;
+  }
+
+  .sl_image_bg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    object-fit: cover;
+  }
+
+  .sl_image_bg_linear {
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 39.25%, #FAFAFA 100%) !important;
+  }
+
+  .head_wrapper {
+    background-color: transparent;
+    padding: 0px;
+    z-index: 5;
+    margin-top: -2px;
+    background-color: var(--grey_2);
+  }
+
+  .head {
+    background-color: var(--grey_2);
+    border-radius: 8px;
+    padding: 0px 12px 6px 12px;
+    flex-direction: column;
+    align-items: unset
+  }
+
+  .head_left {
+    width: 100%;
+  }
+
+  .head_left_detail {
+    justify-content: space-between;
+  }
+
+  .head_left_detail img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .head_left_name {
+    width: calc(100% - 62px);
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .head_left_map {
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .head_left_rate_item {
+    line-height: 16px;
+  }
+
+  .head_right_fa {
+    margin-top: 6px;
+    justify-content: space-between;
+  }
+
+  .head_right_fa button {
+    width: 32%;
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .head_right_time {
+    padding-left: 0px;
+    padding-top: 10px;
+    border-top: solid 1px #CCC;
+    height: fit-content;
+  }
+
+  .head_right_time_right {
+    width: 35%;
+  }
+
+  .time_tody {
+    padding: 4px 6px;
+    font-size: 13px;
+  }
+
+  .time_list_cnt {
+    top: 60px;
+    width: 50%;
+  }
+
+  .time_show {
+    top: 50px;
+  }
+  .open_image_btn{
+    padding: 8px;
+  }
 }

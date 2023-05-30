@@ -58,7 +58,7 @@ export const Gallery = ({ open, onClose }: GalleryProps) => {
               ))
             }
           </ul>
-          <div className={style.tab_cnt}>
+          {/* <div className={style.tab_cnt}>
             <span className={style.tab_name}>{tab?.name}</span>
             <ul className={style.tab_image_list}>
               {
@@ -69,7 +69,7 @@ export const Gallery = ({ open, onClose }: GalleryProps) => {
                 ))
               }
             </ul>
-          </div>
+          </div> */}
         </div>
       </Container>
     </Dialog>

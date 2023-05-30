@@ -4,9 +4,10 @@ import { OrgContext, OrgContextType } from 'context'
 import { IITEMS_DISCOUNT, Product, Service } from 'interface'
 import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem'
 import { SerProItem } from 'components/Layout'
-import { Container } from '@mui/material'
+import { Container, useMediaQuery } from '@mui/material'
 
 export const Deal = () => {
+  const mb = useMediaQuery('(max-width:767px)')
   const {
     org,
     discounts,
@@ -16,7 +17,7 @@ export const Deal = () => {
   return (
     <div className={style.container}>
       <Container>
-        <div className={style.section_item}>
+        <div className={style.section_item_discount}>
           <ul className={style.discount_list}>
             {discounts.map((discount: any, index: number) => (
               <li key={index} className={style.discount_item}>
@@ -42,11 +43,12 @@ export const Deal = () => {
             <ul className={style.special_list}>
               {
                 servicesSpecial.map((item: Service) => (
-                  <li key={item.id} className="">
+                  <li key={item.id} className={style.special_list_item}>
                     <SerProItem
                       org={org}
                       item={item}
                       type="SERVICE"
+                      changeStyle={mb}
                     />
                   </li>
                 ))
@@ -63,11 +65,12 @@ export const Deal = () => {
             <ul className={style.special_list}>
               {
                 productsSpecial.map((item: Product) => (
-                  <li key={item.id} className="">
+                  <li key={item.id} className={style.special_list_item}>
                     <SerProItem
                       org={org}
                       item={item}
                       type='PRODUCT'
+                      changeStyle={mb}
                     />
                   </li>
                 ))

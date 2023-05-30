@@ -123,3 +123,31 @@
   z-index: 2;
   transition: var(--trans);
 }
+
+@media only screen and (max-width: 992px) and (min-width: 767px) {
+  .list_thumb {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .head {
+    padding: 8px 12px;
+  }
+
+  .body {
+    padding: 0px 12px;
+    display: flex;
+  }
+
+  .list_thumb {
+    width: 25%;
+    grid-gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .thumb_item_detail p:first-child{
+    font-size: 10px;
+    line-height: 12px;
+  }
+}

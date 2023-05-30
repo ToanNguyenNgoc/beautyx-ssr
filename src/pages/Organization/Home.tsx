@@ -1,28 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/material';
-import { Banner, Deal, Loading, More, ServiceSection, Tab } from './components';
+import { Banner, Deal, Header, Loading, More, ServiceSection, Tab } from './components';
 import { useContext, useRef } from 'react';
 import { OrgContext, OrgContextType } from 'context';
 import style from './organization.module.css'
+import { BackTopButton } from 'components/Layout';
+import { useDeviceMobile } from 'hooks';
 
 function Home() {
   const { load } = useContext(OrgContext) as OrgContextType
+  const IS_MB = useDeviceMobile()
   return (
     <div className={style.wrapper}>
-      {/* <Container> */}
-        <div className={style.container}>
-          {
-            load ?
-             <Container> <Loading /></Container>
-              :
-              <>
-               <Container> <Banner /></Container>
-                <Body />
-                <More/>
-              </>
-          }
-        </div>
-      {/* </Container> */}
+      <div className={style.container}>
+        {
+          load ?
+            <Container> <Loading /></Container>
+            :
+            <>
+              {IS_MB && <Header/>}
+              <Container>
+                <Banner />
+              </Container>
+              <Body />
+              <More />
+              <BackTopButton />
+            </>
+        }
+      </div>
     </div>
   );
 }
@@ -54,7 +59,7 @@ const Body = () => {
               <ServiceSection type='PRODUCT' />
             </div>
             <div ref={refCombo} className={style.body_section}>
-            <ServiceSection type='COMBO' />
+              <ServiceSection type='COMBO' />
             </div>
           </>
         }

@@ -1,5 +1,5 @@
 /* eslint-disable eqeqeq */
-import { Link, RouteComponentProps, Switch, useLocation } from 'react-router-dom'
+import { Link, RouteComponentProps, Switch, useLocation, useHistory } from 'react-router-dom'
 import style from './more.module.css'
 import { Container, Dialog, useMediaQuery } from '@mui/material'
 import { useSwrInfinite } from 'hooks'
@@ -7,17 +7,19 @@ import API_ROUTE from 'api/_api'
 import { useContext } from 'react'
 import { AppContext, AppContextType, OrgContext, OrgContextType } from 'context'
 import { Category, CategoryService, Product, Service } from 'interface'
-import { SerProItem } from 'components/Layout'
+import { SerProItem, XButton } from 'components/Layout'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { paramProductCatesOrg, paramServiceCatesOrg, paramsProductsOrg, paramsServicesOrg } from 'params-query'
 import queryString from "query-string";
 import { LoadGrid } from 'components/LoadingSketion'
+import icon from 'constants/icon'
 
 export const More = () => {
   const path = ['dich-vu', 'san-pham', 'goi-dich-vu']
   const { t } = useContext(AppContext) as AppContextType
   const { subdomain } = useContext(OrgContext) as OrgContextType
   const location = useLocation()
+  const history = useHistory()
   const pathArr = location.pathname.split('/')
   const currTab = pathArr[3]
   const open = pathArr.some(r => path.includes(r)) ? true : false
@@ -40,11 +42,18 @@ export const More = () => {
       >
         <div className={style.container}>
           <div className={style.head}>
+            <XButton
+              onClick={() => history.goBack()}
+              icon={icon.chevronRightBlack}
+              iconSize={20}
+              className={style.head_back_btn}
+            />
             <Container>
               <div className={style.tab_container}>
                 {
                   tabs.map(tab => (
                     <Link
+                      replace
                       key={tab.id} className={tab.path === currTab ? style.tab_act : ''}
                       to={{ pathname: `/cua-hang/${subdomain}/${tab.path}` }}
                     >
@@ -112,6 +121,7 @@ const ServicePage = ({ type }: Page) => {
     url: API_ROUTE.ORG_SERVICES(subdomain),
     params: {
       ...paramsServicesOrg,
+      "limit":20,
       "filter[service_group_id]": queryParams.cate_id,
     },
     paramsCate: paramServiceCatesOrg
@@ -122,6 +132,7 @@ const ServicePage = ({ type }: Page) => {
       url: API_ROUTE.ORG_PRODUCTS(org?.id),
       params: {
         ...paramsProductsOrg,
+        "limit":20,
         "filter[product_category_id]": queryParams.cate_id,
       },
       paramsCate: paramProductCatesOrg
@@ -169,7 +180,7 @@ const ServicePage = ({ type }: Page) => {
       </div>
       <div className={style.right}>
         <InfiniteScroll
-          height={'calc(100dvh - 90px)'}
+          height={`calc(100dvh - ${mb ? '110px' : '80px'})`}
           dataLength={resData.length}
           hasMore={true}
           next={onLoadMore}
