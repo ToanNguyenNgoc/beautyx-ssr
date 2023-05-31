@@ -1,0 +1,125 @@
+.container {
+    margin-top: 26px;
+}
+.navigate_app_btn{
+    padding: 4px 10px;
+}
+
+.head {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.head img {
+    width: 138px;
+    height: 138px;
+}
+
+.head_status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.head_status_left {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+}
+
+.head_status_right {
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: var(--green);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--white);
+}
+
+.user_info {
+    padding: 12px;
+}
+
+.user_info {
+    padding: 12px;
+}
+
+.user_info_title {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.user_info_row {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+    margin-bottom: 4px;
+}
+
+.user_info_row_left {
+    color: var(--text-hover);
+    margin-right: 6px;
+}
+
+.bill {
+    padding: 12px;
+}
+
+.bill_title {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.bill_title_amount {
+    text-align: center;
+    font-size: 24px;
+    line-height: 26px;
+    font-weight: 700;
+    color: var(--pink-momo);
+}
+.navigate_cnt{
+    padding: 12px;
+}
+.navigate_cnt_body{
+    padding: 12px;
+    background-color: #87c5362b;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 400;
+    color: var(--green);
+}
+.navigate_cnt_btn{
+    margin-left: 2px;
+    font-weight: 700;
+}
+
+.bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: var(--bg-white);
+    border-radius: 8px 8px 0px 0px;
+    padding: 8px 12px 20px 12px;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    justify-content: space-between;
+}
+.bottom_bnt{
+    width: calc(50% - 6px);
+}
+.bottom_bnt:first-child{
+    color: var(--purple);
+    background-color: var(--bg-color);
+}

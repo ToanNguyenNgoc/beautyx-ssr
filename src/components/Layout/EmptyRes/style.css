@@ -1,0 +1,14 @@
+.res-null {
+    padding: 54px 0px 0px 12px;
+    margin: auto;
+}
+.res-null__title {
+    text-align: center;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    margin-top: 2px;
+}
+.res-null__image {
+    margin-top: 24px;
+}

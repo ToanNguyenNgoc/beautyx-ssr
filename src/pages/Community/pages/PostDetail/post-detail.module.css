@@ -1,0 +1,137 @@
+.container {
+    padding: 12px;
+    margin: 24px auto 0px auto;
+    background-color: var(--bg-white);
+    width: 80%;
+}
+
+.head,
+.head_left {
+    display: flex;
+    flex-direction: row;
+}
+
+.head {
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.head_left_btn {
+    padding: 0px;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    display: none;
+}
+
+.head_left_avatar {
+    width: 54px;
+    height: 54px;
+    background-color: var(--bg-color);
+    position: relative;
+    border-radius: 100%;
+}
+
+.head_left_avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+.head_right {
+    width: calc(100% - 62px);
+}
+
+.user_name {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    color: var(--purple);
+}
+
+.post_group_name {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    margin: 2px 0px;
+}
+
+.post_group_name a {
+    font-weight: 600;
+}
+
+.created_add {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+}
+
+.content {
+    margin: 18px 0px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 18px;
+}
+
+.interactive,
+.interactive_item {
+    display: flex;
+    align-items: center;
+}
+
+.interactive_item {
+    margin-right: 12px;
+}
+
+.interactive_item button {
+    padding: 2px;
+    background-color: transparent;
+}
+
+.interactive_item span {
+    font-size: 16px;
+    line-height: 16px;
+    font-weight: 600;
+    margin-left: 4px;
+    color: #8C8C8C;
+}
+
+@media only screen and (max-width: 1023px) {
+    .container {
+        margin: 0px;
+        width: 100%;
+        padding: 8px 12px;
+    }
+
+    .head {
+        position: fixed;
+        padding: 8px 0px;
+        width: 100%;
+        top: 0;
+        right: 0;
+        z-index: 10;
+        background-color: var(--bg-white);
+    }
+
+    .head_left {
+        align-items: center;
+    }
+
+    .head_left_btn {
+        display: block;
+    }
+
+    .head_left_avatar {
+        width: 40px;
+        height: 40px;
+    }
+
+    .head_right {
+        width: calc(100% - 80px);
+    }
+    .content{
+        margin-top: 100px;
+    }
+}
