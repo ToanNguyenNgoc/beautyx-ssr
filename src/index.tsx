@@ -7,8 +7,6 @@ import reportWebVitals from "./reportWebVitals";
 import "./i18n";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-// import * as Sentry from "@sentry/react";
-// import { BrowserTracing } from "@sentry/tracing";
 import { SWRConfig } from "swr";
 import axiosClient from "./api/axios";
 import { PlashScreen } from "components/Layout";
