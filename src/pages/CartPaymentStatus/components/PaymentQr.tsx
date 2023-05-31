@@ -12,6 +12,17 @@ function PaymentQr(props: any) {
     const EX_PAYMENT = EXTRA_PAYMENT(res);
     const pay_url = EX_PAYMENT?.qrCode;
     // const orderStatus = 'PENDING'
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    //         const windowHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    //         const windowFeatures = `toolbar=yes,scrollbars=yes,resizable=yes,top=${(windowHeight - windowHeight * 0.95) / 2},left=${(windowWidth - 573) / 2},width=573,height=${windowHeight * 0.95}`;
+    //         window.open(pay_url, "_blank", windowFeatures);
+    //     }, 1000)
+    //     return () => {
+    //         clearTimeout(timer);
+    //     };
+    // }, [])
     const checkStatus = () => {
         switch (orderStatus) {
             case "PENDING":

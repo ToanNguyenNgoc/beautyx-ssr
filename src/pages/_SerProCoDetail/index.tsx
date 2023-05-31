@@ -493,7 +493,8 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
     const onBookOrBuyNow = () => onBookingNow && (scrollTop(), onBookingNow())
 
     return (
-        <div className={style.container_desc}>
+       <>
+         <div className={style.container_desc}>
             <div className={style.detail_sticky_cnt}>
                 <span className={style.detail_sticky_title}>Bạn đang xem</span>
                 <div className={style.sticky_item}>
@@ -635,6 +636,7 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
                 </div>
             </div>
         </div>
+       </>
     )
 }
 const DetailBottom = (

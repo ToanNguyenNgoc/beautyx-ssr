@@ -327,6 +327,9 @@
     display: block;
     text-align: center;
 }
+.detail_org_right_btn:nth-child(2){
+    background-color: var(--white);
+}
 
 .detail_org_right_btn:nth-child(2) {
     background-color: var(--white);

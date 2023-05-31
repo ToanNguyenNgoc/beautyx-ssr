@@ -12,13 +12,13 @@ function HeadTitle(props: IProps) {
       const { title } = props;
       const FLAT_FORM = EXTRA_FLAT_FORM();
      
-      let t: string = "BeautyX";
-      if (IS_MB) {
-            document.title = t
-      }
-      else {
-            document.title = FLAT_FORM === FLAT_FORM_TYPE.MOMO ? 'BeautyX' : `${title ?? '【BeautyX】- App đặt lịch làm đẹp online với nhiều địa điểm uy tín gần bạn'} - ${FLAT_FORM}`
-      }
+      // let t: string = "BeautyX";
+      // if (IS_MB) {
+      //       document.title = t
+      // }
+      // else {
+      //       document.title = FLAT_FORM === FLAT_FORM_TYPE.MOMO ? 'BeautyX' : `${title ?? '【BeautyX】- App đặt lịch làm đẹp online với nhiều địa điểm uy tín gần bạn'} - ${FLAT_FORM}`
+      // }
       return (
             <></>
       );

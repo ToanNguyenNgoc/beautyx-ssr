@@ -1,11 +1,10 @@
-import React from 'react';
 import { Helmet } from "react-helmet";
 
 
 interface SeoProps {
-    imageCover: string,
+    imageCover?: string,
     title: string,
-    content: string
+    content?: string
 }
 
 export function Seo(props: SeoProps) {
