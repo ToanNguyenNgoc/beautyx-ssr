@@ -75,11 +75,11 @@ function Account() {
   const location = useLocation();
   const IS_MB = useDeviceMobile();
   const { USER } = useSelector((state: IStore) => state.USER);
-  const userResponse: User = useSwr(
-    API_ROUTE.USER_PROFILE,
-    USER,
-    paramsUserProfile
-  ).response;
+  const userResponse: User = useSwr({
+    API_URL: API_ROUTE.USER_PROFILE,
+    enable: USER,
+    params: paramsUserProfile
+  }).response;
   const onChangeAvatar = async (e: any) => {
     const { model_id } = await postMedia(e);
     await dispatch(

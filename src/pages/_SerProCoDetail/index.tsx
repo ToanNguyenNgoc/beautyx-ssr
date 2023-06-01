@@ -78,11 +78,11 @@ function SerProCoDetail() {
     }
     if (!params.id || !params.org) redirectPageError = true
     if (!currentRouteType) redirectPageError = true
-    const { response, error } = useSwr(
-        `/organizations/${params.org}/${currentRouteType?.api}/${params.id}`,
-        (params.id && params.org && currentRouteType),
-        currentRouteType?.params ?? {}
-    )
+    const { response, error } = useSwr({
+        API_URL: `/organizations/${params.org}/${currentRouteType?.api}/${params.id}`,
+        enable: (params.id && params.org && currentRouteType),
+        params: currentRouteType?.params ?? {}
+    })
     if (error) redirectPageError = true
     useEffect(() => {
         if (redirectPageError) {
@@ -97,8 +97,10 @@ function SerProCoDetail() {
         ...response
     }
     const PERCENT = Math.ceil(100 - DETAIL.SPECIAL_PRICE / DETAIL.PRICE * 100)
-    const org: IOrganization = useSwr(API_ROUTE.ORG(params.org), params.org, {
-        'filter[location]': LOCATION
+    const org: IOrganization = useSwr({
+        API_URL: API_ROUTE.ORG(params.org),
+        enable: params.org,
+        params: { 'filter[location]': LOCATION }
     }).response
     const discounts: IDiscountPar[] = []
     const { favoriteSt, onToggleFavorite } = useFavorite({
@@ -493,8 +495,7 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
     const onBookOrBuyNow = () => onBookingNow && (scrollTop(), onBookingNow())
 
     return (
-       <>
-         <div className={style.container_desc}>
+        <div className={style.container_desc}>
             <div className={style.detail_sticky_cnt}>
                 <span className={style.detail_sticky_title}>Bạn đang xem</span>
                 <div className={style.sticky_item}>
@@ -636,7 +637,6 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
                 </div>
             </div>
         </div>
-       </>
     )
 }
 const DetailBottom = (

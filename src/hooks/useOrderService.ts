@@ -22,9 +22,9 @@ export function useOrderService() {
         "limit": 8
     }
     const { resData, totalItem, onLoadMore, isValidating, } = useSwrInfinite(
-        USER,
-        `${API_ROUTE.ORDERS}`,
-        params
+        {
+            API_URL:`${API_ROUTE.ORDERS}`,enable:USER, params
+        }
     )
     const checkTimeExpired = (items: IUser_Items[]) => {
         let condition = false

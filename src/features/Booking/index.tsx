@@ -64,11 +64,11 @@ function Booking() {
     window.onclick = () => closeBranch()
     //api discount apply for book now
     //-------------------------------
-    const org: IOrganization = useSwr(
-        `${API_ROUTE.ORG(location?.state?.org?.id)}`,
-        location?.state?.org?.id,
-        { 'filter[location]': LOCATION }
-    )?.response
+    const org: IOrganization = useSwr({
+        API_URL: `${API_ROUTE.ORG(location?.state?.org?.id)}`,
+        enable: location?.state?.org?.id,
+        params: { 'filter[location]': LOCATION }
+    })?.response
 
     useEffect(() => {
         let mount = true

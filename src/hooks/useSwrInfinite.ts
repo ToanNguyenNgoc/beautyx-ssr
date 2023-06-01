@@ -1,23 +1,29 @@
 import { useSWRInfinite } from "swr";
 import { pickBy, identity } from "lodash"
+import { SWROptions } from './useSwr'
 
-export function useSwrInfinite<ResData = any>(
-    condition: any,
-    API_URL: string,
-    params?: any,
-) {
+export function useSwrInfinite(options: SWROptions) {
+    const { params, enable, API_URL, revalidateOnFocus = false, dedupingInterval } = options
     let paramsURL = "";
     if (params) {
         paramsURL = `&${new URLSearchParams(pickBy(params, identity)).toString()}`
     }
-    const { data, isValidating, size, setSize, mutate } = useSWRInfinite(
-        (index) => condition && `${API_URL}?page=${index + 1}${paramsURL}`,
-        {
-            revalidateOnFocus: false,
-            initialSize: 1
+    let newOptions: any = {
+        revalidateOnFocus: revalidateOnFocus,
+        initialSize: 1,
+        dedupingInterval: 10000000
+    }
+    if (dedupingInterval === 0) {
+        newOptions = {
+            revalidateOnFocus: revalidateOnFocus,
+            initialSize: 1,
         }
+    }
+    const { data, isValidating, size, setSize, mutate } = useSWRInfinite(
+        (index) => enable && `${API_URL}?page=${index + 1}${paramsURL}`,
+        newOptions
     );
-    let resData: ResData[] = [];
+    let resData: any[] = [];
     let originData: any[] = []
     let totalItem = 1;
     if (data) {

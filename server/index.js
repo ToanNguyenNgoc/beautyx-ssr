@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const fs = require("fs");
+const dotenv = require("dotenv")
 const { isHTMLTemplate } = require("./valid")
 const {
     getOrgDetail,
@@ -11,6 +12,8 @@ const {
     getProvince
 } = require("./api")
 const app = express();
+dotenv.config()
+
 
 const PORT = process.env.REACT_APP_PORT || 3008;
 const indexPath = path.resolve(__dirname, '..', 'build', 'index.html');

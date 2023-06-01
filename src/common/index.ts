@@ -1,6 +1,7 @@
 import { AUTH_HEADER } from "api/authHeader"
 
 export const DOMAIN = `https://beautyx.vn`
+export const CACHE_TIME = 10000000
 export const echoConfig = {
   broadcaster: 'pusher',
   key: process.env.MIX_PUSHER_APP_KEY,

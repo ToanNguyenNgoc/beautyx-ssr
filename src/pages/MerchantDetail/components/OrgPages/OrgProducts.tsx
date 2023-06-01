@@ -32,14 +32,14 @@ export function OrgProducts(props: IProps) {
     }
     const { data } = useGetProductCateOrgQuery(org.id)
     const categories: Category[] = data ?? []
-    const { resData, totalItem, onLoadMore } = useSwrInfinite(
-        org?.id,
-        API_ROUTE.ORG_PRODUCTS(org?.id),
-        {
+    const { resData, totalItem, onLoadMore } = useSwrInfinite({
+        enable:org?.id,
+        API_URL:API_ROUTE.ORG_PRODUCTS(org?.id),
+        params:{
             ...paramsProductsOrg,
             "filter[product_category_id]": cate_id
         }
-    )
+    })
     const products: Product[] = resData ?? []
     const onViewMore = () => {
         if (products.length >= 15 && products.length < totalItem) onLoadMore()

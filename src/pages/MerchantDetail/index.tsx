@@ -35,7 +35,10 @@ function MerchantDetail() {
   const params: any = useParams()
   const { subdomain } = params
 
-  const { response, error, isValidating } = useSwr(API_ROUTE.ORG(subdomain), subdomain)
+  const { response, error, isValidating } = useSwr({
+    API_URL: API_ROUTE.ORG(subdomain),
+    enable:subdomain
+  })
 
   const org: IOrganization = response
   const { data } = useGalleriesQuery(subdomain)

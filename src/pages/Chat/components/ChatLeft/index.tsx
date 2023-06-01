@@ -14,11 +14,11 @@ export default function ChatLeft(props: any) {
   const IS_MB = useDeviceMobile();
   console.log(userChat)
 
-  const { resData } = useSwrInfinite<ITopic>(
-    USER,
-    '/topics',
-    { "sort": "-updated_at" }
-  )
+  const { resData } = useSwrInfinite({
+    enable:USER,
+    API_URL:'/topics',
+    params:{ "sort": "-updated_at" }
+  })
   return (
     <>
       <div

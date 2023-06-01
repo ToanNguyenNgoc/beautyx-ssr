@@ -10,11 +10,11 @@ export function useComment(param: ParamComment) {
     const [loadPost, setLoadPost] = useState(false)
     const history = useHistory()
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { responseArray, result, mutate, totalItem } = useSwr(
-        '/comments',
-        param["filter[commentable_id]"],
-        param
-    )
+    const { responseArray, result, mutate, totalItem } = useSwr({
+        API_URL: '/comments',
+        enable: param["filter[commentable_id]"],
+        params: param
+    })
     const comments = responseArray
     const totalComment = totalItem
     const postComment = async (body: any) => {

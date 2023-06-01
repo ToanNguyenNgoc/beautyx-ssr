@@ -42,11 +42,16 @@ function Comment(props: CommentProps) {
         "filter[commentable_id]": commentable_id,
         "filter[organization_id]": commentable_type !== "ORGANIZATION" ? org_id : ""
     }
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
-        (commentable_id && org_id),
-        "/comments",
-        params
-    )
+    // const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
+    //     (commentable_id && org_id),
+    //     "/comments",
+    //     params
+    // )
+    const {resData, totalItem, onLoadMore, isValidating} = useSwrInfinite({
+        API_URL:"/comments",
+        enable: (commentable_id && org_id),
+        params:params
+    })
     const onChangeInputCmt = (e: any) => {
         setTempCmt({ ...tempCmt, body: e.target.value })
     }

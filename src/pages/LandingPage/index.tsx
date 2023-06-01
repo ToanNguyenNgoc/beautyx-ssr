@@ -16,7 +16,7 @@ function LadingPage() {
     const history = useHistory()
     const params: any = extraParamsUrl()
     const id = params.id
-    const { response, isValidating } = useSwr(`/banners/${id}`, id)
+    const { response, isValidating } = useSwr({API_URL:`/banners/${id}`, enable:id})
     let render = true
     if (!id || (!response && !isValidating)) render = false
     const banner: IBanner = response

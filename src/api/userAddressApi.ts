@@ -34,7 +34,7 @@ class UserAddress {
         return axiosClient.post(url, params, AUTH_HEADER());
     }
 
-    deleteAddress = (id: number) => {
+    deleteAddress = (id: any) => {
         const url = `/useraddresses/${id}`;
         if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
             return axiosClient.delete(url, AUTH_HEADER());

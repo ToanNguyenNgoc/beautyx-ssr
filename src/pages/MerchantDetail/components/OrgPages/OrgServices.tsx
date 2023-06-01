@@ -34,10 +34,13 @@ export function OrgServices(props: IProps) {
     }
     const { data } = useGetServiceCateOrgQuery(org.id)
     const categories: CategoryService[] = data ?? []
-    const { resData, totalItem, onLoadMore } = useSwrInfinite(org?.id, API_ROUTE.ORG_SERVICES(org?.id), {
+    const { resData, totalItem, onLoadMore } = useSwrInfinite({
+        enable:org?.id, 
+        API_URL:API_ROUTE.ORG_SERVICES(org?.id), 
+        params:{
         ...paramsServicesOrg,
         "filter[service_group_id]": cate_id
-    })
+    }})
     const services: Service[] = resData ?? []
     const onViewMore = () => {
         if (services.length >= 15 && services.length < totalItem) {
