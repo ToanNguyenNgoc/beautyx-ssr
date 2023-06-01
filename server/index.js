@@ -21,7 +21,6 @@ app.use(express.static(
     { maxAge: '30d' },
 ));
 
-// here we serve the index.html page
 const pagesServerSide = [
     'orgs',
     'cua-hang',
