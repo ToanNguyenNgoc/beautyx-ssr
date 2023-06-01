@@ -6,8 +6,6 @@ import React, { useContext, useState } from 'react';
 import { useDiscountDetail } from './useDiscountDetail';
 import style from '../_SerProCoDetail/detail.module.css'
 import { Container, Drawer, Rating } from '@mui/material';
-import Slider from 'react-slick';
-import { onErrorImg } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import icon from 'constants/icon';
 import { AlertSnack, OpenApp, Seo, ShareSocial, XButton } from 'components/Layout';

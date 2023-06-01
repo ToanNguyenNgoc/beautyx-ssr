@@ -133,21 +133,44 @@
 @media only screen and (max-width: 767px) {
   .head {
     padding: 8px 12px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: var(--white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, .1);
   }
 
   .body {
-    padding: 0px 12px;
+    padding: 60px 12px 0px 12px;
     display: flex;
+    justify-content: space-between;
   }
 
   .list_thumb {
     width: 25%;
-    grid-gap: 12px;
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    display: flex;
+    flex-direction: column;
+    grid-gap:12px
   }
-  .thumb_item_detail p:first-child{
+
+  .thumb_item_detail p:first-child {
     font-size: 10px;
     line-height: 12px;
+  }
+
+  .tab_cnt {
+    margin: 0px;
+    padding: 0px 0px 0px 12px;
+    width: calc(75% - 12px);
+    border-top: none;
+    border-left: solid 1px var(--bg-color);
+  }
+
+  .tab_image_list {
+    margin-top: 8px;
+    grid-template-columns: repeat(2, 1fr);
   }
 }

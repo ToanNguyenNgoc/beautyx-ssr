@@ -2,7 +2,7 @@ import { Dialog } from "@mui/material";
 import icon from "constants/icon";
 import { IOrganization } from "interface";
 import { useRef } from "react";
-import MapGL, { Marker } from 'react-map-gl';
+import MapGL, { Marker, NavigationControl } from 'react-map-gl';
 import Slider from "react-slick";
 import style from './org-item-map.module.css'
 import { XButton } from "components/Layout/XButton";
@@ -94,6 +94,11 @@ export function OrgItemMap(props: OrgMapFullProps) {
                             mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                             mapStyle="mapbox://styles/mapbox/streets-v10"
                         >
+                            <NavigationControl
+                                position="bottom-right"
+                                showZoom={true}
+                                showCompass={true}
+                            />
                             <Marker
                                 latitude={org.latitude}
                                 longitude={org.longitude}

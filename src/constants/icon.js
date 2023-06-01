@@ -252,6 +252,7 @@ import stateLlite from "assets/icon/statellite.png"
 import street from "assets/icon/street.png";
 import movie from "assets/icon/movie.png";
 import expend from "assets/icons/expend.svg"
+import homePurpleBold from "assets/icon/homePurpleBold.svg"
 
 const icon = {
   smilePurple,
@@ -501,6 +502,7 @@ const icon = {
   sendBlack,
   imageBlack,
   refresh,
-  stateLlite, street, movie, expend
+  stateLlite, street, movie, expend,
+  homePurpleBold
 };
 export default icon;

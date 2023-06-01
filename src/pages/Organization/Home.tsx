@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Container } from '@mui/material';
-import { Banner, Deal, Header, Loading, More, ServiceSection, Tab } from './components';
+import { Banner, Deal, Header, Loading, More, ServiceSection, Tab, About } from './components';
 import { useContext, useRef } from 'react';
 import { OrgContext, OrgContextType } from 'context';
 import style from './organization.module.css'
@@ -27,6 +27,7 @@ function Home() {
               <BackTopButton />
             </>
         }
+        {/* <Container><Loading/></Container> */}
       </div>
     </div>
   );
@@ -64,7 +65,7 @@ const Body = () => {
           </>
         }
         <div ref={refDetail} className={style.body_section}>
-          doanh nghiệp
+          <About/>
         </div>
       </div>
     </>
