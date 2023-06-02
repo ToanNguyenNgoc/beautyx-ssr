@@ -59,7 +59,7 @@
 }
 .discount_item_percent {
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     right: 0;
     padding: 5px;
     font-weight: 700;
@@ -75,7 +75,7 @@
     top: 5px;
     left: 5px;
     width: 35px;
-    z-index: 3;
+    z-index: 2;
     background-color: var(--bg-white);
     border-radius: 100%;
 }
@@ -85,7 +85,7 @@
     height: 100%;
     object-fit: cover;
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     border-radius: 8px 8px 0px 0px;
 }
 

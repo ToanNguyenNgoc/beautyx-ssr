@@ -21,7 +21,7 @@ interface ShareSocialProps {
 export function ShareSocial(props: ShareSocialProps) {
     const { url } = props
     const [open, setOpen] = useState(false)
-    const originUrl = `${DOMAIN}${url}`
+    const originUrl = window.location.href
     return (
         <>
             <div className={style.container}>

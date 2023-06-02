@@ -7,6 +7,7 @@ import { useContext, useRef, useState } from 'react'
 import { OrgContext, OrgContextType } from 'context'
 import { usePostAnalytics } from '../../hooks'
 import { Gallery } from '../Gallery'
+import {SharePopup} from '../Share'
 import { OrgItemMap } from 'components/Layout/OrgItemMap'
 import { formatOrgTimeWork } from 'utils'
 import { useMediaQuery } from '@mui/material'
@@ -24,6 +25,7 @@ export const Banner = () => {
     ?.concat(servicesList).slice(0, 5)
   const [oImg, setOImg] = useState(false)
   const [map, setMap] = useState(false)
+  const [share, setShare] = useState(false)
   const refTime = useRef<HTMLUListElement>(null)
   const refIcon = useRef<HTMLImageElement>(null)
   const onToggleTime = () => {
@@ -87,10 +89,12 @@ export const Banner = () => {
                   title='Tư vấn'
                 />
                 <XButton
+                  onClick={()=>setShare(true)}
                   iconSize={mb ? 18 : 16}
                   icon={icon.share}
                   title='Chia sẻ'
                 />
+                <SharePopup open={share} onClose={() => setShare(false)} />
               </div>
               <div className={style.head_right_time}>
                 <div className={style.head_right_time_left}>
