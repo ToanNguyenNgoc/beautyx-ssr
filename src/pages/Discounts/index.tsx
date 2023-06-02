@@ -7,19 +7,28 @@ import HeadMobile from 'features/HeadMobile';
 import DiscountItem from 'pages/HomePage/HomeDiscounts/DiscountItem';
 import { LoadGrid } from 'components/LoadingSketion';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { ParamDiscounts } from 'params-query/param.interface';
 import style from './discounts.module.css'
+import API_ROUTE from 'api/_api';
+import { paramsDiscounts } from 'params-query';
+import { CACHE_TIME } from 'common';
+import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
+import { AUTH_LOCATION } from 'api/authLocation';
 
 function Discounts() {
-    const paramsDiscounts: ParamDiscounts = {
-        "append": "user_available_purchase_count",
-        "filter[platform]": "MOMO",
-        "limit": 18,
-        "sort": "-priority|-created_at|discount_value"
+    const IS_MB = useDeviceMobile()
+    const PLAT_FORM = EXTRA_FLAT_FORM();
+    const LOCATION = AUTH_LOCATION();
+    const params = {
+        ...paramsDiscounts,
+        limit: 18,
+        "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
+        "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
-    const IS_MB = useDeviceMobile();
-    const { resData, totalItem, onLoadMore } = useSwrInfinite({
-        enable:true,API_URL:"/discounts",params:paramsDiscounts
+    const {resData, onLoadMore, totalItem} = useSwrInfinite({
+        API_URL:API_ROUTE.DISCOUNTS,
+        enable:true,
+        dedupingInterval:CACHE_TIME,
+        params
     })
     const discounts: IDiscountPar[] = resData
     const onViewMore = () => {
