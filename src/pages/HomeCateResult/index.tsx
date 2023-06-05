@@ -7,7 +7,7 @@ import {
     FilterPrice,
     FilterSort,
 } from "components/Filter";
-import { BackTopButton, ProductableItem, XButton } from "components/Layout";
+import { BackTopButton, ProductableItem, Seo, XButton } from "components/Layout";
 import { LoadGrid } from "components/LoadingSketion";
 import icon from "constants/icon";
 import HeadMobile from "features/HeadMobile";
@@ -124,6 +124,7 @@ function HomeCateResult() {
     };
     //pagination tags child
     const perPage = IS_MB ? 4 : 6;
+    // const perPage = 3
     const totalTagChild = tag?.children?.length ?? 0;
     const totalPage = Math.ceil(totalTagChild / perPage);
     const pageGroup: IPageGroup[] = [];
@@ -154,6 +155,9 @@ function HomeCateResult() {
     return (
         <>
             {IS_MB && <HeadMobile title={tag?.name ?? ""} />}
+            <Seo
+                title={tag?.name ?? ""}
+            />
             <Container>
                 <div className={style.container}>
                     <div className={style.head}>

@@ -2,7 +2,7 @@ import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { useDeviceMobile, useFavorite } from 'hooks';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { useDiscountDetail } from './useDiscountDetail';
 import style from '../_SerProCoDetail/detail.module.css'
 import { Container, Drawer, Rating } from '@mui/material';
@@ -85,12 +85,8 @@ function DiscountDetail() {
     return (
         (detail && org && discount) ?
             <>
-                <Seo
-                    title={detail.service_name}
-                    content={detail.description}
-                    imageCover={detail.image_url}
-                />
                 {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
+                <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>

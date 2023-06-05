@@ -7,9 +7,10 @@ import { AppContext } from "context/AppProvider";
 import { IProvince } from "interface";
 import { formatRoundOrgCount, scrollTop } from "utils";
 import { useDeviceMobile, useSearchKeyword } from "hooks";
-import { BackTopButton, Input, XButton } from "components/Layout";
+import { BackTopButton, Input, Seo, XButton } from "components/Layout";
 import icon from "constants/icon";
 import style from './list-province.module.css'
+import { Helmet } from "react-helmet";
 
 function Provinces() {
     const [value, setValue] = useState('')
@@ -32,6 +33,9 @@ function Provinces() {
     const list = value === '' ? provinces_org : provinces
     return (
         <>
+           <Seo
+            title="Địa điểm làm đẹp"
+           />
             {
                 IS_MB &&
                 <div className={style.head}>
@@ -77,7 +81,7 @@ function Provinces() {
                     </ul>
                 </div>
             </Container>
-            <BackTopButton/>
+            <BackTopButton />
         </>
     );
 }
