@@ -25,21 +25,16 @@ interface CartCalcType {
     orgChoose: IOrganization
 }
 
-const popupInit = {
-    content: '', open: false, child: <></>
-}
-
 export function CartCalc(props: CartCalcType) {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const { order, orgChoose } = props
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const [openVc, setOpenVc] = useState(false)
-    const {firstLoad, resultLoad, noti} = useNoti()
+    const { firstLoad, resultLoad, noti, onCloseNoti } = useNoti()
     const history = useHistory()
-    const [popup, setPopup] = useState(popupInit)
     const { USER } = useSelector((state: IStore) => state.USER)
     const { cartAmount, cartAmountDiscount, VOUCHER_APPLY, cartList } = useSelector((state: IStore) => state.carts)
-    const {  services_id, products_id, combos_id, outDiscounts, products } = useCartReducer()
+    const { services_id, products_id, combos_id, outDiscounts, products } = useCartReducer()
     let finalAmount = cartAmount - cartAmountDiscount
 
     const { vouchersFinal, totalVoucherValue } = useVoucher(finalAmount, VOUCHER_APPLY, services_id)
@@ -57,6 +52,7 @@ export function CartCalc(props: CartCalcType) {
         .filter(Boolean)
 
     const onPostOrder = async () => {
+        // console.log(orgChoose)
         const param: PostOrderType = {
             ...order,
             products: products_id,
@@ -64,25 +60,26 @@ export function CartCalc(props: CartCalcType) {
             services: services_id,
             coupon_code: listCouponCode
         }
+        if (!orgChoose) {
+            return resultLoad('Vui lòng chọn dịch vụ/ sản phẩm bạn muốn đặt hàng !')
+        }
         if (finalAmount - totalVoucherValue < 1000) {
-            return setPopup({ ...popupInit, open: true, content: 'Giá trị đơn hàng tối thiểu 1.000đ' })
+            return resultLoad('Giá trị đơn hàng tối thiểu 1.000đ')
         }
         if (products_id?.length > 0 && !order.user_address_id) {
-            return setPopup({
-                content: 'Vui lòng thêm địa chỉ giao hàng!',
-                open: true,
-                child: <XButton title='Thêm mới' onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')} />
-            })
+            return resultLoad(
+                'Vui lòng thêm địa chỉ giao hàng!',
+                <XButton title='Thêm mới' onClick={() => history.push('/tai-khoan/dia-chi-giao-hang')} />
+            )
         }
         if (!order.payment_method_id) {
-            return setPopup({ ...popupInit, open: true, content: 'Vui lòng chọn phương thức thanh toán' })
+            return resultLoad('Vui lòng chọn phương thức thanh toán')
         }
         if (PLAT_FORM === PLF_TYPE.MB && !checkPhoneValid(USER?.telephone)) {
-            return setPopup({
-                content: 'Vui lòng thêm số điện thoại để tiếp tục thanh toán!',
-                open: true,
-                child: <XButton title='Thêm mới' onClick={() => history.push('/otp-form')} />
-            })
+            return resultLoad(
+                'Vui lòng thêm số điện thoại để tiếp tục thanh toán!',
+                <XButton title='Thêm mới' onClick={() => history.push('/otp-form')} />
+            )
         }
         firstLoad()
         tracking.PAY_CONFIRM_CLICK(orgChoose.id, formatProductList(products))
@@ -91,7 +88,7 @@ export function CartCalc(props: CartCalcType) {
             resultLoad('')
             const state_payment = await { ...res.data.context, FINAL_AMOUNT: finalAmount - totalVoucherValue };
             if (state_payment.status !== 'PENDING') {
-                return setPopup({ ...popupInit, open: true, content: 'Tạo đơn hàng thất bại!' })
+                return resultLoad('Tạo đơn hàng thất bại!')
             }
             history.push({
                 pathname: `/trang-thai-don-hang/`,
@@ -99,10 +96,8 @@ export function CartCalc(props: CartCalcType) {
                 state: { state_payment },
             });
         } catch (error) {
-            resultLoad('')
-            return setPopup({ ...popupInit, open: true, content: 'Tạo đơn hàng thất bại!' })
+            return resultLoad('Tạo đơn hàng thất bại!')
         }
-
     }
 
 
@@ -160,11 +155,11 @@ export function CartCalc(props: CartCalcType) {
                 cartAmount={cartAmount - cartAmountDiscount}
             />
             <PopupNotification
-                open={popup.open}
-                setOpen={() => setPopup(popupInit)}
+                open={noti.openAlert}
+                setOpen={onCloseNoti}
                 title='Thông báo'
-                content={popup.content}
-                children={popup.child}
+                content={noti.message}
+                children={noti.element}
             />
         </>
     );

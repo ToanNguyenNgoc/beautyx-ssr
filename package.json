@@ -6,6 +6,7 @@
         "@babel/core": "^7.19.3",
         "@babel/preset-env": "^7.19.4",
         "@babel/preset-react": "^7.18.6",
+        "@babel/register": "^7.21.0",
         "@emotion/react": "^11.10.0",
         "@emotion/styled": "^11.10.0",
         "@googlemaps/react-wrapper": "^1.1.35",
@@ -32,6 +33,7 @@
         "i18next": "^21.9.1",
         "i18next-browser-languagedetector": "^6.1.5",
         "i18next-xhr-backend": "^3.2.2",
+        "ignore-styles": "^5.0.1",
         "laravel-echo": "^1.15.0",
         "lightgallery": "^2.6.1",
         "lodash": "^4.17.21",
@@ -57,9 +59,9 @@
         "react-map-gl": "^7.0.19",
         "react-mapbox-autocomplete": "^0.2.3",
         "react-mapbox-gl": "^5.1.1",
+        "react-meta-tags": "^1.0.1",
         "react-player": "^2.9.0",
         "react-redux": "^7.2.6",
-        "react-refresh": "^0.14.0",
         "react-router": "^6.0.2",
         "react-router-dom": "^5.2.0",
         "react-scripts": "^5.0.1",
@@ -85,7 +87,11 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "deploy": "react-scripts build & firebase deploy"
+        "deploy": "react-scripts build & firebase deploy",
+        "dev:build-server": "NODE_ENV=development webpack --config webpack.server.js --mode=development -w",
+        "dev:start": "nodemon ./server-build/index.js",
+        "dev": "npm-run-all --parallel build dev:*",
+        "ssr": "node server/index.js"
     },
     "eslintConfig": {
         "extends": [
@@ -109,13 +115,24 @@
         "@types/react-map-gl": "^6.1.3",
         "@types/crypto-js": "^4.1.1",
         "@types/file-saver": "^2.0.5",
+        "@types/google.maps": "^3.49.2",
         "@types/googlemaps": "^3.43.3",
+        "@types/jest": "^26.0.24",
         "@types/lodash": "^4.14.184",
         "@types/lodash-es": "^4.17.5",
+        "@types/node": "^12.20.55",
+        "@types/reach__router": "^1.3.9",
         "@types/react": "^18.0.25",
+        "@types/react-copy-to-clipboard": "^5.0.4",
+        "@types/react-dom": "^17.0.15",
+        "@types/react-gallery-carousel": "^0.2.2",
         "@types/react-helmet": "^6.1.6",
+        "@types/react-lazy-load-image-component": "^1.5.2",
         "@types/react-lazyload": "^3.2.0",
+        "@types/react-map-gl": "^6.1.3",
         "@types/react-router-dom": "^5.3.2",
-        "@types/react-slick": "^0.23.10"
+        "@types/react-slick": "^0.23.10",
+        "nodemon": "^2.0.15",
+        "npm-run-all": "^4.1.5"
     }
 }

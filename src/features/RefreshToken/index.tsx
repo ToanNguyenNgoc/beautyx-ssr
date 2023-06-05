@@ -4,7 +4,7 @@ import { PopupNotification } from 'components/Notification';
 import { useNoti } from 'hooks';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchAsyncUser } from 'redux/user/userSlice';
+import { fetchAsyncUser } from 'redux/profile/userSlice';
 
 function RefreshToken() {
     const [open, setOpen] = useState(true)

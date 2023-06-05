@@ -1,7 +1,7 @@
 import { useSWRInfinite } from "swr";
 import { pickBy, identity } from "lodash"
 
-export function useSwrInfinite(
+export function useSwrInfinite<ResData = any>(
     condition: any,
     API_URL: string,
     params?: any,
@@ -17,7 +17,7 @@ export function useSwrInfinite(
             initialSize: 1
         }
     );
-    let resData: any[] = [];
+    let resData: ResData[] = [];
     let originData: any[] = []
     let totalItem = 1;
     if (data) {

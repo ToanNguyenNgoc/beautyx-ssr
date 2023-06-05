@@ -304,7 +304,7 @@
 .checkout_out_amount_btn {
     margin-top: 8px;
     border-radius: 6px;
-    background-color: var(--text-orange);
+    background-color: var(--pr-green);
 }
 
 .open_voucher_bnt {

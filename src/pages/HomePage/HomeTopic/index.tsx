@@ -1,12 +1,11 @@
-import { XButton } from 'components/Layout';
+import { HomeTitle, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { AppContext } from 'context/AppProvider';
 import { useDeviceMobile } from 'hooks';
-import React, { useContext } from 'react';
+import  { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { clst, scrollTop, slugify } from 'utils';
-import HomeTitle from '../Components/HomeTitle';
 import {
     deals,
     // topics 

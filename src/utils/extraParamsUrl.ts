@@ -10,7 +10,13 @@ export function extraParamsUrl() {
                 queryString[queryString.length - 1]
                 : "?" + queryString[1];
         const urlSearchParams = new URLSearchParams(result);
-        //console.log(result,Object.fromEntries(urlSearchParams.entries()))
         return Object.fromEntries(urlSearchParams.entries());
     }
 }
+export const extractImageUrls = (htmlTemplate: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTemplate, 'text/html');
+    const imgElements = doc.getElementsByTagName('img')
+    const imageUrls = Array.from(imgElements).map((img) => img.src);
+    return imageUrls;
+};

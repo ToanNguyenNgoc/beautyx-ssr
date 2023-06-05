@@ -9,10 +9,11 @@
 
 .left {
     width: calc(66.66% - 6px);
+    aspect-ratio: 1 / 1;
 }
 .left_cnt{
     width: 100%;
-    padding-bottom: 100%;
+    height: 100%;
 }
 
 .right {
@@ -287,6 +288,7 @@
 }
 
 .post_btn {
+    background-color: var(--pr-green);
     margin-top: 12px;
     width: 100%;
     border-radius: 6px;

@@ -1,18 +1,20 @@
-import React, { useState } from 'react'
-import icon from '../../constants/icon';
+import { Dispatch, useState } from 'react'
 import { Switch, Snackbar, Alert } from '@mui/material';
-import { onSwitchValueCenter } from '../../redux/org/orgMapSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import IStore from '../../interface/IStore';
+import IStore from 'interface/IStore';
+import { onSwitchValueCenter } from 'redux/org/orgMapSlice';
+import icon from 'constants/icon';
+import style from './map.module.css'
 
 interface IProps {
-    handleBackCurrentUser: () => void
+    handleBackCurrentUser: () => void,
+    setMapStyle?: Dispatch<React.SetStateAction<string>>
 }
 
 function MapCurrentUser(props: IProps) {
     const { getValueCenter } = useSelector((state: IStore) => state.ORGS_MAP)
     const dispatch = useDispatch()
-    const { handleBackCurrentUser } = props;
+    const { handleBackCurrentUser, setMapStyle } = props;
     const onClickGetCurrent = async () => {
         handleBackCurrentUser()
     }
@@ -25,26 +27,42 @@ function MapCurrentUser(props: IProps) {
         <>
             <Snackbar
                 open={open}
-                anchorOrigin={{vertical:"top", horizontal:"center"}}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
                 autoHideDuration={1400}
-                onClose={()=>setOpen(false)}
+                onClose={() => setOpen(false)}
             >
                 <Alert severity="success" sx={{ width: '100%' }}>
                     {!getValueCenter && "Tắt"} cập nhật khi di chuyển bản đồ
                 </Alert>
-                </Snackbar>
+            </Snackbar>
             <div className='map-current-user'>
-            <button className="flex-row map-current-user__btn">
-                <Switch
-                    size="small"
-                    onChange={onChangeSwitch}
-                    checked={getValueCenter}
-                />
-            </button>
-            <button onClick={onClickGetCurrent} className="map-current-user__btn">
-                <img src={icon.pinMapRedGoogle} alt="" />
-            </button>
-        </div>
+                <button className="flex-row map-current-user__btn">
+                    <Switch
+                        size="small"
+                        onChange={onChangeSwitch}
+                        checked={getValueCenter}
+                    />
+                </button>
+                <button onClick={onClickGetCurrent} className="map-current-user__btn">
+                    <img src={icon.pinMapRedGoogle} alt="" />
+                </button>
+            </div>
+            <div className={style.map_style_ctrl}>
+                <ul className={style.map_style_list}>
+                    <li
+                        onClick={() => setMapStyle && setMapStyle('mapbox://styles/mapbox/streets-v12')}
+                        className={style.style_item}
+                    >
+                        <img src={icon.street} alt="" />
+                    </li>
+                    <li
+                        onClick={() => setMapStyle && setMapStyle('mapbox://styles/mapbox/satellite-streets-v12')}
+                        className={style.style_item}
+                    >
+                        <img src={icon.stateLlite} alt="" />
+                    </li>
+                </ul>
+            </div>
         </>
     );
 }

@@ -93,8 +93,10 @@
 
 .payment_left_qr {
     width: 100%;
-    height: calc(100% + 75px);
-    margin-top: -75px;
+    height: calc(100% + 670px);
+    margin-top: -670px;
+    /* height: calc(100% + 0px); */
+    /* margin-top: -0px; */
     border: none;
     outline: none;
 }
@@ -352,7 +354,7 @@
 
     .bottom_pay_right_btn {
         padding: 8px 12px !important;
-        background-color: var(--text-orange) !important;
+        background-color: var(--pr-green) !important;
     }
 
     .bottom_pay_left_label,

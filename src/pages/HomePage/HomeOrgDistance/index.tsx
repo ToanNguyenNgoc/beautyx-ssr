@@ -1,12 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import HomeTitle from '../Components/HomeTitle';
+import { useContext, useEffect } from 'react';
 import { ParamOrg } from 'params-query/param.interface';
 import { formatDistance, onErrorImg } from 'utils';
 import style from './home-distance.style.module.css';
 import { IOrganization, IOrgMobaGalleries, ITag } from 'interface';
 import { Link } from 'react-router-dom';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
-import { XButton } from 'components/Layout';
+import { HomeTitle, XButton } from 'components/Layout';
 import { LoadGrid } from 'components/LoadingSketion';
 import icon from 'constants/icon';
 import { AUTH_LOCATION } from 'api/authLocation';

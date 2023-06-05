@@ -47,7 +47,7 @@ export function TimePicker(props: TimePickerProps) {
         const timeNowNum = parseInt(`${dayjs().format("HH")}${dayjs().format("mm")}`)
         const timeItemNum = parseInt(`${time.format("HH")}${time.format("mm")}`)
         const dayPick = datePicker !== "" && dayjs(datePicker).format("YYYYMMDD")
-        const dayPickerNum = dayPick && parseInt(dayPick)
+        const dayPickerNum = dayPick ? parseInt(dayPick) : 0
         const todayNum = parseInt(dayjs().format("YYYYMMDD"))
         if (disablePrev && timeItemNum < timeNowNum && datePicker && dayPickerNum <= todayNum) {
             disable = true

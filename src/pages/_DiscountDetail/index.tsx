@@ -1,17 +1,15 @@
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
-import { useDeviceMobile, useFavorite } from 'hooks';
+import { useCartReducer, useDeviceMobile, useFavorite } from 'hooks';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { useDiscountDetail } from './useDiscountDetail';
 import style from '../_SerProCoDetail/detail.module.css'
 import { Container, Drawer, Rating } from '@mui/material';
-import Slider from 'react-slick';
-import { onErrorImg } from 'utils';
 import formatPrice from 'utils/formatPrice';
 import icon from 'constants/icon';
-import { AlertSnack, OpenApp, ShareSocial, XButton } from 'components/Layout';
-import { DetailDesc, DetailOrgCard, DetailRecommend } from 'pages/_SerProCoDetail';
+import { AlertSnack, OpenApp, Seo, ShareSocial, XButton } from 'components/Layout';
+import { DetailDesc, DetailOrgCard, DetailRecommend, SliderImage } from 'pages/_SerProCoDetail';
 import Comment from 'components/Comment';
 import { IDiscountPar, IOrganization } from 'interface';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,7 +17,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import IStore from 'interface/IStore';
 import { PopupMessage } from 'components/Notification';
 import { formatAddCart } from 'utils/cart/formatAddCart';
-import { addCart } from 'redux/cart';
+import { addCart, unCheck } from 'redux/cart';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
 import { clearAllServices } from 'redux/booking';
@@ -54,67 +52,47 @@ function DiscountDetail() {
         favorite: DETAIL.is_favorite
     })
     //----
-    const settings = {
-        dots: false,
-        arrows: false,
-        speed: 900,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        swipe: true,
-    }
     const onNavigateCateList = () => {
         if (org?.id) {
             history.push(`/cua-hang/${org.subdomain}/dich-vu?cate_id=${DETAIL.category?.id}`)
         }
     }
-
+    const dispatch = useDispatch()
+    const values = formatAddCart(
+        DETAIL,
+        org,
+        DETAIL.type,
+        1,
+        DETAIL.PRICE,
+        discount?.user_available_purchase_count > 0 ? discount : null
+    );
+    const onBookingNow = () => {
+        const TYPE = "BOOK_NOW";
+        const service = {
+            ...DETAIL,
+            SPECIAL_PRICE: 0,
+            discount: values.discount
+        };
+        const services = [{ service, quantity: 1 }];
+        tracking.ADD_CART_CLICK(values.org_id, values.id, values.price, values.quantity)
+        GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
+        history.push({
+            pathname: "/dat-hen",
+            state: { org, services, TYPE },
+        });
+        dispatch(clearAllServices());
+    }
     return (
         (detail && org && discount) ?
             <>
                 {IS_MB && <HeadOrg onBackFunc={() => history.goBack()} org={org} />}
+                <Seo title={DETAIL.name} imageCover={DETAIL.image_url} content={DETAIL.description} />
                 <Container>
                     <div className={style.wrapper} >
                         <div className={style.container}>
                             <div className={style.container_head}>
                                 <div className={style.container_head_left}>
-                                    <div className={style.container_head_img_slide}>
-                                        <Slider
-                                            {...settings}
-                                            className={style.slide}
-                                        >
-                                            {
-                                                DETAIL.video_url &&
-                                                <div className={style.media_item_video}>
-                                                    <video
-                                                        className={style.media_item_bg}
-                                                        src={DETAIL.video_url}>
-
-                                                    </video>
-                                                    <video
-                                                        className={style.video_container}
-                                                        loop
-                                                        controls
-                                                        webkit-playsinline="webkit-playsinline"
-                                                        playsInline={true}
-                                                    >
-                                                        <source src={DETAIL.video_url} />
-                                                    </video>
-                                                </div>
-                                            }
-                                            {
-                                                [DETAIL.image_url].map(i => (
-                                                    <div
-                                                        style={IS_MB ? {
-                                                            height: `414px`
-                                                        } : {}}
-                                                        key={i} className={style.media_item_img}
-                                                    >
-                                                        <img src={i ?? org.image_url} onError={(e) => onErrorImg(e)} alt="" />
-                                                    </div>
-                                                ))
-                                            }
-                                        </Slider>
-                                    </div>
+                                    <SliderImage detail={detail} org={org} />
                                     <div className={style.container_head_img_thumb}>
                                         {!IS_MB && <ShareSocial url={location.pathname} />}
                                     </div>
@@ -187,7 +165,7 @@ function DiscountDetail() {
                                 </div>
                             </div>
                         </div>
-                        <DetailDesc detail={DETAIL} org={org} />
+                        <DetailDesc onBookingNow={onBookingNow} detail={DETAIL} PERCENT={PERCENT} org={org} />
                         {
                             IS_MB &&
                             <div className={style.org_card_mb}>
@@ -232,7 +210,7 @@ const DetailBottom = (
     { detail, org, discount, PERCENT }:
         { detail: DetailProp, org: IOrganization, discount: IDiscountPar, PERCENT: number }
 ) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const [dra, setDra] = useState({
         open: false, type: ''
     })
@@ -286,10 +264,12 @@ const DetailBottom = (
 }
 
 const DetailQuantity = (props: DetailQuantityProps) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const { discount, org, detail, draType } = props
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
+    const { cart_confirm } = useCartReducer()
+    const cartOtherOrg = cart_confirm.filter(i => i.org_id !== org.id)
     const dispatch = useDispatch()
     const { USER } = useSelector((state: IStore) => state.USER)
     const history = useHistory()
@@ -304,9 +284,13 @@ const DetailQuantity = (props: DetailQuantityProps) => {
     );
     const handleAddCart = () => {
         if (!USER) return history.push('/sign-in?1')
+        for (let i = 0; i < cartOtherOrg.length; i++) {
+            dispatch(unCheck(cartOtherOrg[i]))
+        }
         dispatch(addCart({
             ...values,
-            user_id: USER.id
+            user_id: USER.id,
+            isConfirm:true
         }));
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         tracking.ADD_CART_CLICK(
@@ -321,7 +305,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         const TYPE = "BOOK_NOW";
         const service = {
             ...detail,
-            SPECIAL_PRICE:0,
+            SPECIAL_PRICE: 0,
             discount: values.discount
         };
         const services = [{ service, quantity: quantity }];

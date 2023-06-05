@@ -18,11 +18,11 @@ export function XButton(props: IProps) {
         loading,
         title,
         onClick,
-        type,
+        type = "button",
         className,
         style,
         icon,
-        iconSize,
+        iconSize = 18,
     } = props;
     return (
         <button
@@ -30,7 +30,7 @@ export function XButton(props: IProps) {
             disabled={loading === true}
             className={`btn-loading ${className ? className : ""}`}
             onClick={onClick}
-            type={type ?? "button"}
+            type={type}
         >
             {
                 icon &&
@@ -39,8 +39,8 @@ export function XButton(props: IProps) {
                         marginRight: '0px'
                     } : {}}
                     src={icon} alt=""
-                    height={iconSize ?? 18}
-                    width={iconSize ?? 18}
+                    height={iconSize}
+                    width={iconSize}
                 />
             }
             {

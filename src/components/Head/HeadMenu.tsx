@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { AppContext } from 'context/AppProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { logoutUser } from 'redux/user/userSlice';
+import { logoutUser } from 'redux/profile/userSlice';
 
 function HeadMenu() {
     const refMenu = useRef<HTMLDivElement>();
@@ -75,11 +75,6 @@ const HeadMenuBox = (props: HeadMenuProps) => {
         setLanguage(code);
         i18next.changeLanguage(code);
     };
-    const handleSignOut = () => {
-        dispatch(logoutUser());
-        localStorage.removeItem("_WEB_TK");
-        window.sessionStorage.removeItem("_WEB_TK");
-    };
 
     return (
         <div
@@ -138,7 +133,7 @@ const HeadMenuBox = (props: HeadMenuProps) => {
             {USER && (
                 <div className={style.menu_bottom}>
                     <div
-                        onClick={handleSignOut}
+                        onClick={() => dispatch(logoutUser())}
                         className={style.menu_bottom_btn}
                     >
                         {t("Header.sign_out")}

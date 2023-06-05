@@ -28,6 +28,7 @@ import { onErrorImg } from "utils";
 import icon from "constants/icon";
 import './style.css';
 import "mapbox-gl/dist/mapbox-gl.css";
+import style from './map.module.css'
 
 interface IProps {
     orgs: IOrganization[];
@@ -36,8 +37,9 @@ interface IProps {
 
 const MapContent = (props: IProps) => {
     const IS_MB = useDeviceMobile();
+    const [mapStyle, setMapStyle] = useState('mapbox://styles/mapbox/streets-v12')
     const { orgs, isDetail } = props;
-    const mapRef = useRef<any>();
+    const mapRef = useRef<any>(null);
     const { orgCenter, getValueCenter, tags } = useSelector(
         (state: IStore) => state.ORGS_MAP
     );
@@ -216,7 +218,10 @@ const MapContent = (props: IProps) => {
                 openDetail={openDetail}
                 setOpenDetail={setOpenDetail}
             />
-            <MapCurrentUser handleBackCurrentUser={handleBackCurrentUser} />
+            <MapCurrentUser 
+                handleBackCurrentUser={handleBackCurrentUser} 
+                setMapStyle={setMapStyle}
+            />
             {
                 <MapGL
                     onMouseMove={onCenterChange}
@@ -229,7 +234,7 @@ const MapContent = (props: IProps) => {
                     }}
                     attributionControl={true}
                     mapboxAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-                    mapStyle="mapbox://styles/mapbox/streets-v10"
+                    mapStyle={mapStyle}
                     ref={mapRef}
                 >
                     <NavigationControl
@@ -278,6 +283,7 @@ const MapContent = (props: IProps) => {
                             </div>
                         </Marker>
                     ))}
+                    <Island/>
                 </MapGL>
             }
             <div
@@ -359,3 +365,22 @@ const MapContent = (props: IProps) => {
     );
 };
 export default MapContent;
+
+const Island = () => {
+    return (
+        <>
+            <Marker
+                latitude={16.534439}
+                longitude={111.610783}
+            >
+                <span className={style.island_marker} >Quần đảo Hoàng Sa</span>
+            </Marker>
+            <Marker
+                latitude={10.342131}
+                longitude={114.700143}
+            >
+                <span className={style.island_marker} >Quần đảo Trường Sa</span>
+            </Marker>
+        </>
+    )
+}

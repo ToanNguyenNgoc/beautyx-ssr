@@ -1,4 +1,5 @@
 import { AUTH_HEADER } from "api/authHeader"
+export const LOCAL_TK = '_WEB_TK'
 
 export const DOMAIN = `https://beautyx.vn`
 export const echoConfig = {

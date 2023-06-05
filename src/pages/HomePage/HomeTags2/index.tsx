@@ -1,13 +1,12 @@
-import { XButton } from 'components/Layout';
+import { HomeTitle, XButton } from 'components/Layout';
 import icon from 'constants/icon';
 import { AppContext } from 'context/AppProvider';
 import { useTags } from 'hooks';
 import { ITag } from 'interface';
-import React, { useContext, useState } from 'react';
+import  { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { slugify, scrollTop } from 'utils';
-import HomeTitle from '../Components/HomeTitle';
 import style from './style.module.css'
 
 interface IPageGroup {

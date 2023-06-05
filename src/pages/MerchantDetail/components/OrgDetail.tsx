@@ -1,7 +1,7 @@
 import React, { useContext, useRef, useState } from "react";
 import { Container } from "@mui/material";
 import Slider from "react-slick";
-// import PopupDetailContact from "./PopupDetailContact";
+import PopupDetailContact from "./PopupDetailContact";
 import { extraOrgTimeWork, IOrgTimeWork } from "../Functions/extraOrg";
 import { IOrgMobaGalleries, IOrganization } from 'interface'
 import { OrgItemMap } from "components/Layout/OrgItemMap";
@@ -19,6 +19,7 @@ interface IProps {
 
 function OrgDetail(props: IProps) {
     const { org, galleries } = props;
+    const [openContact, setOpenContact] = useState(false)
     const { favoriteSt, onToggleFavorite } = useFavorite({
         id: org.id,
         org_id: org.id,
@@ -29,6 +30,7 @@ function OrgDetail(props: IProps) {
     const { t } = useContext(AppContext) as any;
     const history = useHistory()
     const onContact = () => history.push(`/chat`)
+    // const onContact = () => setOpenContact(true)
     const [openPopupMap, setOpenPopupMap] = useState(false);
     const orgTimes = extraOrgTimeWork(org?.opening_time);
     const orgTimeToday = orgTimes?.find(i => i.todayAct)
@@ -303,11 +305,11 @@ function OrgDetail(props: IProps) {
                     </div>
                 </div>
             </Container>
-            {/* <PopupDetailContact
+            <PopupDetailContact
                 org={org}
-                openPopupContact={openPopupContact}
-                setOpenPopupContact={setOpenPopupContact}
-            /> */}
+                openPopupContact={openContact}
+                setOpenPopupContact={setOpenContact}
+            />
         </div>
     );
 }

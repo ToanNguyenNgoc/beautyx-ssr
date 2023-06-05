@@ -14,7 +14,12 @@ const echoConfig = () => {
     encrypted: true,
     enabledTransports: ['ws', 'wss'],
     authEndpoint: process.env.REACT_APP_ECHO_AUTH_ENDPOINT,
-    auth: AUTH_HEADER_WS()
+    auth: {
+      headers: {
+        "Authorization": `Bearer 6440a9cbd4a759d4bd0d90e2|gOvxABcmUh25LvZs3x7t`,
+        "Content-Type": ''
+      },
+    }
   })
   return config
 }

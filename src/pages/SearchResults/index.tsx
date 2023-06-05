@@ -30,10 +30,10 @@ function SearchResults() {
             link: "dich-vu", title: t('Mer_de.services'),
             icon: ICON.servicePurple, act_icon: ICON.serviceWhite, show: province ? false : true
         },
-        {
-            link: "san-pham", title: t('Mer_de.products'),
-            icon: ICON.barberPurple, act_icon: ICON.barberWhite, show: province ? false : true
-        },
+        // {
+        //     link: "san-pham", title: t('Mer_de.products'),
+        //     icon: ICON.barberPurple, act_icon: ICON.barberWhite, show: province ? false : true
+        // },
         {
             link: "cua-hang", title: t('my_ser.business'),
             icon: ICON.orgPurple, act_icon: ICON.orgWhite, show: true

@@ -248,6 +248,9 @@ import imageBlack from "assets/icon/imageBlack.svg";
 import refresh from "assets/icon/refresh.svg";
 import smilePurple from "assets/icon/smile_purple.svg";
 import imagePurple from "assets/icon/img_purple.svg";
+import stateLlite from "assets/icon/statellite.png"
+import street from "assets/icon/street.png";
+import movie from "assets/icon/movie.png"
 
 const icon = {
   smilePurple,
@@ -497,5 +500,6 @@ const icon = {
   sendBlack,
   imageBlack,
   refresh,
+  stateLlite, street, movie
 };
 export default icon;

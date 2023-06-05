@@ -32,7 +32,7 @@ import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
 import tikiAuthApi from "api/_tikiAuthApi";
 import { loginAsyncMb } from "redux/loginFlatForm/loginFlatFrom";
 import { EXTRA_REDUCER_STATUS } from "redux/status";
-import { fetchAsyncUser } from "redux/user/userSlice";
+import { fetchAsyncUser } from "redux/profile/userSlice";
 import icon from "constants/icon";
 // ==== END
 function LoginFlatFormRequest(props: any) {

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import authentication from "../../../../api/authApi";
 import mediaApi from "../../../../api/mediaApi";
 import icon from "../../../../constants/icon";
-import { putUser, updateAsyncUser } from "../../../../redux/user/userSlice";
+import { putUser, updateAsyncUser } from "../../../../redux/profile/userSlice";
 import * as Yup from "yup";
 import "./dialogChangeInfo.css";
 import { AppContext } from "../../../../context/AppProvider";

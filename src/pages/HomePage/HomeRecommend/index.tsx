@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
-import HomeTitle from "../Components/HomeTitle";
+import  { useContext, useState } from "react";
 import { paramsProductable } from "params-query";
 import { AppContext } from "context/AppProvider";
 import { AUTH_LOCATION } from "api/authLocation";
-import { ProductableItem, XButton } from "components/Layout";
+import { HomeTitle, ProductableItem, XButton } from "components/Layout";
 import style from './recommend.module.css'
 import { useFetchInfinite } from "hooks";
 import API_3RD from "api/3rd-api";

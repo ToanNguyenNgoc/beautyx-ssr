@@ -25,7 +25,7 @@ function BookingMap(props: BookingMapProps) {
     const lngUser = LOCATION && parseFloat(LOCATION?.split(",")[1])
     return (
         <MapGL
-            style={{ width: "100%", height: "100vh" }}
+            style={{ width: "100%", height: "100%" }}
             initialViewState={{
                 latitude: org.latitude,
                 longitude: org.longitude,

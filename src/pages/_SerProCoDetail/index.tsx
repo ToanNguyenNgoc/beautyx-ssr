@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouteMatch, useHistory, Link, useLocation } from 'react-router-dom';
-import { useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useCartReducer, useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
+import { useContext, useEffect, useRef, useState } from 'react';
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { DetailProp } from './detail.interface'
 import formatPrice, { formatSalePriceService } from 'utils/formatPrice';
 import { IDiscountPar, IOrganization } from 'interface';
 import API_ROUTE from 'api/_api';
-import { BackTopButton, BeautyxCare, OpenApp, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
+import { BackTopButton, BeautyxCare, FullImage, OpenApp, Seo, SerProItem, ShareSocial, XButton } from 'components/Layout';
 import { Container } from '@mui/system';
 import { Drawer, Rating } from '@mui/material';
-import Slider from 'react-slick';
+import Slider, { Settings } from 'react-slick';
 import icon from 'constants/icon';
-import { clst, extraParamsUrl, formatDistance, onErrorImg } from 'utils';
+import { checkMediaType, clst, extraParamsUrl, extractImageUrls, formatDistance, onErrorImg, scrollTop } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { addCart, onClearPrevCartItem } from 'redux/cart';
+import { addCart, onClearPrevCartItem, unCheck } from 'redux/cart';
 import { PopupMessage } from 'components/Notification';
 import { clearAllServices } from 'redux/booking';
 import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
@@ -61,7 +61,7 @@ const routeType: RouteType[] = [
 ]
 
 function SerProCoDetail() {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const match = useRouteMatch()
     const paramsOld: any = extraParamsUrl();
     const history = useHistory()
@@ -122,18 +122,42 @@ function SerProCoDetail() {
         });
     }, [params.id]);
     //---
-    const settings = {
-        dots: false,
-        arrows: false,
-        speed: 900,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        swipe: true,
-    }
     // const [openShare, setOpenShare] = useState(false)
     const onNavigateCateList = () => {
         if (org?.id) {
             history.push(`/cua-hang/${org.subdomain}/dich-vu?cate_id=${DETAIL.category?.id}`)
+        }
+    }
+    //----
+    const dispatch = useDispatch()
+    const { USER } = useSelector((state: IStore) => state.USER)
+    const sale_price = DETAIL.SPECIAL_PRICE > 0 ? DETAIL.SPECIAL_PRICE : DETAIL.PRICE
+    const values = formatAddCart(DETAIL, org, DETAIL.type, 1, sale_price);
+    const onBookingNow = () => {
+        if (USER) {
+            const services = [{ service: DETAIL, quantity: 1 }];
+            const TYPE = "BOOK_NOW";
+            history.push({
+                pathname: "/dat-hen",
+                state: { org, services, TYPE, vouchers: [] },
+            })
+            dispatch(clearAllServices());
+        } else {
+            history.push("/sign-in?1")
+        }
+    }
+    const onBuyNow = () => {
+        if (USER) {
+            dispatch(onClearPrevCartItem())
+            const valuesCart = {
+                ...values,
+                isConfirm: true,
+                user_id: USER.id
+            }
+            dispatch(addCart(valuesCart))
+            history.push('/gio-hang')
+        } else {
+            history.push("/sign-in?1");
         }
     }
 
@@ -147,44 +171,7 @@ function SerProCoDetail() {
                         <div className={style.container}>
                             <div className={style.container_head}>
                                 <div className={style.container_head_left}>
-                                    <div className={style.container_head_img_slide}
-                                    >
-                                        <Slider
-                                            {...settings}
-                                            className={style.slide}
-                                        >
-                                            {
-                                                DETAIL.video_url &&
-                                                <div className={style.media_item_video}>
-                                                    <video
-                                                        className={style.media_item_bg}
-                                                        src={`${DETAIL.video_url}#t=0.001`}>
-                                                    </video>
-                                                    <video
-                                                        className={style.video_container}
-                                                        loop
-                                                        controls
-                                                        webkit-playsinline="webkit-playsinline"
-                                                        playsInline={true}
-                                                    >
-                                                        <source type="video/mp4" src={`${DETAIL.video_url}#t=0.001`} />
-                                                    </video>
-                                                </div>
-                                            }
-                                            {
-                                                [DETAIL.image_url].map(i => (
-                                                    <div
-                                                        style={IS_MB ? {
-                                                            height: `414px`
-                                                        } : {}}
-                                                        key={i} className={style.media_item_img}
-                                                    >
-                                                        <img src={i ?? org.image_url} onError={(e) => onErrorImg(e)} alt="" />
-                                                    </div>
-                                                ))
-                                            }
-                                        </Slider>
-                                    </div>
+                                    <SliderImage detail={DETAIL} org={org} />
                                     <div className={style.container_head_img_thumb}>
                                         {!IS_MB && <ShareSocial url={location.pathname} />}
                                     </div>
@@ -265,7 +252,12 @@ function SerProCoDetail() {
                                 </div>
                             </div>
                         </div>
-                        <DetailDesc detail={DETAIL} org={org} />
+                        <DetailDesc
+                            onBookingNow={DETAIL.type === 'SERVICE' ? onBookingNow : onBuyNow}
+                            detail={DETAIL}
+                            org={org}
+                            PERCENT={PERCENT}
+                        />
                         {
                             IS_MB &&
                             <div className={style.org_card_mb}>
@@ -295,7 +287,7 @@ function SerProCoDetail() {
                     item_id={DETAIL.id}
                     org_id={org?.id}
                 />
-                <BackTopButton/>
+                <BackTopButton />
             </>
             :
             <LoadDetail />
@@ -304,8 +296,125 @@ function SerProCoDetail() {
 
 export default SerProCoDetail
 
+export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
+    const IS_MB = useDeviceMobile()
+    const [index, setIndex] = useState(0)
+    const [open, setOpen] = useState(false)
+    const refSlider = useRef<any>(null)
+    const refThumb = useRef<any>(null)
+    const settings: Settings = {
+        dots: false,
+        arrows: false,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        swipe: true,
+        draggable: true,
+        afterChange: (currentIndex) => {
+            setIndex(currentIndex)
+            if (currentIndex % 5 === 0 && refThumb.current) refThumb.current.slickGoTo(currentIndex)
+        }
+    }
+    const settingsThumb: Settings = {
+        dots: false,
+        infinite: true,
+        arrows: !IS_MB,
+        speed: 300,
+        slidesToShow: 5,
+        slidesToScroll: 5,
+        prevArrow: <XButton />,
+        nextArrow: <XButton />
+    }
+    const images = [detail.video_url, detail.image_url || org.image_url]
+        .concat(extractImageUrls(detail.description))
+        .filter(Boolean)
+    const onSlickGoto = (i: number) => {
+        if (refSlider.current) {
+            refSlider.current.slickGoTo(i)
+            setIndex(i)
+        }
+    }
+    return (
+        <div className={style.container_head_img_slide}
+        >
+            <FullImage
+                open={open}
+                setOpen={setOpen}
+                src={images}
+                index={index}
+            />
+            <div className={style.container_head_slide}>
+                {
+                    images.length > 1 &&
+                    <div className={style.container_head_page}>
+                        {index + 1}/{images.length}
+                    </div>
+                }
+                <Slider ref={refSlider} {...settings}>
+                    {
+                        images.map((item) => (
+                            checkMediaType(item) === 'IMAGE' ?
+                                <img
+                                    onClick={() => setOpen(true)}
+                                    key={item} src={item} alt=''
+                                    className={style.side_item}
+                                />
+                                :
+                                <div key={item} className={style.side_item_video}>
+                                    <video
+                                        className={style.video_container}
+                                        loop
+                                        controls
+                                        webkit-playsinline="webkit-playsinline"
+                                        playsInline={true}
+                                    >
+                                        <source src={item} />
+                                    </video>
+                                </div>
+                        ))
+                    }
+                </Slider>
+            </div>
+            {
+                images.length > 5 &&
+                <div className={style.container_head_thumb}>
+                    <Slider ref={refThumb} {...settingsThumb}>
+                        {
+                            images.map((item, i: number) => (
+                                <div key={i} onClick={() => onSlickGoto(i)} className={style.side_item_thumb}>
+                                    <div
+                                        className={i === index ? `${style.thumb_img_cnt} ${style.thumb_act}` : style.thumb_img_cnt}
+                                    >
+                                        <img src={checkMediaType(item) === 'IMAGE' ? item : icon.movie} alt="" />
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </Slider>
+                </div>
+            }
+            {
+                (images.length > 1 && images.length < 5) &&
+                <div className={style.container_head_small}>
+                    {
+                        images.map((item, i: number) => (
+                            <div key={i} onClick={() => onSlickGoto(i)} className={style.side_item_thumb}>
+                                <div
+                                    className={i === index ? `${style.thumb_img_cnt} ${style.thumb_act}` : style.thumb_img_cnt}
+                                >
+                                    <img src={checkMediaType(item) === 'IMAGE' ? item : icon.movie} alt="" />
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            }
+        </div>
+    )
+}
 export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const { favoriteSt, onToggleFavorite } = useFavorite({
         org_id: org?.id,
         type: 'ORG',
@@ -354,9 +463,15 @@ export const DetailOrgCard = ({ org }: { org: IOrganization }) => {
         </div>
     )
 }
-export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganization }) => {
-    const {t} = useContext(AppContext) as any
-    const [more, setMore] = useState(false)
+interface DetailDescProps {
+    detail: DetailProp;
+    org: IOrganization;
+    onBookingNow?: () => void;
+    PERCENT?: number
+}
+export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescProps) => {
+    const { t } = useContext(AppContext) as any
+    const [more, setMore] = useState(true)
     const [contentHeight, setContentHeight] = useState(10)
     const refContent = useRef<HTMLDivElement>(null)
     const refGuide = useRef<HTMLUListElement>(null)
@@ -375,108 +490,153 @@ export const DetailDesc = ({ detail, org }: { detail: DetailProp, org: IOrganiza
         refPolicy.current?.classList.toggle(style.policy_list_show)
         refIconPolicy.current?.classList.toggle(style.icon_down)
     }
+    const onBookOrBuyNow = () => onBookingNow && (scrollTop(), onBookingNow())
 
     return (
-        <div className={style.container_desc}>
-            <p className={style.container_desc_title}>
-                {t('detail_item.desc')}
-            </p>
-            <div
-                style={more ? { height: 'max-content', maxHeight: 'unset' } : {}}
-                className={style.container_desc_content}
-            >
-                <div
-                    style={{
-                        whiteSpace: 'pre-line',
-                    }}
-                    ref={refContent}
-                >
-                    {detail.description === "" ? t('detail_item.updating')+'...' : detail.description}
-                </div>
-                {contentHeight > 100 && !more && <div className={style.gradient}></div>}
-            </div>
-            {
-                contentHeight > 100 &&
-                <XButton
-                    onClick={() => setMore(!more)}
-                    className={style.view_more_btn}
-                    title={more ? t('Mer_de.hide') : t('detail_item.see_more')}
-                />
-            }
-            {
-                detail.type === 'COMBO' &&
-                <div className="">
-                    <p className={style.container_desc_title}>
-                        Combo bao gồm:
-                    </p>
-                    <div className={style.combo_services}>
-                        <ul className={style.combo_services_list}>
+        <>
+            <div className={style.container_desc}>
+                <div className={style.detail_sticky_cnt}>
+                    <span className={style.detail_sticky_title}>Bạn đang xem</span>
+                    <div className={style.sticky_item}>
+                        <div className={style.sticky_item_img}>
                             {
-                                detail.services?.map((item: any, index: number) => (
-                                    <li key={index} className={style.combo_services_item}>
-                                        <SerProItem
-                                            item={item}
-                                            org={org}
-                                            type='SERVICE'
-                                        />
-                                        {
-                                            item.pivot?.number &&
-                                            <div className={style.combo_item_quantity}>
-                                                x{item.pivot?.number}
-                                            </div>
-                                        }
-                                    </li>
-                                ))
+                                detail.SPECIAL_PRICE > 0 &&
+                                <div className={style.sticky_item_percent}>
+                                    -{PERCENT}%
+                                </div>
                             }
+                            <img src={detail.image_url ?? org.image_url} alt="" />
+                        </div>
+                        <div className={style.sticky_item_de}>
+                            <span className={style.sticky_item_de_name}>{detail.name}</span>
+                            <div className={style.sticky_item_de_price}>
+                                {
+                                    detail.SPECIAL_PRICE > 0 ?
+                                        <>
+                                            <p>{formatPrice(detail.SPECIAL_PRICE)}đ</p>
+                                            <p>{formatPrice(detail.PRICE)}</p>
+                                        </>
+                                        :
+                                        <p>{formatPrice(detail.PRICE)}đ</p>
+                                }
+                            </div>
+                        </div>
+                        <div className={style.sticky_item_bot}>
+                            <XButton
+                                onClick={onBookOrBuyNow}
+                                title={detail.type === 'SERVICE' ? 'Đặt hẹn ngay' : 'Mua ngay'}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={style.desc_body_cnt}>
+                    <p className={style.container_desc_title}>
+                        {t('detail_item.desc')}
+                    </p>
+                    <div
+                        style={more ? { height: 'max-content', maxHeight: 'unset' } : {}}
+                        className={style.container_desc_content}
+                    >
+                        <div
+                            style={{
+                                whiteSpace: 'pre-line',
+                            }}
+                            ref={refContent}
+                        >
+                            {
+                                detail.description === "" ? t('detail_item.updating') + '...' :
+                                    <div
+                                        className={style.container_desc_content_txt}
+                                        dangerouslySetInnerHTML={{ __html: detail.description }}
+                                    />
+                            }
+                        </div>
+                        {contentHeight > 100 && !more && <div className={style.gradient}></div>}
+                    </div>
+                    {
+                        contentHeight > 100 &&
+                        <XButton
+                            onClick={() => setMore(!more)}
+                            className={style.view_more_btn}
+                            title={more ? t('Mer_de.hide') : t('detail_item.see_more')}
+                        />
+                    }
+                    {
+                        detail.type === 'COMBO' &&
+                        <div className="">
+                            <p className={style.container_desc_title}>
+                                Combo bao gồm:
+                            </p>
+                            <div className={style.combo_services}>
+                                <ul className={style.combo_services_list}>
+                                    {
+                                        detail.services?.map((item: any, index: number) => (
+                                            <li key={index} className={style.combo_services_item}>
+                                                <SerProItem
+                                                    item={item}
+                                                    org={org}
+                                                    type='SERVICE'
+                                                />
+                                                {
+                                                    item.pivot?.number &&
+                                                    <div className={style.combo_item_quantity}>
+                                                        x{item.pivot?.number}
+                                                    </div>
+                                                }
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    <div className={style.policy}>
+                        (*) {t('detail_item.shelf_life')}
+                    </div>
+                    <div className={style.guide_container}>
+                        <div
+                            onClick={onToggleGuide}
+                            className={style.guide_container_head}
+                        >
+                            <p className={style.container_desc_title}>
+                                {t('detail_item.detailed_description')}
+                            </p>
+                            <img ref={refIconGuide} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
+                        </div>
+                        <ul ref={refGuide} className={style.guide_list}>
+                            <li>{t('detail_item.step_1')}</li>
+                            <li>{t('detail_item.step_2')}</li>
+                            <li>{t('detail_item.step_3')}</li>
+                        </ul>
+                    </div>
+                    <div className={style.guide_container}>
+                        <div
+                            onClick={onTogglePolicy}
+                            className={style.guide_container_head}
+                        >
+                            <p className={style.container_desc_title}>
+                                {t('se.instructions_terms')}
+                            </p>
+                            <img ref={refIconPolicy} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
+                        </div>
+                        <ul ref={refPolicy} className={style.policy_list}>
+                            <li>
+                                <p className={style.policy_list_title}>{t('contact_form.confirm')}</p>
+                                <p className={style.policy_list_content}>
+                                    {t('detail_item.confirm_desc')}{"  "}0289 9959 938
+                                </p>
+                            </li>
+                            <li>
+                                <p className={style.policy_list_title}>{t('detail_item.cancellation_policy')}</p>
+                                <p className={style.policy_list_content}>
+                                    {t('detail_item.policy_desc')}
+                                </p>
+                            </li>
                         </ul>
                     </div>
                 </div>
-            }
-            <div className={style.policy}>
-                (*) {t('detail_item.shelf_life')}
             </div>
-            <div className={style.guide_container}>
-                <div
-                    onClick={onToggleGuide}
-                    className={style.guide_container_head}
-                >
-                    <p className={style.container_desc_title}>
-                        {t('detail_item.detailed_description')}
-                    </p>
-                    <img ref={refIconGuide} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
-                </div>
-                <ul ref={refGuide} className={style.guide_list}>
-                    <li>{t('detail_item.step_1')}</li>
-                    <li>{t('detail_item.step_2')}</li>
-                    <li>{t('detail_item.step_3')}</li>
-                </ul>
-            </div>
-            <div className={style.guide_container}>
-                <div
-                    onClick={onTogglePolicy}
-                    className={style.guide_container_head}
-                >
-                    <p className={style.container_desc_title}>
-                        {t('se.instructions_terms')}
-                    </p>
-                    <img ref={refIconPolicy} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
-                </div>
-                <ul ref={refPolicy} className={style.policy_list}>
-                    <li>
-                        <p className={style.policy_list_title}>{t('contact_form.confirm')}</p>
-                        <p className={style.policy_list_content}>
-                            {t('detail_item.confirm_desc')}{"  "}0289 9959 938
-                        </p>
-                    </li>
-                    <li>
-                        <p className={style.policy_list_title}>{t('detail_item.cancellation_policy')}</p>
-                        <p className={style.policy_list_content}>
-                            {t('detail_item.policy_desc')}
-                        </p>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        </>
     )
 }
 const DetailBottom = (
@@ -488,7 +648,7 @@ const DetailBottom = (
             PERCENT: number, onCommerce: boolean
         }
 ) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const [dra, setDra] = useState({
         open: false, type: ''
     })
@@ -553,7 +713,9 @@ const DetailQuantity = (
     { detail, org, discounts, draType, onClose }:
         { detail: DetailProp, org: IOrganization, discounts: IDiscountPar[], draType?: string, onClose?: () => void }
 ) => {
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
+    const { cart_confirm } = useCartReducer()
+    const cartOtherOrg = cart_confirm.filter(i => i.org_id !== org.id)
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
     const vouchers = IS_VOUCHER(discounts);
@@ -565,10 +727,14 @@ const DetailQuantity = (
     const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
     const values = formatAddCart(detail, org, detail.type, quantity, sale_price);
     const handleAddCart = () => {
+        for (let i = 0; i < cartOtherOrg.length; i++) {
+            dispatch(unCheck(cartOtherOrg[i]))
+        }
         if (USER) {
             const valuesCart = {
                 ...values,
-                user_id: USER.id
+                user_id: USER.id,
+                isConfirm: true
             }
             dispatch(addCart(valuesCart))
             setOpen(true)
@@ -595,7 +761,7 @@ const DetailQuantity = (
             dispatch(onClearPrevCartItem())
             const valuesCart = {
                 ...values,
-                isConfirm:true,
+                isConfirm: true,
                 user_id: USER.id
             }
             dispatch(addCart(valuesCart))

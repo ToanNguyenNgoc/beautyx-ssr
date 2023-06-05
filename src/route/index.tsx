@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import  { lazy, Suspense } from "react";
 import AuthRoute from "./AuthRoute";
 import {
   BrowserRouter as Router,
@@ -18,7 +18,6 @@ import Footer from "components/Footer";
 import MerchantDetail from "pages/MerchantDetail";
 import { analytics, logEvent } from "../firebase";
 import { LoadProgress } from "components/LoadingSketion";
-import LoadDetail from "components/LoadingSketion/LoadDetail";
 import ResetPassword from "pages/ResetPassword";
 import SearchResults from "pages/SearchResults";
 import DiscountDetail from "pages/_DiscountDetail";
@@ -31,10 +30,6 @@ import Cart from "pages/Cart";
 import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
-import { useSelector } from "react-redux";
-import IStore from "interface/IStore";
-import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import RefreshToken from "features/RefreshToken";
 import CateTree from "pages/CateTree";
 import Chat from "pages/Chat";
 
@@ -200,8 +195,11 @@ function RouterConfig() {
     },
     {
       path: "/chi-tiet-giam-gia/:name",
+      component: <DiscountDetail />
+    },
+    {
+      path: "/giam-gia/:name",
       component: <DiscountDetail />,
-      load: <LoadDetail />,
     },
     {
       path: "/giam-gia",
@@ -296,26 +294,22 @@ function RouterConfig() {
     {
       path: "/chat",
       component: <Chat />,
-    },
+    }
   ];
   logEvent(analytics, "page_view", {
     page_title: document.title,
     page_path: window.location.pathname,
     page_location: window.location.href,
   });
-  const { refresh } = useSelector((state: IStore) => state.USER);
-  const PLAT_FORM: string = EXTRA_FLAT_FORM();
-  // const refresh = true
   return (
     <BrowserRouter>
       <Router>
         <Head />
-        {refresh && PLAT_FORM === "BEAUTYX" && <RefreshToken />}
         <Switch>
           <Redirect exact from="/" to="homepage" />
           {routes.map((item, index: number) => (
             <Route key={index} path={item.path}>
-              <Suspense fallback={item.load ?? <LoadProgress />}>
+              <Suspense fallback={<LoadProgress/>}>
                 {item.component}
               </Suspense>
             </Route>

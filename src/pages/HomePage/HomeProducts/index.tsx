@@ -1,13 +1,13 @@
 import { AppContext } from 'context/AppProvider';
 import { useDeviceMobile } from 'hooks';
-import React, { useContext } from 'react';
+import  { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { onSetCateParentId, onSetTab } from 'redux/cates-tree';
 import { scrollTop } from 'utils';
-import HomeTitle from '../Components/HomeTitle';
 import { productsSection, IProductsSection } from '../data'
 import style from './style.module.css'
+import { HomeTitle } from 'components/Layout';
 
 function HomeProducts() {
     const { t } = useContext(AppContext) as any

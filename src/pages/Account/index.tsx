@@ -4,7 +4,7 @@ import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
 import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useContext, useEffect, useState } from "react";
-import { logoutUser } from "redux/user/userSlice";
+import { logoutUser } from "redux/profile/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./account.module.css";
 import { Container } from "@mui/system";
@@ -12,7 +12,7 @@ import IStore from "interface/IStore";
 import { clst, formatPhoneNumber, onErrorImg } from "utils";
 import icon from "constants/icon";
 import { postMedia, useDeviceMobile, useSwr } from "hooks";
-import { updateAsyncUser } from "redux/user/userSlice";
+import { updateAsyncUser } from "redux/profile/userSlice";
 import { ICON } from "constants/icon2";
 import { FullImage, XButton } from "components/Layout";
 import Favorites from "./components/Favorites";
@@ -97,14 +97,14 @@ function Account() {
       notiCount: 0,
       content: "",
     },
-    {
-      link: "/tai-khoan/thanh-vien",
-      title: "Thành viên",
-      hide: false,
-      icon: ICON.userAct,
-      notiCount: 0,
-      content: "",
-    },
+    // {
+    //   link: "/tai-khoan/thanh-vien",
+    //   title: "Thành viên",
+    //   hide: false,
+    //   icon: ICON.userAct,
+    //   notiCount: 0,
+    //   content: "",
+    // },
     {
       link: "/tai-khoan/lich-su-mua",
       title: t("Header.my_order"),
@@ -154,8 +154,6 @@ function Account() {
   const handleSignOut = () => {
     dispatch(logoutUser());
     history.push("/homepage");
-    localStorage.removeItem("_WEB_TK");
-    window.sessionStorage.removeItem("_WEB_TK");
   };
   const PLATFORM = EXTRA_FLAT_FORM();
   const [guide, setGuide] = useState(false);
@@ -174,14 +172,17 @@ function Account() {
             style={
               IS_MB && ACC_SHOW === "right"
                 ? {
-                    marginLeft: "-100vh",
-                  }
+                  marginLeft: "-100vh",
+                }
                 : {}
             }
             className={style.left_cnt}
           >
             {IS_MB && <HeadAccount />}
-            <div onClick={() => setOpenCard(true)} className={style.left_user}>
+            <div 
+              // onClick={() => setOpenCard(true)} 
+              className={style.left_user}
+            >
               <div className={style.left_cnt_head}>
                 <div className={style.user_avatar_cnt}>
                   <img
@@ -244,8 +245,8 @@ function Account() {
                         style={
                           location.pathname === item.link
                             ? {
-                                backgroundColor: "var(--bg-color)",
-                              }
+                              backgroundColor: "var(--bg-color)",
+                            }
                             : {}
                         }
                         className={style.link_item}
@@ -315,8 +316,8 @@ function Account() {
             style={
               IS_MB && ACC_SHOW === "right"
                 ? {
-                    marginLeft: "0px",
-                  }
+                  marginLeft: "0px",
+                }
                 : {}
             }
             className={style.right_cnt}
@@ -360,8 +361,8 @@ const SwitchLanguage = () => {
           style={
             language === "en"
               ? {
-                  marginLeft: "30px",
-                }
+                marginLeft: "30px",
+              }
               : {}
           }
           className={style.switch_btn}
