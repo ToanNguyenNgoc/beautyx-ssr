@@ -51,9 +51,13 @@ import beautyX from "assets/image/beautyX.svg"
 import plashScreenPc from 'assets/image/plashScreenPc.png';
 import bgNotiBtxPoint from 'assets/image/bgNotiBtxPoint.jpg';
 import qrCodeTiki from 'assets/image/qrCodeTiki.png';
-import qrCodeMomo from 'assets/image/qrCodeMomo.png'
+import qrCodeMomo from 'assets/image/qrCodeMomo.png';
+import iconShoppee from 'assets/image/icon-shopee.png';
+import iconVinID from 'assets/image/icon-vinid.png'
 
 const img = {
+    iconShoppee,
+    iconVinID,
     bgNotiBtxPoint,
     appStore,
     playStore,
