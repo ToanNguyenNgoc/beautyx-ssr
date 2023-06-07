@@ -255,6 +255,9 @@ body > iframe {
 #cprhliqipldavybercftg .chat-button--img-container {
     display: none !important;
 }
+.mapboxgl-ctrl-attrib-inner{
+    display: none !important;
+}
 
 @media only screen and (max-width: 1023px) {
     body {

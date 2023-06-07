@@ -54,6 +54,7 @@ const Trends = lazy(() => import("pages/Trends"));
 const Community = lazy(() => import("pages/Community"));
 const TrendsDetail = lazy(() => import("pages/TrendsDetail"));
 const Rewards = lazy(() => import("pages/Rewards"));
+const Messenger = lazy(() => import("pages/Messenger"))
 
 function RouterConfig() {
   const routes = [
@@ -295,6 +296,10 @@ function RouterConfig() {
     {
       path: "/chat",
       component: <Chat />,
+    },
+    {
+      path:"/messenger",
+      component:<Messenger/>
     }
   ];
   logEvent(analytics, "page_view", {

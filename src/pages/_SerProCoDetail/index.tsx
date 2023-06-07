@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRouteMatch, useHistory, Link, useLocation } from 'react-router-dom';
-import { useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
+import { useCartReducer, useDeviceMobile, useFavorite, useGetParamUrl, useSwr } from 'hooks';
 import { useContext, useEffect, useRef, useState } from 'react';
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
 import { DetailProp } from './detail.interface'
@@ -18,7 +18,7 @@ import { AUTH_LOCATION } from 'api/authLocation';
 import { formatAddCart } from 'utils/cart/formatAddCart';
 import { useDispatch, useSelector } from 'react-redux';
 import IStore from 'interface/IStore';
-import { addCart, onClearPrevCartItem } from 'redux/cart';
+import { addCart, onClearPrevCartItem, unCheck } from 'redux/cart';
 import { PopupMessage } from 'components/Notification';
 import { clearAllServices } from 'redux/booking';
 import { IS_VOUCHER } from 'utils/cart/checkConditionVoucher';
@@ -312,7 +312,7 @@ export const SliderImage = ({ detail, org }: { detail: DetailProp, org: IOrganiz
         slidesToShow: 1,
         slidesToScroll: 1,
         swipe: true,
-        draggable:true,
+        draggable: true,
         afterChange: (currentIndex) => {
             setIndex(currentIndex)
             if (currentIndex % 5 === 0 && refThumb.current) refThumb.current.slickGoTo(currentIndex)
@@ -495,150 +495,150 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
     const onBookOrBuyNow = () => onBookingNow && (scrollTop(), onBookingNow())
 
     return (
-       <>
-         <div className={style.container_desc}>
-            <div className={style.detail_sticky_cnt}>
-                <span className={style.detail_sticky_title}>Bạn đang xem</span>
-                <div className={style.sticky_item}>
-                    <div className={style.sticky_item_img}>
-                        {
-                            detail.SPECIAL_PRICE > 0 &&
-                            <div className={style.sticky_item_percent}>
-                                -{PERCENT}%
-                            </div>
-                        }
-                        <img src={detail.image_url ?? org.image_url} alt="" />
-                    </div>
-                    <div className={style.sticky_item_de}>
-                        <span className={style.sticky_item_de_name}>{detail.name}</span>
-                        <div className={style.sticky_item_de_price}>
+        <>
+            <div className={style.container_desc}>
+                <div className={style.detail_sticky_cnt}>
+                    <span className={style.detail_sticky_title}>Bạn đang xem</span>
+                    <div className={style.sticky_item}>
+                        <div className={style.sticky_item_img}>
                             {
-                                detail.SPECIAL_PRICE > 0 ?
-                                    <>
-                                        <p>{formatPrice(detail.SPECIAL_PRICE)}đ</p>
-                                        <p>{formatPrice(detail.PRICE)}</p>
-                                    </>
-                                    :
-                                    <p>{formatPrice(detail.PRICE)}đ</p>
+                                detail.SPECIAL_PRICE > 0 &&
+                                <div className={style.sticky_item_percent}>
+                                    -{PERCENT}%
+                                </div>
+                            }
+                            <img src={detail.image_url ?? org.image_url} alt="" />
+                        </div>
+                        <div className={style.sticky_item_de}>
+                            <span className={style.sticky_item_de_name}>{detail.name}</span>
+                            <div className={style.sticky_item_de_price}>
+                                {
+                                    detail.SPECIAL_PRICE > 0 ?
+                                        <>
+                                            <p>{formatPrice(detail.SPECIAL_PRICE)}đ</p>
+                                            <p>{formatPrice(detail.PRICE)}</p>
+                                        </>
+                                        :
+                                        <p>{formatPrice(detail.PRICE)}đ</p>
+                                }
+                            </div>
+                        </div>
+                        <div className={style.sticky_item_bot}>
+                            <XButton
+                                onClick={onBookOrBuyNow}
+                                title={detail.type === 'SERVICE' ? 'Đặt hẹn ngay' : 'Mua ngay'}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className={style.desc_body_cnt}>
+                    <p className={style.container_desc_title}>
+                        {t('detail_item.desc')}
+                    </p>
+                    <div
+                        style={more ? { height: 'max-content', maxHeight: 'unset' } : {}}
+                        className={style.container_desc_content}
+                    >
+                        <div
+                            style={{
+                                whiteSpace: 'pre-line',
+                            }}
+                            ref={refContent}
+                        >
+                            {
+                                detail.description === "" ? t('detail_item.updating') + '...' :
+                                    <div
+                                        className={style.container_desc_content_txt}
+                                        dangerouslySetInnerHTML={{ __html: detail.description }}
+                                    />
                             }
                         </div>
+                        {contentHeight > 100 && !more && <div className={style.gradient}></div>}
                     </div>
-                    <div className={style.sticky_item_bot}>
+                    {
+                        contentHeight > 100 &&
                         <XButton
-                            onClick={onBookOrBuyNow}
-                            title={detail.type === 'SERVICE' ? 'Đặt hẹn ngay' : 'Mua ngay'}
+                            onClick={() => setMore(!more)}
+                            className={style.view_more_btn}
+                            title={more ? t('Mer_de.hide') : t('detail_item.see_more')}
                         />
-                    </div>
-                </div>
-            </div>
-            <div className={style.desc_body_cnt}>
-                <p className={style.container_desc_title}>
-                    {t('detail_item.desc')}
-                </p>
-                <div
-                    style={more ? { height: 'max-content', maxHeight: 'unset' } : {}}
-                    className={style.container_desc_content}
-                >
-                    <div
-                        style={{
-                            whiteSpace: 'pre-line',
-                        }}
-                        ref={refContent}
-                    >
-                        {
-                            detail.description === "" ? t('detail_item.updating') + '...' :
-                                <div
-                                    className={style.container_desc_content_txt}
-                                    dangerouslySetInnerHTML={{ __html: detail.description }}
-                                />
-                        }
-                    </div>
-                    {contentHeight > 100 && !more && <div className={style.gradient}></div>}
-                </div>
-                {
-                    contentHeight > 100 &&
-                    <XButton
-                        onClick={() => setMore(!more)}
-                        className={style.view_more_btn}
-                        title={more ? t('Mer_de.hide') : t('detail_item.see_more')}
-                    />
-                }
-                {
-                    detail.type === 'COMBO' &&
-                    <div className="">
-                        <p className={style.container_desc_title}>
-                            Combo bao gồm:
-                        </p>
-                        <div className={style.combo_services}>
-                            <ul className={style.combo_services_list}>
-                                {
-                                    detail.services?.map((item: any, index: number) => (
-                                        <li key={index} className={style.combo_services_item}>
-                                            <SerProItem
-                                                item={item}
-                                                org={org}
-                                                type='SERVICE'
-                                            />
-                                            {
-                                                item.pivot?.number &&
-                                                <div className={style.combo_item_quantity}>
-                                                    x{item.pivot?.number}
-                                                </div>
-                                            }
-                                        </li>
-                                    ))
-                                }
-                            </ul>
+                    }
+                    {
+                        detail.type === 'COMBO' &&
+                        <div className="">
+                            <p className={style.container_desc_title}>
+                                Combo bao gồm:
+                            </p>
+                            <div className={style.combo_services}>
+                                <ul className={style.combo_services_list}>
+                                    {
+                                        detail.services?.map((item: any, index: number) => (
+                                            <li key={index} className={style.combo_services_item}>
+                                                <SerProItem
+                                                    item={item}
+                                                    org={org}
+                                                    type='SERVICE'
+                                                />
+                                                {
+                                                    item.pivot?.number &&
+                                                    <div className={style.combo_item_quantity}>
+                                                        x{item.pivot?.number}
+                                                    </div>
+                                                }
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
                         </div>
+                    }
+                    <div className={style.policy}>
+                        (*) {t('detail_item.shelf_life')}
                     </div>
-                }
-                <div className={style.policy}>
-                    (*) {t('detail_item.shelf_life')}
-                </div>
-                <div className={style.guide_container}>
-                    <div
-                        onClick={onToggleGuide}
-                        className={style.guide_container_head}
-                    >
-                        <p className={style.container_desc_title}>
-                            {t('detail_item.detailed_description')}
-                        </p>
-                        <img ref={refIconGuide} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
-                    </div>
-                    <ul ref={refGuide} className={style.guide_list}>
-                        <li>{t('detail_item.step_1')}</li>
-                        <li>{t('detail_item.step_2')}</li>
-                        <li>{t('detail_item.step_3')}</li>
-                    </ul>
-                </div>
-                <div className={style.guide_container}>
-                    <div
-                        onClick={onTogglePolicy}
-                        className={style.guide_container_head}
-                    >
-                        <p className={style.container_desc_title}>
-                            {t('se.instructions_terms')}
-                        </p>
-                        <img ref={refIconPolicy} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
-                    </div>
-                    <ul ref={refPolicy} className={style.policy_list}>
-                        <li>
-                            <p className={style.policy_list_title}>{t('contact_form.confirm')}</p>
-                            <p className={style.policy_list_content}>
-                                {t('detail_item.confirm_desc')}{"  "}0289 9959 938
+                    <div className={style.guide_container}>
+                        <div
+                            onClick={onToggleGuide}
+                            className={style.guide_container_head}
+                        >
+                            <p className={style.container_desc_title}>
+                                {t('detail_item.detailed_description')}
                             </p>
-                        </li>
-                        <li>
-                            <p className={style.policy_list_title}>{t('detail_item.cancellation_policy')}</p>
-                            <p className={style.policy_list_content}>
-                                {t('detail_item.policy_desc')}
+                            <img ref={refIconGuide} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
+                        </div>
+                        <ul ref={refGuide} className={style.guide_list}>
+                            <li>{t('detail_item.step_1')}</li>
+                            <li>{t('detail_item.step_2')}</li>
+                            <li>{t('detail_item.step_3')}</li>
+                        </ul>
+                    </div>
+                    <div className={style.guide_container}>
+                        <div
+                            onClick={onTogglePolicy}
+                            className={style.guide_container_head}
+                        >
+                            <p className={style.container_desc_title}>
+                                {t('se.instructions_terms')}
                             </p>
-                        </li>
-                    </ul>
+                            <img ref={refIconPolicy} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
+                        </div>
+                        <ul ref={refPolicy} className={style.policy_list}>
+                            <li>
+                                <p className={style.policy_list_title}>{t('contact_form.confirm')}</p>
+                                <p className={style.policy_list_content}>
+                                    {t('detail_item.confirm_desc')}{"  "}0289 9959 938
+                                </p>
+                            </li>
+                            <li>
+                                <p className={style.policy_list_title}>{t('detail_item.cancellation_policy')}</p>
+                                <p className={style.policy_list_content}>
+                                    {t('detail_item.policy_desc')}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-       </>
+        </>
     )
 }
 const DetailBottom = (
@@ -716,6 +716,8 @@ const DetailQuantity = (
         { detail: DetailProp, org: IOrganization, discounts: IDiscountPar[], draType?: string, onClose?: () => void }
 ) => {
     const { t } = useContext(AppContext) as any
+    const { cart_confirm } = useCartReducer()
+    const cartOtherOrg = cart_confirm.filter(i => i.org_id !== org.id)
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
     const vouchers = IS_VOUCHER(discounts);
@@ -727,10 +729,14 @@ const DetailQuantity = (
     const sale_price = detail.SPECIAL_PRICE > 0 ? detail.SPECIAL_PRICE : detail.PRICE
     const values = formatAddCart(detail, org, detail.type, quantity, sale_price);
     const handleAddCart = () => {
+        for (let i = 0; i < cartOtherOrg.length; i++) {
+            dispatch(unCheck(cartOtherOrg[i]))
+        }
         if (USER) {
             const valuesCart = {
                 ...values,
-                user_id: USER.id
+                user_id: USER.id,
+                isConfirm: true
             }
             dispatch(addCart(valuesCart))
             setOpen(true)

@@ -1,7 +1,12 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/static/css/main.a4d4d920.css",
     "main.js": "/static/js/main.30030644.js",
+=======
+    "main.css": "/static/css/main.6ef3990c.css",
+    "main.js": "/static/js/main.78e6e36a.js",
+>>>>>>> Dev_Toan
     "static/css/479.f3efb978.chunk.css": "/static/css/479.f3efb978.chunk.css",
     "static/js/479.dd8a7151.chunk.js": "/static/js/479.dd8a7151.chunk.js",
     "static/css/156.11f9fd5e.chunk.css": "/static/css/156.11f9fd5e.chunk.css",
@@ -11,6 +16,7 @@
     "static/css/566.5a33c457.chunk.css": "/static/css/566.5a33c457.chunk.css",
     "static/js/566.d45da383.chunk.js": "/static/js/566.d45da383.chunk.js",
     "static/css/663.38130f14.chunk.css": "/static/css/663.38130f14.chunk.css",
+<<<<<<< HEAD
     "static/js/663.d4c1d1cb.chunk.js": "/static/js/663.d4c1d1cb.chunk.js",
     "static/css/229.aa4b17a4.chunk.css": "/static/css/229.aa4b17a4.chunk.css",
     "static/js/229.cfbda0b8.chunk.js": "/static/js/229.cfbda0b8.chunk.js",
@@ -18,10 +24,23 @@
     "static/js/610.b167851a.chunk.js": "/static/js/610.b167851a.chunk.js",
     "static/css/920.d7ac6e51.chunk.css": "/static/css/920.d7ac6e51.chunk.css",
     "static/js/920.f14bd10d.chunk.js": "/static/js/920.f14bd10d.chunk.js",
+=======
+    "static/js/663.3c78cba1.chunk.js": "/static/js/663.3c78cba1.chunk.js",
+    "static/css/229.aa4b17a4.chunk.css": "/static/css/229.aa4b17a4.chunk.css",
+    "static/js/229.b63fa9da.chunk.js": "/static/js/229.b63fa9da.chunk.js",
+    "static/css/20.0dbe2389.chunk.css": "/static/css/20.0dbe2389.chunk.css",
+    "static/js/20.6690c0f0.chunk.js": "/static/js/20.6690c0f0.chunk.js",
+    "static/css/920.d7ac6e51.chunk.css": "/static/css/920.d7ac6e51.chunk.css",
+    "static/js/920.427c20ec.chunk.js": "/static/js/920.427c20ec.chunk.js",
+>>>>>>> Dev_Toan
     "static/css/106.177ef549.chunk.css": "/static/css/106.177ef549.chunk.css",
     "static/js/106.efaad99b.chunk.js": "/static/js/106.efaad99b.chunk.js",
     "static/css/526.47977ef1.chunk.css": "/static/css/526.47977ef1.chunk.css",
+<<<<<<< HEAD
     "static/js/526.940eaaba.chunk.js": "/static/js/526.940eaaba.chunk.js",
+=======
+    "static/js/526.691bff07.chunk.js": "/static/js/526.691bff07.chunk.js",
+>>>>>>> Dev_Toan
     "static/js/824.74cea8cc.chunk.js": "/static/js/824.74cea8cc.chunk.js",
     "static/css/160.21e29614.chunk.css": "/static/css/160.21e29614.chunk.css",
     "static/js/160.1e8de20c.chunk.js": "/static/js/160.1e8de20c.chunk.js",
@@ -90,7 +109,9 @@
     "static/media/plashScreenPc.png": "/static/media/plashScreenPc.8950b43f1df6f18a4045.png",
     "static/media/step_2.png": "/static/media/step_2.33dc5b57f14e00dd4a18.png",
     "static/media/product3.png": "/static/media/product3.397d565a52d8b7272497.png",
+    "static/media/icon-vinid.png": "/static/media/icon-vinid.57d6b5ce488086b41b1f.png",
     "static/media/step_3.png": "/static/media/step_3.e342c472ea88660d7c5d.png",
+    "static/media/icon-shopee.png": "/static/media/icon-shopee.df93f69851a5b5ad29a7.png",
     "static/media/Nunito-BlackItalic.woff2": "/static/media/Nunito-BlackItalic.d1ee9574a5b494dd3f5e.woff2",
     "static/media/Nunito-ExtraBoldItalic.woff2": "/static/media/Nunito-ExtraBoldItalic.646d903714d5b28f297b.woff2",
     "static/media/Nunito-SemiBoldItalic.woff2": "/static/media/Nunito-SemiBoldItalic.1f3686818312abb9df63.woff2",
@@ -422,8 +443,13 @@
     "static/media/chevronRightBlack.svg": "/static/media/chevronRightBlack.c39dae4207cf3143d43967d7a2c5c8be.svg",
     "static/media/ellipse _109.svg": "/static/media/ellipse _109.c8867b3ef723d8134d92b4c3e3c67e50.svg",
     "static/media/onedot.svg": "/static/media/onedot.e21b279ff39ac73cd10efc592b130093.svg",
+<<<<<<< HEAD
     "main.a4d4d920.css.map": "/static/css/main.a4d4d920.css.map",
     "main.30030644.js.map": "/static/js/main.30030644.js.map",
+=======
+    "main.6ef3990c.css.map": "/static/css/main.6ef3990c.css.map",
+    "main.78e6e36a.js.map": "/static/js/main.78e6e36a.js.map",
+>>>>>>> Dev_Toan
     "479.f3efb978.chunk.css.map": "/static/css/479.f3efb978.chunk.css.map",
     "479.dd8a7151.chunk.js.map": "/static/js/479.dd8a7151.chunk.js.map",
     "156.11f9fd5e.chunk.css.map": "/static/css/156.11f9fd5e.chunk.css.map",
@@ -433,6 +459,7 @@
     "566.5a33c457.chunk.css.map": "/static/css/566.5a33c457.chunk.css.map",
     "566.d45da383.chunk.js.map": "/static/js/566.d45da383.chunk.js.map",
     "663.38130f14.chunk.css.map": "/static/css/663.38130f14.chunk.css.map",
+<<<<<<< HEAD
     "663.d4c1d1cb.chunk.js.map": "/static/js/663.d4c1d1cb.chunk.js.map",
     "229.aa4b17a4.chunk.css.map": "/static/css/229.aa4b17a4.chunk.css.map",
     "229.cfbda0b8.chunk.js.map": "/static/js/229.cfbda0b8.chunk.js.map",
@@ -440,10 +467,23 @@
     "610.b167851a.chunk.js.map": "/static/js/610.b167851a.chunk.js.map",
     "920.d7ac6e51.chunk.css.map": "/static/css/920.d7ac6e51.chunk.css.map",
     "920.f14bd10d.chunk.js.map": "/static/js/920.f14bd10d.chunk.js.map",
+=======
+    "663.3c78cba1.chunk.js.map": "/static/js/663.3c78cba1.chunk.js.map",
+    "229.aa4b17a4.chunk.css.map": "/static/css/229.aa4b17a4.chunk.css.map",
+    "229.b63fa9da.chunk.js.map": "/static/js/229.b63fa9da.chunk.js.map",
+    "20.0dbe2389.chunk.css.map": "/static/css/20.0dbe2389.chunk.css.map",
+    "20.6690c0f0.chunk.js.map": "/static/js/20.6690c0f0.chunk.js.map",
+    "920.d7ac6e51.chunk.css.map": "/static/css/920.d7ac6e51.chunk.css.map",
+    "920.427c20ec.chunk.js.map": "/static/js/920.427c20ec.chunk.js.map",
+>>>>>>> Dev_Toan
     "106.177ef549.chunk.css.map": "/static/css/106.177ef549.chunk.css.map",
     "106.efaad99b.chunk.js.map": "/static/js/106.efaad99b.chunk.js.map",
     "526.47977ef1.chunk.css.map": "/static/css/526.47977ef1.chunk.css.map",
+<<<<<<< HEAD
     "526.940eaaba.chunk.js.map": "/static/js/526.940eaaba.chunk.js.map",
+=======
+    "526.691bff07.chunk.js.map": "/static/js/526.691bff07.chunk.js.map",
+>>>>>>> Dev_Toan
     "824.74cea8cc.chunk.js.map": "/static/js/824.74cea8cc.chunk.js.map",
     "160.21e29614.chunk.css.map": "/static/css/160.21e29614.chunk.css.map",
     "160.1e8de20c.chunk.js.map": "/static/js/160.1e8de20c.chunk.js.map",
@@ -477,7 +517,12 @@
     "966.4bc1dc80.chunk.js.map": "/static/js/966.4bc1dc80.chunk.js.map"
   },
   "entrypoints": [
+<<<<<<< HEAD
     "static/css/main.a4d4d920.css",
     "static/js/main.30030644.js"
+=======
+    "static/css/main.6ef3990c.css",
+    "static/js/main.78e6e36a.js"
+>>>>>>> Dev_Toan
   ]
 }

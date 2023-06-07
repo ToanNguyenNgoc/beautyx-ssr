@@ -8,8 +8,8 @@ import {
     loginAsyncMb,
 } from "../../redux/loginFlatForm/loginFlatFrom";
 import { pickBy, identity } from "lodash";
-import MOMO from '../../api/_momoImport';
-import momoApi, { IUserConsentsData } from "../../api/momoApi";
+import MOMO from "api/_momoImport"
+import momoApi, { IUserConsentsData } from "api/momoApi";
 import { useHistory } from "react-router-dom";
 
 function LoginFlatForm(props: any) {

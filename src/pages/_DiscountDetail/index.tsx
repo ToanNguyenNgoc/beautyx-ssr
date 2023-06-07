@@ -1,5 +1,5 @@
 import LoadDetail from 'components/LoadingSketion/LoadDetail';
-import { useDeviceMobile, useFavorite } from 'hooks';
+import { useCartReducer, useDeviceMobile, useFavorite } from 'hooks';
 import HeadOrg from 'pages/MerchantDetail/components/HeadOrg';
 import { DetailProp } from 'pages/_SerProCoDetail/detail.interface';
 import  { useContext, useState } from 'react';
@@ -17,7 +17,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import IStore from 'interface/IStore';
 import { PopupMessage } from 'components/Notification';
 import { formatAddCart } from 'utils/cart/formatAddCart';
-import { addCart } from 'redux/cart';
+import { addCart, unCheck } from 'redux/cart';
 import GoogleTagPush, { GoogleTagEvents } from 'utils/dataLayer';
 import tracking from 'api/trackApi'
 import { clearAllServices } from 'redux/booking';
@@ -268,6 +268,8 @@ const DetailQuantity = (props: DetailQuantityProps) => {
     const { discount, org, detail, draType } = props
     const [quantity, setQuantity] = useState(1)
     const [open, setOpen] = useState(false)
+    const { cart_confirm } = useCartReducer()
+    const cartOtherOrg = cart_confirm.filter(i => i.org_id !== org.id)
     const dispatch = useDispatch()
     const { USER } = useSelector((state: IStore) => state.USER)
     const history = useHistory()
@@ -282,9 +284,13 @@ const DetailQuantity = (props: DetailQuantityProps) => {
     );
     const handleAddCart = () => {
         if (!USER) return history.push('/sign-in?1')
+        for (let i = 0; i < cartOtherOrg.length; i++) {
+            dispatch(unCheck(cartOtherOrg[i]))
+        }
         dispatch(addCart({
             ...values,
-            user_id: USER.id
+            user_id: USER.id,
+            isConfirm:true
         }));
         GoogleTagPush(GoogleTagEvents.ADD_TO_CART);
         tracking.ADD_CART_CLICK(

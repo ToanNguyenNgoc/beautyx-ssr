@@ -577,6 +577,7 @@
         "detailed_description": "Detailed description"
     },
     "footer": {
+        "voucher_in_app": "Get beauty voucher right on the app",
         "customer_support": "Customer support",
         "consultation_call_center": "Consultation call center",
         "customer_care_call_center": "Customer care call center",
