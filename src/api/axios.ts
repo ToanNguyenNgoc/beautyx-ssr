@@ -4,8 +4,8 @@ import { handleValidToken } from "./authHeader";
 import { EXTRA_FLAT_FORM } from "./extraFlatForm";
 import { IRefreshToken, Response } from "interface";
 
-export const baseURL = process.env.REACT_APP_API_URL;
-// export const baseURL = process.env.REACT_APP_API_DEV;
+// export const baseURL = process.env.REACT_APP_API_URL;
+export const baseURL = process.env.REACT_APP_API_DEV;
 const axiosClient = axios.create({
   baseURL: baseURL,
   headers: {
