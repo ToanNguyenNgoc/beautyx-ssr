@@ -19,7 +19,6 @@ interface ShareSocialProps {
 }
 
 export function ShareSocial(props: ShareSocialProps) {
-    const { url } = props
     const [open, setOpen] = useState(false)
     const originUrl = window.location.href
     return (

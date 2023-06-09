@@ -173,3 +173,8 @@ export const paramsProductable: ParamsProductable = {
     "discount_max_price_ecommerce": "",
     "is_demo": "false"
 }
+export const paramsTopic = {
+    "org": "",
+    "search": "",
+    "sort": "-update_at"
+}

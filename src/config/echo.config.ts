@@ -1,3 +1,4 @@
+import { AUTH_HEADER_WS } from "config/header.config";
 import Echo from "laravel-echo";
 
 export const echoConfig = () => {

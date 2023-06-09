@@ -8,6 +8,9 @@ import { AppContext } from "context/AppProvider";
 import { phoneSupport } from "constants/index";
 import { formatPhoneNumber } from "utils";
 import { PopupNotification } from "components/Notification";
+import { useLocation } from "react-router-dom";
+
+const pathsHide = ["messages"]
 
 function Footer() {
   const url_map = `https://www.google.com/maps/@10.7968352,106.6920552,19.42z`;
@@ -17,6 +20,9 @@ function Footer() {
     content: '',
     child: <></>
   })
+  const location = useLocation()
+  const currRoute = location.pathname.split("/")[1]
+  const show = !pathsHide.includes(currRoute)
   const data_footer = [
     {
       id: 1,
@@ -303,144 +309,147 @@ function Footer() {
   //     setLink(`https://beautyx.page.link/?link=https://beautyx.page.link/myspa?service%3D${params.id}%26merchant%3D${params.org}&apn=com.myspa.beautyx&amv=18&isi=1614767784&ibi=com.myspa.beautyx&imv=18&cid=3028181755793109443&_osl=https://beautyx.page.link/MoBKVqvvHTrirbCG6&_icp=1`)
   // },[params.id, params.org])
   return (
-    <div className="footer">
-      <PopupNotification
-        title="Quét mã QR"
-        open={openPopup.open}
-        setOpen={() => setOpenPopup({ ...openPopup, open: false })}
-        content={openPopup.content}
-        children={openPopup.child}
-      />
-      <Container>
-        <div className="footer-cnt">
-          <div className="footer-left">
-            {data_footer.map((item, index) => (
-              <div key={index} className="wrap">
-                <div className="footer-cnt__item">
-                  <div className="footer-cnt__item-title">{item.title}</div>
-                  <ul>
-                    {item.items.map((a: any, i: number) => (
-                      <li onClick={() => gotoPolicy(a)} key={i}>
-                        {a.title}
-                      </li>
-                    ))}
-                  </ul>
+    show ?
+      <div className="footer">
+        <PopupNotification
+          title="Quét mã QR"
+          open={openPopup.open}
+          setOpen={() => setOpenPopup({ ...openPopup, open: false })}
+          content={openPopup.content}
+          children={openPopup.child}
+        />
+        <Container>
+          <div className="footer-cnt">
+            <div className="footer-left">
+              {data_footer.map((item, index) => (
+                <div key={index} className="wrap">
+                  <div className="footer-cnt__item">
+                    <div className="footer-cnt__item-title">{item.title}</div>
+                    <ul>
+                      {item.items.map((a: any, i: number) => (
+                        <li onClick={() => gotoPolicy(a)} key={i}>
+                          {a.title}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="footer-right">
-            <div className="wrap">
-              <>
-                <div className="footer-cnt__item-title">
-                  {t("footer.payment_method")}
-                </div>
-                <div style={{ marginTop: "16px" }} className="social-list">
-                  {payment.map((item: any, index: number) => (
-                    <div
-                      key={index}
-                      className="social-item__method social-item"
-                    >
-                      <div className="social-item__img">
-                        <img src={item.img} alt="" />
+              ))}
+            </div>
+            <div className="footer-right">
+              <div className="wrap">
+                <>
+                  <div className="footer-cnt__item-title">
+                    {t("footer.payment_method")}
+                  </div>
+                  <div style={{ marginTop: "16px" }} className="social-list">
+                    {payment.map((item: any, index: number) => (
+                      <div
+                        key={index}
+                        className="social-item__method social-item"
+                      >
+                        <div className="social-item__img">
+                          <img src={item.img} alt="" />
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                  <div
+                    style={{ marginTop: "24px" }}
+                    className="footer-cnt__item-title"
+                  >
+                    {t("footer.beautyx_is_on")}
+                  </div>
+                  <div className="social-list">
+                    <div className="flexX-gap-16">
+                      {app.map((item: any, index: number) => (
+                        <div
+                          key={index}
+                          onClick={() => gotoPolicy(item)}
+                          className="social-item__img cursor-pointer"
+                        >
+                          <img src={item.img} alt="" />
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                <div
-                  style={{ marginTop: "24px" }}
-                  className="footer-cnt__item-title"
-                >
-                  {t("footer.beautyx_is_on")}
-                </div>
-                <div className="social-list">
-                  <div className="flexX-gap-16">
-                    {app.map((item: any, index: number) => (
+                  </div>
+                  <div
+                    style={{ marginTop: "16px" }}
+                    className="footer-cnt__item-title"
+                  >
+                    {t("footer.voucher_in_app")}
+                  </div>
+                  <div className="social-list">
+                    <div className="flexX-gap-16">
+                      {voucherInApp.map((item: any, index: number) => (
+                        <div key={index} className="social-item__img">
+                          <img style={{ borderRadius: "8px", backgroundColor: "#fff" }} src={item.img} alt="" />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              </div>
+              <div className="wrap">
+                <>
+                  <div className="footer-cnt__item-title">
+                    {t("footer.contact_width_me")}
+                  </div>
+                  <div className="social-list">
+                    {social_list.map((item: any, index: number) => (
                       <div
                         key={index}
                         onClick={() => gotoPolicy(item)}
-                        className="social-item__img cursor-pointer"
+                        className="social-item"
                       >
-                        <img src={item.img} alt="" />
+                        <div className="social-item__img">
+                          <img src={item.img} alt="" />
+                        </div>
                       </div>
                     ))}
                   </div>
-                </div>
-                <div
-                  style={{ marginTop: "16px" }}
-                  className="footer-cnt__item-title"
-                >
-                  {t("footer.voucher_in_app")}
-                </div>
-                <div className="social-list">
-                  <div className="flexX-gap-16">
-                    {voucherInApp.map((item: any, index: number) => (
-                      <div key={index} className="social-item__img">
-                        <img style={{ borderRadius: "8px", backgroundColor: "#fff" }} src={item.img} alt="" />
-                      </div>
-                    ))}
+                  <div
+                    style={{ marginTop: "24px" }}
+                    className="footer-cnt__item-title"
+                  >
+                    {t("footer.download_app")}
                   </div>
-                </div>
-              </>
-            </div>
-            <div className="wrap">
-              <>
-                <div className="footer-cnt__item-title">
-                  {t("footer.contact_width_me")}
-                </div>
-                <div className="social-list">
-                  {social_list.map((item: any, index: number) => (
-                    <div
-                      key={index}
-                      onClick={() => gotoPolicy(item)}
-                      className="social-item"
-                    >
-                      <div className="social-item__img">
-                        <img src={item.img} alt="" />
-                      </div>
+                  <div className="down-app">
+                    <div className="down-app__qr">
+                      <img src={img.qrCode} alt="" />
                     </div>
-                  ))}
-                </div>
-                <div
-                  style={{ marginTop: "24px" }}
-                  className="footer-cnt__item-title"
-                >
-                  {t("footer.download_app")}
-                </div>
-                <div className="down-app">
-                  <div className="down-app__qr">
-                    <img src={img.qrCode} alt="" />
+                    <div className="down-app__wrap">
+                      {downList.map((item: any, index: number) => (
+                        <div key={index} className="down-app__btn">
+                          <img
+                            onClick={() => gotoPolicy(item)}
+                            src={item.img}
+                            alt=""
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="down-app__wrap">
-                    {downList.map((item: any, index: number) => (
-                      <div key={index} className="down-app__btn">
-                        <img
-                          onClick={() => gotoPolicy(item)}
-                          src={item.img}
-                          alt=""
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </>
+                </>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          className="address"
-          onClick={() =>
-            window.open(`${url_map}`, "_blank", "noopener,noreferrer")
-          }
-        >
-          {t("footer.address_company")}
-        </div>
-        <div className="footer-copy-right">{t("footer.policy")}</div>
-        <div className="footer-copy-right">
-          © 2021 Copyright Myspa | ProductX teams.
-        </div>
-      </Container>
-    </div>
+          <div
+            className="address"
+            onClick={() =>
+              window.open(`${url_map}`, "_blank", "noopener,noreferrer")
+            }
+          >
+            {t("footer.address_company")}
+          </div>
+          <div className="footer-copy-right">{t("footer.policy")}</div>
+          <div className="footer-copy-right">
+            © 2021 Copyright Myspa | ProductX teams.
+          </div>
+        </Container>
+      </div>
+      :
+      <></>
   );
 }
 

@@ -1,39 +1,106 @@
 import { AppContext, AppContextType } from "context/AppProvider";
-import { useAuth } from "hooks";
-import { useContext, useEffect } from "react";
+import { useAuth, useSwrInfinite } from "hooks";
+import { IMessage, ITopic } from "interface";
+import { paramsTopic } from "params-query";
+import { useContext, useEffect, useState } from "react";
+import { Link, Route, Switch, useLocation, useParams } from "react-router-dom";
+import { Loader, Right } from "./components"
+import style from "./message.module.css"
+import icon from "constants/icon";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { formatDateFromNow, onErrorAvatar, unique } from "utils";
+import AuthRoute from "route/AuthRoute";
 
 function Messenger() {
-  const { echo } = useContext(AppContext) as AppContextType
   const { USER } = useAuth()
-  useEffect(() => {
-    if (echo) {
-      // let chat: any = echo?.private(`ci.chat.demo.GENERAL`)
-      let chat: any = echo?.private(`chat`)
-        .subscribed(() => {
-          chat.whisper('connected', {
-            user: {
-              id: USER.id,
-              fullname: USER.fullname,
-              avatar: USER.avatar
-            }, socketId: echo?.socketId()
-          })
-          chat.listenForWhisper('typing', (u: any) => {
-            // console.log(u)
-          })
-        })
-        .listen('UserOnline', (u: any) => {
-          // console.log('on', u)
-        })
-        .listen('UserOffline', (u: any) => {
-          // console.log('off', u)
-        })
-    }
-  }, [echo, USER])
+  const [query, setQuery] = useState(paramsTopic)
+  const location = useLocation()
+  const topic_id = location.pathname.split("/")[2]
+  const { resData, onLoadMore, totalItem } = useSwrInfinite({
+    API_URL: "topics",
+    enable: USER,
+    params: query,
+    dedupingInterval: 0
+  })
+  const more = () => { if (resData.length < totalItem) { onLoadMore() } }
   return (
-    <div>
-      Messenger
+    <div className={style.container}>
+      <div className={topic_id ? `${style.left} ${style.left_ch}` : style.left}>
+        <div className={style.left_head}>
+          <div className={style.left_head_top}>
+            <span className={style.left_head_txt}>Chat</span>
+            <div className={style.left_head_ctl}></div>
+          </div>
+          <div className={style.left_head_bot}>
+            <img src={icon.searchGray} alt="" />
+            <input type="text" placeholder="Tìm kiếm trong tin nhắn..." />
+          </div>
+        </div>
+        <div className={style.left_body}>
+          <InfiniteScroll
+            hasMore={true}
+            dataLength={resData.length}
+            loader={resData.length < totalItem && <Loader />}
+            next={more}
+          >
+            <ul className={style.topic_list}>
+              {
+                resData.map((item: ITopic) => (
+                  <li key={item._id} className={style.topic_cnt}>
+                    <Topic item={item} />
+                  </li>
+                ))
+              }
+            </ul>
+          </InfiniteScroll>
+        </div>
+      </div>
+      <Switch>
+        <AuthRoute>
+          <Route path="/messages/:_id">
+            <div
+              style={{ backgroundColor: 'var(--white)' }}
+              className={topic_id ? `${style.right} ${style.right_ch}` : style.right}
+            >
+              <Right />
+            </div>
+          </Route>
+        </AuthRoute>
+      </Switch>
     </div>
   );
 }
 
 export default Messenger;
+
+const Topic = ({ item }: { item: ITopic }) => {
+  const location = useLocation()
+  let name = item.name
+  if (item.name?.trim().length === 0 || !item.name) {
+    name = unique(item.topic_user?.map(i => i.user?.fullname).filter(Boolean)).join(", ")
+  }
+  const topic_id = location.pathname.split("/")[2]
+  return (
+    <Link
+      style={item._id === topic_id ? { backgroundColor: 'var(--bg-color)' } : {}}
+      to={{ pathname: `/messages/${item._id}`, state: item }}
+      className={style.topic}
+    >
+      <div className={style.topic_left}>
+        <div className={style.topic_left_img}>
+          <img src={item.topic_user[0]?.user?.avatar || ''} onError={onErrorAvatar} alt="" />
+          <span className={style.topic_left_online}></span>
+        </div>
+      </div>
+      <div className={style.topic_right}>
+        <span className={style.topic_name}>
+          {name}
+        </span>
+        <div className={style.topic_message}>
+          <span>{item.messages[0]?.msg}</span>
+          <span>{formatDateFromNow(item.updated_at)}</span>
+        </div>
+      </div>
+    </Link>
+  )
+}

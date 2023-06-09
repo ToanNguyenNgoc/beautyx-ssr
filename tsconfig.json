@@ -32,7 +32,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/index.js"  ],
+, "src/index.js", "src/api/_momoImport.js"  ],
   "exclude": [
     "node_modules"
   ]

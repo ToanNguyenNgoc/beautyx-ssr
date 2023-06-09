@@ -2,20 +2,25 @@ import style from './banner.module.css'
 import img from 'constants/img'
 import { XButton } from 'components/Layout'
 import icon from 'constants/icon'
-import { useFavorite } from 'hooks'
+import { useAuth, useFavorite } from 'hooks'
 import { useContext, useRef, useState } from 'react'
-import { OrgContext, OrgContextType } from 'context'
+import { MessengerContext, MessengerCtxType, OrgContext, OrgContextType } from 'context'
 import { usePostAnalytics } from '../../hooks'
 import { Gallery } from '../Gallery'
-import {SharePopup} from '../Share'
+import { SharePopup } from '../Share'
 import { OrgItemMap } from 'components/Layout/OrgItemMap'
 import { formatOrgTimeWork } from 'utils'
 import { useMediaQuery } from '@mui/material'
 import Slider, { Settings } from 'react-slick'
+import { useHistory } from 'react-router-dom'
+import { chatApi } from 'api'
 
 export const Banner = () => {
   const { galleries, org, loadGalleries, discounts, servicesSpecial, productsSpecial } =
     useContext(OrgContext) as OrgContextType
+  const { currTopic } = useContext(MessengerContext) as MessengerCtxType
+  const history = useHistory()
+  const { USER } = useAuth()
   const mb = useMediaQuery('(max-width:767px)')
   const servicesList = discounts?.map(i => i.items[0]?.productable?.image_url)
     .concat(servicesSpecial.map(i => i.image_url))
@@ -45,6 +50,21 @@ export const Banner = () => {
     favorite: org.is_favorite
   })
   const { orgTimes, orgTimeToday } = formatOrgTimeWork(org?.opening_time)
+  const onChat = async () => {
+    if (!USER) history.push('/sign-in?1')
+    const topic = currTopic(org.id)
+    if (topic) {
+      console.log(topic)
+      history.push("/messages")
+    } else {
+      const res = await chatApi.createTopic({
+        org: org.id,
+        group_name: org.name
+      })
+      console.log(res.context)
+      history.push("/messages")
+    }
+  }
 
   return (
     <>
@@ -87,9 +107,10 @@ export const Banner = () => {
                   iconSize={mb ? 18 : 16}
                   icon={icon.chatSquare}
                   title='Tư vấn'
+                  onClick={onChat}
                 />
                 <XButton
-                  onClick={()=>setShare(true)}
+                  onClick={() => setShare(true)}
                   iconSize={mb ? 18 : 16}
                   icon={icon.share}
                   title='Chia sẻ'
@@ -145,8 +166,8 @@ export const Banner = () => {
           <XButton
             onClick={() => setOImg(true)}
             className={style.open_image_btn}
-            title={mb ? '':'Hiển thị tất cả hình'}
-            icon={mb ? icon.expend:''}
+            title={mb ? '' : 'Hiển thị tất cả hình'}
+            icon={mb ? icon.expend : ''}
           />
         </div>
         {

@@ -9,7 +9,7 @@ import { useDeviceMobile } from "hooks";
 export default function AssistantBtn() {
     const location: any = useLocation();
     const originPath = location.pathname.split('/')[1]
-    const viewDisable = ["trang-thai-don-hang", "chat", "map-box", "ban-do"];
+    const viewDisable = ["trang-thai-don-hang", "chat", "map-box", "ban-do","messages"];
     let disable = false;
     if (viewDisable.includes(originPath)) {
         disable = true;

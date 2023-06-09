@@ -4,7 +4,7 @@ import {  useHistory } from 'react-router-dom'
 import React, { ReactNode, useEffect } from 'react'
 
 interface LayoutProps {
-    children: ReactNode[]
+    children: ReactNode[] | ReactNode
 }
 
 function AuthRoute({ children }: LayoutProps) {

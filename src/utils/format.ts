@@ -105,10 +105,19 @@ export const formatPhoneNumber = (phoneNumberString: string) => {
     return phone;
 };
 export const linkify = (text: string) => {
-    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    return text.replace(urlRegex, function (url) {
-        return '<a class="linkify-chat" target="blank" href="' + url + '">' + url + "</a>";
-    });
+    // eslint-disable-next-line no-useless-escape
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const urlImgRegex = /\.(jpeg|jpg|gif|png|svg)$/;
+    let element = text
+    if (text.match(urlImgRegex)) {
+        return element = '<image class="msg-img" src=" ' + text + ' " alt="" />'
+    }
+    if (text.match(urlRegex)) {
+        element = text.replace(urlRegex, function (url) {
+            return '<a class="linkify-chat" target="blank" href="' + url + '">' + url + "</a>";
+        });
+    }
+    return element
 }
 export const checkHTML = (text: string) => {
     var elem = document.createElement('div')
@@ -136,5 +145,5 @@ export const formatOrgTimeWork = (time_arr: any) => {
         }
     })
     const orgTimeToday = orgTimes?.find(i => i.todayAct)
-    return {orgTimes, orgTimeToday}
+    return { orgTimes, orgTimeToday }
 }

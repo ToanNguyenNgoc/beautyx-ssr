@@ -24,12 +24,8 @@ export function XButton(props: IProps) {
         className,
         style,
         icon,
-<<<<<<< HEAD
         iconSize,
         children
-=======
-        iconSize = 18,
->>>>>>> Dev_Toan
     } = props;
     return (
         <button

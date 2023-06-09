@@ -1,3 +1,9 @@
+export interface ReqTopic {
+  org: number;
+  recipient_id?: string;
+  group_name: string
+}
+
 export interface ITopic {
   _id: string,
   type: string,
@@ -7,6 +13,7 @@ export interface ITopic {
   updated_at: string,
   created_at: string,
   messages: IMessage[]
+  topic_user: ITopicUser[]
 }
 export interface IMessage {
   _id: string,
@@ -15,5 +22,23 @@ export interface IMessage {
   topic_id: string,
   reply_id: null | string,
   updated_at: string,
-  created_at: string
+  created_at: string,
+  user?: {
+    avatar: string | null;
+    current_platform: string | null;
+    fullname: string;
+    id: string;
+  },
+}
+export interface ITopicUser {
+  joined_at: string;
+  topic_id: string;
+  user: {
+    avatar: string | null;
+    current_platform: string | null;
+    fullname: string;
+    id: string;
+  },
+  user_id: number;
+  _id: string;
 }

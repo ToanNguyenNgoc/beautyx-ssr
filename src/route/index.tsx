@@ -298,7 +298,7 @@ function RouterConfig() {
       component: <Chat />,
     },
     {
-      path:"/messenger",
+      path:"/messages",
       component:<Messenger/>
     }
   ];

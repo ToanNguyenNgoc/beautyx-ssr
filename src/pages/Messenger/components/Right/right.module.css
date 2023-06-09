@@ -1,0 +1,250 @@
+.container {
+  background-color: var(--white);
+}
+
+.head {
+  padding: 12px;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.head_left {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.head_left_back {
+  padding: 4px;
+  border-radius: 100%;
+  background-color: var(--white);
+  margin-right: 6px;
+  display: none;
+}
+
+.head_left_back img {
+  transform: rotate(180deg);
+}
+
+.topic {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topic_img {
+  width: 44px;
+  height: 44px;
+  background-color: var(--bg-color);
+  border-radius: 100%;
+  position: relative;
+}
+
+.topic_name {
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  color: var(--text-black);
+  display: -webkit-box;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  margin-left: 6px;
+}
+
+.body {
+  padding: 12px;
+}
+
+.messages {
+  height: calc(100vh - 148px);
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0px 12px;
+  padding-bottom: 60px;
+}
+
+.message {
+  width: 100%;
+  padding: 10px 0px;
+}
+
+
+.message_head {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 35px;
+  height: 35px;
+  background-color: var(--bg-color);
+  border-radius: 100%;
+  z-index: 1;
+  position: relative;
+}
+
+.user_name {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0px 6px;
+}
+
+.create {
+  font-size: 11px;
+  font-weight: 500;
+  margin-bottom: -2px;
+  color: #a1a5b7;
+}
+
+.message_body {
+  margin-top: 6px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.message_body_cnt {
+  background-color: #f8f5ff;
+  padding: 12px;
+  border-radius: 0px 8px 8px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+  max-width: 80%;
+  word-break: break-word;
+}
+
+.message_body_cnt img {
+  width: 300px;
+  border-radius: 8px;
+}
+
+.input_cnt {
+  background-color: var(--white);
+  position: fixed;
+  z-index: 2;
+  bottom: 0;
+  right: 0;
+  width: calc(100% - 360px);
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 12px;
+  box-shadow: var(--box-shadow);
+}
+.scroll_btn{
+  position: absolute;
+  z-index: 1;
+  margin: 0px auto 60px auto;
+  background-color: var(--white);
+  width: 38px;
+  height: 38px;
+  padding: 0px;
+  border-radius: 100%;
+  margin-left: 43%;
+  box-shadow: var(--box-shadow);
+  visibility: hidden;
+  opacity: 0;
+  transition: var(--trans);
+}
+.scroll_btn_act{
+  margin-bottom: 80px;
+  visibility: visible;
+  opacity: 1 !important;
+  transition: var(--trans);
+}
+.scroll_btn img{
+  transform: rotate(90deg);
+}
+
+.ip_ctl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ip_ctl_btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  padding: 0px;
+  margin-right: 6px;
+}
+
+.btn_send {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  padding: 0px;
+}
+
+.text_area_cnt {
+  width: calc(100% - 76px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.text_area {
+  width: calc(100% - 38px);
+  padding: 7px 8px;
+  border: none;
+  outline: none;
+  background-color: #f1faff;
+  font-size: 13px;
+  line-height: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  max-height: 100px;
+  overflow-y: scroll;
+  resize: none;
+}
+.load{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+.load span{
+  margin-left: 10px;
+}
+
+@media only screen and (max-width: 992px) and (min-width: 767px) {}
+
+@media only screen and (max-width: 767px) {
+  .head_left_back {
+    display: block;
+    background-color: var(--bg-color);
+    width: 32px;
+    height: 32px;
+  }
+
+  .messages {
+    height: calc(100dvh - 122px);
+  }
+
+  @supports not (height: calc(100dvh - 122px)) {
+    .messages {
+      height: calc(100dvh - 150px);
+      padding-bottom: 90px;
+    }
+  }
+
+  .topic {
+    width: calc(100% - 36px);
+  }
+
+  .topic_name {
+    width: calc(100% - 44px);
+  }
+
+  .input_cnt {
+    width: 100%;
+  }
+}
