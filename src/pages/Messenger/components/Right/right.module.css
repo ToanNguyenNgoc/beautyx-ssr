@@ -137,7 +137,8 @@
   padding: 8px 12px;
   box-shadow: var(--box-shadow);
 }
-.scroll_btn{
+
+.scroll_btn {
   position: absolute;
   z-index: 1;
   margin: 0px auto 60px auto;
@@ -152,13 +153,15 @@
   opacity: 0;
   transition: var(--trans);
 }
-.scroll_btn_act{
+
+.scroll_btn_act {
   margin-bottom: 80px;
   visibility: visible;
   opacity: 1 !important;
   transition: var(--trans);
 }
-.scroll_btn img{
+
+.scroll_btn img {
   transform: rotate(90deg);
 }
 
@@ -204,15 +207,75 @@
   overflow-y: scroll;
   resize: none;
 }
-.load{
+
+.load {
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
   font-weight: 600;
 }
-.load span{
+
+.load span {
   margin-left: 10px;
+}
+
+.chatBubble {
+  background-color: #f8f5ff;
+  padding: 12px 14px;
+  width: fit-content;
+  border-radius: 8px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+.typing {
+  align-items: center;
+  display: flex;
+}
+
+.typing .dot {
+  animation: mercuryTypingAnimation 1.8s infinite ease-in-out;
+  background-color: var(--purple);
+  border-radius: 50%;
+  height: 7px;
+  margin-right: 4px;
+  vertical-align: middle;
+  width: 7px;
+  display: inline-block;
+}
+
+.typing .dot:nth-child(1) {
+  animation-delay: 200ms;
+}
+
+.typing .dot:nth-child(2) {
+  animation-delay: 300ms;
+}
+
+.typing .dot:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+.typing .dot:last-child {
+  margin-right: 0;
+}
+
+@keyframes mercuryTypingAnimation {
+  0% {
+    transform: translateY(0px);
+    background-color: rgba(112, 98, 185, 0.7);
+  }
+
+  28% {
+    transform: translateY(-7px);
+    background-color: rgba(112, 98, 185, 0.4);
+  }
+
+  44% {
+    transform: translateY(0px);
+    background-color: rgba(112, 98, 185, 0.2);
+  }
 }
 
 @media only screen and (max-width: 992px) and (min-width: 767px) {}

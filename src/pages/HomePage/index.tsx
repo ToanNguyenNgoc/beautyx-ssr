@@ -7,7 +7,7 @@ import tracking from "api/trackApi";
 import { STATUS } from "redux/status";
 import { LoadHomeBanner } from "components/LoadingSketion/LoadHome";
 import HomeDiscount from "pages/HomePage/HomeDiscounts";
-import { OpenApp, PlashScreen } from "components/Layout";
+import { OpenApp, PlashScreen, XButton } from "components/Layout";
 import { useDeviceMobile } from "hooks";
 import HomeBanner2 from "./HomeBanner2";
 import HomeCate2 from "./HomeCate2";
@@ -23,6 +23,8 @@ import HomeProvince from "./HomeProvince";
 import style from "./home.module.css";
 import HomeCurrentLocation from "./HomeCurrentLocation";
 import HomeTrends from "./HomeTrends";
+import axios from "axios";
+import moment from "moment";
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();

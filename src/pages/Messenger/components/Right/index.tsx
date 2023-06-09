@@ -7,7 +7,7 @@ import icon from "constants/icon"
 import { formatDateFromNow, linkify, onErrorAvatar, unique, uniqueArr } from "utils"
 import { useAuth, useElementOnScreen, useSwr, useSwrInfinite } from "hooks"
 import InfiniteScroll from "react-infinite-scroll-component"
-import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent, useMemo } from "react"
+import { Dispatch, SetStateAction, useContext, useEffect, useRef, useState, KeyboardEvent } from "react"
 import { AppContext, AppContextType } from "context"
 import API_ROUTE from "api/_api"
 import { CACHE_TIME } from "common"
@@ -53,11 +53,9 @@ export const Right = () => {
   const more = () => resData.length < totalItem && onLoadMore()
   const isInScreen = useElementOnScreen({ rootMargin: '100px', threshold: 0.3 }, botRef)
   const [msges, setMsges] = useState<IMessage[]>([])
-  useEffect(()=>{
-    console.log(msges[0]?.topic_id)
-  },[])
+  const [isTyping, setIsTyping] = useState(false)
   //[] handle messages
-  useMemo(() => {
+  useEffect(() => {
     if (echo && user && topic && org) {
       let chat: any = echo.join(`ci.chat.${org.subdomain}.${topic_id}`)
         .subscribed(() => {
@@ -69,18 +67,25 @@ export const Right = () => {
               current_platform: 'MANAGER_WEB'
             }, socketId: echo?.socketId()
           })
-          chat.listenForWhisper('typing', (u: any) => { })
+          chat.listenForWhisper('typing', (u: any) => {
+            setIsTyping(u?.user?.isTyping)
+         })
         })
         .listen('MessagePosted', (u: IMessage) => {
           if (user.id !== u.user_id) {
             onScrollBottom()
-            setMsges(prevMsges => uniqueArr([u, ...prevMsges]))
+            setMsges(prev => {
+              if (prev.indexOf(u) === -1) {
+                return [u, ...prev]
+              }
+              return prev
+            })
           }
         })
     }
     return () => {
       setMsges([])
-   }
+    }
   }, [echo, topic_id, org])
 
   return (
@@ -117,6 +122,7 @@ export const Right = () => {
           }
           scrollableTarget="scrollableDiv"
         >
+          {isTyping && <Typing />}
           {uniqueArr(msges).concat(resData).map((item: IMessage, index) => (
             <div key={index} className={style.message}>
               <Message item={item} change={item.user_id === user.id} />
@@ -129,6 +135,7 @@ export const Right = () => {
         topic_id={topic_id}
         onScrollBottom={onScrollBottom}
         isInScreen={isInScreen}
+        org={org}
       />
     </div>
   )
@@ -167,7 +174,8 @@ interface InputProps {
   setMsges: Dispatch<SetStateAction<IMessage[]>>;
   topic_id: string;
   onScrollBottom: () => void;
-  isInScreen?: boolean
+  isInScreen?: boolean;
+  org: any
 }
 const initMsg = {
   _id: "",
@@ -178,10 +186,22 @@ const initMsg = {
   updated_at: '',
   created_at: '',
 }
-const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen }: InputProps) => {
+const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen, org }: InputProps) => {
   const { USER: user } = useAuth()
   const [msg, setMsg] = useState<IMessage>(initMsg)
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const { echo } = useContext(AppContext) as AppContextType
+  const onEmitTyping = (isTyping: boolean) => {
+    let chat: any = echo?.join(`ci.chat.${org.subdomain}.${topic_id}`)
+    chat?.whisper('typing', {
+      user: {
+        id: user.id,
+        fullname: user.fullname,
+        avatar: user.avatar,
+        isTyping: isTyping
+      }, socketId: echo?.socketId()
+    })
+  }
   const resizeTextArea = () => {
     if (textAreaRef.current) {
       textAreaRef.current.style.height = "auto";
@@ -201,8 +221,9 @@ const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen }: InputProp
         created_at: moment().format("YYYY-MM-DD HH:mm:ss")
       }, ...prev])
       setMsg(initMsg)
-      onScrollBottom()
       await chatApi.postMessage({ msg: msg.msg, topic_id })
+      textAreaRef.current?.blur()
+      onScrollBottom()
     }
   }
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -239,6 +260,8 @@ const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen }: InputProp
           rows={1}
           className={style.text_area}
           onKeyDown={handleKeyDown}
+          onFocus={() => onEmitTyping(true)}
+          onBlur={() => onEmitTyping(false)}
         />
         <XButton
           className={style.btn_send}
@@ -252,4 +275,15 @@ const InputChat = ({ setMsges, topic_id, onScrollBottom, isInScreen }: InputProp
 }
 export const Loader = () => {
   return <div className={style.load}>Đang tải...<CircularProgress size={14} /></div>
+}
+const Typing = () => {
+  return (
+    <div className={style.chatBubble}>
+      <div className={style.typing}>
+        <div className={style.dot} />
+        <div className={style.dot} />
+        <div className={style.dot} />
+      </div>
+    </div>
+  )
 }

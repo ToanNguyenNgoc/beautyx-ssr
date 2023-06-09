@@ -1,9 +1,8 @@
-import { AppContext, AppContextType } from "context/AppProvider";
 import { useAuth, useSwrInfinite } from "hooks";
-import { IMessage, ITopic } from "interface";
+import { ITopic } from "interface";
 import { paramsTopic } from "params-query";
-import { useContext, useEffect, useState } from "react";
-import { Link, Route, Switch, useLocation, useParams } from "react-router-dom";
+import { useState } from "react";
+import { Link, Route, Switch, useLocation } from "react-router-dom";
 import { Loader, Right } from "./components"
 import style from "./message.module.css"
 import icon from "constants/icon";
@@ -13,7 +12,7 @@ import AuthRoute from "route/AuthRoute";
 
 function Messenger() {
   const { USER } = useAuth()
-  const [query, setQuery] = useState(paramsTopic)
+  const [query,] = useState(paramsTopic)
   const location = useLocation()
   const topic_id = location.pathname.split("/")[2]
   const { resData, onLoadMore, totalItem } = useSwrInfinite({
@@ -39,6 +38,7 @@ function Messenger() {
         <div className={style.left_body}>
           <InfiniteScroll
             hasMore={true}
+            height={`calc(100vh - 172px)`}
             dataLength={resData.length}
             loader={resData.length < totalItem && <Loader />}
             next={more}
