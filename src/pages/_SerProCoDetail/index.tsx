@@ -599,7 +599,7 @@ export const DetailDesc = ({ detail, org, onBookingNow, PERCENT }: DetailDescPro
                             className={style.guide_container_head}
                         >
                             <p className={style.container_desc_title}>
-                                {t('detail_item.detailed_description')}
+                                {t('se.guide')}
                             </p>
                             <img ref={refIconGuide} className={style.icon_right} src={icon.arrowDownPurple} alt="" />
                         </div>

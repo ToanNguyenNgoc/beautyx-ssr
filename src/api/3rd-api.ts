@@ -1,7 +1,7 @@
 const keyMapBox = process.env.REACT_APP_MAPBOX_TOKEN
 
 const API_3RD = {
-    API_NODE: "https://api-node-myspa.vercel.app/v1",
+    API_NODE: "https://beautyx.blackops.click/v1",
     API_MAP_BOX: (lat: string | number, lng: string | number) => {
         return `https://api.mapbox.com/geocoding/v5/mapbox.places/${lng},${lat}.json?access_token=${keyMapBox}&language=vi&country=vn`
     },

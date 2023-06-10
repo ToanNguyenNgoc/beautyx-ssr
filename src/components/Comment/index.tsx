@@ -53,7 +53,7 @@ function Comment(props: CommentProps) {
     const paramPost = {
         "body": `${tempCmt.body}${bought ? `‭` : ''}`,
         "commentable_id": commentable_id,
-        "commentable_type": commentable_type,
+        "commentable_type": commentable_type === "COMBO" ? "TREATMENT_COMBO":commentable_type,
         "organization_id": org_id,
         "media_ids": tempCmt.media_ids,
         // "rate": 5,
