@@ -23,11 +23,12 @@ const routeType = [
 export function useDiscountDetail() {
     const history = useHistory()
     const paramsUrl = useGetParamUrl()
-    const typeItemProps = routeType.find(i => i.path === paramsUrl[0])
+    const paramsArr = paramsUrl?.slice(paramsUrl?.indexOf('service'), paramsUrl?.indexOf('service') + 4)
+    const typeItemProps = routeType.find(i => i.path === paramsArr[0])
     const params = {
-        id: paramsUrl[2],
-        org_id: paramsUrl[1],
-        item_id: paramsUrl[3]
+        id: paramsArr[2],
+        org_id: paramsArr[1],
+        item_id: paramsArr[3]
     }
     let redirectPageError = false
     if (!typeItemProps) redirectPageError = true

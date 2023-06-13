@@ -317,6 +317,7 @@ const DetailQuantity = (props: DetailQuantityProps) => {
         });
         dispatch(clearAllServices());
     }
+
     return (
         <div>
             {

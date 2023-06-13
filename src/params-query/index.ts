@@ -43,10 +43,10 @@ export const pramsBranchV3: ParamBranchV3 = {
     "is_demo": 'false'
 }
 export const paramsDiscounts = {
-    "append": "user_available_purchase_count",
+    // "append": "user_available_purchase_count",
     "filter[platform]": "MOMO",
     "limit": 12,
-    "sort": "-priority|-created_at|discount_value",
+    // "sort": "-priority|-created_at|discount_value",
 }
 export const paramsServices: ParamService = {
     limit: 30,
