@@ -1,0 +1,120 @@
+.vc_container {
+    width: 550px;
+    padding: 12px;
+    border-radius: 6px;
+    background-color: var(--bg-white);
+}
+
+.vc_header {
+    display: flex;
+    align-items: center;
+}
+
+.vc_header_title {
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--text-orange);
+}
+
+.vc_body {
+    margin-top: 6px;
+}
+
+.vc_body_input {
+    padding: 4px;
+    border: solid 1px var(--bg-color);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.vc_body_input input {
+    padding: 0px;
+    width: calc(100% - 90px);
+    border: none;
+    outline: none;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.vc_body_input_btn {
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.vc_body_input_btn>div>span {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.vc_cart_none {
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+    color: var(--red_2);
+}
+.vc_cart_voucher_org{
+    display: flex;
+    margin-bottom: 8px;
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 500;
+}
+.vc_cart_voucher_org span{
+    font-weight: 600;
+    margin-left: 4px;
+}
+
+.voucher_list_item {
+    margin-bottom: 12px;
+}
+
+.vc_bot {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.vc_bot button {
+    border-radius: 6px;
+}
+
+@media only screen and (max-width: 1023px) {
+    .vc_container {
+        width: 100%;
+    }
+
+    .vc_header {
+        justify-content: space-between;
+    }
+
+    .vc_header_btn {
+        padding: 0px;
+        width: 32px;
+        height: 32px;
+        background-color: var(--bg-color);
+        border-radius: 100%;
+    }
+
+    .vc_bot {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-white);
+        border-radius: 6px 6px 0px 0px;
+        box-shadow: var(--box-shadow);
+        z-index: 10;
+        padding: 8px 12px 20px 12px;
+    }
+
+    .vc_bot button {
+        width: 100%;
+    }
+}

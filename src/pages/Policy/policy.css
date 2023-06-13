@@ -1,0 +1,14 @@
+.po-container{
+    width: 1050px;
+    padding-top: 32px;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+@media only screen and (max-width: 1023px) {
+    .po-container{
+        margin-top: 44px;
+        width: 100%;
+        padding: 12px;
+    }
+}

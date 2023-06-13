@@ -1,0 +1,109 @@
+.sel-cent-cnt{
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+.sel-cent-cnt__head{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    border-bottom: solid .5px var(--bgWhite);
+    z-index: 10;
+    padding: 12px 0px;
+}
+.sel-cent-cnt__head .cnt img{
+    width: 120px;
+    cursor: pointer;
+}
+.sel-cent-cnt__head .cnt button{
+    padding: 8px 16px;
+    border: none;
+    outline: none;
+    background-color: var(--purple);
+    font-size: 16px;
+    line-break: 20px;
+    font-weight: 700;
+    color: var(--bgWhite);
+    border-radius: 12px;
+}
+.sel-cent-cnt img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.sel-cent-cnt__form{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: #2700ff1c;
+}
+.sel-cent-cnt__form .container{
+    border-radius: 12px;
+    width: max-content;
+    margin: auto;
+    margin-top: 164px;
+    background-color: var(--bgWhite);
+    padding: 20px 48px;
+}
+.sel-cent-cnt__form .form-cnt{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sel-cent-cnt__form .logo{
+    width: 132px;
+}
+.sel-cent-cnt__form .title{
+    margin: 8px 0px 16px 0px;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--text-black);
+    font-weight: 700;
+}
+.sel-cent-cnt__form .inp{
+    display: flex;
+    align-items: flex-start;
+}
+.sel-cent-cnt__form input{
+    width: 284px;
+    padding: 6px 20px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    background-color: transparent;
+    outline: none;
+    border: solid 1px var(--text-hover);
+    text-align: center;
+    border-radius: 8px 0px 0px 8px;
+    border-right: none;
+}
+.sel-cent-cnt__form .inp-right{
+    height: 34px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 700;
+    line-height: 34px;
+    border: solid 1px var(--text-hover);
+    padding: 0px 8px;
+    border-radius: 0px 8px 8px 0px;
+    overflow-y: hidden;
+    transition: all .3s;
+    cursor: pointer;
+}
+.drop{
+    height: 102px !important;
+}
+.sel-cent-cnt__form button{
+    margin-top: 24px;
+    padding: 8px 16px;
+    border: none;
+    outline: none;
+    background-color: var(--purple);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    color: var(--bgWhite);
+}

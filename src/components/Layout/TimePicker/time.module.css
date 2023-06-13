@@ -1,0 +1,53 @@
+.container {
+    min-width: 250px;
+    width: 100%;
+    background-color: var(--bg-white);
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+}
+
+.header {
+    padding-bottom: 6px;
+    border-bottom: solid 1px var(--bg-color);
+}
+
+.header span {
+    font-size: 16px;
+    line-height: 25px;
+    font-weight: 600;
+}
+
+.body {
+    margin-top: 6px;
+}
+
+.time_list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.time_list_item {
+    width: 20%;
+    padding: 4px 8px;
+}
+
+.item {
+    width: 100%;
+    text-align: center;
+    padding: 6px 0px;
+    font-size: 14px;
+    line-height: 16px;
+    font-weight: 700;
+    border-radius: 6px;
+    transition: all .3s;
+    cursor: pointer;
+    border: solid 1px var(--bg-color);
+}
+
+.item_dis{
+    cursor: not-allowed;
+    opacity: 0.5;
+    background-color: var(--bg-color);
+    font-weight: 500;
+}

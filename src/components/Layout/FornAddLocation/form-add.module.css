@@ -1,0 +1,37 @@
+.form_cnt {
+    width: 100%;
+}
+
+.input_cnt {
+    height: 38px;
+    width: 100%;
+}
+
+.list_location {
+    margin: 6px 0px;
+}
+
+.list_location_item {
+    padding: 4px;
+    width: 300px;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    color: var(--text-black);
+    display: -webkit-box;
+    font-size: 14px;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    cursor: pointer;
+}
+
+.list_location_item:hover {
+    transition: var(--trans);
+    background-color: var(--bg-color);
+}
+
+.btn_cnt {
+    display: flex;
+    justify-content: center;
+}
