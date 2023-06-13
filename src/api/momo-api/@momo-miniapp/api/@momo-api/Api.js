@@ -1,0 +1,1 @@
+"use strict";var _ApiWeb=_interopRequireDefault(require("./ApiWeb"));Object.defineProperty(exports,"__esModule",{value:!0}),exports["default"]=void 0;function _interopRequireDefault(a){return a&&a.__esModule?a:{default:a}}var _default=_ApiWeb["default"];exports["default"]=_default;
