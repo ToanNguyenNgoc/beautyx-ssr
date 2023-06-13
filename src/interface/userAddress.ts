@@ -1,7 +1,7 @@
 export interface IUserAddress {
-    id: number,
-    latitude: null | number,
-    longitude: null | number,
+    id: any,
+    latitude: null | number | string,
+    longitude: null | number | string,
     address: string | null,
     is_default: boolean,
     user_id: number,

@@ -3,7 +3,6 @@ import cartReducer from "./cart";
 import homeReducer from "./home/homeSlice";
 import userReducer from "./profile/userSlice";
 import servicesBookReducer from "./booking";
-import userAddressReducer from "./profile/userAddressSlice";
 import orgReducer from "./org/orgSlice";
 import loginFlatFromReducer from "./loginFlatForm/loginFlatFrom";
 import cateTree from "./cates-tree";
@@ -23,7 +22,6 @@ const rootReducer = {
     SERVICES_BOOK: servicesBookReducer,
     USER: userReducer,
     ORG: orgReducer,
-    ADDRESS: userAddressReducer,
     CATE: cateTree,
     ORGS_MAP: orgMapReducer,
     FILTER_RESULT: filterResultReduce,

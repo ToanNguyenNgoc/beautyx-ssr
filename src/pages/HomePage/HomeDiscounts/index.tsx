@@ -1,7 +1,6 @@
-import React from "react";
 import { Container } from "@mui/material";
 import { IDiscountPar, IITEMS_DISCOUNT } from "interface";
-import { useDeviceMobile } from "hooks";
+import { useDeviceMobile, useSwrInfinite } from "hooks";
 import DiscountItem from "./DiscountItem";
 import { useHistory } from "react-router-dom";
 import scrollTop from "utils/scrollTop";
@@ -13,7 +12,8 @@ import { AUTH_LOCATION } from "api/authLocation";
 import { paramsDiscounts } from "params-query"
 import "./style.css";
 import { EXTRA_FLAT_FORM } from "api/extraFlatForm";
-import { useHomeDiscountsQuery } from "redux-toolkit-query/hook-home";
+import API_ROUTE from "api/_api";
+import { CACHE_TIME } from "common";
 
 function HomeDiscount() {
     const { t } = useContext(AppContext) as any;
@@ -22,13 +22,17 @@ function HomeDiscount() {
     const LOCATION = AUTH_LOCATION();
     const newParams = {
         ...paramsDiscounts,
-        page: 1,
-        limit: 10,
+        limit: 18,
         "filter[location]": PLAT_FORM === "TIKI" ? "" : LOCATION,
         "sort": PLAT_FORM === "TIKI" ? "-priority" : ""
     }
-    const { data, isLoading } = useHomeDiscountsQuery(newParams)
-    const discounts: IDiscountPar[] = data ?? []
+    const { resData, isValidating } = useSwrInfinite({
+        API_URL: API_ROUTE.DISCOUNTS,
+        enable: true,
+        params: newParams,
+        dedupingInterval: CACHE_TIME
+    })
+    const discounts: IDiscountPar[] = resData ?? []
     const history = useHistory();
     const onViewMore = () => {
         history.push("/giam-gia");
@@ -44,7 +48,7 @@ function HomeDiscount() {
                     </span>
                 </div>
                 <div className="home-discounts__list-wrap">
-                    {isLoading && <LoadGrid item_count={5} grid={5} />}
+                    {isValidating && <LoadGrid item_count={5} grid={5} />}
                     <ul className="home-discounts__list">
                         {discounts
                             ?.filter((i: IDiscountPar) =>

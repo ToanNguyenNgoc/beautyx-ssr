@@ -22,7 +22,10 @@ function PaymentStatus() {
     const params: any = useParams()
     const tran_uid = params.tran_uid
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { response } = useSwr(API_ROUTE.PAYMENT_GATEWAYS(tran_uid), (tran_uid && USER))
+    const { response } = useSwr({
+        API_URL: API_ROUTE.PAYMENT_GATEWAYS(tran_uid),
+        enable: tran_uid && USER
+    })
     //handle post appointment after payment success
     const data = localStorage.getItem('APP_INFO') && JSON.parse(`${localStorage.getItem('APP_INFO')}`)
     const handlePostApp = useCallback(async () => {

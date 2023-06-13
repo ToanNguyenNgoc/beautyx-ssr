@@ -18,15 +18,16 @@ import HomeDownApp from "./HomeDownApp";
 import HomeWhyNot from "./HomeWhyNot";
 import HomePartners from "./HomePartners";
 import HomeCate from "./HomeCate";
-import HomeRecommend from "./HomeRecommend";
+// import HomeRecommend from "./HomeRecommend";
 import HomeProvince from "./HomeProvince";
 import style from "./home.module.css";
 import HomeCurrentLocation from "./HomeCurrentLocation";
-import HomeTrends from "./HomeTrends";
+// import HomeTrends from "./HomeTrends";
+
 
 export default function HomePage() {
     const IS_MB = useDeviceMobile();
-    const [banner_status, USER] = useSelector((state: any) => [state.HOME.status, state.USER]);
+    const [banner_status] = useSelector((state: any) => [state.HOME.status, state.USER]);
     useEffect(() => {
         tracking.HOME_LOAD();
     }, []);

@@ -1,7 +1,6 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { pickBy, identity } from 'lodash';
 import { AUTH_LOCATION } from "./authLocation";
-import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class Organization {
   getOrgById = (id: any) => {
@@ -9,9 +8,8 @@ class Organization {
     const paramsOb = {
       "filter[location]": LOCATION,
     }
-    const params = pickBy(paramsOb, identity);
     const url = `/organizations/${id}`;
-    return axiosClient.get(url, AUTH_HEADER_PARAM_GET(pickBy(params)));
+    return axiosClient.get(url, { params: pickBy(paramsOb, identity) });
   };
   //example get all-----------------
   getAll = (values?: any) => {
@@ -20,9 +18,9 @@ class Organization {
     const paramsOb = {
       page: values.page || 1,
       limit: values.limit || 15,
-      "filter[keyword]": values.keyword ? decodeURI(values.keyword):"" ,
+      "filter[keyword]": values.keyword ? decodeURI(values.keyword) : "",
       "filter[tags]": values.tags,
-      "filter[is_momo_ecommerce_enable]":values.isEcommerce,
+      "filter[is_momo_ecommerce_enable]": values.isEcommerce,
       "filter[min_price]": values.min_price,
       "filter[max_price]": values.max_price,
       "filter[location]": values.LatLng ? values.LatLng : (values.sort === "distance" ? LOCATION : null),
@@ -31,8 +29,7 @@ class Organization {
       "sort": values.sort !== "distance" ? values.sort : null,
       "include": "tags|province|district|ward|branches|favorites|favorites_count"
     }
-    const params = pickBy(paramsOb, identity);
-    return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params))
+    return axiosClient.get(url, { params: pickBy(paramsOb, identity) })
   };
 }
 const orgApi = new Organization();

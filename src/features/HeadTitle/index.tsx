@@ -1,16 +1,16 @@
-import { useDeviceMobile } from 'hooks';
+// import { useDeviceMobile } from 'hooks';
 import React from 'react';
-import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
-import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm'
+// import { EXTRA_FLAT_FORM } from '../../api/extraFlatForm';
+// import { FLAT_FORM_TYPE } from '../../rootComponents/flatForm'
 
 interface IProps {
       title?: string
 }
 
 function HeadTitle(props: IProps) {
-      const IS_MB = useDeviceMobile();
-      const { title } = props;
-      const FLAT_FORM = EXTRA_FLAT_FORM();
+      // const IS_MB = useDeviceMobile();
+      // const { title } = props;
+      // const FLAT_FORM = EXTRA_FLAT_FORM();
      
       // let t: string = "BeautyX";
       // if (IS_MB) {

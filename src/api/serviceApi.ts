@@ -1,6 +1,5 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { pickBy, identity } from "lodash";
-import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 class ServiceApi {
     getByOrgId = (values: any) => {
@@ -18,7 +17,7 @@ class ServiceApi {
         };
         const params = pickBy(paramsOb, identity);
         if (values.org_id) {
-            return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
+            return axiosClient.get(url, {params:params});
         }
     };
     getDetailById = (values: any) => {
@@ -28,7 +27,7 @@ class ServiceApi {
             append: "is_favorite|rating|bought_count",
         };
         if (values.org_id && values.ser_id) {
-            return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
+            return axiosClient.get(url, {params});
         }
     };
 }

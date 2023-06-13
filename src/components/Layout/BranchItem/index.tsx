@@ -2,7 +2,7 @@ import icon from 'constants/icon';
 import img from 'constants/img';
 import { IBranchV3 } from 'interface';
 import { Link } from 'react-router-dom';
-import { clst, onErrorImg, formatDistanceKM } from 'utils';
+import { clst, onErrorImg, formatDistanceKM, scrollTop } from 'utils';
 import { formatRouterLinkOrg } from 'utils/formatRouterLink/formatRouter';
 import { XButton } from '../XButton';
 import style from './branch-item.module.css'
@@ -11,6 +11,7 @@ export function BranchV3Item({ branch, changeStyle }: { branch: IBranchV3, chang
     return (
         <>
             <Link
+                onClick={() => scrollTop()}
                 to={{
                     pathname: formatRouterLinkOrg(branch.subdomain ?? branch.organization_id)
                 }}

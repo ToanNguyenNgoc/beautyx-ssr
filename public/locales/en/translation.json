@@ -147,6 +147,7 @@
         "about": "About",
         "services": "Services",
         "services_name": "Service name",
+        "combo":"Combo",
         "products": "Products",
         "sale": "Sale",
         "view_more": "View more",
@@ -363,6 +364,8 @@
         "scores": "Scores",
         "surplus": "Surplus",
         "province": "Province",
+        "district":"District",
+        "ward":"Ward",
         "rank": "Rank",
         "my_profiles": "My profiles",
         "update_acc": "Fully update personal information to make the account better security",
@@ -385,7 +388,9 @@
         "spending": "Spending",
         "discount_on_bill": "Discount on bill",
         "bonus": "Bonus",
-        "benefit": "Benefit"
+        "benefit": "Benefit",
+        "create_address":"Add new address",
+        "update_address":"Update address"
     },
     "order": {
         "order_his": "Orders history",

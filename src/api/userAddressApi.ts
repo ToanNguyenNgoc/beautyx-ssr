@@ -1,28 +1,9 @@
-import { AUTH_HEADER, AUTH_HEADER_PARAM_GET } from "./authHeader";
-import axiosClient from "./axios";
+import { axiosClient } from "config";
+
 class UserAddress {
-    getAll = (session: any, local: any) => {
+    getAll = () => {
         const url = `/useraddresses`;
-        const params = {
-            limit: 15,
-            page: 1
-        }
-        if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-            return axiosClient.get(url, {
-                params,
-                headers: {
-                    Authorization: `Bearer ${session ? session : local}`,
-                },
-            });
-        }
-    }
-    getAddress = () => {
-        const url = `/useraddresses`;
-        const params = {
-            limit: 15,
-            page: 1
-        }
-        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(params));
+        return axiosClient.get(url, { params: { limit: 15, page: 1 } })
     }
     postAddress = (values: any) => {
         const url = `/useraddresses`;
@@ -31,22 +12,20 @@ class UserAddress {
             "is_default": values.is_default,
             "is_bookmark": true
         }
-        return axiosClient.post(url, params, AUTH_HEADER());
+        return axiosClient.post(url, params);
     }
 
-    deleteAddress = (id: number) => {
+    deleteAddress = (id: number | string) => {
         const url = `/useraddresses/${id}`;
-        if (localStorage.getItem("_WEB_TK") || window.sessionStorage.getItem("_WEB_TK")) {
-            return axiosClient.delete(url, AUTH_HEADER());
-        }
+        return axiosClient.delete(url);
     }
-    updateAddress = (values: any) => {
+    updateAddress = (values: { id: number | string, address?: string }) => {
         const url = `/useraddresses/${values.id}`;
         const params = {
             "address": values.address,
             "is_default": true,
         }
-        return axiosClient.put(url, params, AUTH_HEADER());
+        return axiosClient.put(url, params);
     }
     updateAddressCancelDefault = (values: any) => {
         const url = `/useraddresses/${values.id}`;
@@ -54,7 +33,7 @@ class UserAddress {
             "address": values.address,
             "is_default": false
         }
-        return axiosClient.put(url, params, AUTH_HEADER());
+        return axiosClient.put(url, params);
     }
 }
 const userAddressApi = new UserAddress();

@@ -1,80 +1,75 @@
-import React, { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from 'context/AppProvider';
-import { IUserAddress } from 'interface/userAddress';
-import AddressItem from './components/AddressItem';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    fetchAsyncUserAddress,
-    removeAsyncUserAddress,
-    updateAsyncAddress,
-} from 'redux/profile/userAddressSlice';
-import { STATUS } from 'redux/status';
-import ModalLoad from 'components/ModalLoad';
-import IStore from 'interface/IStore';
+import { AppContext, AppContextType } from 'context/AppProvider';
 import { HeadTitle } from 'pages/Account';
 import { XButton } from 'components/Layout';
-import { useDeviceMobile } from 'hooks';
+import {  useUserAddress } from 'hooks';
 import icon from 'constants/icon';
+import style from './address.module.css'
+import { Radio } from '@mui/material';
 
 function Address() {
-    const IS_MB = useDeviceMobile()
     const history = useHistory();
-    const dispatch = useDispatch();
-    const { USER } = useSelector((state: IStore) => state.USER)
-    const ADDRESS = useSelector((state: any) => state.ADDRESS);
-    const { address, status, status_up, address_default } = ADDRESS;
-    const callUserAddress = () => {
-        if (USER && status !== STATUS.SUCCESS) {
-            dispatch(fetchAsyncUserAddress())
-        }
-    }
-    const { t } = useContext(AppContext) as any
-    useEffect(() => {
-        callUserAddress()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch, USER])
-    const handleRemoveAddress = (address: IUserAddress) => {
-        dispatch(removeAsyncUserAddress(address.id))
-    }
-    const handleUpdateAddress = (address: any) => {
-        dispatch(updateAsyncAddress(address))
-    }
-
-    const gotoAddNewAddress = () => {
-        history.push({
-            pathname: '/tai-khoan/dia-chi',
-        })
+    const { t } = useContext(AppContext) as AppContextType
+    const { addresses, deleteAddress, updateAddress } = useUserAddress()
+    const onUpdateDefault = (id: number | string) => {
+        updateAddress({ id: id, body: { is_default: true } })
     }
     return (
         <>
-            {
-                status_up === STATUS.LOADING && <ModalLoad />
-            }
             <HeadTitle
+                title={t('acc.order_address')}
                 rightBtn={
                     <XButton
-                        onClick={gotoAddNewAddress}
+                        onClick={() => history.push('/tai-khoan/dia-chi')}
                         iconSize={14}
-                        className='add_address_btn'
-                        title={IS_MB ? '' : t('acc.add new')}
+                        className={style.add_address_btn}
                         icon={icon.plusPurple}
                     />
                 }
-                title={t('acc.order_address')}
             />
-            {
-                address?.map((item: IUserAddress, index: number) => (
-                    <AddressItem
-                        key={index}
-                        index={index}
-                        item={item}
-                        handleRemoveAddress={handleRemoveAddress}
-                        handleUpdateAddress={handleUpdateAddress}
-                        address_default={address_default}
-                    />
-                ))
-            }
+            <div className={style.container}>
+                <ul className={style.address_list}>
+                    {
+                        addresses.map(item => (
+                            <li
+                                key={item.id}
+                                className={
+                                    !item.is_default ?
+                                        style.address_item : `${style.address_item} ${style.address_item_de}`
+                                }
+                                onClick={() => onUpdateDefault(item.id)}
+                            >
+                                <div className={style.address_item_left}>
+                                    <Radio
+                                        style={{padding:'4px', color:'var(--purple)'}}
+                                        checked={item.is_default}
+                                        readOnly
+                                    />
+                                    <span className={style.address_name}>{item.address}</span>
+                                </div>
+                                <div className={style.address_item_right}>
+                                    {/* <XButton
+                                        iconSize={12}
+                                        icon={icon.editWhite}
+                                    /> */}
+                                    {
+                                        !item.is_default &&
+                                        <XButton
+                                            iconSize={12}
+                                            icon={icon.trash}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                deleteAddress({ id: item.id })
+                                            }}
+                                        />
+                                    }
+                                </div>
+                            </li>
+                        ))
+                    }
+                </ul>
+            </div>
         </>
     );
 }

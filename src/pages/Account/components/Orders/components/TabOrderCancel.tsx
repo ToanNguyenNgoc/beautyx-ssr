@@ -18,9 +18,14 @@ import { EXTRA_FLAT_FORM } from 'api/extraFlatForm';
 function TabOrderCancel() {
     const PLAT_FORM = EXTRA_FLAT_FORM()
     const { USER } = useSelector((state: IStore) => state.USER)
-    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(USER, API_ROUTE.ORDERS, {
-        ...paramOrder, 
-        "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
+    const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite({
+        enable: USER,
+        API_URL: API_ROUTE.ORDERS,
+        params: {
+            ...paramOrder,
+            "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
+        },
+        dedupingInterval: 0
     })
     const orders: IOrderV2[] = resData ?? []
     const IS_MB = useDeviceMobile()

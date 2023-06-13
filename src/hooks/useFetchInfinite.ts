@@ -1,4 +1,5 @@
-import { AUTH_HEADER } from 'api/authHeader';
+import { CACHE_TIME } from 'common';
+import { AUTH_HEADER } from 'config';
 import { identity, pickBy } from 'lodash';
 import { useSWRInfinite } from 'swr'
 
@@ -24,7 +25,10 @@ export function useFetchInfinite(
         (index) =>
             `${API_URL}?page=${index + 1}${paramsURL}`,
         fetcher,
-        {revalidateOnFocus:false}
+        {
+            revalidateOnFocus:false,
+            dedupingInterval:CACHE_TIME
+        }
     );
     if (data) {
         totalItem = data[0]?.data?.context?.total ?? data[0]?.data?.total;

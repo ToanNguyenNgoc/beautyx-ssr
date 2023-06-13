@@ -1,6 +1,5 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { identity, pickBy } from "lodash";
-import { AUTH_HEADER_PARAM_GET } from "./authHeader";
 
 
 class Discounts {
@@ -10,7 +9,7 @@ class Discounts {
             "filter[organization_id]": values.org_id,
             "append": "user_available_purchase_count"
         }
-        return axiosClient.get(url, AUTH_HEADER_PARAM_GET(pickBy(params, identity)))
+        return axiosClient.get(url, { params: pickBy(params, identity) })
     }
 }
 const discountApi = new Discounts();

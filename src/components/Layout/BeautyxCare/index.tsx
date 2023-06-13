@@ -18,7 +18,7 @@ export function BeautyxCare() {
                 Hoàn tiền 100% nếu khách hàng đến không sử dụng được dịch vụ tại cơ sở.
             </p>
             <Link 
-                onClick={scrollTop}
+                onClick={()=>scrollTop()}
                 className={style.link} to={{ pathname: '/chinh-sach/bao-ve-quyen-loi-khach-hang?id=17' }} 
             >
                 Chính sách bảo vệ người mua BeautyX

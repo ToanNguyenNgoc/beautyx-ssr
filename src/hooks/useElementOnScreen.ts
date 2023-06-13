@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 type OptionsTypes = {
-    root: any,
+    root?: any,
     rootMargin: string,
     threshold: number,
 }

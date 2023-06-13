@@ -124,6 +124,7 @@ function HomeCateResult() {
     };
     //pagination tags child
     const perPage = IS_MB ? 4 : 6;
+    // const perPage = 3
     const totalTagChild = tag?.children?.length ?? 0;
     const totalPage = Math.ceil(totalTagChild / perPage);
     const pageGroup: IPageGroup[] = [];

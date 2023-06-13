@@ -185,7 +185,7 @@ const PlaceComponent = (props: any) => {
                     </div>
                     <div className="map-filter-cnt__drop">
                         <ul className="map-filter-list-org">
-                            {keyword.length > 0 &&
+                            {keyword?.length > 0 &&
                                 coorAddress?.length > 0 &&
                                 coorAddress?.map((i: any, index: number) => (
                                     <li
@@ -196,9 +196,9 @@ const PlaceComponent = (props: any) => {
                                         {i.place_name}
                                     </li>
                                 ))}
-                            {orgs.length > 0 &&
-                                keyword.length > 0 &&
-                                orgs.map((i: IOrganization, index: number) => (
+                            {orgs?.length > 0 &&
+                                keyword?.length > 0 &&
+                                orgs?.map((i: IOrganization, index: number) => (
                                     <li
                                         onClick={() => onClickOrgItemClick(i)}
                                         className="map-list-org__item"

@@ -1,9 +1,8 @@
-import { baseURL } from 'api/axios'
 import { IPaymentMethod, ResponseType } from 'interface'
 import API_ROUTE from 'api/_api'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { identity, pickBy } from 'lodash'
-import { token } from 'api/authHeader'
+import { baseURL, token } from 'config'
 
 export const homeApi = createApi({
     reducerPath: 'homeApi',
@@ -31,14 +30,6 @@ export const homeApi = createApi({
             keepUnusedDataFor: 60 * 60,
             transformResponse: (response: ResponseType) => response?.context?.data ?? []
         }),
-        homeDiscounts: builder.query({
-            query: (params) => ({
-                url: API_ROUTE.DISCOUNTS,
-                params: pickBy(params, identity),
-            }),
-            keepUnusedDataFor: 60 * 60,
-            transformResponse: (response: ResponseType) => response?.context?.data ?? []
-        }),
         serviceCatesChild: builder.query({
             query: (parent_id: number | string) => API_ROUTE.TAGS_ID(parent_id),
             keepUnusedDataFor: 3600,
@@ -55,7 +46,6 @@ export const homeApi = createApi({
 export const {
     useGalleriesQuery,
     useOrgsDistanceQuery,
-    useHomeDiscountsQuery,
     useServiceCatesChildQuery,
     useGetPaymentMethodQuery
 } = homeApi

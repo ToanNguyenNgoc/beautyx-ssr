@@ -2,7 +2,6 @@
 import { RouteComponentProps } from "@reach/router";
 import { Switch, useHistory, useLocation } from "react-router-dom";
 import Information from "./components/Information/index";
-import UserAddress from "./components/UserAddress/components/UserAddress";
 import React, { useContext, useEffect, useState } from "react";
 import { logoutUser } from "redux/profile/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +33,7 @@ import { phoneSupport } from "constants/index";
 import { User } from "interface";
 import CardCoin from "./components/CardCoin";
 import Member from "./components/Member";
+import AddressForm from "./components/UserAddress/AddressForm";
 
 const routes = [
   {
@@ -50,7 +50,7 @@ const routes = [
   },
   {
     path: "/tai-khoan/dia-chi",
-    component: <UserAddress />,
+    component: <AddressForm />,
   },
   {
     path: "/tai-khoan/theo-doi",
@@ -75,11 +75,11 @@ function Account() {
   const location = useLocation();
   const IS_MB = useDeviceMobile();
   const { USER } = useSelector((state: IStore) => state.USER);
-  const userResponse: User = useSwr(
-    API_ROUTE.USER_PROFILE,
-    USER,
-    paramsUserProfile
-  ).response;
+  const userResponse: User = useSwr({
+    API_URL: API_ROUTE.USER_PROFILE,
+    enable: USER,
+    params: paramsUserProfile
+  }).response;
   const onChangeAvatar = async (e: any) => {
     const { model_id } = await postMedia(e);
     await dispatch(
@@ -179,7 +179,7 @@ function Account() {
             className={style.left_cnt}
           >
             {IS_MB && <HeadAccount />}
-            <div 
+            <div
               // onClick={() => setOpenCard(true)} 
               className={style.left_user}
             >

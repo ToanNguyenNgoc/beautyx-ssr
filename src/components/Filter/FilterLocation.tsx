@@ -45,7 +45,7 @@ const useSearchProvinces = (keyword: string, list: any[]) => {
 
 export function FilterLocation(props: FilterLocationProps) {
     const location = AUTH_LOCATION()
-    const {t} = useContext(AppContext) as any
+    const { t } = useContext(AppContext) as any
     const IS_MB = useDeviceMobile()
     const { onChange, province_code, district_code, title, showApplyBtn } = props
     const [open, setOpen] = useState({
@@ -95,9 +95,10 @@ export function FilterLocation(props: FilterLocationProps) {
     let conditionDis = false
     if (province?.province_code) conditionDis = true
     if (province_code !== "cur" && province_code !== "") conditionDis = true
-    const { responseArray } = useSwr(
-        API_ROUTE.PROVINCES_CODE_DISTRICTS(province?.province_code ?? (province_code !== "cur" ? province_code : "")),
-        conditionDis)
+    const { responseArray } = useSwr({
+        API_URL: API_ROUTE.PROVINCES_CODE_DISTRICTS(province?.province_code ?? (province_code !== "cur" ? province_code : "")),
+        enable: conditionDis
+    })
     useEffect(() => {
         if (province_code !== "cur") {
             const prevPro = provincesSelect?.find((item: IProvince) => item.province_code == province_code)
@@ -176,7 +177,7 @@ export function FilterLocation(props: FilterLocationProps) {
                                                     province?.province_code === pro.province_code &&
                                                     `${district?.name},`
                                                 }
-                                                {pro.name.replace('Thành phố','')}
+                                                {pro.name.replace('Thành phố', '')}
                                             </span>
                                         </div>
                                         <XButton

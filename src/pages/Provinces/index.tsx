@@ -10,7 +10,6 @@ import { useDeviceMobile, useSearchKeyword } from "hooks";
 import { BackTopButton, Input, Seo, XButton } from "components/Layout";
 import icon from "constants/icon";
 import style from './list-province.module.css'
-import { Helmet } from "react-helmet";
 
 function Provinces() {
     const [value, setValue] = useState('')

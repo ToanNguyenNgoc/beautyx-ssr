@@ -9,6 +9,7 @@ import { getTotal } from 'redux/cart';
 import { IOrganization } from 'interface';
 import { fetchAsyncByKeyword } from 'redux/org/orgSlice';
 import icon from 'constants/icon';
+import '../style.css'
 
 interface IProps {
     org: IOrganization,

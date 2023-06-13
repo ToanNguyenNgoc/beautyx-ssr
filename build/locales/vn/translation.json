@@ -142,6 +142,7 @@
         "services": "Dịch vụ",
         "services_name": "Tên dịch vụ",
         "products": "Sản phẩm",
+        "combo":"Gói dịch vụ",
         "sale": "Ưu đãi",
         "view_more": "Xem thêm",
         "hide": "Ẩn bớt",
@@ -354,7 +355,9 @@
         "my_services": "Gói dịch vụ"
     },
     "acc": {
-        "province": "Tỉnh / Thành",
+        "province": "Tỉnh/thành",
+        "district":"Quận/huyện",
+        "ward":"Xã/phường",
         "scores": "Điểm",
         "surplus": "Số dư",
         "rank": "Hạng",
@@ -382,7 +385,9 @@
         "spending": "Chi tiêu",
         "discount_on_bill": "Giảm trên bill",
         "bonus": "Tiền thưởng",
-        "benefit": "Quyền lợi"
+        "benefit": "Quyền lợi",
+        "create_address":"Thêm mới địa chỉ",
+        "update_address":"Cập nhật địa chỉ"
     },
     "order": {
         "order_his": "Lịch sử đơn hàng",

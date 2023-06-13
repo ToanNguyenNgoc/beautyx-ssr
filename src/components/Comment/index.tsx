@@ -43,9 +43,11 @@ function Comment(props: CommentProps) {
         "filter[organization_id]": commentable_type !== "ORGANIZATION" ? org_id : ""
     }
     const { resData, totalItem, onLoadMore, isValidating } = useSwrInfinite(
-        (commentable_id && org_id),
-        "/comments",
-        params
+        {
+            API_URL: '/comments',
+            enable: commentable_id && org_id,
+            params: params
+        }
     )
     const onChangeInputCmt = (e: any) => {
         setTempCmt({ ...tempCmt, body: e.target.value })

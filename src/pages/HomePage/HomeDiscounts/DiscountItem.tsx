@@ -35,7 +35,7 @@ function DiscountItem(props: IProps) {
     // console.log(discountItem);
     const displayDisPrice = discountPar.discount_type === DISCOUNT_TYPE.FINAL_PRICE.key ?
         discountPar.discount_value : discountItem.view_price
-    const displayPrice = discountItem.productable.price || discountItem.productable.retail_price
+    const displayPrice = discountItem.productable?.price || discountItem.productable?.retail_price
     const percent = Math.round(100 - displayDisPrice / displayPrice * 100)
     return (
         <div onClick={onDetail} className="home-discount-item__cnt">
@@ -54,9 +54,9 @@ function DiscountItem(props: IProps) {
                 <img
                     alt=""
                     src={
-                        discountItem.productable.image
-                            ? discountItem.productable.image_url
-                            : discountItem.organization.image_url
+                        discountItem.productable?.image
+                            ? discountItem.productable?.image_url
+                            : discountItem.organization?.image_url
                     }
                     width="100%"
                     height="100%"
@@ -73,7 +73,7 @@ function DiscountItem(props: IProps) {
                     </div>
                 }
                 <h2 className="name">
-                    {discountItem.productable.service_name || discountItem.productable.product_name}
+                    {discountItem.productable?.service_name || discountItem.productable?.product_name}
                 </h2>
                 <div className="flex-column price">
                     <span className="sale-price">

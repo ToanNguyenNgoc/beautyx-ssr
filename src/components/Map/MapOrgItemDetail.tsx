@@ -36,14 +36,18 @@ export default function MapOrgItemDetail(props: IProps) {
 
     const LOCATION = AUTH_LOCATION()
     const orgResponse: IOrganization = useSwr(
-        `${API_ROUTE.ORG(org?.id)}`,
-        (org),
-        { 'filter[location]': LOCATION }
+        {
+            API_URL: API_ROUTE.ORG(org?.id),
+            enable: org,
+            params: { 'filter[location]': LOCATION }
+        }
     ).response
-    const galleries: IOrgMobaGalleries[] = useSwrInfinite(
-        (org?.id),
-        API_ROUTE.GALLERIES_ORG_ID(org?.id),
-        paramsGalleries).resData ?? []
+    const galleries: IOrgMobaGalleries[] = useSwrInfinite({
+        enable: (org?.id),
+        API_URL: API_ROUTE.GALLERIES_ORG_ID(org?.id),
+        params: paramsGalleries
+    })
+        .resData ?? []
 
     const images_url = galleries.map((img: IOrgMobaGalleries) => {
         const imgChild = img?.images?.map((child: any) => child.image_url)

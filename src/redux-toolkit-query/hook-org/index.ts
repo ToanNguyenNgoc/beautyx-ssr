@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { baseURL } from 'api/axios'
 import API_ROUTE from 'api/_api'
 import {
     paramDiscounts,
@@ -10,6 +9,7 @@ import {
 } from 'params-query'
 import { IOrganization, Response, ResponseType } from 'interface'
 import { pickBy, identity } from 'lodash'
+import { baseURL } from 'config'
 
 
 export const orgPageApi = createApi({
@@ -53,7 +53,7 @@ export const orgPageApi = createApi({
                 url: API_ROUTE.ORG_PRODUCTS(org_id),
                 params: pickBy({
                     ...paramsProductsOrg,
-                    "limit": 20,
+                    "limit": 10,
                     "filter[special_price]": true,
                     "filter[special]": true,
                     "filter[special_ecommerce]": true
@@ -67,11 +67,11 @@ export const orgPageApi = createApi({
                 url: API_ROUTE.ORG_SERVICES(org_id),
                 params: pickBy({
                     ...paramsServicesOrg,
-                    "limit": 20,
+                    "limit": 10,
                     "filter[special_price]": true,
                     "filter[special]": true,
                     "filter[special_ecommerce]": true
-                }, identity)
+                }, identity),
             }),
             keepUnusedDataFor: 3600,
             transformResponse: (response: ResponseType) => response?.context.data ?? {}

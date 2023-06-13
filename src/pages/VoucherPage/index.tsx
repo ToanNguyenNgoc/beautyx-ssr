@@ -29,11 +29,11 @@ export default function VoucherPage() {
         limit: 30,
         sort: PLAT_FORM === "TIKI" ? "-priority" : "",
     };
-    const { resData, totalItem, onLoadMore } = useSwrInfinite(
-        true,
-        "/discounts",
-        newParams
-    );
+    const { resData, totalItem, onLoadMore } = useSwrInfinite({
+        enable:true,
+        API_URL:"/discounts",
+        params:newParams
+    });
     const discounts = resData ?? [];
     const onViewMore = () => {
         if (resData.length < totalItem) {

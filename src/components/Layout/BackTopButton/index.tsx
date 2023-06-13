@@ -15,7 +15,7 @@ export function BackTopButton() {
     return (
         <div
             className='back-top-btn'
-            onClick={scrollTop}
+            onClick={() => scrollTop()}
         >
             <img src={icon.arrowSmallUpWhite} alt="" />
         </div>

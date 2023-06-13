@@ -1,19 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { createContext, useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
+import { TFunction, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAsyncUser } from 'redux/profile/userSlice';
 import { fetchAsyncHome } from 'redux/home/homeSlice';
 import { AUTH_LOCATION, getPosition } from "api/authLocation";
 import { useAppointment, useOrderService } from "hooks";
 import Echo from 'laravel-echo'
-import echoConfig from "api/echoConfig";
 import IStore from "interface/IStore";
+import { echoConfig } from "config";
+import { LOCAL_TK } from "common";
 const Pusher = require('pusher-js')
 
 export type AppContextType = {
-    t: any,
+    t: TFunction<"translation", undefined>,
     language: any,
     setLanguage: any,
     geo: any,
@@ -41,7 +42,7 @@ export default function AppProvider({ children }: { children: any }) {
     }, [USER])
 
     let lat; let long
-    const location = AUTH_LOCATION()
+    const location: any = AUTH_LOCATION()
     if (location) {
         lat = location.split(',')[0]
         long = location.split(',')[1]
@@ -49,7 +50,7 @@ export default function AppProvider({ children }: { children: any }) {
     const [geo, setGeo] = useState<any>({ lat: lat, long: long });
     const dispatch = useDispatch();
     const lg = localStorage.getItem("i18nextLng");
-    const token = localStorage.getItem('_WEB_TK') ?? sessionStorage.getItem('_WEB_TK')
+    const token = localStorage.getItem(LOCAL_TK) ?? sessionStorage.getItem(LOCAL_TK)
     const [language, setLanguage] = useState(
         (lg === "en-US" || lg === "en") ? "en" : "vn"
     );

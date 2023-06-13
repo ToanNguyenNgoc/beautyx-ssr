@@ -83,7 +83,7 @@ function HomeTopic() {
                         {
                             deals.map(item => (
                                 <Link
-                                    onClick={scrollTop}
+                                    onClick={()=>scrollTop()}
                                     to={{
                                         pathname: `/deal/${slugify(item.title)}`
                                     }}

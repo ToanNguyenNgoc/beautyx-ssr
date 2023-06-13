@@ -1,6 +1,6 @@
 import API_3RD from "api/3rd-api"
-import { AUTH_HEADER } from "api/authHeader"
 import axios from "axios"
+import { AUTH_HEADER } from "config"
 import { identity, pickBy } from "lodash"
 
 export async function postHistorySearch(
@@ -10,7 +10,6 @@ export async function postHistorySearch(
     productable_id?: number
 ) {
     const params = { text, type, organization_id, productable_id: productable_id }
-    // console.log(params)
     await axios.post(
         `${API_3RD.API_NODE}/search_history`,
         pickBy(params, identity),

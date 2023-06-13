@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { CircularProgress } from '@mui/material';
 import './style.css';
 
 interface IProps {
+    children?: ReactNode,
     loading?: boolean,
     title?: string,
     onClick?: (e?: any) => void,
@@ -11,6 +12,7 @@ interface IProps {
     style?: any
     icon?: string,
     iconSize?: number,
+    disable?: boolean
 }
 
 export function XButton(props: IProps) {
@@ -22,7 +24,8 @@ export function XButton(props: IProps) {
         className,
         style,
         icon,
-        iconSize = 18,
+        iconSize,
+        children
     } = props;
     return (
         <button
@@ -50,6 +53,7 @@ export function XButton(props: IProps) {
                 </div>
             }
             {title}
+            {children}
         </button>
     );
 }

@@ -36,7 +36,7 @@ interface StatusOrderProps {
 }
 
 function CartPaymentStatus() {
-    const {sec} = useCountDown(600);
+    const { sec } = useCountDown(600);
     const dispatch = useDispatch();
     const history = useHistory();
     const [open, setOpen] = useState(initOpen);
@@ -51,12 +51,13 @@ function CartPaymentStatus() {
         cancel: false,
         time_refresh: 1000
     })
-    const { response } = useSwr(
-        `/paymentgateways/${transaction_uuid}/status`,
-        transaction_uuid,
-        { cancel: statusOrder.cancel },
-        statusOrder.time_refresh
-    )
+    const { response } = useSwr({
+        API_URL: `/paymentgateways/${transaction_uuid}/status`,
+        enable: transaction_uuid,
+        params: { cancel: statusOrder.cancel },
+        refreshInterval: statusOrder.time_refresh,
+        dedupingInterval:0
+    })
     const orderStatus = response?.status ?? 'PENDING'
 
     const handleCancelCallStatus = () => {

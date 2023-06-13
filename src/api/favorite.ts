@@ -1,6 +1,5 @@
-import axiosClient from "./axios";
+import {axiosClient} from "config";
 import { pickBy, identity } from 'lodash';
-import { AUTH_HEADER, AUTH_HEADER_PARAM_DELE } from "./authHeader";
 
 interface IPostFavoriteItem {
     org_id: number,
@@ -14,14 +13,14 @@ class Favorite {
             organization_id: org_id,
         };
         const url = `/favorites`;
-        return axiosClient.post(url, params, AUTH_HEADER());
+        return axiosClient.post(url, params);
     };
     deleteFavorite = (org_id: number) => {
         const url = `/favorites`;
         const values = {
             organization_id: org_id,
         };
-        return axiosClient.delete(url, AUTH_HEADER_PARAM_DELE(values));
+        return axiosClient.delete(url, {data:values});
     };
     postFavoriteItem = (values: IPostFavoriteItem) => {
         const url = `/favorites`;
@@ -31,7 +30,7 @@ class Favorite {
             service_id: values.service_id,
         }
         const params = pickBy(paramOb, identity)
-        return axiosClient.post(url, params, AUTH_HEADER())
+        return axiosClient.post(url, params)
     };
     deleteFavoriteItem = (values: IPostFavoriteItem) => {
         const url = `/favorites`;
@@ -41,7 +40,7 @@ class Favorite {
             service_id: values.service_id,
         }
         const params = pickBy(paramOb, identity)
-        return axiosClient.delete(url, AUTH_HEADER_PARAM_DELE(params))
+        return axiosClient.delete(url, {data:params})
     }
 }
 const favorites = new Favorite();

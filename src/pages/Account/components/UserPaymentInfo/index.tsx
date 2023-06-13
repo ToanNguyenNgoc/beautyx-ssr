@@ -1,17 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import icon from 'constants/icon';
 import { AppContext } from 'context/AppProvider';
 import style from './user-payment.module.css'
-import { useSwr } from 'hooks';
 import { XButton } from 'components/Layout';
-import API_ROUTE from 'api/_api';
-import { IUserAddress } from 'interface';
+import { useUserAddress } from 'hooks';
 
 interface IProps {
-    onSetAddressDefault?: (address?: any) => void;
     disableEdit?: boolean;
     disableAddress?: boolean
     title?: string,
@@ -19,19 +16,10 @@ interface IProps {
 
 function UserPaymentInfo(props: IProps) {
     const { t } = useContext(AppContext) as any;
-    const { onSetAddressDefault, disableEdit, title, disableAddress } = props;
+    const { disableEdit, title, disableAddress } = props;
+    const {addressDefault} = useUserAddress()
     const history = useHistory();
     const USER = useSelector((state: any) => state.USER.USER);
-    const { response } = useSwr(API_ROUTE.ADDRESSES, USER)
-    const addresses: IUserAddress[] = response ?? []
-    const addressDefault = addresses.find(i => i.is_default === true)
-    useEffect(() => {
-        let mount = true
-        if (addressDefault && onSetAddressDefault && mount) {
-            onSetAddressDefault(addressDefault)
-        }
-        return () => {mount = false}
-    }, [addresses])
     return (
         <div className={style.container}>
             <span className={style.title}>

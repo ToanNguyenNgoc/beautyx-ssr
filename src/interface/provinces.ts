@@ -45,3 +45,14 @@ export interface IDistrict {
       type: string
       ward_code: any
 }
+export interface IWard {
+      name: string,
+      type: string,
+      codename: string,
+      province_code: null | number,
+      district_code: null | number,
+      ward_code: number,
+      province_id: null | number,
+      district_id: number,
+      organizations_count: number
+  }

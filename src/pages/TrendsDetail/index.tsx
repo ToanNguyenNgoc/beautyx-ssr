@@ -30,10 +30,12 @@ function TrendsDetail({ id, onClose }: { id?: string, onClose?: () => void }) {
         `${API_3RD.API_NODE}/trends/${trend_id}`,
         { 'include': 'services|tiktok' }
     ).response?.context
-    const org: IOrganization = useSwr(
-        API_ROUTE.ORG(trend?.organization_id),
-        trend?.organization_id
-    ).response
+
+    const org: IOrganization = useSwr({
+        API_URL:API_ROUTE.ORG(trend?.organization_id),
+        enable:trend?.organization_id
+    }).response
+
     const { onToggleFavorite, favoriteSt } = useFavorite({
         org_id: org?.id,
         type: 'ORG',

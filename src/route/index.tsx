@@ -15,7 +15,8 @@ import AssistantBtn from "../components/AssistantBtn";
 import PaymentStatus from "rootComponents/momo/PaymentStatus";
 import SerProCoDetail from "pages/_SerProCoDetail";
 import Footer from "components/Footer";
-import MerchantDetail from "pages/MerchantDetail";
+// import MerchantDetail from "pages/MerchantDetail";
+import Organization from "pages/Organization";
 import { analytics, logEvent } from "../firebase";
 import { LoadProgress } from "components/LoadingSketion";
 import ResetPassword from "pages/ResetPassword";
@@ -31,7 +32,6 @@ import SignPage from "pages/SignPage";
 import Bottom from "components/Bottom";
 import Head from "components/Head";
 import CateTree from "pages/CateTree";
-import Chat from "pages/Chat";
 
 //community page
 const PostDetail = lazy(() => import("pages/Community/pages/PostDetail"));
@@ -53,6 +53,7 @@ const Trends = lazy(() => import("pages/Trends"));
 const Community = lazy(() => import("pages/Community"));
 const TrendsDetail = lazy(() => import("pages/TrendsDetail"));
 const Rewards = lazy(() => import("pages/Rewards"));
+const Messenger = lazy(() => import("pages/Messenger"))
 
 function RouterConfig() {
   const routes = [
@@ -72,11 +73,11 @@ function RouterConfig() {
     },
     {
       path: "/TIKI/cua-hang/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     {
       path: "/TIKI/org/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     //
     {
@@ -94,11 +95,11 @@ function RouterConfig() {
     },
     {
       path: "/MOMO/cua-hang/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     {
       path: "/MOMO/org/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     // END mini app share link
     {
@@ -171,7 +172,7 @@ function RouterConfig() {
     },
     {
       path: "/cua-hang/:subdomain",
-      component: <MerchantDetail />,
+      component: <Organization />,
     },
     {
       path: "/dia-diem-quan-tam",
@@ -292,8 +293,8 @@ function RouterConfig() {
       component: <Rewards />,
     },
     {
-      path: "/chat",
-      component: <Chat />,
+      path:"/messages",
+      component:<Messenger/>
     }
   ];
   logEvent(analytics, "page_view", {

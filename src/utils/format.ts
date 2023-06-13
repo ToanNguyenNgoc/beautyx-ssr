@@ -105,13 +105,45 @@ export const formatPhoneNumber = (phoneNumberString: string) => {
     return phone;
 };
 export const linkify = (text: string) => {
-    var urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
-    return text.replace(urlRegex, function (url) {
-        return '<a class="linkify-chat" target="blank" href="' + url + '">' + url + "</a>";
-    });
+    // eslint-disable-next-line no-useless-escape
+    const urlRegex = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+    const urlImgRegex = /\.(jpeg|jpg|gif|png|svg)$/;
+    let element = text
+    if (text.match(urlImgRegex)) {
+        return element = '<image class="msg-img" src=" ' + text + ' " alt="" />'
+    }
+    if (text.match(urlRegex)) {
+        element = text.replace(urlRegex, function (url) {
+            return '<a class="linkify-chat" target="blank" href="' + url + '">' + url + "</a>";
+        });
+    }
+    return element
 }
 export const checkHTML = (text: string) => {
     var elem = document.createElement('div')
     elem.innerHTML = text;
     return !!elem.childElementCount;
+}
+const now = new Date();
+const today = now.getDay() + 1;
+export interface IOrgTimeWork {
+    day_week: string,
+    status: string,
+    from_time_opening: string,
+    to_time_opening: string,
+    todayAct: boolean
+}
+export const formatOrgTimeWork = (time_arr: any) => {
+    let orgTimes: IOrgTimeWork[] = [];
+    orgTimes = time_arr?.map((item: any, index: number) => {
+        return {
+            day_week: index + 2 === 8 ? 'Chủ nhật' : `Thứ ${index + 2}`,
+            status: item?.time_opening,
+            from_time_opening: item?.time_opening === "on" ? item?.from_time_opening : "-",
+            to_time_opening: item?.time_opening === "on" ? item?.to_time_opening : "-",
+            todayAct: index + 2 === today ?? false
+        }
+    })
+    const orgTimeToday = orgTimes?.find(i => i.todayAct)
+    return { orgTimes, orgTimeToday }
 }

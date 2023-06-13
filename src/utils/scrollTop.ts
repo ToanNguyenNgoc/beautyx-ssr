@@ -1,5 +1,4 @@
-export const scrollTop=()=>{
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+export const scrollTop = (behavior?: 'auto' | 'smooth') => {
+       window.scrollTo({ top: 0, behavior: behavior ?? 'smooth' })
 }
 export default scrollTop

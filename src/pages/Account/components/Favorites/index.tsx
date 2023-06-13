@@ -23,7 +23,12 @@ function Favorites() {
         'filter[favoritetable]': true,
         'include': 'organization'
     }
-    const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite(USER?.id, `${API_ROUTE.FAVORITES}`, params)
+    const { resData, onLoadMore, totalItem, isValidating } = useSwrInfinite({
+        enable: USER?.id,
+        API_URL: `${API_ROUTE.FAVORITES}`,
+        params,
+        dedupingInterval: 0
+    })
     return (
         <>
             <HeadTitle title={t('Header.Following')} />

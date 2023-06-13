@@ -21,11 +21,12 @@ export function useOrderService() {
         "filter[platform]": PLAT_FORM === 'BEAUTYX' ? 'BEAUTYX|BEAUTYX MOBILE|WEB' : PLAT_FORM,
         "limit": 8
     }
-    const { resData, totalItem, onLoadMore, isValidating, } = useSwrInfinite(
-        USER,
-        `${API_ROUTE.ORDERS}`,
-        params
-    )
+    const { resData, totalItem, onLoadMore, isValidating, } = useSwrInfinite({
+        enable: USER,
+        API_URL: `${API_ROUTE.ORDERS}`,
+        params: params,
+        dedupingInterval: 0
+    })
     const checkTimeExpired = (items: IUser_Items[]) => {
         let condition = false
         const services_sold_ex_time = items

@@ -11,7 +11,6 @@ import { CopyToClipboard } from 'react-copy-to-clipboard'
 import style from './share.module.css'
 import { XButton } from '../XButton';
 import icon from 'constants/icon';
-import { DOMAIN } from 'common'
 import { PopupMessage } from 'components/Notification'
 
 interface ShareSocialProps {
@@ -19,9 +18,8 @@ interface ShareSocialProps {
 }
 
 export function ShareSocial(props: ShareSocialProps) {
-    const { url } = props
     const [open, setOpen] = useState(false)
-    const originUrl = `${DOMAIN}${url}`
+    const originUrl = window.location.href
     return (
         <>
             <div className={style.container}>

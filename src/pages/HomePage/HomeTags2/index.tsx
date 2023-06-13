@@ -85,7 +85,7 @@ function HomeTags2() {
                                     page?.items?.map((item: ITag, index: number) => (
                                         <li key={index} className={style.cate_item_cnt}>
                                             <Link
-                                                onClick={scrollTop}
+                                                onClick={()=>scrollTop()}
                                                 className={style.cate_link}
                                                 to={{ pathname: `/danh-sach-dich-vu/${slugify(item.name)}?id=${item.id}` }}
                                             >
