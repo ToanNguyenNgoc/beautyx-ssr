@@ -56,14 +56,19 @@ app.get('/*', (req, res, next) => {
             }
             if (page === 'chi-tiet-giam-gia' || page === 'giam-gia') {
                 const paramArr = req.path.split('/')[2]?.split('_')
-                const discount_id = paramArr.slice(paramArr.indexOf('service'), paramArr.indexOf('service') + 4)[2]
-                const { item, productable } = await getDiscountDetail(discount_id)
-                title = productable?.service_name
-                description = isHTMLTemplate(productable?.description) ?
-                    `Dịch vụ làm đẹp cùng Deal hot ${productable?.service_name} tại ${item.organization?.full_address}`
-                    :
-                    `${productable.description}`
-                image = productable.image_url
+                if (paramArr) {
+                    const discount_id = paramArr.slice(paramArr.indexOf('service'), paramArr.indexOf('service') + 4)[2]
+                    const { item, productable } = await getDiscountDetail(discount_id)
+                    title = productable?.service_name
+                    description = isHTMLTemplate(productable?.description) ?
+                        `Dịch vụ làm đẹp cùng Deal hot ${productable?.service_name} tại ${item.organization?.full_address}`
+                        :
+                        `${productable.description}`
+                    image = productable.image_url
+                }else{
+                   title = 'Deal làm đẹp cực HOT'
+                   description = 'Dịch vụ làm đẹp cùng Deal hot của Beautyx' 
+                }
             }
             if (page === 'dich-vu') {
                 const service = await getServiceDetail(
