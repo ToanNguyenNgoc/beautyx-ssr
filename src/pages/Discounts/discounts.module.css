@@ -8,7 +8,7 @@
 .discount_list {
     grid-gap: 12px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1023px) {
