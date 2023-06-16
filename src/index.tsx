@@ -9,7 +9,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import { SWRConfig } from "swr";
 import { PlashScreen } from "components/Layout";
-import { axiosClient } from "config";
+import { axiosClient, queryClient } from "config";
+import { QueryClientProvider } from "@tanstack/react-query"
 
 // Sentry.init({
 //     dsn: "https://38eb6d00469546558bd815998210f77f@o1108259.ingest.sentry.io/6554425",
@@ -29,11 +30,13 @@ ReactDOM.render(
                 shouldRetryOnError: false
             }}
         >
-            <Provider store={store}>
-                <Suspense fallback={<PlashScreen />}>
-                    <App />
-                </Suspense>
-            </Provider>
+            <QueryClientProvider client={queryClient} >
+                <Provider store={store}>
+                    <Suspense fallback={<PlashScreen />}>
+                        <App />
+                    </Suspense>
+                </Provider>
+            </QueryClientProvider>
         </SWRConfig>
     </React.StrictMode>,
     document.getElementById("app")
